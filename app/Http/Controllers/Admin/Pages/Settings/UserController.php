@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin\Pages\Settings;
 
 use App\Helper\Money;
 use App\Http\Controllers\Controller;
+use App\Models\TransactBalance;
 use App\Models\User;
+use phpDocumentor\Reflection\Types\Integer;
 use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -129,6 +131,9 @@ class UserController extends Controller
             $user->balance = $balanceRequest;
             $user->save();
 
+            $this->storeTransact($user, $balanceRequest);
+
+
             if (!empty($request->roles)) {
                 foreach ($request->roles as $role){
                     $userRoles[] = Role::whereId($role)->first();
@@ -208,7 +213,8 @@ class UserController extends Controller
             $newBalance = 0;
             if($request->has('balance') && !is_null($request->balance)){
                 $balanceRequest = Money::toDatabase($request->balance);
-                $newBalance = Money::toDatabase($balanceRequest + (($user->commission/100) * $balanceRequest));
+                $newBalanceRequest = $balanceRequest + (($user->commission/100) * $balanceRequest);
+                $newBalance = Money::toDatabase($user->balance) +  $newBalanceRequest;
             }
 
             $user->name = $request->name;
@@ -220,6 +226,10 @@ class UserController extends Controller
             $user->balance = $newBalance;
             $user->indicador = $indicador;
             $user->save();
+
+            if((float) $newBalance > 0){
+                $this->storeTransact($user, $newBalanceRequest);
+            }
 
             if (!empty($request->roles)) {
                 foreach ($request->roles as $role){
@@ -270,5 +280,14 @@ class UserController extends Controller
             ]);
 
         }
+    }
+
+    public function storeTransact(User $user, string $value)
+    {
+        TransactBalance::create([
+            'user_id_sender' => auth()->id(),
+            'user_id' => $user->id,
+            'value' => $value,
+        ]);
     }
 }
