@@ -117,11 +117,16 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="balance">Saldo</label>
-                    <input type="text" class="form-control @error('balance') is-invalid @enderror" id="balance"
-                           name="balance"
+                    <label for="balanceAtual">Saldo Atual</label>
+                    <input type="text" readonly class="form-control text-right" id="balanceAtual"
+                           name="balanceAtual"
                            maxlength="100"
                            value="{{old('balance', !empty($user->balance) ? \App\Helper\Money::toReal($user->balance) : null)}}">
+
+                    <label for="balance">Adicionar Saldo</label>
+                    <input type="text" class="form-control @error('balance') is-invalid @enderror" id="balance"
+                           name="balance"
+                           maxlength="100">
                     @error('balance')
                     <span class="invalid-feedback" role="alert">
                        {{ $message }}

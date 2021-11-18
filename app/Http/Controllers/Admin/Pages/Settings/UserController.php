@@ -115,7 +115,7 @@ class UserController extends Controller
             $user->commission = $request->commission;
             $user->indicador = $indicador;
             if($auxRole == 6){
-            $user->type_client = 1;    
+            $user->type_client = 1;
             }
             $user->balance = !empty($request->balance) ? Money::toDatabase($request->balance) : 0;
             $user->save();
@@ -188,20 +188,27 @@ class UserController extends Controller
             'password_confirmation' => 'sometimes|required_with:password|max:15',
             'commission' => 'required|integer|between:0,100',
         ]);
-                    
-            $indicador = $request->indicador;        
+
+            $indicador = $request->indicador;
             if($indicador == null || $indicador == 0){
             $indicador = 1;
             }
 
-        try {
+        try
+        {
+            $newBalance = 0;
+            if($request->has('balance') && !is_null($request->balance)){
+                $balanceRequest = Money::toDatabase($request->balance);
+                $newBalance = Money::toDatabase($balanceRequest + (($user->commission/100) * $balanceRequest));
+            }
+
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
-            $user->balance = !empty($request->balance) ? Money::toDatabase($request->balance) : 0;
+            $user->balance = $newBalance;
             $user->indicador = $indicador;
             $user->save();
 
