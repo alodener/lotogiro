@@ -107,6 +107,15 @@ class UserController extends Controller
          }
 
         try {
+            $balanceRequest = 0;
+            if($request->has('balance') && !is_null($request->balance)){
+                $balanceRequest = Money::toDatabase($request->balance);
+            }
+
+            if($request->has('commission') && !is_null($request->commission)){
+                $balanceRequest += Money::toDatabase(($request->commission/100) * $balanceRequest);
+            }
+
             $user = new $this->user;
             $user->name = $request->name;
             $user->last_name = $request->last_name;
@@ -117,7 +126,7 @@ class UserController extends Controller
             if($auxRole == 6){
             $user->type_client = 1;
             }
-            $user->balance = !empty($request->balance) ? Money::toDatabase($request->balance) : 0;
+            $user->balance = $balanceRequest;
             $user->save();
 
             if (!empty($request->roles)) {
