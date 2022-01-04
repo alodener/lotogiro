@@ -112,13 +112,17 @@
             @if(isset($matriz))
                 <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
                     @if($typeGame->name == "Lotogiro - 15 Lotofácil" || $typeGame->name == "Lotogiro 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
-                    <button wire:click="selecionaTudo()" class="btn btn-success" type="button" onclick="limpacampos();">Seleciona todos os Números</button>      
-            @endif
+                       
+                    @endif
+                    <button wire:click="selecionaTudo()" class="btn btn-success" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
+                    <br>
+                    <br>
+                    {{-- puxar do banco de dados quantos numeros pode se jogar --}}
+                    @foreach ($busca as $buscas)
+                        <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-success" type="button">{{ $buscas['numbers'] }}</button>
+                    @endforeach 
 
-            {{-- puxar do banco de dados quantos numeros pode se jogar --}}
-            @foreach ($busca as $buscas)
-              <button wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-success" type="button">{{ $buscas['numbers'] }}</button>
-            @endforeach          
+         
 
                 <div class="table-responsive">
                     <table class="table  text-center">
