@@ -33,7 +33,7 @@
                     </div>
                     @endif
                 </div>
-                <h3 class="login-box-msg">Cadastre-se para começar a jogar!</h3>
+                <h3 class="login-box-msg">Cadastre-se para começar a jogar! Teste</h3>
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
