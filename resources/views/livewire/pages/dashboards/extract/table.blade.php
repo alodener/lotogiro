@@ -1,8 +1,9 @@
 <div>
     <div class="row">
         <div class="col-md-12">
-            <h4>Período</h4>
-            <div class="dropdown-divider"></div>
+            <div class="card-header indica-card">
+                Período
+            </div>
         </div>
     </div>
     <div class="row">
@@ -94,18 +95,18 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 extractable-cel">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Tipo</th>
-                        <th>Valor</th>
-                        <th>Descrição</th>
-                        <th>Usuário</th>
-                        <th>Cliente</th>
-                        <th>Criação</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Usuário</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Criação</th>
                     </tr>
                     </thead>
                     <tbody>
