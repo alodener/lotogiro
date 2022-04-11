@@ -48,7 +48,7 @@
     margin-right: auto; margin-top:30px">
 
         <div class="card text-white bg-warning mb-6" style="">
-            <div class="card-header">Jogos Feitos</div>
+            <div class="header-vendas text-bold">Jogos Feitos</div>
                 <div class="card-body">
                     <h5 class="card-title" style="font-size: 30px">{{ $totalJogos }}</h5> <i class="nav-icon fas fa-chart-line"  style="float: right; font-size: 50px"></i>
                     <p class="card-text"></p>
@@ -56,7 +56,7 @@
             </div>
 
             <div class="card text-white bg-success mb-6" style="">
-                <div class="card-header">Vendas Rede</div>
+                <div class="header-vendas text-bold">Vendas Rede</div>
                 <div class="card-body">
                     <h5 class="card-title" style="font-size: 30px">R${{ floatval($valorTotal) }}</h5> <i class="nav-icon fas fa-dollar-sign"  style="float: right; font-size: 50px"></i>
                     <p class="card-text"></p>
@@ -68,24 +68,26 @@
 
     {{-- tabela de rede --}}
     <div class="container">
-        <table id="relatorio" class="table table-striped" style="width: 100%">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>NOME</th>
-                    <th>EMAIL</th>
-                    <th>Total Vendas</th>
-                </tr>
-            </thead>
-            @foreach ($result as $InfoRede)
-                <tr>
-                    <td>{{ $InfoRede->id }}</td>
-                    <td>{{ $InfoRede->name . ' ' . $InfoRede->last_name }}</td>
-                    <td>{{ $InfoRede->email }}</td>
-                    <td>R${{ $InfoRede->valorVenda }}</td>
-                </tr>
-            @endforeach
-        </table>
+        <div class="table-responsive extractable-cel">
+            <table id="relatorio" class="table table-striped" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NOME</th>
+                        <th>EMAIL</th>
+                        <th>Totalr Vendas</th>
+                    </tr>
+                </thead>
+                @foreach ($result as $InfoRede)
+                    <tr>
+                        <td>{{ $InfoRede->id }}</td>
+                        <td>{{ $InfoRede->name . ' ' . $InfoRede->last_name }}</td>
+                        <td>{{ $InfoRede->email }}</td>
+                        <td>R${{ $InfoRede->valorVenda }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
     </div>
 
 @endsection
