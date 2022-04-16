@@ -15,18 +15,20 @@
         @endpush
         @enderror
     </div>
-    <div class="col-md-7">
+    <div class="col-md-7 indica-user">
         <div class="card card-info pb-5">
             <div class="card-header">
                 <h3 class="card-title">Usuário</h3>
             </div>
             <div class="card-body">
                 @if(Route::currentRouteName() == 'admin.settings.users.edit')
+                @can('update_user')
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="status" name="status"
                                @isset($user->status) @if($user->status == 1) checked @endif @endisset>
                         <label class="custom-control-label" for="status">Ativo?</label>
                     </div>
+                    @endcan
                 @endif
                 <div class="form-row">
                     <div class="form-group col-md-4">
@@ -53,10 +55,12 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    
                     <div class="form-group col-md-4">
                         <label for="indicador">ID Indicador</label>
                         <input type="number" class="form-control" id="indicador" name="indicador" value="{{old('indicador', $user->indicador ?? null)}}" maxlength="20">
                     </div>
+                    
                     <div class="form-group col-md-8">
                         <label for="email">E-mail</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
@@ -69,6 +73,22 @@
                         @enderror
                     </div>
                 </div>
+                <!--<div class="form-row">
+                    <div class="form-group col-sm-12">
+                        <label for="password">Link de indicação</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon3">https://superjogo.loteriabr.com/admin/indicate/</span>
+                            </div>
+                            <input type="text" class="form-control" id="link" name="link"
+                                   aria-describedby="basic-addon3" value="{{old('link', $user->link ?? null)}}">
+                        </div>
+                        <div class="col-sm-12">
+                            <p class="text-bold">https://superjogo.loteriabr.com/admin/indicate/{{old('link', $user->link ?? null)}}</p>
+                        </div>
+                    </div>
+                </div>-->
+
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="password">Senha</label>
@@ -95,10 +115,47 @@
                         </span>
                         @enderror
                     </div>
+
+                    {{-- parte de dados do cliente --}}
+                    <div class="form-group col-md-6">
+                        <label for="pix" id="pixL">pix</label>
+                        <input type="" class="form-control @error('pix') is-invalid @enderror"
+                               id="pix"
+                               name="pix" maxlength="50">
+                        @error('pix')
+                        <span class="invalid-feedback" role="alert">
+                           {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="telefone" id="telefoneL">telefone</label>
+                        <input type="text" class="form-control @error('telefone') is-invalid @enderror"
+                               id="telefone"
+                               name="telefone" maxlength="15">
+                        @error('telefone')
+                        <span class="invalid-feedback" role="alert">
+                           {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="cpf" id="cpfL">cpf</label>
+                        <input type="" class="form-control @error('cpf') is-invalid @enderror"
+                               id="cpf"
+                               name="cpf" maxlength="11">
+                        @error('cpf')
+                        <span class="invalid-feedback" role="alert">
+                           {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+   
     <div class="col-md-5">
         <div class="card card-warning">
             <div class="card-header">
@@ -135,7 +192,14 @@
                 </div>
                 <div class="form-group">
                     @if(Route::currentRouteName() == 'admin.settings.users.edit')
+                        <div class="row">
+                            <div class="col-md-6">
                         <a href="{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary btn-block">Extrato de Saldo</a>
+                            </div>
+                            <div class="col-md-6">
+                        <button type="button" class="btn btn-primary btn-block" onclick="habilitarcampo();">Ajuste Manual</button>
+                            </div>
+                    </div>
                     @endif
                 </div>
             </div>
@@ -150,7 +214,8 @@
                         @if(isset($roles) && $roles->count() > 0)
                             @foreach($roles as $role)
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox"
+                                    <input type="radio"
+                                            onchange="radioCliente()"
                                            class="custom-control-input roles"
                                            id="role{{$role->id}}" value="{{$role->id}}"
                                            name="roles[]" @if($role->can) checked @else '' @endif>
@@ -174,6 +239,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.settings.users.index')}}">
@@ -202,5 +268,41 @@
                 unmaskAsNumber: true
             });
         });
+
+        function habilitarcampo(){
+            var campoSaldoAtual = document.getElementById('balanceAtual');
+            var campoSaldo = document.getElementById('balance');
+            campoSaldoAtual.readOnly = false;
+            campoSaldo.readOnly = true;
+        }
+    </script>
+
+    <script>
+        function radioCliente(){
+
+            if (document.getElementById("role6").checked) {
+
+                document.getElementById("pix").style.visibility = "visible";
+                document.getElementById("telefone").style.visibility = "visible";
+                document.getElementById("cpf").style.visibility = "visible";
+
+                document.getElementById("pixL").style.visibility = "visible";
+                document.getElementById("telefoneL").style.visibility = "visible";
+                document.getElementById("cpfL").style.visibility = "visible";
+
+            }
+            else{
+
+                document.getElementById("pix").style.visibility = "hidden";
+                document.getElementById("telefone").style.visibility = "hidden";
+                document.getElementById("cpf").style.visibility = "hidden";
+
+                document.getElementById("pixL").style.visibility = "hidden";
+                document.getElementById("telefoneL").style.visibility = "hidden";
+                document.getElementById("cpfL").style.visibility = "hidden";
+
+            }
+        }
+
     </script>
 @endpush

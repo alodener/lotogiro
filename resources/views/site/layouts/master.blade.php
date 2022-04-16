@@ -8,7 +8,7 @@
     <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{asset('site/layouts/css/master.css')}}">
-    <link rel="shortcut icon" href="{{{ asset('admin/images/painel/logo.png') }}}">
+    <link rel="shortcut icon" href="{{ asset(env('logo')) }}">
     @stack('style')
     @livewireStyles
 
@@ -26,6 +26,7 @@
 <script src="{{asset('site/layouts/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('site/layouts/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('site/layouts/js/master.js')}}"></script>
+
 @stack('scripts')
 @livewireScripts
 

@@ -4,10 +4,27 @@
 
 @section('content')
 
-    <div class="login-box">
-        <div class="login-logo">
-            <img src="https://painel.lotogiro.com/admin/images/painel/logo.png" alt="" width=150 height=150>
+  <div class="col-lg-4 col-md-12 mt-5">
+        <div class="login-logo mt-md-5">
+            <img src="{{ asset(env('logo')) }}" alt="" width=150 height=150>
         </div>
+         @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+        
+        @if (session('SenhaRecuperada'))
+            <div class="alert alert-success" role="alert">
+                {{ session('SenhaRecuperada') }}
+            </div>
+        @endif
+        
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="card">
             <div class="card-body login-card-body">
                 <div class="col-md-12 px-4">
@@ -28,7 +45,7 @@
                     </div>
                     @enderror
                 </div>
-                <p class="login-box-msg">Realize o login para iniciar a sessão</p>
+                <h3 class="login-box-msg">Realize o login para iniciar a sessão</h3>
 
                 <form method="POST" action="{{route('admin.post.login')}}">
                     @csrf
@@ -75,21 +92,28 @@
                         </div>
                     </div>
                 </form>
-                @if (Route::has('password.request'))
-                    <p class="mb-1">
-                        <a href="{{ route('password.request') }}">Esqueci minha senha</a>
-                    </p>
-                @endif
-                    <p class="mb-1"><b>
-                        Não é cadastrado?
-                    </b>
-                    </p>
-                   <a href="https://api.whatsapp.com/send?phone=558196826967&text=Oi, Ainda não tenho cadastrado.">
-                 <button type="submit" class="btn btn-primary btn-block">Fale Conosco</button>
-                </a>
+                
+                <a href="{{ route('forget.password.get') }}">Esqueceu sua Senha?</a>
 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="mb-1 text-bold">
+                            Não é cadastrado?<br>
+                            <a class="btn btn-block btn-info right"
+                               href="{{ route('register') }}">
+                                Cadastre-se
+                            </a>
+                        </p>
+
+                        <a href="https://wa.me/558196826967?text=Olá, gostaria de me tornar um consultor."
+                           class="btn btn-block btn-success"
+                           title="Deseja ser um consultor?"
+                           target="_blank">
+                            <i style="border:none;"class="fa fa-whatsapp"></i> Deseja ser um consultor?
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 @endsection

@@ -1,14 +1,16 @@
 <div>
     <div class="row">
         <div class="col-md-12">
-            <h4>Período</h4>
-            <div class="dropdown-divider"></div>
+            <div class="card-header indica-card">
+                Período
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <select wire:model="range" class="custom-select" id="range" name="range">
+                    <option></option>
                     <option value="1">Mensal</option>
                     <option value="2">Semanal</option>
                     <option value="3">Diário</option>
@@ -93,7 +95,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 extractable-cel">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
@@ -165,6 +167,9 @@
         $(document).ready(function () {
             $('#user').select2({
                 theme: "bootstrap"
+            });
+            $('#range').select2({
+                placeholder: "Please select a country"
             });
         });
 

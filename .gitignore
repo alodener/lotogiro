@@ -9,3 +9,13 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+./vendor/
+/storage/
+/composer.lock
+./public/
+/resources/css/
+
+
+/vendor
+/resources/js/
+.env

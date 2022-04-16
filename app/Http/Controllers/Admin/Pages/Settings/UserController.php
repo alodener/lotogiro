@@ -6,6 +6,7 @@ use App\Helper\Money;
 use App\Http\Controllers\Controller;
 use App\Models\TransactBalance;
 use App\Models\User;
+use App\Models\Client;
 use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -62,6 +63,32 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indicatedByLevel()
+    {
+        return view('admin.pages.settings.user.indicatedByLevel');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indicated()
+    {
+        return view('admin.pages.settings.user.indicated');
+    }
+
+        public function privado(User $user)
+    {
+        
+        return view('admin.pages.settings.user.edit2', compact('user'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -89,6 +116,7 @@ class UserController extends Controller
             abort(403);
         }
 
+        // parte de tratamento de erro
         $validatedData = $request->validate([
             'name' => 'required|max:50',
             'last_name' => 'required|max:100',
@@ -124,13 +152,43 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->commission = $request->commission;
             $user->indicador = $indicador;
+            if (!empty($request->link)) {
+                $user->link = $request->link;
+            }
+
+            // enviar pra cliente
             if($auxRole == 6){
+
+                $validatedData = $request->validate([
+                    'pix' => 'required|max:60',
+                    'telefone' => 'required|max:15',
+                    'cpf' => 'required|max:11'
+                ]);
+
                 $user->type_client = 1;
+
+                $data = $request->only('pix', 'telefone', 'cpf');
+                $passardados = New Client;
+
+                $passardados->cpf = $data['cpf'];
+                $passardados->name = $request->name;
+                $passardados->last_name = $request->last_name;
+                $passardados->email = $request->email;
+                $passardados->phone = $data['telefone'];
+                $passardados->pix  = $data['pix'];
+                $passardados->save();
+
             }
             $user->balance = $balanceRequest;
+
             $user->save();
 
-            $this->storeTransact($user, $balanceRequest);
+        TransactBalance::create([
+            'user_id_sender' => auth()->id(),
+            'user_id' => $user->id,
+            'value' => (float) Money::toDatabase($request->balance),
+            'old_value' => (float) Money::toDatabase(0),
+        ]);
 
 
             if (!empty($request->roles)) {
@@ -164,7 +222,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if(!auth()->user()->hasPermissionTo('update_user')){
+        if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all')){
             abort(403);
         }
 
@@ -176,12 +234,15 @@ class UserController extends Controller
                 $role->can = false;
             }
         }
-
+        if(auth()->user()->hasPermissionTo('edit_all')){
+            return view('admin.pages.settings.user.edit2', compact('user'));
+        }else{
         return view('admin.pages.settings.user.edit', compact('user', 'roles'));
+        }
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage..
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User $user
@@ -189,7 +250,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if(!auth()->user()->hasPermissionTo('update_user')){
+      if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all') ){
             abort(403);
         }
 
@@ -199,7 +260,7 @@ class UserController extends Controller
             'email' => 'email:rfc|required|max:100|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8|same:password_confirmation|max:15',
             'password_confirmation' => 'sometimes|required_with:password|max:15',
-            'commission' => 'required|integer|between:0,100',
+            'commission' => 'integer|between:0,100',
         ]);
 
         $indicador = $request->indicador;
@@ -207,9 +268,16 @@ class UserController extends Controller
             $indicador = 1;
         }
 
+
         try
         {
+             if(auth()->user()->hasPermissionTo('update_user')){
             $newBalance = 0;
+            $ajuste = 0;
+                    $auxRole;
+        foreach ($request->roles as $role){
+            $auxRole = $role;
+        }
             if($request->has('balance') && !is_null($request->balance)){
                 $oldBalance = $user->balance;
                 $balanceRequest = (float) Money::toDatabase($request->balance);
@@ -223,15 +291,47 @@ class UserController extends Controller
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
-            $user->balance = $newBalance;
+            if($auxRole != 6){
+                $user->type_client = null;
+            }
+            if($newBalance > 0){
+                $user->balance = $newBalance;
+            }else{
+                $ajuste = 1;
+                $oldBalance = $user->balance;
+                $user->balance = (float) Money::toDatabase($request->balanceAtual);
+            }
             $user->indicador = $indicador;
+
+            if (!empty($request->link)) {
+                $user->link = $request->link;
+            }
             $user->save();
 
             if((float) $newBalance > 0){
                 $this->storeTransact($user, $newBalanceRequest, $oldBalance);
             }
-
+            if($ajuste == 1 && $oldBalance != $request->balanceAtual){
+                $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance);
+            }
+            }else{
+               $user->name = $request->name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            !empty($request->password) ? $user->password = bcrypt($request->password) : null; 
+                        if (!empty($request->link)) {
+                $user->link = $request->link;
+            }
+            $user->save();
+            }
+            if($request->type_client == 1 || auth()->user()->hasPermissionTo('edit_all')){
+                return redirect()->route('admin.home')->withErrors([
+                'success' => 'Usuário alterado com sucesso'
+            ]);
+            }
+            else{
             if (!empty($request->roles)) {
+                
                 foreach ($request->roles as $role){
                     $userRoles[] = Role::whereId($role)->first();
                 }
@@ -241,7 +341,7 @@ class UserController extends Controller
             }else{
                 $user->syncRoles(null);
             }
-
+        }
             return redirect()->route('admin.settings.users.index')->withErrors([
                 'success' => 'Usuário alterado com sucesso'
             ]);
@@ -252,6 +352,7 @@ class UserController extends Controller
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao alterar o usuário, tente novamente'
             ]);
         }
+        
     }
 
     /**
@@ -306,5 +407,7 @@ class UserController extends Controller
             'value' => $value,
             'old_value' => $oldValue,
         ]);
+         $retornof = "sucesso";
+        return $retornof;
     }
 }

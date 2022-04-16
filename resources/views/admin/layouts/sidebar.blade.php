@@ -1,10 +1,10 @@
 <aside class="main-sidebar sidebar-dark-info elevation-4" style="overflow-x: hidden">
     <a href="/" class="brand-link">
-        <img src="{{asset('admin/images/painel/logo.png')}}"
+        <img src="{{asset(env('logo'))}}"
              alt="Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light" style="font-size: 15px">Lotogiro</span>
+        <span class="brand-text font-weight-light" style="font-size: 15px">{{ env("nome_sistema") }}</span>
     </a>
 
     <div class="sidebar">
@@ -12,6 +12,11 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-flat nav-child-indent" data-widget="treeview"
                 role="menu" data-accordion="false">
+                <center>
+                    <li>
+                        <a href="/" class="nav-link"><button type="button" class="btn btn-success">Faça Seu Jogo</button></a>
+                    </li>
+                </center>
                 @canany(['read_sale', 'read_gain'])
                     <li class="nav-item has-treeview @if(request()->is('admin/dashboards/*')) menu-open @endif">
                         <a href="#" class="nav-link @if(request()->is('admin/dashboards/*')) active @endif">
@@ -25,13 +30,39 @@
                             @can('read_extract')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.index')}}"
-                                       class="nav-link @if(request()->is('admin/dashboards/extracts*')) active @endif">
+                                       class="nav-link @if(request()->is('admin/dashboards/extracts/')) active @endif">
                                         <i class="fas fa-file-alt nav-icon"></i>
                                         <p>Extrato</p>
                                     </a>
                                 </li>
                             @endcan
+                            @if(\App\Helper\UserValidate::iAmAdmin())
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.extracts.manualRecharge')}}"
+                                       class="nav-link @if(request()->is('admin/dashboards/extracts/manual-recharge')) active @endif">
+                                        <i class="fas fa-file-alt nav-icon"></i>
+                                        <p>Extrato Recarga Manual</p>
+                                    </a>
+                                </li>
+                            @endif
+                            @if(\App\Helper\UserValidate::iAmAdmin())
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.extracts.sales')}}"
+                                       class="nav-link @if(request()->is('admin/dashboards/extracts/sales')) active @endif">
+                                        <i class="fas fa-file-alt nav-icon"></i>
+                                        <p>Extrato de Vendas</p>
+                                    </a>
+                                </li>
+                            @endif
                             @can('read_gain')
+                            <li class="nav-item">
+                                <a href="/admin/dashboards/Reportday" class="nav-link">
+                                <i class="nav-icon fas fa-list-alt "></i>
+                                    <p>
+                                        Vendas da Rede
+                                    </p>
+                                </a>
+                            </li>
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.gains.index')}}"
                                        class="nav-link @if(request()->is('admin/dashboards/gains*')) active @endif">
@@ -212,6 +243,16 @@
                         </ul>
                     </li>
                 @endcanany
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.dashboards.wallet.index') }}" class="nav-link @if(request()->is
+                    ('admin/dashboards/wallet/*')) menu-open @endif">
+                    <i class="nav-icon fas fa-wallet"></i>
+                        <p>
+                            Carteira
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

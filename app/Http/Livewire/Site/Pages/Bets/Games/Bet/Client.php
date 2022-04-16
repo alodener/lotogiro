@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Site\Pages\Bets\Games\Bet;
 
 use App\Http\Controllers\Site\Pages\Bets\GameController;
 use Livewire\Component;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class Client extends Component
 {
@@ -12,8 +14,8 @@ class Client extends Component
     protected $rules = [
         'name' => 'required|max:50',
         'last_name' => 'required|max:100',
-        'cpf' => 'required|max:11',
         'pix' => 'required',
+        // 'cpf' => 'required',
         'phone' => 'required'
     ];
 
@@ -23,7 +25,7 @@ class Client extends Component
         $this->typeGames = $typeGames;
     }
 
-    public function updatedCpf($value)
+    public function updatedPhone($value)
     {
         $client = $this->searchClient($value);
         if (!empty($client)) {
@@ -34,38 +36,58 @@ class Client extends Component
         }
     }
 
-    public function searchClient($cpf)
+    public function searchClient($phone)
     {
-        $client = \App\Models\Client::where('cpf', $cpf)->first();
+        $ddd = Str::of($phone)->substr(0, 2);
+        $tel = Str::of($phone)->substr(2);
+        $client = \App\Models\Client::where(['ddd' => $ddd,'phone' => $tel])->first();
 
         return $client;
     }
 
-    public function submit()
+    public function submit(Request $request)
     {
+        $ddd = null;
+        $tel = null;
         $data = $this->validate();
+        $phone = $this->searchClient($data['phone']);
+        if($phone != null){
+        $ddd = $phone->ddd;
+        $tel = $phone->phone;
+        }
+  
+        $client = \App\Models\Client::where(['ddd' => $ddd,'phone' => $tel])->first();
+        
+        if ($client == null){
 
-        try {
-            $client = $this->searchClient($data['cpf']);
-            if (empty($client)) {
-                $client = new \App\Models\Client();
+            try {
+                $client = $this->searchClient($data['phone']);
+                if (empty($client)) {
+                    $client = new \App\Models\Client();
+                }
+
+                $client->cpf = null;
+                $client->name = $data['name'];
+                $client->last_name = $data['last_name'];
+                $client->pix = $data['pix'];
+                $client->ddd = substr($data['phone'], 0, 2);
+                $client->phone = substr($data['phone'], 2);
+                $client->save();
+
+                (new GameController())->setClient($this->bet, $client->id);
+
+                session()->flash('success', 'Cliente cadastrado com sucesso!');
+                return redirect()->route('games.bet', ['user' => $this->bet->user_id, 'bet' => $this->bet]);
+
+            } catch (\Exception $exception) {
+                session()->flash('error', config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro no processo!');
+                return redirect()->route('games.bet', ['user' => $this->bet->user_id, 'bet' => $this->bet]);
             }
-
-            $client->cpf = $data['cpf'];
-            $client->name = $data['name'];
-            $client->last_name = $data['last_name'];
-            $client->pix = $data['pix'];
-            $client->ddd = substr($data['phone'], 0, 2);
-            $client->phone = substr($data['phone'], 2);
-            $client->save();
-
+        
+        }
+        else{
             (new GameController())->setClient($this->bet, $client->id);
-
-            session()->flash('success', 'Cliente cadastrado com sucesso!');
-            return redirect()->route('games.bet', ['user' => $this->bet->user_id, 'bet' => $this->bet]);
-
-        } catch (\Exception $exception) {
-            session()->flash('error', config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro no processo!');
+            session()->flash('success', 'Bem vindo de volta!');
             return redirect()->route('games.bet', ['user' => $this->bet->user_id, 'bet' => $this->bet]);
         }
 

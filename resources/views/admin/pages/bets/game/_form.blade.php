@@ -29,13 +29,17 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.bets.games.index', ['type_game' => $typeGame->id])}}">
-            <button type="button" class="btn btn-block btn-outline-secondary">Voltar a tela principal</button>
+            <button type="button" class="btn btn-block btn-info">Voltar a tela principal</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">
-        <button type="submit" id="button_game"
-                class="btn btn-block btn-outline-success">@if(request()->is('admin/bets/games/create/'.$typeGame->id)) Cadastrar
-            Jogo  @else  Atualizar Jogo @endif </button>
+        <button type="submit" id="button_game" onclick="mudarListaNumerosGeral()"
+                class="btn btn-block btn-success">@if(request()->is('admin/bets/games/create/'.$typeGame->id)) 
+                Cadastrar Jogo  
+                @else  
+                Atualizar Jogo 
+                @endif 
+            </button>
     </div>
 </div>
 

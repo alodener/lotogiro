@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Pages\Dashboards;
 
+use App\Helper\UserValidate;
 use App\Http\Controllers\Controller;
 use App\Models\Extract;
 use App\Models\Game;
 use App\Models\TypeGameValue;
 use Illuminate\Http\Request;
+use function App\Helper\UserValidate;
 
 class ExtractController extends Controller
 {
@@ -17,6 +19,24 @@ class ExtractController extends Controller
         }
 
         return view('admin.pages.dashboards.extracts.index');
+    }
+
+    public function manualRecharge()
+    {
+        if (!UserValidate::iAmAdmin()) {
+            abort(403);
+        }
+
+        return view('admin.pages.dashboards.extracts.manualRecharge');
+    }
+
+    public function sales()
+    {
+        if (!UserValidate::iAmAdmin()) {
+            abort(403);
+        }
+
+        return view('admin.pages.dashboards.extracts.sales');
     }
 
     public static function store($data)
