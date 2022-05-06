@@ -54,6 +54,7 @@ class UsersHasPoints extends Model
             'total_balance' => $lastBalance['total_balance'] + $total,
         ]);
         $newPoint->save();
+        UsersHasQualifications::generateByUser($owner);
 
         $sponsor = $owner;
         $check = true;
@@ -78,6 +79,7 @@ class UsersHasPoints extends Model
                 'total_balance' => $lastBalance['total_balance'] + $total,
             ]);
             $newPoint->save();
+            UsersHasQualifications::generateByUser($sponsor);
 
             if ($sponsor->id == $sponsor->indicador) {
                 $check = false;
