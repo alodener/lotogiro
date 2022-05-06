@@ -16,6 +16,14 @@ class QualificationsTest extends TestCase
 
             if (!$check) {
                 $newQualification = new Qualifications([
+                    'description' => 'Iniciante',
+                    'goal' => 0,
+                    'personal_percentage' => 10,
+                    'group_percentage' => 90,
+                ]);
+                $newQualification->save();
+
+                $newQualification = new Qualifications([
                     'description' => 'Supreme',
                     'goal' => 200,
                     'personal_percentage' => 10,
