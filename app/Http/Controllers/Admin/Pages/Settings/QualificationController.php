@@ -143,4 +143,28 @@ class QualificationController extends Controller
             ]);
         }
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \App\Models\Qualifications $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Qualifications $qualification)
+    {
+        try {
+            $qualification->delete();
+
+            return redirect()->route('admin.settings.qualifications.index')->withErrors([
+                'success' => 'Qualificação deletada com sucesso'
+            ]);
+
+        } catch (\Exception $exception) {
+
+            return redirect()->route('admin.settings.qualifications.index')->withErrors([
+                'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao deletar a qualificação, tente novamente'
+            ]);
+
+        }
+    }
 }
