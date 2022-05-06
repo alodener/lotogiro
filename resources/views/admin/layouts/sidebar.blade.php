@@ -27,6 +27,13 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('admin.dashboards.extracts.points.index')}}"
+                                    class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
+                                    <i class="fas fa-star nav-icon"></i>
+                                    <p>Pontos</p>
+                                </a>
+                            </li>
                             @can('read_extract')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.index')}}"

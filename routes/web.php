@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\Pages\Dashboards\ReportDayController;
 use App\Http\Controllers\Admin\Pages\Dashboards\GainController;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
+use App\Http\Controllers\Admin\Pages\Dashboards\ExtractPointsController;
 use App\Http\Controllers\Admin\Pages\Settings\QualificationController;
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
@@ -83,6 +84,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/', [ExtractController::class, 'index'])->name('index');
                 Route::get('/sales', [ExtractController::class, 'sales'])->name('sales');
                 Route::get('/manual-recharge', [ExtractController::class, 'manualRecharge'])->name('manualRecharge');
+                Route::resource('points', ExtractPointsController::class);
             });
 
 

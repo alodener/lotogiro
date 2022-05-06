@@ -113,4 +113,13 @@ class UsersHasPoints extends Model
             'total_balance' => $lastPoint->total_balance,
         ];
     }
+
+    public function getOrigin(){
+        $origin = User::find($this->origin_id);
+        if(!$origin){
+            return new User;
+        }
+
+        return $origin;
+    }
 }
