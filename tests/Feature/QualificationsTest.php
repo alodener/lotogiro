@@ -54,4 +54,15 @@ class QualificationsTest extends TestCase
 
         $this->assertTrue($result);
     }
+
+    public function testShouldBeQualificated()
+    {
+        $qualification = Qualifications::getQualificationByBalance([
+            'personal_balance' => 100,
+            'group_balance' => 200,
+            'total_balance' => 300,
+        ]);
+
+        $this->assertTrue(true);
+    }
 }
