@@ -20,7 +20,7 @@ use App\Http\Controllers\Admin\Pages\Dashboards\ReportDayController;
 use App\Http\Controllers\Admin\Pages\Dashboards\GainController;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
-
+use App\Http\Controllers\Admin\Pages\Settings\QualificationController;
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
 
@@ -130,6 +130,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
         });
         Route::prefix('settings')->name('settings.')->group(function () {
+            Route::resource('qualifications', QualificationController::class);
             Route::resource('users', UserController::class);
             Route::get('indicated', [UserController::class, 'indicated'])->name('users.indicated');
             Route::get('indicated/{userId}', [UserController::class, 'indicatedByLevel'])->name('users.indicatedByLevel');
