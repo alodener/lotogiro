@@ -93,7 +93,53 @@ class QualificationController extends Controller
         } catch (\Exception $exception) {
 
             return redirect()->route('admin.settings.qualifications.create')->withErrors([
-                'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o usuário, tente novamente'
+                'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar a qualificação, tente novamente'
+            ]);
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param \App\Models\Qualifications $user
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Qualifications $qualification)
+    {
+        return view('admin.pages.settings.qualification.edit', compact('qualification'));
+    }
+
+    /**
+     * Update the specified resource in storage..
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Qualifications $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Qualifications $qualification)
+    {
+
+        $validatedData = $request->validate([
+            'description' => 'required|max:150',
+            'goal' => 'required|integer',
+            'personal_percentage' => 'required|integer',
+            'group_percentage' => 'required|integer',
+        ]);
+
+        try {
+            $qualification->description = $request->description;
+            $qualification->goal = $request->goal;
+            $qualification->personal_percentage = $request->personal_percentage;
+            $qualification->group_percentage = $request->group_percentage;
+            $qualification->save();
+
+            return redirect()->route('admin.settings.qualifications.index')->withErrors([
+                'success' => 'Qualificação alterada com sucesso'
+            ]);
+        } catch (\Exception $exception) {
+
+            return redirect()->route('admin.settings.qualifications.edit', ['qualification' => $qualification->id])->withErrors([
+                'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao alterar a qualificação, tente novamente'
             ]);
         }
     }
