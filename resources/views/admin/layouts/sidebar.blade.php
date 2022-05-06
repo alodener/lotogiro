@@ -240,15 +240,13 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('read_qualification')
-                                <li class="nav-item">
-                                    <a href="{{route('admin.settings.qualifications.index')}}"
-                                       class="nav-link @if(request()->is('admin/settings/qualifications*')) active @endif">
-                                        <i class="fas fa-user nav-icon"></i>
-                                        <p>Qualificações</p>
-                                    </a>
-                                </li>
-                            @endcan
+                            <li class="nav-item">
+                                <a href="{{route('admin.settings.qualifications.index')}}"
+                                    class="nav-link @if(request()->is('admin/settings/qualifications*')) active @endif">
+                                    <i class="fas fa-star nav-icon"></i>
+                                    <p>Qualificações</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 @endcanany
