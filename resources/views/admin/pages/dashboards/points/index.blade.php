@@ -78,18 +78,33 @@
                         <span class="small-box-footer p-2"></span>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="small-box btn-secondary">
-                        <div class="inner">
-                            <h3>{{$qualificationAtived->getQualification()->description}}</h3>
-                            <p>Quanto falta para o próxima qualificação</p>
+                <?php if ($nextGoal !== false) : ?>
+                    <div class="col-md-6">
+                        <div class="small-box btn-secondary">
+                            <div class="inner">
+                                <h3>{{$nextGoal}}</h3>
+                                <p>Quanto falta para o próxima qualificação</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <span class="small-box-footer p-2"></span>
                         </div>
-                        <div class="icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <span class="small-box-footer p-2"></span>
                     </div>
-                </div>
+                <?php else : ?>
+                    <div class="col-md-6">
+                        <div class="small-box btn-secondary">
+                            <div class="inner">
+                                <h3>Parabéns você esta no topo</h3>
+                                <p>Você esta no mais alto nível do plano de carreira</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <span class="small-box-footer p-2"></span>
+                        </div>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         <div class="row">

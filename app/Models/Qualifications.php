@@ -36,4 +36,18 @@ class Qualifications extends Model
 
         return $qualification;
     }
+
+    public static function getDiffNextGoal(Qualifications $currentQualification, $personalPoints, $groupPoints)
+    {
+        $nextQualification = Qualifications::where('goal', '>', $currentQualification->goal)->orderBy('goal')->first();
+        if (!$nextQualification) {
+            return false;
+        }
+
+        $personalPercentage = $nextQualification->personal_percentage;
+        $groupPercentage = $nextQualification->group_percentage;
+        $goal = ($personalPoints * ($personalPercentage / 100)) + ($groupPoints * ($groupPercentage / 100));
+
+        return $goal - $nextQualification->goal;
+    }
 }
