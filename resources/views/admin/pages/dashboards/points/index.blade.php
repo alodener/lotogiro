@@ -32,7 +32,7 @@
             <div class="col-md-4">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>{{number_format($balances['personal_balance'],2,',','.')}} pontos</h3>
+                        <h3>{{number_format($balances['personal_balance'],2,',','.')}}</h3>
                         <p>Pontos Pessoais</p>
                     </div>
                     <div class="icon">
@@ -44,7 +44,7 @@
             <div class="col-md-4">
                 <div class="small-box btn-danger">
                     <div class="inner">
-                        <h3>{{number_format($balances['group_balance'],2,',','.')}} pontos</h3>
+                        <h3>{{number_format($balances['group_balance'],2,',','.')}}</h3>
                         <p>Pontos de Grupo</p>
                     </div>
                     <div class="icon">
@@ -56,7 +56,7 @@
             <div class="col-md-4">
                 <div class="small-box btn-success">
                     <div class="inner">
-                        <h3>{{number_format($balances['total_balance'],2,',','.')}} pontos</h3>
+                        <h3>{{number_format($balances['total_balance'],2,',','.')}}</h3>
                         <p>Pontos Totais</p>
                     </div>
                     <div class="icon">
@@ -82,8 +82,8 @@
                     <div class="col-md-6">
                         <div class="small-box btn-secondary">
                             <div class="inner">
-                                <h3>{{$nextGoal}} pontos</h3>
-                                <p>Quanto falta para o próxima qualificação</p>
+                                <h3>{{$nextGoal}}</h3>
+                                <p>Quanto pontos faltam para o próxima qualificação</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-arrow-up"></i>
