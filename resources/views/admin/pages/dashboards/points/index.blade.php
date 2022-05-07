@@ -65,6 +65,32 @@
                     <span class="small-box-footer p-2"></span>
                 </div>
             </div>
+            <?php if ($qualificationAtived) : ?>
+                <div class="col-md-6">
+                    <div class="small-box btn-primary">
+                        <div class="inner">
+                            <h3>{{$qualificationAtived->getQualification()->description}}</h3>
+                            <p>Sua Qualificação</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <span class="small-box-footer p-2"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="small-box btn-secondary">
+                        <div class="inner">
+                            <h3>{{$qualificationAtived->getQualification()->description}}</h3>
+                            <p>Quanto falta para o próxima qualificação</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <span class="small-box-footer p-2"></span>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="row">
             <div class="col-md-12 extractable-cel">

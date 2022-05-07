@@ -15,6 +15,15 @@ class UsersHasQualifications extends Model
         'active',
     ];
 
+    public function getQualification(){
+        $qualification = Qualifications::find($this->qualification_id);
+        if(!$qualification){
+            return new Qualifications();
+        }
+
+        return $qualification;
+    }
+
     public static function getActivedByUser(User $user)
     {
         if (!$user) {
