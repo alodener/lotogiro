@@ -48,6 +48,6 @@ class Qualifications extends Model
         $groupPercentage = $nextQualification->group_percentage;
         $goal = ($personalPoints * ($personalPercentage / 100)) + ($groupPoints * ($groupPercentage / 100));
 
-        return $goal - $nextQualification->goal;
+        return $nextQualification->goal - $goal;
     }
 }
