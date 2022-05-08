@@ -13,7 +13,7 @@ class ExtractPointsController extends Controller
     public function index(Request $request)
     {
         $balances = UsersHasPoints::getBalancesByUser(auth()->user());
-        $points = UsersHasPoints::where('user_id', auth()->user()->id)->get();
+        $points = UsersHasPoints::where('user_id', auth()->user()->id)->orderByDesc('id')->get();
 
         $qualificationAtived = UsersHasQualifications::getActivedByUser(auth()->user());
         $nextGoal = null;

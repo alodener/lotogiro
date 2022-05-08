@@ -56,6 +56,10 @@ class UsersHasPoints extends Model
         $newPoint->save();
         UsersHasQualifications::generateByUser($owner);
 
+        if ($owner->id == $owner->indicador) {
+            return;
+        }
+
         $sponsor = $owner;
         $check = true;
         $level = 1;
@@ -114,9 +118,10 @@ class UsersHasPoints extends Model
         ];
     }
 
-    public function getOrigin(){
+    public function getOrigin()
+    {
         $origin = User::find($this->origin_id);
-        if(!$origin){
+        if (!$origin) {
             return new User;
         }
 
