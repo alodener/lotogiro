@@ -54,6 +54,15 @@
                                     </a>
                                 </li>
                             @endif
+                            @if(\App\Helper\UserValidate::iAmAdmin())
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.extracts.winning-ticket')}}"
+                                       class="nav-link @if(request()->is('admin/dashboards/extracts/winning-ticket')) active @endif">
+                                        <i class="fas fa-file-alt nav-icon"></i>
+                                        <p>Bilhetes Premiados</p>
+                                    </a>
+                                </li>
+                            @endif
                             @can('read_gain')
                             <li class="nav-item">
                                 <a href="/admin/dashboards/Reportday" class="nav-link">
