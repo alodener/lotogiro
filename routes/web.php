@@ -2,6 +2,7 @@
 
     use App\Http\Controllers\Admin\Pages\Auth\RegisterController;
     use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
+    use App\Http\Controllers\Admin\Pages\Dashboards\WinningTicketController;
     use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
 use App\Http\Controllers\Admin\Pages\HomeController;
@@ -38,7 +39,7 @@ use App\Http\Controllers\ForgotPasswordController;
 
 // rotas para recuperar senha
 Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
-Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
@@ -82,6 +83,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::prefix('extracts')->name('extracts.')->group(function () {
                 Route::get('/', [ExtractController::class, 'index'])->name('index');
                 Route::get('/sales', [ExtractController::class, 'sales'])->name('sales');
+                Route::get('/winning-ticket', [ExtractController::class, 'winningTicket'])->name('winning-ticket');
+                Route::get('/add-winning-ticket', [ExtractController::class, 'addWinningTicket'])->name('add-winning-ticket');
                 Route::get('/manual-recharge', [ExtractController::class, 'manualRecharge'])->name('manualRecharge');
             });
 

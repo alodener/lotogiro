@@ -39,6 +39,24 @@ class ExtractController extends Controller
         return view('admin.pages.dashboards.extracts.sales');
     }
 
+    public function winningTicket()
+    {
+        if (!UserValidate::iAmAdmin()) {
+            abort(403);
+        }
+
+        return view('admin.pages.dashboards.extracts.winningTicket');
+    }
+
+    public function addWinningTicket()
+    {
+        if (!UserValidate::iAmAdmin()) {
+            abort(403);
+        }
+
+        return view('admin.pages.dashboards.extracts.addWinningTicket');
+    }
+
     public static function store($data)
     {
         $extract = new Extract();
