@@ -199,6 +199,8 @@ class GameController extends Controller
                     $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $game->value, $ID_VALUE);
                     $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
 
+                    UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);
+
                     $game->commission_value = $commissionCalculation;
                     $game->commision_value_pai = $commissionCalculationPai;
                     $game->save();
@@ -337,7 +339,7 @@ class GameController extends Controller
                 $game->commision_value_pai = $commissionCalculationPai;
                 $game->save();
 
-                UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Jogo ID: ' . $game->id);
+                UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);
 
                 // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
                 $idCliente = $game->id;
