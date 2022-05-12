@@ -28,6 +28,15 @@
                         </a>
                         <ul class="nav nav-treeview">
                             @can('read_extract')
+                            <li class="nav-item">
+                                <a href="{{route('admin.dashboards.extracts.points.index')}}"
+                                    class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
+                                    <i class="fas fa-star nav-icon"></i>
+                                    <p>Pontos</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('read_extract')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.index')}}"
                                        class="nav-link @if(request()->is('admin/dashboards/extracts/')) active @endif">
@@ -248,6 +257,15 @@
                                         <p>Usuários</p>
                                     </a>
                                 </li>
+                            @endcan
+                            @can('read_user')
+                            <li class="nav-item">
+                                <a href="{{route('admin.settings.qualifications.index')}}"
+                                    class="nav-link @if(request()->is('admin/settings/qualifications*')) active @endif">
+                                    <i class="fas fa-star nav-icon"></i>
+                                    <p>Qualificações</p>
+                                </a>
+                            </li>
                             @endcan
                         </ul>
                     </li>
