@@ -46,8 +46,32 @@ class Qualifications extends Model
 
         $personalPercentage = $nextQualification->personal_percentage;
         $groupPercentage = $nextQualification->group_percentage;
-        $goal = ($personalPoints * ($personalPercentage / 100)) + ($groupPoints * ($groupPercentage / 100));
 
-        return $nextQualification->goal - $goal;
+        $pointsA = ($personalPoints * ($personalPercentage / 100));
+        $pointsB = ($groupPoints * ($groupPercentage / 100));
+        $goal = $pointsA + $pointsB;
+        $diff = $nextQualification->goal - $goal;
+
+        return [
+            'personalPoints' => $pointsA,
+            'groupPoints' => $pointsB,
+            'diff' => $diff,
+            'goal' => $nextQualification->goal,
+            'percentage' => ($goal / $nextQualification->goal)*100,
+        ];
+    }
+
+    public static function getGoalCalculation(Qualifications $qualification, $personalPoints, $groupPoints)
+    {
+        $personalPercentage = $qualification->personal_percentage;
+        $groupPercentage = $qualification->group_percentage;
+
+        $pointsA = ($personalPoints * ($personalPercentage / 100));
+        $pointsB = ($groupPoints * ($groupPercentage / 100));
+
+        return [
+            'personalPoints' => $pointsA,
+            'groupPoints' => $pointsB,
+        ];
     }
 }

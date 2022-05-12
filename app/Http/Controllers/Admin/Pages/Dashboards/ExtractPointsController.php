@@ -17,10 +17,12 @@ class ExtractPointsController extends Controller
 
         $qualificationAtived = UsersHasQualifications::getActivedByUser(auth()->user());
         $nextGoal = null;
+        $goalCalculation = null;
         if ($qualificationAtived) {
             $nextGoal = Qualifications::getDiffNextGoal($qualificationAtived->getQualification(), $balances['personal_balance'], $balances['group_balance']);
+            $goalCalculation = Qualifications::getGoalCalculation($qualificationAtived->getQualification(), $balances['personal_balance'], $balances['group_balance']);
         }
 
-        return view('admin.pages.dashboards.points.index', compact('points', 'balances', 'qualificationAtived','nextGoal'));
+        return view('admin.pages.dashboards.points.index', compact('points', 'balances', 'qualificationAtived', 'nextGoal','goalCalculation'));
     }
 }

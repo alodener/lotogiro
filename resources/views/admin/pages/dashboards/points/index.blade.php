@@ -70,7 +70,7 @@
                     <div class="small-box btn-primary">
                         <div class="inner">
                             <h3>{{$qualificationAtived->getQualification()->description}}</h3>
-                            <p>Sua Qualificação</p>
+                            <p>Sua Qualificação<?php if (!is_null($goalCalculation)) : ?><br />Aproveitamento Pessoal ( {{$goalCalculation['personalPoints']}} ) / Aproveitamento Grupo ( {{$goalCalculation['groupPoints']}} )<?php endif; ?></p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-award"></i>
@@ -78,17 +78,19 @@
                         <span class="small-box-footer p-2"></span>
                     </div>
                 </div>
-                <?php if ($nextGoal !== false) : ?>
+                <?php if ($nextGoal['diff'] !== false) : ?>
                     <div class="col-md-6">
                         <div class="small-box btn-secondary">
                             <div class="inner">
-                                <h3>{{$nextGoal}}</h3>
-                                <p>Quanto pontos faltam para o próxima qualificação</p>
+                                <h3>{{$nextGoal['diff']}}</h3>
+                                <p>Quanto pontos faltam para o próxima qualificação<br />Aproveitamento Pessoal ( {{$nextGoal['personalPoints']}} ) / Aproveitamento Grupo ( {{$nextGoal['groupPoints']}} )</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-arrow-up"></i>
                             </div>
-                            <span class="small-box-footer p-2"></span>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: {{floor(round($nextGoal['percentage'],0))}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{floor(round($nextGoal['percentage'],0))}}%</div>
+                            </div>
                         </div>
                     </div>
                 <?php else : ?>
@@ -96,7 +98,7 @@
                         <div class="small-box btn-secondary">
                             <div class="inner">
                                 <h3>Parabéns você esta no topo</h3>
-                                <p>Você esta no mais alto nível do plano de carreira</p>
+                                <p>Você esta no mais alto nível do plano de carreira<br />&nbsp;</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-trophy"></i>
