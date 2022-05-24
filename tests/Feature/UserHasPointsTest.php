@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class UsersHasPointsTest extends TestCase
 {
-    public function testShouldBeGeneratePointPositive()
+    public function ShouldBeGeneratePointPositive()
     {
         $result = false;
         $user = User::find(82);
@@ -22,7 +22,7 @@ class UsersHasPointsTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldBeGeneratePointNegative()
+    public function ShouldBeGeneratePointNegative()
     {
         $result = false;
         $user = User::find(82);

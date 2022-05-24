@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class QualificationsTest extends TestCase
 {
-    public function testShouldBeCreate()
+    public function ShouldBeCreate()
     {
         $result = false;
         try {
@@ -55,7 +55,7 @@ class QualificationsTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldBeQualificated()
+    public function ShouldBeQualificated()
     {
         $qualification = Qualifications::getQualificationByBalance([
             'personal_balance' => 100,

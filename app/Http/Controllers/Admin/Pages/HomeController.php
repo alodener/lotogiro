@@ -31,6 +31,8 @@ class HomeController extends Controller
         $balances = UsersHasPoints::getBalancesByUser(auth()->user());
         $points = UsersHasPoints::where('user_id', auth()->user()->id)->orderByDesc('id')->get();
 
+        UsersHasQualifications::generateByUser(auth()->user());
+
         $qualificationAtived = UsersHasQualifications::getActivedByUser(auth()->user());
         $nextGoal = null;
         $goalCalculation = null;

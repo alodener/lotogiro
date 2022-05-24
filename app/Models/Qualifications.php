@@ -25,8 +25,9 @@ class Qualifications extends Model
         foreach (Qualifications::select()->orderByDesc('goal')->get() as $r) {
             $personalPercentage = $r->personal_percentage;
             $groupPercentage = $r->group_percentage;
-            $goal = ($balances['personal_balance'] * ($personalPercentage / 100)) + ($balances['group_balance'] * ($groupPercentage / 100));
-            if ($goal < $r->goal) {
+            $personalGoal = $r->goal * ($personalPercentage / 100);
+            $groupGoal = $r->goal * ($groupPercentage / 100);
+            if ($balances['personal_balance'] < $personalGoal || $balances['group_balance'] < $groupGoal) {
                 continue;
             }
 
@@ -46,18 +47,38 @@ class Qualifications extends Model
 
         $personalPercentage = $nextQualification->personal_percentage;
         $groupPercentage = $nextQualification->group_percentage;
+        $personalGoal = $nextQualification->goal * ($personalPercentage / 100);
+        $groupGoal = $nextQualification->goal * ($groupPercentage / 100);
 
-        $pointsA = ($personalPoints * ($personalPercentage / 100));
-        $pointsB = ($groupPoints * ($groupPercentage / 100));
-        $goal = $pointsA + $pointsB;
-        $diff = $nextQualification->goal - $goal;
+        $pointsA = ($personalPoints <= $personalGoal ? $personalPoints : $personalGoal);
+        $pointsB = ($groupPoints <= $groupGoal ? $groupPoints : $groupGoal);
+
+        $goalOk = $pointsA + $pointsB;
+
+        $personalDiff = 0;
+        if ($pointsA < $personalGoal) {
+            $personalDiff = $personalGoal - $pointsA;
+        }
+        $groupDiff = 0;
+        if ($pointsB < $groupGoal) {
+            $groupDiff = $groupGoal - $pointsB;
+        }
+        $totalDiff = ($personalDiff + $groupDiff);
 
         return [
             'personalPoints' => $pointsA,
             'groupPoints' => $pointsB,
-            'diff' => $diff,
+            'goalOk' => $goalOk,
+
+            'personalDiff' => $personalDiff > 0 ? $personalDiff : false,
+            'groupDiff' => $groupDiff > 0 ? $groupDiff : false,
+            'totalDiff' => $totalDiff > 0 ? $totalDiff : false,
+
+            'personalGoal' => $personalGoal,
+            'groupGoal' => $groupGoal,
             'goal' => $nextQualification->goal,
-            'percentage' => ($goal / $nextQualification->goal)*100,
+
+            'percentage' => ($goalOk / $nextQualification->goal) * 100,
         ];
     }
 
@@ -65,13 +86,16 @@ class Qualifications extends Model
     {
         $personalPercentage = $qualification->personal_percentage;
         $groupPercentage = $qualification->group_percentage;
+        $personalGoal = $qualification->goal * ($personalPercentage / 100);
+        $groupGoal = $qualification->goal * ($groupPercentage / 100);
 
-        $pointsA = ($personalPoints * ($personalPercentage / 100));
-        $pointsB = ($groupPoints * ($groupPercentage / 100));
+        $pointsA = ($personalPoints <= $personalGoal ? $personalPoints : $personalGoal);
+        $pointsB = ($groupPoints <= $groupGoal ? $groupPoints : $groupGoal);
 
         return [
             'personalPoints' => $pointsA,
             'groupPoints' => $pointsB,
+            'totalPoints' => ($pointsA + $pointsB),
         ];
     }
 }

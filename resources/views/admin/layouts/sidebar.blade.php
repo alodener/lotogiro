@@ -29,6 +29,15 @@
                         <ul class="nav nav-treeview">
                             @can('read_extract')
                             <li class="nav-item">
+                                <a href="{{route('admin.dashboards.ranking.index')}}"
+                                    class="nav-link @if(request()->is('admin/ranking')) active @endif">
+                                    <i class="fas fa-star nav-icon"></i>
+                                    <p>Ranking</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('read_extract')
+                            <li class="nav-item">
                                 <a href="{{route('admin.dashboards.extracts.points.index')}}"
                                     class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
                                     <i class="fas fa-star nav-icon"></i>

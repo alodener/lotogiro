@@ -66,4 +66,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Extract::class);
     }
+
+    public function getUserQualification(){
+        $actived = UsersHasQualifications::getActivedByUser($this);
+        if(!$actived){
+            return new UsersHasQualifications;
+        }
+
+        return $actived;
+    }
 }
