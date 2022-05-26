@@ -78,11 +78,11 @@
                         <span class="small-box-footer p-2"></span>
                     </div>
                 </div>
-                <?php if ($nextGoal['diff'] !== false) : ?>
+                <?php if ($nextGoal !== false) : ?>
                     <div class="col-md-6">
                         <div class="small-box btn-secondary">
                             <div class="inner">
-                                <h3>{{$nextGoal['diff']}}</h3>
+                                <h3>{{$nextGoal['totalDiff']}}</h3>
                                 <p>Quanto pontos faltam para o próxima qualificação<br />Aproveitamento Pessoal ( {{$nextGoal['personalPoints']}} ) / Aproveitamento Grupo ( {{$nextGoal['groupPoints']}} )</p>
                             </div>
                             <div class="icon">

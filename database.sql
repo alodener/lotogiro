@@ -42,6 +42,9 @@ CREATE TABLE plano.users_has_qualifications (
 	id bigint auto_increment NOT NULL,
 	user_id bigint NOT NULL,
 	qualification_id int NOT NULL,
+	personal_points double DEFAULT NULL,
+	group_points double DEFAULT NULL,
+	total_points double DEFAULT NULL,
 	active smallint(1) NOT NULL,
 	created_at datetime NOT NULL,
 	CONSTRAINT users_has_qualifications_PK PRIMARY KEY (id)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pages\Dashboards;
 
+use App\Helper\UserValidate;
 use App\Http\Controllers\Controller;
 use App\Models\Qualifications;
 use App\Models\UsersHasPoints;
@@ -14,6 +15,8 @@ class ExtractPointsController extends Controller
     {
         $balances = UsersHasPoints::getBalancesByUser(auth()->user());
         $points = UsersHasPoints::where('user_id', auth()->user()->id)->orderByDesc('id')->get();
+
+        UsersHasQualifications::generateByUser(auth()->user());
 
         $qualificationAtived = UsersHasQualifications::getActivedByUser(auth()->user());
         $nextGoal = null;

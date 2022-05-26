@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\Pages\Dashboards\GainController;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractPointsController;
+use App\Http\Controllers\Admin\Pages\Dashboards\RankingController;
 use App\Http\Controllers\Admin\Pages\Settings\QualificationController;
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
@@ -90,6 +91,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::resource('points', ExtractPointsController::class);
             });
 
+            Route::prefix('ranking')->name('ranking.')->group(function () {
+                Route::get('/', [RankingController::class, 'index'])->name('index');
+            });
 
             Route::prefix('wallet')->name('wallet.')->group(function () {
                 Route::get('/', [WalletController::class, 'index'])->name('index');

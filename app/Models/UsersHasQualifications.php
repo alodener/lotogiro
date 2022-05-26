@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class UsersHasQualifications extends Model
 {
@@ -12,12 +13,16 @@ class UsersHasQualifications extends Model
     protected $fillable = [
         'user_id',
         'qualification_id',
+        'personal_points',
+        'group_points',
+        'total_points',
         'active',
     ];
 
-    public function getQualification(){
+    public function getQualification()
+    {
         $qualification = Qualifications::find($this->qualification_id);
-        if(!$qualification){
+        if (!$qualification) {
             return new Qualifications();
         }
 
@@ -47,8 +52,14 @@ class UsersHasQualifications extends Model
         $balances = UsersHasPoints::getBalancesByUser($user);
         $qualification = Qualifications::getQualificationByBalance($balances);
         if (!$qualification) {
+            $userQualificationActived = UsersHasQualifications::getActivedByUser($user);
+            if ($userQualificationActived) {
+                $userQualificationActived->active = 0;
+                $userQualificationActived->save();
+            }
             return;
         }
+        // $calculation = Qualifications::getGoalCalculation($qualification, $balances['personal_balance'], $balances['group_balance']);
 
         $userQualificationActived = UsersHasQualifications::getActivedByUser($user);
         if (!$userQualificationActived) {
@@ -70,6 +81,21 @@ class UsersHasQualifications extends Model
                 ]);
                 $newUserQualification->save();
             }
+        }
+
+
+        $userQualificationActived = UsersHasQualifications::getActivedByUser($user);
+        $userQualificationActived->personal_points = $balances['personal_balance'];
+        $userQualificationActived->group_points = $balances['group_balance'];
+        $userQualificationActived->total_points = $balances['total_balance'];
+        $userQualificationActived->save();
+
+    }
+
+    public static function reprocess()
+    {
+        foreach (User::whereRaw('exists(select sa.id from users_has_points sa where sa.user_id = users.id)')->get() as $r) {
+            UsersHasQualifications::generateByUser($r);
         }
     }
 }
