@@ -1,5 +1,7 @@
 <center>
+
     <img src="https://superjogo.loteriabr.com/{{env('logo')}}" alt="" width=150 height=150>
+
 
     <h1>Seu Bilhete</h1>
     <p>
@@ -12,5 +14,6 @@
     <br>
     Atenciosamente,
     {{ env("nome_sistema") }}
+
 </p>
 </center>
