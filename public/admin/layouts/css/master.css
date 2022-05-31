@@ -183,7 +183,7 @@ a {
 }
 
 a:hover {
-  color: #0056b3;
+  color: #32689A;
   text-decoration: none;
 }
 
@@ -4489,11 +4489,14 @@ input[type=button].btn-block {
   border: 1px solid transparent;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
+  color: #32689A;
 }
 
 .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
-  border-color: #e9ecef #e9ecef #dee2e6;
+  border-color: #32689A;
+  background-color: #32689A;
+  color: #fff;
 }
 
 .nav-tabs .nav-link.disabled {
@@ -4504,9 +4507,9 @@ input[type=button].btn-block {
 
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  color: #495057;
-  background-color: #ffffff;
-  border-color: #dee2e6 #dee2e6 #ffffff;
+  color: #fff;
+  background-color: #32689A;
+  border-color: #32689A;
 }
 
 .nav-tabs .dropdown-menu {
@@ -4522,7 +4525,7 @@ input[type=button].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #ffffff;
-  background-color: #17a2b8;
+  background-color: #32689A;
 }
 
 .nav-fill > .nav-link,
@@ -6390,7 +6393,7 @@ a.disabled.mailbox-attachment-close {
   align-items: center;
   justify-content: flex-end;
   padding: 0.75rem;
-  border-top: 1px solid #e9ecef;
+  border-top: 0px solid;
   border-bottom-right-radius: calc(0.3rem - 1px);
   border-bottom-left-radius: calc(0.3rem - 1px);
 }
@@ -39824,6 +39827,19 @@ a.text-muted:hover {
   width: 60px !important;
 }
 
+
+#draw_table {
+  width: 100% !important;
+}
+
+#user_table {
+  width: 100% !important;
+}
+
+#user_table .acoes {
+  width: 80px !important;
+}
+
 .responsive-bet {
   border: 1px solid #32689A;
   margin-top: 15px;
@@ -39842,6 +39858,26 @@ a.text-muted:hover {
   padding-left: 10px;
 }
 
+
+
+.commisao-icon {
+  float: left;
+  margin-top: 10px;
+}
+
+.commisao-input {
+  float: right;
+}
+
+.commisao-input input {
+  font-size: 15px;
+}
+
+.dezena textarea {
+  width: 100% !important;
+  margin-bottom: 5px;
+  height: 150px;
+}
 
 @media (max-width: 700px) {
 
@@ -39888,6 +39924,10 @@ a.text-muted:hover {
     text-align: center;
   }
 
+  #draw_table tr td {
+    text-align: center;
+  }
+
   #competition_table tr td {
     text-align: center;
     font-size: 10px;
@@ -39906,6 +39946,15 @@ a.text-muted:hover {
     margin-bottom: 4px;
   }
 
+  #user_table tr td {
+    text-align: center;
+    font-size: 10px;
+  }
+
+  #user_table .btn-warning {
+    margin-bottom: 4px;
+  }
+
   .new-client {
     text-align: center;
   }
@@ -39913,5 +39962,18 @@ a.text-muted:hover {
   .validate-msg {
     font-size: 13px;
     font-weight: 900;
+  }
+
+  .indica-user {
+    font-size: 11px;
+  }
+
+  .indica-user #basic-addon3 {
+    font-size: 11px;
+    width: 100%;
+  }
+
+  .indica-user #email {
+    font-size: 11px;
   }
 }
