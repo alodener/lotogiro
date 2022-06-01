@@ -14,7 +14,8 @@ class ExtractPointsController extends Controller
     public function index(Request $request)
     {
         $balances = UsersHasPoints::getBalancesByUser(auth()->user());
-        $points = UsersHasPoints::where('user_id', auth()->user()->id)->orderByDesc('id')->get();
+        // $points = UsersHasPoints::where('user_id', auth()->user()->id)->orderByDesc('id')->get();
+        $pagination = UsersHasPoints::filterPagination('', $request->input('pg'), 12, ['userId' => auth()->user()->id]);
 
         UsersHasQualifications::generateByUser(auth()->user());
 
@@ -26,6 +27,6 @@ class ExtractPointsController extends Controller
             $goalCalculation = Qualifications::getGoalCalculation($qualificationAtived->getQualification(), $balances['personal_balance'], $balances['group_balance']);
         }
 
-        return view('admin.pages.dashboards.points.index', compact('points', 'balances', 'qualificationAtived', 'nextGoal','goalCalculation'));
+        return view('admin.pages.dashboards.points.index', compact('pagination', 'balances', 'qualificationAtived', 'nextGoal', 'goalCalculation'));
     }
 }

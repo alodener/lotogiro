@@ -124,7 +124,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($points as $row)
+                            @forelse($pagination->getRows() as $row)
                             <tr>
                                 <td>{{ $row->id }}</td>
                                 <td>{{ $row->description }}</td>
@@ -145,6 +145,18 @@
                             </tr>
                             @endforelse
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="20">
+                                    <div class="clearfix">
+                                        <div class="float-left">{{$pagination->getTotal()}} registro(s) encontrado(s).</div>
+                                        <nav class="float-right">
+                                            {!!$pagination->getHtml()!!}
+                                        </nav>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
