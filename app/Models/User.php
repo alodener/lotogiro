@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Helper\Pagination;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -67,12 +69,46 @@ class User extends Authenticatable
         return $this->hasMany(Extract::class);
     }
 
-    public function getUserQualification(){
+    public function getUserQualification()
+    {
         $actived = UsersHasQualifications::getActivedByUser($this);
-        if(!$actived){
+        if (!$actived) {
             return new UsersHasQualifications;
         }
 
         return $actived;
+    }
+
+
+    public static function listRankingPagination($url, $page, $perPage = 12)
+    {
+
+        $total = DB::select('
+        select count(1) t 
+        from users a 
+        join users_has_qualifications b on b.user_id = a.id and b.active = 1
+        join qualifications c on c.id = b.qualification_id');
+
+        $total = isset($total[0]) ? $total[0]->t : 0;
+
+        $pagination = new Pagination($total, $perPage, 'pg', $page, $url);
+
+        $users = User::select('users.*')
+            ->join('users_has_qualifications', 'users_has_qualifications.user_id', '=', 'users.id')
+            ->join('qualifications', 'qualifications.id', '=', 'users_has_qualifications.qualification_id')
+            ->where('users_has_qualifications.active', 1)
+            ->orderByDesc('qualifications.goal')
+            ->orderBy('users.name')
+            ->limit($perPage)
+            ->offset($pagination->getOffset())
+            ->get();
+        $rows = [];
+        foreach($users as $r){
+            $rows[] = $r;
+        }
+
+        $pagination->setRows($rows);
+
+        return $pagination;
     }
 }
