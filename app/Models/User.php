@@ -102,6 +102,7 @@ class User extends Authenticatable
             ->limit($perPage)
             ->offset($pagination->getOffset())
             ->get();
+            
         $rows = [];
         foreach($users as $r){
             $rows[] = $r;

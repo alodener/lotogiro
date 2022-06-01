@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Helper\Pagination;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class UsersHasPoints extends Model
 {
@@ -126,5 +128,39 @@ class UsersHasPoints extends Model
         }
 
         return $origin;
+    }
+
+    public static function filterPagination($url, $page, $perPage = 12, array $filter = [])
+    {
+        $where = ' where 0 = 0';
+
+        if (isset($filter['userId']) && trim($filter['userId']) != '') {
+            $where .= ' and user_id = ' . intval($filter['userId']) . ' ';
+        }
+
+        $total = DB::select('
+        select count(1) t 
+        from users_has_points a 
+        ' . $where);
+
+        $total = isset($total[0]) ? $total[0]->t : 0;
+
+        $pagination = new Pagination($total, $perPage, 'pg', $page, $url);
+
+        $userPoints = UsersHasPoints::orderByDesc('id');
+
+        if (isset($filter['userId']) && trim($filter['userId']) != '') {
+            $userPoints = $userPoints->where('user_id', intval($filter['userId']));
+        }
+
+        $userPoints = $userPoints->limit($perPage)->offset($pagination->getOffset());
+
+        $rows = [];
+        foreach ($userPoints->get() as $r) {
+            $rows[] = $r;
+        }
+        $pagination->setRows($rows);
+
+        return $pagination;
     }
 }

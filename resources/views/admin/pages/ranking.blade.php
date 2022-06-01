@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Relatório de Pontos')
+@section('title', 'Relatório de Ranking')
 
 @section('content')
 @error('success')
