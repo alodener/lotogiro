@@ -5310,7 +5310,7 @@ input[type=button].btn-block {
   color: #0056b3;
   text-decoration: none;
   background-color: #E2BA5D;
-  border-color: ##E2BA5D;
+  border-color: #E2BA5D;
 }
 
 .page-link:focus {
@@ -39827,6 +39827,7 @@ a.text-muted:hover {
   width: 60px !important;
 }
 
+
 #draw_table {
   width: 100% !important;
 }
@@ -39856,6 +39857,7 @@ a.text-muted:hover {
   border-left: 12px solid #E2BA5D;
   padding-left: 10px;
 }
+
 
 
 .commisao-icon {
@@ -39912,6 +39914,7 @@ a.text-muted:hover {
   .responsive-bet .btn-warning {
     font-size: 11px !important;
   }
+
 
   #client_table tr td {
     text-align: center;

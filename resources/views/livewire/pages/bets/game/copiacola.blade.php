@@ -91,8 +91,10 @@
         <div class="col-12 dezena">
              <input type="hidden" name="dezena" >
              <input type="hidden" name="qtdDezena" value="{{$qtdDezena}}" >
+
               
             <textarea wire:model="dezena" onclick="bloqueia();" id="dezena"  name="dezena" rows="20" cols="90"></textarea>
+
         </div>
     </div>
         <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
@@ -163,7 +165,9 @@
                 // }
     
              }
+
              function bloqueia(){
+
                   var controlervar = document.getElementById("controle").value; 
                 var textdezena = document.getElementById("dezena");
     
