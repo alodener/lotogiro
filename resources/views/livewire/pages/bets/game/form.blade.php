@@ -120,9 +120,11 @@
                         </p>
                         {{-- puxar do banco de dados quantos numeros pode se jogar --}}
                         @foreach ($busca as $buscas)
+
                             <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})" class="{{ env('randomNumbersColor') }}" type="button" onclick="limpacampos();">{{ $buscas['numbers'] }}</button>
                         @endforeach 
                     </div>
+
 
 
                 <div class="table-responsive responsive-bet">
