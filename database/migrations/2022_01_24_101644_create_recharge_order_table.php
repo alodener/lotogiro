@@ -16,7 +16,7 @@ class CreateRechargeOrderTable extends Migration
         Schema::create('recharge_order', function (Blueprint $table) {
             $table->id();
             $table->uuid('reference');
-            $table->bigInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->decimal('value', 4, 2);
             $table->char('status', '1');//0 - pending, 1 - approved, 2 - canceled, 3 - failure
             $table->text('link');
