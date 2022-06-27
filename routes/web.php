@@ -24,6 +24,8 @@ use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractPointsController;
 use App\Http\Controllers\Admin\Pages\Dashboards\RankingController;
 use App\Http\Controllers\Admin\Pages\Settings\QualificationController;
+use App\Http\Controllers\Admin\Pages\Reports\ReportController;
+
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
 
@@ -146,6 +148,11 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('users/{userId}/statementBalance', [UserController::class, 'statementBalance'])->name('users.statementBalance');
             Route::resource('permissions', PermissionController::class);
             Route::resource('roles', RoleController::class);
+        });
+
+        Route::prefix('reports')->name('reports.')->group(function () {
+            Route::get('used-dozens/competitions', [ReportController::class, 'usedDozensListCompetitions'])->name('used.dozens');
+            Route::get('{competition}/used-dozens', [ReportController::class, 'usedDozensByCompetition'])->name('used.dozens.by-competition');
         });
     });
 });
