@@ -6,6 +6,7 @@ use App\Exports\Receipt;
 use App\Helper\Balance;
 use App\Helper\Commision;
 use App\Helper\Mask;
+use App\Helper\ChaveAleatoria;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
@@ -20,6 +21,7 @@ use App\Models\TypeGameValue;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
+use App\Models\UsersHasPoints;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -83,10 +85,11 @@ class GameController extends Controller
 
         return view('admin.pages.bets.game.index', compact('typeGame'));
     }
-    public function carregarJogo(TypeGame $typeGame){
-          $typeGames = TypeGame::get();
-          $clients = Client::get();
-          return view('admin.pages.bets.game.carregar', compact('typeGames', 'typeGame', 'clients'));
+    public function carregarJogo(TypeGame $typeGame)
+    {
+        $typeGames = TypeGame::get();
+        $clients = Client::get();
+        return view('admin.pages.bets.game.carregar', compact('typeGames', 'typeGame', 'clients'));
     }
 
     public function create(TypeGame $typeGame)
@@ -98,7 +101,7 @@ class GameController extends Controller
         $typeGames = TypeGame::find($typeGame)->first();
         $clients = collect([]);
 
-    /*
+        /*
         $typeGames = TypeGame::get();
         $clients = Client::get();
         */
@@ -108,292 +111,296 @@ class GameController extends Controller
 
     public function store(Request $request, Bet $validate_game, Game $game)
     {
-        if($request->controle == 1){
-        if (!auth()->user()->hasPermissionTo('create_game')) {
-            abort(403);
-        }
+        if ($request->controle == 1) {
+            if (!auth()->user()->hasPermissionTo('create_game')) {
+                abort(403);
+            }
 
-        $validatedData = $request->validate([
-        'type_game' => 'required',
-        'client' => 'required',
-        'value' => 'required',
-        ]);
+            $validatedData = $request->validate([
+                'type_game' => 'required',
+                'client' => 'required',
+                'value' => 'required',
+            ]);
 
 
-        $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
-        $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
-        try {
-            $date = Carbon::now();
-             if ( $date->hour >=20 && $date->hour < 21) {
-             return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                    'error' => 'Apostas Encerradas!'
-                ]);
-             }
+            $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
+            $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
+            try {
+                $date = Carbon::now();
+                if ($date->hour >= 20 && $date->hour < 21) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Apostas Encerradas!'
+                    ]);
+                }
+                $chaveregistro = ChaveAleatoria::generateKey(8);
                 $user = Auth()->user()->id;
                 $bet = new Bet();
                 $bet->user_id = Auth()->user()->id;
                 $bet->client_id = $request->client;
                 $bet->status_xml = 1;
+                $bet->key_reg = $chaveregistro;
                 $bet->save();
-                $bet = Bet::where('user_id', $user)->where('status_xml',1)->first();
+                $bet = Bet::where('user_id', $user)->where('status_xml', 1)->where('key_reg', $chaveregistro)->first();
 
-        $typeGameValue = TypeGameValue::where([
-            ['type_game_id', $request->type_game],
-            ['numbers', $request->qtdDezena],
-        ])->get();
-        $id_type_value = $request->valueId;
-       $dezenas = explode(",", $request->dezena);
-       $totaldeJogos = count($dezenas);
-       $totaldeAposta = $totaldeJogos * $request->value;
-       $dezenasSeparadas;
-       $competition = TypeGame::find($request->type_game)->competitions->last();
-            if (empty($competition)) {
+                $typeGameValue = TypeGameValue::where([
+                    ['type_game_id', $request->type_game],
+                    ['numbers', $request->qtdDezena],
+                ])->get();
+                $id_type_value = $request->valueId;
+                $dezenas = explode(",", $request->dezena);
+                $totaldeJogos = count($dezenas);
+                $totaldeAposta = $totaldeJogos * $request->value;
+                $dezenasSeparadas;
+                $competition = TypeGame::find($request->type_game)->competitions->last();
+                if (empty($competition)) {
+                    $bet->status_xml = 3;
+                    $bet->save();
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Não existe concurso cadastrado!'
+                    ]);
+                }
+                $balance = Balance::calculation($totaldeAposta);
+
+                if (!$balance) {
+                    $bet->status_xml = 3;
+                    $bet->save();
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Saldo Insuficiente!'
+                    ]);
+                }
+                foreach ($dezenas as $dez) {
+                    //$dezenaconvertida = string.split(/,(?! )/);
+                    $dezenaconvertida2 = explode(" ", $dez);
+                    $dezenaconvertida = implode(",", $dezenaconvertida2);
+                    $game = new $this->game;
+                    $game->client_id = $request->client;
+                    $game->user_id = auth()->id();
+                    $game->type_game_id = $request->type_game;
+                    $game->type_game_value_id = $request->valueId;
+                    $game->value = $request->value;
+                    $game->premio = $request->premio;
+                    $game->numbers = $dezenaconvertida;
+                    $game->competition_id = $competition->id;
+                    $game->checked = 1;
+                    $game->bet_id = $bet->id;
+                    $game->commission_percentage = auth()->user()->commission;
+                    $game->save();
+
+                    $extract = [
+                        'type' => 1,
+                        'value' => $game->value,
+                        'type_game_id' => $game->type_game_id,
+                        'description' => 'Venda - Jogo de id: ' . $game->id,
+                        'user_id' => $game->user_id,
+                        'client_id' => $game->client_id
+                    ];
+                    $ID_VALUE = auth()->user()->indicador;
+                    $storeExtact = ExtractController::store($extract);
+                    $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $game->value, $ID_VALUE);
+                    $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
+
+                    UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);
+
+                    $game->commission_value = $commissionCalculation;
+                    $game->commision_value_pai = $commissionCalculationPai;
+                    $game->save();
+                }
+                $bet->status_xml = 2;
+                $bet->save();
+
+                // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
+
+                $idAposta = $bet->id;
+
+                // pegando jogos feitos
+                $jogosCliente = Game::where('bet_id', $idAposta)->get();
+
+                // informações para filename
+                $InfoJogos =  $jogosCliente[0];
+
+                // pegando informações de cliente
+                $ClientInfo = Client::where('id', $InfoJogos["client_id"])->get();
+                $ClienteJogo =  $ClientInfo[0];
+
+                // pegando typegame
+                $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
+                $TipoJogo = $TipoJogo[0];
+
+                // pegando datas do sorteio
+                $Datas = Competition::where('id', $InfoJogos['competition_id'])->get();
+                $Datas = $Datas[0];
+
+                // nome cliente
+                $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
+
+                global $data;
+                $data = [
+                    'prize' => false,
+                    'jogosCliente' => $jogosCliente,
+                    'Nome' => $Nome,
+                    'Datas' => $Datas,
+                    'TipoJogo' => $TipoJogo
+                ];
+
+                global $fileName;
+                $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
+
+                // return view('admin.layouts.pdf.receiptTudo', $data);
+                global $pdf;
+                $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
+                // return $pdf->download($fileName);
+
+                // $arquivo = $pdf->output($fileName);
+                Mail::send('email.jogo', ['idjogo' => $game->id], function ($m) {
+                    global $data;
+                    global $fileName;
+                    global $pdf;
+                    $m->from('admin@superlotogiro.com', 'SuperLotogiro');
+                    $m->subject('Seu Bilhete');
+                    $m->to(auth()->user()->email);
+                    $m->attachData($pdf->output(), $fileName);
+                });
+
+                return redirect()->route('admin.bets.validate-games.edit', ['validate_game' => $bet->id])->withErrors([
+                    'success' => 'Jogo cadastrado com sucesso1'
+                ]);
+            } catch (\Exception $exception) {
                 $bet->status_xml = 3;
                 $bet->save();
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                    'error' => 'Não existe concurso cadastrado!'
+                    'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o jogo, tente novamente'
                 ]);
             }
-        $balance = Balance::calculation($totaldeAposta);
+        } else {
 
-            if (!$balance) {
-            $bet->status_xml = 3;
-            $bet->save();
+            if (!auth()->user()->hasPermissionTo('create_game')) {
+                abort(403);
+            }
+
+            $validatedData = $request->validate([
+                'type_game' => 'required',
+                'client' => 'required',
+                'value' => 'required',
+            ]);
+
+            $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
+            $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
+
+            try {
+                $date = Carbon::now();
+                if ($date->hour >= 20 && $date->hour < 21) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Apostas Encerradas!'
+                    ]);
+                }
+
+                $balance = Balance::calculation($request->value);
+
+                if (!$balance) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Saldo Insuficiente!'
+                    ]);
+                }
+
+                $competition = TypeGame::find($request->type_game)->competitions->last();
+                if (empty($competition)) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Não existe concurso cadastrado!'
+                    ]);
+                }
+
+                $game = new $this->game;
+                $game->client_id = $request->client;
+                $game->user_id = auth()->id();
+                $game->type_game_id = $request->type_game;
+                $game->type_game_value_id = $request->valueId;
+                $game->value = $request->value;
+                $game->premio = $request->premio;
+                $game->numbers = $request->numbers;
+                $game->competition_id = $competition->id;
+                $game->checked = 1;
+                $game->commission_percentage = auth()->user()->commission;
+                $game->save();
+
+                $extract = [
+                    'type' => 1,
+                    'value' => $request->value,
+                    'type_game_id' => $game->type_game_id,
+                    'description' => 'Venda - Jogo de id: ' . $game->id,
+                    'user_id' => $game->user_id,
+                    'client_id' => $game->client_id
+                ];
+                $ID_VALUE = auth()->user()->indicador;
+                $storeExtact = ExtractController::store($extract);
+                $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $request->value, $ID_VALUE);
+                $commissionCalculation = Commision::calculation($game->commission_percentage, $request->value);
+
+                $game->commission_value = $commissionCalculation;
+                $game->commision_value_pai = $commissionCalculationPai;
+                $game->save();
+
+                UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);
+
+                // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
+                $idCliente = $game->id;
+
+                // pegando jogos feitos
+                $jogosCliente = Game::where('id', $idCliente)->get();
+
+                // informações para filename
+                $InfoJogos =  $jogosCliente[0];
+
+                // pegando informações de cliente
+                $ClientInfo = Client::where('id', $InfoJogos["client_id"])->get();
+                $ClienteJogo =  $ClientInfo[0];
+
+                // pegando typegame
+                $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
+                $TipoJogo = $TipoJogo[0];
+
+                // pegando datas do sorteio
+                $Datas = Competition::where('id', $InfoJogos['competition_id'])->get();
+                $Datas = $Datas[0];
+
+                // nome cliente
+                $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
+
+                global $data;
+                $data = [
+                    'prize' => false,
+                    'jogosCliente' => $jogosCliente,
+                    'Nome' => $Nome,
+                    'Datas' => $Datas,
+                    'TipoJogo' => $TipoJogo
+                ];
+                global $fileName;
+                $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
+
+                // return view('admin.layouts.pdf.receiptTudo', $data);
+                global $pdf;
+                $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
+                // return $pdf->download($fileName);
+
+                // $arquivo = $pdf->output($fileName);
+                Mail::send('email.jogo', ['idjogo' => $game->id], function ($m) {
+                    global $data;
+                    global $fileName;
+                    global $pdf;
+                    $m->from('admin@superlotogiro.com', 'SuperLotogiro');
+                    $m->subject('Seu Bilhete');
+                    $m->to(auth()->user()->email);
+                    $m->attachData($pdf->output(), $fileName);
+                });
+
+                return redirect()->route('admin.bets.games.edit', ['game' => $game->id])->withErrors([
+                    'success' => 'Jogo cadastrado com sucesso2'
+                ]);
+            } catch (\Exception $exception) {
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                   'error' => 'Saldo Insuficiente!'
+                    'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o jogo, tente novamente'
                 ]);
             }
-       foreach($dezenas as $dez){
-            //$dezenaconvertida = string.split(/,(?! )/);
-            $dezenaconvertida2 = explode(" ", $dez);
-            $dezenaconvertida = implode(",", $dezenaconvertida2);
-            $game = new $this->game;
-            $game->client_id = $request->client;
-            $game->user_id = auth()->id();
-            $game->type_game_id = $request->type_game;
-            $game->type_game_value_id =$request->valueId;
-            $game->value = $request->value;
-            $game->premio = $request->premio;
-            $game->numbers = $dezenaconvertida;
-            $game->competition_id = $competition->id;
-            $game->checked = 1;
-            $game->bet_id = $bet->id;
-            $game->commission_percentage = auth()->user()->commission;
-            $game->save();
-
-            $extract = [
-                'type' => 1,
-                'value' => $game->value,
-                'type_game_id' => $game->type_game_id,
-                'description' => 'Venda - Jogo de id: ' . $game->id,
-                'user_id' => $game->user_id,
-                'client_id' => $game->client_id
-            ];
-            $ID_VALUE = auth()->user()->indicador;
-            $storeExtact = ExtractController::store($extract);
-            $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $game->value,$ID_VALUE);
-            $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
-
-            $game->commission_value = $commissionCalculation;
-            $game->commision_value_pai = $commissionCalculationPai;
-            $game->save();
-
         }
-            $bet->status_xml = 2;
-            $bet->save();
-
-            // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
-        
-        $idAposta = $bet->id;
-
-        // pegando jogos feitos
-        $jogosCliente = Game::where('bet_id', $idAposta)->get();
-
-        // informações para filename
-        $InfoJogos =  $jogosCliente[0];
-
-        // pegando informações de cliente
-        $ClientInfo = Client::where('id', $InfoJogos["client_id"])->get();
-        $ClienteJogo =  $ClientInfo[0];
-
-        // pegando typegame
-        $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
-        $TipoJogo = $TipoJogo[0];
-
-        // pegando datas do sorteio
-        $Datas = Competition::where('id', $InfoJogos['competition_id'])->get();
-        $Datas = $Datas[0];
-
-        // nome cliente
-        $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
-
-        global $data;
-        $data = [
-            'prize' => false,
-            'jogosCliente' => $jogosCliente,
-            'Nome' => $Nome,
-            'Datas' => $Datas,
-            'TipoJogo' => $TipoJogo
-        ];
-       
-        global $fileName;
-        $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
-
-        // return view('admin.layouts.pdf.receiptTudo', $data);
-        global $pdf;
-        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
-        // return $pdf->download($fileName);
-
-        // $arquivo = $pdf->output($fileName);
-        Mail::send('email.jogo', ['idjogo' => $game->id ], function($m){
-            global $data;
-            global $fileName;
-            global $pdf;
-            $m->from('admin@superlotogiro.com', 'SuperLotogiro');
-            $m->subject('Seu Bilhete');
-            $m->to(auth()->user()->email);
-            $m->attachData($pdf->output(), $fileName);
-        });
-
-              return redirect()->route('admin.bets.validate-games.edit', ['validate_game' => $bet->id])->withErrors([
-                'success' => 'Jogo cadastrado com sucesso1'
-            ]);
-        } catch (\Exception $exception) {
-            $bet->status_xml = 3;
-            $bet->save();
-            return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o jogo, tente novamente'
-            ]);
-        }
-    }else{
-
-        if (!auth()->user()->hasPermissionTo('create_game')) {
-            abort(403);
-        }
-
-        $validatedData = $request->validate([
-            'type_game' => 'required',
-            'client' => 'required',
-            'value' => 'required',
-        ]);
-
-        $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
-        $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
-
-       try {
-            $date = Carbon::now();
-             if ( $date->hour >=20 && $date->hour < 21) {
-             return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                    'error' => 'Apostas Encerradas!'
-                ]);
-             }
-
-            $balance = Balance::calculation($request->value);
-
-            if (!$balance) {
-                return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                    'error' => 'Saldo Insuficiente!'
-                ]);
-            }
-
-            $competition = TypeGame::find($request->type_game)->competitions->last();
-
-            if (empty($competition)) {
-                return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                    'error' => 'N達o existe concurso cadastrado!'
-                ]);
-            }
-
-            $game = new $this->game;
-            $game->client_id = $request->client;
-            $game->user_id = auth()->id();
-            $game->type_game_id = $request->type_game;
-            $game->type_game_value_id =$request->valueId;
-            $game->value = $request->value;
-            $game->premio = $request->premio;
-            $game->numbers = $request->numbers;
-            $game->competition_id = $competition->id;
-            $game->checked = 1;
-            $game->commission_percentage = auth()->user()->commission;
-            $game->save();
-
-            $extract = [
-                'type' => 1,
-                'value' => $request->value,
-                'type_game_id' => $game->type_game_id,
-                'description' => 'Venda - Jogo de id: ' . $game->id,
-                'user_id' => $game->user_id,
-                'client_id' => $game->client_id
-            ];
-            $ID_VALUE = auth()->user()->indicador;
-            $storeExtact = ExtractController::store($extract);
-            $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $request->value,$ID_VALUE);
-            $commissionCalculation = Commision::calculation($game->commission_percentage, $request->value);
-
-            $game->commission_value = $commissionCalculation;
-            $game->commision_value_pai = $commissionCalculationPai;
-            $game->save();
-
-        // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
-        $idCliente = $game->id;
-
-        // pegando jogos feitos
-        $jogosCliente = Game::where('id', $idCliente)->get();
-
-        // informações para filename
-        $InfoJogos =  $jogosCliente[0];
-
-        // pegando informações de cliente
-        $ClientInfo = Client::where('id', $InfoJogos["client_id"])->get();
-        $ClienteJogo =  $ClientInfo[0];
-
-        // pegando typegame
-        $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
-        $TipoJogo = $TipoJogo[0];
-
-        // pegando datas do sorteio
-        $Datas = Competition::where('id', $InfoJogos['competition_id'])->get();
-        $Datas = $Datas[0];
-
-        // nome cliente
-        $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
-
-        global $data;
-        $data = [
-            'prize' => false,
-            'jogosCliente' => $jogosCliente,
-            'Nome' => $Nome,
-            'Datas' => $Datas,
-            'TipoJogo' => $TipoJogo
-        ];
-        global $fileName;
-        $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
-
-        // return view('admin.layouts.pdf.receiptTudo', $data);
-        global $pdf;
-        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
-        // return $pdf->download($fileName);
-
-        // $arquivo = $pdf->output($fileName);
-        Mail::send('email.jogo', ['idjogo' => $game->id ], function($m){
-            global $data;
-            global $fileName;
-            global $pdf;
-            $m->from('admin@superlotogiro.com', 'SuperLotogiro');
-            $m->subject('Seu Bilhete');
-            $m->to(auth()->user()->email);
-            $m->attachData($pdf->output(), $fileName);
-        });
-
-            return redirect()->route('admin.bets.games.edit', ['game' => $game->id])->withErrors([
-                'success' => 'Jogo cadastrado com sucesso2'
-            ]);
-        } catch (\Exception $exception) {
-            return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o jogo, tente novamente'
-            ]);
-        }
-    }
     }
 
     public function createLink()
@@ -415,7 +422,6 @@ class GameController extends Controller
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o link para o jogo, tente novamente'
             ]);
         }
-
     }
 
     public function makeHash()
@@ -467,7 +473,6 @@ class GameController extends Controller
         $this->matriz = $matriz;
 
         return view('admin.pages.bets.game.edit', compact('game', 'matriz', 'selectedNumbers', 'typeGame', 'typeGameValue', 'client'));
-
     }
 
     public function destroy(Game $game)
@@ -498,13 +503,11 @@ class GameController extends Controller
             return redirect()->route('admin.bets.games.index', ['type_game' => $typeGame])->withErrors([
                 'success' => 'Jogo deletado com sucesso'
             ]);
-
         } catch (\Exception $exception) {
 
             return redirect()->route('admin.bets.games.index', ['type_game' => $typeGame])->withErrors([
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao deletar o jogo, tente novamente'
             ]);
-
         }
     }
 
@@ -542,7 +545,7 @@ class GameController extends Controller
 
             $matriz[$index] = $line;
         }
-        
+
         global $data;
         $data = [
             'game' => $game,
@@ -554,17 +557,16 @@ class GameController extends Controller
             'prize' => $prize,
         ];
 
-        
+
 
         if ($format == "pdf") {
-            
+
             global $fileName;
             global $pdf;
             $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.jpeg';
 
             $pdf = SnappyImage::loadView('admin.layouts.pdf.receipt', $data);
             return $pdf->download($fileName);
-
         } elseif ($format == "txt") {
             $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.txt';
             $content = view()->make('admin.layouts.txt.receipt')->with($data);
@@ -577,7 +579,8 @@ class GameController extends Controller
         }
     }
 
-    public function getReceiptTudo(Game $game, $idcliente, $prize = false, Bet $apostas){
+    public function getReceiptTudo(Game $game, $idcliente, $prize = false, Bet $apostas)
+    {
 
         // pegando jogos feitos
         $jogosCliente = game::where('bet_id', $idcliente)->get();
@@ -616,11 +619,11 @@ class GameController extends Controller
         // return view('admin.layouts.pdf.receiptTudo', $data);
         $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
         return $pdf->download($fileName);
-
     }
 
-    public function getReceiptTudoTxt(Game $game, $idcliente, $prize = false, Bet $apostas){
-        
+    public function getReceiptTudoTxt(Game $game, $idcliente, $prize = false, Bet $apostas)
+    {
+
         // pegando jogos feitos
         $jogosCliente = game::where('bet_id', $idcliente)->get();
 
@@ -645,7 +648,7 @@ class GameController extends Controller
 
         // nome cliente
         $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
-        
+
         // telefone cliente
         $telefone = $ClienteJogo['ddd'] . ' ' . $ClienteJogo['phone'];
 
@@ -657,10 +660,10 @@ class GameController extends Controller
             'TipoJogo' => $TipoJogo,
             'telefone' => $telefone
         ];
-        
-        
+
+
         $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.txt';
-       
+
         $content = view()->make('admin.layouts.txt.receiptAllTxt')->with($data);
         $headers = array(
             'Content-Type' => 'plain/txt',
