@@ -15,7 +15,7 @@ class CreateWithdrawRequestTable extends Migration
     {
         Schema::create('withdraw_request', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->decimal('value', 4, 2);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

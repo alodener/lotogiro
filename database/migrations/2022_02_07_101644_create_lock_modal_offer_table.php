@@ -15,7 +15,7 @@ class CreateLockModalOfferTable extends Migration
     {
         Schema::create('lock_modal_offer', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->char('status', '1')->default(0);//0 - open, 1 - closed
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
