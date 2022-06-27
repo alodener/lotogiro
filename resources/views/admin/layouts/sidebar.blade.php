@@ -300,6 +300,12 @@
                                     <i class="fas fa-star nav-icon"></i>
                                     <p>Dezenas Utilizadas</p>
                                 </a>
+                                
+                                <a href="{{route('admin.reports.points-by-user')}}"
+                                    class="nav-link @if(request()->is('admin/settings/points-by-user*')) active @endif">
+                                    <i class="fas fa-users nav-icon"></i>
+                                    <p>Pontos por Cliente</p>
+                                </a>
                             </li>
                             @endcan
                         </ul>
