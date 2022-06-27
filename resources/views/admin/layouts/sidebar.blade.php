@@ -283,6 +283,29 @@
                     </li>
                 @endcanany
 
+                @canany(['read_user', 'read_role', 'read_permission'])
+                    <li class="nav-item has-treeview @if(request()->is('admin/reports/*')) menu-open @endif">
+                        <a href="#" class="nav-link @if(request()->is('admin/reports/*')) active @endif">
+                            <i class="nav-icon fas fa-cog"></i>
+                            <p>
+                                Relatórios
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('read_user')
+                            <li class="nav-item">
+                                <a href="{{route('admin.reports.used.dozens')}}"
+                                    class="nav-link @if(request()->is('admin/settings/used-dozens*')) active @endif">
+                                    <i class="fas fa-star nav-icon"></i>
+                                    <p>Dezenas Utilizadas</p>
+                                </a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
+
                 <li class="nav-item">
                     <a href="{{ route('admin.dashboards.wallet.index') }}" class="nav-link @if(request()->is
                     ('admin/dashboards/wallet/*')) menu-open @endif">
