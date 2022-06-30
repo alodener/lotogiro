@@ -15,7 +15,7 @@ class CreateLockBalanceTable extends Migration
     {
         Schema::create('lock_balance', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('withdraw_request_id');
+            $table->unsignedBigInteger('withdraw_request_id');
             $table->decimal('value', 4, 2);
             $table->char('status', '1')->default(0);//0 - pending, 1 - approved, 2 - canceled
             $table->foreign('withdraw_request_id')->references('id')->on('withdraw_request');
