@@ -153,6 +153,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::prefix('reports')->name('reports.')->group(function () {
             Route::get('used-dozens/competitions', [ReportController::class, 'usedDozensListCompetitions'])->name('used.dozens');
             Route::get('{competition}/used-dozens', [ReportController::class, 'usedDozensByCompetition'])->name('used.dozens.by-competition');
+            Route::get('points-by-user', [ReportController::class, 'pointsByUser'])->name('points-by-user');
         });
     });
 });

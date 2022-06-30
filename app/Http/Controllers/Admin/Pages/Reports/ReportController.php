@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin\Pages\Reports;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Competition;
+use App\Models\User;
+use App\Models\UsersHasPoints;
+use App\Models\Qualifications;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
 
@@ -69,5 +72,37 @@ class ReportController extends Controller
         }
 
         return view('admin.pages.reports.used-dozens-by-competition', compact('usedDozens'));
+    }
+
+    public function pointsByUser(Request $request)
+    {
+        if (!auth()->user()->hasPermissionTo('read_client')) {
+            abort(403);
+        }
+
+        if ($request->ajax()) {
+            $user = User::get();
+            return DataTables::of($user)
+                ->addIndexColumn()
+                ->editColumn('level', function ($user) {
+                    $balances = UsersHasPoints::getBalancesByUser($user);
+                    $qualification = Qualifications::getQualificationByBalance($balances);
+
+                    return $qualification->description;
+                })
+                ->editColumn('personal_balance', function ($user) {
+                    $balances = UsersHasPoints::getBalancesByUser($user);
+
+                    return round($balances['personal_balance'], 2);
+                })
+                ->editColumn('group_balance', function ($user) {
+                    $balances = UsersHasPoints::getBalancesByUser($user);
+
+                    return round($balances['group_balance'], 2);
+                })
+                ->make(true);
+        }
+
+        return view('admin.pages.reports.points-by-user');     
     }
 }
