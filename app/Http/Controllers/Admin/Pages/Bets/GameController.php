@@ -6,6 +6,7 @@ use App\Exports\Receipt;
 use App\Helper\Balance;
 use App\Helper\Commision;
 use App\Helper\Mask;
+use App\Helper\ChaveAleatoria;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
@@ -129,13 +130,15 @@ class GameController extends Controller
                     'error' => 'Apostas Encerradas!'
                 ]);
              }
+                $chaveregistro = ChaveAleatoria::generateKey(8);
                 $user = Auth()->user()->id;
                 $bet = new Bet();
                 $bet->user_id = Auth()->user()->id;
                 $bet->client_id = $request->client;
                 $bet->status_xml = 1;
+                $bet->key_reg = $chaveregistro;
                 $bet->save();
-                $bet = Bet::where('user_id', $user)->where('status_xml',1)->first();
+                $bet = Bet::where('user_id', $user)->where('status_xml',1)->where('key_reg', $chaveregistro)->first();
 
         $typeGameValue = TypeGameValue::where([
             ['type_game_id', $request->type_game],
@@ -617,5 +620,55 @@ class GameController extends Controller
         $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
         return $pdf->download($fileName);
 
+    }
+
+    public function getReceiptTudoTxt(Game $game, $idcliente, $prize = false, Bet $apostas){
+        
+        // pegando jogos feitos
+        $jogosCliente = game::where('bet_id', $idcliente)->get();
+
+        $User = Auth::User();
+        // $Nome = $User['name'] . ' ' . $User['last_name'];
+        // $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $Nome . '.pdf';
+
+        // informações para filename
+        $InfoJogos =  $jogosCliente[0];
+
+        // pegando informações de cliente
+        $ClientInfo = Client::where('id', $InfoJogos["client_id"])->get();
+        $ClienteJogo =  $ClientInfo[0];
+
+        // pegando typegame
+        $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
+        $TipoJogo = $TipoJogo[0];
+
+        // pegando datas do sorteio
+        $Datas = Competition::where('id', $InfoJogos['competition_id'])->get();
+        $Datas = $Datas[0];
+
+        // nome cliente
+        $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
+        
+        // telefone cliente
+        $telefone = $ClienteJogo['ddd'] . ' ' . $ClienteJogo['phone'];
+
+        $data = [
+            'prize' => $prize,
+            'jogosCliente' => $jogosCliente,
+            'Nome' => $Nome,
+            'Datas' => $Datas,
+            'TipoJogo' => $TipoJogo,
+            'telefone' => $telefone
+        ];
+        
+        
+        $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.txt';
+       
+        $content = view()->make('admin.layouts.txt.receiptAllTxt')->with($data);
+        $headers = array(
+            'Content-Type' => 'plain/txt',
+            'Content-Disposition' => sprintf('attachment; filename="%s"', $fileName),
+        );
+        return response()->make($content, 200, $headers);
     }
 }
