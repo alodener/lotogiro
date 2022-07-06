@@ -19,6 +19,7 @@
         <div class="login-logo">
 
             <img src="{{ asset(env('logo')) }}" alt="" width=150 height=150>
+
         </div>
         <div class="card">
             <div class="card-body">
