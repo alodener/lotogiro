@@ -176,7 +176,6 @@ class GameController extends Controller
                     'success' => 'O seu jogo está sendo processado, você será notificado assim que terminar.'
                 ]);
             } catch (\Exception $exception) {
-                dd($exception->getMessage());
                 $bet->status_xml = 3;
                 $bet->save();
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
