@@ -40065,3 +40065,26 @@ a.text-muted:hover {
   margin-bottom: 0;
   border-bottom: 0;
   padding-bottom: 0; }
+
+
+.notification_dropdown .notifications-count {
+  display: none;
+}
+
+.show-notifcations-indicatior .notifications-count {
+    display: flex;
+    width: 15px;
+    height: 15px;
+    justify-content: center;
+    position: absolute;
+    top: 5px;
+    right: 11px;
+    background-color: #dc3545;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 400;
+    font-family: sans-serif;
+    line-height: 2;
+    border-radius: 100%;
+}
+  
