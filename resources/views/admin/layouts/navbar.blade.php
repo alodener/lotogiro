@@ -27,7 +27,7 @@
                     <div class="pulse-css"></div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
+                    <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px; overflow-y: scroll">
                         <ul class="timeline">
                             @foreach(auth()->user()->notifications as $notification)
                             <li>
