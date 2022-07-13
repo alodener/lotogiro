@@ -155,6 +155,11 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('{competition}/used-dozens', [ReportController::class, 'usedDozensByCompetition'])->name('used.dozens.by-competition');
             Route::get('points-by-user', [ReportController::class, 'pointsByUser'])->name('points-by-user');
         });
+
+        Route::prefix('notifications')->name('notifications.')->group(function () {
+            Route::get('/readAll', [UserController::class, 'readAllNotifications']);
+            Route::get('/', [UserController::class, 'getAllNotifications']);
+        });
     });
 });
 
