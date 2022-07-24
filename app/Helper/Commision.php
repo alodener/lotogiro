@@ -10,9 +10,9 @@ class Commision
 
         return $value;
     }
-    public static function calculationPai($percentage, $value, $ID_VALUE){
+    public static function calculationPai($percentage, $value, $ID_VALUE, $user = false){
 
-        $typeClient = auth()->user()->type_client;
+        $typeClient = $user ? $user->type_client : auth()->user()->type_client;
         $valorPai = 0;
         
         if($ID_VALUE != null){

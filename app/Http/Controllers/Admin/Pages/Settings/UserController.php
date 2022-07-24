@@ -410,4 +410,27 @@ class UserController extends Controller
          $retornof = "sucesso";
         return $retornof;
     }
+
+    public function readAllNotifications(Request $request)
+    {
+        $authUser = auth()->user();
+
+        $authUser->notifications->markAsRead();
+
+        if($authUser->unreadNotifications->count() == 0) {
+            return response()->json([
+                'success' => true
+            ]);
+        }
+    }
+
+    public function getAllNotifications(Request $request)
+    {
+        $authUser = auth()->user();
+
+        return response()->json([
+            'notifications' => $authUser->notifications,
+            'unreadCount' => $authUser->unreadNotifications->count()
+        ]);
+    }
 }
