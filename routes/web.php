@@ -1,6 +1,7 @@
 <?php
 
     use App\Http\Controllers\Admin\Pages\Auth\RegisterController;
+    use App\Http\Controllers\Admin\Pages\Bets\GameV2Controller;
     use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
     use App\Http\Controllers\Admin\Pages\Dashboards\WinningTicketController;
     use Illuminate\Support\Facades\Route;
@@ -123,7 +124,11 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');
+            Route::get('/gamesV2/create/{type_game}', [GameV2Controller::class, 'create'])->name('games.create');
             Route::resource('games', GameController::class)->except([
+                'index', 'create'
+            ]);
+            Route::resource('gamesV2', GameV2Controller::class)->except([
                 'index', 'create'
             ]);
             Route::resource('draws', DrawController::class);
