@@ -11,6 +11,8 @@ return [
     'register-button' => 'Cadastre-se',
     'consultant-link-text' => 'Deseja ser um consultor?',
     'copy-link-button' => 'Copiar Link',
+    'entries-not-found' => 'Nenhum registro encontrado.',
+    'found-entries' => 'registro(s) encontrado(s)',
 
     'register' => [
         'page-title' => 'Cadastro',
@@ -50,5 +52,16 @@ return [
         'max-points-text' => 'Você esta no mais alto nível do plano de carreira',
         'games-not-found' => 'Não existem tipos de jogos cadastrados!',
         'copied-url' => 'Link copiado!'
+    ],
+
+    'ranking' => [
+        'page-title' => 'Relatório de Ranking',
+        'page-header' => 'Ranking',
+        'table-id-header' => 'Id',
+        'table-name-header' => 'Nome',
+        'table-qualification-header' => 'Qualificação',
+        'table-personal-points-header' => 'Pontos Pessoais',
+        'table-group-points-header' => 'Pontos de Grupo',
+        'table-total-points-header' => 'Pontos Totais'
     ]
 ];
