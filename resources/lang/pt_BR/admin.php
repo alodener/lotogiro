@@ -41,6 +41,16 @@ return [
     'more-details' => 'Mais Detalhes',
     'initial-date' => 'Data Inicio',
     'end-date' => 'Data Final',
+    'gains-title' => 'Ganhos',
+    'filters' => 'Filtros',
+    'status' => 'Status',
+    'all2' => 'Todos',
+    'open' => 'Abertos',
+    'paid' => 'Pagos',
+    'period' => 'Período',
+    'user' => 'Usuário',
+    'search-user' => 'Pesquisar usuário',
+    'generate-report' => 'Gerar Relatório',
 
     'register' => [
         'page-title' => 'Cadastro',
@@ -92,7 +102,7 @@ return [
         'table-group-points-header' => 'Pontos de Grupo',
         'table-total-points-header' => 'Pontos Totais'
     ],
-
+    
     'points' => [
         'page-title' => 'Relatório de Pontos',
         'page-header' => 'Resumo',
@@ -131,5 +141,22 @@ return [
         'table-name-header' => 'NOME',
         'table-email-header' => 'EMAIL',
         'table-total-sales-header' => 'Total Vendas',        
+    ],
+
+    'gains' => [
+        'page-title' => 'Relatório de Ganhos',
+        'sales-quantity' => 'Quantidade de Vendas',
+        'direct-sales' => 'Vendas direta',
+        'bonus' => 'Bônus',
+        'total-gains' => 'Total de Ganhos',
+        'table-id-header' => 'Id',
+        'table-game-type-header' => 'Tipo de Jogo',
+        'table-cpf-header' => 'Cpf Cliente',
+        'table-customer-header' => 'Cliente',
+        'table-user-header' => 'Usuário',
+        'table-status-header' => 'Status',
+        'table-value-header' => 'Valor',
+        'table-comission-header' => 'Comissão',
+        'table-creation-header' => 'Criação',
     ]
 ];

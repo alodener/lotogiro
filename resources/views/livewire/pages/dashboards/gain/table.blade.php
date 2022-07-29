@@ -2,34 +2,34 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                Ganhos
+                {{ trans('admin.gains-title') }}
             </div>
         </div>
     </div>
     <div class="row ganhos">
         <div class="card-header ganhos-card">
-            Filtros
+            {{ trans('admin.filters') }}
         </div>
     </div>
     <div class="row ganhos">
         <div class="col-md-3">
             <div class="form-group">
-                <label for="status">Status</label>
+                <label for="status">{{ trans('admin.status') }}</label>
                 <select wire:model="status" class="custom-select" id="status" name="status">
-                    <option value="">Todos</option>
-                    <option value="1">Abertos</option>
-                    <option value="2">Pagos</option>
+                    <option value="">{{ trans('admin.all2') }}</option>
+                    <option value="1">{{ trans('admin.open') }}</option>
+                    <option value="2">{{ trans('admin.paid') }}</option>
                 </select>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="range">Periodo</label>
+                <label for="range">{{ trans('admin.period') }}</label>
                 <select wire:model="range" class="custom-select" id="range" name="range">
-                    <option value="1">Mensal</option>
-                    <option value="2">Semanal</option>
-                    <option value="3">Diário</option>
-                    <option value="4">Personalizado</option>
+                    <option value="1">{{ trans('admin.monthly') }}</option>
+                    <option value="2">{{ trans('admin.weekly') }}</option>
+                    <option value="3">{{ trans('admin.daily') }}</option>
+                    <option value="4">{{ trans('admin.custom') }}</option>
                 </select>
             </div>
         </div>
@@ -43,7 +43,7 @@
                                name="dateStart"
                                autocomplete="off"
                                maxlength="50"
-                               placeholder="Data Inicial"
+                               placeholder="{{ trans('admin.initial-date') }}"
                                onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateStart')
                         <span class="invalid-feedback" role="alert">
@@ -58,7 +58,7 @@
                                name="dateEnd"
                                autocomplete="off"
                                maxlength="50"
-                               placeholder="Data Final"
+                               placeholder="{{ trans('admin.end-date') }}"
                                onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateEnd')
                         <span class="invalid-feedback" role="alert">
@@ -73,14 +73,14 @@
     @if($auth->hasPermissionTo('read_all_sales'))
         <div class="row ganhos">
             <div class="card-header ganhos-card">
-                Usuário
+                {{ trans('admin.user') }}
             </div>
         </div>
         
         <div class="row ganhos">
             <div class="col-md-12">
                 <div class="input-group mb-3">
-                    <input wire:model="search" type="text" id="author" class="form-control" placeholder="Pesquisar Usuário"autocomplete="off">
+                    <input wire:model="search" type="text" id="author" class="form-control" placeholder="{{ trans('admin.search-user') }}"autocomplete="off">
                     <div class="input-group-append">
                         <span wire:click="clearUser" class="input-group-text" title="Limpar"><i class="fas fa-user-times"></i></span>
                     </div>
@@ -105,7 +105,7 @@
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3>{{$i ?? null }}</h3>
-                    <p>Quantidade de Vendas</p>
+                    <p>{{ trans('admin.gains.sales-quantity') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-shopping-cart"></i>
@@ -117,7 +117,7 @@
             <div class="small-box bg-success">
                 <div class="inner">
                     <h3>R${{\App\Helper\Money::toReal($value)}}</h3>
-                    <p>Vendas direta</p>
+                    <p>{{ trans('admin.gains.direct-sales') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-dollar-sign"></i>
@@ -131,7 +131,7 @@
             <div class="small-box bg-primary">
                 <div class="inner">
                     <h3>R${{\App\Helper\Money::toReal($valueBonus)}}</h3>
-                    <p>Bônus</p>
+                    <p>{{ trans('admin.gains.bonus') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fas fa-gift"></i>
@@ -143,7 +143,7 @@
             <div class="small-box bg-gold">
                 <div class="inner">
                     <h3>R${{\App\Helper\Money::toReal($value + $valueBonus)}}</h3>
-                    <p>Total de Ganhos</p>
+                    <p>{{ trans('admin.gains.total-gains') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-wallet"></i>
@@ -171,16 +171,16 @@
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Tipo de Jogo</th>
-                        <th>Cpf Cliente</th>
-                        <th>Cliente</th>
-                        <th>Usuário</th>
-                        <th>Status</th>
-                        <th>Valor</th>
+                        <th>{{ trans('admin.gains.table-id-header') }}</th>
+                        <th>{{ trans('admin.gains.table-game-type-header') }}</th>
+                        <th>{{ trans('admin.gains.table-cpf-header') }}</th>
+                        <th>{{ trans('admin.gains.table-customer-header') }}</th>
+                        <th>{{ trans('admin.gains.table-user-header') }}</th>
+                        <th>{{ trans('admin.gains.table-status-header') }}</th>
+                        <th>{{ trans('admin.gains.table-value-header') }}</th>
                         <th>%</th>
-                        <th>Comissão</th>
-                        <th>Criação</th>
+                        <th>{{ trans('admin.gains.table-comission-header') }}</th>
+                        <th>{{ trans('admin.gains.table-creation-header') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -220,7 +220,7 @@
                     @empty
                         <tr>
                             <td class="text-center" colspan="9">
-                                Nenhum registro encontrado.
+                                {{ trans('admin.entries-not-found') }}.
                             </td>
                         </tr>
                     @endforelse
