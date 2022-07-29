@@ -22,6 +22,7 @@ return [
     'weekly' => 'Semanal',
     'monthly' => 'Mensal',
     'custom' => 'Personalizado',
+    'yesterday' => 'Ontem',
     'period' => 'Período',
     'transactions-quantity' => 'Quantidade de Transações',
     'balance' => 'Saldo',
@@ -30,6 +31,13 @@ return [
     'geberate-report' => 'Gerar Relatório',
     'all-admins' => 'Todos os Administradores',
     'total' => 'Total',
+    'see-data' => 'Ver dados',
+    'tickets-sold' => 'Bilhetes Vendidos',
+    'total-received' => 'Total Recebido',
+    'winner-tickets' => 'Bilhetes Premiados',
+    'total-paid' => 'Total Pago',
+    'dozens' => 'Dezenas',
+    'more-details' => 'Mais Detalhes',
 
     'register' => [
         'page-title' => 'Cadastro',
@@ -105,5 +113,10 @@ return [
         'table-date-header' => 'Data',
         'table-responsible-header' => 'Responsável',
         'manual-recharge' => 'Recargas Manuais',
+    ],
+
+    'sales-extract' => [
+        'page-header' => 'Vendas',
+        'zero-games-sold' => 'Nenhum jogo vendido' 
     ]
 ];
