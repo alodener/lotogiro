@@ -17,6 +17,7 @@ return [
     'exclude-game-text' => 'Está ação não pode ser revertida',
     'exclude-game-cancel' => 'Cancelar',
     'exclude-game-confirm' => 'Excluir',
+    'all' => 'Tudo',
     'daily' => 'Diário',
     'weekly' => 'Semanal',
     'monthly' => 'Mensal',
@@ -27,6 +28,8 @@ return [
     'credit' => 'Crédito',
     'debit' => 'Débito',
     'geberate-report' => 'Gerar Relatório',
+    'all-admins' => 'Todos os Administradores',
+    'total' => 'Total',
 
     'register' => [
         'page-title' => 'Cadastro',
@@ -99,5 +102,8 @@ return [
         'table-user-header' => 'Usuário',
         'table-customer-header' => 'Cliente',
         'table-creation-header' => 'Criação',
+        'table-date-header' => 'Data',
+        'table-responsible-header' => 'Responsável',
+        'manual-recharge' => 'Recargas Manuais',
     ]
 ];
