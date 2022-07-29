@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Relatório de Extrato')
+@section('title', trans('admin.extracts.page-title'))
 
 @section('content')
     @error('success')
@@ -26,20 +26,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Deseja excluir este Jogo?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">{{ trans('admin.exclude-game-title') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Está ação não pode ser revertida
+                    {{ trans('admin.exclude-game-text') }}
                 </div>
                 <div class="modal-footer">
                     <form id="destroy" action="" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Excluir</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.exclude-game-cancel') }}</button>
+                        <button type="submit" class="btn btn-danger">{{ trans('admin.exclude-game-confirm') }}</button>
                     </form>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Relatório de Ranking')
+@section('title', trans('admin.ranking.page-header'))
 
 @section('content')
 @error('success')
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card-header indica-card">
-                    Ranking
+                    {{ trans('admin.ranking.page-header') }}
                 </div>
             </div>
         </div>
@@ -34,12 +34,12 @@
                     <table class="table table-striped table-hover table-sm" id="game_table">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Nome</th>
-                                <th>Qualificação</th>
-                                <th>Pontos Pessoais</th>
-                                <th>Pontos de Grupo</th>
-                                <th>Pontos Totais</th>
+                                <th>{{ trans('admin.ranking.table-id-header') }}</th>
+                                <th>{{ trans('admin.ranking.table-name-header') }}</th>
+                                <th>{{ trans('admin.ranking.table-qualification-header') }}</th>
+                                <th>{{ trans('admin.ranking.table-personal-points-header') }}</th>
+                                <th>{{ trans('admin.ranking.table-group-points-header') }}</th>
+                                <th>{{ trans('admin.ranking.table-total-points-header') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,7 +55,7 @@
                             @empty
                             <tr>
                                 <td class="text-center" colspan="9">
-                                    Nenhum registro encontrado.
+                                    {{ trans('admin.entries-not-found') }}
                                 </td>
                             </tr>
                             @endforelse
@@ -64,7 +64,7 @@
                             <tr>
                                 <td colspan="20">
                                     <div class="clearfix">
-                                        <div class="float-left">{{$pagination->getTotal()}} registro(s) encontrado(s).</div>
+                                        <div class="float-left">{{$pagination->getTotal()}} {{ trans('admin.found-entries') }}.</div>
                                         <nav class="float-right">
                                             {!!$pagination->getHtml()!!}
                                         </nav>

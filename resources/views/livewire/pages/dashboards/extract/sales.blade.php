@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                Vendas
+                {{ trans('admin.sales-extract.page-header') }}
             </div>
         </div>
     </div>
@@ -13,11 +13,11 @@
         <div class="col-md-2">
             <div class="form-group">
                 <select wire:model="range" class="custom-select" id="range" name="range">
-                    <option value="0">Diário</option>
-                    <option value="1">Ontem</option>
-                    <option value="2">Semanal</option>
-                    <option value="3">Mensal</option>
-                    <option value="4">Personalizado</option>
+                    <option value="0">{{ trans('admin.daily') }}</option>
+                    <option value="1">{{ trans('admin.yesterday') }}</option>
+                    <option value="2">{{ trans('admin.weekly') }}</option>
+                    <option value="3">{{ trans('admin.monthly') }}</option>
+                    <option value="4">{{ trans('admin.custom') }}</option>
                 </select>
             </div>
         </div>
@@ -70,23 +70,23 @@
                     <button class="btn btn-light btn-block" type="button" data-toggle="collapse"
                             data-target="#dados{{$dado['game']}}" aria-expanded="false"
                             aria-controls="dados{{$dado['game']}}">
-                        Ver Dados
+                        {{ trans('admin.see-data') }}
                     </button>
                 </p>
                 <div class="col">
                     <div class="collapse multi-collapse" id="dados{{$dado['game']}}">
                         <div class="card card-body" style="color: #000">
-                            <p><strong>Bilhetes Vendidos:</strong> {{ $dado['total'] }}</p>
-                            <p><strong>Total Recebido:</strong> {{ $dado['payed'] }}</p>
-                            <p><strong>Bilhetes Premiados:</strong> {{ $dado['drawed'] }}</p>
-                            <p><strong>Total Pago:</strong> {{ $dado['drawedPayed'] }}</p>
+                            <p><strong>{{ trans('admin.tickets-sold') }}:</strong> {{ $dado['total'] }}</p>
+                            <p><strong>{{ trans('admin.total-received') }}:</strong> {{ $dado['payed'] }}</p>
+                            <p><strong>{{ trans('admin.winner-tickets') }}:</strong> {{ $dado['drawed'] }}</p>
+                            <p><strong>{{ trans('admin.total-paid') }}:</strong> {{ $dado['drawedPayed'] }}</p>
                         </div>
 
                         <p>
                             <button class="btn btn-light btn-block" type="button" data-toggle="collapse"
                                     data-target="#detalhes{{$dado['game']}}" aria-expanded="false"
                                     aria-controls="detalhes{{$dado['game']}}">
-                                Mais Detalhes
+                                {{ trans('admin.more-details') }}
                             </button>
                         </p>
                         <div class="col">
@@ -94,13 +94,13 @@
                                 @foreach($dado['unities'] as $unities)
                                 <div class="card card-body" style="color: #000">
                                     <div class="btn bg-blue light mb-2">
-                                        <strong>Dezenas:</strong> {{ $unities['dezenas'] }}
+                                        <strong>{{ trans('admin.dozens') }}:</strong> {{ $unities['dezenas'] }}
                                     </div>
                                     <div>
-                                        <p><strong>Bilhetes Vendidos:</strong> {{ $unities['vendido'] }}</p>
-                                        <p><strong>Total Recebido:</strong> {{ $unities['total'] }}</p>
-                                        <p><strong>Bilhetes Premiados:</strong> {{ $unities['drawed'] }}</p>
-                                        <p><strong>Total Pago:</strong> {{ $unities['payed'] }}</p>
+                                        <p><strong>{{ trans('admin.tickets-sold') }}:</strong> {{ $unities['vendido'] }}</p>
+                                        <p><strong>{{ trans('admin.total-received') }}:</strong> {{ $unities['total'] }}</p>
+                                        <p><strong>{{ trans('admin.winner-tickets') }}:</strong> {{ $unities['drawed'] }}</p>
+                                        <p><strong>{{ trans('admin.total-paid') }}:</strong> {{ $unities['payed'] }}</p>
                                     </div>
                                 </div>
                                 @endforeach
@@ -111,7 +111,7 @@
             </div>
         </div>
         @empty
-        <div class="col-sm-12"><p>Nenhum jogo vendido.</p></div>
+        <div class="col-sm-12"><p>{{ trans('admin.sales-extract.zero-games-sold') }}.</p></div>
         @endforelse
     </div>
 </div>
