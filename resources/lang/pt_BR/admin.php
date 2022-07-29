@@ -17,6 +17,7 @@ return [
     'exclude-game-text' => 'Está ação não pode ser revertida',
     'exclude-game-cancel' => 'Cancelar',
     'exclude-game-confirm' => 'Excluir',
+    'select-period' => 'Selecione o Periodo que Deseja Buscar',
     'all' => 'Tudo',
     'daily' => 'Diário',
     'weekly' => 'Semanal',
@@ -38,6 +39,8 @@ return [
     'total-paid' => 'Total Pago',
     'dozens' => 'Dezenas',
     'more-details' => 'Mais Detalhes',
+    'initial-date' => 'Data Inicio',
+    'end-date' => 'Data Final',
 
     'register' => [
         'page-title' => 'Cadastro',
@@ -118,5 +121,15 @@ return [
     'sales-extract' => [
         'page-header' => 'Vendas',
         'zero-games-sold' => 'Nenhum jogo vendido' 
+    ],
+
+    'network-sales' => [
+        'page-title' => 'Relatorio da Rede',
+        'games-done' => 'Jogos Feitos',
+        'network-sales' => 'Vendas da Rede',
+        'table-id-header' => 'ID',
+        'table-name-header' => 'NOME',
+        'table-email-header' => 'EMAIL',
+        'table-total-sales-header' => 'Total Vendas',        
     ]
 ];
