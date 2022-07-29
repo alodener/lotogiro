@@ -63,5 +63,16 @@ return [
         'table-personal-points-header' => 'Pontos Pessoais',
         'table-group-points-header' => 'Pontos de Grupo',
         'table-total-points-header' => 'Pontos Totais'
+    ],
+
+    'points' => [
+        'page-title' => 'Relatório de Pontos',
+        'page-header' => 'Resumo',
+        'table-id-header' => 'Id',
+        'table-description-header' => 'Descrição',
+        'table-origin-header' => 'Origem',
+        'table-level-header' => 'Nível',
+        'table-points-header' => 'Pontos',
+        'table-creation-header' => 'Criação',
     ]
 ];
