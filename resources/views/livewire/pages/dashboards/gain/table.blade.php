@@ -162,7 +162,7 @@
             </select>
         </div>
         <div class="form-group offset-md-8 col-md-3">
-            <button wire:click="getReport" type="button" class="btn btn-info btn-block">Gerar Relatório</button>
+            <button wire:click="getReport" type="button" class="btn btn-info btn-block">{{ trans('admin.generate-report') }}</button>
         </div>
     </div>
     <div class="row">

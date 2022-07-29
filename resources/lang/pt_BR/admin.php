@@ -29,7 +29,7 @@ return [
     'balance' => 'Saldo',
     'credit' => 'Crédito',
     'debit' => 'Débito',
-    'geberate-report' => 'Gerar Relatório',
+    'generate-report' => 'Gerar Relatório',
     'all-admins' => 'Todos os Administradores',
     'total' => 'Total',
     'see-data' => 'Ver dados',
@@ -158,5 +158,11 @@ return [
         'table-value-header' => 'Valor',
         'table-comission-header' => 'Comissão',
         'table-creation-header' => 'Criação',
+    ],
+
+    'sales' => [
+        'page-title' => 'Relatório de Vendas',
+        'page-header' => 'Vendas',
+        ''
     ]
 ];
