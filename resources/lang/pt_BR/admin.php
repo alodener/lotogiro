@@ -13,6 +13,20 @@ return [
     'copy-link-button' => 'Copiar Link',
     'entries-not-found' => 'Nenhum registro encontrado.',
     'found-entries' => 'registro(s) encontrado(s)',
+    'exclude-game-title' => 'Deseja excluir este Jogo?',
+    'exclude-game-text' => 'Está ação não pode ser revertida',
+    'exclude-game-cancel' => 'Cancelar',
+    'exclude-game-confirm' => 'Excluir',
+    'daily' => 'Diário',
+    'weekly' => 'Semanal',
+    'monthly' => 'Mensal',
+    'custom' => 'Personalizado',
+    'period' => 'Período',
+    'transactions-quantity' => 'Quantidade de Transações',
+    'balance' => 'Saldo',
+    'credit' => 'Crédito',
+    'debit' => 'Débito',
+    'geberate-report' => 'Gerar Relatório',
 
     'register' => [
         'page-title' => 'Cadastro',
@@ -73,6 +87,17 @@ return [
         'table-origin-header' => 'Origem',
         'table-level-header' => 'Nível',
         'table-points-header' => 'Pontos',
+        'table-creation-header' => 'Criação',
+    ],
+
+    'extracts' => [
+        'page-title' => 'Relatório de Extrato',
+        'table-id-header' => 'Id',
+        'table-type-header' => 'Tipo',
+        'table-value-header' => 'Valor',
+        'table-description-header' => 'Descrição',
+        'table-user-header' => 'Usuário',
+        'table-customer-header' => 'Cliente',
         'table-creation-header' => 'Criação',
     ]
 ];
