@@ -31,6 +31,24 @@
                         </a>
                         <ul class="nav nav-treeview">
                             @can('read_extract')
+                            <li class="nav-item">
+                                <a href="{{route('admin.dashboards.ranking.index')}}"
+                                    class="nav-link @if(request()->is('admin/ranking')) active @endif">
+                                    <i class="fas fa-star nav-icon"></i>
+                                    <p>Ranking</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('read_extract')
+                            <li class="nav-item">
+                                <a href="{{route('admin.dashboards.extracts.points.index')}}"
+                                    class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
+                                    <i class="fas fa-star nav-icon"></i>
+                                    <p>Pontos</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('read_extract')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.index')}}"
                                        class="nav-link @if(request()->is('admin/dashboards/extracts/')) active @endif">
@@ -54,6 +72,15 @@
                                        class="nav-link @if(request()->is('admin/dashboards/extracts/sales')) active @endif">
                                         <i class="fas fa-file-alt nav-icon"></i>
                                         <p>Extrato de Vendas</p>
+                                    </a>
+                                </li>
+                            @endif
+                            @if(\App\Helper\UserValidate::iAmAdmin())
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.extracts.winning-ticket')}}"
+                                       class="nav-link @if(request()->is('admin/dashboards/extracts/winning-ticket')) active @endif">
+                                        <i class="fas fa-file-alt nav-icon"></i>
+                                        <p>Bilhetes Premiados</p>
                                     </a>
                                 </li>
                             @endif
@@ -242,6 +269,44 @@
                                         <p>Usuários</p>
                                     </a>
                                 </li>
+                            @endcan
+                            @can('read_user')
+                            <li class="nav-item">
+                                <a href="{{route('admin.settings.qualifications.index')}}"
+                                    class="nav-link @if(request()->is('admin/settings/qualifications*')) active @endif">
+                                    <i class="fas fa-star nav-icon"></i>
+                                    <p>Qualificações</p>
+                                </a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
+
+                @canany(['read_user', 'read_role', 'read_permission'])
+                    <li class="nav-item has-treeview @if(request()->is('admin/reports/*')) menu-open @endif">
+                        <a href="#" class="nav-link @if(request()->is('admin/reports/*')) active @endif">
+                            <i class="nav-icon fas fa-cog"></i>
+                            <p>
+                                Relatórios
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('read_user')
+                            <li class="nav-item">
+                                <a href="{{route('admin.reports.used.dozens')}}"
+                                    class="nav-link @if(request()->is('admin/settings/used-dozens*')) active @endif">
+                                    <i class="fas fa-star nav-icon"></i>
+                                    <p>Dezenas Utilizadas</p>
+                                </a>
+                                
+                                <a href="{{route('admin.reports.points-by-user')}}"
+                                    class="nav-link @if(request()->is('admin/settings/points-by-user*')) active @endif">
+                                    <i class="fas fa-users nav-icon"></i>
+                                    <p>Pontos por Cliente</p>
+                                </a>
+                            </li>
                             @endcan
                         </ul>
                     </li>
