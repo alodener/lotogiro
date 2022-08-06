@@ -19,7 +19,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quattrocento&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+
     <link rel="shortcut icon" href="{{ asset(env('logo')) }}">
+
 
     @livewireStyles
 
@@ -47,6 +49,7 @@
     @endpush
 @endif
 <div class="wrapper">
+
     @include('admin.layouts.navbar')
     @include('admin.layouts.sidebar')
 
@@ -66,6 +69,54 @@
 <script src="{{asset('admin/layouts/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin/layouts/js/master.js')}}"></script>
 <script src="{{asset('admin/layouts/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+
+<script>
+    $(document).ready(function () {
+        setInterval(() => {
+            $.ajax({
+                url: '/admin/notifications',
+                success: function(response) {
+                    shownNotifications = $('.notification_dropdown .timeline li');
+
+                    if(response.notifications.length > shownNotifications.length) {
+                        $.each(response.notifications, function(i, notification) {
+                            let date = new Date(notification.created_at);
+
+                           $newNotification = `
+                                <li>
+                                    <a href="${notification.data.url}">
+                                        <div class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">${notification.data.title}</h6>
+                                                <small class="d-block">${date.toLocaleDateString('pt-BR')}</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            `;
+
+                            $('.notification_dropdown .timeline').append($newNotification);
+                            $('.notification_dropdown .nav-link').addClass('show-notifcations-indicatior');
+                            $('.notification_dropdown .nav-link .notifications-count').text(response.unreadCount);
+                        });
+                    }
+                }
+            })
+        }, 10000);
+
+        $('.notification_dropdown .nav-link').on('click', function() {
+            $.ajax({
+                url: '/admin/notifications/readAll',
+                success: function(response) {
+                    if(response.success) {
+                        $('.notification_dropdown .nav-link').removeClass('show-notifcations-indicatior');
+                        $('.notification_dropdown .nav-link .notifications-count').text('');
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function () {
@@ -91,9 +142,7 @@
     }
 </script>
 
-@if(auth()->user()->lockModal == 0)
-    @livewire('pages.dashboards.layouts.modal-offer')
-@endif
+
 @livewireScripts
 @stack('scripts')
 

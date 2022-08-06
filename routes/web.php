@@ -2,6 +2,7 @@
 
     use App\Http\Controllers\Admin\Pages\Auth\RegisterController;
     use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
+    use App\Http\Controllers\Admin\Pages\Dashboards\WinningTicketController;
     use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
 use App\Http\Controllers\Admin\Pages\HomeController;
@@ -20,6 +21,10 @@ use App\Http\Controllers\Admin\Pages\Dashboards\ReportDayController;
 use App\Http\Controllers\Admin\Pages\Dashboards\GainController;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
+use App\Http\Controllers\Admin\Pages\Dashboards\ExtractPointsController;
+use App\Http\Controllers\Admin\Pages\Dashboards\RankingController;
+use App\Http\Controllers\Admin\Pages\Settings\QualificationController;
+use App\Http\Controllers\Admin\Pages\Reports\ReportController;
 
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
@@ -38,7 +43,7 @@ use App\Http\Controllers\ForgotPasswordController;
 
 // rotas para recuperar senha
 Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
-Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
@@ -82,9 +87,15 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::prefix('extracts')->name('extracts.')->group(function () {
                 Route::get('/', [ExtractController::class, 'index'])->name('index');
                 Route::get('/sales', [ExtractController::class, 'sales'])->name('sales');
+                Route::get('/winning-ticket', [ExtractController::class, 'winningTicket'])->name('winning-ticket');
+                Route::get('/add-winning-ticket', [ExtractController::class, 'addWinningTicket'])->name('add-winning-ticket');
                 Route::get('/manual-recharge', [ExtractController::class, 'manualRecharge'])->name('manualRecharge');
+                Route::resource('points', ExtractPointsController::class);
             });
 
+            Route::prefix('ranking')->name('ranking.')->group(function () {
+                Route::get('/', [RankingController::class, 'index'])->name('index');
+            });
 
             Route::prefix('wallet')->name('wallet.')->group(function () {
                 Route::get('/', [WalletController::class, 'index'])->name('index');
@@ -108,6 +119,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('/games/create-link', [GameController::class, 'createLink'])->name('games.link');
             Route::get('/games/receipt/{game}/{format}/{prize?}', [GameController::class, 'getReceipt'])->name('games.receipt');
             Route::get('/games/receiptTudo/{idcliente}', [GameController::class, 'getReceiptTudo'])->name('games.receiptTudo');
+            Route::get('/games/receiptTudoTxt/{idcliente}', [GameController::class, 'getReceiptTudoTxt'])->name('games.getReceiptTudoTxt');
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');
@@ -129,12 +141,24 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
         });
         Route::prefix('settings')->name('settings.')->group(function () {
+            Route::resource('qualifications', QualificationController::class);
             Route::resource('users', UserController::class);
             Route::get('indicated', [UserController::class, 'indicated'])->name('users.indicated');
             Route::get('indicated/{userId}', [UserController::class, 'indicatedByLevel'])->name('users.indicatedByLevel');
             Route::get('users/{userId}/statementBalance', [UserController::class, 'statementBalance'])->name('users.statementBalance');
             Route::resource('permissions', PermissionController::class);
             Route::resource('roles', RoleController::class);
+        });
+
+        Route::prefix('reports')->name('reports.')->group(function () {
+            Route::get('used-dozens/competitions', [ReportController::class, 'usedDozensListCompetitions'])->name('used.dozens');
+            Route::get('{competition}/used-dozens', [ReportController::class, 'usedDozensByCompetition'])->name('used.dozens.by-competition');
+            Route::get('points-by-user', [ReportController::class, 'pointsByUser'])->name('points-by-user');
+        });
+
+        Route::prefix('notifications')->name('notifications.')->group(function () {
+            Route::get('/readAll', [UserController::class, 'readAllNotifications']);
+            Route::get('/', [UserController::class, 'getAllNotifications']);
         });
     });
 });
