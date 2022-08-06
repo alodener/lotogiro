@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Novo Cliente')
+@section('title', trans('admin.customers.new-customer-page-title'))
 
 @section('content')
 

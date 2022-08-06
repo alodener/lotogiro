@@ -163,6 +163,17 @@ return [
     'sales' => [
         'page-title' => 'Relatório de Vendas',
         'page-header' => 'Vendas',
-        ''
+    ],
+
+    'customers' => [
+        'page-title' => 'Clientes',
+        'new-customer' => 'Novo Cliente',
+        'table-id-header' => 'Id',
+        'table-name-header' => 'Nome',
+        'table-email-header' => 'E-mail',
+        'table-creation-header' => 'Criação',
+        'table-actions-header' => 'Ações',
+        'remove-customer-modal-title' => 'Deseja excluir este cliente?',
+        'new-customer-page-title' => 'Novo Cliente',
     ]
 ];
