@@ -101,7 +101,7 @@
         <input hidden value="1" id="xml" name="xml">    
         <button type="button"  class="btn btn-secondary" wire:click="dezenas" >Computar</button>   
         <div class="modal-footer">
-            <button type="submit" class="btn btn-info">Criar</button>
+            <button type="submit" class="btn btn-info" id="submit_game">Criar</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             
         </div>
