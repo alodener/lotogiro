@@ -29,6 +29,8 @@ use Yajra\DataTables\Facades\DataTables;
 use PDF;
 use SnappyImage;
 
+use App\Jobs\ProcessBetEntries;
+
 // lib de email
 use Mail;
 
@@ -132,6 +134,7 @@ class GameController extends Controller
                         'error' => 'Apostas Encerradas!'
                     ]);
                 }
+
                 $chaveregistro = ChaveAleatoria::generateKey(8);
                 $user = Auth()->user()->id;
                 $bet = new Bet();
@@ -140,6 +143,7 @@ class GameController extends Controller
                 $bet->status_xml = 1;
                 $bet->key_reg = $chaveregistro;
                 $bet->save();
+
                 $bet = Bet::where('user_id', $user)->where('status_xml', 1)->where('key_reg', $chaveregistro)->first();
 
                 $typeGameValue = TypeGameValue::where([
@@ -168,103 +172,14 @@ class GameController extends Controller
                         'error' => 'Saldo Insuficiente!'
                     ]);
                 }
-                foreach ($dezenas as $dez) {
-                    //$dezenaconvertida = string.split(/,(?! )/);
-                    $dezenaconvertida2 = explode(" ", $dez);
-                    $dezenaconvertida = implode(",", $dezenaconvertida2);
-                    $game = new $this->game;
-                    $game->client_id = $request->client;
-                    $game->user_id = auth()->id();
-                    $game->type_game_id = $request->type_game;
-                    $game->type_game_value_id = $request->valueId;
-                    $game->value = $request->value;
-                    $game->premio = $request->premio;
-                    $game->numbers = $dezenaconvertida;
-                    $game->competition_id = $competition->id;
-                    $game->checked = 1;
-                    $game->bet_id = $bet->id;
-                    $game->commission_percentage = auth()->user()->commission;
-                    $game->save();
 
-                    $extract = [
-                        'type' => 1,
-                        'value' => $game->value,
-                        'type_game_id' => $game->type_game_id,
-                        'description' => 'Venda - Jogo de id: ' . $game->id,
-                        'user_id' => $game->user_id,
-                        'client_id' => $game->client_id
-                    ];
-                    $ID_VALUE = auth()->user()->indicador;
-                    $storeExtact = ExtractController::store($extract);
-                    $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $game->value, $ID_VALUE);
-                    $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
+                ProcessBetEntries::dispatch($dezenas, $request, $bet, $competition, auth()->user())->onQueue('default');
 
-                    UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);
-
-                    $game->commission_value = $commissionCalculation;
-                    $game->commision_value_pai = $commissionCalculationPai;
-                    $game->save();
-                }
-                $bet->status_xml = 2;
-                $bet->save();
-
-                // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
-
-                $idAposta = $bet->id;
-
-                // pegando jogos feitos
-                $jogosCliente = Game::where('bet_id', $idAposta)->get();
-
-                // informações para filename
-                $InfoJogos =  $jogosCliente[0];
-
-                // pegando informações de cliente
-                $ClientInfo = Client::where('id', $InfoJogos["client_id"])->get();
-                $ClienteJogo =  $ClientInfo[0];
-
-                // pegando typegame
-                $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
-                $TipoJogo = $TipoJogo[0];
-
-                // pegando datas do sorteio
-                $Datas = Competition::where('id', $InfoJogos['competition_id'])->get();
-                $Datas = $Datas[0];
-
-                // nome cliente
-                $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
-
-                global $data;
-                $data = [
-                    'prize' => false,
-                    'jogosCliente' => $jogosCliente,
-                    'Nome' => $Nome,
-                    'Datas' => $Datas,
-                    'TipoJogo' => $TipoJogo
-                ];
-
-                global $fileName;
-                $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
-
-                // return view('admin.layouts.pdf.receiptTudo', $data);
-                global $pdf;
-                $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
-                // return $pdf->download($fileName);
-
-                // $arquivo = $pdf->output($fileName);
-                Mail::send('email.jogo', ['idjogo' => $game->id], function ($m) {
-                    global $data;
-                    global $fileName;
-                    global $pdf;
-                    $m->from('admin@superlotogiro.com', 'SuperLotogiro');
-                    $m->subject('Seu Bilhete');
-                    $m->to(auth()->user()->email);
-                    $m->attachData($pdf->output(), $fileName);
-                });
-
-                return redirect()->route('admin.bets.validate-games.edit', ['validate_game' => $bet->id])->withErrors([
-                    'success' => 'Jogo cadastrado com sucesso1'
+                return redirect()->route('admin.bets.games.index', ['type_game' => $request->type_game])->withErrors([
+                    'success' => 'O seu jogo está sendo processado, você será notificado assim que terminar.'
                 ]);
             } catch (\Exception $exception) {
+
                 $bet->status_xml = 3;
                 $bet->save();
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
