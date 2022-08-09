@@ -15,9 +15,9 @@ class CreateWinningTicketTable extends Migration
     {
         Schema::create('winning_ticket', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('game_id');
-            $table->bigInteger('draw_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('game_id');
+            $table->unsignedBigInteger('draw_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('game_id')->references('id')->on('games');
             $table->foreign('draw_id')->references('id')->on('draws');

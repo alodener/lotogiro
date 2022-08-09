@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLockModalOfferTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateLockModalOfferTable extends Migration
      */
     public function up()
     {
-        Schema::create('lock_modal_offer', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->char('status', '1')->default(0);//0 - open, 1 - closed
-            $table->foreign('user_id')->references('id')->on('users');
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->text('data');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateLockModalOfferTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lock_modal_offer');
+        Schema::dropIfExists('notifications');
     }
 }
