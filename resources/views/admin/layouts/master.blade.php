@@ -22,6 +22,7 @@
 
     <link rel="shortcut icon" href="{{ asset(env('logo')) }}">
 
+
     @livewireStyles
 
     <style>
@@ -71,6 +72,54 @@
 
 <script>
     $(document).ready(function () {
+        setInterval(() => {
+            $.ajax({
+                url: '/admin/notifications',
+                success: function(response) {
+                    shownNotifications = $('.notification_dropdown .timeline li');
+
+                    if(response.notifications.length > shownNotifications.length) {
+                        $.each(response.notifications, function(i, notification) {
+                            let date = new Date(notification.created_at);
+
+                           $newNotification = `
+                                <li>
+                                    <a href="${notification.data.url}">
+                                        <div class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">${notification.data.title}</h6>
+                                                <small class="d-block">${date.toLocaleDateString('pt-BR')}</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            `;
+
+                            $('.notification_dropdown .timeline').append($newNotification);
+                            $('.notification_dropdown .nav-link').addClass('show-notifcations-indicatior');
+                            $('.notification_dropdown .nav-link .notifications-count').text(response.unreadCount);
+                        });
+                    }
+                }
+            })
+        }, 10000);
+
+        $('.notification_dropdown .nav-link').on('click', function() {
+            $.ajax({
+                url: '/admin/notifications/readAll',
+                success: function(response) {
+                    if(response.success) {
+                        $('.notification_dropdown .nav-link').removeClass('show-notifcations-indicatior');
+                        $('.notification_dropdown .nav-link .notifications-count').text('');
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
         bsCustomFileInput.init();
     });
 
@@ -93,9 +142,7 @@
     }
 </script>
 
-@if(auth()->user()->lockModal == 0)
-    @livewire('pages.dashboards.layouts.modal-offer')
-@endif
+
 @livewireScripts
 @stack('scripts')
 
