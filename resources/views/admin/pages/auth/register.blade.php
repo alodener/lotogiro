@@ -18,9 +18,7 @@
     <div class="col-lg-6 col-md-12 mt-5">
         <div class="login-logo">
 
-
-            <img src="{{ asset(env('logo')) }}" alt="" width=150 height=150>
-
+            <img src="{{ asset(env('logo')) }}" alt="" width=300 height=150>
 
         </div>
         <div class="card">
