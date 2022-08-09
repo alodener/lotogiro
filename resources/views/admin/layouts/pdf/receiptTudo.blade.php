@@ -135,7 +135,9 @@
         <div class="">
             <div class="border-bottom-dashed py-2">
                 <p class="text-danger text-center font text-size-3 text-bold">
+
                     APOSTA {{ env("nome_sistema") }} TUDO
+
                 </p>
                 @if($prize)
                     <p class="text-success text-center font text-size-4 text-bold py-2">
@@ -225,7 +227,7 @@
                 </p>
                 <p class="">
                     <span class="font text-bold">VALOR APOSTADO: </span>
-                    <span class="font">R${{\App\Helper\Money::toReal($jogos{'value'})}}</span>
+                    <span class="font">R${{\App\Helper\Money::toReal($jogos['value'])}}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">GANHO MÁXIMO: </span>
