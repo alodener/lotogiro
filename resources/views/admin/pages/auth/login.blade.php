@@ -47,13 +47,13 @@
                     </div>
                     @enderror
                 </div>
-                <h3 class="login-box-msg">Realize o login para iniciar a sessão</h3>
+                <h3 class="login-box-msg">{{ trans('admin.login-title') }}</h3>
 
                 <form method="POST" action="{{route('admin.post.login')}}">
                     @csrf
                     <div class="input-group mb-3">
                         <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                               placeholder="E-mail">
+                               placeholder="{{ trans('admin.email-field') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
-                               name="password" placeholder="Senha">
+                               name="password" placeholder="{{ trans('admin.password-field') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -85,33 +85,33 @@
                                 <input type="checkbox" name="remember"
                                        id="remember" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="remember">
-                                    Manter conectado
+                                    {{ trans('admin.keep-connected') }}
                                 </label>
                             </div>
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Acessar</button>
+                            <button type="submit" class="btn btn-primary btn-block">{{ trans('admin.login-button') }}</button>
                         </div>
                     </div>
                 </form>
                 
-                <a href="{{ route('forget.password.get') }}">Esqueceu sua Senha?</a>
+                <a href="{{ route('forget.password.get') }}">{{ trans('admin.forgot-password-link') }}</a>
 
                 <div class="row">
                     <div class="col-sm-12">
                         <p class="mb-1 text-bold">
-                            Não é cadastrado?<br>
+                            {{ trans('admin.register-label') }}<br>
                             <a class="btn btn-block btn-info right"
                                href="{{ route('register') }}">
-                                Cadastre-se
+                                {{ trans('admin.register-button') }}
                             </a>
                         </p>
 
                         <a href="https://wa.me/558196826967?text=Olá, gostaria de me tornar um consultor."
                            class="btn btn-block btn-success"
-                           title="Deseja ser um consultor?"
+                           title="{{ trans('admin.consultant-link-text') }}"
                            target="_blank">
-                            <i style="border:none;"class="fa fa-whatsapp"></i> Deseja ser um consultor?
+                            <i style="border:none;"class="fa fa-whatsapp"></i> {{ trans('admin.consultant-link-text') }}
                         </a>
                     </div>
                 </div>
