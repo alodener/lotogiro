@@ -159,11 +159,11 @@ class UserController extends Controller
             // enviar pra cliente
             if($auxRole == 6){
 
-                $validatedData = $request->validate([
+               /* $validatedData = $request->validate([
                     'pix' => 'required|max:60',
                     'telefone' => 'required|max:15',
                     'cpf' => 'required|max:11'
-                ]);
+                ]);*/
 
                 $user->type_client = 1;
 
@@ -409,5 +409,28 @@ class UserController extends Controller
         ]);
          $retornof = "sucesso";
         return $retornof;
+    }
+
+    public function readAllNotifications(Request $request)
+    {
+        $authUser = auth()->user();
+
+        $authUser->notifications->markAsRead();
+
+        if($authUser->unreadNotifications->count() == 0) {
+            return response()->json([
+                'success' => true
+            ]);
+        }
+    }
+
+    public function getAllNotifications(Request $request)
+    {
+        $authUser = auth()->user();
+
+        return response()->json([
+            'notifications' => $authUser->notifications,
+            'unreadCount' => $authUser->unreadNotifications->count()
+        ]);
     }
 }
