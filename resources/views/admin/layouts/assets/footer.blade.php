@@ -4,6 +4,7 @@
     </div>
 
     <strong>Copyright &copy; 2020-2022 {{ env("nome_sistema") }}.</strong>
+
     Todos
     direitos
     reservados.

@@ -124,6 +124,7 @@ class GameController extends Controller
                 'value' => 'required',
             ]);
 
+
             $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
             $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
             try {
@@ -133,6 +134,7 @@ class GameController extends Controller
                         'error' => 'Apostas Encerradas!'
                     ]);
                 }
+
                 $chaveregistro = ChaveAleatoria::generateKey(8);
                 $user = Auth()->user()->id;
                 $bet = new Bet();
@@ -141,6 +143,7 @@ class GameController extends Controller
                 $bet->status_xml = 1;
                 $bet->key_reg = $chaveregistro;
                 $bet->save();
+
                 $bet = Bet::where('user_id', $user)->where('status_xml', 1)->where('key_reg', $chaveregistro)->first();
 
                 $typeGameValue = TypeGameValue::where([
@@ -176,6 +179,7 @@ class GameController extends Controller
                     'success' => 'O seu jogo está sendo processado, você será notificado assim que terminar.'
                 ]);
             } catch (\Exception $exception) {
+
                 $bet->status_xml = 3;
                 $bet->save();
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
