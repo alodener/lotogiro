@@ -19,3 +19,10 @@ yarn-error.log
 /vendor
 /resources/js/
 .env
+
+
+php_errors.log
+docker-compose.yml
+plano.sql
+
+/db
