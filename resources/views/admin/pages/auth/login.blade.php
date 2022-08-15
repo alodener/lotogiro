@@ -7,7 +7,7 @@
   <div class="col-lg-4 col-md-12 mt-5">
         <div class="login-logo mt-md-5">
 
-            <img src="{{ asset(env('logo')) }}" alt="" width=200 height=150>
+            <img src="{{ asset(env('logo')) }}" alt="" width="300" height="150">
 
         </div>
          @if (session('success'))
