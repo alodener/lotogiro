@@ -135,7 +135,7 @@
                                 @foreach($lines as $cols)
                                     <td>
                                         <button wire:click="selectNumber({{$cols}})" id="number_{{$cols}}" type="button"
-                                                class="btn {{in_array($cols, $selectedNumbers) ? env('OneNumber2') : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
+                                                class="btn {{in_array($cols, $selectedNumbers) ? env('OneNumber2') : 'btn-warning'}} btn-beat-number">R{{$cols}}</button>
                                     </td>
                                 @endforeach
                             </tr>
