@@ -121,6 +121,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');
+            Route::post('/games/mass-delete', [GameController::class, 'massDelete'])->name('games.massDelete');
             Route::resource('games', GameController::class)->except([
                 'index', 'create'
             ]);

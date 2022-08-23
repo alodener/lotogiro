@@ -52,6 +52,9 @@ class GameController extends Controller
             $game->get();
             return DataTables::of($game)
                 ->addIndexColumn()
+                ->addColumn('mass_action', function ($game) {
+                    return "<input type='checkbox' name='games[]' class='game-checkbox' value='{$game->id}' />";
+                })
                 ->addColumn('action', function ($game) {
                     $data = '';
                     if (auth()->user()->hasPermissionTo('update_game')) {
@@ -79,7 +82,7 @@ class GameController extends Controller
                 ->editColumn('created_at', function ($game) {
                     return Carbon::parse($game->created_at)->format('d/m/Y');
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'mass_action'])
                 ->make(true);
         }
 
@@ -511,6 +514,47 @@ class GameController extends Controller
         }
     }
 
+    public function massDelete(Request $request)
+    {
+        if (!auth()->user()->hasPermissionTo('delete_game')) {
+            throw new \Exception('Não autorizado.');
+        }
+
+        // if (!auth()->user()->hasPermissionTo('read_all_games') && $game->user_id != auth()->id()) {
+        //     abort(403);
+        // }
+
+        try {
+            $games = Game::whereIn('id', $request->ids)->get();
+
+            if($games->count() > 0) {
+                foreach($games->all() as $game) {
+                    $typeGame = $game->type_game_id;
+
+                    $draws = Draw::get();
+        
+                    foreach ($draws as $draw) {
+                        $draw->games = explode(',', $draw->games);
+                        $gameDraw = in_array($game->id, $draw->games);
+        
+                        if ($gameDraw)
+                            throw new \Exception('Jogo #' . $game->id . ' vinculado em um sorteio');
+                    }
+        
+                    $game->delete();
+                }
+            }
+
+            return response()->json([
+                'message' => 'Jogos deletados com sucesso',
+                'success' => true
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
 
     public function getReceipt(Game $game, $format, $prize = false)
     {
