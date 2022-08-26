@@ -227,7 +227,7 @@
                 </p>
                 <p class="">
                     <span class="font text-bold">VALOR APOSTADO: </span>
-                    <span class="font">R${{\App\Helper\Money::toReal($jogos{'value'})}}</span>
+                    <span class="font">R${{\App\Helper\Money::toReal($jogos['value'])}}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">GANHO MÁXIMO: </span>
