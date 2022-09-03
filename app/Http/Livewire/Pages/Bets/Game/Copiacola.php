@@ -46,7 +46,6 @@ class Copiacola extends Component
         $result;
         $contadorLinhas;
         $contador = 0;
-        $this->contadorJogos = 0;
         foreach($this->dezena as $dezenaConvert){
             $this->contadorJogos++;
             $string = preg_replace('/^\h*\v+/m', '', $dezenaConvert);
@@ -56,12 +55,12 @@ class Copiacola extends Component
             if($contador == 0){
                  $contadorLinhas = $result;
             }
-            if($result != $contadorLinhas){
+            if($result > $contadorLinhas){
                 $this->msg = "Existem linhas de dezenas diferentes";
                 break 1;
             }
             $contador = 1;
-            // $contadorLinhas = $result;
+            $contadorLinhas = $result;
             
         }
         if($this->msg == null){
