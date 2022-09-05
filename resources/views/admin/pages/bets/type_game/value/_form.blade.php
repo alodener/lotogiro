@@ -22,7 +22,7 @@
             </div>
             <div class="card-body">
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="name">Dezenas</label>
                         <input type="text" class="form-control @error('dozens') is-invalid @enderror" id="dozens"
                                name="dozens"
@@ -33,7 +33,7 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="multiplicador">Multiplicador</label>
                         <input type="text" class="form-control @error('multiplicador') is-invalid @enderror"
                                id="multiplicador"
@@ -45,7 +45,7 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="maxreais">Máximo em Reais</label>
                         <input type="text" class="form-control @error('maxreais') is-invalid @enderror"
                                id="maxreais"
@@ -55,6 +55,17 @@
                         <span class="invalid-feedback" role="alert">
                             {{ $message }}
                         </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="name">Limite de Jogos Repetidos</label>
+                        <input type="text" class="form-control @error('max_repeated_games') is-invalid @enderror" id="max_repeated_games"
+                               name="max_repeated_games"
+                               maxlength="50" value="{{old('max_repeated_games', $value->max_repeated_games ?? null)}}">
+                        @error('max_repeated_games')
+                            <span class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>
@@ -83,6 +94,7 @@
 
         $(document).ready(function () {
             $('#dozens').inputmask("9999");
+            $('#max_repeated_games').inputmask("9999");
             $("#amount").inputmask( 'currency',{"autoUnmask": true,
                 radixPoint:",",
                 groupSeparator: ".",

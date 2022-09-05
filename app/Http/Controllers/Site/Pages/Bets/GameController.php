@@ -10,6 +10,7 @@ use App\Models\Bet;
 use App\Models\Game;
 use App\Models\HashGame;
 use App\Models\TypeGame;
+use App\Models\TypeGameValue;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -89,6 +90,19 @@ class GameController extends Controller
 
         if (!empty($validGame)) {
             throw new \Exception('Não é possivel cadastrar o mesmo jogo para está aposta!');
+        }
+
+        $typeGameValue = TypeGameValue::find($valueid);
+
+        if(!empty($typeGameValue->max_repeated_games)) {
+            $foundGames = Game::where('numbers', implode(',', $selectedNumbers))
+            ->where('competition_id', $competition->id)
+            ->where('type_game_value_id', $valueid)
+            ->get();
+
+            if ($foundGames->count() >= $typeGameValue->max_repeated_games) {
+                throw new \Exception('Essa dezena já atingiu o número máximo de apostas com esses números!');
+            }
         }
 
         $game = new Game();

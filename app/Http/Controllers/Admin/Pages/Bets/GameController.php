@@ -176,6 +176,25 @@ class GameController extends Controller
                     ]);
                 }
 
+                $typeGameValue = TypeGameValue::find($request['valueId']);
+
+                if(!empty($typeGameValue->max_repeated_games)) {
+                    foreach($dezenas as $dezena) {
+                        $dezena = str_replace(' ', ',', $dezena);
+
+                        $foundGames = Game::where('numbers', $dezena)
+                        ->where('competition_id', $competition->id)
+                        ->where('type_game_value_id', $request['valueId'])
+                        ->get();
+
+                        if ($foundGames->count() >= $typeGameValue->max_repeated_games) {
+                            return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                                'error' => "Essa dezena já atingiu o número máximo de apostas com esses números ({$dezena})!"
+                            ]);
+                        }
+                    }
+                }
+
                 ProcessBetEntries::dispatch($dezenas, $request, $bet, $competition, auth()->user())->onQueue('default');
 
                 return redirect()->route('admin.bets.games.index', ['type_game' => $request->type_game])->withErrors([
@@ -225,6 +244,21 @@ class GameController extends Controller
                     return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                         'error' => 'Não existe concurso cadastrado!'
                     ]);
+                }
+
+                $typeGameValue = TypeGameValue::find($request['valueId']);
+
+                if(!empty($typeGameValue->max_repeated_games)) {
+                    $foundGames = Game::where('numbers', $request['numbers'])
+                    ->where('competition_id', $competition->id)
+                    ->where('type_game_value_id', $request['valueId'])
+                    ->get();
+
+                    if ($foundGames->count() >= $typeGameValue->max_repeated_games) {
+                        return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                            'error' => 'Essa dezena já atingiu o número máximo de apostas com esses números!'
+                        ]);
+                    }
                 }
 
                 $game = new $this->game;
