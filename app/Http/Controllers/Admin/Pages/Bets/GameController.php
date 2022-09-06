@@ -261,6 +261,9 @@ class GameController extends Controller
                     }
                 }
 
+                $numbers = explode(',', $request->numbers);
+                sort($numbers, SORT_NUMERIC);
+
                 $game = new $this->game;
                 $game->client_id = $request->client;
                 $game->user_id = auth()->id();
@@ -268,7 +271,7 @@ class GameController extends Controller
                 $game->type_game_value_id = $request->valueId;
                 $game->value = $request->value;
                 $game->premio = $request->premio;
-                $game->numbers = $request->numbers;
+                $game->numbers = implode(',', $numbers);
                 $game->competition_id = $competition->id;
                 $game->checked = 1;
                 $game->commission_percentage = auth()->user()->commission;
