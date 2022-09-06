@@ -64,6 +64,8 @@ class ProcessBetEntries implements ShouldQueue
         foreach ($this->dezenas as $dez) {
             //$dezenaconvertida = string.split(/,(?! )/);
             $dezenaconvertida2 = explode(" ", $dez);
+            sort($dezenaconvertida2, SORT_NUMERIC);
+
             $dezenaconvertida = implode(",", $dezenaconvertida2);
             
             $game = new Game;
