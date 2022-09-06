@@ -433,4 +433,15 @@ class UserController extends Controller
             'unreadCount' => $authUser->unreadNotifications->count()
         ]);
     }
+
+    public function logInAs(Request $request, User $user)
+    {
+        if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all') ){
+            abort(403);
+        }
+        
+        \Auth::user()->impersonate($user);
+
+        return redirect('/');
+    }
 }
