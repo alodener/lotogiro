@@ -168,6 +168,12 @@
                 class="btn btn-block btn-outline-success">@if(request()->is('admin/settings/users/create')) Cadastrar
             Usuário  @else  Atualizar Usuário @endif </button>
     </div>
+
+    @if(isset($user))
+        <div class="col-md-12">
+            <a href="{{ route('admin.settings.users.login-as', $user->id) }}" class="btn btn-block btn-outline-info">Entrar como usuário</a>
+        </div>
+    @endif
 </div>
 
 @push('scripts')
