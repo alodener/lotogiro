@@ -63,10 +63,10 @@ class ProcessBetEntries implements ShouldQueue
     {
         foreach ($this->dezenas as $dez) {
             //$dezenaconvertida = string.split(/,(?! )/);
-            $dezenaconvertida2 = explode(" ", $dez);
-            sort($dezenaconvertida2, SORT_NUMERIC);
+            // $dezenaconvertida2 = explode(" ", $dez);
+            // sort($dezenaconvertida2, SORT_NUMERIC);
 
-            $dezenaconvertida = implode(",", $dezenaconvertida2);
+            // $dezenaconvertida = implode(",", $dezenaconvertida2);
             
             $game = new Game;
             $game->client_id = $this->request['client'];
@@ -75,7 +75,7 @@ class ProcessBetEntries implements ShouldQueue
             $game->type_game_value_id = $this->request['valueId'];
             $game->value = $this->request['value'];
             $game->premio = $this->request['premio'];
-            $game->numbers = $dezenaconvertida;
+            $game->numbers = $dez;
             $game->competition_id = $this->competition->id;
             $game->checked = 1;
             $game->bet_id = $this->bet->id;
