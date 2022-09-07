@@ -444,4 +444,11 @@ class UserController extends Controller
 
         return redirect('/');
     }
+
+    public function logoutAs()
+    {
+        \Auth::user()->leaveImpersonation();
+        
+        return redirect('/');
+    }
 }
