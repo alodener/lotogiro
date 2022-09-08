@@ -267,6 +267,7 @@ class GameController extends Controller
 
                 $numbers = explode(',', $request->numbers);
                 sort($numbers, SORT_NUMERIC);
+                $numbers = implode(',', $numbers);
 
                 $typeGameValue = TypeGameValue::find($request['valueId']);
 
@@ -298,7 +299,7 @@ class GameController extends Controller
                 $game->type_game_value_id = $request->valueId;
                 $game->value = $request->value;
                 $game->premio = $request->premio;
-                $game->numbers = implode(',', $numbers);
+                $game->numbers = $numbers;
                 $game->competition_id = $competition->id;
                 $game->checked = 1;
                 $game->commission_percentage = auth()->user()->commission;
