@@ -178,21 +178,40 @@ class GameController extends Controller
 
                 $typeGameValue = TypeGameValue::find($request['valueId']);
 
+                // Formatar dezenas
+                foreach($dezenas as $key => $dezena) {
+                    $dezena_arr = explode(' ', $dezena);
+                    sort($dezena_arr, SORT_NUMERIC);
+
+                    $dezenas[$key] = implode(',', $dezena_arr);
+                }
+
+                // Contar dezenas repetidas enviadas
+                $countedDozens = array_count_values($dezenas);
+
                 if(!empty($typeGameValue->max_repeated_games)) {
                     foreach($dezenas as $dezena) {
-                        $dezena = str_replace(' ', ',', $dezena);
 
                         $foundGames = Game::where('numbers', $dezena)
                         ->where('competition_id', $competition->id)
                         ->where('type_game_value_id', $request['valueId'])
                         ->get();
 
-                        if ($foundGames->count() >= $typeGameValue->max_repeated_games) {
+                        if ($foundGames->count() >= $typeGameValue->max_repeated_games ||
+                            $typeGameValue->max_repeated_games >= $countedDozens[$dezena]) {
                             return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                                 'error' => "Essa dezena já atingiu o número máximo de apostas com esses números ({$dezena})!"
                             ]);
                         }
                     }
+                }
+
+                $hasDraws = Draw::where('competition_id', $competition->id)->count();
+
+                if($hasDraws > 0) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Esse sorteio já foi finalizado!'
+                    ]);
                 }
 
                 ProcessBetEntries::dispatch($dezenas, $request, $bet, $competition, auth()->user())->onQueue('default');
@@ -262,6 +281,14 @@ class GameController extends Controller
                             'error' => 'Essa dezena já atingiu o número máximo de apostas com esses números!'
                         ]);
                     }
+                }
+
+                $hasDraws = Draw::where('competition_id', $competition->id)->count();
+
+                if($hasDraws > 0) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Esse sorteio já foi finalizado!'
+                    ]);
                 }
 
                 $game = new $this->game;
