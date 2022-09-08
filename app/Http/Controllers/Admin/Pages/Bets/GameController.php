@@ -198,7 +198,7 @@ class GameController extends Controller
                         ->get();
 
                         if ($foundGames->count() >= $typeGameValue->max_repeated_games ||
-                            $typeGameValue->max_repeated_games >= $countedDozens[$dezena]) {
+                            $countedDozens[$dezena] >= $typeGameValue->max_repeated_games ) {
                             return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                                 'error' => "Essa dezena já atingiu o número máximo de apostas com esses números ({$dezena})!"
                             ]);
