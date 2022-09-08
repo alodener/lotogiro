@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Controller;
 use App\Models\Bet;
 use App\Models\Game;
+use App\Models\Draw;
 use App\Models\HashGame;
 use App\Models\TypeGame;
 use App\Models\TypeGameValue;
@@ -79,6 +80,11 @@ class GameController extends Controller
             throw new \Exception('Não existe concurso cadastrado!');
         }
 
+        $hasDraws = Draw::where('competition_id', $competition->id)->count();
+
+        if($hasDraws > 0) {
+            throw new \Exception('Esse sorteio já foi finalizado!');
+        }
 
         $validGame = Game::where([
             ['client_id', $bet->client->id],
