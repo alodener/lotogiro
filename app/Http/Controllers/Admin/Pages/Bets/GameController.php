@@ -246,10 +246,13 @@ class GameController extends Controller
                     ]);
                 }
 
+                $numbers = explode(',', $request->numbers);
+                sort($numbers, SORT_NUMERIC);
+
                 $typeGameValue = TypeGameValue::find($request['valueId']);
 
                 if(!empty($typeGameValue->max_repeated_games)) {
-                    $foundGames = Game::where('numbers', $request['numbers'])
+                    $foundGames = Game::where('numbers', $numbers)
                     ->where('competition_id', $competition->id)
                     ->where('type_game_value_id', $request['valueId'])
                     ->get();
@@ -260,10 +263,6 @@ class GameController extends Controller
                         ]);
                     }
                 }
-
-
-                $numbers = explode(',', $request->numbers);
-                sort($numbers, SORT_NUMERIC);
 
                 $game = new $this->game;
                 $game->client_id = $request->client;
