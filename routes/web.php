@@ -1,9 +1,9 @@
 <?php
 
-    use App\Http\Controllers\Admin\Pages\Auth\RegisterController;
-    use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
-    use App\Http\Controllers\Admin\Pages\Dashboards\WinningTicketController;
-    use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Pages\Auth\RegisterController;
+use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
+use App\Http\Controllers\Admin\Pages\Dashboards\WinningTicketController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
 use App\Http\Controllers\Admin\Pages\HomeController;
 use App\Http\Controllers\Admin\Pages\Settings\UserController;
