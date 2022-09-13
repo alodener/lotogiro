@@ -166,15 +166,6 @@ class GameController extends Controller
                         'error' => 'Não existe concurso cadastrado!'
                     ]);
                 }
-                $balance = Balance::calculation($totaldeAposta);
-
-                if (!$balance) {
-                    $bet->status_xml = 3;
-                    $bet->save();
-                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                        'error' => 'Saldo Insuficiente!'
-                    ]);
-                }
 
                 $typeGameValue = TypeGameValue::find($request['valueId']);
 
@@ -204,6 +195,16 @@ class GameController extends Controller
                             ]);
                         }
                     }
+                }
+
+                $balance = Balance::calculation($totaldeAposta);
+
+                if (!$balance) {
+                    $bet->status_xml = 3;
+                    $bet->save();
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Saldo Insuficiente!'
+                    ]);
                 }
 
                 ProcessBetEntries::dispatch($dezenas, $request, $bet, $competition, auth()->user())->onQueue('default');
