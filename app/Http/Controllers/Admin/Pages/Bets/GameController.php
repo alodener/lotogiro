@@ -189,12 +189,20 @@ class GameController extends Controller
                         ->get();
 
                         if ($foundGames->count() >= $typeGameValue->max_repeated_games ||
-                            $typeGameValue->max_repeated_games >= $countedDozens[$dezena]) {
+                            $countedDozens[$dezena] >= $typeGameValue->max_repeated_games ) {
                             return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                                 'error' => "Essa dezena já atingiu o número máximo de apostas com esses números ({$dezena})!"
                             ]);
                         }
                     }
+                }
+
+                $hasDraws = Draw::where('competition_id', $competition->id)->count();
+
+                if($hasDraws > 0) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Esse sorteio já foi finalizado!'
+                    ]);
                 }
 
                 $balance = Balance::calculation($totaldeAposta);
@@ -258,10 +266,14 @@ class GameController extends Controller
                     ]);
                 }
 
+                $numbers = explode(',', $request->numbers);
+                sort($numbers, SORT_NUMERIC);
+                $numbers = implode(',', $numbers);
+
                 $typeGameValue = TypeGameValue::find($request['valueId']);
 
                 if(!empty($typeGameValue->max_repeated_games)) {
-                    $foundGames = Game::where('numbers', $request['numbers'])
+                    $foundGames = Game::where('numbers', $numbers)
                     ->where('competition_id', $competition->id)
                     ->where('type_game_value_id', $request['valueId'])
                     ->get();
@@ -273,8 +285,13 @@ class GameController extends Controller
                     }
                 }
 
-                $numbers = explode(',', $request->numbers);
-                sort($numbers, SORT_NUMERIC);
+                $hasDraws = Draw::where('competition_id', $competition->id)->count();
+
+                if($hasDraws > 0) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Esse sorteio já foi finalizado!'
+                    ]);
+                }
 
                 $game = new $this->game;
                 $game->client_id = $request->client;
@@ -283,7 +300,7 @@ class GameController extends Controller
                 $game->type_game_value_id = $request->valueId;
                 $game->value = $request->value;
                 $game->premio = $request->premio;
-                $game->numbers = implode(',', $numbers);
+                $game->numbers = $numbers;
                 $game->competition_id = $competition->id;
                 $game->checked = 1;
                 $game->commission_percentage = auth()->user()->commission;

@@ -143,6 +143,10 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         });
         Route::prefix('settings')->name('settings.')->group(function () {
             Route::resource('qualifications', QualificationController::class);
+
+            Route::get('user/{user}/login-as', [UserController::class, 'logInAs'])->name('users.login-as');
+            Route::get('user/loggout-as', [UserController::class, 'logoutAs'])->name('users.logout-as');
+
             Route::resource('users', UserController::class);
             Route::get('indicated', [UserController::class, 'indicated'])->name('users.indicated');
             Route::get('indicated/{userId}', [UserController::class, 'indicatedByLevel'])->name('users.indicatedByLevel');
