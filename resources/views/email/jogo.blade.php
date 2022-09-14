@@ -13,6 +13,7 @@
     Obrigado por jogar conosco.
     <br>
     Atenciosamente,
+
     {{ env("nome_sistema") }}
 
 </p>
