@@ -33,7 +33,33 @@
 
     @stack('styles')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed" style="font-family: Montserrat, sans-serif;">
+<body class="hold-transition sidebar-mini layout-fixed @impersonating($guard = null) impersonating  @endImpersonating" style="font-family: Montserrat, sans-serif;">
+
+@impersonating($guard = null)
+    <div class="leave-current-user-wrapper">
+        <span><strong>Conectado Como: </strong> {{ auth()->user()->name }}</span>
+        <a href="{{ route('admin.settings.users.logout-as') }}" class="text-white">X Sair da Sessão</a>
+    </div>
+
+    <style>
+        body.impersonating{
+            padding-top: 50px;
+        }
+        .leave-current-user-wrapper {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background: #000;
+            z-index: 999999;
+            padding: 10px 20px;
+            text-align: center;
+            color: #fff
+        }
+    </style>
+@endImpersonating
+
 @if (session('success'))
     @push('scripts')
         <script>

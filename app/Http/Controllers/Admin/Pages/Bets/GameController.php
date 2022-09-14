@@ -54,6 +54,9 @@ class GameController extends Controller
             $game->get();
             return DataTables::of($game)
                 ->addIndexColumn()
+                ->addColumn('mass_action', function ($game) {
+                    return "<input type='checkbox' name='games[]' class='game-checkbox' value='{$game->id}' />";
+                })
                 ->addColumn('action', function ($game) {
                     $data = '';
                     if (auth()->user()->hasPermissionTo('update_game')) {
@@ -81,7 +84,7 @@ class GameController extends Controller
                 ->editColumn('created_at', function ($game) {
                     return Carbon::parse($game->created_at)->format('d/m/Y');
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'mass_action'])
                 ->make(true);
         }
 
@@ -163,6 +166,45 @@ class GameController extends Controller
                         'error' => 'Não existe concurso cadastrado!'
                     ]);
                 }
+
+                $typeGameValue = TypeGameValue::find($request['valueId']);
+
+                // Formatar dezenas
+                foreach($dezenas as $key => $dezena) {
+                    $dezena_arr = explode(' ', $dezena);
+                    sort($dezena_arr, SORT_NUMERIC);
+
+                    $dezenas[$key] = implode(',', $dezena_arr);
+                }
+
+                // Contar dezenas repetidas enviadas
+                $countedDozens = array_count_values($dezenas);
+
+                if(!empty($typeGameValue->max_repeated_games)) {
+                    foreach($dezenas as $dezena) {
+
+                        $foundGames = Game::where('numbers', $dezena)
+                        ->where('competition_id', $competition->id)
+                        ->where('type_game_value_id', $request['valueId'])
+                        ->get();
+
+                        if ($foundGames->count() >= $typeGameValue->max_repeated_games ||
+                            $countedDozens[$dezena] >= $typeGameValue->max_repeated_games ) {
+                            return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                                'error' => "Essa dezena já atingiu o número máximo de apostas com esses números ({$dezena})!"
+                            ]);
+                        }
+                    }
+                }
+
+                $hasDraws = Draw::where('competition_id', $competition->id)->count();
+
+                if($hasDraws > 0) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Esse sorteio já foi finalizado!'
+                    ]);
+                }
+
                 $balance = Balance::calculation($totaldeAposta);
 
                 if (!$balance) {
@@ -224,6 +266,33 @@ class GameController extends Controller
                     ]);
                 }
 
+                $numbers = explode(',', $request->numbers);
+                sort($numbers, SORT_NUMERIC);
+                $numbers = implode(',', $numbers);
+
+                $typeGameValue = TypeGameValue::find($request['valueId']);
+
+                if(!empty($typeGameValue->max_repeated_games)) {
+                    $foundGames = Game::where('numbers', $numbers)
+                    ->where('competition_id', $competition->id)
+                    ->where('type_game_value_id', $request['valueId'])
+                    ->get();
+
+                    if ($foundGames->count() >= $typeGameValue->max_repeated_games) {
+                        return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                            'error' => 'Essa dezena já atingiu o número máximo de apostas com esses números!'
+                        ]);
+                    }
+                }
+
+                $hasDraws = Draw::where('competition_id', $competition->id)->count();
+
+                if($hasDraws > 0) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Esse sorteio já foi finalizado!'
+                    ]);
+                }
+
                 $game = new $this->game;
                 $game->client_id = $request->client;
                 $game->user_id = auth()->id();
@@ -231,7 +300,7 @@ class GameController extends Controller
                 $game->type_game_value_id = $request->valueId;
                 $game->value = $request->value;
                 $game->premio = $request->premio;
-                $game->numbers = $request->numbers;
+                $game->numbers = $numbers;
                 $game->competition_id = $competition->id;
                 $game->checked = 1;
                 $game->commission_percentage = auth()->user()->commission;
@@ -426,6 +495,47 @@ class GameController extends Controller
         }
     }
 
+    public function massDelete(Request $request)
+    {
+        if (!auth()->user()->hasPermissionTo('delete_game')) {
+            throw new \Exception('Não autorizado.');
+        }
+
+        // if (!auth()->user()->hasPermissionTo('read_all_games') && $game->user_id != auth()->id()) {
+        //     abort(403);
+        // }
+
+        try {
+            $games = Game::whereIn('id', $request->ids)->get();
+
+            if($games->count() > 0) {
+                foreach($games->all() as $game) {
+                    $typeGame = $game->type_game_id;
+
+                    $draws = Draw::get();
+        
+                    foreach ($draws as $draw) {
+                        $draw->games = explode(',', $draw->games);
+                        $gameDraw = in_array($game->id, $draw->games);
+        
+                        if ($gameDraw)
+                            throw new \Exception('Jogo #' . $game->id . ' vinculado em um sorteio');
+                    }
+        
+                    $game->delete();
+                }
+            }
+
+            return response()->json([
+                'message' => 'Jogos deletados com sucesso',
+                'success' => true
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
 
     public function getReceipt(Game $game, $format, $prize = false)
     {
