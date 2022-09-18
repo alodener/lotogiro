@@ -76,6 +76,7 @@
                         <th>Responsável</th>
                         <th>Usuário</th>
                         <th>Valor</th>
+                        <th>Carteira</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -85,6 +86,7 @@
                             <td>{{ $transact->responsavel }}</td>
                             <td>{{ $transact->usuario }}</td>
                             <td>{{ $transact->value }}</td>
+                            <td>{{ $transact->wallet == 'balance' ? 'Saldo' : 'Bônus' }}</td>
                         </tr>
                     @empty
                         <tr>

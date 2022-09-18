@@ -268,21 +268,22 @@ class UserController extends Controller
             $indicador = 1;
         }
 
-
         try
         {
-             if(auth()->user()->hasPermissionTo('update_user')){
+            if(auth()->user()->hasPermissionTo('update_user')){
             $newBalance = 0;
+            $newBonus = 0;
             $ajuste = 0;
-                    $auxRole;
+            $auxRole;
         foreach ($request->roles as $role){
             $auxRole = $role;
         }
             if($request->has('balance') && !is_null($request->balance)){
                 $oldBalance = $user->balance;
+                $oldBonus = $user->bonus;
                 $balanceRequest = (float) Money::toDatabase($request->balance);
-                $newBalanceRequest = $balanceRequest + (($user->commission/100) * $balanceRequest);
-                $newBalance = $user->balance +  $newBalanceRequest;
+                $newBonus = $user->bonus + ($user->commission/100) * $balanceRequest;
+                $newBalance = $user->balance +  $balanceRequest;
             }
 
             $user->name = $request->name;
@@ -294,6 +295,7 @@ class UserController extends Controller
             if($auxRole != 6){
                 $user->type_client = null;
             }
+            
             if($newBalance > 0){
                 $user->balance = $newBalance;
             }else{
@@ -301,6 +303,11 @@ class UserController extends Controller
                 $oldBalance = $user->balance;
                 $user->balance = (float) Money::toDatabase($request->balanceAtual);
             }
+
+            if($newBonus > 0){
+                $user->bonus = $newBonus;
+            }
+
             $user->indicador = $indicador;
 
             if (!empty($request->link)) {
@@ -308,8 +315,12 @@ class UserController extends Controller
             }
             $user->save();
 
+            if((float) $newBonus > 0){
+                $this->storeTransact($user, ($user->commission/100) * $balanceRequest, $oldBonus, 'bonus');
+            }
+
             if((float) $newBalance > 0){
-                $this->storeTransact($user, $newBalanceRequest, $oldBalance);
+                $this->storeTransact($user, $balanceRequest, $oldBalance);
             }
             if($ajuste == 1 && $oldBalance != $request->balanceAtual){
                 $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance);
@@ -399,13 +410,14 @@ class UserController extends Controller
         return view('admin.pages.settings.user.statementBalance', ['historybalance' => $historybalance, 'user' => $user]);
     }
 
-    public function storeTransact(User $user, string $value, string $oldValue)
+    public function storeTransact(User $user, string $value, string $oldValue, string $wallet = 'balance')
     {
         TransactBalance::create([
             'user_id_sender' => auth()->id(),
             'user_id' => $user->id,
             'value' => $value,
             'old_value' => $oldValue,
+            'wallet' => $wallet
         ]);
          $retornof = "sucesso";
         return $retornof;
