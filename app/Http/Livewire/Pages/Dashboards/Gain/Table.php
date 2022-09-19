@@ -26,6 +26,7 @@ class Table extends Component
     public $status = null;
     public $value;
     public $valueBonus;
+    public $valueBalance;
     public $i;
     public $dateStart;
     public $dateEnd;
@@ -272,34 +273,43 @@ class Table extends Component
     public function bonValuesIndividual($query, $id)
     {
         $value = 0;
+        $balanceValue = 0;
         $result = User::where('id',  $id)->get();
         foreach ($result as $item) {
             $value += $item->bonus;
+            $balanceValue += $item->balance;
         }
         $this->valueBonus = $value;
+        $this->valueBalance = $balanceValue;
         return $query;
     }
         public function bonValuesEscolhido($query, $id)
     {
         $value = 0;
+        $balanceValue = 0;
         $result = User::where('id', $id)->get();
         foreach ($result as $item) {
             $value += $item->bonus;
+            $balanceValue += $item->balance;
         }
 
         $this->valueBonus = $value;
+        $this->valueBalance = $balanceValue;
 
         return $query;
     }
         public function bonValuesTodo($query)
     {
         $value = 0;
+        $balanceValue = 0;
         $result = User::get();
         foreach ($result as $item) {
             $value += $item->bonus;
+            $balanceValue += $item->balance;
         }
 
         $this->valueBonus = $value;
+        $this->valueBalance = $balanceValue;
 
         return $query;
     }
