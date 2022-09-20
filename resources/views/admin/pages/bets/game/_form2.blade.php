@@ -38,6 +38,7 @@
         $(formID).submit(function(event){
             if (formID.checkValidity()) {
                 send.attr('disabled', 'disabled');
+                $('#submit_game').attr('disabled', 'disabled');
             }
         });
 

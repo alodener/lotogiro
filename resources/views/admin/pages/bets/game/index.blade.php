@@ -28,6 +28,7 @@
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>Id</th>
                         <th>Tipo de Jogo</th>
                         <th>Cpf Cliente</th>
@@ -40,6 +41,15 @@
                     <tbody>
                     </tbody>
                 </table>
+
+                <div class="row-actions">
+                    <div class="form-group actions-wrapper col-12 col-sm-2">
+                        <select name="table-actions" id="tableActions" class="form-control">
+                            <option value="">Selecionar</option>
+                            <option value="delete">Deletar</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -71,8 +81,78 @@
 @endsection
 
 @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
+        $('#tableActions').on('change', function() {
+            const actionSelector = $(this);
+
+            let selectedGames = $('.game-checkbox:checked');
+
+            if(selectedGames.length > 0) {
+                switch(actionSelector.val()) {
+                    case 'delete':
+                        massDelete(selectedGames);
+                        break;
+                }
+            } else {
+                actionSelector.val('');
+
+                Swal.fire({
+                    text: 'Selecione ao menos um jogo!',
+                    icon: 'error'
+                });
+            }
+        });
+
+        function massDelete(selectedGames) {
+            Swal.fire({
+                text: 'Tem certeza que deseja deletar os jogos selecionados?',
+                confirmButtonText: 'Remover',
+                icon: 'question',
+                focusConfirm: false,
+            }).then((result) => {
+                let ids = [];
+
+                $.each(selectedGames, function(i, selectedGame) {
+                    ids[i] = selectedGame.value;
+                });
+
+                if(result.isConfirmed) {
+                    $.ajax({
+                        method: 'POST',
+                        url: '{{ route("admin.bets.games.massDelete") }}',
+                        data: {
+                            ids: ids
+                        },
+                        success: function(response) {
+                            if(response.success) {
+                                Swal.fire({
+                                    text: response.message,
+                                    icon: 'success'
+                                }).then((result) => {
+                                    if(result.isConfirmed || result.isDismissed) {
+                                        document.location.reload(true);
+                                    }
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            Swal.fire({
+                                text: xhr.responseJSON.error,
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
+            });
+        }
 
         $(document).on('click', '#btn_delete_game', function () {
             var game = $(this).attr('game');
@@ -99,6 +179,7 @@
                 serverSide: true,
                 ajax: "{{ route('admin.bets.games.index', ['type_game' => $typeGame]) }}",
                 columns: [
+                    {data: 'mass_action', name: 'mass_action', orderable: false, searchable: false},
                     {data: 'id', name: 'id'},
                     {data: 'type', name: 'type'},
                     {data: 'client_cpf', name: 'client_cpf'},
