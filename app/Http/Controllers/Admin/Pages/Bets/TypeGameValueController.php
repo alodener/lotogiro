@@ -52,6 +52,9 @@ class TypeGameValueController extends Controller
                 ->editColumn('maxreais', function ($typeGameValue) {
                     return Money::toReal($typeGameValue->maxreais);
                 })
+                ->editColumn('max_repeated_games', function ($typeGameValue) {
+                    return $typeGameValue->max_repeated_games;
+                })
                 ->editColumn('created_at', function ($typeGameValue) {
                     return Carbon::parse($typeGameValue->created_at)->format('d/m/Y');
                 })
@@ -97,6 +100,7 @@ class TypeGameValueController extends Controller
         ]);
 
         $request['dozens'] = preg_replace('/[^0-9]/', '', $request->dozens);
+        $request['max_repeated_games'] = preg_replace('/[^0-9]/', '', $request->max_repeated_games);
        // $request['amount'] = Money::toDatabase($request->amount);
         //$request['prize'] = Money::toDatabase($request->prize);
 
@@ -106,6 +110,7 @@ class TypeGameValueController extends Controller
             $typeGameValue->numbers = $request->dozens;
             $typeGameValue->multiplicador = $request->multiplicador;
             $typeGameValue->maxreais = $request->maxreais;
+            $typeGameValue->max_repeated_games = $request->max_repeated_games;
             $typeGameValue->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([
@@ -155,6 +160,8 @@ class TypeGameValueController extends Controller
         ]);
 
         $request['dozens'] = preg_replace('/[^0-9]/', '', $request->dozens);
+        $request['max_repeated_games'] = preg_replace('/[^0-9]/', '', $request->max_repeated_games);
+
        // $request['multiplicador'] = $request->amount;
          $request['maxreais'] = Money::toDatabase($request->maxreais);
 
@@ -163,6 +170,7 @@ class TypeGameValueController extends Controller
             $value->numbers = $request->dozens;
             $value->multiplicador = $request->multiplicador;
             $value->maxreais = $request->maxreais;
+            $value->max_repeated_games = $request->max_repeated_games;
             $value->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([
