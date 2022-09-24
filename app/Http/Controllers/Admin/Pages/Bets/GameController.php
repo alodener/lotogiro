@@ -71,7 +71,7 @@ class GameController extends Controller
             }
 
             if(isset($params['endDate']) && !empty($params['endDate'])) {
-                $game = $game->where('created_at', '<=', $params['endDate']);
+                $game = $game->where('created_at', '<=', $params['endDate'] . ' 23:59:59');
             }
             
             if (!auth()->user()->hasPermissionTo('read_all_games')) $game->where('user_id', auth()->id());

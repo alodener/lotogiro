@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -462,5 +463,12 @@ class UserController extends Controller
         \Auth::user()->leaveImpersonation();
         
         return redirect('/');
+    }
+
+    public function listSelect(Request $request)
+    {
+        $users = User::orWhere('name', 'like', '%' . $request->q . '%')->orWhere('last_name', 'like', '%' . $request->q . '%')->get();
+
+        return UserResource::collection($users);
     }
 }
