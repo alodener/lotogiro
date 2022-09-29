@@ -154,6 +154,19 @@
     </div>
     <div class="row">
         <div class="col-md-6">
+            <div class="small-box bg-secondary">
+                <div class="inner">
+                    <h3>R${{\App\Helper\Money::toReal($totalBonus)}}</h3>
+                    <p>Total de Bônus</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <span class="small-box-footer p-2"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>R${{\App\Helper\Money::toReal($valueBalance)}}</h3>

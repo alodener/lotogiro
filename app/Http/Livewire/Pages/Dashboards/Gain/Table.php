@@ -27,6 +27,7 @@ class Table extends Component
     public $value;
     public $valueBonus;
     public $valueBalance;
+    public $totalBonus;
     public $i;
     public $dateStart;
     public $dateEnd;
@@ -314,6 +315,11 @@ class Table extends Component
         return $query;
     }
 
+    public function sumTotalBonus($query, $userId = null)
+    {
+        dd($query);
+    }
+
     public function runQueryBuilder()
     {
         $query = Game::query();
@@ -330,13 +336,16 @@ class Table extends Component
         if(!$this->auth->hasPermissionTo('read_all_gains')) {
             $query = $this->bonValuesIndividual($query, $this->auth->id);
             $query = $this->sumValues($query, $this->auth->id);
+            $this->sumTotalBonus($query, $this->auth->id);
        }else{
            if($this->userId != null){
                $query = $this->bonValuesEscolhido($query, $this->userId);
                $query = $this->sumValuesEscolhido($query, $this->userId);
+               $this->sumTotalBonus($query, $this->userId);
            }else{
                $query = $this->bonValuesTodo($query);
                $query = $this->sumValuesTodos($query);
+               $this->sumTotalBonus($query);
            }
 
        }
