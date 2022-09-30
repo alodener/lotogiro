@@ -283,8 +283,10 @@ class UserController extends Controller
                 $oldBalance = $user->balance;
                 $oldBonus = $user->bonus;
                 $balanceRequest = (float) Money::toDatabase($request->balance);
+                $newBalanceRequest = $balanceRequest + (($user->commission/100) * $balanceRequest);
+                $newBalance = $user->balance +  $newBalanceRequest;
                 $newBonus = $user->bonus + ($user->commission/100) * $balanceRequest;
-                $newBalance = $user->balance +  $balanceRequest;
+                //$newBalance = $user->balance +  $balanceRequest;
             }
 
             $user->name = $request->name;
@@ -305,9 +307,9 @@ class UserController extends Controller
                 $user->balance = (float) Money::toDatabase($request->balanceAtual);
             }
 
-            if($newBonus > 0){
+           /* if($newBonus > 0){
                 $user->bonus = $newBonus;
-            }
+            }*/
 
             $user->indicador = $indicador;
 
