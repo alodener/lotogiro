@@ -42,6 +42,7 @@ class Sales extends Component
 
         $games = Game::with('typeGame')
                 ->whereBetween('created_at', $periodo)
+                ->where('checked', 1)
                 ->select(
                     'type_game_id',
                     \DB::raw('SUM(value) as gameValue'),
@@ -70,6 +71,7 @@ class Sales extends Component
             $gamesByUnity = Game::with('typeGameValue')
                 ->whereBetween('created_at', $periodo)
                 ->where('type_game_id', $game->type_game_id)
+                ->where('checked', 1)
                 ->select(
                     'type_game_value_id',
                     \DB::raw('SUM(value) as gameValue'),

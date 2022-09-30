@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Resources\ClientResource;
 
 class ClientController extends Controller
 {
@@ -235,5 +236,12 @@ class ClientController extends Controller
             ]);
 
         }
+    }
+
+    public function listSelect(Request $request)
+    {
+        $clients = Client::orWhere('name', 'like', '%' . $request->q . '%')->orWhere('last_name', 'like', '%' . $request->q . '%')->get();
+
+        return ClientResource::collection($clients);
     }
 }
