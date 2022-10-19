@@ -27,7 +27,17 @@ class Qualifications extends Model
             $groupPercentage = $r->group_percentage;
             $personalGoal = $r->goal * ($personalPercentage / 100);
             $groupGoal = $r->goal * ($groupPercentage / 100);
-            if ($balances['personal_balance'] < $personalGoal || $balances['group_balance'] < $groupGoal) {
+
+            /**
+             * personal_balance = 100% dos pontos do nívels
+             * 
+             * ou
+             * 
+             * personal_balance pode ter no mínimo 10% dos pontos do nível e o resto vir dos pontos da rede
+             */
+
+            if ($balances['personal_balance'] < $personalGoal ||
+            ($balances['personal_balance'] + $balances['group_balance']) < $r->goal) {
                 continue;
             }
 
@@ -57,7 +67,7 @@ class Qualifications extends Model
 
         $personalDiff = 0;
         if ($pointsA < $personalGoal) {
-            $personalDiff = $personalGoal - $pointsA;
+            $personalDiff = ($personalGoal + floatval($personalPoints)) - $pointsA;
         }
         $groupDiff = 0;
         if ($pointsB < $groupGoal) {
@@ -65,7 +75,7 @@ class Qualifications extends Model
         }
         $totalDiff = ($personalDiff + $groupDiff);
 
-        return [
+        $arr = [
             'personalPoints' => $pointsA,
             'groupPoints' => $pointsB,
             'goalOk' => $goalOk,
@@ -80,6 +90,10 @@ class Qualifications extends Model
 
             'percentage' => ($goalOk / $nextQualification->goal) * 100,
         ];
+
+        // dd($arr);
+
+        return $arr;
     }
 
     public static function getGoalCalculation(Qualifications $qualification, $personalPoints, $groupPoints)
