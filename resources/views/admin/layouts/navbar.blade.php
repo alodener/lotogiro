@@ -1,83 +1,121 @@
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <ul class="navbar-nav">
-        <li class="nav-item d-lg-none">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item pl-3">
-            Saldo: R${{\App\Helper\Money::toReal(auth()->user()->balance)}} |
-            Bônus:  R${{\App\Helper\Money::toReal(auth()->user()->bonus)}}
-        </li>
-        <li class="nav-item pl-3">
-                        <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light
-                        text-bold">
-                            <i class="fas fa-piggy-bank"></i>
-                            Recarregar 
-                        </a>
-        </li>
-    </ul>
+@extends('admin.layouts.login')
 
-    <ul class="navbar-nav ml-auto">
-        @php $unreadNotifications = auth()->user()->unreadNotifications; @endphp
+@section('title', 'Login')
 
-        @if(!empty(auth()->user()->notifications) && count(auth()->user()->notifications) > 0)
-            <li class="nav-item dropdown notification_dropdown">
-                <a class="nav-link bell ai-icon {{ $unreadNotifications->count() > 0 ? 'show-notifcations-indicatior' : '' }}" href="#" role="button" data-toggle="dropdown">
-                    <svg id="icon-user" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
+@section('content')
 
-                    {{-- @if($unreadNotifications->count() > 0) --}}
-                        <div class="notifications-count">{{ $unreadNotifications->count() }}</div>
-                    {{-- @endif --}}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px; overflow-y: auto">
-                        <ul class="timeline">
-                            @foreach(auth()->user()->notifications as $notification)
-                            <li>
-                                <a @if($notification->data['url']) href="{{$notification->data['url']}}" @else href="javascript:;" @endif>
-                                <div class="timeline-panel">
-                                    <div class="media-body">
-                                        <h6 class="mb-1">{{$notification->data['title']}}</h6>
-                                        <small class="d-block">{{$notification->created_at->diffForHumans()}}</small>
-                                    </div>
-                                </div>
-                                </a>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <!--<a class="all-notification" href="#">See all notifications <i class="ti-arrow-right"></i></a>-->
-                </div>
-            </li>
-        @endif
 
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-               <i class="fas fa-cog"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                <p class="px-2 pt-1">
-                    Olá, {{auth()->user()->name}}
-                </p>
-                @can('read_user')
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{route('admin.settings.users.edit', ['user' => auth()->user()->id])}}">
-                    <i class="fas fa-user mr-2"></i> Conta
-                </a>
-                @endcan
-                @can('edit_all')
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{route('admin.settings.users.edit', ['user' => auth()->user()->id])}}">
-                    <i class="fas fa-user mr-2"></i> Conta
-                </a>
-                @endcan
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{route('admin.logout')}}">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
+  <div class="container-login100">
+
+         @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
             </div>
-        </li>
-    </ul>
-</nav>
+        @endif
+        
+        @if (session('SenhaRecuperada'))
+            <div class="alert alert-success" role="alert">
+                {{ session('SenhaRecuperada') }}
+            </div>
+        @endif
+        
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+        <div class="wrap-login100">
+            <div class="card-body login-card-body">
+                        <div class="login-logo mt-md-5">
+
+            <img src="{{ asset(env('logo')) }}" alt="" width="150" height="150">
+
+        </div>
+                <div class="col-md-12 px-4">
+                    @error('success')
+                    <div class="alert alert-success alert-dismissible fade show">
+                        {{ $message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @enderror
+                    @error('error')
+                    <div class="alert alert-default-danger alert-dismissible fade show">
+                        {{ $message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @enderror
+                </div>
+                <h3 class="login-box-msg">Login</h3>
+
+                <form method="POST" action="{{route('admin.post.login')}}">
+                    @csrf
+                    <div class="wrap-input100">
+                        <input type="email" class="form-control @error('email') is-invalid @enderror input100" name="email"
+                               placeholder="E-mail">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="wrap-input100">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror input100"
+                               name="password" placeholder="Senha">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" name="remember"
+                                       id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="remember">
+                                    Manter conectado
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="login100-form-btn">Acessar</button>
+                        </div>
+                    </div>
+                </form>
+                
+                <a href="{{ route('forget.password.get') }}">Esqueceu sua Senha?</a>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="mb-1 text-bold">
+                            Não é cadastrado?<br>
+                            <a class="btn btn-block btn-info right"
+                               href="{{ route('register') }}">
+                                Cadastre-se
+                            </a>
+                        </p>
+
+                        <a href="https://wa.me/558196826967?text=Olá, poderia me ajudar?"
+                           class="btn btn-block btn-success"
+                           title="Precisa de ajuda?"
+                           target="_blank">
+                            <i style="border:none;"class="fa fa-whatsapp"></i> Precisa de ajuda?
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
