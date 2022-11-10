@@ -19,7 +19,7 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
             <a class="nav-link" href="https://wa.me/558196826967?text=Olá, Poderia me ajudar?">
-               <i class="fas fa-circle-question"></i>
+               <i class="fas fa-regular fa-question"></i>
             </a>
         </li>
         @php $unreadNotifications = auth()->user()->unreadNotifications; @endphp
