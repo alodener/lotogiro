@@ -25,6 +25,51 @@
                 </a>
             @endcan
             <div class="table-responsive extractable-cel">
+                <div class="filter-wrapper">
+                    <form class="form" id="filterForm">
+                        <div class="form-row no-gutters">
+                            <div class="form-group col">
+                                <label for="client_id">Cliente</label>
+                                {{-- <select name="client_id" id="client_id" class="form-control">
+                                    @if($clients->count() > 0)
+                                        <option value="">Todos</option>
+
+                                        @foreach($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
+                                    @endif
+                                </select> --}}
+                                <input type="text" id="client_id" name="client_id" class="selectize" />
+                            </div>
+                            <div class="form-group col">
+                                <label for="user_id">Usuário</label>
+                                {{-- <select name="user_id" id="user_id" class="form-control">
+                                    <option value="">Todos</option>
+
+                                    @if($users->count() > 0)
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    @endif
+                                </select> --}}
+
+                                <input type="text" id="user_id" name="user_id" class="selectize" />
+                            </div>
+                            <div class="form-group col">
+                                <label for="startDate">Data Inicial</label>
+                                <input type="date" name="startDate" id="startDate" class="form-control" />
+                            </div>
+                            <div class="form-group col">
+                                <label for="endDate">Data Final</label>
+                                <input type="date" name="endDate" id="endDate" class="form-control" />
+                            </div>
+                            <div class="form-group col">
+                                <button class="btn btn-primary" id="filterBtn">Filtrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
                     <tr>
@@ -80,8 +125,32 @@
 
 @endsection
 
+@push('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css" integrity="sha512-bkB9w//jjNUnYbUpATZQCJu2khobZXvLP5GZ8jhltg7P/dghIrTaSJ7B/zdlBUT0W/LXGZ7FfCIqNvXjWKqCYA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        #filterForm {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        #filterForm .form-row {
+            justify-content: flex-end;
+            align-items: flex-end;
+            margin: 0;
+        }
+
+        @media(max-width: 467px) {
+            #filterForm .form-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+@endpush
+
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js" integrity="sha512-pF+DNRwavWMukUv/LyzDyDMn8U2uvqYQdJN0Zvilr6DDo/56xPDZdDoyPDYZRSL4aOKO/FGKXTpzDyQJ8je8Qw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script type="text/javascript">
         $.ajaxSetup({
@@ -167,17 +236,28 @@
             document.execCommand('copy');
         });
 
-        $(document).ready(function () {
+        function initTable(formData) {
             @error('messageHashGame')
             $('#modal_hash_game').modal('show')
             @enderror
+
+            if ($.fn.dataTable.isDataTable('#game_table')) {
+                $('#game_table').DataTable().destroy();
+            }
+
             var table = $('#game_table').DataTable({
                 language: {
                     url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
                 },
+                retrieve: true,
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.bets.games.index', ['type_game' => $typeGame]) }}",
+                ajax: {
+                    url: "{{ route('admin.bets.games.index', ['type_game' => $typeGame]) }}",
+                    data: function(d){
+                        d.form = formData;
+                    }
+                },
                 columns: [
                     {data: 'mass_action', name: 'mass_action', orderable: false, searchable: false},
                     {data: 'id', name: 'id'},
@@ -189,6 +269,61 @@
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
+        }
+
+        $(document).ready(function () {
+            initTable('');
+
+            let selects = [
+                {
+                    id: '#client_id',
+                    url: '{{ route('admin.settings.clients.list.select') }}'
+                },
+                {
+                    id: '#user_id',
+                    url: '{{ route('admin.settings.users.list.select') }}'
+                }
+            ];
+
+            $.each(selects, function(i, select) {
+                $(select.id).selectize({
+                    valueField: "id",
+                    labelField: "text",
+                    searchField: "text",
+                    options: [],
+                    placeholder: "Pesquisar...",
+                    maxItems: 1,
+                    // closeAfterSelect: true,
+                    // selectOnTab: true,
+                    load: function (query, callback) {
+                        if (!query.length || query.length < 3) return callback();
+
+                        $.ajax({
+                            url: select.url,
+                            type: "GET",
+                            dataType: 'json',
+                            data: {
+                                q: query,
+                                field: 'name',
+                            },
+                            error: function () {
+                                callback();
+                            },
+                            success: function (res) {
+                                callback(res.data);
+                            },
+                        });
+                    }
+                });
+            });
+        });
+
+        $('#filterForm').on('submit', function(e) {
+            e.preventDefault();
+
+            let formData = $(this).serialize();
+
+            initTable(formData);
         });
     </script>
 
