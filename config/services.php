@@ -33,6 +33,7 @@ return [
     'zoop' => [
         'marketplaceId' => env('ZOOP_MARKETPLACE_ID'),
         'sellerId' => env('ZOOP_SELLER_ID'),
-        'publishableKey' => env('ZOOP_PUBLISHABLE_KEY')
+        'publishableKey' => env('ZOOP_PUBLISHABLE_KEY'),
+        'mode' => env('ZOOP_GATEWAY_MODE')
     ]
 ];
