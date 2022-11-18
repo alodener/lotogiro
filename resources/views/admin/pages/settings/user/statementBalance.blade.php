@@ -32,6 +32,7 @@
                     <tr>
                         <th>Data</th>
                         <th>Responsável</th>
+                        <th>Carteira</th>
                         <th>Valor</th>
                         <th>Valor Anterior</th>
                     </tr>
@@ -41,6 +42,7 @@
                         <tr>
                             <td>{{ $history->data }}</td>
                             <td>{{ $history->responsavel }}</td>
+                            <td>{{ $history->wallet == 'balance' ? 'Saldo' : 'Bônus' }}</td>
                             <td>{{ $history->value }}</td>
                             <td>{{ $history->old_value }}</td>
                         </tr>

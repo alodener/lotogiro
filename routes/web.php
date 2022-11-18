@@ -147,6 +147,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('user/{user}/login-as', [UserController::class, 'logInAs'])->name('users.login-as');
             Route::get('user/loggout-as', [UserController::class, 'logoutAs'])->name('users.logout-as');
 
+            Route::get('users/list/select', [UserController::class, 'listSelect'])->name('users.list.select');
+            Route::get('clients/list/select', [ClientController::class, 'listSelect'])->name('clients.list.select');
+
             Route::resource('users', UserController::class);
             Route::get('indicated', [UserController::class, 'indicated'])->name('users.indicated');
             Route::get('indicated/{userId}', [UserController::class, 'indicatedByLevel'])->name('users.indicatedByLevel');
