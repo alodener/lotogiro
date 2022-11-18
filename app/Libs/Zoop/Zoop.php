@@ -102,6 +102,26 @@ class Zoop
     }
 
     /**
+     * @param Webhook $webhook
+     *
+     * @return BaseResponse
+     */
+    public function createWebhook(Webhook $webhook)
+    {
+        $response = $this->request->post($this->credentials,
+        "/v1/marketplaces/".$this->credentials->getMarketplaceId()."/webhooks",
+        $webhook->toJSON());
+
+        dd($response);
+
+        $baseResponse = new BaseResponse();
+        $baseResponse->mapperJson(json_decode($response, true));
+
+        return $baseResponse;
+    }
+
+
+    /**
      * @param Customer $customer
      *
      * @return BaseResponse

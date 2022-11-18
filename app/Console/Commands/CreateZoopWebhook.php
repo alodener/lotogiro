@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Helper\ZoopGateway;
 
 class CreateZoopWebhook extends Command
 {
@@ -11,14 +12,14 @@ class CreateZoopWebhook extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'zoop:create-transaction-success-webhook';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Create zoop transaction success webhook';
 
     /**
      * Create a new command instance.
@@ -37,6 +38,19 @@ class CreateZoopWebhook extends Command
      */
     public function handle()
     {
-        return 0;
+        $zoopGateway = new ZoopGateway;
+
+        $data = [
+            'method' => 'POST',
+            'url' => route('zoop.webhook.process.success'),
+            'event' => [
+                'transaction.succeeded'
+            ],
+            'description' => 'transaction:success:handler'
+        ];
+
+        $response = $zoopGateway->createWebhook($data);
+
+        $this->info(print_r($response));
     }
 }

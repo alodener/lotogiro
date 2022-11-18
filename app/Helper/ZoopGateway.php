@@ -2,12 +2,11 @@
 
 namespace App\Helper;
 
-use Illuminate\Support\Facades\Http;
-
 use App\Libs\Zoop\Credentials;
 use App\Libs\Zoop\Pix;
 use App\Libs\Zoop\Customer;
 use App\Libs\Zoop\Zoop;
+use App\Libs\Zoop\Webhook;
 use Carbon\Carbon;
 
 class ZoopGateway
@@ -73,5 +72,22 @@ class ZoopGateway
         $authorize = $zoop->Pix($transaction);
 
         return $authorize;
+    }
+
+    public function createWebhook($data)
+    {
+        $webhook = new Webhook();
+        
+        $webhook->setMethod($data['method']);
+        $webhook->setUrl($data['url']);
+        // $webhook->setDescription($data['description'] ?? '');
+        $webhook->setEvent($data['event']);
+        // $webhook->setAuthorization($data['authorization'] ?? null);
+
+        $zoop = new Zoop($this->credentials);
+
+        $response = $zoop->createWebhook($webhook);
+
+        return $response;
     }
 }
