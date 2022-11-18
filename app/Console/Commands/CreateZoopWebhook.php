@@ -3,24 +3,22 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Helper\ZoopGateway;
-use App\Models\RechargeOrder;
 
-class TesteZoopIntegration extends Command
+class CreateZoopWebhook extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'zoop:test';
+    protected $signature = 'command:name';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Teste Zoop Integration';
+    protected $description = 'Command description';
 
     /**
      * Create a new command instance.
@@ -39,12 +37,6 @@ class TesteZoopIntegration extends Command
      */
     public function handle()
     {
-        $lastRecharge = RechargeOrder::orderBy('id', 'DESC')->limit(1)->first();
-
-        $zoopGateway = new ZoopGateway;
-
-        $authorize = $zoopGateway->createCharge($lastRecharge);
-
-        $this->info(print_r($authorize->getResponse()));
+        return 0;
     }
 }

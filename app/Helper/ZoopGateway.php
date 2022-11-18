@@ -8,6 +8,7 @@ use App\Libs\Zoop\Credentials;
 use App\Libs\Zoop\Pix;
 use App\Libs\Zoop\Customer;
 use App\Libs\Zoop\Zoop;
+use Carbon\Carbon;
 
 class ZoopGateway
 {
@@ -33,7 +34,7 @@ class ZoopGateway
         $this->sellerId = $sellerId;
     }
 
-    public function createCustomer()
+    public function mapCustomer($user)
     {
         $customer = new Customer();
         $customer->setFirstName("Cesar Damascena");
@@ -53,27 +54,23 @@ class ZoopGateway
     public function createCharge($rechargeOrder)
     {
         // Get User From Recharge Order
+        // $customer = $this->createCustomer();
+        // var_dump($customer);
 
+        $expirationDate = Carbon::now()->addDay(1);
+        $value = bcmul($rechargeOrder->value, 100);
 
-
-        $customer = $this->createCustomer();
-
-        var_dump($customer);
-
-
-        $transaction = new Boleto();
-        $transaction->setAmount(300);
+        $transaction = new Pix();
+        $transaction->setAmount($value);
         $transaction->setCurrency("BRL");
-        $transaction->setDescription("minhaloja");
+        $transaction->setDescription("RechargeOrder:" . $rechargeOrder->id);
         $transaction->setPaymentType("pix");
         $transaction->setOnBehalfOf($this->sellerId);
-        $transaction->setExpirationDate("2022-11-20");
-        $transaction->setPaymentLimitDate("2022-11-20");
-        $transaction->setBodyInstructions("teste de instrucao");
+        $transaction->getPixExpirationDateTime($expirationDate->format('Y-m-d H:i:s'));
 
         $zoop = new Zoop($this->credentials);
 
-        $authorize = $zoop->Boleto($transaction, $customer);
+        $authorize = $zoop->Pix($transaction);
 
         return $authorize;
     }

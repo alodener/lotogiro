@@ -81,7 +81,7 @@ class Zoop
      *
      * @return AuthorizeResponse
      */
-    public function Pix(Pix $pix, $customer)
+    public function Pix(Pix $pix)
     {
         try {
             $response = $this->request->post($this->credentials,

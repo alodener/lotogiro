@@ -35,5 +35,7 @@ return [
         'sellerId' => env('ZOOP_SELLER_ID'),
         'publishableKey' => env('ZOOP_PUBLISHABLE_KEY'),
         'mode' => env('ZOOP_GATEWAY_MODE')
-    ]
+    ],
+
+    'activeGateway' => env('ACTIVE_GATEWAY', 'MP')
 ];

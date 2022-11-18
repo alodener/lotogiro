@@ -9,6 +9,7 @@ use Livewire\Component;
 use MercadoPago\Item;
 use MercadoPago\Preference;
 use MercadoPago\SDK;
+use App\Helper\ZoopGateway;
 
 class Table extends Component
 {
@@ -54,6 +55,35 @@ class Table extends Component
             'html' => "Seu link para pagamento está pronto, gostaria de pagar agora?<br><br>
                         <a class='btn btn-block btn-outline-info'
                             onclick=redirect('{$preference->init_point}')>Sim</a>",
+        ]);
+    }
+
+    public function callZoop()
+    {
+        $order = new RechargeOrder([
+            'user_id' => auth()->id(),
+            'value' => Money::toDatabase($this->valueAdd),
+            'status' => 0,
+            'gateway' => 'zoop'
+        ]);
+        $order->save();
+
+        $zoopGateway = new ZoopGateway;
+
+        $authorize = $zoopGateway->createCharge($order);
+        $response = $authorize->getResponse();
+
+        $order->update(['link' => $response['payment_method']['qr_code']['emv'], 'reference' => $response['id']]);
+
+        $this->alert('info', 'Pronto!!', [
+            'position' => 'center',
+            'timer' => null,
+            'toast' => false,
+            'html' => "Seu código Copia e Cola está pronto, gostaria de pagar agora?<br><br>
+                    <div class='input-group mb-3'>
+                        <input type='text' value='{$order->link}' readonly class='form-control' placeholder='qrCodeZoop' aria-label='qrCodeZoop' aria-describedby='button-addon2'>
+                        <button class='btn btn-outline-secondary' type='button' id='copyPix'>Copiar</button>
+                    </div>'",
         ]);
     }
 

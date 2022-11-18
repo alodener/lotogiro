@@ -37,7 +37,8 @@ class AuthorizeResponse extends BaseResponse
     protected $authresponse;
     protected $url;
     protected $barcode;
-
+    protected $pix_link;
+    protected $qr_code;
     /**
      * @return mixed
      */
@@ -334,6 +335,13 @@ class AuthorizeResponse extends BaseResponse
         return $this;
     }
 
+    public function setPixLink()
+    {
+        return $this->pix_link;
+    }
 
-
+    public function getPixLink()
+    {
+        return $this->pix_link;
+    }
 }
