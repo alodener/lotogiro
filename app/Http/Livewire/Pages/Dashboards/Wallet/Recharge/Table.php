@@ -81,8 +81,8 @@ class Table extends Component
             'toast' => false,
             'html' => "Seu código Copia e Cola está pronto, gostaria de pagar agora?<br><br>
                     <div class='input-group mb-3'>
-                        <input type='text' value='{$order->link}' readonly class='form-control' placeholder='qrCodeZoop' aria-label='qrCodeZoop' aria-describedby='button-addon2'>
-                        <button class='btn btn-outline-secondary' type='button' id='copyPix'>Copiar</button>
+                        <input type='text' value='{$order->link}' readonly class='form-control' placeholder='qrCodeZoop' aria-label='qrCodeZoop' aria-describedby='button-addon2' id='input_output'>
+                        <button class='btn btn-outline-secondary'  onclick='copyText()'  type='button' id='copyPix'>Copiar</button>
                     </div>'",
         ]);
     }
