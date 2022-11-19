@@ -36,9 +36,15 @@
                                         </ul>
 
                                         <div class="input-group-append bt-recharge">
-                                            <button wire:click.prevent="callMP" type="submit"
+                                            @if(config('services.activeGateway') == 'MP')
+                                                <button wire:click.prevent="callMP" type="submit"
+                                                        @if($valueAdd <= .99) disabled @endif
+                                                        class="btn btn-info btn-md btn-block">Continuar {{$valueAdd}}</button>
+                                            @else
+                                                <button wire:click.prevent="callZoop" type="submit"
                                                     @if($valueAdd <= .99) disabled @endif
                                                     class="btn btn-info btn-md btn-block">Continuar {{$valueAdd}}</button>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
