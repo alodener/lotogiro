@@ -27,6 +27,7 @@ return [
     'period' => 'Período',
     'transactions-quantity' => 'Quantidade de Transações',
     'balance' => 'Saldo',
+    'bonus' => 'Bônus',
     'credit' => 'Crédito',
     'debit' => 'Débito',
     'generate-report' => 'Gerar Relatório',
@@ -51,6 +52,14 @@ return [
     'user' => 'Usuário',
     'search-user' => 'Pesquisar usuário',
     'generate-report' => 'Gerar Relatório',
+    'select' => 'Selecione',
+    'back-to-main-page' => 'Voltar a tela principal',
+    'savings-account' => 'Poupança',
+    'trade-account' => 'Corrente',
+    'bank' => 'Banco',
+    'agency' => 'Agência',
+    'bank-account' => 'Conta',
+
 
     'register' => [
         'page-title' => 'Cadastro',
@@ -125,6 +134,7 @@ return [
         'table-creation-header' => 'Criação',
         'table-date-header' => 'Data',
         'table-responsible-header' => 'Responsável',
+        'table-wallet-header' => 'Carteira',
         'manual-recharge' => 'Recargas Manuais',
     ],
 
@@ -175,5 +185,8 @@ return [
         'table-actions-header' => 'Ações',
         'remove-customer-modal-title' => 'Deseja excluir este cliente?',
         'new-customer-page-title' => 'Novo Cliente',
+        'account-type-label' => 'Tipo de Conta',
+        'register-client' => 'Cadastrar Cliente',
+        'edit-client' => 'Atualizar Cliente',
     ]
 ];

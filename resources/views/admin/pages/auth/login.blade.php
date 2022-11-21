@@ -4,12 +4,9 @@
 
 @section('content')
 
-  <div class="col-lg-4 col-md-12 mt-5">
-        <div class="login-logo mt-md-5">
 
-            <img src="{{ asset(env('logo')) }}" alt="" width=300 height=200>
+  <div class="container-login100">
 
-        </div>
          @if (session('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}
@@ -27,8 +24,13 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="card">
+        <div class="wrap-login100">
             <div class="card-body login-card-body">
+                        <div class="login-logo mt-md-5">
+
+            <img src="{{ asset(env('logo')) }}" alt="" width="150" height="150">
+
+        </div>
                 <div class="col-md-12 px-4">
                     @error('success')
                     <div class="alert alert-success alert-dismissible fade show">
@@ -47,32 +49,30 @@
                     </div>
                     @enderror
                 </div>
-                <h3 class="login-box-msg">{{ trans('admin.login-title') }}</h3>
+                <h3 class="login-box-msg">Login</h3>
 
                 <form method="POST" action="{{route('admin.post.login')}}">
                     @csrf
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                               placeholder="{{ trans('admin.email-field') }}">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user"></span>
-                            </div>
-                        </div>
+                    <div class="wrap-input100">
+                        <input type="email" class="form-control @error('email') is-invalid @enderror input100" name="email"
+                               placeholder="E-mail">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
                         @error('email')
                         <span class="invalid-feedback" role="alert">
                             {{ $message }}
                         </span>
                         @enderror
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror"
-                               name="password" placeholder="{{ trans('admin.password-field') }}">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
+                    <div class="wrap-input100">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror input100"
+                               name="password" placeholder="Senha">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             {{ $message }}
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">{{ trans('admin.login-button') }}</button>
+                            <button type="submit" class="login100-form-btn">Acessar</button>
                         </div>
                     </div>
                 </form>
@@ -107,11 +107,11 @@
                             </a>
                         </p>
 
-                        <a href="https://wa.me/558196826967?text=Olá, gostaria de me tornar um consultor."
+                        <a href="https://wa.me/558196826967?text=Olá, poderia me ajudar?"
                            class="btn btn-block btn-success"
-                           title="{{ trans('admin.consultant-link-text') }}"
+                           title="Precisa de ajuda?"
                            target="_blank">
-                            <i style="border:none;"class="fa fa-whatsapp"></i> {{ trans('admin.consultant-link-text') }}
+                            <i style="border:none;"class="fa fa-whatsapp"></i> Precisa de ajuda?
                         </a>
                     </div>
                 </div>

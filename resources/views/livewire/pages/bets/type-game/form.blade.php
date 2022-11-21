@@ -79,6 +79,7 @@
                             <th>Dezenas</th>
                             <th>Multiplicador</th>
                             <th>Máximo em Reais</th>
+                            <th>Máximo Repetidos</th>
                             <th>Criação</th>
                             <th style="width: 80px">Ações</th>
                         </tr>
@@ -186,6 +187,7 @@
                     {data: 'numbers', name: 'numbers'},
                     {data: 'multiplicador', name: 'multiplicador'},
                     {data: 'maxreais', name: 'maxreais'},
+                    {data: 'max_repeated_games', name: 'max_repeated_games'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]

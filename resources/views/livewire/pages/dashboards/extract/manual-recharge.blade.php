@@ -76,6 +76,7 @@
                         <th>{{ trans('admin.extracts.table-responsible-header') }}</th>
                         <th>{{ trans('admin.extracts.table-user-header') }}</th>
                         <th>{{ trans('admin.extracts.table-value-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-wallet-header') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -85,6 +86,7 @@
                             <td>{{ $transact->responsavel }}</td>
                             <td>{{ $transact->usuario }}</td>
                             <td>{{ $transact->value }}</td>
+                            <td>{{ $transact->wallet == 'balance' ? trans('admin.balance') : trans('admin.bonus') }}</td>
                         </tr>
                     @empty
                         <tr>

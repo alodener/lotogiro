@@ -126,7 +126,7 @@
             </div>
         </div>
     </div>
-        <div class="row">
+    <div class="row">
         <div class="col-md-6">
             <div class="small-box bg-primary">
                 <div class="inner">
@@ -152,6 +152,21 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>R${{\App\Helper\Money::toReal($valueBalance)}}</h3>
+                    <p>Total de Saldo</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <span class="small-box-footer p-2"></span>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="form-group col-md-1">
             <select wire:model="perPage" class="custom-select" id="per_page">

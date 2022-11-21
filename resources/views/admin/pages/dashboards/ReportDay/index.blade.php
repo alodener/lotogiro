@@ -116,7 +116,7 @@
         }
         else{
             document.getElementById("FiltroPersonalizado").style.display = "none";
-            location.href = "http://127.0.0.1:8000/admin/dashboards/Reportday/FiltroEspecifico/" + value;
+            location.href = "{{env('APP_URL')}}/admin/dashboards/Reportday/FiltroEspecifico/" + value;
         }
     }
     	
