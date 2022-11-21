@@ -215,5 +215,10 @@ return [
         'not-found' => 'Não existem jogos criados para essa aposta!',
         'validated' => 'Validado',
         'validate' => 'Validar'
-    ]
+    ],
+
+    'competitions' => [
+        'new-competition-button' => 'Novo Concurso'
+    ],
+    
 ];

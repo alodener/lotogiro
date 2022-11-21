@@ -106,7 +106,9 @@ return [
     |
     */
     'available_locales' => [
-        'pt_BR', 'en', 'es'
+        'pt_BR' => 'PT',
+        'en' => 'EN',
+        'es' => 'ES'
     ],
 
     /*
