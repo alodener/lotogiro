@@ -70,6 +70,11 @@ class User extends Authenticatable
         return $this->hasMany(Extract::class);
     }
 
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'indicador', 'id');
+    }
+
     public function getUserQualification()
     {
         $actived = UsersHasQualifications::getActivedByUser($this);

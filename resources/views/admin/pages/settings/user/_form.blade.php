@@ -55,10 +55,15 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    
                     <div class="form-group col-md-4">
                         <label for="indicador">ID Indicador</label>
-                        <input type="number" class="form-control" id="indicador" name="indicador" value="{{old('indicador', $user->indicador ?? null)}}" maxlength="20">
+
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="indicador" name="indicador" value="{{old('indicador', $user->indicador ?? null)}}" maxlength="20">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" type="button">Detalhes</button>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group col-md-8">
@@ -258,6 +263,36 @@
         </div>
     @endif
 </div>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Detalhes do Indicador</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <p>
+                <strong>Nome: </strong> {{ $user->referrer ? $user->referrer->name . ' ' . $user->referrer->last_name : '-' }}
+            </p>
+            <p>
+                <strong>E-mail: </strong> {{ $user->referrer ? $user->referrer->email : '-' }}
+            </p>
+            <p>
+                <strong>Tel.: </strong> {{ $user->referrer ? $user->referrer->phone : '-' }}
+            </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <a type="button" href="{{ route('admin.settings.users.edit', ['user' => $user->indicador]) }}" target="_blank" class="btn btn-info">Abrir em nova Aba</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 @push('scripts')
     <script src="{{asset('admin/layouts/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
