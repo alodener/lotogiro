@@ -21,7 +21,7 @@
             @enderror
             @can('create_competition')
             <a href="{{route('admin.bets.competitions.create')}}">
-                <button class="btn btn-info my-2">Novo Concurso</button>
+                <button class="btn btn-info my-2">{{ trans('admin.competitions.new-competition-button') }}</button>
 
             </a>
             @endcan

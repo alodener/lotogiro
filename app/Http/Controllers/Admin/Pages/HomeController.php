@@ -49,4 +49,13 @@ class HomeController extends Controller
     {
         dd($request->all());
     }
+
+    public function changeLocale(Request $request, $locale)
+    {
+        $user = Auth::user();
+        $user->lang = $locale;
+        $user->save();
+
+        return redirect()->back();
+    }
 }

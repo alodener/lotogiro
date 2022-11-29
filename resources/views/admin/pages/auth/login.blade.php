@@ -85,7 +85,7 @@
                                 <input type="checkbox" name="remember"
                                        id="remember" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="remember">
-                                    Manter conectado
+                                    {{ trans('admin.keep-connected') }}
                                 </label>
                             </div>
                         </div>
@@ -95,15 +95,15 @@
                     </div>
                 </form>
                 
-                <a href="{{ route('forget.password.get') }}">Esqueceu sua Senha?</a>
+                <a href="{{ route('forget.password.get') }}">{{ trans('admin.forgot-password-link') }}</a>
 
                 <div class="row">
                     <div class="col-sm-12">
                         <p class="mb-1 text-bold">
-                            Não é cadastrado?<br>
+                            {{ trans('admin.register-label') }}<br>
                             <a class="btn btn-block btn-info right"
                                href="{{ route('register') }}">
-                                Cadastre-se
+                                {{ trans('admin.register-button') }}
                             </a>
                         </p>
 
