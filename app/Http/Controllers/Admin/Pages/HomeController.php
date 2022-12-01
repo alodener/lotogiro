@@ -52,9 +52,11 @@ class HomeController extends Controller
 
     public function changeLocale(Request $request, $locale)
     {
-        $user = Auth::user();
-        $user->lang = $locale;
-        $user->save();
+        \DB::table('users')
+        ->where('id', \Auth()->user()->id)
+        ->update([
+            'lang' => $locale
+        ]);
 
         return redirect()->back();
     }
