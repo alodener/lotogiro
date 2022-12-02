@@ -60,6 +60,11 @@ class User extends Authenticatable
         return $this->hasMany(Game::class);
     }
 
+    public function customer()
+    {
+        return Client::where('email', $this->email)->first();
+    }
+
     public function bet()
     {
         return $this->hasMany(Bet::class);
