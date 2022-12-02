@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Inicio')
+@section('title', trans('admin.dashboard.page-title'))
 
 @section('content')
 <div class="row bg-white p-3">
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">JOGOS</h3>
+        <h3 class="text-center text-bold">{{ trans('admin.dashboard.page-title') }}</h3>
     </div>
 
     {{-- caso o cliente seja cambista --}}
@@ -15,14 +15,14 @@
 
         <div class="card text-white bg-success mb-6">
             <div class="card-body">
-                <h5 class="card-title text-bold">Jogos Feitos</h5>
+                <h5 class="card-title text-bold">{{ trans('admin.dashboard.games-done-title') }}</h5>
                 <i class="nav-icon fas fa-chart-line" style="float: right; font-size: 50px"></i>
                 <p class="card-text">{{ $JogosFeitos }}</p>
             </div>
         </div>
         <div class="card text-white bg-danger mb-6" style="">
             <div class="card-body text-bold">
-                <h5 class="card-title">Saldo</h5> <i class="nav-icon fas fa-chart-line" style="float: right; font-size: 50px"></i>
+                <h5 class="card-title">{{ trans('admin.dashboard.balance-title') }}</h5> <i class="nav-icon fas fa-chart-line" style="float: right; font-size: 50px"></i>
                 <p class="card-text">R${{ $saldo }}</p>
             </div>
         </div>
@@ -47,17 +47,17 @@
                 </div>
                 <div class="card-body col-lg-6 col-sm-12">
                     <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:left;">
-                        <button type="button" id="btn_copy_link" class="btn btn-info btn-block">Copiar Link</button>
-                        <p class="mensagem">Clique no botão e copie seu link acima</p>
+                        <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{ trans('admin.copy-link-button') }}</button>
+                        <p class="mensagem">{{ trans('admin.copy-whatsapp-message') }}</p>
                     </div>
                 </div>
                 <div class="card-body col-lg-6 col-sm-12">
                     <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:right;">
                         <a href="https://api.whatsapp.com/send?text=Segue link para criar um jogo: {{route('games.bet', ['user' => auth()->id()])}}" target="_blank" style="text-decoration: none !important;">
                             <button type="button" class="btn btn-info btn-block">
-                                Enviar via WhatsApp
+                                {{ trans('admin.dashboard.copy-whatsapp-button') }}
                             </button>
-                            <p class="mensagem">Clique no botão e envie pelo WhatsApp</p>
+                            <p class="mensagem">{{ trans('admin.dashboard.copy-whatsapp-message') }}</p>
                         </a>
                     </div>
                 </div>
@@ -65,16 +65,16 @@
                 <div class="card-body col-lg-6 col-sm-12">
                     <div class="alert bg-light indica-corpo" role="alert">
                         <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link" value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}" />
-                        <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">Indique e Ganhe!</button>
-                        <p class="mensagem">Clique no botão e copie seu link de indicação</p>
+                        <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">{{ trans('admin.dashboard.referral-button-text') }}</button>
+                        <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
                     </div>
                 </div>
                 <div class="card-body col-lg-6 col-sm-12">
                     <div class="indica-corpo bg-light-2" style="color: #fff;" role="alert">
                         <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-info">
-                            Seus indicados
+                            {{ trans('admin.dashboard.referrals-button') }}
                         </a>
-                        <p class="mensagem">Clique no botão e veja seus indicados</p>
+                        <p class="mensagem">{{ trans('admin.dashboard.referrals-message') }}</p>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
 <div class="col-md-6">
     <div class="card w-100">
         <div class="card-header indica-card">
-            Pontuações e Qualificações
+            {{ trans('admin.dashboard.points-title') }}
         </div>
         <div class="container">
             <div class="row">
@@ -93,7 +93,7 @@
                     <div class="small-box bg-warning">
                         <div class="inner">
                             <h3>{{number_format($balances['personal_balance'],2,',','.')}}</h3>
-                            <p>Pontos Pessoais</p>
+                            <p>{{ trans('admin.dashboard.personal-points') }}</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-star"></i>
@@ -105,7 +105,7 @@
                     <div class="small-box btn-danger">
                         <div class="inner">
                             <h3>{{number_format($balances['group_balance'],2,',','.')}}</h3>
-                            <p>Pontos de Grupo</p>
+                            <p>{{ trans('admin.dashboard.group-points') }}</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-star"></i>
@@ -117,7 +117,7 @@
                     <div class="small-box btn-success">
                         <div class="inner">
                             <h3>{{number_format($balances['total_balance'],2,',','.')}}</h3>
-                            <p>Pontos Totais</p>
+                            <p>{{ trans('admin.dashboard.total-points') }}</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-star"></i>
@@ -130,7 +130,7 @@
                         <div class="small-box btn-primary">
                             <div class="inner">
                                 <h3>{{$qualificationAtived->getQualification()->description}}</h3>
-                                <p>Sua Qualificação<?php if (!is_null($goalCalculation)) : ?><br />Aproveitamento Pessoal ( {{$goalCalculation['personalPoints']}} ) / Aproveitamento Grupo ( {{$goalCalculation['groupPoints']}} )<?php endif; ?></p>
+                                <p>{{ trans('admin.dashboard.your-qualification') }}<?php if (!is_null($goalCalculation)) : ?><br />{{ trans('admin.dashboard.personal-points-used') }} ( {{$goalCalculation['personalPoints']}} ) / {{ trans('admin.dashboard.group-points-used') }} ( {{$goalCalculation['groupPoints']}} )<?php endif; ?></p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-award"></i>
@@ -143,7 +143,7 @@
                             <div class="small-box btn-secondary">
                                 <div class="inner">
                                     <h3>{{$nextGoal['totalDiff']}}</h3>
-                                    <p>Quanto pontos faltam para o próxima qualificação<br />Aproveitamento Pessoal ( {{$nextGoal['personalPoints']}} ) / Aproveitamento Grupo ( {{$nextGoal['groupPoints']}} )</p>
+                                    <p>{{ trans('admin.dashboard.points-next-qualification') }}<br />{{ trans('admin.dashboard.personal-points-used') }} ( {{$nextGoal['personalPoints']}} ) / {{ trans('admin.dashboard.group-points-used') }} ( {{$nextGoal['groupPoints']}} )</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-arrow-up"></i>
@@ -157,8 +157,8 @@
                         <div class="col-md-6">
                             <div class="small-box btn-secondary">
                                 <div class="inner">
-                                    <h3>Parabéns você esta no topo</h3>
-                                    <p>Você esta no mais alto nível do plano de carreira<br />&nbsp;</p>
+                                    <h3>{{ trans('admin.dashboard.max-points-title') }}</h3>
+                                    <p>{{ trans('admin.dashnoard.max-points-text') }}<br />&nbsp;</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-trophy"></i>
@@ -215,7 +215,7 @@
     </div>
     @else
     <div class="col-md-12 p-3 text-center">
-        Não existem tipos de jogos cadastrados!
+        {{ trans('admin.dashboard.games-not-found') }}
     </div>
     @endif
 </div>
@@ -279,12 +279,14 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
+    const copiedUrlText = "{{ trans('admin.dashboard.copied-url') }}";
+
     $('#btn_copy_link').click(function() {
         var link = document.getElementById("link_copy");
         link.select();
         document.execCommand('copy');
         Swal.fire(
-            'Link copiado!',
+            copiedUrlText,
             '',
             'success'
         );
@@ -299,7 +301,7 @@
         document.execCommand("copy");
         document.body.removeChild(TempText);
         Swal.fire(
-            'Link copiado!',
+            copiedUrlText,
             '',
             'success'
         );

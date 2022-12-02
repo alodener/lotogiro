@@ -18,12 +18,12 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header indica-card">
-                <h3 class="card-title">Cliente</h3>
+                <h3 class="card-title">{{ trans('admin.customers.new-customer-page-title') }}</h3>
             </div>
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="name">Nome</label>
+                        <label for="name">{{ trans('admin.register.name-label') }}</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                                name="name"
                                maxlength="50" value="{{old('name', $client->name ?? null)}}">
@@ -34,7 +34,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="last_name">Sobrenome</label>
+                        <label for="last_name">{{ trans('admin.register.last-name-label') }}</label>
                         <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name"
                                name="last_name"
                                maxlength="100" value="{{old('last_name', $client->last_name ?? null)}}">
@@ -58,7 +58,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="phone">Telefone</label>
+                        <label for="phone">{{ trans('admin.register.phone-label') }}</label>
                         <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
                                name="phone"
                                maxlength="100"
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="email">E-mail</label>
+                    <label for="email">{{ trans('admin.register.email-label') }}</label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
                            name="email"
                            maxlength="100" value="{{old('email', $client->email ?? null)}}">
@@ -83,11 +83,11 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="type_account">Tipo de Conta</label>
+                        <label for="type_account">{{ trans('admin.customers.account-type-label') }}</label>
                         <select class="custom-select @error('type_account') is-invalid @enderror" name="type_account" id="type_account">
-                            <option value="" @if(!isset($client)) selected @endif>Selecione</option>
-                            <option value="1" @if(isset($client) && $client->type_account == 1) selected @endif>Corrente</option>
-                            <option value="2" @if(isset($client) && $client->type_account == 2) selected @endif>Poupança</option>
+                            <option value="" @if(!isset($client)) selected @endif>{{ trans('admin.select') }}</option>
+                            <option value="1" @if(isset($client) && $client->type_account == 1) selected @endif>{{ trans('admin.trade-account') }}</option>
+                            <option value="2" @if(isset($client) && $client->type_account == 2) selected @endif>{{ trans('admin.savings-account') }}</option>
                         </select>
                         @error('type_account')
                         <span class="invalid-feedback" role="alert">
@@ -96,7 +96,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="bank">Banco</label>
+                        <label for="bank">{{ trans('admin.bank') }}</label>
                         <input type="text" class="form-control @error('bank') is-invalid @enderror" id="bank"
                                name="bank"
                                maxlength="50" value="{{old('bank', $client->bank ?? null)}}">
@@ -109,7 +109,7 @@
                 </div>
                 <div class="form-row">               
                     <div class="form-group col-md-6">
-                        <label for="agency">Agência</label>
+                        <label for="agency">{{ trans('admin.agency') }}</label>
                         <input type="text" class="form-control @error('agency') is-invalid @enderror" id="agency"
                                name="agency"
                                maxlength="50" value="{{old('agency', $client->agency ?? null)}}">
@@ -120,7 +120,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="account">Conta</label>
+                        <label for="account">{{ trans('admin.bank-account') }}</label>
                         <input type="text" class="form-control @error('account') is-invalid @enderror" id="account"
                                name="account"
                                maxlength="50" value="{{old('account', $client->account ?? null)}}">
@@ -178,13 +178,13 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.bets.clients.index')}}">
-            <button type="button" class="btn btn-block btn-outline-secondary">Voltar a tela principal</button>
+            <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.back-to-main-page') }}</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">
         <button type="submit"
-                class="btn btn-block btn-outline-success">@if(request()->is('admin/bets/clients/create')) Cadastrar
-            Cliente  @else  Atualizar Cliente @endif </button>
+                class="btn btn-block btn-outline-success">@if(request()->is('admin/bets/clients/create')) {{ trans('admin.customers.register-client') }}
+              @else  {{ trans('admin.customers.edit-client') }} @endif </button>
     </div>
 </div>
 

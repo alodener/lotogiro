@@ -71,4 +71,15 @@ class HomeController extends Controller
     {
         dd($request->all());
     }
+
+    public function changeLocale(Request $request, $locale)
+    {
+        \DB::table('users')
+        ->where('id', \Auth()->user()->id)
+        ->update([
+            'lang' => $locale
+        ]);
+
+        return redirect()->back();
+    }
 }
