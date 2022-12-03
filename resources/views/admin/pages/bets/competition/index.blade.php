@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Concursos')
+@section('title', trans('admin.competitions.create'))
 
 @section('content')
     <div class="row bg-white p-3">
@@ -20,7 +20,7 @@
             @endpush
             @enderror
             @can('create_competition')
-            <a href="{{route('admin.bets.competitions.create')}}">
+            <a href="{{ trans('admin.competitions.create') }}">
                 <button class="btn btn-info my-2">{{ trans('admin.competitions.new-competition-button') }}</button>
 
             </a>
@@ -29,12 +29,12 @@
             <table class="table table-striped table-hover table-sm" id="competition_table">
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Número</th>
-                    <th>Tipo de Jogo</th>
-                    <th>Data de Sorteio</th>
-                    <th>Criação</th>
-                    <th class="acoes">Ações</th>
+                    <th>{{ trans('admin.competitions.table-id-header') }}</th>
+                    <th>{{ trans('admin.competitions.table-number-header') }}</th>
+                    <th>{{ trans('admin.competitions.table-game-type-header') }}</th>
+                    <th>{{ trans('admin.competitions.table-draw-date-header') }}</th>
+                    <th>{{ trans('admin.competitions.table-created-header') }}</th>
+                    <th class="acoes">{{ trans('admin.competitions.table-actions-header') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,20 +48,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Deseja excluir este concurso?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">{{ trans('admin.competitions.remove-competition-title') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Está ação não pode ser revertida
+                    {{ trans('admin.exclude-game-text') }}
                 </div>
                 <div class="modal-footer">
                     <form id="destroy" action="" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Excluir</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.exclude-game-cancel') }}</button>
+                        <button type="submit" class="btn btn-danger">{{ trans('admin.exclude-game-confirm') }}</button>
                     </form>
                 </div>
             </div>
@@ -75,7 +75,7 @@
 
         $(document).on('click', '#btn_delete_competition', function () {
             var competition = $(this).attr('competition');
-            var url = '{{ route("admin.bets.competitions.destroy", ":competition") }}';
+            var url = '{{ route("admin.competitions.destroy", ":competition") }}';
             url = url.replace(':competition', competition);
             $("#destroy").attr('action', url);
         });
@@ -87,7 +87,7 @@
                 },
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.bets.competitions.index') }}",
+                ajax: "{{ route('admin.competitions.index') }}",
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'number', name: 'number'},

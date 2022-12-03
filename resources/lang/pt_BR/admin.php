@@ -218,7 +218,23 @@ return [
     ],
 
     'competitions' => [
-        'new-competition-button' => 'Novo Concurso'
+        'listing-page-title' => 'Concursos',
+        'edit-page-title' => 'Editar Concurso',
+        'create-page-title' => 'Novo Concurso',
+        'new-competition-button' => 'Novo Concurso',
+        'table-id-header' => 'Id',
+        'table-number-header' => 'Número',
+        'table-game-type-header' => 'Tipo de Jogo',
+        'table-draw-date-header' => 'Data do Sorteio',
+        'table-created-header' => 'Criação',
+        'table-actions-header' => 'Ações',
+        'remove-competition-title' => 'Deseja excluir este concurso?',
+        'form-title' => 'Concurso',
+        'number-input-label' => 'Número',
+        'game-type-input-label' => 'Tipo de Jogo',
+        'draw-date-input-label' => 'Data do Sorteio',
+        'create-competitions-button' => 'Cadastrar Concurso',
+        'edit-competition-button' => 'Atualizar Concurso'
     ],
     
 ];
