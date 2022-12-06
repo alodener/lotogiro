@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Jogos')
+@section('title', trans('admin.games.listing-page-title'))
 
 @section('content')
     <div class="row bg-white p-3">
@@ -21,7 +21,7 @@
             @enderror
             @can('create_client')
                 <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame])}}">
-                    <button class="btn btn-info my-2">Novo Jogo</button>
+                    <button class="btn btn-info my-2">{{ trans('admin.games.new-game-button') }}</button>
                 </a>
             @endcan
             <div class="table-responsive extractable-cel">
@@ -29,7 +29,7 @@
                     <form class="form" id="filterForm">
                         <div class="form-row no-gutters">
                             <div class="form-group col">
-                                <label for="client_id">Cliente</label>
+                                <label for="client_id">{{ trans('admin.games.customer-input-label') }}</label>
                                 {{-- <select name="client_id" id="client_id" class="form-control">
                                     @if($clients->count() > 0)
                                         <option value="">Todos</option>
@@ -42,7 +42,7 @@
                                 <input type="text" id="client_id" name="client_id" class="selectize" />
                             </div>
                             <div class="form-group col">
-                                <label for="user_id">Usuário</label>
+                                <label for="user_id">{{ trans('admin.games.user-input-label') }}</label>
                                 {{-- <select name="user_id" id="user_id" class="form-control">
                                     <option value="">Todos</option>
 
@@ -56,15 +56,15 @@
                                 <input type="text" id="user_id" name="user_id" class="selectize" />
                             </div>
                             <div class="form-group col">
-                                <label for="startDate">Data Inicial</label>
+                                <label for="startDate">{{ trans('admin.games.initial-date-input-label') }}</label>
                                 <input type="date" name="startDate" id="startDate" class="form-control" />
                             </div>
                             <div class="form-group col">
-                                <label for="endDate">Data Final</label>
+                                <label for="endDate">{{ trans('admin.games.end-date-input-label') }}</label>
                                 <input type="date" name="endDate" id="endDate" class="form-control" />
                             </div>
                             <div class="form-group col">
-                                <button class="btn btn-primary" id="filterBtn">Filtrar</button>
+                                <button class="btn btn-primary" id="filterBtn">{{ trans('admin.games.filter-button-label') }}</button>
                             </div>
                         </div>
                     </form>
@@ -74,13 +74,13 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>Id</th>
-                        <th>Tipo de Jogo</th>
-                        <th>Cpf Cliente</th>
-                        <th>Cliente</th>
-                        <th>Usuário</th>
-                        <th>Criação</th>
-                        <th class="acoes">Ações</th>
+                        <th>{{ trans('admin.games.table-id-header') }}</th>
+                        <th>{{ trans('admin.games.table-game-type-header') }}</th>
+                        <th>{{ trans('admin.games.table-client-document-header') }}</th>
+                        <th>{{ trans('admin.games.table-client-header') }}</th>
+                        <th>{{ trans('admin.games.table-user-header') }}</th>
+                        <th>{{ trans('admin.games.table-created-header') }}</th>
+                        <th class="acoes">{{ trans('admin.games.table-actions-header') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -90,8 +90,8 @@
                 <div class="row-actions">
                     <div class="form-group actions-wrapper col-12 col-sm-2">
                         <select name="table-actions" id="tableActions" class="form-control">
-                            <option value="">Selecionar</option>
-                            <option value="delete">Deletar</option>
+                            <option value="">{{ trans('admin.select') }}</option>
+                            <option value="delete">{{ trans('admin.delete') }}</option>
                         </select>
                     </div>
                 </div>
@@ -103,20 +103,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Deseja excluir este Jogo?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">{{ trans('admin.exclude-game-title') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Está ação não pode ser revertida
+                    {{ trans('admin.exclude-game-text') }}
                 </div>
                 <div class="modal-footer">
                     <form id="destroy" action="" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Excluir</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.exclude-game-cancel') }}</button>
+                        <button type="submit" class="btn btn-danger">{{ trans('admin.exclude-game-confirm') }}</button>
                     </form>
                 </div>
             </div>
@@ -174,7 +174,7 @@
                 actionSelector.val('');
 
                 Swal.fire({
-                    text: 'Selecione ao menos um jogo!',
+                    text: '{{ trans("admin.games.no-games-selected-error") }}',
                     icon: 'error'
                 });
             }
@@ -182,8 +182,8 @@
 
         function massDelete(selectedGames) {
             Swal.fire({
-                text: 'Tem certeza que deseja deletar os jogos selecionados?',
-                confirmButtonText: 'Remover',
+                text: '{{ trans("admin.games.mass-delete-confirmation") }}',
+                confirmButtonText: '{{ trans("admin.remove") }}',
                 icon: 'question',
                 focusConfirm: false,
             }).then((result) => {
@@ -291,7 +291,7 @@
                     labelField: "text",
                     searchField: "text",
                     options: [],
-                    placeholder: "Pesquisar...",
+                    placeholder: "{{ trans('admin.search') }}",
                     maxItems: 1,
                     // closeAfterSelect: true,
                     // selectOnTab: true,
