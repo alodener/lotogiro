@@ -58,6 +58,17 @@ return [
     'bank' => 'Banco',
     'agency' => 'Agência',
     'bank-account' => 'Conta',
+    'delete' => 'Deletar',
+    'remove' => 'Remover',
+    'search' => 'Pesquisar...',
+    'customer' => 'Cliente',
+    'select-customer' => 'Selecione o Cliente',
+    'file' => 'Arquivo',
+    'create' => 'Criar',
+    'close' => 'Fechar',
+    'game' => 'Jogo',
+    'clear' => 'Limpar',
+    'search-customer' => 'Pesquisar Cliente'
 
 
     'register' => [
@@ -237,4 +248,39 @@ return [
         'edit-competition-button' => 'Atualizar Concurso'
     ],
     
+    'games' => [
+        'listing-page-title' => 'Jogos',
+        'new-game-button' => 'Novo Jogo',
+        'customer-input-label' => 'Cliente',
+        'user-input-label' => 'Usuário',
+        'initial-date-input-label' => 'Data Inicial',
+        'end-date-input-label' => 'Data Final',
+        'filter-button-label' => 'Filtrar',
+        'table-id-header' => 'Id',
+        'table-game-type-header' => 'Tipo de Jogo',
+        'table-client-document-header' => 'Cpf Cliente',
+        'table-client-header' => 'Cliente',
+        'table-user-header' => 'Usuário',
+        'table-created-header' => 'Criação',
+        'table-actions-header' => 'Ações',
+        'table-competition-header' => 'Concurso',
+        'table-draw-date-header' => 'Data Sorteio',
+        'table-bet-amount-header' => 'Valor da Aposta',
+        'table-prize-amount-header' => 'Valor do Prêmio',
+
+        'no-games-selected-error' => 'Selecione ao menos um jogo!',
+        'mass-delete-confirmation' => 'Tem certeza que deseja deletar os jogos selecionados?',
+        'create-page-title' => 'Novo Jogo',
+        'create-game-xml' => 'Criar Jogo XML',
+        'edit-page-title' => 'Editar Usuário',
+        'generate-pdf-invoice' => 'Gerar Recibo PDF',
+        'generate-txt-invoice' => 'Gerar Recibo TXT',
+        'send-to-whatsapp' => 'Informar via WhatsApp',
+        'insert-game-button' => 'Cadastrar Jogo',
+        'update-game-button' => 'Atualizar Jogo'
+        'value' => 'Valor',
+        'bet-value-label' => 'Digite o Valor da Aposta',
+        'prize-value-label' => 'Valor do Prêmio',
+        'calculate' => 'Calcular'
+    ]
 ];
