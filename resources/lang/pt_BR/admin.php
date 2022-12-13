@@ -277,7 +277,7 @@ return [
         'generate-txt-invoice' => 'Gerar Recibo TXT',
         'send-to-whatsapp' => 'Informar via WhatsApp',
         'insert-game-button' => 'Cadastrar Jogo',
-        'update-game-button' => 'Atualizar Jogo'
+        'update-game-button' => 'Atualizar Jogo',
         'value' => 'Valor',
         'bet-value-label' => 'Digite o Valor da Aposta',
         'prize-value-label' => 'Valor do Prêmio',
