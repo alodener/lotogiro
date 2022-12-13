@@ -112,14 +112,24 @@ class Zoop
         "/v1/marketplaces/".$this->credentials->getMarketplaceId()."/webhooks",
         $webhook->toJSON());
 
-        dd($response);
-
         $baseResponse = new BaseResponse();
         $baseResponse->mapperJson(json_decode($response, true));
 
         return $baseResponse;
     }
 
+    public function deleteWebhook($id)
+    {
+        $response = $this->request->delete($this->credentials,
+        "/v1/marketplaces/".$this->credentials->getMarketplaceId()."/webhooks/{$id}");
+
+        return $response;
+
+        // $baseResponse = new BaseResponse();
+        // $baseResponse->mapperJson(json_decode($response, true));
+
+        // return $baseResponse;
+    }
 
     /**
      * @param Customer $customer
