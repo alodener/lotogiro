@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Relatório de Pontos')
+@section('title', trans('admin.points.page-title'))
 
 @section('content')
 @error('success')
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card-header indica-card">
-                    Resumo
+                    {{ trans('admin.points.page-header') }}
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 <div class="small-box bg-warning">
                     <div class="inner">
                         <h3>{{number_format($balances['personal_balance'],2,',','.')}}</h3>
-                        <p>Pontos Pessoais</p>
+                        <p>{{ trans('admin.dashboard.personal-points') }}</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-star"></i>
@@ -45,7 +45,7 @@
                 <div class="small-box btn-danger">
                     <div class="inner">
                         <h3>{{number_format($balances['group_balance'],2,',','.')}}</h3>
-                        <p>Pontos de Grupo</p>
+                        <p>{{ trans('admin.dashboard.group-points') }}</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-star"></i>
@@ -57,7 +57,7 @@
                 <div class="small-box btn-success">
                     <div class="inner">
                         <h3>{{number_format($balances['total_balance'],2,',','.')}}</h3>
-                        <p>Pontos Totais</p>
+                        <p>{{ trans('admin.dashboard.total-points') }}</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-star"></i>
@@ -70,7 +70,7 @@
                     <div class="small-box btn-primary">
                         <div class="inner">
                             <h3>{{$qualificationAtived->getQualification()->description}}</h3>
-                            <p>Sua Qualificação<?php if (!is_null($goalCalculation)) : ?><br />Aproveitamento Pessoal ( {{$goalCalculation['personalPoints']}} ) / Aproveitamento Grupo ( {{$goalCalculation['groupPoints']}} )<?php endif; ?></p>
+                            <p>{{ trans('admin.dashboard.your-qualification') }}<?php if (!is_null($goalCalculation)) : ?><br />{{ trans('admin.dashboard.personal-points-used') }} ( {{$goalCalculation['personalPoints']}} ) / {{ trans('admin.dashboard.group-points-used') }} ( {{$goalCalculation['groupPoints']}} )<?php endif; ?></p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-award"></i>
@@ -83,7 +83,7 @@
                         <div class="small-box btn-secondary">
                             <div class="inner">
                                 <h3>{{$nextGoal['totalDiff']}}</h3>
-                                <p>Quanto pontos faltam para o próxima qualificação<br />Aproveitamento Pessoal ( {{$nextGoal['personalPoints']}} ) / Aproveitamento Grupo ( {{$nextGoal['groupPoints']}} )</p>
+                                <p>{{ trans('admin.dashboard.points-next-qualification') }}<br />{{ trans('admin.dashboard.personal-points-used') }} ( {{$nextGoal['personalPoints']}} ) / {{ trans('admin.dashboard.group-points-used') }} ( {{$nextGoal['groupPoints']}} )</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-arrow-up"></i>
@@ -97,8 +97,8 @@
                     <div class="col-md-6">
                         <div class="small-box btn-secondary">
                             <div class="inner">
-                                <h3>Parabéns você esta no topo</h3>
-                                <p>Você esta no mais alto nível do plano de carreira<br />&nbsp;</p>
+                                <h3>{{ trans('admin.dashboard.max-points-title') }}</h3>
+                                <p>{{ trans('admin.dashboard.max-points-text') }}<br />&nbsp;</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-trophy"></i>
@@ -115,12 +115,12 @@
                     <table class="table table-striped table-hover table-sm" id="game_table">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Descrição</th>
-                                <th>Origem</th>
-                                <th>Nível</th>
-                                <th>Pontos</th>
-                                <th>Criação</th>
+                                <th>{{ trans('admin.points.table-id-header') }}</th>
+                                <th>{{ trans('admin.points.table-description-header') }}</th>
+                                <th>{{ trans('admin.points.table-origin-header') }}</th>
+                                <th>{{ trans('admin.points.table-level-header') }}</th>
+                                <th>{{ trans('admin.points.table-points-header') }}</th>
+                                <th>{{ trans('admin.points.table-creation-header') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -140,7 +140,7 @@
                             @empty
                             <tr>
                                 <td class="text-center" colspan="9">
-                                    Nenhum registro encontrado.
+                                    {{ trans('admin.entries-not-found') }}
                                 </td>
                             </tr>
                             @endforelse
@@ -149,7 +149,7 @@
                             <tr>
                                 <td colspan="20">
                                     <div class="clearfix">
-                                        <div class="float-left">{{$pagination->getTotal()}} registro(s) encontrado(s).</div>
+                                        <div class="float-left">{{$pagination->getTotal()}} {{ trans('admin.found-entries') }}.</div>
                                         <nav class="float-right">
                                             {!!$pagination->getHtml()!!}
                                         </nav>
