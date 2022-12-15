@@ -75,7 +75,7 @@
 
         $(document).on('click', '#btn_delete_competition', function () {
             var competition = $(this).attr('competition');
-            var url = '{{ route("admin.competitions.destroy", ":competition") }}';
+            var url = '{{ route("admin.bets.competitions.destroy", ":competition") }}';
             url = url.replace(':competition', competition);
             $("#destroy").attr('action', url);
         });
