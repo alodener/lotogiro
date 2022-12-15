@@ -87,7 +87,7 @@
                 },
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.competitions.index') }}",
+                ajax: "{{ route('admin.bets.competitions.index') }}",
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'number', name: 'number'},
