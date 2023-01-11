@@ -9,10 +9,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
+use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable
 {
-    use HasRoles, HasFactory, Notifiable;
+    use HasRoles, HasFactory, Notifiable, Impersonate;
 
     /**
      * The attributes that are mass assignable.
@@ -59,6 +60,11 @@ class User extends Authenticatable
         return $this->hasMany(Game::class);
     }
 
+    public function customer()
+    {
+        return Client::where('email', $this->email)->first();
+    }
+
     public function bet()
     {
         return $this->hasMany(Bet::class);
@@ -67,6 +73,11 @@ class User extends Authenticatable
     public function extracts()
     {
         return $this->hasMany(Extract::class);
+    }
+
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'indicador', 'id');
     }
 
     public function getUserQualification()

@@ -30,4 +30,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'zoop' => [
+        'marketplaceId' => env('ZOOP_MARKETPLACE_ID'),
+        'sellerId' => env('ZOOP_SELLER_ID'),
+        'publishableKey' => env('ZOOP_PUBLISHABLE_KEY'),
+        'mode' => env('ZOOP_GATEWAY_MODE')
+    ],
+
+    'activeGateway' => env('ACTIVE_GATEWAY', 'MP')
 ];

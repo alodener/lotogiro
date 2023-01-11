@@ -1,6 +1,6 @@
 @extends('admin.layouts.login')
 
-@section('title', 'Cadastro')
+@section('title', trans('admin.register.page-title'))
 
 @section('content')
     <style type="text/css">
@@ -18,7 +18,7 @@
     <div class="col-lg-6 col-md-12 mt-5">
         <div class="login-logo">
 
-            <img src="{{ asset(env('logo')) }}" alt="" width=300 height=200>
+            <img src="{{ asset(env('logo')) }}" alt="" width="300" height="150">
 
         </div>
         <div class="card">
@@ -42,11 +42,11 @@
                     @enderror
                     @if($indicator->name)
                     <div class="alert alert-default-primary text-center text-bold fade show">
-                        Indicado por {{ $indicator->name }}
+                        {{ trans('admin.register.referred-by') }} {{ $indicator->name }}
                     </div>
                     @endif
                 </div>
-                <h3 class="login-box-msg">Cadastre-se para começar a jogar!!</h3>
+                <h3 class="login-box-msg">{{ trans('admin.register.page-header') }}</h3>
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
@@ -54,7 +54,7 @@
                     <div class="form-group row">
 
                         <div class="col-sm-12 col-md-12">
-                            <label for="email" class="col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-form-label text-md-left">{{ trans('admin.register.email-label') }}</label>
                             <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
                             @if ($errors->has('email'))
                                 <span class="invalid-feedback">
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="col-sm-12 col-md-6">
-                            <label for="name" class="col-form-label text-md-left">Nome</label>
+                            <label for="name" class="col-form-label text-md-left">{{ trans('admin.register.name-label') }}</label>
                             <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
                             @if ($errors->has('name'))
                                 <span class="invalid-feedback">
@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="col-sm-12 col-md-6">
-                            <label for="last_name" class="col-form-label text-md-left">Sobrenome</label>
+                            <label for="last_name" class="col-form-label text-md-left">{{ trans('admin.register.last-name-label') }}</label>
                             <input id="last_name" type="text" class="form-control{{ $errors->has('last_name') ? '
                             is-invalid' : '' }}" name="last_name" value="{{ old('last_name') }}" required autofocus>
                             @if ($errors->has('last_name'))
@@ -90,12 +90,12 @@
                     <div class="form-group row">
 
                         <div class="col-sm-12 col-md-6">
-                            <label for="pix" class="col-form-label text-md-left">PIX</label>
+                            <label for="pix" class="col-form-label text-md-left">{{ trans('admin.register.pix-label') }}</label>
                             <input id="pix" type="text" class="form-control" name="pix" value="" autofocus placeholder="(opcional)">
                         </div>
                         
                         <div class="col-sm-6 col-md-6">
-                            <label for="phone" class="col-form-label text-md-left">Telefone</label>
+                            <label for="phone" class="col-form-label text-md-left">{{ trans('admin.register.phone-label') }}</label>
                             <input id="phone" type="text"
                                    class="form-control{{ $errors->has('phone') ? 'is-invalid' : '' }}"
                                    name="phone" value="{{ old('phone') }}" required>
@@ -109,7 +109,7 @@
 
                     <div class="form-group row">
                         <div class="col-sm-12 col-md-6">
-                            <label for="password" class="col-form-label text-md-left">{{ __('Password') }}</label>
+                            <label for="password" class="col-form-label text-md-left">{{ trans('admin.register.password-label') }}</label>
                             <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                             @if ($errors->has('password'))
                                 <span class="invalid-feedback">
@@ -119,7 +119,7 @@
                         </div>
 
                         <div class="col-sm-12 col-md-6">
-                            <label for="password-confirm" class="col-form-label text-md-left">{{ __('Confirmar Senha') }}</label>
+                            <label for="password-confirm" class="col-form-label text-md-left">{{ trans('admin.register.confirm-password-label') }}</label>
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
 
                         </div>
@@ -137,7 +137,7 @@
                     <div class="form-group row">
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary btn-block">
-                                {{ __('Register') }}
+                                {{ trans('admin.register.button') }}
                             </button>
                         </div>
                     </div>

@@ -70,6 +70,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::post('/login', [LoginController::class, 'login'])->name('post.login');
     });
     Route::middleware(['auth:admin', 'check.openModal'])->group(function () {
+        Route::get('change-locale/{locale}', [HomeController::class, 'changeLocale'])->name('changeLocale');
+
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::prefix('dashboards')->name('dashboards.')->group(function () {
@@ -123,6 +125,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');
+            Route::post('/games/mass-delete', [GameController::class, 'massDelete'])->name('games.massDelete');
             Route::resource('games', GameController::class)->except([
                 'index', 'create'
             ]);
@@ -142,6 +145,13 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         });
         Route::prefix('settings')->name('settings.')->group(function () {
             Route::resource('qualifications', QualificationController::class);
+
+            Route::get('user/{user}/login-as', [UserController::class, 'logInAs'])->name('users.login-as');
+            Route::get('user/loggout-as', [UserController::class, 'logoutAs'])->name('users.logout-as');
+
+            Route::get('users/list/select', [UserController::class, 'listSelect'])->name('users.list.select');
+            Route::get('clients/list/select', [ClientController::class, 'listSelect'])->name('clients.list.select');
+
             Route::resource('users', UserController::class);
             Route::get('indicated', [UserController::class, 'indicated'])->name('users.indicated');
             Route::get('indicated/{userId}', [UserController::class, 'indicatedByLevel'])->name('users.indicatedByLevel');

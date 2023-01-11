@@ -4,16 +4,16 @@
         <div class="form-row">
             <div class="form-group col-md-12">
                 <div wire:ignore>
-                        <h4>Cliente</h4>
+                        <h4>{{ trans('admin.customer') }}</h4>
     
                 <div class="dropdown-divider"></div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="input-group mb-3">
-                            <input wire:model="search" type="text" id="author" class="form-control" placeholder="Pesquisar Cliente"autocomplete="off" required>
+                            <input wire:model="search" type="text" id="author" class="form-control" placeholder="{{ trans('admin.search-customer') }}"autocomplete="off" required>
                         
                             <div class="input-group-append">
-                                <span wire:click="clearUser" class="input-group-text" title="Limpar"><i class="fas fa-user-times"></i></span>
+                                <span wire:click="clearUser" class="input-group-text" title="{{ trans('admin.clear') }}"><i class="fas fa-user-times"></i></span>
                             </div>
                         </div>
                     </div>
@@ -50,12 +50,12 @@
     {{-- parte de calculo de valores --}}
     <div class="form-group col-md-12">
             @if(isset($values) && $values->count() > 0)
-            <label for="client">Valor: </label>
+            <label for="client">{{ trans('admin.games.value') }}: </label>
                 @foreach($values as $value)
                     <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
                     <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
                     <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
-                    Digite o Valor da Aposta
+                    {{ trans('admin.games.bet-value-label') }}
                     <input type="text" id="value" onchange="altera();" value="" name="value" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1'); 
                     
                     var valor = document.getElementById('value').value;
@@ -65,9 +65,9 @@
                     var valorTotal = contadorJogos * numberValor;
                     document.getElementById('ValorTotal').value = valorTotal.toFixed(2);">
                     
-                    Valor do Prêmio R$
+                    {{ trans('admin.games.prize-value-label') }} R$
                     <input type="text" id="premio" value="" name="premio" readonly>
-                    <button  class="btn btn-success" type="button">Calcular</button>
+                    <button  class="btn btn-success" type="button">{{ trans('admin.games.calculate') }}</button>
                 @endforeach
     
                     <br>
@@ -92,8 +92,7 @@
              <input type="hidden" name="dezena" >
              <input type="hidden" name="qtdDezena" value="{{$qtdDezena}}" >
 
-              
-            <textarea wire:model="dezena" onclick="bloqueia();" id="dezena"  name="dezena" rows="20" cols="90"></textarea>
+            <textarea wire:model="dezena" id="dezena"  onclick="bloqueia();"name="dezena" rows="20" cols="90"></textarea>
 
         </div>
     </div>
@@ -101,7 +100,7 @@
         <input hidden value="1" id="xml" name="xml">    
         <button type="button"  class="btn btn-secondary" wire:click="dezenas" >Computar</button>   
         <div class="modal-footer">
-            <button type="submit" class="btn btn-info">Criar</button>
+            <button type="submit" class="btn btn-info" id="submit_game">Criar</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             
         </div>
@@ -165,6 +164,7 @@
                 // }
     
              }
+
 
              function bloqueia(){
 
