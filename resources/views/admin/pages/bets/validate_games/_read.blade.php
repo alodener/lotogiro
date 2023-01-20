@@ -18,12 +18,12 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">Aposta</h3>
+                <h3 class="card-title">{{ trans('admin.validate-games.read-card-title') }}</h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h4>Cliente</h4>
+                        <h4>{{ trans('admin.validate-games.client') }}</h4>
                         <div class="table-responsive">
                             <table class="table table-sm">
                                 <thead>
@@ -32,7 +32,7 @@
                                         Cpf
                                     </td> --}}
                                     <td>
-                                        Nome
+                                        {{ trans('admin.validate-games.name') }}
                                     </td>
                                 </tr>
                                 </thead>
@@ -56,7 +56,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <h4>Jogos</h4>
+                        <h4>{{ trans('admin.validate-games.games') }}</h4>
 
                         @foreach($validate_game->games as $game)
                             @php
@@ -68,7 +68,7 @@
                         <div class="card-body col-lg-6 col-sm-12" style="float: left !important">
                             <a href="{{ route('admin.bets.games.receiptTudo', ['idcliente' =>$idCliente ]) }}">
                                 <button type="button" class="btn btn-info btn-block">
-                                    imprimir Todos Recibos em PDF
+                                    {{ trans('admin.validate-games.print-pdf') }}
                                 </button>
                             </a>
                         </div>
@@ -76,7 +76,7 @@
                         <div class="card-body col-lg-6 col-sm-12" style="float: left !important">
                             <a href="{{ route('admin.bets.games.getReceiptTudoTxt', ['idcliente' =>$idCliente ]) }}">
                                 <button type="button" class="btn btn-info btn-block">
-                                    imprimir Todos Recibos em TXT
+                                    {{ trans('admin.validate-games.print-txt') }}
                                 </button>
                             </a>
                         </div>
@@ -86,13 +86,13 @@
                             <table class="table table-sm" id="myTable">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Id Jogo</th>
-                                    <th scope="col">Tipo de Jogo</th>
-                                    <th scope="col">Concurso</th>
-                                    <th scope="col">Dezenas</th>
-                                    <th scope="col">Valor</th>
-                                    <th scope="col">Prêmio</th>
-                                    <th scope="col">Recibo</th>
+                                    <th scope="col">{{ trans('admin.validate-games.table-id-header') }}</th>
+                                    <th scope="col">{{ trans('admin.validate-games.table-game-type-header') }}</th>
+                                    <th scope="col">{{ trans('admin.validate-games.table-competitions-header') }}</th>
+                                    <th scope="col">{{ trans('admin.validate-games.table-dozens-header') }}</th>
+                                    <th scope="col">{{ trans('admin.validate-games.table-value-header') }}</th>
+                                    <th scope="col">{{ trans('admin.validate-games.table-prize-header') }}</th>
+                                    <th scope="col">{{ trans('admin.validate-games.table-invoice-header') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -140,7 +140,7 @@
                                     @php($totalPrize += $game->premio)
                                 @empty
                                     <tr class="text-center">
-                                        <td colspan="4">Não existem jogos criados para essa aposta!</td>
+                                        <td colspan="4">{{ trans('admin.validate-games.not-found') }}</td>
                                     </tr>
                                 </tbody>
                                 @endforelse
@@ -165,15 +165,15 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.bets.validate-games.index')}}">
-            <button type="button" class="btn btn-block btn-outline-secondary">Voltar a tela principal</button>
+            <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.back-to-main-page') }}</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">
         @if($validate_game->status == 1)
-            <button type="submit" id="button_game" class="btn btn-block btn-outline-success" disabled>Validado!</button>
+            <button type="submit" id="button_game" class="btn btn-block btn-outline-success" disabled>{{ trans('admin.validate-games.validated') }}!</button>
                 
             @else
-                <button type="submit" id="button_game" class="btn btn-block btn-outline-success">Validar</button>
+                <button type="submit" id="button_game" class="btn btn-block btn-outline-success">{{ trans('admin.validate-games.validate') }}</button>
            
         @endif
 
