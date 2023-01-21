@@ -266,6 +266,7 @@
 
   
   <!-- Modal -->
+  @if(isset($user))
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -277,7 +278,7 @@
         </div>
         <div class="modal-body">
             <p>
-                <strong>Nome: </strong> {{ $user->referrer ? $user->referrer->name . ' ' . $user->referrer->last_name : '-' }}
+             <strong>Nome: </strong> {{ $user->referrer ? $user->referrer->name . ' ' . $user->referrer->last_name : '-' }}
             </p>
             <p>
                 <strong>E-mail: </strong> {{ $user->referrer ? $user->referrer->email : '-' }}
@@ -285,6 +286,7 @@
             <p>
                 <strong>Tel.: </strong> {{ $user->referrer ? $user->referrer->phone : '-' }}
             </p>
+            
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -293,6 +295,7 @@
       </div>
     </div>
   </div>
+  @endif
 
 @push('scripts')
     <script src="{{asset('admin/layouts/plugins/inputmask/jquery.inputmask.min.js')}}"></script>

@@ -159,15 +159,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('read_type_game')
-                                <li class="nav-item">
-                                    <a href="{{route('admin.bets.validate-games.index')}}"
-                                       class="nav-link @if(request()->is('admin/bets/validate-games*')) active @endif">
-                                        <i class="fas fa-check nav-icon"></i>
-                                        <p>Validar Jogo</p>
-                                    </a>
-                                </li>
-                            @endcan
+                            
                             @can('read_game')
                                 <li class="nav-item has-treeview @if(request()->is('admin/bets/games*')) menu-open @endif">
                                     <a href="#"
