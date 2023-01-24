@@ -161,8 +161,8 @@
         </div>
     </div>
    
-    <div class="col-md-5">
-        <div class="card card-warning">
+    <div class="col-md-5 indica-user">
+        <div class="card card-info pb-5">
             <div class="card-header">
                 <h3 class="card-title">Valores</h3>
             </div>
