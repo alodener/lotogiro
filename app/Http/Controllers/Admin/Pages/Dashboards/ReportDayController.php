@@ -20,9 +20,9 @@ class ReportDayController extends Controller
         $indicador = Auth()->User()->id;
 
         // relacionamento de tabelas a fim de pegar os valores de ganhos da rede
-        $result = DB::select("SELECT u.id, u.name, u.last_name, u.email, CAST(SUM(g.value) AS decimal(10,2)) as valorVenda FROM games as g INNER JOIN users as u ON  u.id = g.user_id WHERE u.indicador = :id group by u.id", ['id' => $indicador]);
+        $result = DB::select("SELECT u.id, u.name, u.last_name, u.email, CAST(SUM(g.value) AS decimal(10,2)) as valorVenda FROM games as g INNER JOIN users as u ON  u.id = g.user_id WHERE g.checked = 1 and u.indicador = :id group by u.id", ['id' => $indicador]);
 
-        $jogosFeitos = DB::select("SELECT count(g.value) as jogoFeitos FROM games as g INNER JOIN users as u ON  u.id = g.user_id WHERE u.indicador = :id", ['id' => $indicador]);
+        $jogosFeitos = DB::select("SELECT count(g.value) as jogoFeitos FROM games as g INNER JOIN users as u ON  u.id = g.user_id WHERE g.checked = 1 and u.indicador = :id", ['id' => $indicador]);
 
         $data = [
             'result' => $result,
@@ -92,8 +92,8 @@ class ReportDayController extends Controller
         $data = $request->only('dataInicio', 'dataFinal');
         $indicador = Auth()->User()->id;
 
-        $result = DB::select("SELECT u.id, u.name, u.last_name, u.email, CAST(SUM(g.value) AS decimal(10,2)) as valorVenda FROM games as g INNER JOIN  users as u ON u.id = g.user_id WHERE u.indicador = :id AND  DATE_FORMAT(g.created_at, '%Y%m%d') BETWEEN DATE_FORMAT(:dataInicio, '%Y%m%d') AND DATE_FORMAT(:dataFinal, '%Y%m%d') group by u.id", ['id' => $indicador, 'dataInicio' => $data['dataInicio'], 'dataFinal' => $data['dataFinal']]);
-        $jogosFeitos = DB::select("SELECT count(g.value) as jogoFeitos FROM games as g INNER JOIN users as u ON  u.id = g.user_id WHERE u.indicador = :id AND  DATE_FORMAT(g.created_at, '%Y%m%d') BETWEEN DATE_FORMAT(:dataInicio, '%Y%m%d') AND DATE_FORMAT(:dataFinal, '%Y%m%d') group by u.id", ['id' => $indicador, 'dataInicio' => $data['dataInicio'], 'dataFinal' => $data['dataFinal']]);
+        $result = DB::select("SELECT u.id, u.name, u.last_name, u.email, CAST(SUM(g.value) AS decimal(10,2)) as valorVenda FROM games as g INNER JOIN  users as u ON u.id = g.user_id WHERE g.checked = 1 and u.indicador = :id AND  DATE_FORMAT(g.created_at, '%Y%m%d') BETWEEN DATE_FORMAT(:dataInicio, '%Y%m%d') AND DATE_FORMAT(:dataFinal, '%Y%m%d') group by u.id", ['id' => $indicador, 'dataInicio' => $data['dataInicio'], 'dataFinal' => $data['dataFinal']]);
+        $jogosFeitos = DB::select("SELECT count(g.value) as jogoFeitos FROM games as g INNER JOIN users as u ON  u.id = g.user_id WHERE g.checked = 1 and u.indicador = :id AND  DATE_FORMAT(g.created_at, '%Y%m%d') BETWEEN DATE_FORMAT(:dataInicio, '%Y%m%d') AND DATE_FORMAT(:dataFinal, '%Y%m%d') group by u.id", ['id' => $indicador, 'dataInicio' => $data['dataInicio'], 'dataFinal' => $data['dataFinal']]);
         $data = [
             'result' => $result,
             'valorTotal' => 0,

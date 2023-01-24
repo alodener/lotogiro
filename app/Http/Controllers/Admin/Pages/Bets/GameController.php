@@ -48,8 +48,32 @@ class GameController extends Controller
         if (!auth()->user()->hasPermissionTo('read_game')) {
             abort(403);
         }
+
+        $clients = Client::get();
+        $users = User::get();
+
         if ($request->ajax()) {
             $game = $this->game->whereRaw('type_game_id = ? and checked = 1', $typeGame);
+            
+            $params = array();
+            parse_str($request->form, $params);    
+
+            if(isset($params['client_id']) && !empty($params['client_id'])) {
+                $game = $game->where('client_id', $params['client_id']);
+            }
+
+            if(isset($params['user_id']) && !empty($params['user_id'])) {
+                $game = $game->where('user_id', $params['user_id']);
+            }
+
+            if(isset($params['startDate']) && !empty($params['startDate'])) {
+                $game = $game->where('created_at', '>=', $params['startDate']);
+            }
+
+            if(isset($params['endDate']) && !empty($params['endDate'])) {
+                $game = $game->where('created_at', '<=', $params['endDate'] . ' 23:59:59');
+            }
+            
             if (!auth()->user()->hasPermissionTo('read_all_games')) $game->where('user_id', auth()->id());
             $game->get();
             return DataTables::of($game)
@@ -88,7 +112,7 @@ class GameController extends Controller
                 ->make(true);
         }
 
-        return view('admin.pages.bets.game.index', compact('typeGame'));
+        return view('admin.pages.bets.game.index', compact('typeGame', 'clients', 'users'));
     }
     public function carregarJogo(TypeGame $typeGame)
     {
