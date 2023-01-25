@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                Recargas Manuais
+                {{ trans('admin.extracts.manual-recharge') }}
             </div>
         </div>
     </div>
@@ -10,7 +10,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <select wire:model="adminSelected" class="custom-select" id="user" name="user">
-                    <option value="0">Todos os Administradores</option>
+                    <option value="0">{{ trans('admin.all-admins') }}</option>
                     @foreach($admins as $admin)
                         <option value="{{$admin['id']}}">{{ $admin['name'] }}</option>
                     @endforeach
@@ -20,11 +20,11 @@
         <div class="col-md-2">
             <div class="form-group">
                 <select wire:model="range" class="custom-select" id="range" name="range">
-                    <option value="0">Tudo</option>
-                    <option value="1">Mensal</option>
-                    <option value="2">Semanal</option>
-                    <option value="3">Diário</option>
-                    <option value="4">Personalizado</option>
+                    <option value="0">{{ trans('admin.all') }}</option>
+                    <option value="1">{{ trans('admin.monthly') }}</option>
+                    <option value="2">{{ trans('admin.weekly') }}</option>
+                    <option value="3">{{ trans('admin.daily') }}</option>
+                    <option value="4">{{ trans('admin.custom') }}</option>
                 </select>
             </div>
         </div>
@@ -72,11 +72,11 @@
                 <table class="table table-striped table-hover table-bordered table-lg">
                     <thead>
                     <tr>
-                        <th>Data</th>
-                        <th>Responsável</th>
-                        <th>Usuário</th>
-                        <th>Valor</th>
-                        <th>Carteira</th>
+                        <th>{{ trans('admin.extracts.table-date-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-responsible-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-user-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-value-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-wallet-header') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -86,14 +86,14 @@
                             <td>{{ $transact->responsavel }}</td>
                             <td>{{ $transact->usuario }}</td>
                             <td>{{ $transact->value }}</td>
-                            <td>{{ $transact->wallet == 'balance' ? 'Saldo' : 'Bônus' }}</td>
+                            <td>{{ $transact->wallet == 'balance' ? trans('admin.balance') : trans('admin.bonus') }}</td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="5">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        Nenhum registro encontrado.
+                                        {{ trans('admin.entries-not-found') }}
                                     </div>
                                 </div>
                             </td>
@@ -108,7 +108,7 @@
                                     {{ $transacts->links() }}
                                 </div>
                                 <div class="col-sm-12 col-md-3 text-right text-bold">
-                                    Total: R$ {{ $transacts->valueTotal }}
+                                    {{ trans('admin.total') }}: R$ {{ $transacts->valueTotal }}
                                 </div>
                             </div>
                         </td>

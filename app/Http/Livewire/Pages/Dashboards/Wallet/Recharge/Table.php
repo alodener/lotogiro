@@ -10,6 +10,8 @@ use MercadoPago\Item;
 use MercadoPago\Preference;
 use MercadoPago\SDK;
 use App\Helper\ZoopGateway;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class Table extends Component
 {
@@ -86,6 +88,41 @@ class Table extends Component
                     </div>'",
         ]);
     }
+    public function callDoBank()
+    {
+        $order = new RechargeOrder([
+            'user_id' => auth()->id(),
+            'value' => Money::toDatabase($this->valueAdd),
+            'status' => 0,
+            'gateway' => 'doBank'
+        ]);
+        $order->save();
+
+        $response = Http::post('https://dobank.com.br/api/recebimento', [
+            'token' => 'GvfdgleZBKkV0ngQ766G0grRBRmPsiJFa0tc1QRHL2jtsrsBdtcxzbnL8mYI6AkteLzPmMGrmxxPccJ8Es2I8n57sP09UMMyBHYloMadNNYhjCdctDGHRy13jSbdncqmIHVErilLaRIkFKAJdMjlm8jb1DQX48WDnhIJSLNr0xbMNgWtvhmI80YkjaWBtbAn9hEekrnw',
+            'amount' => Money::toDatabase($this->valueAdd),
+            'method_code' => "pix",
+        ]);
+        $pix = json_decode($response->json());
+        //dd($pix->copiaecola);
+        $order->update(['link' => $pix->copiaecola, 'reference' =>$pix->txid]);
+        $baseURL = env('APP_URL');
+        $url = $baseURL . "/admin/dashboards/wallet/recharge-order";
+        
+        $this->alert('info', 'Pronto!!', [
+            'position' => 'center',
+            'timer' => null,
+            'toast' => false,
+            'html' => "Seu código Copia e Cola está pronto, gostaria de pagar agora?<br><br>
+                    <div class='input-group mb-3'>
+                        <input type='text' value='{$pix->copiaecola}' readonly class='form-control' placeholder='qrCodeZoop' aria-label='qrCodeZoop' aria-describedby='button-addon2' id='input_output'>
+                        <button class='btn btn-outline-secondary'  onclick='copyText()'  type='button' id='copyPix'>Copiar</button>
+                    </div>
+                    <a class='btn btn-block btn-outline-info'
+                            onclick=redirect()>Confirmar Pagamento</a>'",
+        ]);
+    }
+
 
     public function render()
     {
