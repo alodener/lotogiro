@@ -10,6 +10,10 @@ class ZoopController extends Controller
 {
     public function processTransactionSuccess(Request $request)
     {
+        if($request->has('type') && $request->type == 'ping') {
+            return response()->json([], 200);
+        }
+
         if($request->has('id') && $request->has('type') && $request->type == 'transaction.succeeded') {
             $payload = $request->payload;
 
