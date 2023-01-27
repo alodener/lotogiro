@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Webhook;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Helper\Wallet;
 
 class ZoopController extends Controller
 {
@@ -16,13 +17,14 @@ class ZoopController extends Controller
 
         if($request->has('id') && $request->has('type') && $request->type == 'transaction.succeeded') {
             $payload = $request->payload;
+            $data = new \stdClass;
 
-            $status = $payload['object']['status'] == 'succeeded' ? 'approved' : 'failure';
-            $id = $request->id;
+            $data->status = $payload['object']['status'] == 'succeeded' ? 'approved' : 'failure';
+            $data->external_reference = $request->id;
 
-            $route = url("/updateStatusPaymentCron/2de1ce3ddcb20dda6e6ea9fba8031de4/?status={$status}&external_reference={$id}");
+            $walletHelper = new Wallet;
 
-            return redirect($route);
+            return $walletHelper->updateStatusPayment($data);
         }
 
         return response()->json([
