@@ -172,16 +172,16 @@
         </div>
     </div>
 
-    <div class="card w-100">
+  <!--  <div class="card w-100">
         <div class="card-header indica-card d-flex justify-content-between align-items-center">
             <div class="col"><span>Ranking</span></div>
 
             @php $htmlRanking = '' @endphp
 
             @if(is_array($rankings) && count($rankings) > 0)
-                @foreach($rankings as $key => $ranking)
-                    @php ++$key; $htmlRanking .= "{$key} {$ranking->name} - R$ {$ranking->total},%0a"; @endphp
-                @endforeach
+            @foreach($rankings as $key => $ranking)
+            @php ++$key; $htmlRanking .= "{$key} {$ranking->name} - R$ {$ranking->total},%0a"; @endphp
+            @endforeach
             @endif
 
             <div class="col text-right">
@@ -192,14 +192,16 @@
             <div class="row">
                 <div class="col">
                     @if(is_array($rankings) && count($rankings) > 0)
-                        @foreach($rankings as $key => $ranking)
-                            <p>#{{ ++$key }} {{ $ranking->name }} - R$ {{ $ranking->total }}</p>
-                        @endforeach
+                    @foreach($rankings as $key => $ranking)
+                    <p>#{{ ++$key }} {{ $ranking->name }} - R$ {{ $ranking->total }}</p>
+                    @endforeach
                     @endif
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+</div>
+
 </div>
 
 <div class="col-md-12">
