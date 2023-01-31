@@ -20,7 +20,7 @@ class ZoopController extends Controller
             $data = new \stdClass;
 
             $data->status = $payload['object']['status'] == 'succeeded' ? 'approved' : 'failure';
-            $data->external_reference = $request->id;
+            $data->external_reference = $payload['object']['id'];
 
             $walletHelper = new Wallet;
 
