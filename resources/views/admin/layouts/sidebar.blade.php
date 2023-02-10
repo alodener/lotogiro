@@ -258,15 +258,15 @@
                         </ul>
                     </li>
                 @endcanany
-
-                <li class="nav-item has-treeview @if(request()->is('admin/dashboards/wallet/*')) menu-open @endif">
-                    <a href="{{route('admin.dashboards.wallet.index')}}" class="nav-link @if(request()->is('admin/dashboards/wallet/*')) menu-open @endif">
-                    <i class="nav-icon fas fa-wallet"></i>
-                        <p>
-                            Carteira
-                        </p>
-                    </a>
-                </li>
+                    <li class="nav-item has-treeview @if(request()->is('admin/dashboards/wallet/*')) menu-open @endif">
+                        <a href="{{route('admin.dashboards.wallet.index')}}" class="nav-link 
+                        @if(request()->is('admin/dashboards/wallet/*')) menu-open @endif">
+                        <i class="nav-icon fas fa-wallet"></i>
+                            <p>
+                                Carteira
+                            </p>
+                        </a>
+                    </li>
                 @canany(['read_user', 'read_role', 'read_permission'])
                 <li class="nav-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
                     <a href="#" class="nav-link @if(request()->is('admin/settings/*')) active @endif">
