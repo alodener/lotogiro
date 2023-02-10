@@ -32,7 +32,7 @@
                         <th>Id</th>
                         <th>Nome</th>
                         <th>E-mail</th>
-                        <th>DDD</th> 
+                        <th>ddd</th> 
                         <th>Telefone</th> 
                         <th>Criação</th>
                         <th class="acoes">Ações</th>
