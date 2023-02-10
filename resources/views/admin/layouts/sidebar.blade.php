@@ -259,11 +259,8 @@
                     </li>
                 @endcanany
 
-                
-
-                <li class="nav-item">
-                    <a href="{{ route('admin.dashboards.wallet.index') }}" class="nav-link @if(request()->is
-                    ('admin/dashboards/wallet/*')) menu-open @endif">
+                <li class="nav-item has-treeview @if(request()->is('admin/dashboards/wallet/*')) menu-open @endif">
+                    <a href="{{route('admin.dashboards.wallet.index')}}" class="nav-link @if(request()->is('admin/dashboards/wallet/*')) menu-open @endif">
                     <i class="nav-icon fas fa-wallet"></i>
                         <p>
                             Carteira
@@ -308,6 +305,7 @@
                             </li>
                         @endcan
                         @can('read_user')
+                        
                         <li class="nav-item">
                             <a href="{{route('admin.settings.qualifications.index')}}"
                                 class="nav-link @if(request()->is('admin/settings/qualifications*')) active @endif">
