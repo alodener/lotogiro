@@ -24,7 +24,7 @@
         <div class="col-md-12">
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Jogo</h3>
+                    <h3 class="card-title">{{ trans('admin.game') }}</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -34,19 +34,19 @@
                                     <tbody>
                                     <tr>
                                         <td>
-                                            Id
+                                            {{ trans('admin.table-id') }}
                                         </td>
                                         <td>
-                                            Tipo de Jogo
+                                            {{ trans('admin.table-game-type') }}
                                         </td>
                                         <td>
-                                            Concurso
+                                            {{ trans('admin.table-competition') }}
                                         </td>
                                         <td>
-                                            Números
+                                            {{ trans('admin.numbers') }}
                                         </td>
                                         <td>
-                                            Data Sorteio
+                                            {{ trans('admin.table-withdraw-date') }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -74,12 +74,12 @@
                                     <table class="table table-striped table-hover table-sm" id="result_table">
                                         <thead>
                                         <tr>
-                                            <th>Jogo</th>
-                                            <th>Pix</th>
-                                            <th>Nome</th>
-                                            <th>Valor Aposta</th>
-                                            <th>Valor Prêmio</th>
-                                            <th>Recibo</th>
+                                            <th>{{ trans('admin.table-game') }}</th>
+                                            <th>{{ trans('admin.table-pix') }}</th>
+                                            <th>{{ trans('admin.table-name') }}</th>
+                                            <th>{{ trans('admin.table-bet-value') }}</th>
+                                            <th>{{ trans('admin.table-bet-prize') }}</th>
+                                            <th>{{ trans('admin.table-receipt') }}</th>
                                         </tr>
                                         </thead>
                                         @if(isset($games))
@@ -95,12 +95,12 @@
                                                         <td width="180">
                                                             <a href="{{route('admin.bets.games.receipt', ['game' => $game->id, 'format' => 'pdf', 'prize' => true])}}">
                                                                 <button class="btn btn-info btn-sm">
-                                                                    Gerar Pdf
+                                                                    {{ tans('admin.generate-pdf') }}
                                                                 </button>
                                                             </a>
                                                             <a href="{{route('admin.bets.games.receipt', ['game' => $game, 'format' => 'txt', 'prize' => true])}}">
                                                                 <button type="button" class="btn btn-info btn-sm">
-                                                                    Gerar Txt
+                                                                    {{ tans('admin.generate-txt') }}
                                                                 </button>
                                                             </a>
                                                         </td>
@@ -108,7 +108,7 @@
                                                 @endforeach
                                             @else
                                                 <tr class="text-center">
-                                                    <td colspan="5"> Não houve nenhum ganhador para os números: {{$draw->numbers}}</td>
+                                                    <td colspan="5"> {{ trans('admin.draws.no-winners') }}: {{$draw->numbers}}</td>
                                                 </tr>
                                             @endif
                                             </tbody>
@@ -125,7 +125,7 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <a href="{{route('admin.bets.draws.index')}}">
-                <button type="button" class="btn btn-block btn-outline-secondary">Voltar a tela principal</button>
+                <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.back-to-main-page') }}</button>
             </a>
         </div>
     </div>

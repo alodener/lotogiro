@@ -18,6 +18,8 @@ return [
     'exclude-game-cancel' => 'Cancelar',
     'exclude-game-confirm' => 'Excluir',
     'select-period' => 'Selecione o Periodo que Deseja Buscar',
+    'finances' => 'Financeiro',
+    'general' => 'Geral',
     'all' => 'Tudo',
     'daily' => 'Diário',
     'weekly' => 'Semanal',
@@ -69,7 +71,19 @@ return [
     'game' => 'Jogo',
     'clear' => 'Limpar',
     'search-customer' => 'Pesquisar Cliente',
-
+    'generate-txt' => 'Gerar Txt',
+    'generate-pdf' => 'Gerar Pdf',
+    'table-id' => 'Id',
+    'table-game-type' => 'Tipo de Jogo',
+    'table-competition' => 'Concurso',
+    'table-numbers' => 'Números',
+    'table-withdraw-date' => 'Data Sorteio',
+    'table-game' => 'Jogo',
+    'table-pix' => 'Pix',
+    'table-name' => 'Nome',
+    'table-bet-value' => 'Valor Aposta',
+    'table-bet-prize' => 'Valor Prêmio',
+    'table-receipt' => 'Recibo',
 
     'register' => [
         'page-title' => 'Cadastro',
@@ -298,7 +312,19 @@ return [
         'table-competition' => 'Concurso',
         'table-numbers' => 'Números',
         'table-prize' => 'Prêmio',
-        'table-created-at' => 'Criação'
+        'table-created-at' => 'Criação',
+        'draw-title-create' => 'Novo Sorteio',
+        'draw-title-list' => 'Sorteios',
+        'new-draw' => 'Novo Sorteio',
+        'send-daily-report' => 'Enviar relatório diário',
+        'table-id' => 'Id',
+        'table-game-type' => 'Tipo de Jogo',
+        'table-competition' => 'Concurso',
+        'table-created-at' => 'Criação',
+        'table-actions' => 'Ações',
+        'exclude-confirmation-text' => 'Deseja excluir este sorteio?',
+        'no-winners' => 'Não houve nenhum ganhador para os números',
+        
     ],
 
     'game-types' => [
@@ -319,6 +345,7 @@ return [
         'table-id' => 'Id',
         'table-name' => 'Nome',
         'table-created-at' => 'Criação',
-        'table-actions' => 'Ações'
+        'table-actions' => 'Ações',
+        'delete-confirm-message' => 'Deseja excluir este tipo de jogo?',
     ]
 ];
