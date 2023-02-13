@@ -282,5 +282,43 @@ return [
         'bet-value-label' => 'Digite o Valor da Aposta',
         'prize-value-label' => 'Valor do Prêmio',
         'calculate' => 'Calcular'
+    ],
+
+    'draws' => [
+        'table-title' => 'PRÊMIOS',
+        'export-payments-loader' => 'Baixando Pagamentos',
+        'export-payments-button' => 'Baixar Pagamento',
+        'payment-info-title' => 'Informações de Pagamento',
+        'game-count' => 'Quantidade',
+        'table-id' => 'Id',
+        'table-game-type' => 'Tipo de Jogo',
+        'table-game-customer-document' => 'Cpf Cliente',
+        'table-customer' => 'Cliente',
+        'table-user' => 'Usuário',
+        'table-competition' => 'Concurso',
+        'table-numbers' => 'Números',
+        'table-prize' => 'Prêmio',
+        'table-created-at' => 'Criação'
+    ],
+
+    'game-types' => [
+        'game-type' => 'Tipo de Jogo',
+        'multiplicator' => 'Multiplicador',
+        'max-bet' => 'Máximo em Reais',
+        'max-repeated' => 'Limite de Jogos Repetidos',
+        'back-to-index' => 'Voltar para o tipo de jogo',
+        'register' => 'Cadastrar Valor',
+        'update' => 'Atualizar Valor',
+        'register-title' => 'Novo Valor',
+        'edit-title' => 'Editar Usuário',
+        'game-type-register-button' => 'Cadastrar Tipo de Jogo',
+        'game-type-update-button' => 'Atualizar Tipo de Jogo',
+        'new-game-type' =>  'Novo Tipo de Jogo',
+        'edit-game-type' => 'Editar Tipo de Jogo',
+        'list-game-type' => 'Tipos de Jogo',
+        'table-id' => 'Id',
+        'table-name' => 'Nome',
+        'table-created-at' => 'Criação',
+        'table-actions' => 'Ações'
     ]
 ];
