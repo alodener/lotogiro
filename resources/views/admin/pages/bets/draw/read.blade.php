@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Visualizar Sorteio')
+@section('title', trans('admin.draws.list-title'))
 
 @section('content')
 

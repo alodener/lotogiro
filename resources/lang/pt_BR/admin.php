@@ -324,7 +324,7 @@ return [
         'table-actions' => 'Ações',
         'exclude-confirmation-text' => 'Deseja excluir este sorteio?',
         'no-winners' => 'Não houve nenhum ganhador para os números',
-        
+        'list-title' => 'Visualizar Sorteio'
     ],
 
     'game-types' => [
