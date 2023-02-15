@@ -18,7 +18,7 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">Jogo</h3>
+                <h3 class="card-title">{{ trans('admin.game') }}</h3>
             </div>
             <div class="card-body">
                 @livewire('pages.bets.game.form', ['typeGame' => $typeGame ?? null , 'clients' => $clients ?? null, 'game' => $game ?? null])
@@ -29,15 +29,15 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.bets.games.index', ['type_game' => $typeGame->id])}}">
-            <button type="button" class="btn btn-block btn-info">Voltar a tela principal</button>
+            <button type="button" class="btn btn-block btn-info">{{ trans('admin.back-to-main-page') }}</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">
         <button type="submit" id="button_game" onclick="mudarListaNumerosGeral()"
                 class="btn btn-block btn-success">@if(request()->is('admin/bets/games/create/'.$typeGame->id)) 
-                Cadastrar Jogo  
+                {{ trans('admin.games.insert-game-button') }}
                 @else  
-                Atualizar Jogo 
+                {{ trans('admin.games.update-game-button') }}
                 @endif 
             </button>
     </div>

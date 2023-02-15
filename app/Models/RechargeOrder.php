@@ -16,6 +16,7 @@ class RechargeOrder extends Model
         'value',
         'link',
         'status',
+        'gateway'
     ];
 
     public function user()
