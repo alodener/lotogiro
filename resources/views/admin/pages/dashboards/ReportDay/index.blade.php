@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Relatorio da Rede')
+@section('title', trans('admin.network-sales.page-title'))
 
 @section('content')
     {{-- calculando venda total da rede --}}
@@ -16,11 +16,11 @@
     {{-- filtro de data --}}
     <div class="container">
         <select id="Filtro" class="form-select" aria-label="Default select example" onchange="Filtro()">
-            <option selected value='0'>Selecione o Periodo que Deseja Buscar</option>
-            <option value="1">Diario</option>
-            <option value="2">Semanal</option>
-            <option value="3">Mensal</option>
-            <option value="4">Personalizado</option>
+            <option selected value='0'>{{ trans('admin.select-period') }}</option>
+            <option value="1">{{ trans('admin.daily') }}</option>
+            <option value="2">{{ trans('admin.weekly') }}</option>
+            <option value="3">{{ trans('admin.monthly') }}</option>
+            <option value="4">{{ trans('admin.custom') }}</option>
         </select>
     </div> 
 
@@ -29,12 +29,12 @@
         @csrf
         <div class="container">
             <div>
-                <label for="">Data Inicio:</label>
+                <label for="">{{ trans('admin.initial-date') }}:</label>
                 <input id="startDate" name='dataInicio' class="form-control" type="date" />
             </div>
             
             <div>
-                <label for="">Data Final:</label>
+                <label for="">{{ trans('admin.end-date') }}:</label>
                 <input id="endDate" name='dataFinal' class="form-control" type="date" />
             </div>
             
@@ -48,7 +48,7 @@
     margin-right: auto; margin-top:30px">
 
         <div class="card text-white bg-warning mb-6" style="">
-            <div class="card-header">Jogos Feitos</div>
+            <div class="card-header">{{ trans('admin.network-sales.games-done') }}</div>
                 <div class="card-body">
                     <h5 class="card-title" style="font-size: 30px">{{ $totalJogos }}</h5> <i class="nav-icon fas fa-chart-line"  style="float: right; font-size: 50px"></i>
                     <p class="card-text"></p>
@@ -56,7 +56,7 @@
             </div>
 
             <div class="card text-white bg-success mb-6" style="">
-                <div class="card-header">Vendas Rede</div>
+                <div class="card-header">{{ trans('admin.network-sales.network-sales') }}</div>
                 <div class="card-body">
                     <h5 class="card-title" style="font-size: 30px">R${{ floatval($valorTotal) }}</h5> <i class="nav-icon fas fa-dollar-sign"  style="float: right; font-size: 50px"></i>
                     <p class="card-text"></p>
@@ -71,10 +71,10 @@
         <table id="relatorio" class="table table-striped" style="width: 100%">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>NOME</th>
-                    <th>EMAIL</th>
-                    <th>Total Vendas</th>
+                    <th>{{ trans('admin.network-sales.table-id-header') }}</th>
+                    <th>{{ trans('admin.network-sales.table-name-header') }}</th>
+                    <th>{{ trans('admin.network-sales.table-email-header') }}</th>
+                    <th>{{ trans('admin.network-sales.table-total-sales-header') }}</th>
                 </tr>
             </thead>
             @foreach ($result as $InfoRede)
@@ -116,7 +116,7 @@
         }
         else{
             document.getElementById("FiltroPersonalizado").style.display = "none";
-            location.href = "http://127.0.0.1:8000/admin/dashboards/Reportday/FiltroEspecifico/" + value;
+            location.href = "{{env('APP_URL')}}/admin/dashboards/Reportday/FiltroEspecifico/" + value;
         }
     }
     	
