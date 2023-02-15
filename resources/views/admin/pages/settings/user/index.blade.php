@@ -32,7 +32,8 @@
                         <th>Id</th>
                         <th>Nome</th>
                         <th>E-mail</th>
-                       <!--  <th>Telefone</th> -->
+                        <th>ddd</th> 
+                        <th>Telefone</th> 
                         <th>Criação</th>
                         <th class="acoes">Ações</th>
                     </tr>
@@ -92,12 +93,16 @@
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
-                   // {data: 'phone', name: 'phone'},
+                    {data: 'ddd', name: 'ddd'},
+                    {data: 'phone', name: 'phone'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
         });
+        
     </script>
+   
+    
 
 @endpush
