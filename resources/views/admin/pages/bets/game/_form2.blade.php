@@ -18,7 +18,7 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">Jogo</h3>
+                <h3 class="card-title">{{ trans('admin.game') }}</h3>
             </div>
             <div class="card-body">
                 @livewire('pages.bets.game.copiacola', ['typeGame' => $typeGame ?? null , 'clients' => $clients ?? null])

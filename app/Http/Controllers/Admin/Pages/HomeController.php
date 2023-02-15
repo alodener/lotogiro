@@ -21,6 +21,28 @@ class HomeController extends Controller
         //$user->assignRole('Administrador');
         //$user= auth()->user()->hasAllRoles(Role::all());
 
+        $rankings = \DB::select(
+            (\DB::raw("WITH RECURSIVE
+                unwound AS (
+                SELECT id, games
+                    FROM draws
+                UNION ALL
+                SELECT id, regexp_replace(games, '^[^,]*,', '') games
+                    FROM unwound
+                    WHERE games LIKE '%,%'
+                )
+                
+                SELECT client_id, SUM(premio) AS total, cli.name
+                FROM games
+                JOIN clients cli ON client_id = cli.id
+                WHERE games.id IN (SELECT regexp_replace(games, ',.*', '') games
+                FROM unwound
+                ORDER BY id) 
+                GROUP BY client_id
+                ORDER BY 2 DESC;"
+            )
+        ));
+
         $User = Auth::user();
         $FiltroUser = client::where('email', $User['email'])->first();
         $this->FiltroUser = $FiltroUser;
@@ -42,11 +64,22 @@ class HomeController extends Controller
         }
 
         // mandando valores para dashboar
-        return view('admin.pages.home', compact('User', 'FiltroUser', 'JogosFeitos', 'saldo','points', 'balances', 'qualificationAtived', 'nextGoal','goalCalculation'));
+        return view('admin.pages.home', compact('User', 'FiltroUser', 'JogosFeitos', 'saldo','points', 'balances', 'qualificationAtived', 'nextGoal','goalCalculation', 'rankings'));
     }
 
     public function riot(Request $request)
     {
         dd($request->all());
+    }
+
+    public function changeLocale(Request $request, $locale)
+    {
+        \DB::table('users')
+        ->where('id', \Auth()->user()->id)
+        ->update([
+            'lang' => $locale
+        ]);
+
+        return redirect()->back();
     }
 }
