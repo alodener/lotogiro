@@ -70,6 +70,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::post('/login', [LoginController::class, 'login'])->name('post.login');
     });
     Route::middleware(['auth:admin', 'check.openModal'])->group(function () {
+        Route::get('change-locale/{locale}', [HomeController::class, 'changeLocale'])->name('changeLocale');
+
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::prefix('dashboards')->name('dashboards.')->group(function () {
