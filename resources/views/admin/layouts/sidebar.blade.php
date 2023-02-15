@@ -21,8 +21,8 @@
                     </li>
                 </center>
                 @canany(['read_sale', 'read_gain'])
-                    <li class="nav-item has-treeview @if(request()->is('admin/dashboards/*')) menu-open @endif">
-                        <a href="#" class="nav-link @if(request()->is('admin/dashboards/*')) active @endif">
+                    <li class="nav-item has-treeview @if(request()->is('admin/dashboards/*')) @endif">
+                        <a href="#" class="nav-link @if(request()->is('admin/dashboards/*'))menu-open @endif">
                             <i class="nav-icon fas fa-chart-line"></i>
                             <p>
                                 Dashboards
@@ -199,55 +199,6 @@
                         </ul>
                     </li>
                 @endcanany
-                @canany(['read_user', 'read_role', 'read_permission'])
-                    <li class="nav-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
-                        <a href="#" class="nav-link @if(request()->is('admin/settings/*')) active @endif">
-                            <i class="nav-icon fas fa-cog"></i>
-                            <p>
-                                Configurações
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            @can('read_permission')
-                                <li class="nav-item">
-                                    <a href="{{route('admin.settings.permissions.index')}}"
-                                       class="nav-link @if(request()->is('admin/settings/permissions*')) active @endif">
-                                        <i class="fas fa-user-lock nav-icon"></i>
-                                        <p>Permissões</p>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('read_role')
-                                <li class="nav-item">
-                                    <a href="{{route('admin.settings.roles.index')}}"
-                                       class="nav-link @if(request()->is('admin/settings/roles*')) active @endif">
-                                        <i class="fas fa-user-tag nav-icon"></i>
-                                        <p>Funções</p>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('read_user')
-                                <li class="nav-item">
-                                    <a href="{{route('admin.settings.users.index')}}"
-                                       class="nav-link @if(request()->is('admin/settings/users*')) active @endif">
-                                        <i class="fas fa-user nav-icon"></i>
-                                        <p>Usuários</p>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('read_user')
-                            <li class="nav-item">
-                                <a href="{{route('admin.settings.qualifications.index')}}"
-                                    class="nav-link @if(request()->is('admin/settings/qualifications*')) active @endif">
-                                    <i class="fas fa-star nav-icon"></i>
-                                    <p>Qualificações</p>
-                                </a>
-                            </li>
-                            @endcan
-                        </ul>
-                    </li>
-                @endcanany
 
                 @canany(['read_user', 'read_role', 'read_permission'])
                     <li class="nav-item has-treeview @if(request()->is('admin/reports/*')) menu-open @endif">
@@ -306,19 +257,67 @@
 
                         </ul>
                     </li>
-                @endcanany
-
-                
-
-                <li class="nav-item">
-                    <a href="{{ route('admin.dashboards.wallet.index') }}" class="nav-link @if(request()->is
-                    ('admin/dashboards/wallet/*')) menu-open @endif">
-                    <i class="nav-icon fas fa-wallet"></i>
+                @endcanany 
+                    <li class="nav-link ">
+                        <a href="{{route('admin.dashboards.wallet.index')}}" 
+                        class="nav-link  @if(request()->is('admin/dashboards/wallet/index*')) @endif">
+                        <i class="nav-icon fas fa-wallet"></i>
+                        <i class="fas fa-dice-d8 "></i>
+                            <p>
+                                Carteira
+                            </p>
+                        </a>
+                    </li>
+                @canany(['read_user', 'read_role', 'read_permission'])
+                <li class="nav-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
+                    <a href="#" class="nav-link @if(request()->is('admin/settings/*')) active @endif">
+                        <i class="nav-icon fas fa-cog"></i>
                         <p>
-                            Carteira
+                            Configurações
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        @can('read_permission')
+                            <li class="nav-item">
+                                <a href="{{route('admin.settings.permissions.index')}}"
+                                   class="nav-link @if(request()->is('admin/settings/permissions*')) active @endif">
+                                    <i class="fas fa-user-lock nav-icon"></i>
+                                    <p>Permissões</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('read_role')
+                            <li class="nav-item">
+                                <a href="{{route('admin.settings.roles.index')}}"
+                                   class="nav-link @if(request()->is('admin/settings/roles*')) active @endif">
+                                    <i class="fas fa-user-tag nav-icon"></i>
+                                    <p>Funções</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('read_user')
+                            <li class="nav-item">
+                                <a href="{{route('admin.settings.users.index')}}"
+                                   class="nav-link @if(request()->is('admin/settings/users*')) active @endif">
+                                    <i class="fas fa-user nav-icon"></i>
+                                    <p>Usuários</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('read_user')
+                        
+                        <li class="nav-item">
+                            <a href="{{route('admin.settings.qualifications.index')}}"
+                                class="nav-link @if(request()->is('admin/settings/qualifications*')) active @endif">
+                                <i class="fas fa-star nav-icon"></i>
+                                <p>Qualificações</p>
+                            </a>
+                        </li>
+                        @endcan
+                    </ul>
                 </li>
+            @endcanany
             </ul>
         </nav>
     </div>
