@@ -54,12 +54,22 @@
         }
         public function updateStatusPayment(Request $request)
         {
-            $typeStatus = [
-                'pending' => 0,
-                'approved' => 1,
-                'failure' => 3
-            ];
-
+            $ACTIVE_GATEWAY = env('ACTIVE_GATEWAY');
+            
+            if($ACTIVE_GATEWAY == "doBank"){
+                $typeStatus = [
+                    'pending' => 0,
+                    'Recebido' => 1,
+                    'failure' => 3
+                ];
+            }else{
+                $typeStatus = [
+                    'pending' => 0,
+                    'approved' => 1,
+                    'failure' => 3
+                ];
+            }
+            
             if(!$request->has('status')){
                 return response()->json(['status' => 403]);
             }

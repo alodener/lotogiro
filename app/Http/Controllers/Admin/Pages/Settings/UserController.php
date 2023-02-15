@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Str;
+
 
 class UserController extends Controller
 {
@@ -146,6 +148,9 @@ class UserController extends Controller
                 $balanceRequest += Money::toDatabase(($request->commission/100) * $balanceRequest);
             }
 
+            
+           
+
             $user = new $this->user;
             $user->name = $request->name;
             $user->last_name = $request->last_name;
@@ -153,6 +158,13 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->commission = $request->commission;
             $user->indicador = $indicador;
+            if(!is_null($request->telefone)){
+                $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
+                $ddd = Str::of($telefoneCompleto)->substr(0, 2);
+                $telefone = Str::of($telefoneCompleto)->substr(2);
+                $user->ddd = $ddd;
+                $user->phone = $telefone;
+             }
             if (!empty($request->link)) {
                 $user->link = $request->link;
             }
@@ -168,14 +180,22 @@ class UserController extends Controller
 
                 $user->type_client = 1;
 
-                $data = $request->only('pix', 'telefone', 'cpf');
+                $data = $request->only('pix', 'cpf');
                 $passardados = New Client;
+
+
 
                 $passardados->cpf = $data['cpf'];
                 $passardados->name = $request->name;
                 $passardados->last_name = $request->last_name;
                 $passardados->email = $request->email;
-                $passardados->phone = $data['telefone'];
+                if(!is_null($request->telefone)){
+                    $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
+                    $ddd = Str::of($telefoneCompleto)->substr(0, 2);
+                    $telefone = Str::of($telefoneCompleto)->substr(2);
+                    $passardados->ddd = $ddd;
+                    $passardados->phone = $telefone;
+                 }
                 $passardados->pix  = $data['pix'];
                 $passardados->save();
 
@@ -251,10 +271,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+   
       if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all') ){
             abort(403);
         }
-
+      
         $validatedData = $request->validate([
             'name' => 'required|max:50',
             'last_name' => 'required|max:100',
@@ -263,12 +284,12 @@ class UserController extends Controller
             'password_confirmation' => 'sometimes|required_with:password|max:15',
             'commission' => 'integer|between:0,100',
         ]);
-
+    
         $indicador = $request->indicador;
         if($indicador == null || $indicador == 0){
             $indicador = 1;
         }
-
+    
         try
         {
             if(auth()->user()->hasPermissionTo('update_user')){
@@ -288,15 +309,31 @@ class UserController extends Controller
                 $newBonus = $user->bonus + ($user->commission/100) * $balanceRequest;
                 //$newBalance = $user->balance +  $balanceRequest;
             }
-
+            if(!is_null($request->telefone)){
+                $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
+                $ddd = Str::of($telefoneCompleto)->substr(0, 2); 
+                $telefone = Str::of($telefoneCompleto)->substr(2);
+            }
+          
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
+            if(!is_null($telefone)){
+            $user->ddd = $ddd;
+            $user->phone = $telefone;
+            }
+            
+            if($user->type_client == 1){
+                if(!is_null($telefone)){
+                $userClient = Client::where("email", $user->email)->update(['ddd'=>$ddd, 'phone'=>$telefone]);
+                }
+            }
+
+          
             if($auxRole != 6){
-                $user->type_client = null;
             }
             
             if($newBalance > 0){
@@ -310,6 +347,7 @@ class UserController extends Controller
            /* if($newBonus > 0){
                 $user->bonus = $newBonus;
             }*/
+            
 
             $user->indicador = $indicador;
 
@@ -337,11 +375,12 @@ class UserController extends Controller
                 $user->link = $request->link;
             }
             $user->save();
-            }
+            } 
+
             if($request->type_client == 1 || auth()->user()->hasPermissionTo('edit_all')){
                 return redirect()->route('admin.home')->withErrors([
                 'success' => 'Usuário alterado com sucesso'
-            ]);
+                ]);
             }
             else{
             if (!empty($request->roles)) {
@@ -356,6 +395,7 @@ class UserController extends Controller
                 $user->syncRoles(null);
             }
         }
+        
             return redirect()->route('admin.settings.users.index')->withErrors([
                 'success' => 'Usuário alterado com sucesso'
             ]);
@@ -366,7 +406,7 @@ class UserController extends Controller
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao alterar o usuário, tente novamente'
             ]);
         }
-        
+    
     }
 
     /**
