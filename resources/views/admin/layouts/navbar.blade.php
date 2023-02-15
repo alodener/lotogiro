@@ -58,6 +58,25 @@
             </li>
         @endif
 
+        <li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                   {{ App\Helper\Lang::getCurrentUserLangLabel() }}
+                </a>
+
+                @php $availableLangs = App\Helper\Lang::getAvailableLangs() @endphp
+                <ul class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                    @if(is_array($availableLangs) && $availableLangs > 0)
+                        @foreach($availableLangs as $key => $label)
+                            <li style="padding: 5px 10px;">
+                                <a href="{{ route('admin.changeLocale', $key) }}" style="color: #555; display: block">{{ $label }}</a>
+                            </li>
+                        @endforeach
+                    @endif
+                </ul>
+            </li>
+        </li>
+
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                <i class="fas fa-cog"></i>
