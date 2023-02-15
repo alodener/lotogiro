@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Sorteios')
+@section('title', trans('admin.draws.draw-title-list'))
 
 @section('content')
     <div class="row bg-white p-3">
@@ -21,19 +21,19 @@
             @enderror
             @can('create_draw')
                 <a href="{{route('admin.bets.draws.create')}}">
-                    <button class="btn btn-info my-2">Novo Sorteio</button>
+                    <button class="btn btn-info my-2">{{ trans('admin.draws.new-draw') }}</button>
                 </a>
 
                 <label class="dropdown">
                     <div class="dd-button">
-                        Enviar relatório diário
+                        {{ trans('admin.draws.send-daily-report') }}
                     </div>
                     <input type="checkbox" class="dd-input" id="test">
 
                     <ul class="dd-menu">
-                        <li><a class="link-muted" href="{{ route('admin.bets.report-draws', 'geral') }}">Geral</a></li>
+                        <li><a class="link-muted" href="{{ route('admin.bets.report-draws', 'geral') }}">{{ trans('admin.general') }}</a></li>
                         <li><a class="link-muted" href="{{ route('admin.bets.report-draws', 'financeiro')
-                        }}">Financeiro</a></li>
+                        }}">{{ trans('admin.finances') }}</a></li>
                     </ul>
                 </label>
             @endcan
@@ -41,11 +41,11 @@
                 <table class="table table-striped table-hover table-sm" id="draw_table">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Tipo de Jogo</th>
-                        <th>Concurso</th>
-                        <th>Criação</th>
-                        <th style="width: 80px">Ações</th>
+                        <th>{{ trans('admin.draws.table-id') }}</th>
+                        <th>{{ trans('admin.draws.table-game-type') }}</th>
+                        <th>{{ trans('admin.draws.table-competition') }}</th>
+                        <th>{{ trans('admin.draws.table-created-at') }}</th>
+                        <th style="width: 80px">{{ trans('admin.draws.table-actions') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,20 +59,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Deseja excluir este sorteio?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">{{ trans('admin.draws.exclude-confirmation-text') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Está ação não pode ser revertida
+                    {{ trans('admin.exclude-game-text') }}
                 </div>
                 <div class="modal-footer">
                     <form id="destroy" action="" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Excluir</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.exclude-game-cancel') }}Cancelar</button>
+                        <button type="submit" class="btn btn-danger">{{ trans('admin.exclude-game-confirm') }}Excluir</button>
                     </form>
                 </div>
             </div>

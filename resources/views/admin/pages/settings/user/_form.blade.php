@@ -123,7 +123,7 @@
 
                     {{-- parte de dados do cliente --}}
                     <div class="form-group col-md-6">
-                        <label for="pix" id="pixL">pix</label>
+                        <label for="pix" id="pixL">Pix</label>
                         <input type="" class="form-control @error('pix') is-invalid @enderror"
                                id="pix"
                                name="pix" maxlength="50">
@@ -134,10 +134,10 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="telefone" id="telefoneL">telefone</label>
+                        <label for="telefone" id="telefoneL">Telefone</label>
                         <input type="text" class="form-control @error('telefone') is-invalid @enderror"
                                id="telefone"
-                               name="telefone" maxlength="15">
+                               name="telefone" maxlength="18" value="{{old('phone', isset($user->phone) && !empty($user->phone) ? $user->ddd.$user->phone : null) }}">
                         @error('telefone')
                         <span class="invalid-feedback" role="alert">
                            {{ $message }}
@@ -145,7 +145,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="cpf" id="cpfL">cpf</label>
+                        <label for="cpf" id="cpfL">Cpf</label>
                         <input type="" class="form-control @error('cpf') is-invalid @enderror"
                                id="cpf"
                                name="cpf" maxlength="11">
@@ -161,8 +161,8 @@
         </div>
     </div>
    
-    <div class="col-md-5">
-        <div class="card card-warning">
+    <div class="col-md-5 indica-user">
+        <div class="card card-info pb-5">
             <div class="card-header">
                 <h3 class="card-title">Valores</h3>
             </div>
@@ -266,6 +266,7 @@
 
   
   <!-- Modal -->
+  @if(isset($user))
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -277,7 +278,7 @@
         </div>
         <div class="modal-body">
             <p>
-                <strong>Nome: </strong> {{ $user->referrer ? $user->referrer->name . ' ' . $user->referrer->last_name : '-' }}
+             <strong>Nome: </strong> {{ $user->referrer ? $user->referrer->name . ' ' . $user->referrer->last_name : '-' }}
             </p>
             <p>
                 <strong>E-mail: </strong> {{ $user->referrer ? $user->referrer->email : '-' }}
@@ -285,6 +286,7 @@
             <p>
                 <strong>Tel.: </strong> {{ $user->referrer ? $user->referrer->phone : '-' }}
             </p>
+            
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -293,6 +295,7 @@
       </div>
     </div>
   </div>
+  @endif
 
 @push('scripts')
     <script src="{{asset('admin/layouts/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
@@ -316,6 +319,11 @@
             campoSaldoAtual.readOnly = false;
             campoSaldo.readOnly = true;
         }
+
+        $(document).ready(function(){
+        let selector = document.getElementById("telefone");
+        Inputmask("(99) 9 9999-9999").mask(selector);
+    });
     </script>
 
     <script>
@@ -335,11 +343,11 @@
             else{
 
                 document.getElementById("pix").style.visibility = "hidden";
-                document.getElementById("telefone").style.visibility = "hidden";
+                //document.getElementById("telefone").style.visibility = "hidden";
                 document.getElementById("cpf").style.visibility = "hidden";
 
                 document.getElementById("pixL").style.visibility = "hidden";
-                document.getElementById("telefoneL").style.visibility = "hidden";
+                //document.getElementById("telefoneL").style.visibility = "hidden";
                 document.getElementById("cpfL").style.visibility = "hidden";
 
             }
