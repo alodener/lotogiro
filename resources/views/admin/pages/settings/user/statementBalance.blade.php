@@ -26,12 +26,13 @@
             @enderror
             {{-- TODO: Verificar permissões para acessar rota e recurso --}}
             <div class="table-responsive">
-                <h4 class="my-4">Extrato de Saldo | {{ $user->name }} - Saldo Total: {{ \App\Helper\Money::toReal($user->balance) }}</h4>
+                <h4 class="my-4">Extrato de Saldo | {{ $user->name }} - Saldo Total: {{ \App\Helper\Money::toReal($user->balance) }} | Bônus: R${{\App\Helper\Money::toReal($user->bonus)}}</h4>
                 <table class="table table-striped table-hover table-bordered table-lg" id="statementBalance_table">
                     <thead>
                     <tr>
                         <th>Data</th>
                         <th>Responsável</th>
+                        <th>Carteira</th>
                         <th>Valor</th>
                         <th>Valor Anterior</th>
                     </tr>
@@ -41,6 +42,7 @@
                         <tr>
                             <td>{{ $history->data }}</td>
                             <td>{{ $history->responsavel }}</td>
+                            <td>{{ $history->wallet == 'balance' ? 'Saldo' : 'Bônus' }}</td>
                             <td>{{ $history->value }}</td>
                             <td>{{ $history->old_value }}</td>
                         </tr>

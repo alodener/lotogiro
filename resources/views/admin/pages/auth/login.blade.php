@@ -4,18 +4,8 @@
 
 @section('content')
 
-  <div class="col-lg-4 col-md-12 mt-5">
-        <div class="login-logo mt-md-5">
-
-            <img src="{{ asset(env('logo')) }}" alt="" width="300" height="150">
-
-        </div>
-         @if (session('success'))
-            <div class="alert alert-success" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
-        
+  <div class="container-login100">
+           
         @if (session('SenhaRecuperada'))
             <div class="alert alert-success" role="alert">
                 {{ session('SenhaRecuperada') }}
@@ -27,8 +17,19 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="card">
+        <div class="wrap-login100">
+        
             <div class="card-body login-card-body">
+            @if (session('success'))
+            <div class="col-md-12 alert alert-success" style=" margin-right:0%;" role="alert">
+                {{ session('success') }}
+            </div>
+            @endif
+            <div class="login-logo mt-md-5">
+
+            <img src="{{ asset(env('logo')) }}" alt="" width="150" height="150">
+
+        </div>
                 <div class="col-md-12 px-4">
                     @error('success')
                     <div class="alert alert-success alert-dismissible fade show">
@@ -47,32 +48,30 @@
                     </div>
                     @enderror
                 </div>
-                <h3 class="login-box-msg">Realize o login para iniciar a sessão</h3>
+                <h3 class="login-box-msg">Login</h3>
 
                 <form method="POST" action="{{route('admin.post.login')}}">
                     @csrf
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                    <div class="wrap-input100">
+                        <input type="email" class="form-control @error('email') is-invalid @enderror input100" name="email"
                                placeholder="E-mail">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user"></span>
-                            </div>
-                        </div>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
                         @error('email')
                         <span class="invalid-feedback" role="alert">
                             {{ $message }}
                         </span>
                         @enderror
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                    <div class="wrap-input100">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror input100"
                                name="password" placeholder="Senha">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             {{ $message }}
@@ -85,33 +84,33 @@
                                 <input type="checkbox" name="remember"
                                        id="remember" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="remember">
-                                    Manter conectado
+                                    {{ trans('admin.keep-connected') }}
                                 </label>
                             </div>
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Acessar</button>
+                            <button type="submit" class="login100-form-btn">Acessar</button>
                         </div>
                     </div>
                 </form>
                 
-                <a href="{{ route('forget.password.get') }}">Esqueceu sua Senha?</a>
+                <a href="{{ route('forget.password.get') }}">{{ trans('admin.forgot-password-link') }}</a>
 
                 <div class="row">
                     <div class="col-sm-12">
                         <p class="mb-1 text-bold">
-                            Não é cadastrado?<br>
+                            {{ trans('admin.register-label') }}<br>
                             <a class="btn btn-block btn-info right"
                                href="{{ route('register') }}">
-                                Cadastre-se
+                                {{ trans('admin.register-button') }}
                             </a>
                         </p>
 
-                        <a href="https://wa.me/558196826967?text=Olá, gostaria de me tornar um consultor."
+                        <a href="https://wa.me/558196826967?text=Olá, poderia me ajudar?"
                            class="btn btn-block btn-success"
-                           title="Deseja ser um consultor?"
+                           title="Precisa de ajuda?"
                            target="_blank">
-                            <i style="border:none;"class="fa fa-whatsapp"></i> Deseja ser um consultor?
+                            <i style="border:none;"class="fa fa-whatsapp"></i> Precisa de ajuda?
                         </a>
                     </div>
                 </div>

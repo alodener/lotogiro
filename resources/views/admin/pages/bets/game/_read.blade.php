@@ -18,21 +18,21 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">Jogo</h3>
+                <h3 class="card-title">{{ trans('admin.game') }}</h3>
             </div>
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-md-3 mb-3">
                         <a href="{{route('admin.bets.games.receipt', ['game' => $game, 'format' => 'pdf'])}}">
                             <button type="button" class="btn btn-info btn-block">
-                                Gerar Recibo PDF
+                                {{ trans('admin.games.generate-pdf-invoice') }}
                             </button>
                         </a>
                     </div>
                     <div class="col-md-3 mb-3">
                         <a href="{{route('admin.bets.games.receipt', ['game' => $game, 'format' => 'txt'])}}">
                             <button type="button" class="btn btn-info btn-block">
-                                Gerar Recibo TXT
+                                {{ trans('admin.games.generate-txt-invoice') }}
                             </button>
                         </a>
                     </div>
@@ -41,7 +41,7 @@
                     <div class="col-md-3 mb-3 text-right">
                         <a href="https://api.whatsapp.com/send?phone=55{{$client->ddd.$client->phone}}&text=Jogo de {{$typeGame->name }} cadastrado com sucesso! Id da Aposta: {{$game->id}}, Cliente: {{$client->name. ' ' . $client->last_name}}, Dezenas: {{$game->numbers}}, Valor R${{\App\Helper\Money::toReal($game->value)}}, Prêmio R${{\App\Helper\Money::toReal($game->premio)}}, Data: {{\Carbon\Carbon::parse($game->crated_at)->format('d/m/Y') }}" target="_blank">
                             <button type="button" class="btn btn-info btn-block">
-                                Informar via WhatsApp
+                                {{ trans('admin.games.send-to-whatsapp') }}
                             </button>
                         </a>
                     </div>
@@ -53,25 +53,25 @@
                                 <tbody>
                                 <tr>
                                     <td>
-                                        Tipo de Jogo
+                                        {{ trans('admin.games.table-game-type-header') }}
                                     </td>
                                     <td>
-                                        Concurso
+                                        {{ trans('admin.games.table-competition-header') }}
                                     </td>
                                     <td>
-                                        Data Sorteio
+                                        {{ trans('admin.games.table-draw-date-header') }}
                                     </td>
                                     <td>
-                                        Cliente
+                                        {{ trans('admin.games.table-client-header') }}
                                     </td>
                                     <td>
-                                        Usuário
+                                        {{ trans('admin.games.table-user-header') }}
                                     </td>
                                     <td>
-                                        Valor da Aposta
+                                        {{ trans('admin.games.table-bet-amount-header') }}
                                     </td>
                                     <td>
-                                        Valor do Prêmio
+                                        {{ trans('admin.games.table-prize-amount-header') }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -128,7 +128,7 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.bets.games.index', ['type_game' => $typeGame->id])}}">
-            <button type="button" class="btn btn-block btn-outline-secondary">Voltar a tela principal</button>
+            <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.back-to-main-page') }}</button>
         </a>
     </div>
 </div>
