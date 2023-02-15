@@ -275,7 +275,7 @@ class UserController extends Controller
       if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all') ){
             abort(403);
         }
-      
+        $telefone = null;
         $validatedData = $request->validate([
             'name' => 'required|max:50',
             'last_name' => 'required|max:100',
