@@ -21,8 +21,8 @@
                     </li>
                 </center>
                 @canany(['read_sale', 'read_gain'])
-                    <li class="nav-item has-treeview @if(request()->is('admin/dashboards/*')) menu-open @endif">
-                        <a href="#" class="nav-link @if(request()->is('admin/dashboards/*')) active @endif">
+                    <li class="nav-item has-treeview @if(request()->is('admin/dashboards/*')) @endif">
+                        <a href="#" class="nav-link @if(request()->is('admin/dashboards/*'))menu-open @endif">
                             <i class="nav-icon fas fa-chart-line"></i>
                             <p>
                                 Dashboards
@@ -257,16 +257,17 @@
 
                         </ul>
                     </li>
-                @endcanany
-
-                <li class="nav-item has-treeview @if(request()->is('admin/dashboards/wallet/*')) menu-open @endif">
-                    <a href="{{route('admin.dashboards.wallet.index')}}" class="nav-link @if(request()->is('admin/dashboards/wallet/*')) menu-open @endif">
-                    <i class="nav-icon fas fa-wallet"></i>
-                        <p>
-                            Carteira
-                        </p>
-                    </a>
-                </li>
+                @endcanany 
+                    <li class="nav-link ">
+                        <a href="{{route('admin.dashboards.wallet.index')}}" 
+                        class="nav-link  @if(request()->is('admin/dashboards/wallet/index*')) @endif">
+                        <i class="nav-icon fas fa-wallet"></i>
+                        <i class="fas fa-dice-d8 "></i>
+                            <p>
+                                Carteira
+                            </p>
+                        </a>
+                    </li>
                 @canany(['read_user', 'read_role', 'read_permission'])
                 <li class="nav-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
                     <a href="#" class="nav-link @if(request()->is('admin/settings/*')) active @endif">
