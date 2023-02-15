@@ -26,7 +26,7 @@
             @enderror
             {{-- TODO: Verificar permissões para acessar rota e recurso --}}
             <div class="table-responsive">
-                <h4 class="my-4">Extrato de Saldo | {{ $user->name }} - Saldo Total: {{ \App\Helper\Money::toReal($user->balance) }}</h4>
+                <h4 class="my-4">Extrato de Saldo | {{ $user->name }} - Saldo Total: {{ \App\Helper\Money::toReal($user->balance) }} | Bônus: R${{\App\Helper\Money::toReal($user->bonus)}}</h4>
                 <table class="table table-striped table-hover table-bordered table-lg" id="statementBalance_table">
                     <thead>
                     <tr>

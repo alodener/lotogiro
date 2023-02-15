@@ -31,10 +31,8 @@ class Table extends Component
             ]);
         }
         $value = str_replace(',', '.', $this->valueTransfer);
-        $valorConvertido = (float)$value;
-        $valorFormatadoSolicitado = number_format($valorConvertido, 2, '.', '');
-        $valorFormatadoBonus = number_format($this->user['bonus'], 2, '.', '');
-        if($valorFormatadoSolicitado > $valorFormatadoBonus){
+        $value = Money::toDatabase($this->valueTransfer);
+        if ($value > $this->user['bonus']){
             $this->alert('warning', 'Saldo Bônus inferior ao solicitado!', [
                 'position' => 'center',
                 'timer' => '2000',
@@ -44,7 +42,8 @@ class Table extends Component
             ]);
         }
 
-       if($this->valueTransfer > .99 && $this->valueTransfer <= $this->user['bonus']){
+       if($this->valueTransfer > .99 && $value <= $this->user['bonus']){
+
            $withdrawRequest = WithdrawRequest::create([
                'user_id' => $this->userId,
                'value' => Money::toDatabase($this->valueTransfer)
