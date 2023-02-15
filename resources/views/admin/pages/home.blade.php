@@ -30,7 +30,7 @@
 </div>
 @endif
 
-<div class="col-md-6">
+<div class="col-md-12 p-4">
     <div class="card w-100">
         <div class="card-header indica-card">
             Indicações
@@ -45,12 +45,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body col-lg-6 col-sm-12">
-                    <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:left;">
+                <!-- button copiar link -->
+                <div class="card-body col-lg-4 col-sm-5">
+                    <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:left;">  
+                    <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
                         <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{ trans('admin.copy-link-button') }}</button>
-                        <p class="mensagem">{{ trans('admin.copy-whatsapp-message') }}</p>
                     </div>
-                </div>
+                </div> 
+
+                <!-- button seus indicados 
+                <div class="card-body col-lg-4 col-sm-6">
+                    <div class="col-lg-12 my-2 indica-corpo bg-light-2" style="color: #fff;" role="alert">
+                    <p class="mensagem">{{ trans('admin.dashboard.referrals-message') }}</p>
+                        <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-info"> 
+                            {{ trans('admin.dashboard.referrals-button') }}
+                        </a>
+                    </div>
+                </div> -->
+
+                <!--
                 <div class="card-body col-lg-6 col-sm-12">
                     <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:right;">
                         <a href="https://api.whatsapp.com/send?text=Segue link para criar um jogo: {{route('games.bet', ['user' => auth()->id()])}}" target="_blank" style="text-decoration: none !important;">
@@ -60,29 +73,34 @@
                             <p class="mensagem">{{ trans('admin.dashboard.copy-whatsapp-message') }}</p>
                         </a>
                     </div>
-                </div>
+                </div> -->
+
+                <!-- button indique e ganhe -->
                 @endif
-                <div class="card-body col-lg-6 col-sm-12">
-                    <div class="alert bg-light indica-corpo" role="alert">
+                <div class="card-body col-lg-4 col-sm-6">
+                    <div class="col-lg-12 my-2 alert bg-light indica-corpo" role="alert" >
                         <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link" value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}" />
-                        <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">{{ trans('admin.dashboard.referral-button-text') }}</button>
                         <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
+                        <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">{{ trans('admin.dashboard.referral-button-text') }} </button>
+                        
                     </div>
-                </div>
-                <div class="card-body col-lg-6 col-sm-12">
-                    <div class="indica-corpo bg-light-2" style="color: #fff;" role="alert">
+                </div> 
+                
+                <!-- button seus indicados -->
+                     <div class="card-body col-lg-4 col-sm-6">
+                    <div class="col-lg-12 my-2 indica-corpo bg-light-2" style="color: #fff;" role="alert">
+                    <p class="mensagem">{{ trans('admin.dashboard.referrals-message') }}</p>
                         <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-info">
-                            {{ trans('admin.dashboard.referrals-button') }}
+                            {{ trans('admin.dashboard.referrals-button') }} 
                         </a>
-                        <p class="mensagem">{{ trans('admin.dashboard.referrals-message') }}</p>
-                    </div>
-                </div>
+                    </div> 
+                </div> 
             </div>
         </div>
     </div>
 </div>
 
-<div class="col-md-6">
+<div class="col-md-12 p-4">
     <div class="card w-100">
         <div class="card-header indica-card">
             {{ trans('admin.dashboard.points-title') }}
@@ -204,7 +222,7 @@
 
 </div>
 
-<div class="col-md-12">
+<div class="col-md-15">
     @if(\App\Models\TypeGame::count() > 0)
     <div class="row">
         @foreach(\App\Models\TypeGame::get() as $typeGame)

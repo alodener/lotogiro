@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Novo Tipo de Jogo')
+@section('title', trans('admin.game-types.new-game-type'))
 
 @section('content')
 

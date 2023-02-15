@@ -119,7 +119,7 @@
 
                     {{-- parte de dados do cliente --}}
                     <div class="form-group col-md-6">
-                        <label for="pix" id="pixL">pix</label>
+                        <label for="pix" id="pixL">Pix</label>
                         <input type="" class="form-control @error('pix') is-invalid @enderror"
                                id="pix"
                                name="pix" maxlength="50">
@@ -130,10 +130,12 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="telefone" id="telefoneL">telefone</label>
-                        <input type="text" class="form-control @error('telefone') is-invalid @enderror"
-                               id="telefone"
-                               name="telefone" maxlength="15">
+                        <label for="telefone" id="telefoneL">Telefone</label>
+                        <input type="text" class="form-control @error('telefone') is-invalid @enderror" id="telefone"
+                               name="telefone" 
+                               maxlength="15"
+                               value="{{old('telefone', isset($client->telefone) && !empty($client->telefone) ? $client->ddd.$client->telefone : null) }}"
+                               >
                         @error('telefone')
                         <span class="invalid-feedback" role="alert">
                            {{ $message }}
@@ -141,7 +143,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="cpf" id="cpfL">cpf</label>
+                        <label for="cpf" id="cpfL">Cpf</label>
                         <input type="" class="form-control @error('cpf') is-invalid @enderror"
                                id="cpf"
                                name="cpf" maxlength="11">
@@ -170,7 +172,18 @@
     </div>
 </div>
 
+
 @push('scripts')
+
+    <script src="{{asset('admin/layouts/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#cpf').inputmask("999.999.999-99");
+            $('#telefone').inputmask("(99) 9999[9]-9999");
+        });
+    </script>
+
+
     <script src="{{asset('admin/layouts/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
