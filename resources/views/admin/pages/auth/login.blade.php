@@ -12,13 +12,13 @@
                 {{ session('success') }}
             </div>
         @endif
-        
+
         @if (session('SenhaRecuperada'))
             <div class="alert alert-success" role="alert">
                 {{ session('SenhaRecuperada') }}
             </div>
         @endif
-        
+
         @if (session('error'))
             <div class="alert alert-danger" role="alert">
                 {{ session('error') }}
@@ -40,6 +40,11 @@
                         </button>
                     </div>
                     @enderror
+                    @if (session('erro'))
+                    <div class="col-md-12 alert alert-danger" style=" margin-right:0%;" role="alert">
+                        {{ session('erro') }}
+                    </div>
+                    @endif
                     @error('error')
                     <div class="alert alert-default-danger alert-dismissible fade show">
                         {{ $message }}
@@ -94,7 +99,7 @@
                         </div>
                     </div>
                 </form>
-                
+
                 <a href="{{ route('forget.password.get') }}">{{ trans('admin.forgot-password-link') }}</a>
 
                 <div class="row">
