@@ -3,6 +3,7 @@
 @section('title', trans('admin.games.listing-page-title'))
 
 @section('content')
+    <?php use App\Models\Game; ?>
     <div class="col bg-white p-3 overflow-auto">
         <div class="row">
             <div class="col">
@@ -27,10 +28,16 @@
                             <th scope="col">Email</th>
                             <th scope="col"></th>
                             <th scope="col">Saldo</th>
+                            <th scope="col"></th>
+                            <th scope="col">Jogos Feitos <br/>(Quantidade)</th>
+                            <th scope="col">Valor Apostado</th>
+                            <th scope="col">Premios Recebidos</th>
+                            <th scope="col">Lucro/<br/>Prejuízo</th>
+                            <th scope="col">Cliente de<br/>Risco</th>
                             <th scope="col" class="text-center">Comissão</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
-                            <th scope="col">Ações</th>
+                            <th scope="col">Bloquear/<br>Desbloquear</th>
                             <th scope="col"></th>
                             <th scope="col">Contato Realizado</th>
                         </tr>
@@ -52,6 +59,28 @@
                                     <td class="text-success"><?php echo 'R$ '.number_format($user['balance'],2,'.',',');?></td>
                                 @else
                                     <td class="text-danger"><?php echo 'R$ '.number_format($user['balance'],2,'.',',');?></td>
+                                @endif
+                            </th>
+                            <th>
+                                <td>{{ $total_jogos = Game::where('user_id',$user['id'])->count('value')}}</td>
+                                <td><?php $total_apostado = Game::where('user_id',$user['id'])->sum('value');?> <?php echo 'R$ '.number_format($total_jogos,2,'.',','); ?></td>
+                                <td>{{ $total_premio = Game::where('user_id',$user['id'])->sum('prize_payment') }}</td>
+                                <?php $lucro_prejuizo = $total_premio - $total_apostado ?>
+
+                                @if ($lucro_prejuizo > 0)
+                                    <td class="text-success">{{ $lucro_prejuizo}}</td>
+                                @elseif ($lucro_prejuizo == 0)
+                                    <td>{{ $lucro_prejuizo}}</td>
+                                @else
+                                    <td class="text-danger">{{ $lucro_prejuizo}}</td>
+                                @endif
+
+                                @if ($lucro_prejuizo <= 2*($total_apostado))
+                                    <td><button type="button" class="btn btn-success disabled"><i class="bi bi-check-square-fill"></i></button></td>
+                                @elseif ($lucro_prejuizo > 2*($total_apostado) || $lucro_prejuizo <= 3*($total_apostado))
+                                    <td><button type="button" class="btn btn-warning disabled text-light"><i class="bi bi-exclamation-triangle-fill"></i></button></td>
+                                @else
+                                    <button type="button" class="btn btn-danger disabled text-light"><i class="bi bi-exclamation-triangle-fill"></i></button>
                                 @endif
                             </th>
                             <th>

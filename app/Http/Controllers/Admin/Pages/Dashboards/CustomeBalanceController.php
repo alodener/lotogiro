@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Pages\Dashboards;
 
 use App\Http\Controllers\Controller;
+use App\Models\Game;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class CustomeBalanceController extends Controller
         $users = User::all();
 
         return view('admin.pages.dashboards.customer.index',[
-            'users' => $users
+            'users' => $users,
         ]);
     }
 
