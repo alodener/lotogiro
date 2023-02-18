@@ -76,6 +76,7 @@ HTML);
                     'indicador' => $request->indicator,
                     'password' => $hashed,
                     'type_client' => 1,
+                    'is_active' => 1
                 ]);
 
                 Client::create([
