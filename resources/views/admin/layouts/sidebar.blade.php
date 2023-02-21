@@ -133,7 +133,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            
+
                             @can('read_game')
                                 <li class="nav-item has-treeview @if(request()->is('admin/bets/games*')) menu-open @endif">
                                     <a href="#"
@@ -217,7 +217,7 @@
                                     <i class="fas fa-star nav-icon"></i>
                                     <p>Dezenas Utilizadas</p>
                                 </a>
-                                
+
                                 <a href="{{route('admin.reports.points-by-user')}}"
                                     class="nav-link @if(request()->is('admin/settings/points-by-user*')) active @endif">
                                     <i class="fas fa-users nav-icon"></i>
@@ -242,6 +242,15 @@
                                     </a>
                                 </li>
                             @endif
+                            @if (\App\Helper\UserValidate::iAmAdmin())
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.dashboards.customer.balance') }}"
+                                        class="nav-link @if (request()->is('admin/dashboards/custome/balance')) active @endif">
+                                        <i class="fas fa-file-alt nav-icon"></i>
+                                        <p>Saldo de Clientes</p>
+                                    </a>
+                                </li>
+                            @endif
                             @if(\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.sales')}}"
@@ -257,9 +266,9 @@
 
                         </ul>
                     </li>
-                @endcanany 
+                @endcanany
                     <li class="nav-link ">
-                        <a href="{{route('admin.dashboards.wallet.index')}}" 
+                        <a href="{{route('admin.dashboards.wallet.index')}}"
                         class="nav-link  @if(request()->is('admin/dashboards/wallet/index*')) @endif">
                         <i class="nav-icon fas fa-wallet"></i>
                         <i class="fas fa-dice-d8 "></i>
@@ -306,7 +315,7 @@
                             </li>
                         @endcan
                         @can('read_user')
-                        
+
                         <li class="nav-item">
                             <a href="{{route('admin.settings.qualifications.index')}}"
                                 class="nav-link @if(request()->is('admin/settings/qualifications*')) active @endif">
