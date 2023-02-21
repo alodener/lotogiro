@@ -48,7 +48,7 @@
                 <div class="card-body col-lg-6 col-sm-12">
                     <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:left;">
                         <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{ trans('admin.copy-link-button') }}</button>
-                        <p class="mensagem">{{ trans('admin.copy-whatsapp-message') }}</p>
+                        <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
                     </div>
                 </div>
                 <div class="card-body col-lg-6 col-sm-12">
@@ -66,7 +66,7 @@
                     <div class="alert bg-light indica-corpo" role="alert">
                         <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link" value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}" />
                         <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">{{ trans('admin.dashboard.referral-button-text') }}</button>
-                        <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
+                        <p class="mensagem">{{ trans('admin.dashboard.referral-messsage') }}</p>
                     </div>
                 </div>
                 <div class="card-body col-lg-6 col-sm-12">
