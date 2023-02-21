@@ -84,6 +84,9 @@ return [
     'table-bet-value' => 'Bet Amount',
     'table-bet-prize' => 'Premium Value',
     'table-receipt' => 'Receipt',
+    'recharge' => 'Recharge',
+    'account' => 'Profile',
+    'greeting' => 'Hi',
 
     'sidebar' => [
         'do-game' => 'Play Your Game',

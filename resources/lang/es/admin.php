@@ -84,6 +84,9 @@ return [
     'table-bet-value' => 'Cantidad Apostada',
     'table-bet-prize' => 'Valor Premio',
     'table-receipt' => 'Recibo',
+    'recharge' => 'Recargar',
+    'account' => 'Cuenta',
+    'greeting' => 'Hola',
 
     'sidebar' => [
         'do-game' => 'Juega tu juego',

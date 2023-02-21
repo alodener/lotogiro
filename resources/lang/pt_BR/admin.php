@@ -84,6 +84,9 @@ return [
     'table-bet-value' => 'Valor Aposta',
     'table-bet-prize' => 'Valor Prêmio',
     'table-receipt' => 'Recibo',
+    'recharge' => 'Recarregar'
+    'account' => 'Conta',
+    'greeting' => 'Olá'
 
     'sidebar' => [
         'do-game' => 'Faça Seu Jogo',
