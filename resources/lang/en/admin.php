@@ -225,6 +225,7 @@ return [
         'direct-sales' => 'Direct sales',
         'bonus' => 'Bonus',
         'total-gains' => 'Total Earnings',
+        'total-balance' => 'Total Balance',
         'table-id-header' => 'Id',
         'table-game-type-header' => 'Game type',
         'table-cpf-header' => 'Customer Cpf',
