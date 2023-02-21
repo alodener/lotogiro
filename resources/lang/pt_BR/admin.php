@@ -122,6 +122,11 @@ return [
     
     ],
 
+    'footer' => [
+        'version' => 'Versão',
+        'copyright' => 'Todos direitos reservados.'
+    ],
+
     'register' => [
         'page-title' => 'Cadastro',
         'page-header' => 'Cadastre-se para começar a jogar!!',
@@ -159,7 +164,8 @@ return [
         'max-points-title' => 'Parabéns você esta no topo',
         'max-points-text' => 'Você esta no mais alto nível do plano de carreira',
         'games-not-found' => 'Não existem tipos de jogos cadastrados!',
-        'copied-url' => 'Link copiado!'
+        'copied-url' => 'Link copiado!',
+        'indications' => 'Indicações',
     ],
 
     'ranking' => [

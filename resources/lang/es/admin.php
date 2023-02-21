@@ -158,7 +158,13 @@ return [
         'max-points-title' => 'Felicidades estás en la cima',
         'max-points-text' => 'Estás en el nivel más alto de la carrera.',
         'games-not-found' => '¡No hay tipos de juegos registrados!',
-        'copied-url' => '¡Enlace copiado!'
+        'copied-url' => '¡Enlace copiado!',
+        'indications' => 'Indicaciones'
+    ],
+
+    'footer' => [
+        'version' => 'Versión',
+        'copyright' => 'Reservados todos los derechos.'
     ],
 
     'ranking' => [

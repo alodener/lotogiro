@@ -33,7 +33,7 @@
 <div class="col-md-6">
     <div class="card w-100">
         <div class="card-header indica-card">
-            Indicações
+            {{ trans('admin.dashboard.indications') }}
         </div>
         <div class="container">
             <div class="row">

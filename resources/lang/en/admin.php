@@ -121,6 +121,11 @@ return [
         'wallet' => 'Wallet',
     ],
 
+    'footer' => [
+        'version' => 'Version',
+        'copyright' => 'All rights reserved.'
+    ],
+
     'register' => [
         'page-title' => 'Register',
         'page-header' => 'Sign up to start playing!!',
@@ -158,7 +163,8 @@ return [
         'max-points-title' => 'Congratulations you are on top',
         'max-points-text' => 'You are at the highest level of the career path',
         'games-not-found' => 'There are no game types registered!',
-        'copied-url' => 'Link copied!'
+        'copied-url' => 'Link copied!',
+        'indications' => 'Indications'
     ],
 
     'ranking' => [
