@@ -84,9 +84,18 @@ return [
     'table-bet-value' => 'Cantidad Apostada',
     'table-bet-prize' => 'Valor Premio',
     'table-receipt' => 'Recibo',
+    'table-cpf-customer' => 'Cpf del cliente',
+    'table-customer' => 'Cliente',
+    'table-user' => 'Usuario',
+    'table-value' => 'Valor',
+    'table-comission' => 'Comisión',
+    'table-creation' => 'Creación',
     'recharge' => 'Recargar',
     'account' => 'Cuenta',
     'greeting' => 'Hola',
+    'quantity' => 'Cantidad',
+    'sales-label' => 'Ventas',
+    'no-row-found' => 'No se encontraron registros.',
 
     'sidebar' => [
         'do-game' => 'Juega tu juego',
@@ -398,5 +407,14 @@ return [
         'draw' => 'Dibujado',
         'selected' => 'Seleccionado',
         'no-games-sold' => 'No se venden juegos'
+    ],
+
+    'comissions' => [
+        'page-title' => 'Pagos - Comisiones',
+        'table-title' => 'COMISIONES',
+        'download-payments-button' => 'Descargar Pagos',
+        'download-payments-loader' => 'Descarga de pagos',
+        'payment-info-table-title' => 'Información del pago',
+        'search-user-placeholder' => 'Usuario de búsqueda'
     ]
 ];

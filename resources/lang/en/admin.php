@@ -84,9 +84,18 @@ return [
     'table-bet-value' => 'Bet Amount',
     'table-bet-prize' => 'Premium Value',
     'table-receipt' => 'Receipt',
+    'table-cpf-customer' => 'Cpf Customer',
+    'table-customer' => 'Customer',
+    'table-user' => 'User',
+    'table-value' => 'Value',
+    'table-comission' => 'Comission',
+    'table-creation' => 'Creation',
     'recharge' => 'Recharge',
     'account' => 'Profile',
     'greeting' => 'Hi',
+    'quantity' => 'Quantity',
+    'sales-label' => 'Sales',
+    'no-row-found' => 'No record found.',
 
     'sidebar' => [
         'do-game' => 'Play Your Game',
@@ -398,5 +407,14 @@ return [
         'draw' => 'Drawn',
         'selected' => 'Selected',
         'no-games-sold' => 'No games sold'
+    ],
+
+    'comissions' => [
+        'page-title' => 'Payments - Commissions',
+        'table-title' => 'COMMISSIONS',
+        'download-payments-button' => 'Download Payments',
+        'download-payments-loader' => 'Downloading Payments',
+        'payment-info-table-title' => 'Payment Information',
+        'search-user-placeholder' => 'Search User'
     ]
 ];

@@ -1,6 +1,6 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">COMISSÕES</h3>
+        <h3 class="text-center text-bold">{{ trans('admin.comissions.table-title') }}</h3>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -16,7 +16,7 @@
                                name="dateStart"
                                autocomplete="off"
                                maxlength="50"
-                               placeholder="Data Inicial"
+                               placeholder="{{ trans('admin.initial-date') }}"
                                onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateStart')
                         <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@
                                name="dateEnd"
                                autocomplete="off"
                                maxlength="50"
-                               placeholder="Data Final"
+                               placeholder="trans('admin.end-date')"
                                onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateEnd')
                         <span class="invalid-feedback" role="alert">
@@ -51,10 +51,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="input-group mb-3">
-                <input wire:model="search" type="text" id="author" class="form-control" placeholder="Pesquisar Usuário"
+                <input wire:model="search" type="text" id="author" class="form-control" placeholder="{{ trans('admin.comissions.search-user-placeholder') }}"
                        autocomplete="off">
                 <div class="input-group-append">
-                    <span wire:click="clearUser" class="input-group-text" title="Limpar"><i
+                    <span wire:click="clearUser" class="input-group-text" title="{{ trans('admin.clear') }}"><i
                             class="fas fa-user-times"></i></span>
                 </div>
             </div>
@@ -78,7 +78,7 @@
             <div class="alert alert-warning" role="alert">
                 <button class="btn" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    Baixando Pagamentos
+                    {{ trans('admin.comissions.download-payments-loader') }}
                 </button>
             </div>
         </div>
@@ -93,26 +93,26 @@
             </select>
         </div>
         <div class="form-group offset-md-5 col-md-6 text-right">
-            <button wire:click="pay" type="button" class="btn btn-danger">Baixar Pagamento</button>
+            <button wire:click="pay" type="button" class="btn btn-danger">{{ trans('admin.comissions.download-payments-button') }}</button>
         </div>
     </div>
     <div class="card card-info">
         <div class="card-header indica-card">
-            <h3 class="card-title">Informações de Pagamento</h3>
+            <h3 class="card-title">{{ trans('admin.comissions.payment-info-table-title') }}</h3>
         </div>
         <div class="card-body">
             <div class="row">
                     <div class="col-md-3">   
-                        <b>Quantidade:</b> {{$games->count()}}
+                        <b>{{ trans('admin.quantity') }}:</b> {{$games->count()}}
                     </div>
                     <div class="col-md-3">
-                        <b>Vendas:</b> R${{\App\Helper\Money::toReal($value)}} 
+                        <b>{{ trans('admin.sales-label') }}:</b> R${{\App\Helper\Money::toReal($value)}} 
                     </div>
                     <div class="col-md-3">
-                        <b>Bonus:</b> R${{\App\Helper\Money::toReal($valueBonus)}} 
+                        <b>{{ trans('admin.bonus') }}:</b> R${{\App\Helper\Money::toReal($valueBonus)}} 
                     </div>
                     <div class="col-md-3">
-                        <b>Total:</b> R${{\App\Helper\Money::toReal($value + $valueBonus)}}
+                        <b>{{ trans('admin.total') }}:</b> R${{\App\Helper\Money::toReal($value + $valueBonus)}}
                     </div>
             </div>
         </div>
@@ -123,15 +123,15 @@
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Tipo de Jogo</th>
-                        <th>Cpf Cliente</th>
-                        <th>Cliente</th>
-                        <th>Usuário</th>
-                        <th>Valor</th>
+                        <th>{{ trans('admin.table-id') }}</th>
+                        <th>{{ trans('admin.table-game-type') }}</th>
+                        <th>{{ trans('admin.table-cpf-customer') }}</th>
+                        <th>{{ trans('admin.table-customer') }}</th>
+                        <th>{{ trans('admin.table-user') }}</th>
+                        <th>{{ trans('admin.table-value') }}</th>
                         <th>%</th>
-                        <th>Comissão</th>
-                        <th>Criação</th>
+                        <th>{{ trans('admin.table-comission') }}</th>
+                        <th>{{ trans('admin.table-creation') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -168,7 +168,7 @@
                     @empty
                         <tr>
                             <td class="text-center" colspan="9">
-                                Nenhum registro encontrado.
+                                {{ trans('admin.no-row-found') }}
                             </td>
                         </tr>
                     @endforelse
