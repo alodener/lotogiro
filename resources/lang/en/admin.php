@@ -389,5 +389,13 @@ return [
         'table-created-at' => 'Creation',
         'table-actions' => 'Actions',
         'delete-confirm-message' => 'Do you want to exclude this type of game?',
+    ],
+
+    'winning-ticket' => [
+        'register-ticket' => 'Register Tickets',
+        'draw-at' => 'Drawn in',
+        'draw' => 'Drawn',
+        'selected' => 'Selected',
+        'no-games-sold' => 'No games sold'
     ]
 ];

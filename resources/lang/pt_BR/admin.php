@@ -390,5 +390,13 @@ return [
         'table-created-at' => 'Criação',
         'table-actions' => 'Ações',
         'delete-confirm-message' => 'Deseja excluir este tipo de jogo?',
+    ],
+
+    'winning-ticket' => [
+        'register-ticket' => 'Cadastrar Bilhetes',
+        'draw-at' => 'Sorteado em',
+        'draw' => 'Sorteado',
+        'selected' => 'Selecionados',
+        'no-games-sold' => 'Nenhum jogo vendido'
     ]
 ];

@@ -388,6 +388,14 @@ return [
         'table-name' => 'Nombre',
         'table-created-at' => 'Creación',
         'table-actions' => 'Comportamiento',
-        'delete-confirm-message' => '¿Quieres excluir este tipo de juego?',
+        'delete-confirm-message' => '¿Quieres excluir este tipo de juego?', 
+    ],
+
+    'winning-ticket' => [
+        'register-ticket' => 'Registrar Entradas',
+        'draw-at' => 'Dibujado en',
+        'draw' => 'Dibujado',
+        'selected' => 'Seleccionado',
+        'no-games-sold' => 'No se venden juegos'
     ]
 ];

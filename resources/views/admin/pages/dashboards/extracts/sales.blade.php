@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Extrato de Vendas')
+@section('title', trans('admin.sidebar.extract-sales'))
 
 @section('content')
     <div class="row bg-white p-3">
