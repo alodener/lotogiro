@@ -448,6 +448,7 @@ class UserController extends Controller
             $h->responsavel = $h->userSender->name;
             $h->value = Money::toReal($h->value);
             $h->old_value = Money::toReal($h->old_value);
+            $h->value_a = Money::toReal($h->value_a);
             $user = $h->user;
         }
         return view('admin.pages.settings.user.statementBalance', ['historybalance' => $historybalance, 'user' => $user]);
