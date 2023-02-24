@@ -34,7 +34,9 @@ class Table extends Component
                 'responsavel' => $h['user_sender']['name'],
                 'value' => Money::toReal($h['value']),
                 'old_value' => Money::toReal($h['old_value']),
+                'value_a' => Money::toReal($h['value_a']),
                 'obs' => $h['type']
+                
             ];
         }
     }
