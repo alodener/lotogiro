@@ -63,6 +63,7 @@ class Wallet
                         'user_id' => $user->id,
                         'value' => $totalRecharge,
                         'old_value' => $user->balance,
+                        'value_a' => $balance - $request->value,
                         'type' => "Recarga efetuada por meio da plataforma. {$msgCommission}"
                     ]);
 
