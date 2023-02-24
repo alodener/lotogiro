@@ -95,12 +95,12 @@
                                                         <td width="180">
                                                             <a href="{{route('admin.bets.games.receipt', ['game' => $game->id, 'format' => 'pdf', 'prize' => true])}}">
                                                                 <button class="btn btn-info btn-sm">
-                                                                    {{ tans('admin.generate-pdf') }}
+                                                                    {{ trans('admin.generate-pdf') }}
                                                                 </button>
                                                             </a>
                                                             <a href="{{route('admin.bets.games.receipt', ['game' => $game, 'format' => 'txt', 'prize' => true])}}">
                                                                 <button type="button" class="btn btn-info btn-sm">
-                                                                    {{ tans('admin.generate-txt') }}
+                                                                    {{ trans('admin.generate-txt') }}
                                                                 </button>
                                                             </a>
                                                         </td>
