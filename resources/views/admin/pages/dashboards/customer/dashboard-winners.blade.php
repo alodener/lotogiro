@@ -31,7 +31,7 @@
                         <input type="date" name="initial_date" class="form-control" id="initial_date">
                     </div>
                     <div class="form-group w-25">
-                    <label for="exampleInputEmail1">Data Inicio</label>
+                    <label>Data Final</label>
                     <input type="date" class="form-control" name="final_date" id="final_date">
                     </div>
                     <button type="submit" onclick="validate_date(event)" class="btn btn-primary">Filtrar</button>
