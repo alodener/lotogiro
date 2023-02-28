@@ -115,6 +115,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
             Route::prefix('customer')->name('customer.')->group(function (){
                 Route::get('/', [CustomeBalanceController::class, 'index'])->name('balance');
+                Route::get('/dashboard/winners', [CustomeBalanceController::class, 'dashboard_winners'])->name('dashboard.winners');
+                Route::post('/detailed/view/user', [CustomeBalanceController::class, 'filter'])->name('detailed.view.user');
                 Route::get('/lock/{id}', [CustomeBalanceController::class, 'lock_account'])->name('lock');
                 Route::get('/unlock/{id}', [CustomeBalanceController::class, 'unlock_account'])->name('unlock');
                 Route::get('/contact/made{id}', [CustomeBalanceController::class, 'contact_made'])->name('contact.made');
