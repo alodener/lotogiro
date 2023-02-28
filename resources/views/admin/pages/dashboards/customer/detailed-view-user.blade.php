@@ -48,7 +48,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <a href="{{ route('admin.dashboards.customer.detailed.view') }}"><button type="button" class="btn btn-secondary"><i class="bi bi-arrow-left-square-fill"></i></button></a>
+                <a href="{{ route('admin.dashboards.customer.dashboard.winners') }}"><button type="button" class="btn btn-secondary"><i class="bi bi-arrow-left-square-fill"></i></button></a>
                 <button onclick="gerar_pdf()" type="button" class="btn btn-danger"><i class="bi bi-filetype-pdf"></i></button>
             </div>
         </div>
