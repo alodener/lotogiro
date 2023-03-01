@@ -85,9 +85,9 @@ class ProcessBetEntries implements ShouldQueue
             $transact_balance = new TransactBalance;
             $transact_balance->user_id_sender = auth()->id();
             $transact_balance->user_id = auth()->id();
-            $transact_balance->value = $request->value;
+            $transact_balance->value = $game->value;
             $transact_balance->old_value = auth()->user()->balance;
-            $transact_balance->value_a = auth()->user()->balance - $request->value;
+            $transact_balance->value_a = auth()->user()->balance - $game->value;
             $transact_balance->type = 'Compra - Jogo de id: ' . $game->id . ' do tipo: ' . $game->type_game_id;
             $transact_balance->save();
 
