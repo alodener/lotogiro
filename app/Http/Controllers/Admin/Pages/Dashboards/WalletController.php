@@ -107,7 +107,7 @@
                             'user_id' => $user->id,
                             'value' => $totalRecharge,
                             'old_value' => $user->balance,
-                            'value_a' => auth()->user()->balance - $request->value,
+                            'value_a' => $user->balance + $totalRecharge,
                             'type' => "Recarga efetuada por meio da plataforma. {$msgCommission}"
                         ]);
 
