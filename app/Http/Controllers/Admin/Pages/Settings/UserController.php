@@ -209,6 +209,7 @@ class UserController extends Controller
             'user_id' => $user->id,
             'value' => (float) Money::toDatabase($request->balance),
             'old_value' => (float) Money::toDatabase(0),
+            'value_a' => (float) Money::toDatabase(0),
         ]);
 
 
@@ -334,6 +335,7 @@ class UserController extends Controller
 
           
             if($auxRole != 6){
+                $user->type_client = null;
             }
             
             if($newBalance > 0){
@@ -447,7 +449,7 @@ class UserController extends Controller
             $h->data = Carbon::parse($h->created_at)->format('d/m/y à\\s H:i');
             $h->responsavel = $h->userSender->name;
             $h->value = Money::toReal($h->value);
-            $h->old_value = Money::toReal($h->old_value);
+            $h->old_value = Money::toReal($h->lue);
             $user = $h->user;
         }
         return view('admin.pages.settings.user.statementBalance', ['historybalance' => $historybalance, 'user' => $user]);
