@@ -335,6 +335,7 @@ class UserController extends Controller
 
           
             if($auxRole != 6){
+                $user->type_client = null;
             }
             
             if($newBalance > 0){

@@ -18,6 +18,9 @@
             <div class="col">
                 <p>Controle o acesso dos clientes por aqui!</p>
             </div>
+            <div class="col border-left border-top">
+                <p>Para ter uma visão detalhada dos clientes premiados<br><a href="{{ route('admin.dashboards.customer.dashboard.winners') }}">Clique Aqui!</a></p>
+            </div>
         </div>
         <div class="row mt-2">
             <div class="col">
@@ -71,17 +74,17 @@
                                             ?>
                                         @endif
                                     @endforeach
-                                    <?php echo 'R$ ' . number_format($total_soma_premios, 2, '.', ',');
+                                    <?php echo 'R$' . number_format($total_soma_premios, 2, '.', ',');
                                     $lucro_prejuizo = $total_soma_premios - $total_apostado;
                                     ?>
                                 </td>
                                 <td>
                                     @if ($lucro_prejuizo > 0)
-                                <td class="text-success">{{ $lucro_prejuizo }}</td>
+                                <td class="text-success">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',') }}</td>
                                 @elseif ($lucro_prejuizo == 0)
-                                    <td>{{ $lucro_prejuizo }}</td>
+                                    <td>{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',') }}</td>
                                 @else
-                                    <td class="text-danger">{{ $lucro_prejuizo }}</td>
+                                    <td class="text-danger">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',') }}</td>
                                 @endif
 
                                 @if ($lucro_prejuizo <= 2 * $total_apostado)
@@ -128,6 +131,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="row">
+                    {{ $users->links() }}
+                </div>
             </div>
         </div>
     </div>
