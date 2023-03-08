@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Novo Valor')
+@section('title', {{ trans('admin.game-types.register-title') }})
 
 @section('content')
 

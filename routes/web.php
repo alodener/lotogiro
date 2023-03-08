@@ -2,6 +2,7 @@
 
     use App\Http\Controllers\Admin\Pages\Auth\RegisterController;
     use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
+    use App\Http\Controllers\Admin\Pages\Dashboards\CustomeBalanceController;
     use App\Http\Controllers\Admin\Pages\Dashboards\WinningTicketController;
     use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
@@ -69,7 +70,7 @@ Route::middleware('guest:web')->group(function () {
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('get.login');
-        Route::post('/login', [LoginController::class, 'login'])->name('post.login');
+        Route::post('/login', [LoginController::class, 'login'])->name('post.login')->middleware('is.active');;
     });
     Route::middleware(['auth:admin', 'check.openModal'])->group(function () {
         Route::get('change-locale/{locale}', [HomeController::class, 'changeLocale'])->name('changeLocale');
@@ -113,6 +114,14 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/order-detail/{id}', [WalletController::class, 'orderDetail'])->name('order-detail');
                 Route::get('/updateStatusPayment/2de1ce3ddcb20dda6e6ea9fba8031de4/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPayment');
                 Route::get('/thanks/', [WalletController::class, 'thanks'])->name('thanks');
+            });
+            Route::prefix('customer')->name('customer.')->group(function (){
+                Route::get('/', [CustomeBalanceController::class, 'index'])->name('balance');
+                Route::get('/lock/{id}', [CustomeBalanceController::class, 'lock_account'])->name('lock');
+                Route::get('/unlock/{id}', [CustomeBalanceController::class, 'unlock_account'])->name('unlock');
+                Route::get('/contact/made{id}', [CustomeBalanceController::class, 'contact_made'])->name('contact.made');
+                Route::get('/contact/not/made{id}', [CustomeBalanceController::class, 'contact_not_made'])->name('contact.not.made');
+                Route::put('/save/{id}', [CustomeBalanceController::class, 'save_changes'])->name('save');
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
