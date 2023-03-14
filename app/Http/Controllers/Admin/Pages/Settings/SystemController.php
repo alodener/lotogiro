@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 
+
 class SystemController extends Controller
 {
 
@@ -100,10 +101,19 @@ class SystemController extends Controller
         
            $system->value = $data['logo'];
            $system->save();
-
-
         }
-        return redirect()->route('admin.settings.systems.index');
+
+        try{
+            return redirect()->route('admin.settings.systems.index')->withErrors([
+                'success' => 'Configuração alterada com sucesso!'
+            ]);
+        } catch (\Exception $exception) {
+
+            return redirect()->route('admin.settings.systems.index')->withErrors([
+                'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao cadastrar a imagem, tente novamente'
+            ]);
+        }
+
     }
 
     /**

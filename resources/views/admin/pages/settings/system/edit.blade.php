@@ -37,6 +37,10 @@
                             <label for="file">Nome da configuração:</label>
                             <br>
                             <label for="file">{{$system->nome_config}}</label>
+                            <br>
+                        <img src="{{ url("storage/{$system->value}")}}"
+                             class="brand-image  elevation-3"
+                             style="opacity: .8">
                         </div>
 
                 
