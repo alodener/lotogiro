@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-info elevation-4" style="overflow-x: hidden">
     <a href="/" class="brand-link">
 
-        <img src="{{asset(env('logo'))}}"
+      <img src="{{ App\Helper\Configs::getConfigLogo() }}"
              alt="Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
@@ -269,7 +269,7 @@
                 @endcanany
                     <li class="nav-link ">
                         <a href="{{route('admin.dashboards.wallet.index')}}"
-                        class="nav-link  @if(request()->is('admin/dashboards/wallet/index*')) @endif">
+                        class="nav-link  @if(request()->is('admin/dashboards/wallet/index*')) active @endif">
                         <i class="nav-icon fas fa-wallet"></i>
                         <i class="fas fa-dice-d8 "></i>
                             <p>
@@ -324,7 +324,15 @@
                             </a>
                         </li>
                         @endcan
-                    </ul>
+                        @can('read_user')
+                        <li class="nav-item">
+                            <a href="{{route('admin.settings.systems.index')}}"
+                                class="nav-link @if(request()->is('admin/settings/system*')) active @endif">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>Sistema</p>
+                            </a>
+                        </li>
+                        @endcan 
                 </li>
             @endcanany
             </ul>
