@@ -122,6 +122,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/contact/made{id}', [CustomeBalanceController::class, 'contact_made'])->name('contact.made');
                 Route::get('/contact/not/made{id}', [CustomeBalanceController::class, 'contact_not_made'])->name('contact.not.made');
                 Route::put('/save/{id}', [CustomeBalanceController::class, 'save_changes'])->name('save');
+                Route::get('/pdf/{id}/{date_initial}/{date_final}', [CustomeBalanceController::class, 'get_pdf'])->name('get.pdf');
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
@@ -184,3 +185,4 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     });
 });
 
+Route::get('/users/winners', [CustomeBalanceController::class, 'userswinnersAPI']);
