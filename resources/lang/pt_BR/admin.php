@@ -90,12 +90,19 @@ return [
     'table-value' => 'Valor',
     'table-comission' => 'Comissão',
     'table-creation' => 'Criação',
-    'recharge' => 'Recarregar'
+    'recharge' => 'Recarregar',
     'account' => 'Conta',
     'greeting' => 'Olá',
     'quantity' => 'Quantidade',
     'sales-label' => 'Vendas',
     'no-row-found' => 'Nenhum registro encontrado.',
+    'wallet' => 'Carteira',
+    'withdraw' => 'Retirar',
+    'convert' => 'Converter',
+    'withdraw-solicitations' => 'Solicitações de saque',
+    'recharge-solicitations' => 'Pedidos de Recarga',
+    'extract' => 'Extrato',
+
 
     'sidebar' => [
         'do-game' => 'Faça Seu Jogo',
@@ -127,7 +134,7 @@ return [
         'reports' => 'Relatórios',
         'used-dozens' => 'Dezenas Utilizadas',
         'points-by-client' => 'Pontos por Cliente',
-        'wallet' => 'Carteira',
+        'wallet-title' => 'Carteira',
     
     ],
 
@@ -417,5 +424,12 @@ return [
         'download-payments-loader' => 'Baixando Pagamentos',
         'payment-info-table-title' => 'Informações de Pagamento',
         'search-user-placeholder' => 'Pesquisar Usuário'
+    ],
+
+    'wallet' => [
+        'balance-transfer' => 'Transferência de Saldo',
+        'receiver-data' => 'Dados do Recebedor',
+        'change-pix-warning' => 'Ao alterar essa informação, ela passa a ser sua principal',
+        
     ]
 ];

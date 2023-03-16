@@ -1,6 +1,6 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">CARTEIRA</h3>
+        <h3 class="text-center text-bold text-uppercase">{{ trans('admin.wallet-title') }}</h3>
     </div>
     <div class="row bg-white p-3">
         <div class="col-md-12">
