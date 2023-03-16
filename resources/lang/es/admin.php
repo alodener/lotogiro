@@ -84,51 +84,6 @@ return [
     'table-bet-value' => 'Cantidad Apostada',
     'table-bet-prize' => 'Valor Premio',
     'table-receipt' => 'Recibo',
-    'table-cpf-customer' => 'Cpf del cliente',
-    'table-customer' => 'Cliente',
-    'table-user' => 'Usuario',
-    'table-value' => 'Valor',
-    'table-comission' => 'Comisión',
-    'table-creation' => 'Creación',
-    'recharge' => 'Recargar',
-    'account' => 'Cuenta',
-    'greeting' => 'Hola',
-    'quantity' => 'Cantidad',
-    'sales-label' => 'Ventas',
-    'no-row-found' => 'No se encontraron registros.',
-
-    'sidebar' => [
-        'do-game' => 'Juega tu juego',
-        'dashboard' => 'Dashboards',
-        'ranking' => 'Clasificación',
-        'points' => 'Puntos',
-        'extracts' => 'Extracto',
-        'extract-manual-recharge' => 'Extraer Recarga Manual',
-        'extract-sales' => 'Declaración de ventas',
-        'winning-tickets' => 'Boletos ganadores',
-        'network-sales' => 'Ventas en red',
-        'gains' => 'Ganancias',
-        'sales' => 'Ventas',
-        'bets' => 'Apuestas',
-        'customers' => 'Clientes',
-        'validate-game' => 'Validar juego',
-        'competitions' => 'Concursos',
-        'game-types' => 'Tipos de juegos',
-        'games' => 'Juegos',
-        'payments' => 'Pagos',
-        'comissions' => 'Comisiones',
-        'prizes' => 'Premios',
-        'raffles' => 'Lotería de carreras',
-        'settings' => 'Ajustes',
-        'permissions' => 'Permisos',
-        'functions' => 'Funciones',
-        'users' => 'Usuarios',
-        'qualifications' => 'Calificaciones',
-        'reports' => 'Informes',
-        'used-dozens' => 'Decenas usadas',
-        'points-by-client' => 'Puntos por Cliente',
-        'wallet' => 'Portafolio',
-    ],
 
     'register' => [
         'page-title' => 'Registro',
@@ -151,7 +106,7 @@ return [
         'balance-title' => 'Saldo',
         'copy-link-message' => 'Haga clic en el botón y copie su enlace de arriba',
         'copy-whatsapp-button' => 'Enviar por Whatsapp',
-        'copy-whatsapp-message' => 'Click en el botón y enviar por Whatsapp',
+        'copy-whatspp-message' => 'Click en el botón y enviar por Whatsapp',
         'referral-button-text' => '¡Recomiende y gane!',
         'referral-messsage' => 'Haga clic en el botón y copie su enlace de referencia',
         'referrals-button' => 'Sus indicados',
@@ -167,13 +122,7 @@ return [
         'max-points-title' => 'Felicidades estás en la cima',
         'max-points-text' => 'Estás en el nivel más alto de la carrera.',
         'games-not-found' => '¡No hay tipos de juegos registrados!',
-        'copied-url' => '¡Enlace copiado!',
-        'indications' => 'Indicaciones'
-    ],
-
-    'footer' => [
-        'version' => 'Versión',
-        'copyright' => 'Reservados todos los derechos.'
+        'copied-url' => '¡Enlace copiado!'
     ],
 
     'ranking' => [
@@ -234,7 +183,6 @@ return [
         'direct-sales' => 'Ventas directas',
         'bonus' => 'Bonos',
         'total-gains' => 'Ganancias Totales',
-        'total-balance' => 'Balance total',
         'table-id-header' => 'Id',
         'table-game-type-header' => 'Tipo de juego',
         'table-cpf-header' => 'Cpf del cliente',
@@ -398,23 +346,6 @@ return [
         'table-name' => 'Nombre',
         'table-created-at' => 'Creación',
         'table-actions' => 'Comportamiento',
-        'delete-confirm-message' => '¿Quieres excluir este tipo de juego?', 
-    ],
-
-    'winning-ticket' => [
-        'register-ticket' => 'Registrar Entradas',
-        'draw-at' => 'Dibujado en',
-        'draw' => 'Dibujado',
-        'selected' => 'Seleccionado',
-        'no-games-sold' => 'No se venden juegos'
-    ],
-
-    'comissions' => [
-        'page-title' => 'Pagos - Comisiones',
-        'table-title' => 'COMISIONES',
-        'download-payments-button' => 'Descargar Pagos',
-        'download-payments-loader' => 'Descarga de pagos',
-        'payment-info-table-title' => 'Información del pago',
-        'search-user-placeholder' => 'Usuario de búsqueda'
+        'delete-confirm-message' => '¿Quieres excluir este tipo de juego?',
     ]
 ];

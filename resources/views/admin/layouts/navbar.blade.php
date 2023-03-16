@@ -4,14 +4,14 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item pl-3">
-            {{ trans('admin.balance') }}: R${{\App\Helper\Money::toReal(auth()->user()->balance)}} |
-            {{ trans('admin.bonus') }}:  R${{\App\Helper\Money::toReal(auth()->user()->bonus)}}
+            Saldo: R${{\App\Helper\Money::toReal(auth()->user()->balance)}} |
+            Bônus:  R${{\App\Helper\Money::toReal(auth()->user()->bonus)}}
         </li>
         <li class="nav-item pl-3">
                         <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">
                             <i class="fas fa-piggy-bank"></i>
-                            {{ trans('admin.recharge') }} 
+                            Recarregar 
                         </a>
         </li>
     </ul>
@@ -83,18 +83,18 @@
             </a>
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
                 <p class="px-2 pt-1">
-                    {{ trans('admin.greeting') }}, {{auth()->user()->name}}
+                    Olá, {{auth()->user()->name}}
                 </p>
                 @can('read_user')
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('admin.settings.users.edit', ['user' => auth()->user()->id])}}">
-                    <i class="fas fa-user mr-2"></i> {{ trans('admin.account') }} 
+                    <i class="fas fa-user mr-2"></i> Conta
                 </a>
                 @endcan
                 @can('edit_all')
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('admin.settings.users.edit', ['user' => auth()->user()->id])}}">
-                    <i class="fas fa-user mr-2"></i> {{ trans('admin.account') }} 
+                    <i class="fas fa-user mr-2"></i> Conta
                 </a>
                 @endcan
                 <div class="dropdown-divider"></div>
