@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                <span class="float-left">Bilhetes Premiados</span>
+                <span class="float-left">{{ trans('admin.winner-tickets') }}</span>
                 <span class="float-right">
-                    <a href="{{route('admin.dashboards.extracts.add-winning-ticket')}}" class="btn btn-light">Cadastrar Bilhetes</a>
+                    <a href="{{route('admin.dashboards.extracts.add-winning-ticket')}}" class="btn btn-light">{{ trans('admin.winning-ticket.register-ticket') }}</a>
                 </span>
             </div>
         </div>
@@ -16,11 +16,11 @@
         <div class="col-md-2">
             <div class="form-group">
                 <select wire:model="range" class="custom-select" id="range" name="range">
-                    <option value="0">Diário</option>
-                    <option value="1">Ontem</option>
-                    <option value="2">Semanal</option>
-                    <option value="3">Mensal</option>
-                    <option value="4">Personalizado</option>
+                    <option value="0">{{ trans('admin.daily') }}</option>
+                    <option value="1">{{ trans('admin.yesterday') }}</option>
+                    <option value="2">{{ trans('admin.weekly') }}</option>
+                    <option value="3">{{ trans('admin.monthly') }}</option>
+                    <option value="4">{{ trans('admin.custom') }}</option>
                 </select>
             </div>
         </div>
@@ -34,7 +34,7 @@
                                name="dateStart"
                                autocomplete="off"
                                maxlength="50"
-                               placeholder="Data Inicial"
+                               placeholder="{{ trans('admin.initial-date') }}"
                                onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateStart')
                         <span class="invalid-feedback" role="alert">
@@ -49,7 +49,7 @@
                                name="dateEnd"
                                autocomplete="off"
                                maxlength="50"
-                               placeholder="Data Final"
+                               placeholder="{{ trans('admin.end-date') }}"
                                onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateEnd')
                         <span class="invalid-feedback" role="alert">
@@ -70,19 +70,19 @@
                         <div class="d-flex flex-row">
                             <div class="col-12 bg-cyan align-middle text-left pt-1">
                                 <h6>{{ $dado->user->name }} |
-                                    <strong>Sorteado em:
+                                    <strong>{{ trans('admin.winning-ticket.draw-at') }}:
                                         {{ \Carbon\Carbon::parse($dado->created_at)->format('d/m/Y') }}
                                     </strong>
                                 </h6>
-                                <small><strong>Sorteado:</strong> {{ $dado->draw->numbers }}</small><br>
-                                <small><strong>Selecionados:</strong> {{ $dado->game->numbers }}</small>
+                                <small><strong>{{ trans('admin.winning-ticket.draw') }}:</strong> {{ $dado->draw->numbers }}</small><br>
+                                <small><strong>{{ trans('admin.winning-ticket.selected') }}:</strong> {{ $dado->game->numbers }}</small>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         @empty
-            <div class="col-sm-12"><p>Nenhum jogo vendido.</p></div>
+            <div class="col-sm-12"><p>{{ trans('admin.winning-ticket.no-games-sold') }}.</p></div>
         @endforelse
     </div>
 </div>

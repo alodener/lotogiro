@@ -33,7 +33,7 @@
 <div class="col-md-12 p-4">
     <div class="card w-100">
         <div class="card-header indica-card">
-            Indicações
+            {{ trans('admin.dashboard.indications') }}
         </div>
         <div class="container">
             <div class="row">
@@ -50,6 +50,10 @@
                     <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:left;">  
                     <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
                         <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{ trans('admin.copy-link-button') }}</button>
+<<<<<<< HEAD
+                        <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
+=======
+>>>>>>> 9ce4e0d7bdbc33afda34c8e8329efd2cab7cfb66
                     </div>
                 </div> 
 
@@ -80,9 +84,14 @@
                 <div class="card-body col-lg-4 col-sm-6">
                     <div class="col-lg-12 my-2 alert bg-light indica-corpo" role="alert" >
                         <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link" value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}" />
+<<<<<<< HEAD
+                        <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">{{ trans('admin.dashboard.referral-button-text') }}</button>
+                        <p class="mensagem">{{ trans('admin.dashboard.referral-messsage') }}</p>
+=======
                         <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
                         <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">{{ trans('admin.dashboard.referral-button-text') }} </button>
                         
+>>>>>>> 9ce4e0d7bdbc33afda34c8e8329efd2cab7cfb66
                     </div>
                 </div> 
                 

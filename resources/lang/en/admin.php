@@ -84,6 +84,56 @@ return [
     'table-bet-value' => 'Bet Amount',
     'table-bet-prize' => 'Premium Value',
     'table-receipt' => 'Receipt',
+    'table-cpf-customer' => 'Cpf Customer',
+    'table-customer' => 'Customer',
+    'table-user' => 'User',
+    'table-value' => 'Value',
+    'table-comission' => 'Comission',
+    'table-creation' => 'Creation',
+    'recharge' => 'Recharge',
+    'account' => 'Profile',
+    'greeting' => 'Hi',
+    'quantity' => 'Quantity',
+    'sales-label' => 'Sales',
+    'no-row-found' => 'No record found.',
+
+    'sidebar' => [
+        'do-game' => 'Play Your Game',
+        'dashboard' => 'Dashboards',
+        'ranking' => 'Ranking',
+        'points' => 'Points',
+        'extracts' => 'Extract',
+        'extract-manual-recharge' => 'Extract Manual Recharge',
+        'extract-sales' => 'Sales Statement',
+        'winning-tickets' => 'Winning Tickets',
+        'network-sales' => 'Network Sales',
+        'gains' => 'Gains',
+        'sales' => 'Sales',
+        'bets' => 'Bets',
+        'customers' => 'Customers',
+        'validate-game' => 'Validate Game',
+        'competitions' => 'Contests',
+        'game-types' => 'Game Types',
+        'games' => 'Games',
+        'payments' => 'Payments',
+        'comissions' => 'Comissions',
+        'prizes' => 'Prizes',
+        'raffles' => 'Raffles',
+        'settings' => 'Settings',
+        'permissions' => 'Permissions',
+        'functions' => 'Functions',
+        'users' => 'Users',
+        'qualifications' => 'Qualifications',
+        'reports' => 'Reports',
+        'used-dozens' => 'Used Dozens',
+        'points-by-client' => 'Points By Customer',
+        'wallet' => 'Wallet',
+    ],
+
+    'footer' => [
+        'version' => 'Version',
+        'copyright' => 'All rights reserved.'
+    ],
 
     'register' => [
         'page-title' => 'Register',
@@ -106,7 +156,7 @@ return [
         'balance-title' => 'Balance',
         'copy-link-message' => 'Click the button and copy your link above',
         'copy-whatsapp-button' => 'Send via WhatsApp',
-        'copy-whatspp-message' => 'Click the button and send via WhatsApp',
+        'copy-whatsapp-message' => 'Click the button and send via WhatsApp',
         'referral-button-text' => 'Refer and Earn!',
         'referral-messsage' => 'Click the button and copy your referral link',
         'referrals-button' => 'Your nominees',
@@ -122,7 +172,8 @@ return [
         'max-points-title' => 'Congratulations you are on top',
         'max-points-text' => 'You are at the highest level of the career path',
         'games-not-found' => 'There are no game types registered!',
-        'copied-url' => 'Link copied!'
+        'copied-url' => 'Link copied!',
+        'indications' => 'Indications'
     ],
 
     'ranking' => [
@@ -183,6 +234,7 @@ return [
         'direct-sales' => 'Direct sales',
         'bonus' => 'Bonus',
         'total-gains' => 'Total Earnings',
+        'total-balance' => 'Total Balance',
         'table-id-header' => 'Id',
         'table-game-type-header' => 'Game type',
         'table-cpf-header' => 'Customer Cpf',
@@ -347,5 +399,22 @@ return [
         'table-created-at' => 'Creation',
         'table-actions' => 'Actions',
         'delete-confirm-message' => 'Do you want to exclude this type of game?',
+    ],
+
+    'winning-ticket' => [
+        'register-ticket' => 'Register Tickets',
+        'draw-at' => 'Drawn in',
+        'draw' => 'Drawn',
+        'selected' => 'Selected',
+        'no-games-sold' => 'No games sold'
+    ],
+
+    'comissions' => [
+        'page-title' => 'Payments - Commissions',
+        'table-title' => 'COMMISSIONS',
+        'download-payments-button' => 'Download Payments',
+        'download-payments-loader' => 'Downloading Payments',
+        'payment-info-table-title' => 'Payment Information',
+        'search-user-placeholder' => 'Search User'
     ]
 ];
