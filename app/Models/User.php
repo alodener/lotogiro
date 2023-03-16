@@ -29,6 +29,8 @@ class User extends Authenticatable
         'pixSaque',
         'link',
         'type_client',
+        'is_active',
+        'contact_made'
     ];
 
     /**
@@ -60,6 +62,11 @@ class User extends Authenticatable
         return $this->hasMany(Game::class);
     }
 
+    public function customer()
+    {
+        return Client::where('email', $this->email)->first();
+    }
+
     public function bet()
     {
         return $this->hasMany(Bet::class);
@@ -68,6 +75,11 @@ class User extends Authenticatable
     public function extracts()
     {
         return $this->hasMany(Extract::class);
+    }
+
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'indicador', 'id');
     }
 
     public function getUserQualification()
@@ -85,8 +97,8 @@ class User extends Authenticatable
     {
 
         $total = DB::select('
-        select count(1) t 
-        from users a 
+        select count(1) t
+        from users a
         join users_has_qualifications b on b.user_id = a.id and b.active = 1
         join qualifications c on c.id = b.qualification_id');
 
@@ -103,7 +115,7 @@ class User extends Authenticatable
             ->limit($perPage)
             ->offset($pagination->getOffset())
             ->get();
-            
+
         $rows = [];
         foreach($users as $r){
             $rows[] = $r;

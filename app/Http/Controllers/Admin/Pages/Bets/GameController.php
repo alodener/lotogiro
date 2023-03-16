@@ -10,6 +10,7 @@ use App\Helper\ChaveAleatoria;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\TransactBalance;
 use App\Models\Competition;
 use App\Models\Commission;
 use App\Models\Draw;
@@ -329,6 +330,18 @@ class GameController extends Controller
                 $game->checked = 1;
                 $game->commission_percentage = auth()->user()->commission;
                 $game->save();
+                
+                $transact_balance = new TransactBalance;
+                $transact_balance->user_id_sender = auth()->id();
+                $transact_balance->user_id = auth()->id();
+                $transact_balance->value = $request->value;
+                $transact_balance->old_value = auth()->user()->balance;
+                $transact_balance->value_a = auth()->user()->balance - $request->value;
+                $transact_balance->type = 'Compra - Jogo de id: ' . $game->id . ' do tipo: ' . $game->type_game_id;
+                $transact_balance->save();
+
+
+
 
                 $extract = [
                     'type' => 1,

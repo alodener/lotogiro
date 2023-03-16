@@ -2,7 +2,7 @@
     <div class="container">
         <a href="#" class="navbar-brand">
 
-            <img src="{{ asset(env('logo')) }}" alt="Logo" class="brand-image  rounded-circle"
+            <img src="{{ App\Helper\Configs::getConfigLogo() }}" alt="Logo" class="brand-image  rounded-circle"
                  style="height: 50px"> - {{ env("nome_sistema") }}
 
         </a>

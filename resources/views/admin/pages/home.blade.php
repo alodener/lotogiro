@@ -30,7 +30,7 @@
 </div>
 @endif
 
-<div class="col-md-6">
+<div class="col-md-12 p-4">
     <div class="card w-100">
         <div class="card-header indica-card">
             {{ trans('admin.dashboard.indications') }}
@@ -45,12 +45,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body col-lg-6 col-sm-12">
-                    <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:left;">
+                <!-- button copiar link -->
+                <div class="card-body col-lg-4 col-sm-5">
+                    <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:left;">  
+                    <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
                         <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{ trans('admin.copy-link-button') }}</button>
+<<<<<<< HEAD
                         <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
+=======
+>>>>>>> 9ce4e0d7bdbc33afda34c8e8329efd2cab7cfb66
                     </div>
-                </div>
+                </div> 
+
+                <!-- button seus indicados 
+                <div class="card-body col-lg-4 col-sm-6">
+                    <div class="col-lg-12 my-2 indica-corpo bg-light-2" style="color: #fff;" role="alert">
+                    <p class="mensagem">{{ trans('admin.dashboard.referrals-message') }}</p>
+                        <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-info"> 
+                            {{ trans('admin.dashboard.referrals-button') }}
+                        </a>
+                    </div>
+                </div> -->
+
+                <!--
                 <div class="card-body col-lg-6 col-sm-12">
                     <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:right;">
                         <a href="https://api.whatsapp.com/send?text=Segue link para criar um jogo: {{route('games.bet', ['user' => auth()->id()])}}" target="_blank" style="text-decoration: none !important;">
@@ -60,29 +77,39 @@
                             <p class="mensagem">{{ trans('admin.dashboard.copy-whatsapp-message') }}</p>
                         </a>
                     </div>
-                </div>
+                </div> -->
+
+                <!-- button indique e ganhe -->
                 @endif
-                <div class="card-body col-lg-6 col-sm-12">
-                    <div class="alert bg-light indica-corpo" role="alert">
+                <div class="card-body col-lg-4 col-sm-6">
+                    <div class="col-lg-12 my-2 alert bg-light indica-corpo" role="alert" >
                         <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link" value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}" />
+<<<<<<< HEAD
                         <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">{{ trans('admin.dashboard.referral-button-text') }}</button>
                         <p class="mensagem">{{ trans('admin.dashboard.referral-messsage') }}</p>
+=======
+                        <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
+                        <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">{{ trans('admin.dashboard.referral-button-text') }} </button>
+                        
+>>>>>>> 9ce4e0d7bdbc33afda34c8e8329efd2cab7cfb66
                     </div>
-                </div>
-                <div class="card-body col-lg-6 col-sm-12">
-                    <div class="indica-corpo bg-light-2" style="color: #fff;" role="alert">
+                </div> 
+                
+                <!-- button seus indicados -->
+                     <div class="card-body col-lg-4 col-sm-6">
+                    <div class="col-lg-12 my-2 indica-corpo bg-light-2" style="color: #fff;" role="alert">
+                    <p class="mensagem">{{ trans('admin.dashboard.referrals-message') }}</p>
                         <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-info">
-                            {{ trans('admin.dashboard.referrals-button') }}
+                            {{ trans('admin.dashboard.referrals-button') }} 
                         </a>
-                        <p class="mensagem">{{ trans('admin.dashboard.referrals-message') }}</p>
-                    </div>
-                </div>
+                    </div> 
+                </div> 
             </div>
         </div>
     </div>
 </div>
 
-<div class="col-md-6">
+<div class="col-md-12 p-4">
     <div class="card w-100">
         <div class="card-header indica-card">
             {{ trans('admin.dashboard.points-title') }}
@@ -171,9 +198,40 @@
             </div>
         </div>
     </div>
+
+  <!--  <div class="card w-100">
+        <div class="card-header indica-card d-flex justify-content-between align-items-center">
+            <div class="col"><span>Ranking</span></div>
+
+            @php $htmlRanking = '' @endphp
+
+            @if(is_array($rankings) && count($rankings) > 0)
+            @foreach($rankings as $key => $ranking)
+            @php ++$key; $htmlRanking .= "{$key} {$ranking->name} - R$ {$ranking->total},%0a"; @endphp
+            @endforeach
+            @endif
+
+            <div class="col text-right">
+                <a href="https://api.whatsapp.com/send?text={{ $htmlRanking }}" class="btn btn-success">Compartilhar</a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    @if(is_array($rankings) && count($rankings) > 0)
+                    @foreach($rankings as $key => $ranking)
+                    <p>#{{ ++$key }} {{ $ranking->name }} - R$ {{ $ranking->total }}</p>
+                    @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div> -->
 </div>
 
-<div class="col-md-12">
+</div>
+
+<div class="col-md-15">
     @if(\App\Models\TypeGame::count() > 0)
     <div class="row">
         @foreach(\App\Models\TypeGame::get() as $typeGame)

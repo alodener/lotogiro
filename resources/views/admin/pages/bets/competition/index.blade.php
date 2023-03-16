@@ -19,11 +19,13 @@
                 </script>
             @endpush
             @enderror
+            
             @can('create_competition')
-            <a href="{{ trans('admin.competitions.create') }}">
-                <button class="btn btn-info my-2">{{ trans('admin.competitions.new-competition-button') }}</button>
+                <a href="{{route('admin.bets.competitions.create')}}">
+                <button type="button" class="btn btn-info my-2">{{ trans('admin.competitions.new-competition-button') }}</button>
 
             </a>
+            
             @endcan
             <div class="table-responsive extractable-cel">
             <table class="table table-striped table-hover table-sm" id="competition_table">
