@@ -157,7 +157,7 @@
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>R${{\App\Helper\Money::toReal($valueBalance)}}</h3>
-                    <p>{{ trans('admin.gains.total-balance') }}</p>
+                    <p>Total de Saldo</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-dollar-sign"></i>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', trans('admin.comissions.page-title'))
+@section('title', 'Pagamentos - Comissões')
 
 @section('content')
     @error('success')

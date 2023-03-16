@@ -84,64 +84,6 @@ return [
     'table-bet-value' => 'Valor Aposta',
     'table-bet-prize' => 'Valor Prêmio',
     'table-receipt' => 'Recibo',
-    'table-cpf-customer' => 'Cpf Cliente',
-    'table-customer' => 'Cliente',
-    'table-user' => 'Usuário',
-    'table-value' => 'Valor',
-    'table-comission' => 'Comissão',
-    'table-creation' => 'Criação',
-    'recharge' => 'Recarregar',
-    'account' => 'Conta',
-    'greeting' => 'Olá',
-    'quantity' => 'Quantidade',
-    'sales-label' => 'Vendas',
-    'no-row-found' => 'Nenhum registro encontrado.',
-    'wallet' => 'Carteira',
-    'withdraw' => 'Retirar',
-    'convert' => 'Converter',
-    'withdraw-solicitations' => 'Solicitações de saque',
-    'recharge-solicitations' => 'Pedidos de Recarga',
-    'extract' => 'Extrato',
-
-
-    'sidebar' => [
-        'do-game' => 'Faça Seu Jogo',
-        'dashboard' => 'Dashboards',
-        'ranking' => 'Ranking',
-        'points' => 'Pontos',
-        'extracts' => 'Extrato',
-        'extract-manual-recharge' => 'Extrato Recarga Manual',
-        'extract-sales' => 'Extrato de Vendas',
-        'winning-tickets' => 'Bilhetes Premiados',
-        'network-sales' => 'Vendas da Rede',
-        'gains' => 'Ganhos',
-        'sales' => 'Vendas',
-        'bets' => 'Apostas',
-        'customers' => 'Clientes',
-        'validate-game' => 'Validar Jogo',
-        'competitions' => 'Concursos',
-        'game-types' => 'Tipos de Jogo',
-        'games' => 'Jogos',
-        'payments' => 'Pagamentos',
-        'comissions' => 'Comissões',
-        'prizes' => 'Prêmios',
-        'raffles' => 'Sorteios',
-        'settings' => 'Configurações',
-        'permissions' => 'Permissões',
-        'functions' => 'Funções',
-        'users' => 'Usuários',
-        'qualifications' => 'Qualificações',
-        'reports' => 'Relatórios',
-        'used-dozens' => 'Dezenas Utilizadas',
-        'points-by-client' => 'Pontos por Cliente',
-        'wallet-title' => 'Carteira',
-    
-    ],
-
-    'footer' => [
-        'version' => 'Versão',
-        'copyright' => 'Todos direitos reservados.'
-    ],
 
     'register' => [
         'page-title' => 'Cadastro',
@@ -164,7 +106,7 @@ return [
         'balance-title' => 'Saldo',
         'copy-link-message' => 'Clique no botão e copie seu link acima',
         'copy-whatsapp-button' => 'Enviar via WhatsApp',
-        'copy-whatsapp-message' => 'Clique no botão e envie pelo WhatsApp',
+        'copy-whatspp-message' => 'Clique no botão e envie pelo WhatsApp',
         'referral-button-text' => 'Indique e Ganhe!',
         'referral-messsage' => 'Clique no botão e copie seu link de indicação',
         'referrals-button' => 'Seus indicados',
@@ -180,8 +122,7 @@ return [
         'max-points-title' => 'Parabéns você esta no topo',
         'max-points-text' => 'Você esta no mais alto nível do plano de carreira',
         'games-not-found' => 'Não existem tipos de jogos cadastrados!',
-        'copied-url' => 'Link copiado!',
-        'indications' => 'Indicações',
+        'copied-url' => 'Link copiado!'
     ],
 
     'ranking' => [
@@ -242,7 +183,6 @@ return [
         'direct-sales' => 'Vendas direta',
         'bonus' => 'Bônus',
         'total-gains' => 'Total de Ganhos',
-        'total-balance' => 'Total de Saldo',
         'table-id-header' => 'Id',
         'table-game-type-header' => 'Tipo de Jogo',
         'table-cpf-header' => 'Cpf Cliente',
@@ -407,29 +347,5 @@ return [
         'table-created-at' => 'Criação',
         'table-actions' => 'Ações',
         'delete-confirm-message' => 'Deseja excluir este tipo de jogo?',
-    ],
-
-    'winning-ticket' => [
-        'register-ticket' => 'Cadastrar Bilhetes',
-        'draw-at' => 'Sorteado em',
-        'draw' => 'Sorteado',
-        'selected' => 'Selecionados',
-        'no-games-sold' => 'Nenhum jogo vendido'
-    ],
-
-    'comissions' => [
-        'page-title' => 'Pagamentos - Comissões',
-        'table-title' => 'COMISSÕES',
-        'download-payments-button' => 'Baixar Pagamentos',
-        'download-payments-loader' => 'Baixando Pagamentos',
-        'payment-info-table-title' => 'Informações de Pagamento',
-        'search-user-placeholder' => 'Pesquisar Usuário'
-    ],
-
-    'wallet' => [
-        'balance-transfer' => 'Transferência de Saldo',
-        'receiver-data' => 'Dados do Recebedor',
-        'change-pix-warning' => 'Ao alterar essa informação, ela passa a ser sua principal',
-        
     ]
 ];
