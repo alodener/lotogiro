@@ -24,11 +24,13 @@
         </div>
         <div class="row mt-2">
             <div class="col">
-                <table class="table table-sm">
+                <table id="table" class="table table-sm">
                     <thead>
                         <tr>
                             <th scope="col"></th>
                             <th scope="col">Nome</th>
+                            <th scope="col"></th>
+                            <th scope="col">Sobrenome</th>
                             <th scope="col"></th>
                             <th scope="col">Número</th>
                             <th scope="col"></th>
@@ -52,13 +54,16 @@
                         @foreach ($users as $user)
                             <tr>
                                 <th scope="row">
-                                <td>{{ $user['name'] }}</td>
+                                    <td>{{ $user['name'] }}</td>
                                 </th>
                                 <th scope="row">
-                                <td>{{ $user['phone'] }}</td>
+                                    <td>{{ $user['last_name'] }}</td>
                                 </th>
                                 <th scope="row">
-                                <td>{{ $user['email'] }}</td>
+                                    <td>{{ $user['phone'] }}</td>
+                                </th>
+                                <th scope="row">
+                                    <td>{{ $user['email'] }}</td>
                                 </th>
                                 <th>
                                 <td>{{ $total_jogos = Game::where('user_id', $user['id'])->count('value') }}</td>
@@ -80,11 +85,11 @@
                                 </td>
                                 <td>
                                     @if ($lucro_prejuizo > 0)
-                                <td class="text-success">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',') }}</td>
+                                <td class="text-danger">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',') }}</td>
                                 @elseif ($lucro_prejuizo == 0)
                                     <td>{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',') }}</td>
                                 @else
-                                    <td class="text-danger">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',') }}</td>
+                                    <td class="text-success">{{ 'R$' . number_format(abs($lucro_prejuizo), 2, '.', ',') }}</td>
                                 @endif
 
                                 @if ($lucro_prejuizo <= 2 * $total_apostado)
@@ -131,9 +136,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="row">
-                    {{ $users->links() }}
-                </div>
             </div>
         </div>
     </div>
@@ -141,9 +143,10 @@
 
 @push('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css"
-        integrity="sha512-bkB9w//jjNUnYbUpATZQCJu2khobZXvLP5GZ8jhltg7P/dghIrTaSJ7B/zdlBUT0W/LXGZ7FfCIqNvXjWKqCYA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    integrity="sha512-bkB9w//jjNUnYbUpATZQCJu2khobZXvLP5GZ8jhltg7P/dghIrTaSJ7B/zdlBUT0W/LXGZ7FfCIqNvXjWKqCYA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
     <style>
         #filterForm {
             margin-top: 30px;
@@ -162,4 +165,23 @@
             }
         }
     </style>
+@endpush
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#table').DataTable({
+              "language": {
+                  "search": 'Buscar',
+                  "lengthMenu": "Mostrando _MENU_ registros por página",
+                  "zeroRecords": "Nada encontrado",
+                  "info": "Mostrando página _PAGE_ de _PAGES_",
+                  "infoEmpty": "Nenhum registro disponível",
+                  "infoFiltered": "(filtrado de _MAX_ registros no total)",
+              }
+          });
+    });
+    </script>
 @endpush

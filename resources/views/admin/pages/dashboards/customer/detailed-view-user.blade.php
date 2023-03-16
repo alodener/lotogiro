@@ -4,14 +4,63 @@
 
 @section('content')
     <div class="col bg-white p-3">
-        <div class="row mt-2">
-            <div class="col" id="table">
+        <div class="row">
+            <div class="col">
+                <div class="p-3 bg-body shadow-sm rounded border border-1">
+                    <div class="d-flex justify-content-between">
+                        <div class="float-start">
+                            <h5 class="value">Total de apostas feitas</h5>
+                            <p class="mb-0" style="font-size: 20px;"><b>{{ $total_bets }}</b></p>
+                        </div>
+                        <div class="float-end d-inline-block bg-light shadow-light rounded-3 p-2">
+                            <i style="font-size: 1rem" class="bi bi-file-text-fill"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="p-3 bg-body shadow-sm rounded border border-1">
+                    <div class="d-flex justify-content-between">
+                        <div class="float-start">
+                            <h5 class="value">Valor Apostado</h5>
+                            <p class="mb-0" style="font-size: 20px;">{{ 'R$ ' . number_format($total_apostado, 2, '.', ',') }}</p>
+                        </div>
+                        <div class="float-end d-inline-block bg-light shadow-light rounded-3 p-2">
+                            <i class="bi bi-currency-dollar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="p-2 bg-body shadow-sm rounded border border-1">
+                    <div class="d-flex justify-content-between">
+                        <div class="float-start">
+                            <h4 class="value">Lucro/Prejuizo(Casa)</h4>
+                            @if ($lucro_prejuizo > 0)
+                                <p class="text-success" class="mb-0">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',')  }}</p>
+                            @elseif ($lucro_prejuizo == 0)
+                                <p class="mb-0" style="font-size: 20px;">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',')  }}</p>
+                            @else
+                                <p class="text-danger" class="mb-0" style="font-size: 20px;">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',')  }}</p>
+                            @endif
+                        </div>
+                        <div class="float-end d-inline-block bg-light shadow-light rounded-3 p-2">
+                            <i class="bi bi-hand-thumbs-up-fill text-success"></i>
+                            <i class="bi bi-hand-thumbs-down-fill text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
                 <h3>Visão Detalhada do Cliente</h3>
-                <table class="table table-sm">
+                <table id="table" class="table table-sm">
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">Concurso</th>
+                            <th aria-controls="widget-options" scope="col">Concurso</th>
                             <th scope="col"></th>
                             <th scope="col">Tipo de Jogo</th>
                             <th scope="col"></th>
@@ -35,7 +84,11 @@
                                     <td>{{ 'R$' . number_format($user['value_game'], 2, '.', ',')  }}</td>
                                 </th>
                                 <th scope="row">
-                                    <td>{{ 'R$' . number_format($user['award_game'], 2, '.', ',')  }}</td>
+                                    @if ($user['award_game'] != NULL)
+                                        <td>{{ 'R$' . number_format($user['award_game'], 2, '.', ',')  }}</td>
+                                    @else
+                                        <td>R$0,00</td>
+                                    @endif
                                 </th>
                                 <th scope="row">
                                     <td>{{ $user['date_game']  }}</td>
@@ -49,7 +102,7 @@
         <div class="row">
             <div class="col">
                 <a href="{{ route('admin.dashboards.customer.dashboard.winners') }}"><button type="button" class="btn btn-secondary"><i class="bi bi-arrow-left-square-fill"></i></button></a>
-                <button onclick="gerar_pdf()" type="button" class="btn btn-danger"><i class="bi bi-filetype-pdf"></i></button>
+                <a href="{{ route('admin.dashboards.customer.get.pdf',['id' => $id_user,'date_initial' => $date_initial, 'date_final' => $date_final]) }}"><button type="button" class="btn btn-danger"><i class="bi bi-filetype-pdf"></i></button></a>
             </div>
         </div>
     </div>
@@ -58,8 +111,9 @@
 @push('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css"
         integrity="sha512-bkB9w//jjNUnYbUpATZQCJu2khobZXvLP5GZ8jhltg7P/dghIrTaSJ7B/zdlBUT0W/LXGZ7FfCIqNvXjWKqCYA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+        crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+        <link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
     <style>
         #filterForm {
             margin-top: 30px;
@@ -81,19 +135,20 @@
 @endpush
 
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 <script>
-    function gerar_pdf(){
-        const data = document.querySelector('#table');
-        const opt = {
-            margin:       1,
-            filename:     'Relatório - Análise_Detalhada.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-
-        html2pdf().set(opt).from(data).save();
-    }
-</script>
+    $(document).ready(function(){
+        $('#table').DataTable({
+              "language": {
+                  "search": 'Buscar',
+                  "lengthMenu": "Mostrando _MENU_ registros por página",
+                  "zeroRecords": "Nada encontrado",
+                  "info": "Mostrando página _PAGE_ de _PAGES_",
+                  "infoEmpty": "Nenhum registro disponível",
+                  "infoFiltered": "(filtrado de _MAX_ registros no total)",
+              }
+          });
+    });
+    </script>
 @endpush

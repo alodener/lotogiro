@@ -26,6 +26,8 @@ use App\Http\Controllers\Admin\Pages\Dashboards\ExtractPointsController;
 use App\Http\Controllers\Admin\Pages\Dashboards\RankingController;
 use App\Http\Controllers\Admin\Pages\Settings\QualificationController;
 use App\Http\Controllers\Admin\Pages\Reports\ReportController;
+use App\Http\Controllers\Admin\Pages\Settings\SystemController;
+use App\Http\Controllers\Admin\Pages\Settings\LogosController;
 
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
@@ -122,6 +124,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/contact/made{id}', [CustomeBalanceController::class, 'contact_made'])->name('contact.made');
                 Route::get('/contact/not/made{id}', [CustomeBalanceController::class, 'contact_not_made'])->name('contact.not.made');
                 Route::put('/save/{id}', [CustomeBalanceController::class, 'save_changes'])->name('save');
+                Route::get('/pdf/{id}/{date_initial}/{date_final}', [CustomeBalanceController::class, 'get_pdf'])->name('get.pdf');
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
@@ -163,6 +166,10 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('users/list/select', [UserController::class, 'listSelect'])->name('users.list.select');
             Route::get('clients/list/select', [ClientController::class, 'listSelect'])->name('clients.list.select');
 
+            Route::resource('systems', SystemController::class);
+            Route::resource('logos', LogosController::class);
+            
+
             Route::resource('users', UserController::class);
             Route::get('indicated', [UserController::class, 'indicated'])->name('users.indicated');
             Route::get('indicated/{userId}', [UserController::class, 'indicatedByLevel'])->name('users.indicatedByLevel');
@@ -184,3 +191,4 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     });
 });
 
+Route::get('/users/winners', [CustomeBalanceController::class, 'userswinnersAPI']);

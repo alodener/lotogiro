@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Models\Competition;
 use App\Models\TypeGame;
 use App\Models\Client;
+use App\Models\TransactBalance;
 
 // lib de email
 use Mail;
