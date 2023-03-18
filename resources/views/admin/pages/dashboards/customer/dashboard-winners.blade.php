@@ -24,6 +24,7 @@
                         <label for="input-url4">Selecionar Cliente</label>
                         <input type="text" class="form-control" name="user_name" placeholder="Digite Aqui ..."
                             id="winners_names" />
+                        <input type="hidden" name="user_id" id="winners_games_id">
                     </div>
                     <div class="form-group w-25">
                         <label>Data Inicio</label>
@@ -91,25 +92,22 @@
     </script>
 
     <script>
-        $.ajax({
-            url: 'http://127.0.0.1:8000/users/winners',
-            type: 'GET',
-            dataType: 'json',
-        })
-        .done(function(response) {
-            let users_winners = Object.values(response);
-            let id_name_users_winners = [];
-            users_winners.forEach(element => {
-                id_name_users_winners.push(
-                    element['name']
-                );
-            });
-            $('#winners_names').autocomplete({
-                source: id_name_users_winners
-            });
-        })
-        .fail(function() {
-            console.log("error");
+        $('#winners_names').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: `{{url('/')}}/users/winners?busca=${$('#winners_names').val()}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        response(Object.values(data).map((i) => ({ label: `${i.name} ${i.last_name} | ${i.email}`, value: i.id })));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $("#winners_names").val(ui.item.label);
+                $("#winners_games_id").val(ui.item.value);
+                return false;
+            }
         });
     </script>
 @endpush
