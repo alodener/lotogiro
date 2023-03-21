@@ -87,7 +87,7 @@ class CustomeBalanceController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin/dashboards/customer');
+        return redirect()->route('admin.dashboards.customer.balance');
     }
 
     public function unlock_account($id)
@@ -102,7 +102,7 @@ class CustomeBalanceController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin/dashboards/customer');
+        return redirect()->route('admin.dashboards.customer.balance');
     }
 
     public function save_changes(Request $request, $id)
@@ -117,7 +117,7 @@ class CustomeBalanceController extends Controller
         $user['commission'] = $data['commission'];
         $user->save();
 
-        return redirect()->route('admin/dashboards/customer');
+        return redirect()->route('admin.dashboards.customer.balance');
     }
 
     public function contact_made($id)
@@ -132,7 +132,7 @@ class CustomeBalanceController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin/dashboards/customer');
+        return redirect()->route('admin.dashboards.customer.balance');
     }
 
     public function contact_not_made($id)
@@ -147,7 +147,7 @@ class CustomeBalanceController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin/dashboards/customer');
+        return redirect()->route('admin.dashboards.customer.balance');
     }
 
     private function return_array_users_game(){
