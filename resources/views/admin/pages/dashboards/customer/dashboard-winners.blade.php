@@ -21,10 +21,16 @@
                 <form class="mb-2" action="{{ route('admin.dashboards.customer.detailed.view.user') }}" method="POST">
                     @csrf
                     <div id="user_name" class="form-group ui-widget w-25">
-                        <label for="input-url4">Selecionar Cliente</label>
+                        <label for="input-url4">Selecionar Consultor</label>
                         <input type="text" class="form-control" name="user_name" placeholder="Digite Aqui ..."
                             id="winners_names" />
                         <input type="hidden" name="user_id" id="winners_games_id">
+                    </div>
+                    <div id="client_name" class="form-group ui-widget w-25 hide">
+                        <label for="input-url4">Selecionar Cliente</label>
+                        <input type="text" class="form-control" name="client_name" placeholder="Digite Aqui ..."
+                            id="winners_names_client" />
+                        <input type="hidden" name="client_id" id="winners_games_client_id">
                     </div>
                     <div class="form-group w-25">
                         <label>Data Inicio</label>
@@ -62,6 +68,10 @@
             margin: 0;
         }
 
+        .hide {
+            display: none;
+        }
+
         @media(max-width: 467px) {
             #filterForm .form-row {
                 flex-direction: column;
@@ -92,6 +102,24 @@
     </script>
 
     <script>
+        $('#winners_names_client').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: `{{url('/')}}/users/winners-clients?user_id=${$('#winners_games_id').val()}&busca=${$('#winners_names_client').val()}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        response(Object.values(data).map((i) => ({ label: `${i.name} ${i.last_name} | ${i.email}`, value: i.id })));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $("#winners_names_client").val(ui.item.label);
+                $("#winners_games_client_id").val(ui.item.value);
+                return false;
+            }
+        });
+
         $('#winners_names').autocomplete({
             source: function(request, response) {
                 $.ajax({
@@ -106,6 +134,10 @@
             select: function (event, ui) {
                 $("#winners_names").val(ui.item.label);
                 $("#winners_games_id").val(ui.item.value);
+                $("#winners_names_client").val('');
+                $("#winners_games_client_id").val('');
+                $("#client_name").removeClass('hide');
+
                 return false;
             }
         });
