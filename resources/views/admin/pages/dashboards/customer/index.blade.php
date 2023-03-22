@@ -20,6 +20,12 @@
             <div class="col-md-6 col-12">
                 <div class="row busca-container">
                     <div class="col-2">
+                        <select class="change-busca form-control" name="busca-user-type" data-busca-param="userType">
+                            <option value="consultor" {{ $userType == 'consultor' ? 'selected' : '' }} >Consultor</option>
+                            <option value="cliente" {{ $userType == 'cliente' ? 'selected' : '' }} >Cliente</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
                         <select class="change-busca form-control" name="busca-per-page" data-busca-param="perPage">
                             <option value="10" {{ $perPage == '10' ? 'selected' : '' }} >10</option>
                             <option value="20" {{ $perPage == '20' ? 'selected' : '' }} >20</option>
@@ -34,11 +40,11 @@
                             <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >90 dias</option>
                         </select>
                     </div>
-                    <div class="col-5">
+                    <div class="col-4">
                         <input type="text" class="form-control" name="user_name" placeholder="Buscar..." id="busca-autocomplete" />
                         <input type="hidden" id="busca-autocomplete-id">
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <button type="button" class="btn btn-success" id="busca-limpar">Limpar</button>
                     </div>
                 </div>
