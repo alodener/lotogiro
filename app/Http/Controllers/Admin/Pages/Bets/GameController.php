@@ -31,6 +31,7 @@ use PDF;
 use SnappyImage;
 
 use App\Jobs\ProcessBetEntries;
+use App\Helper\Configs;
 
 // lib de email
 use Mail;
@@ -360,8 +361,10 @@ class GameController extends Controller
                 $game->commision_value_pai = $commissionCalculationPai;
                 $game->save();
 
+                $planodecarreira = Configs::getPlanoDeCarreira();
+                if($planodecarreira == "Ativado"){
                 UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);
-
+                }
                 // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
                 $idCliente = $game->id;
 
