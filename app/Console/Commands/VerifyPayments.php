@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\RechargeOrder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use App\Helper\Configs;
 
 class VerifyPayments extends Command
 {
@@ -52,10 +53,11 @@ class VerifyPayments extends Command
         $info = 'Nenhum pagamento a validar.';
         $ACTIVE_GATEWAY = env('ACTIVE_GATEWAY');
         if($ACTIVE_GATEWAY == "MP"){
+            $authorizationToken = "Bearer " . Configs::getTokenMercadoPago();
         if($paymentReference->count() > 0) {
             foreach($paymentReference as $payment) {
                 $request = Http::withHeaders([
-                    'authorization' => 'Bearer APP_USR-2909617305972251-012203-1eb52e7fbfc50a7355b5beb6d5abbe79-1011031176'
+                    'authorization' => $authorizationToken
                 ])->get("https://api.mercadopago.com/v1/payments/search?external_reference={$payment->reference}#json");
                 
                 if (count($request->json()['results']) > 0) {

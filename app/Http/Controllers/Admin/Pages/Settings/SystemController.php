@@ -8,6 +8,9 @@ use Carbon\Carbon;
 use FontLib\Table\Type\post;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use App\Helper\Pagination;
+use App\Models\UsersHasPoints;
+
 
 
 
@@ -54,7 +57,7 @@ class SystemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, System $system)
     {   
         //
     }
@@ -91,19 +94,41 @@ class SystemController extends Controller
      */
     public function update(Request $request, System $system)
     {
-        //
-        $data = $request->all(); 
         
+        $data = $request->all();        
         
-        if ($request->file('image')->isValid()){
-           $image = $request->image->store('logo');
-           $data['logo'] = $image;
-        
-           $system->value = $data['logo'];
-           $system->save();
-        }
 
+        if(isset($request->token))
+        {
+            $system->value = $data['token'];
+        
+        } 
+        else if(isset ($request->exampleRadios))
+        {
+            
+            $system->value = $data['exampleRadios'];
+            
+        }
+        else if(isset ($request->exampleRadios2))
+        {
+            
+            $system->value = $data['exampleRadios2'];
+            
+        }
+        else if(isset($request->image))
+        {
+            if ($request->file('image')->isValid())
+            {
+                $image = $request->image->store('logo');
+                $data['logo'] = $image;
+             
+                $system->value = $data['logo'];
+               
+             }
+         
+        }
         try{
+            $system->save();
             return redirect()->route('admin.settings.systems.index')->withErrors([
                 'success' => 'Configuração alterada com sucesso!'
             ]);
@@ -112,8 +137,8 @@ class SystemController extends Controller
             return redirect()->route('admin.settings.systems.index')->withErrors([
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao cadastrar a imagem, tente novamente'
             ]);
-        }
-
+   }
+    
     }
 
     /**
@@ -125,5 +150,12 @@ class SystemController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function desativar(Request $request, $id)
+    {
+     $UserHasPoints = System::findOrFail($id);
+     $UserHasPoints->desativarFuncao();
+    return redirect()->back()->with('success', 'Função desativada com sucesso!');
     }
 }
