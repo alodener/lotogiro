@@ -36,6 +36,20 @@
                 <div class="p-2 bg-body shadow-sm rounded border border-1">
                     <div class="d-flex justify-content-between">
                         <div class="float-start">
+                            <h4 class="value">Prêmio Cliente</h4>
+                            <p class="text-dark" class="mb-0">{{ 'R$' . number_format($total_apostado - $lucro_prejuizo, 2, '.', ',')  }}</p>
+                        </div>
+                        <div class="float-end d-inline-block bg-light shadow-light rounded-3 p-2">
+                            <i class="bi bi-hand-thumbs-up-fill text-success"></i>
+                            <i class="bi bi-hand-thumbs-down-fill text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="p-2 bg-body shadow-sm rounded border border-1">
+                    <div class="d-flex justify-content-between">
+                        <div class="float-start">
                             <h4 class="value">Lucro/Prejuizo(Casa)</h4>
                             @if ($lucro_prejuizo > 0)
                                 <p class="text-success" class="mb-0">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',')  }}</p>
@@ -55,7 +69,7 @@
         </div>
         <div class="row mt-5">
             <div class="col">
-                <h3>Visão Detalhada do Cliente</h3>
+                <h3>Visão Detalhada do Cliente {{$user->name}} {{$user->last_name}} #{{$user->id}}</h3>
                 <table id="table" class="table table-sm">
                     <thead>
                         <tr>
@@ -67,6 +81,8 @@
                             <th scope="col">Valor Apostado</th>
                             <th scope="col"></th>
                             <th scope="col">Prêmio</th>
+                            <th scope="col"></th>
+                            <th scope="col">Cliente</th>
                             <th scope="col"></th>
                             <th scope="col">Data</th>
                         </tr>
@@ -89,6 +105,9 @@
                                     @else
                                         <td>R$0,00</td>
                                     @endif
+                                </th>
+                                <th scope="row">
+                                    <td>{{ $user['client_name'] == ' ' ? 'Cliente excluído' : $user['client_name'] }}</td>
                                 </th>
                                 <th scope="row">
                                     <td>{{ $user['date_game']  }}</td>

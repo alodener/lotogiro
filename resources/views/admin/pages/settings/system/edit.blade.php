@@ -30,48 +30,93 @@
         @method('PUT')
                 @csrf    
                 <div class="card-body">
-                    
-                    
+     
                     <div class="form-row" >
                         <div class="col-md-6">
                             <label for="file">Nome da configuração:</label>
-                            <br>
-                            <label for="file">{{$system->nome_config}}</label>
-                            <br>
-                        <img src="{{ url("storage/{$system->value}")}}"
-                             class="brand-image  elevation-3"
-                             style="opacity: .8">
-                        </div>
+                                <br>
 
-                
-                        @if ($system->nome_config == "Logo do Sistema")
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                    <label for="alias">Anexar arquivo</label> 
-                                    <input type="file"  name="image" class="form-control ">
-                                    @error('file')
-                                    <span class="invalid-feedback" role="alert">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
-                            
+                            <label for="file">{{$system->nome_config}}</label>
+                                <br>
+ 
+                            @if ($system->nome_config == "Logo do Sistema")
+                                <img src="{{ url("storage/{$system->value}")}}"
+                                 class="brand-image  elevation-3"
+                                style="opacity: .8">
+                            @endif    
+
                         </div>
-                        
-                        @else                     
+                        @if ($system->nome_config == "Accesstoken MercadoPago")
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="alias">Valor</label> 
-                                    <input type="text" id="guardar" name="guardar" class="form-control ">
-                                    @error('alias')
+                                    <input type="text" name="token" class="form-control ">
+                                    @error('text')
                                     <span class="invalid-feedback" role="alert">
                                         {{ $message }}
                                     </span>
                                     @enderror
                                 </div>
-                            </div>                       
-                        @endif  
-                    </div>
+                            </div>     
+                            @endif           
+                            
+                            @if ($system->nome_config == "Plano de Carreira")
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="alias"><h5><b>Plano de Carreira</b></h5></label>
+                                    <div class="form-check">
+                                        @if ($system->value == "Desativado" )
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Ativado" >
+                                                    <label class="form-check-label" for="exampleRadios1">
+                                                    <b>   Ativar </b>
+                                                    </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Desativado"checked>
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        <b>   Desativar </b>
+                                                    </label>
+                                            </div>
+                                            @endif 
+
+                                    @if ($system->value == "Ativado" )
+                                    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Ativado" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                        <b>  Ativar </b>
+                                        </label>
+                                      </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Desativado">
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                <b>   Desativar </b>
+                                            </label>
+                                      </div>
+                                   @endif
+                                    </div>
+                                </div>
+                            </div>     
+                            @endif    
+              
+                        @if ($system->nome_config == "Logo do Sistema")
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="alias">Anexar arquivo</label> 
+                                <input type="file"  name="image" class="form-control ">
+                                @error('file')
+                                    <span class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </span>
+                                @enderror   
+                            </div>
+                        </div>
+                        @endif
+                            
+                        
+                         </div>
                 </div>    
         </div>
     
@@ -89,6 +134,7 @@
                             
                         </div>
                     </div>
-                </form>
+                   
+                </form>   
 
 @endsection

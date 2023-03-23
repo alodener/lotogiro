@@ -33,6 +33,7 @@
                         <tr>
                             <td> {{$system->nome_config}} </td>
                             <td> {{$system->value}} </td>
+                            
                             <td> <a href="{{route('admin.settings.systems.edit', ['system' => $system->id ])}}">
                                         <button class="btn btn-sm btn-warning" title="Editar"><i class="far fa-edit"></i></button>
                                 </a>   
