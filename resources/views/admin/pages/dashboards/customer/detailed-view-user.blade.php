@@ -82,8 +82,10 @@
                             <th scope="col"></th>
                             <th scope="col">Prêmio</th>
                             <th scope="col"></th>
+                            @if ($user_type === 'user_id')
                             <th scope="col">Cliente</th>
                             <th scope="col"></th>
+                            @endif
                             <th scope="col">Data</th>
                         </tr>
                     </thead>
@@ -106,9 +108,11 @@
                                         <td>R$0,00</td>
                                     @endif
                                 </th>
+                                @if ($user_type === 'user_id')
                                 <th scope="row">
                                     <td>{{ $user['client_name'] == ' ' ? 'Cliente excluído' : $user['client_name'] }}</td>
                                 </th>
+                                @endif
                                 <th scope="row">
                                     <td>{{ $user['date_game']  }}</td>
                                 </th>

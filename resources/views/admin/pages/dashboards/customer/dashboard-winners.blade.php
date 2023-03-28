@@ -21,7 +21,7 @@
                 <form class="mb-2" action="{{ route('admin.dashboards.customer.detailed.view.user') }}" method="POST">
                     @csrf
                     <div id="user_name" class="form-group ui-widget w-25">
-                        <label for="input-url4">Selecionar Consultor</label>
+                        <label for="input-url4">Selecionar Usuário</label>
                         <input type="text" class="form-control" name="user_name" placeholder="Digite Aqui ..."
                             id="winners_names" />
                         <input type="hidden" name="user_id" id="winners_games_id">
