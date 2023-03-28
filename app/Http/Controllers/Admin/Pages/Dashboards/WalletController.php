@@ -32,6 +32,10 @@
         {
             return view('admin.pages.dashboards.wallet.withdraw');
         }
+        public function withdrawVisualizacao()
+        {
+            return view('admin.pages.dashboards.wallet.withdrawVisualizacao');
+        }
         public function extract()
         {
             return view('admin.pages.dashboards.wallet.extract');

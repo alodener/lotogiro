@@ -108,6 +108,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/recharge', [WalletController::class, 'recharge'])->name('recharge');
                 Route::get('/transfer', [WalletController::class, 'transfer'])->name('transfer');
                 Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
+                Route::get('/withdraw-visualizacao', [WalletController::class, 'withdrawVisualizacao'])->name('withdraw-visualizacao');
                 Route::get('/extract', [WalletController::class, 'extract'])->name('extract');
                 Route::get('/withdraw-list', [WalletController::class, 'withdrawList'])->name('withdraw-list');
                 Route::get('/recharge-order', [WalletController::class, 'rechargeOrder'])->name('recharge-order');
