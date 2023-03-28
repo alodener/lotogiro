@@ -20,12 +20,6 @@
             <div class="col-md-6 col-12">
                 <div class="row busca-container">
                     <div class="col-2">
-                        <select class="change-busca form-control" name="busca-user-type" data-busca-param="userType">
-                            <option value="consultor" {{ $userType == 'consultor' ? 'selected' : '' }} >Consultor</option>
-                            <option value="cliente" {{ $userType == 'cliente' ? 'selected' : '' }} >Cliente</option>
-                        </select>
-                    </div>
-                    <div class="col-2">
                         <select class="change-busca form-control" name="busca-per-page" data-busca-param="perPage">
                             <option value="10" {{ $perPage == '10' ? 'selected' : '' }} >10</option>
                             <option value="20" {{ $perPage == '20' ? 'selected' : '' }} >20</option>

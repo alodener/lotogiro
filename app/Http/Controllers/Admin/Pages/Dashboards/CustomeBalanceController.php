@@ -7,6 +7,7 @@ use App\Models\Draw;
 use App\Models\Game;
 use App\Models\TypeGame;
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -23,20 +24,17 @@ class CustomeBalanceController extends Controller
         $intervalo = $request->has('intervalo') ? $request->input('intervalo') : 30;
         $buscaIntervalo = now()->subDays($intervalo)->endOfDay();
         $perPage = $request->has('perPage') ? $request->input('perPage') : 10;
-        $userType = $request->has('userType') ? $request->input('userType') : 'consultor';
-
-        $userTypeDb = $userType === 'cliente' ? 'client_id' : 'user_id';
 
         $users = User::query();
         if ($request->has('user')) $users->where('id', $request->input('user'));
 
         $users = $users->orderBy('name')->paginate($perPage);
         foreach ($users as $index => $user) {
-            $total_jogos = Game::where($userTypeDb, $user->id)->whereDate('created_at','>=', $buscaIntervalo)->count('value');
-            $total_apostado = Game::where($userTypeDb, $user->id)->whereDate('created_at','>=', $buscaIntervalo)->sum('value');
+            $total_jogos = Game::where('user_id', $user->id)->whereDate('created_at','>=', $buscaIntervalo)->count('value');
+            $total_apostado = Game::where('user_id', $user->id)->whereDate('created_at','>=', $buscaIntervalo)->sum('value');
 
             $total_soma_premios = 0;
-            foreach ($this->return_user_games($user, $userTypeDb, $buscaIntervalo) as $games) {
+            foreach ($this->return_user_games($user, 'user_id', $buscaIntervalo) as $games) {
                 $total_premio = floatval($games->premio);
                 $total_soma_premios += $total_premio;
             }
@@ -50,7 +48,6 @@ class CustomeBalanceController extends Controller
         return view('admin.pages.dashboards.customer.index', [
             'users' => $users,
             'perPage' => $perPage,
-            'userType' => $userType,
             'intervalo' => $intervalo,
         ]);
     }
@@ -64,7 +61,7 @@ class CustomeBalanceController extends Controller
         if ($buscaEnd !== null) $gamesQuery->whereDate('games.created_at','<=', $buscaEnd);
 
         $draws = Draw::query();
-        foreach ($gamesQuery->select('games.*', 'users.name as client_name', 'users.last_name as client_last_name')->leftJoin('users', 'users.id', '=', 'games.client_id')->where($user_type, $user->id)->get() as $game) {
+        foreach ($gamesQuery->select('games.*', 'clients.name as client_name', 'clients.last_name as client_last_name')->leftJoin('clients', 'clients.id', '=', 'games.client_id')->where($user_type, $user->id)->get() as $game) {
             $id = $game->id;
             $games[$id] = $game;
             $draws->orWhereRaw("games LIKE '%$id%'");
@@ -213,7 +210,11 @@ class CustomeBalanceController extends Controller
         $user_id = $data['client_id'] > 0 ? $data['client_id'] : $data['user_id'];
         $user_type = $data['client_id'] > 0 ? 'client_id' : 'user_id';
         
-        $user = User::where('id', $user_id)->first();
+        if ($user_type === 'user_id') {
+            $user = User::where('id', $user_id)->first();
+        } else {
+            $user = Client::where('id', $user_id)->first();
+        }
         $winners_games = $this->return_user_games($user, $user_type, $data['initial_date'], $data['final_date']);
 
         if($data['initial_date'] == NULL && $data['final_date'] == NULL){
@@ -243,6 +244,7 @@ class CustomeBalanceController extends Controller
                 'data' => $data_to_view,
                 'id_user' => $user['id'],
                 'user' => $user,
+                'user_type' => $user_type,
                 'total_bets' => $total_bets_user,
                 'total_apostado' => $total_apostado,
                 'lucro_prejuizo' => abs($lucro_prejuizo),
@@ -289,6 +291,7 @@ class CustomeBalanceController extends Controller
                 'data' => $data_to_view,
                 'id_user' => $user['id'],
                 'user' => $user,
+                'user_type' => $user_type,
                 'total_bets' => $total_bets_user,
                 'total_apostado' => $total_apostado,
                 'lucro_prejuizo' => $lucro_prejuizo,
@@ -314,15 +317,15 @@ class CustomeBalanceController extends Controller
     }
 
     public function userswinnersClientesAPI(Response $response, Request $request) {
-        $users = Game::select('users.*')
-            ->join('users', 'users.id', '=', 'games.client_id')
+        $users = Game::select('clients.*')
+            ->join('clients', 'clients.id', '=', 'games.client_id')
             ->where('games.user_id', $request->input('user_id'))
             ->where(function($q) use ($request) {
-                $q->where('users.name', 'LIKE', '%'.$request->input('busca').'%')
-                ->orWhere('users.last_name', 'LIKE', '%'.$request->input('busca').'%')
-                ->orWhere('users.email', 'LIKE', '%'.$request->input('busca').'%');
+                $q->where('clients.name', 'LIKE', '%'.$request->input('busca').'%')
+                ->orWhere('clients.last_name', 'LIKE', '%'.$request->input('busca').'%')
+                ->orWhere('clients.email', 'LIKE', '%'.$request->input('busca').'%');
             })
-            ->orderBy('users.name')
+            ->orderBy('clients.name')
             ->distinct()
             ->take(10)->get();
 
