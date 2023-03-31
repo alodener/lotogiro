@@ -15,7 +15,10 @@ class TransactBalance extends Model
         'user_id',
         'value',
         'old_value',
+        'value_a',
         'type',
+        'wallet'
+        
     ];
 
     public function user()

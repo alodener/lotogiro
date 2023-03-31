@@ -10,6 +10,7 @@ use App\Helper\ChaveAleatoria;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\TransactBalance;
 use App\Models\Competition;
 use App\Models\Commission;
 use App\Models\Draw;
@@ -30,6 +31,7 @@ use PDF;
 use SnappyImage;
 
 use App\Jobs\ProcessBetEntries;
+use App\Helper\Configs;
 
 // lib de email
 use Mail;
@@ -48,8 +50,32 @@ class GameController extends Controller
         if (!auth()->user()->hasPermissionTo('read_game')) {
             abort(403);
         }
+
+        $clients = Client::get();
+        $users = User::get();
+
         if ($request->ajax()) {
             $game = $this->game->whereRaw('type_game_id = ? and checked = 1', $typeGame);
+            
+            $params = array();
+            parse_str($request->form, $params);    
+
+            if(isset($params['client_id']) && !empty($params['client_id'])) {
+                $game = $game->where('client_id', $params['client_id']);
+            }
+
+            if(isset($params['user_id']) && !empty($params['user_id'])) {
+                $game = $game->where('user_id', $params['user_id']);
+            }
+
+            if(isset($params['startDate']) && !empty($params['startDate'])) {
+                $game = $game->where('created_at', '>=', $params['startDate']);
+            }
+
+            if(isset($params['endDate']) && !empty($params['endDate'])) {
+                $game = $game->where('created_at', '<=', $params['endDate'] . ' 23:59:59');
+            }
+            
             if (!auth()->user()->hasPermissionTo('read_all_games')) $game->where('user_id', auth()->id());
             $game->get();
             return DataTables::of($game)
@@ -88,7 +114,7 @@ class GameController extends Controller
                 ->make(true);
         }
 
-        return view('admin.pages.bets.game.index', compact('typeGame'));
+        return view('admin.pages.bets.game.index', compact('typeGame', 'clients', 'users'));
     }
     public function carregarJogo(TypeGame $typeGame)
     {
@@ -305,6 +331,18 @@ class GameController extends Controller
                 $game->checked = 1;
                 $game->commission_percentage = auth()->user()->commission;
                 $game->save();
+                
+                $transact_balance = new TransactBalance;
+                $transact_balance->user_id_sender = auth()->id();
+                $transact_balance->user_id = auth()->id();
+                $transact_balance->value = $request->value;
+                $transact_balance->old_value = auth()->user()->balance;
+                $transact_balance->value_a = auth()->user()->balance - $request->value;
+                $transact_balance->type = 'Compra - Jogo de id: ' . $game->id . ' do tipo: ' . $game->type_game_id;
+                $transact_balance->save();
+
+
+
 
                 $extract = [
                     'type' => 1,
@@ -323,8 +361,10 @@ class GameController extends Controller
                 $game->commision_value_pai = $commissionCalculationPai;
                 $game->save();
 
+                $planodecarreira = Configs::getPlanoDeCarreira();
+                if($planodecarreira == "Ativado"){
                 UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);
-
+                }
                 // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
                 $idCliente = $game->id;
 

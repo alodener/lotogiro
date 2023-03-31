@@ -4,8 +4,16 @@
     </div>
     <div class="row bg-white p-3">
         <div class="col-md-12">
+            
             <div class="card-header indica-card">
+                <div class="row">
+                    <div class="col-md-6">
                 Solicitações de Saque
+                    </div>
+                <div class="col-md-6 text-right">
+                <a href="{{route('admin.dashboards.wallet.withdraw-visualizacao')}}" class="btn btn-warning"> Visualizar Histórico</a>
+                </div>
+            </div>
             </div>
             <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-bordered table-lg">

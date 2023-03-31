@@ -18,12 +18,12 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">Tipo de Jogo</h3>
+                <h3 class="card-title">{{ trans('admin.game-types.game-type') }}</h3>
             </div>
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label for="name">Dezenas</label>
+                        <label for="name">{{ trans('admin.dozens') }}</label>
                         <input type="text" class="form-control @error('dozens') is-invalid @enderror" id="dozens"
                                name="dozens"
                                maxlength="50" value="{{old('dozens', $value->numbers ?? null)}}">
@@ -34,7 +34,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="multiplicador">Multiplicador</label>
+                        <label for="multiplicador">{{ trans('admin.game-types.multiplicator') }}</label>
                         <input type="text" class="form-control @error('multiplicador') is-invalid @enderror"
                                id="multiplicador"
                                name="multiplicador"
@@ -46,7 +46,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="maxreais">Máximo em Reais</label>
+                        <label for="maxreais">{{ trans('admin.game-types.max-bet') }}</label>
                         <input type="text" class="form-control @error('maxreais') is-invalid @enderror"
                                id="maxreais"
                                name="maxreais"
@@ -58,7 +58,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="name">Limite de Jogos Repetidos</label>
+                        <label for="name">{{ trans('admin.game-types.max-repeated') }}</label>
                         <input type="text" class="form-control @error('max_repeated_games') is-invalid @enderror" id="max_repeated_games"
                                name="max_repeated_games"
                                maxlength="50" value="{{old('max_repeated_games', $value->max_repeated_games ?? null)}}">
@@ -76,13 +76,12 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.bets.type_games.edit', ['type_game' => $typeGame->id ?? $value->type_game_id])}}">
-            <button type="button" class="btn btn-block btn-outline-secondary">Voltar para o tipo de jogo</button>
+            <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.game-types.max-repeated') }}</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">
         <button type="submit"
-                class="btn btn-block btn-outline-success">@if(Route::currentRouteName() == 'admin.bets.type_games.values.create') Cadastrar
-            Valor  @else  Atualizar Valor @endif </button>
+                class="btn btn-block btn-outline-success">@if(Route::currentRouteName() == 'admin.bets.type_games.values.create') {{ trans('admin.game-types.register') }}  @else  {{ trans('admin.game-types.update') }} @endif </button>
     </div>
 </div>
 
