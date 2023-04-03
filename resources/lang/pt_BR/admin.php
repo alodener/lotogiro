@@ -10,7 +10,7 @@ return [
     'register-label' => 'Não é cadastrado?',
     'register-button' => 'Cadastre-se',
     'consultant-link-text' => 'Deseja ser um consultor?',
-    'copy-link-button' => 'Copiar Link',
+    'copy-link-button' => 'Jogo Avulso',
     'entries-not-found' => 'Nenhum registro encontrado.',
     'found-entries' => 'registro(s) encontrado(s)',
     'exclude-game-title' => 'Deseja excluir este Jogo?',
