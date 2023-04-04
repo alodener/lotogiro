@@ -30,7 +30,7 @@
                 <h4 class="my-4">Extrato de Saldo | {{ $user->name }} - Saldo Total: {{ \App\Helper\Money::toReal($user->balance) }} | Bônus: R${{\App\Helper\Money::toReal($user->bonus)}}</h4>
                 <table class="table table-striped table-hover table-bordered table-lg" id="statementBalance_table">
                     <div class="my-4 col-md-4 text-right">
-                    <a href= "{{route('admin.settings.users.statementBalanceFiltrado', $user->id)}}" class="btn btn-primary"> Filtrar por Recargas </a>
+                    <a href= "{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary"> Voltar </a>
                     </div>
                 </div>
                     <thead>
@@ -42,7 +42,6 @@
                         <th>Valor</th>
                         <th>Valor Atual</th>
                         <th>Descrição</th>
-                        
                     </tr>
                     </thead>
                     <tbody>
@@ -55,7 +54,6 @@
                             <td>{{ $history->value }}</td>
                             <td>{{ $history->value_a }}</td>
                             <td>{{ $history->type }}</td>
-                            
                         </tr>
                     @empty
                         <tr>
