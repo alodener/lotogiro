@@ -108,7 +108,7 @@ return [
         'copy-whatsapp-button' => 'Send via WhatsApp',
         'copy-whatspp-message' => 'Click the button and send via WhatsApp',
         'referral-button-text' => 'Refer and Earn!',
-        'referral-messsage' => 'Click the button and copy your referral link',
+        'referral-message' => 'Click the button and copy your referral link',
         'referrals-button' => 'Your nominees',
         'referrals-message' => 'Click the button and see your nominees',
         'points-title' => 'Scores and Qualifications',
