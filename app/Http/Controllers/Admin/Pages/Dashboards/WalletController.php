@@ -32,6 +32,10 @@
         {
             return view('admin.pages.dashboards.wallet.withdraw');
         }
+        public function withdrawVisualizacao()
+        {
+            return view('admin.pages.dashboards.wallet.withdrawVisualizacao');
+        }
         public function extract()
         {
             return view('admin.pages.dashboards.wallet.extract');
@@ -107,6 +111,7 @@
                             'user_id' => $user->id,
                             'value' => $totalRecharge,
                             'old_value' => $user->balance,
+                            'value_a' => $user->balance + $totalRecharge,
                             'type' => "Recarga efetuada por meio da plataforma. {$msgCommission}"
                         ]);
 
