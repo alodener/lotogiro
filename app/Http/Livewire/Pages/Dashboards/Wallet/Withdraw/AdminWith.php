@@ -12,7 +12,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Helper\UserValidate;
 
-class AdminList extends Component
+class AdminWith extends Component
 {
     use WithPagination;
 
@@ -44,15 +44,15 @@ class AdminList extends Component
     {
         $withdraws = WithdrawRequest::with('user')
             ->where('user_id', auth()->id())
-            ->where('status', 0)
+            ->where('status', 1)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
             
 
         if(UserValidate::iAmAdmin()){
             $withdraws = WithdrawRequest::with('user')
+                ->where('status', 1)
                 ->orderBy('created_at', 'desc')
-                ->where('status', 0)
                 ->paginate(10);
         }
 
@@ -64,12 +64,8 @@ class AdminList extends Component
             $item->statusTxt = $item->status === 0 ? 'À fazer' : 'Feito';
         });
 
-        return view('livewire.pages.dashboards.wallet.withdraw.admin-list', [
-            'withdraws' => $withdraws
-        ]);
-
         return view('livewire.pages.dashboards.wallet.withdraw.admin-with', [
-            'withdraw' => $withdraws
+            'withdraws' => $withdraws
         ]);
     }
 }

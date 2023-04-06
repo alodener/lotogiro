@@ -56,6 +56,7 @@ class Convert extends Component
             'user_id' => $user->id,
             'value' => $value,
             'old_value' => $oldValue,
+            'value_a' => $valueA,
             'type' => $type
         ]);
     }

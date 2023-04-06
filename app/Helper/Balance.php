@@ -69,4 +69,24 @@ class Balance
         return $response;
 
     }
+    public static function calculationEstorno($UsuarioEstorno, $typeGameValue)
+    {
+        $response = false;
+
+        $user = User::find($UsuarioEstorno);
+
+        $balance = $user->balance;
+        
+        $result = $balance + $typeGameValue;
+        if($result >= 0){
+           
+            $user->balance = $result;
+            $user->save();
+
+            $response = true;
+        }
+
+        return $response;
+
+    }
 }
