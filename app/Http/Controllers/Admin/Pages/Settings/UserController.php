@@ -272,7 +272,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-   
+       
       if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all') ){
             abort(403);
         }
@@ -361,13 +361,15 @@ class UserController extends Controller
             $user->save();
 
             if((float) $newBonus > 0){
+               
                 $this->storeTransact($user, ($user->commission/100) * $balanceRequest,$oldBonus,  $newBalance, 'bonus');
             }
 
             if((float) $newBalance > 0){
+                
                 $this->storeTransact($user, $balanceRequest, $oldBalance ,  $newBalance);
             }
-            if($ajuste == 1 && $oldBalance != $request->balanceAtual){
+            if($ajuste == 1 && $oldBalance != (float) Money::toDatabase($request->balanceAtual)){
                 $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance,  $newBalance);
             }
             }else{
