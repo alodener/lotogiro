@@ -108,7 +108,7 @@ return [
         'copy-whatsapp-button' => 'Enviar por Whatsapp',
         'copy-whatspp-message' => 'Click en el botón y enviar por Whatsapp',
         'referral-button-text' => '¡Recomiende y gane!',
-        'referral-messsage' => 'Haga clic en el botón y copie su enlace de referencia',
+        'referral-message' => 'Haga clic en el botón y copie su enlace de referencia',
         'referrals-button' => 'Sus indicados',
         'referrals-message' => 'Haga clic en el botón y vea sus indicados',
         'points-title' => 'Puntuaciones y Calificaciones',
