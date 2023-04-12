@@ -10,6 +10,13 @@ class Commision
 
         return $value;
     }
+    public static function Estornocalculation($percentage, $value)
+    {
+    $value = ($value / -100) *  $percentage;
+ 
+        return $value;
+        
+    }
     public static function calculationPai($percentage, $value, $ID_VALUE, $user = false){
 
         $typeClient = $user ? $user->type_client : auth()->user()->type_client;
@@ -138,4 +145,27 @@ class Commision
         }
     return $valorPai;
     }
+
+    public static function calculationEstorno($idUsuario, $value, $commmission_pai)
+    {
+
+
+        $user = User::find($idUsuario);
+        $result = $user->bonus - $value;
+        $user->bonus = $result;
+        $user->save();
+
+        
+
+        if($user->indicador > 0){
+            $userPai = User::find($user->indicador);
+            $result = $user->bonus - $commmission_pai;
+            $userPai->bonus = $result;
+            $userPai->save();
+        }
+
+        return $user->bonus;
+    }
+
+
 }
