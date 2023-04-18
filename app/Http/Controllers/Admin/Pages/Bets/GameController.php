@@ -535,12 +535,14 @@ class GameController extends Controller
 
                 $idUsuario = $game->user_id;
                 $user = User::find($idUsuario);
-
+                $CommissionPai = false;
                 //Devolvendo o valor do saldo.
                 Balance::calculationEstorno($idUsuario, $game->value);
                 
-                Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commission_value_pai);
-
+                if(!is_null($game->commision_value_pai )){
+                    $CommissionPai = true;
+                }
+                Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commision_value_pai, $CommissionPai);
                 //Criando o Registro no Extrato da Carteira do Estorno.
                 $transact_balance = new TransactBalance;
                 $transact_balance->user_id_sender = $user->id;
@@ -551,6 +553,7 @@ class GameController extends Controller
                 $transact_balance->type = 'Estorno - Jogo de id: ' . $game->id . ' do tipo: ' . $game->type_game_id;
                 $transact_balance->save();
             }
+            
 
             return redirect()->route('admin.bets.games.index', ['type_game' => $typeGame])->withErrors([
                 'success' => 'Jogo deletado com sucesso'
@@ -595,12 +598,15 @@ class GameController extends Controller
 
                     $idUsuario = $game->user_id;
                     $user = User::find($idUsuario);
+                    $CommissionPai = false;
     
                     //Devolvendo o valor do saldo.
                     Balance::calculationEstorno($idUsuario, $game->value);
-                    
+                    if(!is_null($game->commision_value_pai )){
+                        $CommissionPai = true;
+                    }
                     //Devolvendo o valor do Bônus.
-                    Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commission_value_pai);
+                    Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commission_value_pai, $CommissionPai);
     
                     //Criando o Registro no Extrato da Carteira do Estorno.
                     $transact_balance = new TransactBalance;
