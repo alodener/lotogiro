@@ -146,7 +146,7 @@ class Commision
     return $valorPai;
     }
 
-    public static function calculationEstorno($idUsuario, $value, $commmission_pai)
+    public static function calculationEstorno($idUsuario, $value, $commmission_pai, $CommissionPai)
     {
 
 
@@ -157,9 +157,9 @@ class Commision
 
         
 
-        if($user->indicador > 0){
+        if($user->indicador > 0 && $CommissionPai == true){
             $userPai = User::find($user->indicador);
-            $result = $user->bonus - $commmission_pai;
+            $result = $userPai->bonus - $commmission_pai;
             $userPai->bonus = $result;
             $userPai->save();
         }
