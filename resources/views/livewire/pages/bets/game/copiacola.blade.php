@@ -30,7 +30,7 @@
                         @if(isset($clients) && $clients->count() > 0)
                             @foreach($clients as $client)
                                 <li wire:click="setId({{ $client }})"
-                                    class="list-group-item" style="cursor:pointer;">{{ $client->name . ' - ' . \App\Helper\Mask::addMaskCpf($client->cpf) . ' - ' . $client->email . ' - '. \App\Helper\Mask::addMaksPhone($client->ddd.$client->phone)}} </li>
+                                    class="list-group-item" style="cursor:pointer;">{{ $client->name . ' ' . $client->last_name  .' - '. $client->email . ' - '. \App\Helper\Mask::addMaksPhone($client->ddd.$client->phone)}} </li>
                             @endforeach
                         @endif
                     </ul>
