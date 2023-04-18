@@ -169,22 +169,11 @@ class UserController extends Controller
                 $user->link = $request->link;
             }
 
-            // enviar pra cliente
-            if($auxRole == 6){
 
-               /* $validatedData = $request->validate([
-                    'pix' => 'required|max:60',
-                    'telefone' => 'required|max:15',
-                    'cpf' => 'required|max:11'
-                ]);*/
-
-                $user->type_client = 1;
+            
 
                 $data = $request->only('pix', 'cpf');
                 $passardados = New Client;
-
-
-
                 $passardados->cpf = $data['cpf'];
                 $passardados->name = $request->name;
                 $passardados->last_name = $request->last_name;
@@ -198,6 +187,17 @@ class UserController extends Controller
                  }
                 $passardados->pix  = $data['pix'];
                 $passardados->save();
+
+            // enviar pra cliente
+            if($auxRole == 6){
+
+                $user->type_client = 1;
+                
+               /* $validatedData = $request->validate([
+                    'pix' => 'required|max:60',
+                    'telefone' => 'required|max:15',
+                    'cpf' => 'required|max:11'
+                ]);*/
 
             }
             $user->balance = $balanceRequest;
