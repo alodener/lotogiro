@@ -44,10 +44,15 @@ class AdminList extends Component
     {
         $withdraws = WithdrawRequest::with('user')
             ->where('user_id', auth()->id())
+            ->where('status', 0)
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
+            
 
         if(UserValidate::iAmAdmin()){
             $withdraws = WithdrawRequest::with('user')
+                ->orderBy('created_at', 'desc')
+                ->where('status', 0)
                 ->paginate(10);
         }
 
@@ -62,5 +67,10 @@ class AdminList extends Component
         return view('livewire.pages.dashboards.wallet.withdraw.admin-list', [
             'withdraws' => $withdraws
         ]);
+
+        return view('livewire.pages.dashboards.wallet.withdraw.admin-with', [
+            'withdraw' => $withdraws
+        ]);
     }
 }
+

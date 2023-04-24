@@ -90,4 +90,15 @@ class ZoopGateway
 
         return $response;
     }
+
+
+    public function deleteWebhook($id)
+    {
+        $zoop = new Zoop($this->credentials);
+
+        $response = $zoop->deleteWebhook($id);
+
+        return $response;
+    }
+
 }

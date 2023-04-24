@@ -38,11 +38,15 @@
                                         <div class="input-group-append bt-recharge">
                                             @if(config('services.activeGateway') == 'MP')
                                                 <button wire:click.prevent="callMP" type="submit"
-                                                        @if($valueAdd <= .99) disabled @endif
+                                                        @if($valueAdd <= 0.99) disabled @endif
                                                         class="btn btn-info btn-md btn-block">Continuar {{$valueAdd}}</button>
+                                            @elseif(config('services.activeGateway') == 'doBank')
+                                            <button wire:click.prevent="callDoBank" type="submit"
+                                                    @if($valueAdd <= 9.99) disabled @endif
+                                                    class="btn btn-info btn-md btn-block">Continuar {{$valueAdd}}</button>
                                             @else
                                                 <button wire:click.prevent="callZoop" type="submit"
-                                                    @if($valueAdd <= .99) disabled @endif
+                                                    @if($valueAdd <= 9.99) disabled @endif
                                                     class="btn btn-info btn-md btn-block">Continuar {{$valueAdd}}</button>
                                             @endif
                                         </div>
@@ -75,8 +79,8 @@
             VMasker(document.getElementById("valueAdd")).maskMoney();
         }
 
-        function redirect(link){
-            window.open(link, "_blank");
+        function redirect(){
+           
             window.location.href = 'recharge-order';
         }
     </script>

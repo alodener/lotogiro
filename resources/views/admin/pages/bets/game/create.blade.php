@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Novo Jogo')
+@section('title', trans('admin.games.create-page-title'))
 
 @section('content')
 
@@ -18,7 +18,7 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-              <h4 class="modal-title">Criar Jogo XML</h4>
+              <h4 class="modal-title">{{ trans('admin.games.create-game-xml') }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
               </div>
@@ -28,9 +28,9 @@
              
               <div class="form-row">
               <div class="form-group col-md-12">
-                <label for="client">Cliente</label>
+                <label for="client">{{ trans('admin.customer') }}</label>
                 <select class="custom-select @error('client') is-invalid @enderror" name="client" id="clients" required>
-                    <option selected value="">Selecione o Cliente</option>
+                    <option selected value="">{{ trans('admin.customer') }}</option>
                     @if(isset($clients) && $clients->count() > 0)
                         @foreach($clients as $client)
                             <option value="{{$client->id}}">{{\App\Helper\Mask::addMaskCpf($client->cpf) .' - '. $client->name.' '. $client->last_name . ' - ' . $client->email . ' - '. \App\Helper\Mask::addMaksPhone($client->ddd.$client->phone)  }}</option>
@@ -41,15 +41,15 @@
               </div>
                <div class="row">
               <div class="col-12">
-              Arquivo:
+              {{ trans('admin.file') }}:
               <input class="form-control"  type="file" value="" name="arq" required>
               <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
               <input hidden value="1" id="xml" name="xml"> 
               </div>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-info">Criar</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-info">{{ trans('admin.create') }}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.close') }}</button>
 
                 </form>
               </div>

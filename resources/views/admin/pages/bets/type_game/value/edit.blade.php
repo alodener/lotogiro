@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Editar Usuário')
+@section('title', trans('admin.game-types.edit-title'))
 
 @section('content')
 

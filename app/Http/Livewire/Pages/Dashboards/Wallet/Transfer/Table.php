@@ -65,13 +65,14 @@ class Table extends Component
         ], route('admin.dashboards.wallet.index'));
     }
 
-    private function storeTransact(User $user, string $value, string $oldValue, string $type): void
+    private function storeTransact(User $user, string $value, string $oldValue, string $valueA, string $type): void
     {
         TransactBalance::create([
             'user_id_sender' => $this->userId,
             'user_id' => $user->id,
             'value' => Money::toDatabase($value),
             'old_value' => $oldValue,
+            'value_a' => $valueA,
             'type' => $type
         ]);
     }

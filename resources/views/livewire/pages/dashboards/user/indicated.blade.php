@@ -14,7 +14,9 @@
                 </div>
                 <div class="content my-2">
                     <p><b>{{ $indicated->name }} {{ $indicated->last_name }}</b></p>
-                    <p><b>Contato: {{ $indicated->phone ?? '-' }}</b></p>
+                    @php $userClient = $indicated->customer() @endphp
+
+                    <p><b>Contato: {{ $userClient ? $userClient->phone : '-' }}</b></p>
                     <p>
                         <small>Cadastro realizado em: <br>
                         {{ \Carbon\Carbon::parse($indicated->created_at)->format('d/m/Y') }}</small>
