@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Str;
+
 
 class UserController extends Controller
 {
@@ -146,6 +148,9 @@ class UserController extends Controller
                 $balanceRequest += Money::toDatabase(($request->commission/100) * $balanceRequest);
             }
 
+            
+           
+
             $user = new $this->user;
             $user->name = $request->name;
             $user->last_name = $request->last_name;
@@ -153,31 +158,46 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->commission = $request->commission;
             $user->indicador = $indicador;
+            if(!is_null($request->telefone)){
+                $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
+                $ddd = Str::of($telefoneCompleto)->substr(0, 2);
+                $telefone = Str::of($telefoneCompleto)->substr(2);
+                $user->ddd = $ddd;
+                $user->phone = $telefone;
+             }
             if (!empty($request->link)) {
                 $user->link = $request->link;
             }
 
+
+            
+
+                $data = $request->only('pix', 'cpf');
+                $passardados = New Client;
+                $passardados->cpf = $data['cpf'];
+                $passardados->name = $request->name;
+                $passardados->last_name = $request->last_name;
+                $passardados->email = $request->email;
+                if(!is_null($request->telefone)){
+                    $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
+                    $ddd = Str::of($telefoneCompleto)->substr(0, 2);
+                    $telefone = Str::of($telefoneCompleto)->substr(2);
+                    $passardados->ddd = $ddd;
+                    $passardados->phone = $telefone;
+                 }
+                $passardados->pix  = $data['pix'];
+                $passardados->save();
+
             // enviar pra cliente
             if($auxRole == 6){
 
+                $user->type_client = 1;
+                
                /* $validatedData = $request->validate([
                     'pix' => 'required|max:60',
                     'telefone' => 'required|max:15',
                     'cpf' => 'required|max:11'
                 ]);*/
-
-                $user->type_client = 1;
-
-                $data = $request->only('pix', 'telefone', 'cpf');
-                $passardados = New Client;
-
-                $passardados->cpf = $data['cpf'];
-                $passardados->name = $request->name;
-                $passardados->last_name = $request->last_name;
-                $passardados->email = $request->email;
-                $passardados->phone = $data['telefone'];
-                $passardados->pix  = $data['pix'];
-                $passardados->save();
 
             }
             $user->balance = $balanceRequest;
@@ -189,6 +209,7 @@ class UserController extends Controller
             'user_id' => $user->id,
             'value' => (float) Money::toDatabase($request->balance),
             'old_value' => (float) Money::toDatabase(0),
+            'value_a' => (float) Money::toDatabase(0),
         ]);
 
 
@@ -251,10 +272,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+       
       if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all') ){
             abort(403);
         }
-
+        $telefone = null;
         $validatedData = $request->validate([
             'name' => 'required|max:50',
             'last_name' => 'required|max:100',
@@ -263,12 +285,12 @@ class UserController extends Controller
             'password_confirmation' => 'sometimes|required_with:password|max:15',
             'commission' => 'integer|between:0,100',
         ]);
-
+    
         $indicador = $request->indicador;
         if($indicador == null || $indicador == 0){
             $indicador = 1;
         }
-
+    
         try
         {
             if(auth()->user()->hasPermissionTo('update_user')){
@@ -280,6 +302,7 @@ class UserController extends Controller
             $auxRole = $role;
         }
             if($request->has('balance') && !is_null($request->balance)){
+                if($user->balance != $request->balance ){
                 $oldBalance = $user->balance;
                 $oldBonus = $user->bonus;
                 $balanceRequest = (float) Money::toDatabase($request->balance);
@@ -287,14 +310,32 @@ class UserController extends Controller
                 $newBalance = $user->balance +  $newBalanceRequest;
                 $newBonus = $user->bonus + ($user->commission/100) * $balanceRequest;
                 //$newBalance = $user->balance +  $balanceRequest;
+                }
             }
-
+            if(!is_null($request->telefone)){
+                $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
+                $ddd = Str::of($telefoneCompleto)->substr(0, 2); 
+                $telefone = Str::of($telefoneCompleto)->substr(2);
+            }
+          
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
+            if(!is_null($telefone)){
+            $user->ddd = $ddd;
+            $user->phone = $telefone;
+            }
+            
+            if($user->type_client == 1){
+                if(!is_null($telefone)){
+                $userClient = Client::where("email", $user->email)->update(['ddd'=>$ddd, 'phone'=>$telefone]);
+                }
+            }
+
+          
             if($auxRole != 6){
                 $user->type_client = null;
             }
@@ -310,6 +351,7 @@ class UserController extends Controller
            /* if($newBonus > 0){
                 $user->bonus = $newBonus;
             }*/
+            
 
             $user->indicador = $indicador;
 
@@ -319,14 +361,16 @@ class UserController extends Controller
             $user->save();
 
             if((float) $newBonus > 0){
-                $this->storeTransact($user, ($user->commission/100) * $balanceRequest, $oldBonus, 'bonus');
+               
+                $this->storeTransact($user, ($user->commission/100) * $balanceRequest,$oldBonus,  $newBalance, 'bonus');
             }
 
             if((float) $newBalance > 0){
-                $this->storeTransact($user, $balanceRequest, $oldBalance);
+                
+                $this->storeTransact($user, $balanceRequest, $oldBalance ,  $newBalance);
             }
-            if($ajuste == 1 && $oldBalance != $request->balanceAtual){
-                $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance);
+            if($ajuste == 1 && $oldBalance != (float) Money::toDatabase($request->balanceAtual)){
+                $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance,  $newBalance);
             }
             }else{
                $user->name = $request->name;
@@ -337,11 +381,12 @@ class UserController extends Controller
                 $user->link = $request->link;
             }
             $user->save();
-            }
+            } 
+
             if($request->type_client == 1 || auth()->user()->hasPermissionTo('edit_all')){
                 return redirect()->route('admin.home')->withErrors([
                 'success' => 'Usuário alterado com sucesso'
-            ]);
+                ]);
             }
             else{
             if (!empty($request->roles)) {
@@ -356,6 +401,7 @@ class UserController extends Controller
                 $user->syncRoles(null);
             }
         }
+        
             return redirect()->route('admin.settings.users.index')->withErrors([
                 'success' => 'Usuário alterado com sucesso'
             ]);
@@ -366,7 +412,7 @@ class UserController extends Controller
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao alterar o usuário, tente novamente'
             ]);
         }
-        
+    
     }
 
     /**
@@ -397,10 +443,11 @@ class UserController extends Controller
         }
     }
 
-    public function statementBalance($userId)
+    public function Balance($userId)
     {
         $historybalance = TransactBalance::with('user', 'userSender')
             ->where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         foreach ($historybalance as $h){
@@ -408,18 +455,48 @@ class UserController extends Controller
             $h->responsavel = $h->userSender->name;
             $h->value = Money::toReal($h->value);
             $h->old_value = Money::toReal($h->old_value);
+            $h->value_a = Money::toReal($h->value_a);
+            $h->type = $h->type;
             $user = $h->user;
         }
         return view('admin.pages.settings.user.statementBalance', ['historybalance' => $historybalance, 'user' => $user]);
+
+    }
+    
+    public function statementBalancea($userId)
+    {
+
+            $user = User::find($userId);
+            
+
+            $historybalance = TransactBalance::with('user', 'userSender')
+            ->where('user_id', $userId)
+            ->where('type', 'like', '%add%') //busca os registros que tem a palavra add em qualquer posicao da coluna 
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        foreach ($historybalance as $h){
+            $h->data = Carbon::parse($h->created_at)->format('d/m/y à\\s H:i');
+            $h->responsavel = $h->userSender->name;
+            $h->value = Money::toReal($h->value);
+            $h->old_value = Money::toReal($h->old_value);
+            $h->value_a = Money::toReal($h->value_a);
+            $h->type = $h->type;
+            $user = $h->user;
+        }
+     
+
+        return view('admin.pages.settings.user.statementBalancea', compact('user', 'historybalance'));
     }
 
-    public function storeTransact(User $user, string $value, string $oldValue, string $wallet = 'balance')
+    public function storeTransact(User $user, string $value, string $oldValue, string $value_a, string $wallet = 'balance')
     {
         TransactBalance::create([
             'user_id_sender' => auth()->id(),
             'user_id' => $user->id,
             'value' => $value,
             'old_value' => $oldValue,
+            'value_a' => $value_a,
             'wallet' => $wallet
         ]);
          $retornof = "sucesso";

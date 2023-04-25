@@ -76,6 +76,8 @@ HTML);
                     'indicador' => $request->indicator,
                     'password' => $hashed,
                     'type_client' => 1,
+                    'is_active' => 1,
+                    'contact_made' => 0
                 ]);
 
                 Client::create([
@@ -90,7 +92,7 @@ HTML);
                 $user->syncRoles([6]);
 
             \DB::commit();
-              session()->flash('success', 'Cadastrado realizado com sucesso, Efetue seu login!');
+              session()->flash('success', 'Cadastro realizado com sucesso, Efetue seu login!');
             return redirect(route('admin.get.login'));
         } catch (Throwable $e) {
             \DB::rollback();

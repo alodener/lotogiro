@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Novo Sorteio')
+@section('title', trans('admin.draws.draw-title-create'))
 
 @section('content')
 

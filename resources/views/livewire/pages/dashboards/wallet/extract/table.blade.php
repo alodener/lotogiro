@@ -5,8 +5,8 @@
     <div class="row bg-white p-3">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                Extrato de Saldo | {{ auth()->user()->name }} - Saldo Total: {{ \App\Helper\Money::toReal
-                (auth()->user()->balance) }}
+                Extrato de Saldo | {{ auth()->user()->name }} - Saldo Total: R${{ \App\Helper\Money::toReal
+                (auth()->user()->balance) }} | Bônus: R${{\App\Helper\Money::toReal(auth()->user()->bonus)}}
             </div>
             <div class="table-responsive extractable-cel" >
                 
@@ -15,9 +15,10 @@
                     <tr>
                         <th>Data</th>
                         <th>Responsável</th>
-                        <th>Valor</th>
                         <th>Valor Anterior</th>
-                        <th>Obs</th>
+                        <th>Valor</th>
+                        <th>Valor Atual</th>
+                        <th>Descrição</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -25,15 +26,17 @@
                             <tr>
                                 <td x-text="history.data"></td>
                                 <td x-text="history.responsavel"></td>
-                                <td x-text="history.value"></td>
                                 <td x-text="history.old_value"></td>
+                                <td x-text="history.value"></td>
+                                <td x-text="history.value_a"></td>
                                 <td x-text="history.obs"></td>
+                                <!-- 'Venda - Jogo de id: ' . $game->id, 'do tipo: ' . $game->type_game_id -->
                             </tr>
                         </template>
                     </tbody>
                     <tfoot>
                     <tr>
-                        <td colspan="5">
+                        <td colspan="9">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <a href="{{ $paginate['prev'] }}" class="btn btn-info btn-block

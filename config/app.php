@@ -95,6 +95,22 @@ return [
 
     'fallback_locale' => 'en',
 
+     /*
+    |--------------------------------------------------------------------------
+    | Faker Locale
+    |--------------------------------------------------------------------------
+    |
+    | This locale will be used by the Faker PHP library when generating fake
+    | data for your database seeds. For example, this will be used to get
+    | localized telephone numbers, street address information and more.
+    |
+    */
+    'available_locales' => [
+        'pt_BR' => 'PT',
+        'en' => 'EN',
+        'es' => 'ES'
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Faker Locale
@@ -162,7 +178,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
-        
+        Barryvdh\DomPDF\ServiceProvider::class,
+
 
         /*
          * Package Service Providers...
@@ -237,6 +254,8 @@ return [
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'PDFDOM' => Barryvdh\DomPDF\Facade::class
+
 
     ],
 

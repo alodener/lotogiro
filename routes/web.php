@@ -2,6 +2,7 @@
 
     use App\Http\Controllers\Admin\Pages\Auth\RegisterController;
     use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
+    use App\Http\Controllers\Admin\Pages\Dashboards\CustomeBalanceController;
     use App\Http\Controllers\Admin\Pages\Dashboards\WinningTicketController;
     use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
@@ -25,6 +26,8 @@ use App\Http\Controllers\Admin\Pages\Dashboards\ExtractPointsController;
 use App\Http\Controllers\Admin\Pages\Dashboards\RankingController;
 use App\Http\Controllers\Admin\Pages\Settings\QualificationController;
 use App\Http\Controllers\Admin\Pages\Reports\ReportController;
+use App\Http\Controllers\Admin\Pages\Settings\SystemController;
+use App\Http\Controllers\Admin\Pages\Settings\LogosController;
 
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
@@ -67,9 +70,11 @@ Route::middleware('guest:web')->group(function () {
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('get.login');
-        Route::post('/login', [LoginController::class, 'login'])->name('post.login');
+        Route::post('/login', [LoginController::class, 'login'])->name('post.login')->middleware('is.active');;
     });
     Route::middleware(['auth:admin', 'check.openModal'])->group(function () {
+        Route::get('change-locale/{locale}', [HomeController::class, 'changeLocale'])->name('changeLocale');
+
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::prefix('dashboards')->name('dashboards.')->group(function () {
@@ -103,12 +108,24 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/recharge', [WalletController::class, 'recharge'])->name('recharge');
                 Route::get('/transfer', [WalletController::class, 'transfer'])->name('transfer');
                 Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
+                Route::get('/withdraw-visualizacao', [WalletController::class, 'withdrawVisualizacao'])->name('withdraw-visualizacao');
                 Route::get('/extract', [WalletController::class, 'extract'])->name('extract');
                 Route::get('/withdraw-list', [WalletController::class, 'withdrawList'])->name('withdraw-list');
                 Route::get('/recharge-order', [WalletController::class, 'rechargeOrder'])->name('recharge-order');
                 Route::get('/order-detail/{id}', [WalletController::class, 'orderDetail'])->name('order-detail');
                 Route::get('/updateStatusPayment/2de1ce3ddcb20dda6e6ea9fba8031de4/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPayment');
                 Route::get('/thanks/', [WalletController::class, 'thanks'])->name('thanks');
+            });
+            Route::prefix('customer')->name('customer.')->group(function (){
+                Route::get('/', [CustomeBalanceController::class, 'index'])->name('balance');
+                Route::get('/dashboard/winners', [CustomeBalanceController::class, 'dashboard_winners'])->name('dashboard.winners');
+                Route::post('/detailed/view/user', [CustomeBalanceController::class, 'filter'])->name('detailed.view.user');
+                Route::get('/lock/{id}', [CustomeBalanceController::class, 'lock_account'])->name('lock');
+                Route::get('/unlock/{id}', [CustomeBalanceController::class, 'unlock_account'])->name('unlock');
+                Route::get('/contact/made{id}', [CustomeBalanceController::class, 'contact_made'])->name('contact.made');
+                Route::get('/contact/not/made{id}', [CustomeBalanceController::class, 'contact_not_made'])->name('contact.not.made');
+                Route::put('/save/{id}', [CustomeBalanceController::class, 'save_changes'])->name('save');
+                Route::get('/pdf/{id}/{date_initial}/{date_final}', [CustomeBalanceController::class, 'get_pdf'])->name('get.pdf');
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
@@ -150,10 +167,15 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('users/list/select', [UserController::class, 'listSelect'])->name('users.list.select');
             Route::get('clients/list/select', [ClientController::class, 'listSelect'])->name('clients.list.select');
 
+            Route::resource('systems', SystemController::class);
+            Route::resource('logos', LogosController::class);
+            
+
             Route::resource('users', UserController::class);
             Route::get('indicated', [UserController::class, 'indicated'])->name('users.indicated');
             Route::get('indicated/{userId}', [UserController::class, 'indicatedByLevel'])->name('users.indicatedByLevel');
-            Route::get('users/{userId}/statementBalance', [UserController::class, 'statementBalance'])->name('users.statementBalance');
+            Route::get('users/{userId}/stateBalanceFiltrado', [UserController::class, 'statementBalancea'])->name('users.statementBalanceFiltrado');
+            Route::get('users/{userId}/statementBalance', [UserController::class, 'Balance'])->name('users.statementBalance');
             Route::resource('permissions', PermissionController::class);
             Route::resource('roles', RoleController::class);
         });
@@ -171,3 +193,5 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     });
 });
 
+Route::get('/users/winners', [CustomeBalanceController::class, 'userswinnersAPI']);
+Route::get('/users/winners-clients', [CustomeBalanceController::class, 'userswinnersClientesAPI']);
