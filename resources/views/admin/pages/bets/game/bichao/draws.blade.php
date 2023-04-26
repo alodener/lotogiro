@@ -44,6 +44,7 @@
                             <th scope="col" style="max-width: 180px">Modalidade</th>
                             <th scope="col" style="max-width: 120px">Aposta</th>
                             <th scope="col" style="max-width: 140px">Prêmios</th>
+                            <th scope="col">Pago</th>
                             <th scope="col" style="max-width: 180px">Criado em</th>
                             <th scope="col" style="max-width: 50px">Ações</th>
                         </tr>
@@ -74,6 +75,7 @@
                                 <td>{{ $aposta['modalidade_nome'] }}</td>
                                 <td>{{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}</td>
                                 <td>{{ join('°, ', $premios) }}°</td>
+                                <td>{{ $aposta['payment'] == 1 ? 'Pago' : 'Aberto' }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($aposta['created_at'])) }}</td>
                                 <td>
                                     <a href="{{ route('admin.bets.bichao.receipt', ['id' => $aposta['id'], 'tipo' => 'txt']) }}">
@@ -86,6 +88,13 @@
                                             <i class="bi bi-ticket"></i>
                                         </button>
                                     </a>
+                                    @if ($aposta['payment'] == 0)
+                                    <a href="#" id="marcar-premio-pago" data-id="{{ $aposta['id_premio'] }}">
+                                        <button type="button" class="btn btn-success text-light" title="Marcar como prêmio pago">
+                                            <i class="bi bi-wallet"></i>
+                                        </button>
+                                    </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

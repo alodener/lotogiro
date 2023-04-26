@@ -172,6 +172,21 @@
         });
     }
 
+    $('#marcar-premio-pago').click(function(ev) {
+        ev.preventDefault();
+        const id = $(this).attr('data-id');
+
+        $.ajax({
+            url: '{{url('/')}}/admin/bets/bichao/marcar-premio-pago',
+            type: 'POST',
+            dataType: 'json',
+            data: { id  },
+            success: function(data) {
+                location.reload();
+            }
+        });
+    });
+
     $('.chart-remove-item').click(function(ev) {
         ev.preventDefault();
         const url = $(this).attr('url');

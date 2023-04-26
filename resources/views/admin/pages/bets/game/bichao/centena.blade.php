@@ -84,17 +84,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-12">
-                    <select class="custom-select @error('client') is-invalid @enderror" name="client" id="clients"
-                        required>
-                        <option selected value="">{{ trans('admin.customer') }}</option>
-                        @if (isset($clients) && $clients->count() > 0)
-                            @foreach ($clients as $client)
-                                <option value="{{ $client->id }}">
-                                    {{ $client->name . ' ' . $client->last_name . ' - ' . $client->email . ' - ' . \App\Helper\Mask::addMaksPhone($client->ddd . $client->phone) }}
-                                </option>
-                            @endforeach
-                        @endif
-                    </select>
+                    @livewire('utils.clientautocomplete.table')
                 </div>
 
             {{-- PARTE DE PESQUISA DE CLIENTE SE NÃO TIVER AUTENTICAÇÃO --}}
@@ -245,7 +235,7 @@
         $('#btn-add-to-chart').click(function() {
             const option_award = validate_award();
             const value = $('#input_value_bet').val();
-            const client_id = $('#clients').val();
+            const client_id = $('#livewire-client-id').val();
             const centena_input = $('#input-centena').val();
 
             if (!option_award > 0) return alert('Selecione um dos prêmios');

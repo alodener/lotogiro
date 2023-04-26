@@ -23,4 +23,16 @@ class SaleController extends Controller
 
         return view('admin.pages.dashboards.sales.index', compact('users'));
     }
+
+    public function bichaoSales(Request $request)
+    {
+        if (!auth()->user()->hasPermissionTo('read_sale')) {
+            abort(403);
+        }
+
+        $users = User::get();
+
+
+        return view('admin.pages.dashboards.salesbichao.index', compact('users'));
+    }
 }

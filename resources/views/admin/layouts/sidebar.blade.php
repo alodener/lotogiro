@@ -84,9 +84,18 @@
                             @can('read_sale')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.sales.index')}}"
-                                       class="nav-link @if(request()->is('admin/dashboards/sales*')) active @endif">
+                                       class="nav-link @if(request()->is('admin/dashboards/sales')) active @endif">
                                         <i class="fas fa-funnel-dollar nav-icon"></i>
                                         <p>Vendas</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('read_sale')
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.sales.bichao')}}"
+                                       class="nav-link @if(request()->is('admin/dashboards/sales/bichao')) active @endif">
+                                        <i class="fas fa-funnel-dollar nav-icon"></i>
+                                        <p>Vendas Bichão</p>
                                     </a>
                                 </li>
                             @endcan

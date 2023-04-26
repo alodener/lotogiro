@@ -44,12 +44,11 @@ class BichaoController extends Controller
         $showList = false;
 
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $clients = Client::orderBy('name', 'ASC')->get();
         $modalidade = BichaoModalidades::where('nome', 'Milhar')->first();
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.index', compact('clients','clientId','showList','totalCarrinho', 'modalidade', 'chart', 'estados'));
+        return view('admin.pages.bets.game.bichao.index', compact('clientId','showList','totalCarrinho', 'modalidade', 'chart', 'estados'));
     }
 
     public function centena()
@@ -58,12 +57,11 @@ class BichaoController extends Controller
             abort(403);
         }
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $clients = Client::orderBy('name', 'ASC')->get();
         $modalidade = BichaoModalidades::where('nome', 'Centena')->first();
         $estados = BichaoEstados::where('active', 1)->get();
         
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.centena', compact('clients', 'modalidade', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.centena', compact('modalidade', 'chart', 'totalCarrinho', 'estados'));
     }
 
     public function dezena()
@@ -72,12 +70,11 @@ class BichaoController extends Controller
             abort(403);
         }
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $clients = Client::orderBy('name', 'ASC')->get();
         $modalidade = BichaoModalidades::where('nome', 'Dezena')->first();
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.dezena', compact('clients', 'modalidade', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.dezena', compact('modalidade', 'chart', 'totalCarrinho', 'estados'));
     }
 
     public function group()
@@ -86,12 +83,11 @@ class BichaoController extends Controller
             abort(403);
         }
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $clients = Client::orderBy('name', 'ASC')->get();
         $modalidade = BichaoModalidades::where('nome', 'Grupo')->first();
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.group', compact('clients', 'modalidade', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.group', compact('modalidade', 'chart', 'totalCarrinho', 'estados'));
     }
 
     public function milhar_centena()
@@ -100,12 +96,11 @@ class BichaoController extends Controller
             abort(403);
         }
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $clients = Client::orderBy('name', 'ASC')->get();
         $modalidade = BichaoModalidades::where('nome', 'Milhar/Centena')->first();
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.milhar_centena', compact('clients', 'modalidade', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.milhar_centena', compact('modalidade', 'chart', 'totalCarrinho', 'estados'));
     }
 
     public function terno_dezena()
@@ -114,12 +109,11 @@ class BichaoController extends Controller
             abort(403);
         }
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $clients = Client::orderBy('name', 'ASC')->get();
         $modalidade = BichaoModalidades::where('nome', 'Terno de Dezena')->first();
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.terno_dezena', compact('clients', 'modalidade', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.terno_dezena', compact('modalidade', 'chart', 'totalCarrinho', 'estados'));
     }
 
     public function terno_grupo()
@@ -128,12 +122,11 @@ class BichaoController extends Controller
             abort(403);
         }
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $clients = Client::orderBy('name', 'ASC')->get();
         $modalidade = BichaoModalidades::where('nome', 'Terno de Grupos')->first();
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.terno_grupo', compact('clients', 'modalidade', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.terno_grupo', compact('modalidade', 'chart', 'totalCarrinho', 'estados'));
     }
 
     public function duque_dezena()
@@ -142,12 +135,11 @@ class BichaoController extends Controller
             abort(403);
         }
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $clients = Client::orderBy('name', 'ASC')->get();
         $modalidade = BichaoModalidades::where('nome', 'Duque de Dezena')->first();
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.duque_dezena', compact('clients', 'modalidade', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.duque_dezena', compact('modalidade', 'chart', 'totalCarrinho', 'estados'));
     }
 
     public function duque_grupo()
@@ -156,12 +148,11 @@ class BichaoController extends Controller
             abort(403);
         }
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $clients = Client::orderBy('name', 'ASC')->get();
         $modalidade = BichaoModalidades::where('nome', 'Duque de Grupo')->first();
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.duque_grupo', compact('clients', 'modalidade', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.duque_grupo', compact('modalidade', 'chart', 'totalCarrinho', 'estados'));
     }
 
     public function cotacao(Response $response)
@@ -262,7 +253,7 @@ class BichaoController extends Controller
         $intervalo = $request->has('intervalo') ? $request->input('intervalo') : 30;
         $buscaIntervalo = now()->subDays($intervalo)->endOfDay();
 
-        $apostas = BichaoGames::select('bichao_games.*', 'bgv.valor_premio', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.pix')
+        $apostas = BichaoGames::select('bichao_games.*', 'bgv.valor_premio', 'bgv.id as id_premio', 'bgv.payment', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.pix')
             ->join('bichao_games_vencedores as bgv', 'bgv.game_id', 'bichao_games.id')
             ->join('clients as c', 'c.id', 'bichao_games.client_id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
@@ -325,6 +316,19 @@ class BichaoController extends Controller
         }
 
         session()->flash('success', 'Jogo removido com sucesso.');
+
+        echo json_encode(['status' => 200]);
+    }
+
+    public function pay_prize(Request $request) {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+        $data = $request->all();
+
+        BichaoGamesVencedores::where('id', $data['id'])->update(['payment' => 1]);
+
+        session()->flash('success', 'Prêmio pago com sucesso');
 
         echo json_encode(['status' => 200]);
     }

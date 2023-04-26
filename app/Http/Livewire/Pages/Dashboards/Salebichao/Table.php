@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Pages\Dashboards\Sale;
+namespace App\Http\Livewire\Pages\Dashboards\Salebichao;
 
-use App\Models\Game;
+use App\Models\BichaoGames;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
@@ -175,14 +175,12 @@ class Table extends Component
         $row =  $query->where('user_id', $id)->count();
         //Game::where('user_id', $id)->count();
         if($row>0){
-            
-             $this->i = $query->where('checked', 1)->where('user_id', $id)->count();
-             //Game::where('checked', 1)->where('user_id', $id)->count();
        
-            $result = $query->where('checked', 1)->where('user_id', $id)->get();
-            //Game::where('checked', 1)->where('user_id', $id)->get();
+            $this->i = $query->where('user_id', $id)->count();
+
+            $result = $query->where('user_id', $id)->get();
                 foreach ($result as $item) {
-            $value += $item->value;
+            $value += $item->valor;
             
             
         }
@@ -197,15 +195,13 @@ class Table extends Component
         return $query;
     }
      public function sumValuesTodos($query)
-    {
-             $this->i = $query->where('checked', 1)->count();
-            // Game::where('checked', 1)->count();
-             $value = 0;
-       
-            $result = $query->where('checked', 1)->get();
+    {       
+            $this->i = $query->count();
+            $value = 0;
+            $result = $query->get();
             //Game::where('checked', 1)->get();
                 foreach ($result as $item) {
-            $value += $item->value;
+            $value += $item->valor;
             
             
         }
@@ -219,15 +215,12 @@ class Table extends Component
          $value = 0;
         $row = $query->where('user_id', $id)->count();
         //Game::where('user_id', $id)->count();
-        if($row>0) {
-            
-             $this->i = $query->where('checked', 1)->where('user_id', $id)->count();
-             //Game::where('checked', 1)->where('user_id', $id)->count();
-       
-            $result = $query->where('checked', 1)->where('user_id', $id)->get();
+        if($row>0){
+            $this->i = $query->where('user_id', $id)->count();
+            $result = $query->where('user_id', $id)->get();
             //Game::where('checked', 1)->where('user_id', $id)->get();
                 foreach ($result as $item) {
-            $value += $item->value;
+            $value += $item->valor;
             
             
         }
@@ -244,7 +237,7 @@ class Table extends Component
 
     public function runQueryBuilder()
     {
-        $query = Game::query();
+        $query = BichaoGames::query();
         if (!$this->auth->hasPermissionTo('read_all_sales')) {
             $query->where('user_id', $this->auth->id);
         }
@@ -273,7 +266,7 @@ class Table extends Component
 
     public function getReport()
     {
-        $games = $this->runQueryBuilder()->with(['user', 'client', 'typeGameValue'])->get();
+        $games = $this->runQueryBuilder()->with(['user', 'client'])->get();
         $collection = new Collection();
         foreach ($games as $game) {
             $collection = $collection->push($game->toArray());
@@ -287,7 +280,7 @@ class Table extends Component
             'total' => 0
         ];
 
-        $pdf = PDF::loadView('admin.layouts.pdf.sales', $data)->output();
+        $pdf = PDF::loadView('admin.layouts.pdf.salesbichao', $data)->output();
 
         $fileName = 'Relatório de Vendas - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
 
@@ -299,7 +292,7 @@ class Table extends Component
 
     public function render()
     {
-        return view('livewire.pages.dashboards.sale.table', [
+        return view('livewire.pages.dashboards.salebichao.table', [
             "games" => $this->runQueryBuilder()->paginate($this->perPage),
         ]);
     }
