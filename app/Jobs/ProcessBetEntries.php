@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Models\Competition;
 use App\Models\TypeGame;
 use App\Models\Client;
+use App\Models\TransactBalance;
+use App\Helper\Configs;
 
 // lib de email
 use Mail;
@@ -103,9 +105,10 @@ class ProcessBetEntries implements ShouldQueue
             $storeExtact = ExtractController::store($extract);
             $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $game->value, $ID_VALUE, $this->user);
             $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
-
+            $planodecarreira = Configs::getPlanoDeCarreira();
+            if( $planodecarreira == "Ativado"){
             UsersHasPoints::generatePoints($this->user, $game->value, 'Venda - Jogo de id: ' . $game->id);
-
+            }
             $game->commission_value = $commissionCalculation;
             $game->commision_value_pai = $commissionCalculationPai;
             $game->save();

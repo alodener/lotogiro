@@ -83,17 +83,25 @@ class Copiacola extends Component
          public function setId($client)
     {
             $this->clientId = $client["id"];
-            $this->search = $client["name"] . ' - ' . $client["cpf"]. ' - ' . $client["email"]. ' - ' . $client["ddd"].' - ' . $client["phone"];
+            $this->search = $client["name"] . ' ' . $client["last_name"] . ' - ' . $client["cpf"]. ' ' . $client["email"]. ' - ' . $client["ddd"].' - ' . $client["phone"];
             $this->showList = false;
         
     }
         public function updatedSearch($value)
     {
         
-            $this->clients = Client::where("name", "like", "%{$this->search}%")->get();
-            $this->showList = true;
-        
-    }
+            $this->clients = Client::where(function($query) {
+            $query->where("name", "like", "%{$this->search}%")
+            ->orWhere("last_name", "like", "%{$this->search}%");
+            })
+
+        ->get(); //executar a consulta SQL que busca e mostra os nomes e sobrenomes dos clientes
+
+    $this->showList = true;
+
+        }
+    
+
     public function clearUser()
     {
             $this->reset(['search', 'clientId']);

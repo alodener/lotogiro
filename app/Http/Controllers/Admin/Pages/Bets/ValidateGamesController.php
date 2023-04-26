@@ -20,6 +20,7 @@ use App\Models\TypeGameValue;
 use App\Models\UsersHasPoints;
 use App\Models\TransactBalance;
 use Illuminate\Support\Facades\Auth;
+use App\Helper\Configs;
 
 use PDF;
 
@@ -115,10 +116,24 @@ class ValidateGamesController extends Controller
                         'user_id' => $game->user_id,
                         'client_id' => $game->client_id
                     ];
+                    
+                    $transact_balance = new TransactBalance;
+                    $transact_balance->user_id_sender = auth()->id();
+                    $transact_balance->user_id = auth()->id();
+                    $transact_balance->value = $game->value;
+                    $transact_balance->old_value = auth()->user()->balance;
+                    $transact_balance->value_a = auth()->user()->balance - $game->value;
+                    $transact_balance->type = 'Compra - Jogo de id: ' . $game->id . ' do tipo: ' . $game->type_game_id;
+                    $transact_balance->save();
+    
                     $storeExtact = ExtractController::store($extract);
+                    $planodecarreira = Configs::getPlanoDeCarreira();
+                    if( $planodecarreira == "Ativado"){
                     UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);
+                    }
                 }
 
+               
                 $validate_game->status = true;
                 $validate_game->save();
             }
