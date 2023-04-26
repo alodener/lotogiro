@@ -5,7 +5,7 @@
 @section('content')
     <div class="col bg-white p-3">
         <div class="row">
-            <div class="col-8 d-flex justify-content-end">
+            <div class="col-md-8 col-12 d-flex justify-content-end container-menu-items">
                 <a href="{{ route('admin.bets.bichao.index')}}">
                     <button class="btn btn-info my-2 ml-1">Apostar</button>
                 </a>
@@ -22,7 +22,7 @@
         </div>
         <hr/>
         <div class="row">
-            <div class="col-8 justify-content-center">
+            <div class="col-md-8 col-12 justify-content-center">
                 <div class="row">
                     <div class="col">
                         <h1>Bichão da Sorte</h1>
@@ -64,15 +64,15 @@
         </div>
         <div class="row">
             <div class="col button-group overflow-auto">
-                <a class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.index') }}"><b>Milhar</b></a>
-                <a class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.centena') }}"><b>Centena</b></a>
-                <a class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.dezena') }}"><b>Dezena</b></a>
-                <a class="btn btn-outline-primary" id="btn-group" href="{{ route('admin.bets.bichao.group')}}"><b>Grupo</b></a>
-                <a class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.milhar.centena')}}"><b>Milhar/Centena</b></a>
-                <a class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.terno.dezena')}}"><b>Terno de Dezena</b></a>
-                <a class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.terno.grupo') }}"><b>Terno de Grupo</b></a>
-                <a class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.duque.dezena')}}"><b>Duque de Dezena</b></a>
-                <a class="btn btn-primary" href="#"><b>Duque de Grupo</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.index') }}"><b>Milhar</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.centena') }}"><b>Centena</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.dezena') }}"><b>Dezena</b></a>
+                <a class="btn btn-outline-primary mb-1" id="btn-group" href="{{ route('admin.bets.bichao.group')}}"><b>Grupo</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.milhar.centena')}}"><b>Milhar/Centena</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.dezena')}}"><b>Terno de Dezena</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.grupo') }}"><b>Terno de Grupo</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.dezena')}}"><b>Duque de Dezena</b></a>
+                <a class="btn btn-primary mb-1" href="#"><b>Duque de Grupo</b></a>
             </div>
         </div>
         <hr/>
@@ -106,7 +106,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col animal-wrapper">
                     <div id="animal-container" button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
                         <label id="animal-container-1" onclick="select_animals_1()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal-container">
@@ -878,7 +878,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-2 col-12">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">R$</span>
@@ -939,6 +939,36 @@
         @media(max-width: 467px) {
             #filterForm .form-row {
                 flex-direction: column;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .container-menu-items {
+                flex-wrap: wrap;
+            }
+
+            .container-menu-items a {
+                flex: 50%;
+                width: 100%;
+            }
+
+            .container-menu-items a button {
+                width: 100%;
+            }
+
+            .animal-wrapper {
+                display: flex;
+                flex-wrap: wrap;
+                
+            }
+
+            .animal-wrapper > div {
+                flex: 50%;
+                padding: 5px;
+            }
+
+            .animal-wrapper > div > label {
+                height: 100%;
             }
         }
     </style>

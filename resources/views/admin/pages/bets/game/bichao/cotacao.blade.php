@@ -5,7 +5,7 @@
 @section('content')
     <div class="col bg-white p-3">
         <div class="row">
-            <div class="col-8 d-flex justify-content-end">
+            <div class="col-md-8 col-12 d-flex justify-content-end container-menu-items">
                 <a href="{{ route('admin.bets.bichao.index')}}">
                     <button class="btn btn-info my-2 ml-1">Apostar</button>
                 </a>
@@ -80,6 +80,21 @@
         @media(max-width: 467px) {
             #filterForm .form-row {
                 flex-direction: column;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .container-menu-items {
+                flex-wrap: wrap;
+            }
+
+            .container-menu-items a {
+                flex: 50%;
+                width: 100%;
+            }
+
+            .container-menu-items a button {
+                width: 100%;
             }
         }
     </style>

@@ -26,7 +26,7 @@
             <div class="tab-pane fade show" id="nav-cotacoes" role="tabpanel" aria-labelledby="nav-settings-cotacoes">
                 <div class="row">
                     @foreach($cotacoes as $cotacao)
-                        <div class="col-4">
+                        <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="name">{{ $cotacao->nome }}</label>
                                 <input 

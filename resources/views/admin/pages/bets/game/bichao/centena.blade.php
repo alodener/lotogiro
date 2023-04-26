@@ -5,7 +5,7 @@
 @section('content')
     <div class="col bg-white p-3">
         <div class="row">
-            <div class="col-8 d-flex justify-content-end">
+            <div class="col-md-8 col-12 d-flex justify-content-end container-menu-items">
                 <a href="{{ route('admin.bets.bichao.index')}}">
                     <button class="btn btn-info my-2 ml-1">Apostar</button>
                 </a>
@@ -22,7 +22,7 @@
         </div>
         <hr />
         <div class="row">
-            <div class="col-8 justify-content-center">
+            <div class="col-md-8 col-12 justify-content-center">
                 <div class="row">
                     <div class="col">
                         <h1>Bichão da Sorte</h1>
@@ -64,15 +64,15 @@
         </div>
         <div class="row">
             <div class="col button-group overflow-auto">
-                <a id="btn-group" class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.index') }}"><b>Milhar</b></a>
+                <a id="btn-group" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.index') }}"><b>Milhar</b></a>
                 <a id="btn-group btn-centena" class="btn btn-primary" href="#"><b>Centena</b></a>
-                <a id="btn-group" class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.dezena') }}"><b>Dezena</b></a>
-                <a id="btn-group" class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.group') }}"> <b>Grupo</b></a>
-                <a id="btn-group" class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.milhar.centena')}}"> <b>Milhar/Centena</b></a>
-                <a id="btn-group" class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.terno.dezena')}}"><b>Terno de Dezena</b></a>
-                <a id="btn-group" class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.terno.grupo')}}"><b>Terno de Grupo</b></a>
-                <a id="btn-group" class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.duque.dezena')}}"><b>Duque de Dezena</b></a>
-                <a id="btn-group" class="btn btn-outline-primary" href="{{ route('admin.bets.bichao.duque.grupo')}}"><b>Duque de Grupo</b></a>
+                <a id="btn-group" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.dezena') }}"><b>Dezena</b></a>
+                <a id="btn-group" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.group') }}"> <b>Grupo</b></a>
+                <a id="btn-group" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.milhar.centena')}}"> <b>Milhar/Centena</b></a>
+                <a id="btn-group" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.dezena')}}"><b>Terno de Dezena</b></a>
+                <a id="btn-group" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.grupo')}}"><b>Terno de Grupo</b></a>
+                <a id="btn-group" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.dezena')}}"><b>Duque de Dezena</b></a>
+                <a id="btn-group" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.grupo')}}"><b>Duque de Grupo</b></a>
             </div>
         </div>
         <hr/>
@@ -101,16 +101,16 @@
         <div class="col-12" id="centena-group">
             <hr />
             <div class="row align-items-center">
-                <div class="col-1">
+                <div class="col-md-1 col-6">
                     <p>Insira seu jogo:</p>
                 </div>
-                <div class="col-6">
+                <div class="col-md-6 col-6">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" id="input-centena"
                             aria-describedby="basic-addon1">
                     </div>
                 </div>
-                <div class="col-5">
+                <div class="col-md-5 col-12">
                     <button id="btn-gerar-centena" onclick="insere_valor()" type="button" class="btn btn-secondary">Gerar Centena</button>
                 </div>
             </div>
@@ -143,7 +143,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-2 col-12">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">R$</span>
@@ -200,6 +200,21 @@
         @media(max-width: 467px) {
             #filterForm .form-row {
                 flex-direction: column;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .container-menu-items {
+                flex-wrap: wrap;
+            }
+
+            .container-menu-items a {
+                flex: 50%;
+                width: 100%;
+            }
+
+            .container-menu-items a button {
+                width: 100%;
             }
         }
     </style>

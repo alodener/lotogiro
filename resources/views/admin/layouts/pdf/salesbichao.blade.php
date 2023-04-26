@@ -183,9 +183,9 @@
                             @if($game['comission_payment']) Pago @else Aberto @endif
                         </td>
                         <td class="font border-bottom">
-                            R$0
+                            R${{ $game['valor'] }}
                             @php
-                                $subtotal +=  0;
+                                $subtotal +=  $game['valor'];
                             @endphp
                         </td>
                     </tr>

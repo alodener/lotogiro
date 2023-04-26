@@ -1,4 +1,4 @@
-<div style="background-color:#E9ECEF;" class="col-4 h-auto">
+<div style="background-color:#E9ECEF;" class="col-md-4 col-12 h-auto">
     <div class="row align-items-center mt-4">
         <div class="col">
             <h4 class="text-center">Lista de Jogos</h4>

@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-6 col-12">
                 <div class="row busca-container">
-                    <div class="col-2">
+                    <div class="col-md-2 col-6">
                         <select class="change-busca form-control" name="busca-per-page" data-busca-param="perPage">
                             <option value="10" {{ $perPage == '10' ? 'selected' : '' }} >10</option>
                             <option value="20" {{ $perPage == '20' ? 'selected' : '' }} >20</option>
@@ -20,7 +20,7 @@
                             <option value="100" {{ $perPage == '100' ? 'selected' : '' }} >100</option>
                         </select>
                     </div>
-                    <div class="col-2">
+                    <div class="col-md-2 col-6">
                         <select class="change-busca form-control" name="busca-intervalo" data-busca-param="intervalo">
                             <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >30 dias</option>
                             <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >60 dias</option>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="row mt-4">
-            <div class="col">
+            <div class="col overflow-auto">
                 <table class="table table-sm">
                     <thead>
                         <tr>
