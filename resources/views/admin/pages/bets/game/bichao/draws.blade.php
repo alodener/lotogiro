@@ -74,7 +74,7 @@
                                 <td>{{ $aposta['modalidade_nome'] }}</td>
                                 <td>{{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}</td>
                                 <td>{{ join('°, ', $premios) }}°</td>
-                                <td>{{ date('H:i d/m/Y', strtotime($aposta['created_at'])) }}</td>
+                                <td>{{ date('d/m/Y H:i', strtotime($aposta['created_at'])) }}</td>
                                 <td>
                                     <a href="{{ route('admin.bets.bichao.receipt', ['id' => $aposta['id'], 'tipo' => 'txt']) }}">
                                         <button type="button" class="btn btn-primary text-light" title="Baixar bilhete TXT">
@@ -82,7 +82,7 @@
                                         </button>
                                     </a>
                                     <a href="{{ route('admin.bets.bichao.receipt', ['id' => $aposta['id'], 'tipo' => 'pdf']) }}">
-                                        <button type="button" class="btn btn-primary text-light" title="Baixar bilhete PDF">
+                                        <button type="button" class="btn btn-danger text-light" title="Baixar bilhete PDF">
                                             <i class="bi bi-ticket"></i>
                                         </button>
                                     </a>

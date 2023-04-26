@@ -113,11 +113,6 @@
 
 <div class="">
     <div class="border-bottom-dashed py-2">
-        <p class="text-center font text-size-3 text-bold text-white">
-
-            BICHÃO DA SORTE
-
-        </p>
         @if($prize == 1)
             <p class="text-success text-center font text-size-4 text-bold py-2">
                 BILHETE PREMIADO
@@ -135,8 +130,16 @@
             <span class="font">{{\Carbon\Carbon::parse($game->criado_em)->format('d/m/Y H:i:s')}}</span>
         </p>
         <p class="text-white text-size-2">
+            <span class="font text-bold">BANCA:</span>
+            <span class="font">{{$game->banca}}</span>
+        </p>
+        <p class="text-white text-size-2">
             <span class="font text-bold">PARTICIPANTE:</span>
             <span class="font">{{mb_strtoupper($game->cliente_nome . ' ' . $game->cliente_sobrenome, 'UTF-8') }}</span>
+        </p>
+        <p class="text-white text-size-2">
+            <span class="font text-bold">E-MAIL:</span>
+            <span class="font">{{$game->cliente_email}}</span>
         </p>
         <p class="text-white text-size-2">
             <span class="font text-bold">DATA SORTEIO:</span>
@@ -165,7 +168,7 @@
         </p>
         <p class="">
             <span class="font text-bold">GANHO MÁXIMO: </span>
-            <span class="font">R${{\App\Helper\Money::toReal($game->valor * $game->multiplicador)}}</span>
+            <span class="font">R${{\App\Helper\Money::toReal($premio_maximo)}}</span>
         </p>
     </div>
 </center>

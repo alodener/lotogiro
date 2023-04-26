@@ -81,6 +81,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::prefix('dashboards')->name('dashboards.')->group(function () {
             Route::prefix('sales')->name('sales.')->group(function () {
                 Route::get('/', [SaleController::class, 'index'])->name('index');
+                Route::get('/bichao', [SaleController::class, 'bichaoSales'])->name('bichao');
             });
             Route::prefix('Reportday')->name('Reportday.')->group(function () {
                 Route::get('/', [ReportDayController::class, 'index'])->name('index');

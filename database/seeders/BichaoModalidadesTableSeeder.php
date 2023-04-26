@@ -58,8 +58,8 @@ class BichaoModalidadesTableSeeder extends Seeder
             array (
                 'id' => 5,
                 'nome' => 'Milhar/Centena',
-                'multiplicador' => 5000,
-                'multiplicador_2' => 600,
+                'multiplicador' => 2800,
+                'multiplicador_2' => null,
                 'created_at' => \Carbon\Carbon::now()->toDateTime(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTime(),
             ),

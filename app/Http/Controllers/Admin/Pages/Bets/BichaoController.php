@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Pages\Bets;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Models\TransactBalance;
 use App\Helper\Commision;
@@ -178,7 +179,7 @@ class BichaoController extends Controller
         if (!auth()->user()->hasPermissionTo('read_user')) {
             abort(403);
         }
-        $cotacoes = BichaoModalidades::where('id', '!=', 5)->get();
+        $cotacoes = BichaoModalidades::get();
         $estados = BichaoEstados::get();
 
         return view('admin.pages.bets.game.bichao.settings', compact('cotacoes', 'estados'));
@@ -307,6 +308,8 @@ class BichaoController extends Controller
 
         session(['@loteriasbr/chart' => $chart]);
 
+        session()->flash('success', 'Jogo adicionado com sucesso.');
+
         echo json_encode(['status' => 200]);
     }
 
@@ -320,6 +323,8 @@ class BichaoController extends Controller
             unset($chart[$index]);
             session(['@loteriasbr/chart' => array_values($chart)]);
         }
+
+        session()->flash('success', 'Jogo removido com sucesso.');
 
         echo json_encode(['status' => 200]);
     }
@@ -400,6 +405,8 @@ class BichaoController extends Controller
 
         session(['@loteriasbr/chart' => []]);
 
+        session()->flash('success', 'Jogos cadastrados com sucesso.');
+
         echo json_encode(['status' => true, 'chart' => $checkout]);
     }
 
@@ -408,7 +415,7 @@ class BichaoController extends Controller
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
-        $game = BichaoGames::select('bichao_games.*', 'bgv.id as vencedor_id', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'bm.multiplicador', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.cpf as cliente_cpf')
+        $game = BichaoGames::select('bichao_games.*', 'bgv.id as vencedor_id', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'bm.multiplicador', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.cpf as cliente_cpf', 'c.email as cliente_email')
             ->join('clients as c', 'c.id', 'bichao_games.client_id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
             ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
@@ -419,22 +426,32 @@ class BichaoController extends Controller
         $apostas = [];
         $premios = [];
 
-        if (strval($game['game_1']) > 0) $apostas[] = $game['game_1'];
-        if (strval($game['game_2']) > 0) $apostas[] = $game['game_2'];
-        if (strval($game['game_3']) > 0) $apostas[] = $game['game_3'];
+        if (strval($game->game_1) > 0) $apostas[] = $game->game_1;
+        if (strval($game->game_2) > 0) $apostas[] = $game->game_2;
+        if (strval($game->game_3) > 0) $apostas[] = $game->game_3;
 
-        if ($game['premio_1'] == 1) $premios[] = 1;
-        if ($game['premio_2'] == 1) $premios[] = 2;
-        if ($game['premio_3'] == 1) $premios[] = 3;
-        if ($game['premio_4'] == 1) $premios[] = 4;
-        if ($game['premio_5'] == 1) $premios[] = 5;
+        if ($game->premio_1 == 1) $premios[] = 1;
+        if ($game->premio_2 == 1) $premios[] = 2;
+        if ($game->premio_3 == 1) $premios[] = 3;
+        if ($game->premio_4 == 1) $premios[] = 4;
+        if ($game->premio_5 == 1) $premios[] = 5;
 
+        $premioMaximo = $game->valor * $game->multiplicador / sizeof($premios);
+
+        if ($game->modalidade_id == 6 || $game->modalidade_id == 8 || $game->modalidade_id == 9) {
+            $premioMaximo = $game->valor * $game->multiplicador;
+        }
+        if ($game->modalidade_id == 7) {
+            $premioMaximo = sizeof($premios) == 3 ? $game->valor * $game->multiplicador : $game->valor * $game->multiplicador_2;
+        }
+        
         global $data;
         $data = [
             'game' => $game,
             'prize' => $game->vencedor_id > 0 ? 1 : 0,
             'aposta' => str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT),
             'premios' => join('°, ', $premios),
+            'premio_maximo' => $premioMaximo,
         ];
 
         if ($tipo == "pdf") {

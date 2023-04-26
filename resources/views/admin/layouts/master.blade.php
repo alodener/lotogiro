@@ -232,7 +232,7 @@
                     console.log(data);
                     return alert(data.message);
                 }
-                alert('Jogos cadastrados com sucesso!');
+
                 location.reload();
             }
         });

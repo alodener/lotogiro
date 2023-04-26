@@ -1,7 +1,5 @@
 COMPROVANTE DE APOSTA
 
-BICHÃO DA SORTE
-
 @if($prize == 1)
 PREMIADO
 
@@ -10,9 +8,11 @@ NÚMERO DO BILHETE: {{$game->id}}°
 
 EMITIDO EM: {{\Carbon\Carbon::parse($game->criado_em)->format('d/m/Y H:i:s')}}
 
-CPF: {{\App\Helper\Mask::addMaskCpf($game->cliente_cpf)}}
+BANCA: {{$game->banca}}
 
 PARTICIPANTE: {{mb_strtoupper($game->cliente_nome . ' ' . $game->cliente_sobrenome, 'UTF-8') }}
+
+E-MAIL: {{$game->cliente_email}}
 
 DATA SORTEIO: {{\Carbon\Carbon::parse($game->criado_em)->format('d/m/Y')}}
 
@@ -26,6 +26,6 @@ PRÊMIOS: {{ $premios }}°
 
 VALOR APOSTADO: R${{\App\Helper\Money::toReal($game->valor)}}
 
-GANHO MÁXIMO: R${{\App\Helper\Money::toReal($game->valor * $game->multiplicador)}}
+GANHO MÁXIMO: R${{\App\Helper\Money::toReal($premio_maximo)}}
 
 

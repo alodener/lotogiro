@@ -222,8 +222,7 @@
         integrity="sha512-pF+DNRwavWMukUv/LyzDyDMn8U2uvqYQdJN0Zvilr6DDo/56xPDZdDoyPDYZRSL4aOKO/FGKXTpzDyQJ8je8Qw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        const awardMilhar =parseInt('{{$modalidade->multiplicador}}');
-        const awardCentena =parseInt('{{$modalidade->multiplicador_2}}');
+        const award =parseInt('{{$modalidade->multiplicador}}');
         const initial_value = 0;
         const button_first = $('#btn-award-first');
         const button_second = $('#btn-award-second');
@@ -296,23 +295,22 @@
                 message_minimum.addClass('hide');
 
                 const option_award = validate_award();
-                const totalAward = awardMilhar + awardCentena;
 
                 if(option_award == 1){
-                    value = totalAward;
+                    value = award;
                 }else if(option_award == 2){
-                    value = (totalAward / 2);
+                    value = (award / 2);
                 }else if(option_award == 3){
-                    value = (totalAward / 3);
+                    value = (award / 3);
                 }else if(option_award == 4){
-                    value = (totalAward / 4);
+                    value = (award / 4);
                 }else if(option_award == 5){
-                    value = (totalAward / 5);
+                    value = (award / 5);
                 }else if(option_award == 6){
-                    value = (totalAward / 5);
+                    value = (award / 5);
                 }
 
-                const result = value * value_input_bet / 2;
+                const result = value * value_input_bet;
 
                 if (result > 0 && $('#input-milhar').val().length === 4) {
                     $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
