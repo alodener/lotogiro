@@ -4,17 +4,18 @@
     </div>
     <div class="row bg-white p-3">
         <div class="col-md-12">
-            
+
             <div class="card-header indica-card">
-                <div class="row">
-                    <div class="col-md-6">
-                Solicitações de Saque
+                <div class= "row">
+                    <div class="col-md-11">
+                Solicitações de Saque - Visualizar Histórico
                     </div>
-                <div class="col-md-6 text-right">
-                <a href="{{route('admin.dashboards.wallet.withdraw-visualizacao')}}" class="btn btn-warning"> Visualizar Histórico</a>
+                <div class="text-right">
+                    <a href="{{route('admin.dashboards.wallet.withdraw-list')}}" class="btn btn-warning"> Voltar </a> 
+                </div>
                 </div>
             </div>
-            </div>
+        
             <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-bordered table-lg">
                     <thead>
@@ -42,20 +43,20 @@
                             @if(\App\Helper\UserValidate::iAmAdmin())
                             <td width="5%" align="center">
                                 @if($withdraw->status === 0)
-                                    <button wire:click="withdrawDone({{ $withdraw->id }})" type="button" class="btn
-                                        btn-warning">
-                                        <i class="fa fa-check-circle"></i>
-                                        Feito
-                                    </button>
+                                <button wire:click="withdrawDone({{ $withdraw->id }})" type="button" class="btn
+                                    btn-warning">
+                                    <i class="fa fa-check-circle"></i>
+                                    Feito
                                 @else
-                                    <button disabled type="button" class="btn btn-success"><i class="fa
+                                <button disabled type="button" class="btn btn-success"><i class="fa
                                     fa-check-circle"></i></button>
+                                
                                 @endif
                                 @endif
                             </td>
                         </tr>
                     @empty
-
+                                
                     @endforelse
                     </tbody>
                     <tfoot>

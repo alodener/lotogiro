@@ -12,6 +12,10 @@ use MercadoPago\SDK;
 use App\Helper\ZoopGateway;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
+use App\Helper\Configs;
+use App\Models\System;
+use Faker\Extension\Helper;
+
 
 class Table extends Component
 {
@@ -21,12 +25,14 @@ class Table extends Component
 
     public function callMP()
     {
-        SDK::setAccessToken("APP_USR-2909617305972251-012203-1eb52e7fbfc50a7355b5beb6d5abbe79-1011031176"); // Either Production or SandBox AccessToken
+        $tokenMP = Configs::getTokenMercadoPago();
 
-        $preference = new Preference();
+        SDK::setAccessToken($tokenMP); // Either Production or SandBox AccessToken
+        
+        $preference = new Preference(); 
         $item = new Item();
 
-        $item->title = "Recarga SuperLotogiro";
+        $item->title = "Recarga " . ENV("nome_sistema");
         $item->quantity = 1;
         $item->unit_price = Money::toDatabase($this->valueAdd);
 
@@ -39,12 +45,12 @@ class Table extends Component
 
         $preference->items = array($item);
         $preference->back_urls = [
-            "success" => "https://superjogo.loteriabr.com/admin/dashboards/wallet/thanks/",
-            "failure" => "https://superjogo.loteriabr.com/dashboards/wallet/thanks/",
-            "pending" => "https://superjogo.loteriabr.com/dashboards/wallet/thanks/"
+            "success" => env("APP_URL") . "/admin/dashboards/wallet/thanks/",
+            "failure" => env("APP_URL") . "/dashboards/wallet/thanks/",
+            "pending" => env("APP_URL") . "/dashboards/wallet/thanks/"
         ];
         $preference->auto_return = "approved";
-        $preference->notification_url = "https://superjogo.loteriabr.com/dashboards/wallet/updateStatusPayment/2de1ce3ddcb20dda6e6ea9fba8031de4/";
+        $preference->notification_url = env("APP_URL") . "/dashboards/wallet/updateStatusPayment/2de1ce3ddcb20dda6e6ea9fba8031de4/";
         $preference->external_reference = $order->reference;
         $preference->save();
 
@@ -88,6 +94,7 @@ class Table extends Component
                     </div>'",
         ]);
     }
+
     public function callDoBank()
     {
         $order = new RechargeOrder([

@@ -104,8 +104,10 @@ class Request
             curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
             curl_setopt($curl, CURLOPT_ENCODING, "");
             curl_setopt_array($curl, $defaultCurlOptions);
+
         } elseif($method == 'DELETE') {
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+
         }
 
         try {

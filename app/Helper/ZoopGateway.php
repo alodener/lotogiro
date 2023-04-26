@@ -91,6 +91,7 @@ class ZoopGateway
         return $response;
     }
 
+
     public function deleteWebhook($id)
     {
         $zoop = new Zoop($this->credentials);
@@ -99,4 +100,5 @@ class ZoopGateway
 
         return $response;
     }
+
 }
