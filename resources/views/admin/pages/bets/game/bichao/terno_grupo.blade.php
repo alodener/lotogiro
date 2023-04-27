@@ -942,6 +942,16 @@
             margin: 0;
         }
 
+        .button-group button {
+            background-color: #fff !important;
+            color: #007bff !important;
+        }
+
+        .button-group .active {
+            background-color: #007bff !important;
+            color: #fff !important;
+        }
+
         @media(max-width: 467px) {
             #filterForm .form-row {
                 flex-direction: column;
@@ -1027,7 +1037,7 @@
             const input_value_bet = $('#input_value_bet');
             const label_award = $('#price_award');
             const limit_maximum_bet = parseFloat('4.00'.replace(',', '.'));
-            const limit_minimum_bet = parseFloat('0.10'.replace(',', '.'));
+            const limit_minimum_bet = parseFloat('0.09'.replace(',', '.'));
             const message = $('#message-minimum-value');
             const award_total= parseInt('{{$modalidade->multiplicador}}');
             let value = 0;

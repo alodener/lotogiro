@@ -147,7 +147,7 @@
         </p>
         <p class="text-white text-size-2">
             <span class="font text-bold">HORA SORTEIO:</span>
-            <span class="font">{{\Carbon\Carbon::parse($game->competition->sort_date)->format('H:i:s') }}</span>
+            <span class="font">{{\Carbon\Carbon::parse($game->horario)->format('H:i:s') }}</span>
         </p>
         <h2 class="font text-bold text-center text-white">{{mb_strtoupper($game->modalidade_nome, 'UTF-8')}}</h2>
     </div>
