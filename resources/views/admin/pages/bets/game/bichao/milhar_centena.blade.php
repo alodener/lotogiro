@@ -154,7 +154,7 @@
             </div>
         </div>
         <div id="message-minimum-value" class="col-12 hide">
-            <span class="text-danger"><b>Valor mínimo de 0,20</b></span>
+            <span class="text-danger"><b>Valor mínimo de 0,02</b></span>
         </div>
         <div id="message-maximum-value" class="col-12 hide">
             <span class="text-danger"><b>Valor máximo de 8,00</b></span>
@@ -292,7 +292,7 @@
             const input_value_bet = $('#input_value_bet');
             const label_award = $('#price_award');
             const limit_maximum_bet = parseFloat('8.00'.replace(',', '.'));
-            const limit_minimum_bet = parseFloat('0.20'.replace(',', '.'));
+            const limit_minimum_bet = parseFloat('0.02'.replace(',', '.'));
             const message = $('#message-minimum-value');
             let value = 0;
 
