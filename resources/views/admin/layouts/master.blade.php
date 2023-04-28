@@ -190,12 +190,14 @@
     $('.chart-remove-item').click(function(ev) {
         ev.preventDefault();
         const url = $(this).attr('url');
+        console.log('Chamando remoção do carrinho', url);
 
         $.ajax({
             url,
             type: 'GET',
             dataType: 'json',
             success: function(data) {
+                console.log('Remoção do carrinho realizada', data);
                 location.reload();
             }
         });

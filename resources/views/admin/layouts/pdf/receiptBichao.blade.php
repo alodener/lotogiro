@@ -38,6 +38,7 @@
             margin-left: 1.5cm;
             margin-right: 1.5cm;
             margin-bottom: 1.5cm;
+            background-color: #284CA7;
         }
 
         .page-break {
