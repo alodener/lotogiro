@@ -23,7 +23,9 @@ use App\Models\Cotacao;
 use App\Models\TypeGame;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use PDF;
+use Illuminate\Support\Collection;
+use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade as PDF;
 use SnappyImage;
 
 class BichaoController extends Controller
@@ -267,6 +269,40 @@ class BichaoController extends Controller
             'perPage' => $perPage,
             'intervalo' => $intervalo,
         ]);
+    }
+
+    public function draws_reports(Request $request) {
+        $data = $request->all();
+
+        $games = BichaoGames::select('bichao_games.*', 'bgv.valor_premio', 'bgv.id as id_premio', 'bgv.payment', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome')
+            ->join('bichao_games_vencedores as bgv', 'bgv.game_id', 'bichao_games.id')
+            ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
+            ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
+            ->whereDate('bichao_games.created_at', '=', $data['search_date'])
+            ->with(['user', 'client'])
+            ->get();
+        
+        $collection = new Collection();
+        foreach ($games as $game) {
+            $collection = $collection->push($game->toArray());
+        }
+        $collection = $collection->sortByDesc('client.name')->groupBy('user.name');
+
+        $data = [
+            'dateFilter' => $data['search_date'],
+            'collection' => $collection,
+            'subtotal' => 0,
+            'total' => 0
+        ];
+
+        $pdf = PDF::loadView('admin.layouts.pdf.drawsBichao', $data)->output();
+
+        $fileName = 'Relatório Diário de Prêmios Bichão - ' . Carbon::parse($data['dateFilter'])->format('d-m-Y') . '.pdf';
+
+        return response()->streamDownload(
+            fn() => print($pdf),
+            $fileName
+        );
     }
 
     public function results(){
