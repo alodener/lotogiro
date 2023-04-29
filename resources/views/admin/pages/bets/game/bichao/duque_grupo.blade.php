@@ -895,10 +895,10 @@
         </div>
         <div id="message-maximum-value" class="row hide">
             <div class="col">
-                <span class="text-danger"><b>Valor máximo de 1.250,00</b></span>
+                <span class="text-danger"><b>Premiação: Limite de R$ 20.000,00 excedido</b></span>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="price_award_check">
             <div class="col">
                 <p>Premiação
                     <span id="price_award" class="text-success">R$0,00</span>
@@ -1033,13 +1033,15 @@
         function calculate_award() {
             const input_value_bet = $('#input_value_bet');
             const label_award = $('#price_award');
-            const limit_maximum_bet = parseFloat('1250.00'.replace(',', '.'));
-            const limit_minimum_bet = parseFloat('0.01'.replace(',', '.'));
+            const limit_maximum_bet = 20000 / award;
+            const limit_minimum_bet = 0.01;
             const message = $('#message-minimum-value');
             const award_total=parseInt('{{$modalidade->multiplicador}}');
             let value = 0;
 
             const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
+
+            $('#price_award_check').hide();
             if(value_input_bet < limit_minimum_bet){
                 message_maximum.addClass('hide');
                 message_minimum.removeClass('hide');
@@ -1047,6 +1049,7 @@
                 message_maximum.removeClass('hide');
                 message_minimum.addClass('hide');
             } else{
+                $('#price_award_check').show();
                 message_maximum.addClass('hide');
                 message_minimum.addClass('hide');
 

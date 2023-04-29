@@ -157,9 +157,9 @@
             <span class="text-danger"><b>Valor mínimo de 0,01</b></span>
         </div>
         <div id="message-maximum-value" class="col-12 hide">
-            <span class="text-danger"><b>Valor máximo de 200,00</b></span>
+            <span class="text-danger"><b>Premiação: Limite de R$ 20.000,00 excedido</b></span>
         </div>
-        <div class="row">
+        <div class="row" id="price_award_check">
             <div class="col">
                 <p>Premiação
                     <span id="price_award" class="text-success">R$0,00</span>
@@ -290,15 +290,19 @@
         function calculate_awards() {
             const input_value_bet = $('#input_value_bet');
             const label_award = $('#price_award');
-            const limit_maximum_bet = parseFloat('200.00'.replace(',', '.'));
-            const limit_minimum_bet = parseFloat('0.01'.replace(',', '.'));
+            const limit_minimum_bet = 0.01;
             const message = $('#message-minimum-value');
             const award_total = parseInt('{{$modalidade->multiplicador}}');
+            const option_award = validate_award() === 6 ? 5 : validate_award();
+            
+            let limit_maximum_bet = 20000 / award;
             let value = 0;
 
+            if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
 
             const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
 
+            $('#price_award_check').hide();
             if (value_input_bet < limit_minimum_bet) {
                 message_maximum.addClass('hide');
                 message_minimum.removeClass('hide');
@@ -306,10 +310,9 @@
                 message_maximum.removeClass('hide');
                 message_minimum.addClass('hide');
             } else {
+                $('#price_award_check').show();
                 message_maximum.addClass('hide');
                 message_minimum.addClass('hide');
-
-                const option_award = validate_award();
 
                 if(option_award == 1){
                     value = award_total;
