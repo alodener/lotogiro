@@ -155,6 +155,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::post('add/chart', [BichaoController::class, 'add_in_chart'])->name('bichao.add.chart');
                 Route::post('marcar-premio-pago', [BichaoController::class, 'pay_prize'])->name('bichao.payprize');
                 Route::get('remove/chart/{index}', [BichaoController::class, 'remove_chart'])->name('bichao.remove.chart');
+                Route::get('remove-all/chart', [BichaoController::class, 'remove_all_chart'])->name('bichao.remove_all.chart');
                 Route::post('horarios', [BichaoController::class, 'get_horarios'])->name('bichao.horarios');
                 Route::post('checkout', [BichaoController::class, 'checkout'])->name('bichao.checkout');
                 Route::get('get-results', [BichaoController::class, 'get_resultados'])->name('bichao.get_resultados');

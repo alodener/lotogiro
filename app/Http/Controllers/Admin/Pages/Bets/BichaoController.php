@@ -356,6 +356,18 @@ class BichaoController extends Controller
         echo json_encode(['status' => 200]);
     }
 
+    public function remove_all_chart() {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+
+        session(['@loteriasbr/chart' => []]);
+
+        session()->flash('success', 'Carrinho limpo.');
+
+        echo json_encode(['status' => 200]);
+    }
+
     public function pay_prize(Request $request) {
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
@@ -413,34 +425,43 @@ class BichaoController extends Controller
         if (!$balance) return json_encode(['status' => false, 'message' => 'Saldo insuficiente.']);
 
         foreach ($checkout as $index => $checkoutDto) {
+            $apostas = [];
+            
+            if (strval($checkout[$index]['game_1']) > 0) $apostas[] = $checkout[$index]['game_1'];
+            if (strval($checkout[$index]['game_2']) > 0) $apostas[] = $checkout[$index]['game_2'];
+            if (strval($checkout[$index]['game_3']) > 0) $apostas[] = $checkout[$index]['game_3'];
+            
             $checkout[$index]['id'] = BichaoGames::insertGetId($checkoutDto);
+            $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
+            $checkout[$index]['modalidade'] = BichaoModalidades::where('id', $checkout[$index]['modalidade_id'])->first();
+            $checkout[$index]['horario'] = BichaoHorarios::where('id', $checkout[$index]['horario_id'])->first();
         }
 
-        foreach ($checkout as $checkout) {
+        foreach ($checkout as $checkoutItem) {
 
             $transact_balance = new TransactBalance;
             $transact_balance->user_id_sender = auth()->id();
             $transact_balance->user_id = auth()->id();
-            $transact_balance->value = $checkout['valor'];
+            $transact_balance->value = $checkoutItem['valor'];
             $transact_balance->old_value = $oldBalance;
-            $transact_balance->type = 'Compra Bichão - Jogo de id: ' . $checkout['id'] . ' do tipo: ' . $modalidades[$checkout['modalidade_id']];
+            $transact_balance->type = 'Compra Bichão - Jogo de id: ' . $checkoutItem['id'] . ' do tipo: ' . $modalidades[$checkoutItem['modalidade_id']];
             $transact_balance->save();
 
             $extract = [
                 'type' => 10, // 1 para jogos gerais, 10 para bichao
-                'value' => $checkout['valor'],
-                'type_game_id' => $checkout['modalidade_id'],
-                'description' => 'Venda - Jogo de id: ' . $checkout['id'],
-                'user_id' => $checkout['user_id'],
-                'client_id' => $checkout['client_id']
+                'value' => $checkoutItem['valor'],
+                'type_game_id' => $checkoutItem['modalidade_id'],
+                'description' => 'Venda - Jogo de id: ' . $checkoutItem['id'],
+                'user_id' => $checkoutItem['user_id'],
+                'client_id' => $checkoutItem['client_id']
             ];
 
             $ID_VALUE = auth()->user()->indicador;
             $storeExtact = ExtractController::store($extract);
-            $commissionCalculationPai = Commision::calculationPai($checkout['comission_percentage'], $checkout['valor'], $ID_VALUE);
-            $commissionCalculation = Commision::calculation($checkout['comission_percentage'], $checkout['valor']);
+            $commissionCalculationPai = Commision::calculationPai($checkoutItem['comission_percentage'], $checkoutItem['valor'], $ID_VALUE);
+            $commissionCalculation = Commision::calculation($checkoutItem['comission_percentage'], $checkoutItem['valor']);
 
-            BichaoGames::where('id', $checkout['id'])->update(['comission_value' => $commissionCalculation, 'comission_value_pai' => $commissionCalculationPai]);
+            BichaoGames::where('id', $checkoutItem['id'])->update(['comission_value' => $commissionCalculation, 'comission_value_pai' => $commissionCalculationPai]);
         }
 
         session(['@loteriasbr/chart' => []]);

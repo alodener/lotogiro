@@ -172,6 +172,17 @@
         });
     }
 
+    $('#clear-all-chart').click(function(ev) {
+        $.ajax({
+            url: '{{url('/')}}/admin/bets/bichao/remove-all/chart',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                location.reload();
+            }
+        });
+    });
+
     $('#marcar-premio-pago').click(function(ev) {
         ev.preventDefault();
         const id = $(this).attr('data-id');
@@ -250,7 +261,30 @@
                     return alert(data.message);
                 }
 
-                location.reload();
+                let htmlTable = data.chart.map((item) => (`
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>R$ ${item.valor.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td>${item.modalidade.nome}</td>
+                        <td>
+                            <a href="{{url('/')}}/admin/bets/bichao/receipt/${item.id}/txt">
+                                <button type="button" class="btn btn-primary text-light" title="Baixar bilhete TXT">
+                                    <i class="bi bi-ticket"></i>
+                                </button>
+                            </a>
+                            <a href="{{url('/')}}/admin/bets/bichao/receipt/${item.id}/pdf">
+                                <button type="button" class="btn btn-danger text-light" title="Baixar bilhete PDF">
+                                    <i class="bi bi-ticket"></i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                `));
+
+                $('#jogos-realizados-table').html(htmlTable);
+                $('#chart-text').html(`<p class="text-center">Seu carrinho está vazio, faça um jogo para realizar uma aposta.</p>`);
+                $('#estado-sorteio').addClass('hide');
+                $('#jogos-realizados').modal('show');
             }
         });
     });

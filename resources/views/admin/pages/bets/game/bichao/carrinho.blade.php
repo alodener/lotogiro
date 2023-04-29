@@ -21,6 +21,10 @@
             @endforeach
             @if (sizeof($chart) == 0)
                 <p class="text-center">Seu carrinho está vazio, faça um jogo para realizar uma aposta.</p>
+            @else
+                <div class="clear-chart-container">
+                    <button class="btn btn-danger" id="clear-all-chart" type="button">Limpar carrinho</button>
+                </div>
             @endif
         </div>
     </div>
@@ -63,6 +67,38 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="jogos-realizados" tabindex="-1" role="dialog" aria-labelledby="jogos-realizadosLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jogos-realizadosLabel">Jogos cadastrados com sucesso!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Modalidade</th>
+                            <th scope="col">Bilhete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="jogos-realizados-table">
+                        
+                    </tbody>
+                  </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+  </div>
 
 @push('styles')
     <style>
@@ -111,6 +147,10 @@
             font-weight: bold;
             background-color: rgba(237,56,44,.75);
             color: #fff;
+        }
+
+        .clear-chart-container {
+            text-align: right;
         }
     </style>
 @endpush
