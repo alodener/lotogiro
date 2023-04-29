@@ -138,6 +138,9 @@
             <br/>
             <span class="font text-bold">PERÍODO:</span>
             <span class="font">{{\Carbon\Carbon::parse($dateFilter['dateStart'])->format('d/m/Y')}} ATÉ {{\Carbon\Carbon::parse($dateFilter['dateEnd'])->format('d/m/Y')}}</span>
+            <br/>
+            <span class="font text-bold">BANCA:</span>
+            <span class="font">{{env("nome_sistema")}}</span>
         </p>
     </div>
 

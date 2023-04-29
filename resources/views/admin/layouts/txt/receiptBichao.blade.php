@@ -8,7 +8,9 @@ NÚMERO DO BILHETE: {{$game->id}}°
 
 EMITIDO EM: {{\Carbon\Carbon::parse($game->criado_em)->format('d/m/Y H:i:s')}}
 
-BANCA: {{$game->banca}}
+BANCA: {{env("nome_sistema")}}
+
+LOCAL DE SORTEIO: {{$game->banca}}
 
 PARTICIPANTE: {{mb_strtoupper($game->cliente_nome . ' ' . $game->cliente_sobrenome, 'UTF-8') }}
 

@@ -132,6 +132,10 @@
         </p>
         <p class="text-white text-size-2">
             <span class="font text-bold">BANCA:</span>
+            <span class="font">{{env("nome_sistema")}}</span>
+        </p>
+        <p class="text-white text-size-2">
+            <span class="font text-bold">LOCAL DE SORTEIO:</span>
             <span class="font">{{$game->banca}}</span>
         </p>
         <p class="text-white text-size-2">
