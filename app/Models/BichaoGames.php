@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Extract extends Model
+class BichaoGames extends Model
 {
     use HasFactory;
+    protected $table = 'bichao_games';
 
     public function client()
     {
@@ -19,13 +20,8 @@ class Extract extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function typeGame()
+    public function modalidade()
     {
-        return $this->belongsTo(TypeGame::class);
-    }
-
-    public function modalidadeGame()
-    {
-        return $this->belongsTo(BichaoModalidades::class, 'type_game_id');
+        return $this->belongsTo(BichaoModalidades::class, 'modalidade_id');
     }
 }
