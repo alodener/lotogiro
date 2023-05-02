@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-info elevation-4" style="overflow-x: hidden">
     <a href="/" class="brand-link">
 
-        <img src="{{asset(env('logo'))}}"
+      <img src="{{ App\Helper\Configs::getConfigLogo() }}"
              alt="Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
@@ -29,26 +29,32 @@
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        
                         <ul class="nav nav-treeview">
-                            @can('read_extract')
-                            <li class="nav-item">
-                                <a href="{{route('admin.dashboards.ranking.index')}}"
-                                    class="nav-link @if(request()->is('admin/ranking')) active @endif">
-                                    <i class="fas fa-star nav-icon"></i>
-                                    <p>Ranking</p>
-                                </a>
-                            </li>
-                            @endcan
-                            @can('read_extract')
-                            <li class="nav-item">
-                                <a href="{{route('admin.dashboards.extracts.points.index')}}"
-                                    class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
-                                    <i class="fas fa-star nav-icon"></i>
-                                    <p>Pontos</p>
-                                </a>
-                            </li>
-                            @endcan
 
+                            @if(\App\Helper\Configs::getPlanoDeCarreira() == "Ativado")
+                                @can('read_extract')
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.ranking.index')}}"
+                                        class="nav-link @if(request()->is('admin/ranking')) active @endif">
+                                        <i class="fas fa-star nav-icon"></i>
+                                        <p>Ranking</p>
+                                    </a>
+                                </li>
+                                
+                                @endcan
+                                    
+                               
+                                @can('read_extract')
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.extracts.points.index')}}"
+                                        class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
+                                        <i class="fas fa-star nav-icon"></i>
+                                        <p>Pontos</p>
+                                    </a>
+                                </li>
+                                @endcan
+                            @endif    
                             @if(\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.winning-ticket')}}"
@@ -73,7 +79,7 @@
                                         <i class="fas fa-hand-holding-usd nav-icon"></i>
                                         <p>Ganhos</p>
                                     </a>
-                                </li>
+                                </li>                             
                             @endcan
                             @can('read_sale')
                                 <li class="nav-item">
@@ -269,7 +275,7 @@
                 @endcanany
                     <li class="nav-link ">
                         <a href="{{route('admin.dashboards.wallet.index')}}"
-                        class="nav-link  @if(request()->is('admin/dashboards/wallet/index*')) @endif">
+                        class="nav-link  @if(request()->is('admin/dashboards/wallet/index*')) active @endif">
                         <i class="nav-icon fas fa-wallet"></i>
                         <i class="fas fa-dice-d8 "></i>
                             <p>
@@ -314,6 +320,7 @@
                                 </a>
                             </li>
                         @endcan
+                        @if(\App\Helper\Configs::getPlanoDeCarreira() == "Ativado")
                         @can('read_user')
 
                         <li class="nav-item">
@@ -324,7 +331,16 @@
                             </a>
                         </li>
                         @endcan
-                    </ul>
+                        @endif
+                        @can('read_user')
+                        <li class="nav-item">
+                            <a href="{{route('admin.settings.systems.index')}}"
+                                class="nav-link @if(request()->is('admin/settings/system*')) active @endif">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>Sistema</p>
+                            </a>
+                        </li>
+                        @endcan 
                 </li>
             @endcanany
             </ul>

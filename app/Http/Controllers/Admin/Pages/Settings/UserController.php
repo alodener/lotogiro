@@ -169,22 +169,11 @@ class UserController extends Controller
                 $user->link = $request->link;
             }
 
-            // enviar pra cliente
-            if($auxRole == 6){
 
-               /* $validatedData = $request->validate([
-                    'pix' => 'required|max:60',
-                    'telefone' => 'required|max:15',
-                    'cpf' => 'required|max:11'
-                ]);*/
-
-                $user->type_client = 1;
+            
 
                 $data = $request->only('pix', 'cpf');
                 $passardados = New Client;
-
-
-
                 $passardados->cpf = $data['cpf'];
                 $passardados->name = $request->name;
                 $passardados->last_name = $request->last_name;
@@ -198,6 +187,17 @@ class UserController extends Controller
                  }
                 $passardados->pix  = $data['pix'];
                 $passardados->save();
+
+            // enviar pra cliente
+            if($auxRole == 6){
+
+                $user->type_client = 1;
+                
+               /* $validatedData = $request->validate([
+                    'pix' => 'required|max:60',
+                    'telefone' => 'required|max:15',
+                    'cpf' => 'required|max:11'
+                ]);*/
 
             }
             $user->balance = $balanceRequest;
@@ -272,7 +272,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-   
+       
       if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all') ){
             abort(403);
         }
@@ -302,6 +302,7 @@ class UserController extends Controller
             $auxRole = $role;
         }
             if($request->has('balance') && !is_null($request->balance)){
+                if($user->balance != $request->balance ){
                 $oldBalance = $user->balance;
                 $oldBonus = $user->bonus;
                 $balanceRequest = (float) Money::toDatabase($request->balance);
@@ -309,6 +310,7 @@ class UserController extends Controller
                 $newBalance = $user->balance +  $newBalanceRequest;
                 $newBonus = $user->bonus + ($user->commission/100) * $balanceRequest;
                 //$newBalance = $user->balance +  $balanceRequest;
+                }
             }
             if(!is_null($request->telefone)){
                 $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
@@ -335,6 +337,7 @@ class UserController extends Controller
 
           
             if($auxRole != 6){
+                $user->type_client = null;
             }
             
             if($newBalance > 0){
@@ -358,14 +361,16 @@ class UserController extends Controller
             $user->save();
 
             if((float) $newBonus > 0){
-                $this->storeTransact($user, ($user->commission/100) * $balanceRequest, $oldBonus, 'bonus');
+               
+                $this->storeTransact($user, ($user->commission/100) * $balanceRequest,$oldBonus,  $newBalance, 'bonus');
             }
 
             if((float) $newBalance > 0){
-                $this->storeTransact($user, $balanceRequest, $oldBalance);
+                
+                $this->storeTransact($user, $balanceRequest, $oldBalance ,  $newBalance);
             }
-            if($ajuste == 1 && $oldBalance != $request->balanceAtual){
-                $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance);
+            if($ajuste == 1 && $oldBalance != (float) Money::toDatabase($request->balanceAtual)){
+                $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance,  $newBalance);
             }
             }else{
                $user->name = $request->name;
@@ -438,29 +443,60 @@ class UserController extends Controller
         }
     }
 
-    public function statementBalance($userId)
+    public function Balance($userId)
     {
         $historybalance = TransactBalance::with('user', 'userSender')
             ->where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         foreach ($historybalance as $h){
             $h->data = Carbon::parse($h->created_at)->format('d/m/y à\\s H:i');
             $h->responsavel = $h->userSender->name;
             $h->value = Money::toReal($h->value);
-            $h->old_value = Money::toReal($h->lue);
+            $h->old_value = Money::toReal($h->old_value);
+            $h->value_a = Money::toReal($h->value_a);
+            $h->type = $h->type;
             $user = $h->user;
         }
         return view('admin.pages.settings.user.statementBalance', ['historybalance' => $historybalance, 'user' => $user]);
+
+    }
+    
+    public function statementBalancea($userId)
+    {
+
+            $user = User::find($userId);
+            
+
+            $historybalance = TransactBalance::with('user', 'userSender')
+            ->where('user_id', $userId)
+            ->where('type', 'like', '%add%') //busca os registros que tem a palavra add em qualquer posicao da coluna 
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        foreach ($historybalance as $h){
+            $h->data = Carbon::parse($h->created_at)->format('d/m/y à\\s H:i');
+            $h->responsavel = $h->userSender->name;
+            $h->value = Money::toReal($h->value);
+            $h->old_value = Money::toReal($h->old_value);
+            $h->value_a = Money::toReal($h->value_a);
+            $h->type = $h->type;
+            $user = $h->user;
+        }
+     
+
+        return view('admin.pages.settings.user.statementBalancea', compact('user', 'historybalance'));
     }
 
-    public function storeTransact(User $user, string $value, string $oldValue, string $wallet = 'balance')
+    public function storeTransact(User $user, string $value, string $oldValue, string $value_a, string $wallet = 'balance')
     {
         TransactBalance::create([
             'user_id_sender' => auth()->id(),
             'user_id' => $user->id,
             'value' => $value,
             'old_value' => $oldValue,
+            'value_a' => $value_a,
             'wallet' => $wallet
         ]);
          $retornof = "sucesso";

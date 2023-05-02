@@ -27,7 +27,7 @@
             @endif
             <div class="login-logo mt-md-5">
 
-            <img src="{{ asset(env('logo')) }}" alt="" width="150" height="150">
+            <img src="{{ App\Helper\Configs::getConfigLogo() }}" alt="" width="150" height="150">
 
         </div>
                 <div class="col-md-12 px-4">

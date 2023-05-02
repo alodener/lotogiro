@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helper\Wallet;
 
+
 class ZoopController extends Controller
 {
     public function processTransactionSuccess(Request $request)
     {
+
         if($request->has('type') && $request->type == 'ping') {
             return response()->json([], 200);
         }
@@ -25,6 +27,7 @@ class ZoopController extends Controller
             $walletHelper = new Wallet;
 
             return $walletHelper->updateStatusPayment($data);
+
         }
 
         return response()->json([
