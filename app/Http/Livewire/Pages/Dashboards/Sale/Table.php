@@ -219,7 +219,7 @@ class Table extends Component
          $value = 0;
         $row = $query->where('user_id', $id)->count();
         //Game::where('user_id', $id)->count();
-        if($row>0){
+        if($row>0) {
             
              $this->i = $query->where('checked', 1)->where('user_id', $id)->count();
              //Game::where('checked', 1)->where('user_id', $id)->count();

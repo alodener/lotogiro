@@ -233,6 +233,11 @@
             </a>
         </div>
         @endforeach
+        <div class="col-md-6 my-2">
+            <a href="{{route('admin.bets.bichao.index')}}">
+                <button class="btn btn-block text-white" style="background-color: #284CA7;">Bichão da sorte</button>
+            </a>
+        </div>
     </div>
     @else
     <div class="col-md-12 p-3 text-center">
