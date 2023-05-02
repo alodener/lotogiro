@@ -266,6 +266,7 @@
 
   
   <!-- Modal -->
+
   @if(isset($user))
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -278,6 +279,7 @@
         </div>
         <div class="modal-body">
             <p>
+
              <strong>Nome: </strong> {{ $user->referrer ? $user->referrer->name . ' ' . $user->referrer->last_name : '-' }}
             </p>
             <p>
@@ -286,7 +288,9 @@
             <p>
                 <strong>Tel.: </strong> {{ $user->referrer ? $user->referrer->phone : '-' }}
             </p>
+
             
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -295,6 +299,7 @@
       </div>
     </div>
   </div>
+
   @endif
 
 @push('scripts')
