@@ -2,15 +2,30 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                {{ trans('admin.period') }}
+                {{ trans('admin.sales.page-header') }} Bichão
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
+    <div class="row ganhos">
+        <div class="card-header ganhos-card">
+            {{ trans('admin.filters') }}
+        </div>
+    </div>
+    <div class="row ganhos">
+        <div class="col-md-3">
             <div class="form-group">
+                <label for="status">{{ trans('admin.status') }}</label>
+                <select wire:model="status" class="custom-select" id="status" name="status">
+                    <option value="">{{ trans('admin.all2') }}</option>
+                    <option value="1">{{ trans('admin.open') }}</option>
+                    <option value="2">{{ trans('admin.paid') }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="range">{{ trans('admin.period') }}</label>
                 <select wire:model="range" class="custom-select" id="range" name="range">
-                    <option></option>
                     <option value="1">{{ trans('admin.monthly') }}</option>
                     <option value="2">{{ trans('admin.weekly') }}</option>
                     <option value="3">{{ trans('admin.daily') }}</option>
@@ -18,7 +33,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6 align-self-end">
             <form wire:submit.prevent="submit">
                 <div class="form-row">
                     <div class="form-group col-md-6 @if($range != 4) d-none @endif">
@@ -28,7 +43,7 @@
                                name="dateStart"
                                autocomplete="off"
                                maxlength="50"
-                               placeholder="Data Inicial"
+                               placeholder="{{ trans('admin.initial-date') }}"
                                onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateStart')
                         <span class="invalid-feedback" role="alert">
@@ -43,7 +58,7 @@
                                name="dateEnd"
                                autocomplete="off"
                                maxlength="50"
-                               placeholder="Data Final"
+                               placeholder="{{ trans('admin.end-date') }}"
                                onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateEnd')
                         <span class="invalid-feedback" role="alert">
@@ -55,24 +70,57 @@
             </form>
         </div>
     </div>
+    @if($auth->hasPermissionTo('read_all_sales'))
+    <div class="row ganhos">
+            <div class="card-header ganhos-card">
+                {{ trans('admin.user') }}
+            </div>
+        </div>
+    <div class="dropdown-divider"></div>
+    <div class="row ganhos">
+        <div class="col-md-12">
+            <div class="input-group mb-3">
+                <input wire:model="search" type="text" id="author" class="form-control" placeholder="{{ trans('admin.search-user') }}" autocomplete="off">
+                <div class="input-group-append">
+                    <span wire:click="clearUser" class="input-group-text" title="Limpar"><i class="fas fa-user-times"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
+        <div class="col-md-12">
+            @if($showList)
+                <ul class="list-group">
+                    @foreach($users as $user)
+                        <li wire:click="setId({{ $user }})"
+                            class="list-group-item" style="cursor:pointer;">{{ $user->name . ' ' . $user->last_name . ' - ' . $user->email}}</li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>{{$extracts->count()}}</h3>
-                    <p>{{ trans('admin.transactions-quantity') }}</p>
+                    <h3>{{$i ?? null }}</h3>
+
+                    <p>{{ trans('admin.gains.sales-quantity') }}</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-balance-scale-left"></i>
+                    <i class="fas fa-shopping-cart"></i>
                 </div>
                 <span class="small-box-footer p-2"></span>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="small-box @if($value < 0) bg-danger @else bg-success @endif">
+            <div class="small-box bg-success">
                 <div class="inner">
+
+                    
                     <h3>R${{\App\Helper\Money::toReal($value)}}</h3>
-                    <p>{{ trans('admin.balance') }}</p>
+                    <p>{{ trans('admin.gains.direct-sales') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-dollar-sign"></i>
@@ -100,48 +148,48 @@
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
                     <tr>
-                        <th>{{ trans('admin.extracts.table-id-header') }}</th>
-                        <th>{{ trans('admin.extracts.table-type-header') }}</th>
-                        <th>{{ trans('admin.extracts.table-value-header') }}</th>
-                        <th>{{ trans('admin.extracts.table-description-header') }}</th>
-                        <th>{{ trans('admin.extracts.table-user-header') }}</th>
-                        <th>{{ trans('admin.extracts.table-customer-header') }}</th>
-                        <th>{{ trans('admin.extracts.table-creation-header') }}</th>
+                        <th>{{ trans('admin.gains.table-id-header') }}</th>
+                        <th>{{ trans('admin.gains.table-game-type-header') }}</th>
+                        <th>{{ trans('admin.gains.table-cpf-header') }}</th>
+                        <th>{{ trans('admin.gains.table-customer-header') }}</th>
+                        <th>{{ trans('admin.gains.table-user-header') }}</th>
+                        <th>{{ trans('admin.gains.table-status-header') }}</th>
+                        <th>{{ trans('admin.gains.table-value-header') }}</th>
+                        <th>{{ trans('admin.gains.table-creation-header') }}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($extracts as $extract)
+                    @forelse($games as $game)
                         <tr>
                             <td>
-                                {{ $extract->id }}
+                                {{ $game->id }}
                             </td>
                             <td>
-                                @if($extract->type == 1 || $extract->type == 10)
-                                    <span class="text-success">{{ trans('admin.credit') }}</span>
-                                @elseif($extract->type == 2  || $extract->type == 11)
-                                    <span class="text-danger">{{ trans('admin.debit') }}</span>
-                                @endif
+                                {{ $game->modalidade->nome }}
                             </td>
                             <td>
-                                R${{ \App\Helper\Money::toReal($extract->value) }}
+                                {{ \App\Helper\Mask::addMaskCpf($game->client->cpf) }}
                             </td>
                             <td>
-                                {{ $extract->description }} do tipo: {{ $extract->type == 10 || $extract->type == 11 ? 'Bichão da Sorte-'.$extract->modalidadeGame->nome ?? null : $extract->typeGame->name ?? null}}
+                                {{ $game->client->name . ' ' . $game->client->last_name }}
                             </td>
                             <td>
-                                {{ !empty($extract->user->name) ? $extract->user->name .' '. $extract->user->last_name: null }}
+                                {{ $game->user->name . ' ' . $game->user->last_name }}
                             </td>
                             <td>
-                                {{ !empty($extract->client->name) ? $extract->client->name .' '. $extract->client->last_name: null }}
+                               @if($game->comission_payment) Pago @else Aberto @endif
                             </td>
                             <td>
-                                {{ \Carbon\Carbon::parse($extract->created_at)->format('d/m/Y') }}
+                                {{ 'R$' . \App\Helper\Money::toReal($game->valor) }}
+                            </td>
+                            <td>
+                                {{ \Carbon\Carbon::parse($game->created_at)->format('d/m/Y') }}
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td class="text-center" colspan="9">
-                                {{ trans('admin.entries-not-found') }}
+                            <td class="text-center" colspan="7">
+                                {{ trans('admin.entries-not-found') }}.
                             </td>
                         </tr>
                     @endforelse
@@ -149,11 +197,16 @@
                 </table>
             </div>
             <div>
-                {{ $extracts->links() }}
+                {{ $games->links() }}
             </div>
         </div>
     </div>
 </div>
+
+@push('styles')
+    <link href="{{asset('admin/layouts/plugins/select2/css/select2.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('admin/layouts/plugins/select2-bootstrap4-theme/select2-bootstrap4.css')}}" rel="stylesheet"/>
+@endpush
 
 @push('scripts')
 
@@ -167,9 +220,6 @@
         $(document).ready(function () {
             $('#user').select2({
                 theme: "bootstrap"
-            });
-            $('#range').select2({
-                placeholder: "Please select a country"
             });
         });
 
@@ -193,4 +243,20 @@
         });
     </script>
 
+@endpush
+
+@push('styles')
+    <style>
+
+        @media screen and (max-width: 760px) {
+            
+            .extractable-cel {
+                font-size: 8px;
+            }
+            .extractable-cel thead th {
+                font-size: 9px;
+                text-align: center;
+            }
+
+    </style>
 @endpush

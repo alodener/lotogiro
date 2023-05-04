@@ -30,6 +30,10 @@
         body, * {
             font-family: "Exo", sans-serif;
         }
+
+        .hide {
+            display: none;
+        }
     </style>
 
     @stack('styles')
@@ -148,6 +152,141 @@
 <script>
     $(document).ready(function () {
         bsCustomFileInput.init();
+    });
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+
+    function addChartItem(item) {
+        $.ajax({
+            url: '{{url('/')}}/admin/bets/bichao/add/chart',
+            type: 'POST',
+            dataType: 'json',
+            data: { item  },
+            success: function(data) {
+                location.reload();
+            }
+        });
+    }
+
+    $('#clear-all-chart').click(function(ev) {
+        $.ajax({
+            url: '{{url('/')}}/admin/bets/bichao/remove-all/chart',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                location.reload();
+            }
+        });
+    });
+
+    $('#marcar-premio-pago').click(function(ev) {
+        ev.preventDefault();
+        const id = $(this).attr('data-id');
+
+        $.ajax({
+            url: '{{url('/')}}/admin/bets/bichao/marcar-premio-pago',
+            type: 'POST',
+            dataType: 'json',
+            data: { id  },
+            success: function(data) {
+                location.reload();
+            }
+        });
+    });
+
+    $('.chart-remove-item').click(function(ev) {
+        ev.preventDefault();
+        const url = $(this).attr('url');
+        console.log('Chamando remoção do carrinho', url);
+
+        $.ajax({
+            url,
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log('Remoção do carrinho realizada', data);
+                location.reload();
+            }
+        });
+    });
+
+    $('#selecionar-estado-bichao').change(function() {
+        const estado_id = $(this).val();
+
+        if (estado_id > 0) {
+            $.ajax({
+                url: '{{url('/')}}/admin/bets/bichao/horarios',
+                type: 'POST',
+                dataType: 'json',
+                data: { estado_id },
+                success: function(data) {
+                    if (data.horarios.length == 0) {
+                        $('#horarios-resultados').html(`
+                            <p>Não há sorteios disponíveis no momento, por favor selecione outro estado.</p>
+                        `);
+                    } else {
+                        const horarios = data.horarios.map((horario, index) => (`
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="bichao-horario-sorteio" id="bichao-horario-sorteio-${horario.id}" value="${horario.id}" ${index === 0 && 'checked'}>
+                                <label class="form-check-label" for="bichao-horario-sorteio-${horario.id}">
+                                    ${horario.horario} - ${horario.banca}
+                                </label>
+                            </div>
+                        `));
+                        $('#horarios-resultados').html(horarios);
+                    }
+                    $('#estado-sorteio').removeClass('hide');
+                }
+            });
+        }
+    });
+
+    $('#cadastrar-jogos').click(function() {
+        const horario_id = $('input[name=bichao-horario-sorteio]:checked').val();
+
+        if (!horario_id > 0) return alert('Selecione um estado e um sorteio');
+
+        $.ajax({
+            url: '{{url('/')}}/admin/bets/bichao/checkout',
+            type: 'POST',
+            dataType: 'json',
+            data: { horario_id },
+            success: function(data) {
+                if (!data.status) {
+                    console.log(data);
+                    return alert(data.message);
+                }
+
+                let htmlTable = data.chart.map((item) => (`
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>R$ ${item.valor.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td>${item.modalidade.nome}</td>
+                        <td>
+                            <a href="{{url('/')}}/admin/bets/bichao/receipt/${item.id}/txt">
+                                <button type="button" class="btn btn-primary text-light" title="Baixar bilhete TXT">
+                                    <i class="bi bi-ticket"></i>
+                                </button>
+                            </a>
+                            <a href="{{url('/')}}/admin/bets/bichao/receipt/${item.id}/pdf">
+                                <button type="button" class="btn btn-danger text-light" title="Baixar bilhete PDF">
+                                    <i class="bi bi-ticket"></i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                `));
+
+                $('#jogos-realizados-table').html(htmlTable);
+                $('#chart-text').html(`<p class="text-center">Seu carrinho está vazio, faça um jogo para realizar uma aposta.</p>`);
+                $('#estado-sorteio').addClass('hide');
+                $('#jogos-realizados').modal('show');
+            }
+        });
     });
 
     toastr.options = {
