@@ -476,7 +476,7 @@ class BichaoController extends Controller
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
-        $game = BichaoGames::select('bichao_games.*', 'bgv.id as vencedor_id', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'bm.multiplicador', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.cpf as cliente_cpf', 'c.email as cliente_email')
+        $game = BichaoGames::select('bichao_games.*', 'bgv.id as vencedor_id', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'bm.multiplicador', 'bm.multiplicador_2', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.cpf as cliente_cpf', 'c.email as cliente_email')
             ->join('clients as c', 'c.id', 'bichao_games.client_id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
             ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
@@ -498,7 +498,7 @@ class BichaoController extends Controller
         if ($game->premio_5 == 1) $premios[] = 5;
 
         $premioMaximo = $game->valor * $game->multiplicador / sizeof($premios);
-
+        
         if ($game->modalidade_id == 6 || $game->modalidade_id == 8 || $game->modalidade_id == 9) {
             $premioMaximo = $game->valor * $game->multiplicador;
         }
