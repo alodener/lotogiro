@@ -220,6 +220,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('used-dozens/competitions', [ReportController::class, 'usedDozensListCompetitions'])->name('used.dozens');
             Route::get('{competition}/used-dozens', [ReportController::class, 'usedDozensByCompetition'])->name('used.dozens.by-competition');
             Route::get('points-by-user', [ReportController::class, 'pointsByUser'])->name('points-by-user');
+            Route::get('bichao/bilhetes', [ReportController::class, 'bichaoReceipt'])->name('bichao.bilhetes');
+            Route::post('bichao/bilhetes/remove/{game}', [ReportController::class, 'bichaoReceiptDestroy'])->name('bichao.bilhetes.destroy');
         });
 
         Route::prefix('notifications')->name('notifications.')->group(function () {
