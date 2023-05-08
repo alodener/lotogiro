@@ -187,7 +187,9 @@
                                 {{ \Carbon\Carbon::parse($game->created_at)->format('d/m/Y') }}
                             </td>
                             <td>
+                                @if (date('Y-m-d', strtotime($game->created_at)).' '.$game->horario->horario > date('Y-m-d H:i:s'))
                                 <button class="btn btn-sm btn-danger" id="btn_delete_game_bichao" game="{{ $game->id }}" title="Deletar" data-toggle="modal" data-target="#modal_delete_game"> <i class="far fa-trash-alt"></i></button>
+                                @endif
                             </td>
                         </tr>
                     @empty

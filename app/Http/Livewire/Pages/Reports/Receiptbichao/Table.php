@@ -244,7 +244,7 @@ class Table extends Component
         $filterRange = $this->filterRange();
         $query
             ->when($this->range, fn($query, $search) => $query->whereDate('created_at', '>=', $filterRange['dateStart'])
-                ->whereDate('created_at', '<=', $filterRange['dateEnd']));
+                ->whereDate('created_at', '<=', $filterRange['dateEnd']))->orderBy('created_at', 'desc');
         $query = $this->filterUser($query);
         $query = $this->filterStatus($query);
         
@@ -266,7 +266,7 @@ class Table extends Component
 
     public function getReport()
     {
-        $games = $this->runQueryBuilder()->with(['user', 'client'])->get();
+        $games = $this->runQueryBuilder()->with(['user', 'client', 'horario'])->get();
         $collection = new Collection();
         foreach ($games as $game) {
             $collection = $collection->push($game->toArray());

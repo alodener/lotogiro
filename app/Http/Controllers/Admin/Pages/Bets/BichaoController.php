@@ -849,7 +849,7 @@ class BichaoController extends Controller
                     $horario = array_values(array_filter($horarios->toArray(), fn ($item) => $item['horario'] == $searchTime));
 
                     if (sizeof($horario) > 0 && $horario[0]['banca'] == $game->lottery) {
-                        $checkResultExist = BichaoResultados::where('horario_id', $horario[0]['id'])->where('data', date('Y-m-d'))->first();
+                        $checkResultExist = BichaoResultados::where('horario_id', $horario[0]['id'])->where('created_at', date('Y-m-d'))->first();
     
                         if (!$checkResultExist) {
                             $resultadosDto[] = [
