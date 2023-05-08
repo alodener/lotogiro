@@ -239,7 +239,6 @@ class BichaoController extends Controller
             ->join('users as u', 'u.id', 'bichao_games.user_id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
             ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
-            ->where('bichao_games.comission_value','>',0)
             ->whereDate('bichao_games.created_at','>=', $buscaIntervalo)
             ->orderBy('bichao_games.created_at', 'DESC')
             ->paginate($perPage);
