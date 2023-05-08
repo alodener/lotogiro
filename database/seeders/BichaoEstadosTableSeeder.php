@@ -90,6 +90,15 @@ class BichaoEstadosTableSeeder extends Seeder
                 'created_at' => \Carbon\Carbon::now()->toDateTime(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTime(),
             ),
+            8 =>
+            array (
+                'id' => 9,
+                'nome' => 'Federal',
+                'uf' => 'FED',
+                'active' => true,
+                'created_at' => \Carbon\Carbon::now()->toDateTime(),
+                'updated_at' => \Carbon\Carbon::now()->toDateTime(),
+            ),
         ));
     }
 }

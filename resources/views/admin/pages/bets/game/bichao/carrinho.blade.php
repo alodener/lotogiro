@@ -35,7 +35,9 @@
                 <select class="form-control" id="selecionar-estado-bichao">
                     <option selected disabled>Selecione um estado</option>
                     @foreach ($estados as $estado)
+                        @if ($estado->uf != 'FED' || ($estado->uf == 'FED' && (date('w') == 3 || date('w') == 6)))
                         <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>

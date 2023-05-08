@@ -193,7 +193,11 @@ class BichaoController extends Controller
         }
 
         foreach ($cotacoes as $cotacao) {
-            BichaoModalidades::where('id', $cotacao['id'])->update(['multiplicador' => $cotacao['value']]);
+            if ($cotacao['id'] == '7b') {
+                BichaoModalidades::where('id', 7)->update(['multiplicador_2' => $cotacao['value']]);
+            } else {
+                BichaoModalidades::where('id', $cotacao['id'])->update(['multiplicador' => $cotacao['value']]);
+            }
         }
 
         return json_encode(['status' => 'ok']);
@@ -207,7 +211,7 @@ class BichaoController extends Controller
         $intervalo = $request->has('intervalo') ? $request->input('intervalo') : 30;
         $buscaIntervalo = now()->subDays($intervalo)->endOfDay();
 
-        $apostas = BichaoGames::select('bichao_games.*', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome')
+        $apostas = BichaoGames::select('bichao_games.*', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'bm.multiplicador', 'bm.multiplicador_2', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.ddd as cliente_ddd', 'c.phone as cliente_phone')
             ->join('clients as c', 'c.id', 'bichao_games.client_id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
             ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
@@ -426,15 +430,35 @@ class BichaoController extends Controller
 
         foreach ($checkout as $index => $checkoutDto) {
             $apostas = [];
+            $premios = [];
             
             if (strval($checkout[$index]['game_1']) > 0) $apostas[] = $checkout[$index]['game_1'];
             if (strval($checkout[$index]['game_2']) > 0) $apostas[] = $checkout[$index]['game_2'];
             if (strval($checkout[$index]['game_3']) > 0) $apostas[] = $checkout[$index]['game_3'];
+
+            if ($checkout[$index]['premio_1'] == 1) $premios[] = 1;
+            if ($checkout[$index]['premio_2'] == 1) $premios[] = 2;
+            if ($checkout[$index]['premio_3'] == 1) $premios[] = 3;
+            if ($checkout[$index]['premio_4'] == 1) $premios[] = 4;
+            if ($checkout[$index]['premio_5'] == 1) $premios[] = 5;
+
+            $checkout[$index]['modalidade'] = BichaoModalidades::where('id', $checkout[$index]['modalidade_id'])->first();
+
+            $premioMaximo = $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador / sizeof($premios);
+            
+            if ($checkout[$index]['modalidade_id'] == 6 || $checkout[$index]['modalidade_id'] == 8 || $checkout[$index]['modalidade_id'] == 9) {
+                $premioMaximo = $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador;
+            }
+            if ($checkout[$index]['modalidade_id'] == 7) {
+                $premioMaximo = sizeof($premios) == 3 ? $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador : $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador_2;
+            }
             
             $checkout[$index]['id'] = BichaoGames::insertGetId($checkoutDto);
             $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
-            $checkout[$index]['modalidade'] = BichaoModalidades::where('id', $checkout[$index]['modalidade_id'])->first();
+            $checkout[$index]['premio_maximo'] = $premioMaximo;
             $checkout[$index]['horario'] = BichaoHorarios::where('id', $checkout[$index]['horario_id'])->first();
+            $checkout[$index]['client'] = Client::where('id', $checkout[$index]['client_id'])->first();
+            $checkout[$index]['emitido_em'] = Carbon::parse($checkout[$index]['created_at'])->format('d/m/Y H:i:s');
         }
 
         foreach ($checkout as $checkoutItem) {
@@ -476,7 +500,7 @@ class BichaoController extends Controller
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
-        $game = BichaoGames::select('bichao_games.*', 'bgv.id as vencedor_id', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'bm.multiplicador', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.cpf as cliente_cpf', 'c.email as cliente_email')
+        $game = BichaoGames::select('bichao_games.*', 'bgv.id as vencedor_id', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'bm.multiplicador', 'bm.multiplicador_2', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.cpf as cliente_cpf', 'c.email as cliente_email')
             ->join('clients as c', 'c.id', 'bichao_games.client_id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
             ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
@@ -498,7 +522,7 @@ class BichaoController extends Controller
         if ($game->premio_5 == 1) $premios[] = 5;
 
         $premioMaximo = $game->valor * $game->multiplicador / sizeof($premios);
-
+        
         if ($game->modalidade_id == 6 || $game->modalidade_id == 8 || $game->modalidade_id == 9) {
             $premioMaximo = $game->valor * $game->multiplicador;
         }
@@ -558,7 +582,7 @@ class BichaoController extends Controller
         $games = BichaoGames::select('bichao_games.*', 'bichao_horarios.horario', 'bichao_modalidades.multiplicador', 'bichao_modalidades.multiplicador_2')
             ->join('bichao_horarios', 'bichao_horarios.id', '=', 'bichao_games.horario_id')
             ->join('bichao_modalidades', 'bichao_modalidades.id', '=', 'bichao_games.modalidade_id')
-            ->where('created_at', '>=', $dataAnterior. '00:00:00')
+            ->where('created_at', '>=', $dataAnterior. ' 00:00:00')
             ->where('created_at', '<=', $dataAtual.' 23:59:59')
             ->get()
             ->toArray();
@@ -801,26 +825,29 @@ class BichaoController extends Controller
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
-        $estados = BichaoEstados::get();
+        $estados = BichaoEstados::where('uf', '!=', 'FED')->get();
         $searchData = explode('-', date('d-m-Y'));
         $resultadosDto = [];
         
         $horariosApi = self::request_api_results($estados, $searchData);
-
         foreach ($horariosApi as $estado_id => $horarioApi) {
             $result = json_decode($horarioApi);
-
+            
             if ($result) {
                 $horarios = BichaoHorarios::where('estado_id', $estado_id)->get();
-
+                
                 foreach ($result as $game) {
+                    if ($estado_id == 1 && $game->lottery == 'FEDERAL') {
+                        $estadoFed = BichaoEstados::where('uf', 'FED')->first();
+                        $horarios = BichaoHorarios::where('estado_id', $estadoFed->id)->get();
+                    }
                     $timeRaw = explode('.', $game->time);
                     $hora = str_pad($timeRaw[0], 2, '0', STR_PAD_LEFT);
                     $minuto = isset($timeRaw[1]) ? str_pad($timeRaw[1], 2, '0', STR_PAD_RIGHT) : '00';
                     $searchTime = "$hora:$minuto:00";
                     
                     $horario = array_values(array_filter($horarios->toArray(), fn ($item) => $item['horario'] == $searchTime));
-    
+
                     if (sizeof($horario) > 0 && $horario[0]['banca'] == $game->lottery) {
                         $checkResultExist = BichaoResultados::where('horario_id', $horario[0]['id'])->where('data', date('Y-m-d'))->first();
     

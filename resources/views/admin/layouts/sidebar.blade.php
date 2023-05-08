@@ -314,6 +314,15 @@
                                     </a>
                                 </li>
                             @endif
+                            @if(\App\Helper\UserValidate::iAmAdmin())
+                                <li class="nav-item">
+                                    <a href="{{route('admin.reports.bichao.bilhetes')}}"
+                                       class="nav-link @if(request()->is('admin/reports/bichao/bilhetes')) active @endif">
+                                        <i class="fas fa-file-alt nav-icon"></i>
+                                        <p>Bilhetes Bichão</p>
+                                    </a>
+                                </li>
+                            @endif
 
                             </li>
                             @endcan
