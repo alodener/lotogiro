@@ -562,7 +562,7 @@ class BichaoController extends Controller
         $games = BichaoGames::select('bichao_games.*', 'bichao_horarios.horario', 'bichao_modalidades.multiplicador', 'bichao_modalidades.multiplicador_2')
             ->join('bichao_horarios', 'bichao_horarios.id', '=', 'bichao_games.horario_id')
             ->join('bichao_modalidades', 'bichao_modalidades.id', '=', 'bichao_games.modalidade_id')
-            ->where('created_at', '>=', $dataAnterior. '00:00:00')
+            ->where('created_at', '>=', $dataAnterior. ' 00:00:00')
             ->where('created_at', '<=', $dataAtual.' 23:59:59')
             ->get()
             ->toArray();
@@ -805,26 +805,29 @@ class BichaoController extends Controller
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
-        $estados = BichaoEstados::get();
+        $estados = BichaoEstados::where('uf', '!=', 'FED')->get();
         $searchData = explode('-', date('d-m-Y'));
         $resultadosDto = [];
         
         $horariosApi = self::request_api_results($estados, $searchData);
-
         foreach ($horariosApi as $estado_id => $horarioApi) {
             $result = json_decode($horarioApi);
-
+            
             if ($result) {
                 $horarios = BichaoHorarios::where('estado_id', $estado_id)->get();
-
+                
                 foreach ($result as $game) {
+                    if ($estado_id == 1 && $game->lottery == 'FEDERAL') {
+                        $estadoFed = BichaoEstados::where('uf', 'FED')->first();
+                        $horarios = BichaoHorarios::where('estado_id', $estadoFed->id)->get();
+                    }
                     $timeRaw = explode('.', $game->time);
                     $hora = str_pad($timeRaw[0], 2, '0', STR_PAD_LEFT);
                     $minuto = isset($timeRaw[1]) ? str_pad($timeRaw[1], 2, '0', STR_PAD_RIGHT) : '00';
                     $searchTime = "$hora:$minuto:00";
                     
                     $horario = array_values(array_filter($horarios->toArray(), fn ($item) => $item['horario'] == $searchTime));
-    
+
                     if (sizeof($horario) > 0 && $horario[0]['banca'] == $game->lottery) {
                         $checkResultExist = BichaoResultados::where('horario_id', $horario[0]['id'])->where('data', date('Y-m-d'))->first();
     
