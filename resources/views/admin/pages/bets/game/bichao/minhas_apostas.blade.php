@@ -87,6 +87,15 @@
                                         if ($aposta['premio_3'] == 1) $premios[] = 3;
                                         if ($aposta['premio_4'] == 1) $premios[] = 4;
                                         if ($aposta['premio_5'] == 1) $premios[] = 5;
+
+                                        $premioMaximo = $aposta['valor'] * $aposta['multiplicador'] / sizeof($premios);
+        
+                                        if ($aposta['modalidade_id'] == 6 || $aposta['modalidade_id'] == 8 || $aposta['modalidade_id'] == 9) {
+                                            $premioMaximo = $aposta['valor'] * $aposta['multiplicador'];
+                                        }
+                                        if ($aposta['modalidade_id'] == 7) {
+                                            $premioMaximo = sizeof($premios) == 3 ? $aposta['valor'] * $aposta['multiplicador'] : $aposta['valor'] * $aposta['multiplicador_2'];
+                                        }
                                     ?>
                                     {{ join('°, ', $premios) }}°
                                 </td>
@@ -100,6 +109,11 @@
                                     <a href="{{ route('admin.bets.bichao.receipt', ['id' => $aposta['id'], 'tipo' => 'pdf']) }}">
                                         <button type="button" class="btn btn-danger text-light" title="Baixar bilhete PDF">
                                             <i class="bi bi-ticket"></i>
+                                        </button>
+                                    </a>
+                                    <a href="https://api.whatsapp.com/send?phone=55{{ $aposta['cliente_ddd'].$aposta['cliente_phone'] }}&text=Jogo de {{ $aposta['modalidade_nome'] }} cadastrado com sucesso! Id da Aposta: {{ $aposta['id'] }}, Cliente: {{ $aposta['cliente_nome'] }} {{ $aposta['cliente_sobrenome'] }}, Aposta: {{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}, Valor R$ {{ number_format($aposta['valor'], 2, ',', '.') }}, Prêmio Máximo R$ {{ number_format($premioMaximo, 2, ',', '.') }}, Data: {{ date('d/m/Y H:i', strtotime($aposta['created_at'])) }}" target="_blank">
+                                        <button type="button" class="btn btn-success text-light" title="Enviar por whatsapp">
+                                            <i class="bi bi-whatsapp"></i>
                                         </button>
                                     </a>
                                 </td>

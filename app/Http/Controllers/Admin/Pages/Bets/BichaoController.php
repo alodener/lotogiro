@@ -211,7 +211,7 @@ class BichaoController extends Controller
         $intervalo = $request->has('intervalo') ? $request->input('intervalo') : 30;
         $buscaIntervalo = now()->subDays($intervalo)->endOfDay();
 
-        $apostas = BichaoGames::select('bichao_games.*', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome')
+        $apostas = BichaoGames::select('bichao_games.*', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'bm.multiplicador', 'bm.multiplicador_2', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.ddd as cliente_ddd', 'c.phone as cliente_phone')
             ->join('clients as c', 'c.id', 'bichao_games.client_id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
             ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
@@ -430,15 +430,35 @@ class BichaoController extends Controller
 
         foreach ($checkout as $index => $checkoutDto) {
             $apostas = [];
+            $premios = [];
             
             if (strval($checkout[$index]['game_1']) > 0) $apostas[] = $checkout[$index]['game_1'];
             if (strval($checkout[$index]['game_2']) > 0) $apostas[] = $checkout[$index]['game_2'];
             if (strval($checkout[$index]['game_3']) > 0) $apostas[] = $checkout[$index]['game_3'];
+
+            if ($checkout[$index]['premio_1'] == 1) $premios[] = 1;
+            if ($checkout[$index]['premio_2'] == 1) $premios[] = 2;
+            if ($checkout[$index]['premio_3'] == 1) $premios[] = 3;
+            if ($checkout[$index]['premio_4'] == 1) $premios[] = 4;
+            if ($checkout[$index]['premio_5'] == 1) $premios[] = 5;
+
+            $checkout[$index]['modalidade'] = BichaoModalidades::where('id', $checkout[$index]['modalidade_id'])->first();
+
+            $premioMaximo = $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador / sizeof($premios);
+            
+            if ($checkout[$index]['modalidade_id'] == 6 || $checkout[$index]['modalidade_id'] == 8 || $checkout[$index]['modalidade_id'] == 9) {
+                $premioMaximo = $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador;
+            }
+            if ($checkout[$index]['modalidade_id'] == 7) {
+                $premioMaximo = sizeof($premios) == 3 ? $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador : $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador_2;
+            }
             
             $checkout[$index]['id'] = BichaoGames::insertGetId($checkoutDto);
             $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
-            $checkout[$index]['modalidade'] = BichaoModalidades::where('id', $checkout[$index]['modalidade_id'])->first();
+            $checkout[$index]['premio_maximo'] = $premioMaximo;
             $checkout[$index]['horario'] = BichaoHorarios::where('id', $checkout[$index]['horario_id'])->first();
+            $checkout[$index]['client'] = Client::where('id', $checkout[$index]['client_id'])->first();
+            $checkout[$index]['emitido_em'] = Carbon::parse($checkout[$index]['created_at'])->format('d/m/Y H:i:s');
         }
 
         foreach ($checkout as $checkoutItem) {
