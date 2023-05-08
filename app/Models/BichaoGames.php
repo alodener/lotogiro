@@ -24,4 +24,9 @@ class BichaoGames extends Model
     {
         return $this->belongsTo(BichaoModalidades::class, 'modalidade_id');
     }
+
+    public function horario()
+    {
+        return $this->belongsTo(BichaoHorarios::class, 'horario_id');
+    }
 }
