@@ -860,7 +860,7 @@ class BichaoController extends Controller
                                 'premio_3' => $game->placement[2],
                                 'premio_4' => $game->placement[3],
                                 'premio_5' => $game->placement[4],
-                                'data' => date('Y-m-d'),
+                                'created_at' => date('Y-m-d'),
                             ];
                         }
                     }
