@@ -582,8 +582,8 @@ class BichaoController extends Controller
         $games = BichaoGames::select('bichao_games.*', 'bichao_horarios.horario', 'bichao_modalidades.multiplicador', 'bichao_modalidades.multiplicador_2')
             ->join('bichao_horarios', 'bichao_horarios.id', '=', 'bichao_games.horario_id')
             ->join('bichao_modalidades', 'bichao_modalidades.id', '=', 'bichao_games.modalidade_id')
-            ->where('created_at', '>=', $dataAnterior. ' 00:00:00')
-            ->where('created_at', '<=', $dataAtual.' 23:59:59')
+            ->where('bichao_games.created_at', '>=', $dataAnterior. ' 00:00:00')
+            ->where('bichao_games.created_at', '<=', $dataAtual.' 23:59:59')
             ->get()
             ->toArray();
         $animais = BichaoAnimals::get()->toArray();
