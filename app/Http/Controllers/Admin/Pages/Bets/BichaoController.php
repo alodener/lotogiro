@@ -581,9 +581,6 @@ class BichaoController extends Controller
     }
 
     private static function get_winners($resultados) {
-        if (!auth()->user()->hasPermissionTo('create_game')) {
-            abort(403);
-        }
         $dataAtual = date('Y-m-d');
         $horaAtual = date('H:i:s');
         $dataAnterior = date('Y-m-d', strtotime('-24 hours'));
@@ -796,9 +793,6 @@ class BichaoController extends Controller
     }
 
     private function request_api_results($estados, $searchData) {
-        if (!auth()->user()->hasPermissionTo('create_game')) {
-            abort(403);
-        }
         $result = [];
 
         $mh = curl_multi_init();
@@ -832,9 +826,6 @@ class BichaoController extends Controller
     }
 
     public function get_resultados(Request $request) {
-        if (!auth()->user()->hasPermissionTo('create_game')) {
-            abort(403);
-        }
         $estados = BichaoEstados::where('uf', '!=', 'FED')->get();
         $searchData = explode('-', date('d-m-Y'));
         $resultadosDto = [];
@@ -886,5 +877,8 @@ class BichaoController extends Controller
         if (sizeof($resultadosDto) > 0) {
             self::get_winners($resultadosDto);
         }
+
+        echo 'ok';
+        exit;
     }
 }
