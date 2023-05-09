@@ -239,7 +239,6 @@ class BichaoController extends Controller
             ->join('users as u', 'u.id', 'bichao_games.user_id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
             ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
-            ->where('bichao_games.comission_value','>',0)
             ->whereDate('bichao_games.created_at','>=', $buscaIntervalo)
             ->orderBy('bichao_games.created_at', 'DESC')
             ->paginate($perPage);
@@ -324,6 +323,16 @@ class BichaoController extends Controller
 
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
 
+        if (auth()->user()->type_client == 1) {
+            $client = Client::where('email', auth()->user()->email)->first();
+            if (!$client) {
+                echo json_encode(['status' => 400]);
+                exit;
+            }
+
+            $data['item']['client_id'] = $client->id;
+        }
+
         if ($data['item']['modality'] === 'Milhar/Centena') {
             $data['item']['value'] = floatval($data['item']['value']) / 2;
             
@@ -337,8 +346,9 @@ class BichaoController extends Controller
             $chart[] = $data['item'];
         }
 
+        
         session(['@loteriasbr/chart' => $chart]);
-
+        
         session()->flash('success', 'Jogo adicionado com sucesso.');
 
         echo json_encode(['status' => 200]);
