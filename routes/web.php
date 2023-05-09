@@ -158,7 +158,6 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('remove-all/chart', [BichaoController::class, 'remove_all_chart'])->name('bichao.remove_all.chart');
                 Route::post('horarios', [BichaoController::class, 'get_horarios'])->name('bichao.horarios');
                 Route::post('checkout', [BichaoController::class, 'checkout'])->name('bichao.checkout');
-                Route::get('get-results', [BichaoController::class, 'get_resultados'])->name('bichao.get_resultados');
                 Route::post('get-results-json', [BichaoController::class, 'get_results_json'])->name('bichao.get_results_json');
                 Route::get('receipt/{id}/{tipo}', [BichaoController::class, 'getReceipt'])->name('receipt');
                 Route::post('save/settings', [BichaoController::class, 'save_settings'])->name('bichao.save.settings');
