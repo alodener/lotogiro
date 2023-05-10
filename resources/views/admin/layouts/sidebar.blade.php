@@ -90,6 +90,7 @@
                                     </a>
                                 </li>
                             @endcan
+                            @if(\App\Helper\Configs::getBichao() == "Ativado")
                             @can('read_sale')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.sales.bichao')}}"
@@ -99,6 +100,7 @@
                                     </a>
                                 </li>
                             @endcan
+                            @endif
                         </ul>
                     </li>
                 @endcanany
@@ -169,6 +171,7 @@
                                                 </li>
                                             @endforeach
                                         @endif
+                                        @if(\App\Helper\Configs::getBichao() == "Ativado")
                                         <li class="nav-item">
                                             <a 
                                                 href="{{ route('admin.bets.bichao.index') }}"
@@ -178,6 +181,7 @@
                                                 <p>Bichão da Sorte</p>
                                             </a>
                                         </li>
+                                        @endif
                                     </ul>
                                 </li>
                             @endcan
@@ -211,16 +215,17 @@
                                     </ul>
                                 </li>
                             @endcanany
-                            @canany(['read_payments_commission', 'read_payments_draw'])
-                                <li class="nav-item has-treeview @if(request()->is('admin/bets/draws/bichao') || request()->is('admin/bets/comissions/bichao')) menu-open @endif">
-                                    <a href="#"
-                                       class="nav-link">
-                                        <i class="fas fa-dollar-sign nav-icon"></i>
-                                        <p>Pagamentos bichão</p>
-                                        <i class="right fas fa-angle-left"></i>
-                                    </a>
+                            @if(\App\Helper\Configs::getBichao() == "Ativado")
+                                @canany(['read_payments_commission', 'read_payments_draw'])
+                                    <li class="nav-item has-treeview @if(request()->is('admin/bets/draws/bichao') || request()->is('admin/bets/comissions/bichao')) menu-open @endif">
+                                        <a href="#"
+                                            class="nav-link">
+                                            <i class="fas fa-dollar-sign nav-icon"></i>
+                                            <p>Pagamentos bichão</p>
+                                            <i class="right fas fa-angle-left"></i>
+                                        </a>
                                     <ul class="nav nav-treeview">
-                                        @can('read_payments_commission')
+                                            @can('read_payments_commission')
                                             <li class="nav-item">
                                                 <a href="{{route('admin.bets.comissions.bichao')}}"
                                                    class="nav-link @if(request()->is('admin/bets/comissions/bichao')) active @endif">
@@ -228,8 +233,8 @@
                                                     <p>Comissões</p>
                                                 </a>
                                             </li>
-                                        @endcan
-                                        @can('read_payments_draw')
+                                            @endcan
+                                            @can('read_payments_draw')
                                             <li class="nav-item">
                                                 <a href="{{route('admin.bets.draws.bichao')}}"
                                                    class="nav-link @if(request()->is('admin/bets/draws/bichao')) active @endif">
@@ -237,10 +242,11 @@
                                                     <p>Prêmios</p>
                                                 </a>
                                             </li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                            @endcanany
+                                            @endcan
+                                        </ul>
+                                    </li>
+                                @endcanany
+                            @endif
                             @can('read_draw')
                                 <li class="nav-item">
                                     <a href="{{route('admin.bets.draws.index')}}"
@@ -314,6 +320,7 @@
                                     </a>
                                 </li>
                             @endif
+                            @if(\App\Helper\Configs::getBichao() == "Ativado")
                             @if(\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{route('admin.reports.bichao.bilhetes')}}"
@@ -322,6 +329,7 @@
                                         <p>Bilhetes Bichão</p>
                                     </a>
                                 </li>
+                            @endif
                             @endif
 
                             </li>
@@ -398,7 +406,8 @@
                             </a>
                         </li>
                         @endcan
-                        @can('read_user')
+                        @if(\App\Helper\Configs::getBichao() == "Ativado")
+                            @can('read_user')
                             <li class="nav-item">
                                 <a href="{{ route('admin.settings.bichao.index') }}"
                                     class="nav-link @if (request()->is('admin/settings/bichao*')) active @endif">
@@ -406,7 +415,8 @@
                                     <p>Bichão da sorte</p>
                                 </a>
                             </li>
-                        @endcan
+                            @endcan
+                        @endif
                 </li>
             @endcanany
             </ul>
