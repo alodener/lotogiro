@@ -26,6 +26,36 @@
             <div class="tab-pane fade show" id="nav-cotacoes" role="tabpanel" aria-labelledby="nav-settings-cotacoes">
                 <div class="row">
                     @foreach($cotacoes as $cotacao)
+                        @if ($cotacao->id == 7)
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="name">{{ $cotacao->nome }} 1 ao 3</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control settings-bichao-cotacao"
+                                    data-id="{{ $cotacao->id }}"
+                                    id="campo-{{ $cotacao->id }}" 
+                                    name="campo-{{ $cotacao->id }}" 
+                                    placeholder="{{ $cotacao->nome }}"
+                                    value="{{ $cotacao->multiplicador ?? null }}"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="name">{{ $cotacao->nome }} 1 ao 5</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control settings-bichao-cotacao"
+                                    data-id="{{ $cotacao->id }}b"
+                                    id="campo-{{ $cotacao->id }}b" 
+                                    name="campo-{{ $cotacao->id }}b" 
+                                    placeholder="{{ $cotacao->nome }}"
+                                    value="{{ $cotacao->multiplicador_2 ?? null }}"
+                                >
+                            </div>
+                        </div>
+                        @else
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="name">{{ $cotacao->nome }}</label>
@@ -40,6 +70,7 @@
                                 >
                             </div>
                         </div>
+                        @endif
                     @endforeach
                 </div>
             </div>

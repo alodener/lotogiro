@@ -297,6 +297,15 @@ class BichaoHorariosTableSeeder extends Seeder
                 'created_at' => \Carbon\Carbon::now()->toDateTime(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTime(),
             ),
+            31 =>
+            array (
+                'id' => 32,
+                'estado_id' => 9,
+                'horario' => '19:00:00',
+                'banca' => 'FEDERAL',
+                'created_at' => \Carbon\Carbon::now()->toDateTime(),
+                'updated_at' => \Carbon\Carbon::now()->toDateTime(),
+            ),
         ));
     }
 }
