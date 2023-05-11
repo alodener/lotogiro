@@ -100,6 +100,65 @@
                                 </div>
                             </div>     
                             @endif    
+
+                            @if ($system->nome_config == "E-mail/Remetente")
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="alias">E-mail</label> 
+                                    <input type="text" name="mail" class="form-control ">
+                                    <br>
+                                    <label for="alias">Remetente</label>
+                                    <input type="text" name="remetente" class="form-control ">
+                                    @error('text')
+                                    <span class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>     
+                            @endif       
+
+                            @if ($system->nome_config == "Bichao")
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="alias"><h5><b>Bichão</b></h5></label>
+                                    <div class="form-check">
+                                        @if ($system->value == "Desativado" )
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Ativado" >
+                                                    <label class="form-check-label" for="exampleRadios1">
+                                                    <b>   Ativar </b>
+                                                    </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Desativado"checked>
+                                                    <label class="form-check-label" for="exampleRadios2">
+                                                        <b>   Desativar </b>
+                                                    </label>
+                                            </div>
+                                            @endif 
+
+                                    @if ($system->value == "Ativado" )
+                                    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Ativado" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                        <b>  Ativar </b>
+                                        </label>
+                                      </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Desativado">
+                                            <label class="form-check-label" for="exampleRadios2">
+                                                <b>   Desativar </b>
+                                            </label>
+                                      </div>
+                                   @endif
+                                    </div>
+                                </div>
+                            </div>     
+                            @endif 
+                                                           
               
                         @if ($system->nome_config == "Logo do Sistema")
                         <div class="col-md-6">
@@ -114,6 +173,34 @@
                             </div>
                         </div>
                         @endif
+
+                        @if ($system->nome_config == "TelegramUrlBot")
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="alias">Valor</label> 
+                                    <input type="text" name="telegrambot" class="form-control ">
+                                    @error('text')
+                                    <span class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>     
+                            @endif    
+                            
+                            @if ($system->nome_config == "TelegramChatId")
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="alias">Valor</label> 
+                                    <input type="text" name="telegramchatid" class="form-control ">
+                                    @error('text')
+                                    <span class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>     
+                            @endif           
                             
                         
                          </div>

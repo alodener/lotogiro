@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Pages\Dashboards\Salebichao;
+namespace App\Http\Livewire\Pages\Reports\Receiptbichao;
 
 use App\Models\BichaoGames;
 use App\Models\User;
@@ -266,7 +266,7 @@ class Table extends Component
 
     public function getReport()
     {
-        $games = $this->runQueryBuilder()->with(['user', 'client'])->get();
+        $games = $this->runQueryBuilder()->with(['user', 'client', 'horario'])->get();
         $collection = new Collection();
         foreach ($games as $game) {
             $collection = $collection->push($game->toArray());
@@ -282,7 +282,7 @@ class Table extends Component
 
         $pdf = PDF::loadView('admin.layouts.pdf.salesbichao', $data)->output();
 
-        $fileName = 'Relatório de Vendas - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
+        $fileName = 'Relatório de Vendas (bilhetes) - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
 
         return response()->streamDownload(
             fn() => print($pdf),
@@ -292,7 +292,7 @@ class Table extends Component
 
     public function render()
     {
-        return view('livewire.pages.dashboards.salebichao.table', [
+        return view('livewire.pages.reports.receiptbichao.table', [
             "games" => $this->runQueryBuilder()->paginate($this->perPage),
         ]);
     }

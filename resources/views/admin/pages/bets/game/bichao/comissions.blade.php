@@ -41,7 +41,7 @@
                             <th scope="col" style="max-width: 180px">Modalidade</th>
                             <th scope="col">Valor</th>
                             <th scope="col">%</th>
-                            <th scope="col">Comissão</th>
+                            <th scope="col">Comissão do <br />Indicador</th>
                             <th scope="col" style="max-width: 50px">Pago</th>
                             <th scope="col" style="max-width: 180px">Criado em</th>
                             <!-- <th scope="col" style="max-width: 50px">Ações</th> -->
@@ -70,7 +70,7 @@
                                 <td>{{ $aposta['modalidade_nome'] }}</td>
                                 <td>R${{ number_format($aposta['valor'], 2, ',', '.') }}</td>
                                 <td>{{ $aposta['comission_percentage'] }}%</td>
-                                <td>R${{ number_format($aposta['comission_value'], 2, ',', '.') }}</td>
+                                <td>R${{ number_format($aposta['comission_value_pai'], 2, ',', '.') }}</td>
                                 <td>{{ $aposta['comission_payment'] == 1 ? 'Sim' : 'Não' }}</td>
                                 <td>{{ date('H:i d/m/Y', strtotime($aposta['created_at'])) }}</td>
                                 <!-- <td>

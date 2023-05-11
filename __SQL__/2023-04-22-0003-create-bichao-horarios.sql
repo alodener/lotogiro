@@ -39,4 +39,5 @@ INSERT INTO `bichao_horarios` (`id`, `estado_id`, `horario`, `banca`) VALUES
 	(28, 7, '19:00:00', 'LBR'),
 	(29, 8, '11:00:00', 'LOTECE'),
 	(30, 8, '14:00:00', 'LOTECE'),
-	(31, 8, '19:00:00', 'LOTECE');
+	(31, 8, '19:00:00', 'LOTECE'),
+	(32, 9, '19:00:00', 'FEDERAL');

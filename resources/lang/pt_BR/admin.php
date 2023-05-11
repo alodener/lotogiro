@@ -108,6 +108,7 @@ return [
         'copy-whatsapp-button' => 'Enviar via WhatsApp',
         'copy-whatspp-message' => 'Clique no botão e envie pelo WhatsApp',
         'referral-button-text' => 'Indique e Ganhe!',
+        'referral-button-text-client' => 'Indique um Amigo!',
         'referral-message' => 'Clique no botão e copie seu link de indicação',
         'referrals-button' => 'Seus indicados',
         'referrals-message' => 'Clique no botão e veja seus indicados',
