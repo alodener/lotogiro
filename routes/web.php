@@ -158,7 +158,6 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('remove-all/chart', [BichaoController::class, 'remove_all_chart'])->name('bichao.remove_all.chart');
                 Route::post('horarios', [BichaoController::class, 'get_horarios'])->name('bichao.horarios');
                 Route::post('checkout', [BichaoController::class, 'checkout'])->name('bichao.checkout');
-                Route::get('get-results', [BichaoController::class, 'get_resultados'])->name('bichao.get_resultados');
                 Route::post('get-results-json', [BichaoController::class, 'get_results_json'])->name('bichao.get_results_json');
                 Route::get('receipt/{id}/{tipo}', [BichaoController::class, 'getReceipt'])->name('receipt');
                 Route::post('save/settings', [BichaoController::class, 'save_settings'])->name('bichao.save.settings');
@@ -220,6 +219,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('used-dozens/competitions', [ReportController::class, 'usedDozensListCompetitions'])->name('used.dozens');
             Route::get('{competition}/used-dozens', [ReportController::class, 'usedDozensByCompetition'])->name('used.dozens.by-competition');
             Route::get('points-by-user', [ReportController::class, 'pointsByUser'])->name('points-by-user');
+            Route::get('bichao/bilhetes', [ReportController::class, 'bichaoReceipt'])->name('bichao.bilhetes');
+            Route::post('bichao/bilhetes/remove/{game}', [ReportController::class, 'bichaoReceiptDestroy'])->name('bichao.bilhetes.destroy');
         });
 
         Route::prefix('notifications')->name('notifications.')->group(function () {

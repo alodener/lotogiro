@@ -128,7 +128,7 @@
         </p>
         <p class="text-white text-size-2">
             <span class="font text-bold">EMITIDO EM:</span>
-            <span class="font">{{\Carbon\Carbon::parse($game->criado_em)->format('d/m/Y H:i:s')}}</span>
+            <span class="font">{{\Carbon\Carbon::parse($game->created_at)->format('d/m/Y H:i:s')}}</span>
         </p>
         <p class="text-white text-size-2">
             <span class="font text-bold">BANCA:</span>
@@ -148,7 +148,7 @@
         </p>
         <p class="text-white text-size-2">
             <span class="font text-bold">DATA SORTEIO:</span>
-            <span class="font">{{\Carbon\Carbon::parse($game->horario)->format('H:i:s')}}</span>
+            <span class="font">{{\Carbon\Carbon::parse($game->created_at)->format('d/m/Y')}}</span>
         </p>
         <p class="text-white text-size-2">
             <span class="font text-bold">HORA SORTEIO:</span>
