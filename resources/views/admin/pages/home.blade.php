@@ -45,9 +45,17 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- button indique e ganhe -->
                 @endif
+                <!-- button indique e ganhe -->
+                @if($User['type_client'] == 1)
+                <div class="card-body   col-lg-4 col-sm-6">
+                    <div class="col-lg-12 card text-white   my-2 alert bg-light indica-corpo" role="alert" >
+                        <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link " value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador}}" />
+                        <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
+                        <button type="button" id="btn_copy_link2" class="btn btn-success btn-block" onclick="CopyMe(getUrl())"> {{ trans('admin.dashboard.referral-button-text-client') }} </button>                        
+                    </div>
+              </div> 
+               @elseif($User['type_client'] != 1)
                 <div class="card-body   col-lg-4 col-sm-6">
                     <div class="col-lg-12 card text-white   my-2 alert bg-light indica-corpo" role="alert" >
                         <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link " value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}" />
@@ -55,6 +63,7 @@
                         <button type="button" id="btn_copy_link2" class="btn btn-success btn-block" onclick="CopyMe(getUrl())"><i class="bi bi-coin"></i> {{ trans('admin.dashboard.referral-button-text') }} </button>                        
                     </div>
                 </div> 
+                @endif
 
                 <!-- button copiar link -->
                 <div class="card-body col-lg-4 col-sm-5">
@@ -233,6 +242,13 @@
             </a>
         </div>
         @endforeach
+        @if(\App\Helper\Configs::getBichao() == "Ativado")
+            <div class="col-md-6 my-2">
+                <a href="{{route('admin.bets.bichao.index')}}">
+                    <button class="btn btn-block text-white" style="background-color: #284CA7;">Bichão da sorte</button>
+                </a>
+            </div>
+        @endif
     </div>
     @else
     <div class="col-md-12 p-3 text-center">
