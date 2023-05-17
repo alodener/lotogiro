@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Carteira - Solicitação de Saque')
+@section('title', 'Carteira - Solicitação de Saque ')
 
 @section('content')
     <div class="row bg-white p-3">

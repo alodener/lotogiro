@@ -5,7 +5,7 @@
 @section('content')
     <div class="row bg-white p-3">
         <div class="col-md-12 p-4">
-            <h3 class="text-center">JOGOS</h3>
+            <h3 class="text-center">{{ trans ('admin.homeBladeK.games') }} </h3>
         </div>
         <div class="col-md-7 my-2">
             <div class="form-group">
@@ -13,13 +13,13 @@
             </div>
         </div>
         <div class="col-md-2 my-2">
-            <button type="button" id="btn_copy_link" class="btn btn-info btn-block">Copiar Link</button>
+            <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{ trans ('admin.homeBladeK.copLink') }} </button>
         </div>
         <div class="col-md-3 my-2">
             <a href="https://api.whatsapp.com/send?text=Segue link para criar um jogo: {{route('games.bet', ['user' => auth()->id()])}}"
                target="_blank">
                 <button type="button" class="btn btn-info btn-block">
-                    Enviar via WhatsApp
+                {{ trans ('admin.homeBladeK.envWpp') }} 
                 </button>
             </a>
         </div>
@@ -35,7 +35,7 @@
             @endforeach
         @else
             <div class="col-md-12 p-3 text-center">
-                Não existem tipos de jogos cadastrados!
+            {{ trans ('admin.homeBladeK.gamesCadast') }} 
             </div>
         @endif
     </div>

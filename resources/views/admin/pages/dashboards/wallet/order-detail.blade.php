@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Detalhe do Pedido')
+@section('title', 'Detalhe do Pedido ')
 
 @section('content')
     <div class="row bg-white p-3">

@@ -40,7 +40,7 @@
                     </div>
                     @enderror
                 </div>
-                <h3 class="login-box-msg">Recupere Sua Senha</h3>
+                <h3 class="login-box-msg">{{ trans ('admin.forgetPassoword.recSenha') }} </h3>
                   
                 @if (Session::has('message'))
                         <div class="alert alert-success" role="alert">
@@ -50,7 +50,7 @@
                 <center>
                     <form action="{{ route('forget.password.post') }}" method="POST">
                         @csrf
-                        <p>Vamos enviar um link de recuperação para seu e-mail</p>
+                        <p>{{ trans ('admin.forgetPassoword.linkRec') }} </p>
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <input placeholder="Seu Email:" type="text" id="email_address" class="form-control" name="email" required autofocus>
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                             <button type="submit" class="btn btn-primary">
-                                Enviar
+                            {{ trans ('admin.forgetPassoword.env') }} 
                             </button>
                     </form>
                 </center>             

@@ -28,7 +28,7 @@
                     </div>
                     @enderror
                 </div>
-                <p class="login-box-msg">Realize o login para iniciar a sessão</p>
+                <p class="login-box-msg">{{ trans ('admin.loginBladea.realizarLogin') }} </p>
 
                 <form method="POST" action="{{route('admin.post.login')}}">
                     @csrf
@@ -48,7 +48,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
-                               name="password" placeholder="Senha">
+                               name="password" placeholder="{{ trans ('admin.loginBladea.password') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -66,18 +66,18 @@
                                 <input type="checkbox" name="remember"
                                        id="remember" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="remember">
-                                    Manter conectado
+                                {{ trans ('admin.loginBladea.manterConectado') }}
                                 </label>
                             </div>
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Acessar</button>
+                            <button type="submit" class="btn btn-primary btn-block">{{ trans ('admin.loginBladea.acesso') }} </button>
                         </div>
                     </div>
                 </form>
                 @if (Route::has('password.request'))
                     <p class="mb-1">
-                        <a href="{{ route('password.request') }}">Esqueci minha senha</a>
+                        <a href="{{ route('password.request') }}">{{ trans ('admin.loginBladea.esqueciSenha') }}  </a>
                     </p>
                 @endif
 

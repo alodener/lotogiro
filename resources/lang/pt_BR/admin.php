@@ -122,7 +122,663 @@ return [
         'max-points-title' => 'Parabéns você esta no topo',
         'max-points-text' => 'Você esta no mais alto nível do plano de carreira',
         'games-not-found' => 'Não existem tipos de jogos cadastrados!',
-        'copied-url' => 'Link copiado!'
+        'copied-url' => 'Link copiado!',
+        'indications' => 'Indicações'
+    ],
+    
+    'menu' => [
+        'page-title' => 'Faça seu jogo',
+        'dashboards' => 'Dashboards',
+        'ranking-index' => 'Ranking',
+        'points' => 'Pontos',
+        'winning-ticket' => 'Bilhetes Premiados',
+        'Reportday' => 'Vendas da Rede',
+        'gains*' => 'Ganhos',
+        'sales*' => 'Vendas',
+        'bets' => 'Apostas',
+        'clients*' => 'Cliente',
+        'validate-games*' => 'Validar Jogo',
+        'competitions*' => 'Concursos',
+        'type_games*' => 'Tipos de Jogo',
+        'games*' => 'Jogos',
+        'payments*' => 'Pagamentos',
+        'commissions' => 'Comissões',
+        'draws' => 'Prêmios',
+        'draws*' => 'Sorteios',
+        'reports' => 'Relatórios',
+        'used-dozens*' => 'Dezenas Utilizadas',
+        'points-by-user*' => 'Pontos por Cliente',
+        'extracts' => 'Extrato',
+        'manual-recharge' => 'Extrato Recarga Manual',
+        'balance' => 'Saldo de Clientes',
+        'sales' => 'Extrato de Vendas',
+        'index*' => 'Carteira',
+        'settings' => 'Configurações',
+        'permissions*' => 'Permissões',
+        'roles*' => 'Funções',
+        'users*' => 'Usuários',
+        'qualifications*' => 'Qualificações',
+        'system*' => 'Sistema'
+    ],
+
+    'bilhete' => [
+        'winning-Tickets' => 'Bilhetes Premiados',
+        'register-Tickets' => 'Cadastrar Bilhetes',
+        'daily' => 'Diário',
+        'yesterday' => 'Ontem',
+        'weekly' => 'Semanal',
+        'monthly' => 'Mensal',
+        'custom' => 'Personalizado',
+        'drawn-on' => 'Sorteado em:',
+        'drawn' => 'Sorteado:',
+        'selected' => 'Selecionados:',
+        'no-games' => 'Nenhum jogo vendido.'
+    ],
+
+    'vendas' => [
+        'daily' => 'Diário',
+        'yesterday' => 'Ontem',
+        'weekly' => 'Semanal',
+        'monthly' => 'Mensal',
+        'custom' => 'Personalizado',
+        'research' => 'Pesquisar'
+    ], 
+
+    'navbar' => [
+        'balance' => 'Saldo:',
+        'bonus' => 'Bônus:',
+        'recharge' => 'Recarregar',
+        'hello' => 'Olá,',
+        'account' => 'Conta',
+        'account*' => 'Conta',
+        'logout' => 'Logout'
+    ],
+
+    'extrato' => [
+        'balanceS' => 'Extrato de Saldo:',
+        'totalB' => 'Saldo Total:',
+        'bonus' => 'Bônus',
+        'filter' => 'Filtrar por Recargas',
+        'date' => 'Data',
+        'responsible' => 'Responsável',
+        'wallet' => 'Carteira',
+        'previousValue' => 'Valor Anterior',
+        'value' => 'Valor',
+        'currentValue' => 'Valor Atual',
+        'description' => 'Descrição',
+        'noData' => 'Nenhum dado para exibir.'
+    ],
+
+    'carteira' => [
+        'balanceS' => 'Extrato de Saldo',
+        'totalB' => 'Saldo Total:',
+        'bonus' => 'Bônus',
+        'filter' => 'Filtrar por Recargas',
+        'date' => 'Data',
+        'responsible' => 'Responsável',
+        'wallet' => 'CARTEIRA',
+        'previousValue' => 'Valor Anterior',
+        'value' => 'Valor',
+        'currentValue' => 'Valor Atual',
+        'description' => 'Descrição',
+        'noData' => 'Nenhum dado para exibir.',
+        'previous' => 'Anterior',
+        'next' => 'Próxima'
+    ],
+
+    'language' => [
+        'lengthMenu' => 'Mostrando _MENU_ registros por página',
+        'zeroRecords' => 'Nada encontrado',
+        'info' => 'Mostrando página _PAGE_ de _PAGES_',
+        'infoEmpty' => 'Nenhum registro disponível',
+        'infoFiltered' => '(filtrado de _MAX_ registros no total)',
+        'search' => 'Pesquisar: ',
+        'previous' => 'Anterior',
+        'next' => 'Próximo'
+    ],
+
+    'datatable-language' => [
+        'datatable-language' => 'admin/layouts/plugins/datatables-bs4/language/pt_BR.json',
+        'delete' => 'Excluir'
+    ],
+
+    'customer' => [
+        'customerr' => 'Saldo de Clientes',
+        'control' => 'Controle o acesso dos clientes por aqui',
+        '30days' => '30 dias',
+        '60days' => '60 dias',
+        '90days' => '90 dias',
+        'clear' => 'Limpar',
+        'detailed' => 'Para ter uma visão detalhada dos clientes premiados',
+        'clique' => 'Clique Aqui!',
+        'name' => 'Nome',
+        'lastName' => 'Sobrenome',
+        'number' => 'Número',
+        'email' => 'Email',
+        'games' => 'Jogos Feitos',
+        'quantity' => '(Quantidade)',
+        'apostado' => 'Valor Apostado',
+        'received' => 'Premios Recebidos',
+        'profit' => 'Lucro/',
+        'loss' => 'Prejuízo',
+        'customeros' => 'Cliente de',
+        'risk' => 'Risco',
+        'commission' => 'Comissão',
+        'block' => 'Bloquear/',
+        'unblock' => 'Desbloquear',
+        'contact' => 'Contato Realizado',
+    ],
+
+    'wallet' => [
+        'WALLET' => 'CARTEIRA',
+        'wallet' => 'Carteira',
+        'balance' => 'Saldo:',
+        'bonus' => 'Bônus:',
+        'recharge' => 'Recarregar',
+        'withdraw' => 'Retirar',
+        'convert' => 'Converter',
+        'extract' => 'Extrato',
+        'request' => 'Solicitações de saque',
+        'Precharge' => 'Pedidos de Recarga',
+    ],
+
+    'walletAdd' => [
+        'WALLET' => 'CARTEIRA',
+        'addBalance' => 'Adicionar Saldo',
+        'valueAdd' => 'Valor a ser adicionado',
+        'valueMin' => 'Valor mínimo de R$ 1,00',
+        'value' => 'O valor inserido, será creditado em sua conta assim que formos notificados.',
+        'valuee' => 'Valor',
+        'continuar' => 'Continuar'
+    ],
+
+    'ordersBlade' => [
+        'WALLET' => 'CARTEIRA',
+        'peRecharge' => 'Pedidos de Recarga',
+        'date' => 'Data',
+        'user' => 'Usuário',
+        'value' => 'Valor',
+        'status' => 'Status',
+        'action' => 'Ação',
+        'details' => 'Detalhes',
+    ],  
+
+    'orderDetail' => [
+        'detailP' => 'Detalhes Pedido',
+        'update' => 'Última atualização:',
+        'user' => 'Usuário:',
+        'recharge' => 'Recarga:',
+        'statuss' => 'Status:',
+        'date' => 'Data',
+        'status' => 'Status',
+        'try' => 'Tentar Novamente'
+    ],
+
+    'convertWallet' => [
+        'conversao' => 'Conversão de Bônus para Saldo',
+        'balance' => 'Saldo:',
+        'bonuss' => 'Bônus:',
+        'valueT' => 'Valor a transferir',
+        'valueM' => '(Valor deve ser menor ou igual ao seu',
+        'bonus' => 'BÔNUS',
+        'convert' => 'Converter'
+    ],
+
+    'tableTransfer' => [
+        'wallet' => 'Carteira - Transferência de Saldo',
+        'procurar' => 'Procurar contato para transferência',
+        'dados' => 'Dados do Recebedor',
+        'name' => 'Nome:',
+        'email' => 'E-Mail:',
+        'phone' => 'Telefone:',
+        'salvar' => 'Salvar contato?',
+        'valuet' => 'Valor a transferir',
+        'value' => 'Valor a transferir',
+        'transf' => 'Transferir',
+        'userS' => 'Nenhum usuário selecionado para efetuar a transferência.',
+    ],
+
+    'walletWithdraw' => [
+        'wallet' => 'CARTEIRA',
+        'solicitar' => 'Solicitações de Saque',
+        'visualizar' => 'Visualizar Histórico',
+        'date' => 'Data',
+        'respon' => 'Responsável',
+        'pix' => 'Pix',
+        'value' => 'Valor',
+        'status' => 'Status',
+        'acao' => 'Ação',
+        'feito' => 'Feito',
+    ],
+
+    'withBlade' => [
+        'wallet' => 'CARTEIRA',
+        'solicitacao' => 'Solicitações de Saque - Visualizar Histórico',
+        'volt' => 'Voltar',
+        'date' => 'Data',
+        'resp' => 'Responsável',
+        'value' => 'Valor',
+        'status' => 'Status',
+        'acao' => 'Ação',
+        'feito' => 'Feito'
+    ],
+
+    'transferenciaSaldo' => [
+        'wallet' => 'CARTEIRA',
+        'tranfer' => 'Transferência de Saldo',
+        'dados' => 'Dados do Recebedor',
+        'name' => 'Nome: ',
+        'email' => 'E-Mail: ',
+        'phone' => 'Telefone: ',
+        'alterar' => 'Ao alterar essa informação, ela passa a ser sua principal.',
+        'valueRetirar' => 'Valor a retirar',
+        'valueMin' => 'Valor mínimo de R$ 1,00',
+        'valueInserido' => 'O valor inserido, será creditado em sua conta assim que formos notificados.',
+        'valueRet' => 'Valor a retirar',
+        'solicit' => 'Solicitar'
+    ],
+
+    'permission' => [
+        'newPermission' => 'Nova Permissão',
+        'name' => 'Nome',
+        'menu' => 'Menu',
+        'creation' => 'Criação',
+        'action' => 'Ações',
+        'ePermission' => 'Deseja excluir esta permissão?',
+        'nRevert' => 'Está ação não pode ser revertida',
+        'cancel' => 'Cancelar',
+        'exclui' => 'Excluir'
+    ],
+
+    'formBlade' => [
+        'permission' => 'Permissão',
+        'name' => 'Nome',
+        'menu' => 'Árvore de Menu',
+        'nameVisible' => 'Nome Visível',
+        'back' => 'Voltar a tela principal',
+        'cadastrar' => 'Cadastrar Permissão',
+        'atualizar' => 'Atualizar Permissão',
+        'cadast' => 'Ex: Cadastrar Usuário'
+    ],
+
+    'formRole' => [
+        'function' => 'Função',
+        'name' => 'Nome',
+        'example' => 'Ex: Administrador de Sistema',
+        'permissions' => 'Permissões',
+        'config' => 'Configurações',
+        'apostas' => 'Apostas',
+        'dashboard' => 'Dashboards',
+        'payments' => 'Pagamentos',
+        'users' => 'Usuários',
+        'functions' => 'Funções',
+        'permissionss' => 'Permissões',
+        'clients' => 'Clientes',
+        'concursos' => 'Concursos',
+        'typeGames' => 'Tipos de Jogo',
+        'games' => 'Jogos',
+        'sorteio' => 'Sorteios',
+        'extrato' => 'Extrato',
+        'vendas' => 'Vendas',
+        'ganhos' => 'Ganhos',
+        'comission' => 'Comissão',
+        'sorteio' => 'Sorteio',
+        'backTela' => 'Voltar a tela principal',
+        'cadastrar' => 'Cadastrar Função',
+        'atualizar' => 'Atualizar Função'
+    ],
+
+    'roleIndex' => [
+        'newFunction' => 'Nova Função',
+        'name' => 'Nome',
+        'creation' => 'Criação',
+        'acion' => 'Ações',
+        'deleteFunction' => 'Deseja excluir esta função?',
+        'acionRevert' => 'Está ação não pode ser revertida',
+        'cancel' => 'Cancelar',
+        'delete' => 'Excluir'
+    ],
+
+    'userForm' => [
+        'user' => 'Usuário',
+        'active' => 'Ativo?',
+        'name' => 'Nome',
+        'last-name' => 'Sobrenome',
+        'id' => 'ID Indicador',
+        'details' => 'Detalhes',
+        'email' => 'E-mail',
+        'write' => '*Em branco para não alterar',
+        'senha' => 'Senha',
+        'password' => 'Confirme a senha',
+        'phone' => 'Telefone',
+        'values' => 'Valores',
+        'comission' => 'Porcentagem de Comissão',
+        'balance-actual' => 'Saldo Atual',
+        'add' => 'Adicionar Saldo',
+        'balance' => 'Extrato de Saldo',
+        'ajuste' => 'Ajuste Manual',
+        'functions' => 'Funções',
+        'no-functions' => 'Ainda não existe funções cadastradas.',
+        'back' => 'Voltar a tela principal',
+        'cadastra' => 'Cadastrar Usuário',
+        'atual-user' => 'Atualizar Usuário',
+        'entrar' => 'Entrar como usuário',
+        'details-indication' => 'Detalhes do Indicador',
+        'namee' => 'Nome:',
+        'emaill' => 'E-mail:',
+        'tel' => 'Tel.:',
+        'fecha' => 'Fechar',
+        'abrir' => 'Abrir em nova Aba',
+    ],
+
+    'userForm2' => [
+        'user' => 'Usuário',
+        'active' => 'Ativo?',
+        'name' => 'Nome',
+        'last-name' => 'Sobrenome',
+        'email' => 'E-mail',
+        'write' => '*Em branco para não alterar',
+        'senha' => 'Senha',
+        'password' => 'Confirme a senha',
+        'phone' => 'Telefone',
+        'back' => 'Voltar a tela principal',
+        'cadastra' => 'Cadastrar Usuário',
+        'atual-user' => 'Atualizar Usuário',
+    ],
+
+    'indexUser' => [
+        'new-user' => 'Novo Usuário',
+        'name' => 'Nome',
+        'email' => 'E-mail',
+        'phone' => 'Telefone',
+        'creation' => 'Criação',
+        'action' => 'Ações',
+        'delete-user' => 'Deseja excluir este usuário?',
+        'revert-action' => 'Está ação não pode ser revertida',
+        'cancel' => 'Cancelar',
+        'delete' => 'Excluir'
+    ],
+
+    'statementBalance' => [
+        'balance' => 'Extrato de Saldo ',
+        'balanceT' => 'Saldo Total:',
+        'bonus' => 'Bônus:',
+        'back' => 'Voltar',
+        'date' => 'Data',
+        'resp' => 'Responsável',
+        'wallet' => 'Carteira',
+        'valueA' => 'Valor Anterior',
+        'value' => 'Valor',
+        'aValue' => 'Valor Atual',
+        'descrip' => 'Descrição',
+        'dado-exibir' => 'Nenhum dado para exibir. ',
+        'saldo' => 'Saldo',
+        'bonus' => 'Bônus'
+    ],
+
+    'emailBlade' => [
+        'esqueceuSenha' => 'Esqueceu sua senha? Aqui você pode recuperar facilmente',
+        'solicitarSenha' => 'Solicitar nova senha',
+        'login' => 'Login',
+        'recuperar' => 'Recupera Senha',
+    ],
+
+    'resetBlade' => [
+        'recuperaSenha' => 'Recupera Senha',
+        'senha' => 'Senha',
+        'confirm' => 'Confirme a senha',
+        'altera' => 'Alterar senha',
+        'login' => 'Login'
+    ],
+
+    'loginBlade' => [
+        'login' => 'Login',
+        'senharec' => 'SenhaRecuperada',
+        'login' => 'Login',
+        'senha' => 'Senha',
+        'acess' => 'Acessar',
+        'poderiaajudar' => 'Olá, poderia me ajudar?',
+        'ajuda' => 'Precisa de ajuda?'
+    ],
+
+    'loginBladea' => [
+        'login' => 'Login',
+        'realizarLogin' => 'Realize o login para iniciar a sessão',
+        'password' => 'Senha',
+        'manterConectado' => 'Manter conectado',
+        'acesso' => 'Acessar',
+        'esqueciSenha' => 'Esqueci minha senha',
+    ],
+
+    'clientForm' => [
+        'password' => 'Senha',
+        'write' => '*Em branco para não alterar',
+        'confirm' => 'Confirme a senha',
+    ],
+
+    'customerDashboard' => [
+        'visaoCliente' => 'Visão Detalhada do Cliente',
+        'concurso' => 'Concurso',
+        'typeGames' => 'Tipo de Jogo',
+        'value' => 'Valor Apostado',
+        'premio' => 'Prêmio',
+        'date' => 'Data',
+    ],
+
+    'customerWinners' => [
+        'visaoD' => 'Visão Detalhada de Clientes Premiados',
+        'selecU' => 'Selecionar Usuário',
+        'digite' => 'Digite Aqui ...',
+        'selecC' => 'Selecionar Cliente',
+        'dateI' => 'Data Inicio',
+        'dateF' => 'Data Final',
+        'filtrar' => 'Filtrar',
+        'obs' => 'Obs: Para filtrar todo o histórico do cliente, deixe os campos de data em branco, ou
+        informe o intervalo desejado'
+    ],
+
+    'customerDetails' => [
+        'totalApost' => 'Total de apostas feitas',
+        'valueApost' => 'Valor Apostado',
+        'premioC' => 'Prêmio Cliente',
+        'lucro/prej' => 'Lucro/Prejuizo(Casa)',
+        'visaoCliente' => 'Visão Detalhada do Cliente',
+        'concurso' => 'Concurso',
+        'typegame' => 'Tipo de Jogo',
+        'valueapost' => 'Valor Apostado',
+        'premio' => 'Prêmio',
+        'client' => 'Cliente',
+        'date' => 'Data',         
+    ],
+
+    'detailedView' => [
+        'visaoC' => 'Visão Detalhada de Clientes Premiados',
+        'selecC' => 'Selecionar Cliente',
+        'dateI' => 'Data Inicio',
+        'dateF' => 'Data Final',
+        'filtrar' => 'Filtrar',
+        'obs' => 'Obs: Para filtrar todo o histórico do cliente, deixe os campos de data em branco, ou informe o intervalo desejado'
+    ],
+
+    'extratoVendas' => [
+        'extract' => 'Extrato de Vendas',
+        'extratoR' => 'Extrato de Recargas Manuais'
+    ],
+
+    'walletBlade' => [
+        'saque' => 'Saque - Solicitações',
+        'conversao' => 'Conversão - Conversão de Bônus para Saldo',
+        'wallet' => 'Carteira - Extrato de transações',
+        'wallett' => 'Carteira',
+        'detailedP' => 'Detalhe do Pedido',
+        'recharge' => 'Recarga - Adicione Saldo',
+        'thanks' => 'Obrigado!',
+        'recebemosC' => 'Recebemos sua compra!',
+        'confirm' => 'Aguardaremos a confirmação do pagamento com nosso intermediador, e em breve teremos novidades
+        para você.',
+        'inicio' => 'Ir para o início.',
+        'walletTransf' => 'Carteira - Transferência',
+        'walletSolicit' => 'Carteira - Solicitação de Saque'
+    ],
+
+    'points-by-user' => [
+        'relatorio' => 'Relatório - Pontos por Usuário',
+        'name' => 'Nome',
+        'email' => 'Email',
+        'nivel' => 'Nível',
+        'pointsp' => 'Pontos Pessoais',
+        'pointse' => 'Pontos de Equipe'
+    ],
+
+    'used-dozens' => [
+        'relatorio' => 'Relatório - Dezenas Utilizadas por Concurso',
+        'dozens' => 'Dezena',
+        'quant' => 'Quantidade'
+    ],
+
+    'used-dozensB' => [
+        'relatorio' => 'Relatório - Concursos',
+        'number' => 'Número',
+        'typegame' => 'Tipo de Jogo',
+        'date' => 'Data de Sorteio',
+        'creation' => 'Criação',
+        'actions' => 'Ações' 
+    ],
+
+    'permissionsNew' => [
+        'newperm' => 'Nova Permissão',
+        'edit' => 'Editar Função',
+        'permission' => 'Permissões'
+    ],
+
+    'qualificationBlade' => [
+        'newQual' => 'Nova Qualificação',
+        'qualif' => 'Qualificação',
+        'name' => 'Nome',
+        'meta' => 'Meta de Pontos',
+        'aproveitamentoP' => 'Aproveitamento Pessoal',
+        'aproveitamentoG' => 'Aproveitamento Grupo',
+        'voltarP' => 'Voltar a tela principal',
+        'cadastrar' => 'Cadastrar'
+        ],
+
+    'qualificationBlade2' => [
+        'newEdit' => 'Editar Qualificação',
+        'qualif' => 'Qualificação',
+        'name' => 'Nome',
+        'meta' => 'Meta de Pontos',
+        'aproveitamentoP' => 'Aproveitamento Pessoal',
+        'aproveitamentoG' => 'Aproveitamento Grupo',
+        'voltarP' => 'Voltar a tela principal',
+        'alter' => 'Alterar'
+        ],
+
+    'qualificationIndex' => [
+        'qualif' => 'Qualificações',
+        'newQ' => 'Nova Qualificação',
+        'name' => 'Nome',
+        'metaP' => 'Meta de Pontos',
+        'aprovP' => 'Aproveitamento Pessoal',
+        'aprovG' => 'Aproveitamento Grupo',
+        'actions' => 'Ações',
+        'excluiQ' => 'Deseja excluir esta qualificação?',
+        'actionrevert' => 'Está ação não pode ser revertida',
+        'cancel' => 'Cancelar',
+        'exclui' => 'Excluir'
+    ],
+
+    'roleCreate' => [
+        'newFunction' => 'Nova Função',
+        'editFunction' => 'Editar Função',
+        'functions' => 'Funções'
+    ],
+
+    'system' => [
+        'editConfig' => 'Editar Configurações',
+        'editConf' => 'Editar Configuração',
+        'nameConf' => 'Nome da configuração:',
+        'value' => 'Valor',
+        'planoC' => 'Plano de Carreira: ',
+        'desat' => 'Desativado',
+        'ativ' => 'Ativar',
+        'desativ' => 'Desativar',
+        'ativad' => 'Ativado',
+        'anexArq' => 'Anexar arquivo',
+        'logo' => 'Logo do Sistema',
+        'config' => 'Configurações',
+        'actions' => 'Ações',
+        'logos' => 'Logo do Sistema',
+        'volt' => 'Voltar a tela principal',
+        'salvar' => 'Salvar Configuração'
+    ],
+
+    'homeBladeK' => [
+        'games' => 'JOGOS',
+        'copLink' => 'Copiar Link',
+        'envWpp' => 'Enviar via WhatsApp',
+        'gamesCadast' => ' Não existem tipos de jogos cadastrados!'
+    ],
+
+    'forgetPassoword' => [
+        'recSenha' => 'Recupere Sua Senha',
+        'linkRec' => 'Vamos enviar um link de recuperação para seu e-mail',
+        'env' => 'Enviar',
+        'altSenha' => 'Alterar Senha',
+        'email' => 'Seu Email: ',
+        'password' => 'Sua Senha: ',
+        'confirmP' => 'Confirme Sua Senha: '
+    ],
+
+    'forgetBlade' => [
+        'reset' => 'Reset de Senha',
+        'link' => 'Olá, você solicitou o reset de senha, segue o link abaixo para realizar o procedimento:',
+        'recuperarS' => 'Recuperar Senha',
+        'atenc' => 'Atenciosamente,'
+    ],
+
+    'jogoBlade' => [
+        'bihete' => 'Seu Bilhete',
+        'jogoID' => 'Olá, você acaba de realizar o Jogo de ID:',
+        'anexo' => 'Segue anexo o seu bilhete.',
+        'thanks' => 'Obrigado por jogar conosco.',
+        'atencio' => 'Atenciosamente,'
+    ],
+
+    'cliente' => [
+        'sEmptyTable' => 'Nenhum registro encontrado',
+        'sInfo' => 'Mostrando de _START_ até _END_ de _TOTAL_ registros',
+        'sInfoEmpty' => 'Mostrando 0 até 0 de 0 registros',
+        'sInfoFiltered' => '(Filtrados de _MAX_ registros)',
+        'sLengthMenu' => 'Exibir _MENU_ resultados por página',
+        'sLoadingRecords' => 'Carregando...',
+        'sProcessing' => 'Processando...',
+        'sZeroRecords' => 'Nenhum registro encontrado',
+        'sSearch' => 'Pesquisar',
+        'sNext' => 'Próximo',
+        'sPrevious' => 'Anterior',
+        'sFirst' => 'Primeiro',
+        'sLast' => 'Último'
+    ],
+
+
+    'comissão' => [
+        'commissions' => 'COMISSÕES',
+        'downloadingPayments' => 'Baixando Pagamentos',
+        'downloadPayment' => 'Baixar Pagamento',
+        'paymentInformation' => 'Informações de Pagamento',
+        'quantity' => 'Quantidade:',
+        'sales' => 'Vendas:',
+        'bonus' => 'Bônus:',
+        'total' => 'Total:',
+        'ID' => 'Id',
+        'gameType' => 'Tipo de Jogo',
+        'customerCPF' => 'CPF Cliente',
+        'client' => 'Cliente',
+        'user' => 'Usuário',
+        'value' => 'Valor',
+        'commission' => 'Comissão',
+        'creation' => 'Criação',
+        'no-record-found' => 'Nenhum registro encontrado.'
     ],
 
     'ranking' => [
@@ -135,7 +791,7 @@ return [
         'table-group-points-header' => 'Pontos de Grupo',
         'table-total-points-header' => 'Pontos Totais'
     ],
-    
+
     'points' => [
         'page-title' => 'Relatório de Pontos',
         'page-header' => 'Resumo',

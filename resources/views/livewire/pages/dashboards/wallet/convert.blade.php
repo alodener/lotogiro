@@ -1,19 +1,19 @@
 <div>
     <div class="col-md-12">
         <div class="card card-info">
-            <div class="card-header">
-                <h3 class="card-title">Conversão de Bônus para Saldo</h3>
+            <div class="card-header"> 
+                <h3 class="card-title"> {{ trans('admin.convertWallet.conversao') }} </h3>
             </div>
             <div class="card-body">
                 <div x-data="{}">
                     <div class="row mt-2">
                         <div class="col-md-5 col-sm-12">
-                            <h4>Saldo: R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
-                            <h4>Bônus: R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h4>
+                            <h4>{{ trans('admin.convertWallet.balance') }}  R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
+                            <h4>{{ trans('admin.convertWallet.bonuss') }}  R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h4>
                         </div>
                         <div class="col-md-7 col-sm-12">
-                            <h6>Valor a transferir</h6>
-                            <small>(Valor deve ser menor ou igual ao seu <b>BÔNUS</b>)</small>
+                            <h6>{{ trans('admin.convertWallet.valueT') }} </h6>
+                            <small>{{ trans('admin.convertWallet.valueM') }} <b>{{ trans('admin.convertWallet.bonus') }}</b>)</small>
                             <div class="input-group">
                                 <input wire:model="valueConvert" x-on:focus="formatInput()" type="text"
                                        class="search-query form-control" placeholder="Valor a converter"
@@ -24,7 +24,7 @@
                             <div class="input-group">
                                 <button wire:click="transferBalance" type="button" class="btn btn-dark
                                 btn-block">
-                                    Converter <span class="fa fa-exchange-alt" style="color: #fff938"></span>
+                                {{ trans('admin.convertWallet.convert') }} <span class="fa fa-exchange-alt" style="color: #fff938"></span>
                                 </button>
                             </div>
                         </div>
