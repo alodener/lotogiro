@@ -1,6 +1,6 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">{{ trans('admin.withBlade.wallet') }}  </h3>
+        <h3 class="text-center text-bold">CARTEIRA</h3>
     </div>
     <div class="row bg-white p-3">
         <div class="col-md-12">
@@ -8,10 +8,10 @@
             <div class="card-header indica-card">
                 <div class= "row">
                     <div class="col-md-11">
-                    {{ trans('admin.withBlade.solicitacao') }}  
+                Solicitações de Saque - Visualizar Histórico
                     </div>
                 <div class="text-right">
-                    <a href="{{route('admin.dashboards.wallet.withdraw-list')}}" class="btn btn-warning">  {{ trans('admin.withBlade.volt') }}   </a> 
+                    <a href="{{route('admin.dashboards.wallet.withdraw-list')}}" class="btn btn-warning"> Voltar </a> 
                 </div>
                 </div>
             </div>
@@ -20,14 +20,14 @@
                 <table class="table table-striped table-hover table-bordered table-lg">
                     <thead>
                     <tr>
-                        <th>{{ trans('admin.withBlade.date') }}   </th>
-                        <th>{{ trans('admin.withBlade.resp') }} </th>
+                        <th>Data</th>
+                        <th>Responsável</th>
                         @if(\App\Helper\UserValidate::iAmAdmin())
                             <th>Pix</th>
                         @endif
-                        <th>{{ trans('admin.withBlade.value') }} </th>
-                        <th>{{ trans('admin.withBlade.status') }} </th>
-                        <th>{{ trans('admin.withBlade.acao') }} </th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ação</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,7 +46,7 @@
                                 <button wire:click="withdrawDone({{ $withdraw->id }})" type="button" class="btn
                                     btn-warning">
                                     <i class="fa fa-check-circle"></i>
-                                    {{ trans('admin.withBlade.feito') }} 
+                                    Feito
                                 @else
                                 <button disabled type="button" class="btn btn-success"><i class="fa
                                     fa-check-circle"></i></button>

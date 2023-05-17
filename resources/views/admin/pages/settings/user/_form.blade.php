@@ -18,7 +18,7 @@
     <div class="col-md-7 indica-user">
         <div class="card card-info pb-5">
             <div class="card-header">
-                <h3 class="card-title">{{ trans('admin.userForm.user') }}  </h3>
+                <h3 class="card-title">Usuário</h3>
             </div>
             <div class="card-body">
                 @if(Route::currentRouteName() == 'admin.settings.users.edit')
@@ -26,13 +26,13 @@
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="status" name="status"
                                @isset($user->status) @if($user->status == 1) checked @endif @endisset>
-                        <label class="custom-control-label" for="status">{{ trans('admin.userForm.active') }}  </label>
+                        <label class="custom-control-label" for="status">Ativo?</label>
                     </div>
                     @endcan
                 @endif
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="name">{{ trans('admin.userForm.name') }}  </label>
+                        <label for="name">Nome</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                                name="name"
                                maxlength="50" value="{{old('name', $user->name ?? null)}}">
@@ -43,7 +43,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-8">
-                        <label for="last_name">{{ trans('admin.userForm.last-name') }} </label>
+                        <label for="last_name">Sobrenome</label>
                         <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name"
                                name="last_name"
                                maxlength="100" value="{{old('last_name', $user->last_name ?? null)}}">
@@ -56,18 +56,18 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="indicador">{{ trans('admin.userForm.id') }} </label>
+                        <label for="indicador">ID Indicador</label>
 
                         <div class="input-group">
                             <input type="number" class="form-control" id="indicador" name="indicador" value="{{old('indicador', $user->indicador ?? null)}}" maxlength="20">
                             <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" type="button">{{ trans('admin.userForm.details') }} </button>
+                              <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" type="button">Detalhes</button>
                             </div>
                         </div>
                     </div>
                     
                     <div class="form-group col-md-8">
-                        <label for="email">{{ trans('admin.userForm.email') }}  </label>
+                        <label for="email">E-mail</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
                                name="email"
                                maxlength="100" value="{{old('email', $user->email ?? null)}}">
@@ -96,12 +96,12 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="password">{{ trans('admin.userForm.senha') }}   </label>
+                        <label for="password">Senha</label>
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
                                id="password" name="password"
                                maxlength="15">
                         @if(Route::currentRouteName() == 'admin.settings.users.edit')
-                            <small>{{ trans('admin.userForm.write') }} </small>
+                            <small>*Em branco para não alterar</small>
                         @endif
                         @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -110,7 +110,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="confirm_password">{{ trans('admin.userForm.password') }}  </label>
+                        <label for="confirm_password">Confirme a senha</label>
                         <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                                id="password_confirmation"
                                name="password_confirmation" maxlength="15">
@@ -134,7 +134,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="telefone" id="telefoneL">{{ trans('admin.userForm.phone') }}   </label>
+                        <label for="telefone" id="telefoneL">Telefone</label>
                         <input type="text" class="form-control @error('telefone') is-invalid @enderror"
                                id="telefone"
                                name="telefone" maxlength="18" value="{{old('phone', isset($user->phone) && !empty($user->phone) ? $user->ddd.$user->phone : null) }}">
@@ -164,11 +164,11 @@
     <div class="col-md-5 indica-user">
         <div class="card card-info pb-5">
             <div class="card-header">
-                <h3 class="card-title">{{ trans('admin.userForm.values') }}  </h3>
+                <h3 class="card-title">Valores</h3>
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="commission">{{ trans('admin.userForm.comission') }} </label>
+                    <label for="commission">Porcentagem de Comissão</label>
                     <input type="text" class="form-control @error('commission') is-invalid @enderror" id="commission"
                            name="commission"
                            maxlength="100" value="{{old('commission', $user->commission ?? null)}}">
@@ -179,13 +179,13 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="balanceAtual">{{ trans('admin.userForm.balance-actual') }} </label>
+                    <label for="balanceAtual">Saldo Atual</label>
                     <input type="text" readonly class="form-control text-right" id="balanceAtual"
                            name="balanceAtual"
                            maxlength="100"
                            value="{{old('balance', !empty($user->balance) ? \App\Helper\Money::toReal($user->balance) : null)}}">
 
-                    <label for="balance">{{ trans('admin.userForm.add') }}  </label>
+                    <label for="balance">Adicionar Saldo</label>
                     <input type="text" class="form-control @error('balance') is-invalid @enderror" id="balance"
                            name="balance"
                            maxlength="100">
@@ -199,10 +199,10 @@
                     @if(Route::currentRouteName() == 'admin.settings.users.edit')
                         <div class="row">
                             <div class="col-md-6">
-                        <a href="{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary btn-block">{{ trans('admin.userForm.balance') }} </a>
+                        <a href="{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary btn-block">Extrato de Saldo</a>
                             </div>
                             <div class="col-md-6">
-                        <button type="button" class="btn btn-primary btn-block" onclick="habilitarcampo();">{{ trans('admin.userForm.ajuste') }} </button>
+                        <button type="button" class="btn btn-primary btn-block" onclick="habilitarcampo();">Ajuste Manual</button>
                             </div>
                     </div>
                     @endif
@@ -211,7 +211,7 @@
         </div>
         <div class="card card-secondary">
             <div class="card-header">
-                <h3 class="card-title">{{ trans('admin.userForm.functions') }}  </h3>
+                <h3 class="card-title">Funções</h3>
             </div>
             <div class="card-body">
                 <div class="form-group">
@@ -228,7 +228,7 @@
                                 </div>
                             @endforeach
                         @else
-                            <p>{{ trans('admin.userForm.no-functions') }}   </p>
+                            <p>Ainda não existe funções cadastradas.</p>
                         @endif
                     @else
                         @if(isset($roles) && $roles->count() > 0)
@@ -248,18 +248,18 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.settings.users.index')}}">
-            <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.userForm.back') }}  </button>
+            <button type="button" class="btn btn-block btn-outline-secondary">Voltar a tela principal</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">
         <button type="submit"
-                class="btn btn-block btn-outline-success">@if(request()->is('admin/settings/users/create')) {{ trans('admin.userForm.cadastra') }}  
-                  @else  {{ trans('admin.userForm.atual-user') }}  @endif </button>
+                class="btn btn-block btn-outline-success">@if(request()->is('admin/settings/users/create')) Cadastrar
+            Usuário  @else  Atualizar Usuário @endif </button>
     </div>
 
     @if(isset($user))
         <div class="col-md-12">
-            <a href="{{ route('admin.settings.users.login-as', $user->id) }}" class="btn btn-block btn-outline-info">{{ trans('admin.userForm.entrar') }}   </a>
+            <a href="{{ route('admin.settings.users.login-as', $user->id) }}" class="btn btn-block btn-outline-info">Entrar como usuário</a>
         </div>
     @endif
 </div>
@@ -272,7 +272,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ trans('admin.userForm.details-indication') }}  </h5>
+          <h5 class="modal-title" id="exampleModalLabel">Detalhes do Indicador</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -280,10 +280,10 @@
         <div class="modal-body">
             <p>
 
-             <strong>{{ trans('admin.userForm.namee') }}  </strong> {{ $user->referrer ? $user->referrer->name . ' ' . $user->referrer->last_name : '-' }}
+             <strong>Nome: </strong> {{ $user->referrer ? $user->referrer->name . ' ' . $user->referrer->last_name : '-' }}
             </p>
             <p>
-                <strong>{{ trans('admin.userForm.emaill') }}   </strong> {{ $user->referrer ? $user->referrer->email : '-' }}
+                <strong>E-mail: </strong> {{ $user->referrer ? $user->referrer->email : '-' }}
             </p>
             <p>
                 <strong>Tel.: </strong> {{ $user->referrer ? $user->referrer->phone : '-' }}
@@ -293,8 +293,8 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.userForm.fecha') }}   </button>
-          <a type="button" href="{{ route('admin.settings.users.edit', ['user' => $user->indicador]) }}" target="_blank" class="btn btn-info">{{ trans('admin.userForm.abrir') }} </a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <a type="button" href="{{ route('admin.settings.users.edit', ['user' => $user->indicador]) }}" target="_blank" class="btn btn-info">Abrir em nova Aba</a>
         </div>
       </div>
     </div>

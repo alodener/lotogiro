@@ -25,11 +25,11 @@
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>{{ trans ('admin.points-by-user.name') }} </th>
-                        <th>{{ trans ('admin.points-by-user.email') }} </th>
-                        <th>{{ trans ('admin.points-by-user.nivel') }} </th>
-                        <th>{{ trans ('admin.points-by-user.pointsp') }} </th>
-                        <th>{{ trans ('admin.points-by-user.pointse') }} </th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Nível</th>
+                        <th>Pontos Pessoais</th>
+                        <th>Pontos de Equipe</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -52,16 +52,7 @@
         $(document).ready(function () {
             var table = $('#user_table').DataTable({
                 language: {
-                    "lengthMenu": "{{ trans ('admin.language.lengthMenu') }}",
-                    "zeroRecords": "{{ trans ('admin.language.zeroRecords') }}",
-                    "info": "{{ trans ('admin.language.info') }}",
-                    "infoEmpty":  "{{ trans ('admin.language.infoEmpty') }}",
-                    "infoFiltered": "{{ trans ('admin.language.infoFiltered') }}",
-                    "search": "{{ trans ('admin.language.search') }}",
-                "paginate": {
-                    "next": "{{ trans ('admin.language.next') }}",
-                    "previous": "{{ trans ('admin.language.previous') }}"
-                }
+                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
                 },
                 processing: true,
                 serverSide: true,

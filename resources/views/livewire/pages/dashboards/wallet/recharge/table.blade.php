@@ -1,11 +1,11 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">{{ trans('admin.walletAdd.WALLET') }}</h3>
+        <h3 class="text-center text-bold">CARTEIRA</h3>
     </div>
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header indica-card">
-                <h3 class="card-title">{{ trans('admin.walletAdd.addBalance') }}</h3>
+                <h3 class="card-title">Adicionar Saldo</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -18,17 +18,18 @@
                                             <li class="list-group-item">
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-7">
-                                                        <h6 class="my-0">{{ trans('admin.walletAdd.valueAdd') }}</h6>
-                                                        <small class="text-muted">{{ trans('admin.walletAdd.valueMin') }}
+                                                        <h6 class="my-0">Valor a ser adicionado</h6>
+                                                        <small class="text-muted">Valor mínimo de R$ 1,00
 
-                                                            <small class="text-muted"><p> {{ trans('admin.walletAdd.value') }}  </p></small>
+                                                            <small class="text-muted"><p>O valor inserido, será creditado
+                                                                em sua conta assim que formos notificados.</p></small>
                                                         </small>
                                                     </div>
 
                                                     <div class="col-sm-12 col-md-5 input-group">
                                                         <input wire:model="valueAdd" x-on:focus="formatInput()"
                                                                type="text" name="valueAdd" id="valueAdd"
-                                                               class="search-query form-control w-100" placeholder="{{ trans('admin.walletAdd.valuee') }}" />
+                                                               class="search-query form-control w-100" placeholder="Valor" />
                                                     </div>
                                                 </div>
                                             </li>
@@ -46,7 +47,7 @@
                                             @else
                                                 <button wire:click.prevent="callZoop" type="submit"
                                                     @if($valueAdd <= 9.99) disabled @endif
-                                                    class="btn btn-info btn-md btn-block"> {{ trans('admin.walletAdd.continuar') }} {{$valueAdd}}</button>
+                                                    class="btn btn-info btn-md btn-block">Continuar {{$valueAdd}}</button>
                                             @endif
                                         </div>
                                     </div>

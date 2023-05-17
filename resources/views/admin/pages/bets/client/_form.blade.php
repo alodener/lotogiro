@@ -146,12 +146,12 @@
                 </div>
                 {{--                <div class="form-row">--}}
                 {{--                    <div class="form-group col-md-6">--}}
-                {{--                        <label for="password">{{ trans('admin.clientForm.password') }} </label>--}}
+                {{--                        <label for="password">Senha</label>--}}
                 {{--                        <input type="password" class="form-control @error('password') is-invalid @enderror"--}}
                 {{--                               id="password" name="password"--}}
                 {{--                               maxlength="15">--}}
                 {{--                        @if(Route::currentRouteName() == 'admin.settings.users.edit')--}}
-                {{--                            <small>{{ trans('admin.clientForm.write') }} </small>--}}
+                {{--                            <small>*Em branco para não alterar</small>--}}
                 {{--                        @endif--}}
                 {{--                        @error('password')--}}
                 {{--                        <span class="invalid-feedback" role="alert">--}}
@@ -160,7 +160,7 @@
                 {{--                        @enderror--}}
                 {{--                    </div>--}}
                 {{--                    <div class="form-group col-md-6">--}}
-                {{--                        <label for="confirm_password">{{ trans('admin.clientForm.confirm') }} </label>--}}
+                {{--                        <label for="confirm_password">Confirme a senha</label>--}}
                 {{--                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"--}}
                 {{--                               id="password_confirmation"--}}
                 {{--                               name="password_confirmation" maxlength="15">--}}
@@ -178,7 +178,7 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.bets.clients.index')}}">
-            <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.back-to-main-page') }} </button>
+            <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.back-to-main-page') }}</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">

@@ -16,15 +16,15 @@
         @enderror
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">{{ trans('admin.formRole.function') }} </h3>
+                <h3 class="card-title">Função</h3>
             </div>
             <div class="card-body">
                 <div class="form-row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="name">{{ trans('admin.formRole.name') }} </label>
+                            <label for="name">Nome</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                   id="name" name="name" placeholder="{{ trans('admin.formRole.example') }} "
+                                   id="name" name="name" placeholder="Ex: Administrador de Sistemas"
                                    maxlength="50" value="{{ $role->name ?? null }}">
                             @error('name')
                             <span class="invalid-feedback" role="alert">
@@ -38,15 +38,15 @@
         </div>
         <div class="card card-danger">
             <div class="card-header">
-                <h3 class="card-title">{{ trans('admin.formRole.permissions') }} </h3>
+                <h3 class="card-title">Permissões</h3>
             </div>
             <div class="card-body">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab" href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">{{ trans('admin.formRole.config') }} </a>
-                        <a class="nav-item nav-link" id="nav-bets-tab" data-toggle="tab" href="#nav-bets" role="tab" aria-controls="nav-bets" aria-selected="true">{{ trans('admin.formRole.apostas') }} </a>
-                        <a class="nav-item nav-link" id="nav-dashboards-tab" data-toggle="tab" href="#nav-dashboards" role="tab" aria-controls="nav-dashboards" aria-selected="true">{{ trans('admin.formRole.dashboard') }} </a>
-                        <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#nav-payments" role="tab" aria-controls="nav-payments" aria-selected="true">{{ trans('admin.formRole.payments') }} </a>
+                        <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab" href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="true">Configurações</a>
+                        <a class="nav-item nav-link" id="nav-bets-tab" data-toggle="tab" href="#nav-bets" role="tab" aria-controls="nav-bets" aria-selected="true">Apostas</a>
+                        <a class="nav-item nav-link" id="nav-dashboards-tab" data-toggle="tab" href="#nav-dashboards" role="tab" aria-controls="nav-dashboards" aria-selected="true">Dashboards</a>
+                        <a class="nav-item nav-link" id="nav-payments-tab" data-toggle="tab" href="#nav-payments" role="tab" aria-controls="nav-payments" aria-selected="true">Pagamentos</a>
                       </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
@@ -54,9 +54,9 @@
                         <div class="row my-2">
                             <div class="col-md-3">
                                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                    <a class="nav-link active" id="v-pills-users-tab" data-toggle="pill" href="#v-pills-users" role="tab" aria-controls="v-pills-users" aria-selected="true">{{ trans('admin.formRole.users') }}  </a>
-                                    <a class="nav-link" id="v-pills-roles-tab" data-toggle="pill" href="#v-pills-roles" role="tab" aria-controls="v-pills-roles" aria-selected="false">{{ trans('admin.formRole.functions') }}  </a>
-                                    <a class="nav-link" id="v-pills-permissions-tab" data-toggle="pill" href="#v-pills-permissions" role="tab" aria-controls="v-pills-permissions" aria-selected="false">{{ trans('admin.formRole.permissionss') }}  </a>
+                                    <a class="nav-link active" id="v-pills-users-tab" data-toggle="pill" href="#v-pills-users" role="tab" aria-controls="v-pills-users" aria-selected="true">Usuários</a>
+                                    <a class="nav-link" id="v-pills-roles-tab" data-toggle="pill" href="#v-pills-roles" role="tab" aria-controls="v-pills-roles" aria-selected="false">Funções</a>
+                                    <a class="nav-link" id="v-pills-permissions-tab" data-toggle="pill" href="#v-pills-permissions" role="tab" aria-controls="v-pills-permissions" aria-selected="false">Permissões</a>
                                 </div>
                             </div>
                             <div class="col-md-9">
@@ -106,11 +106,11 @@
                         <div class="row my-2">
                             <div class="col-md-3">
                                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                    <a class="nav-link active" id="v-pills-clients-tab" data-toggle="pill" href="#v-pills-clients" role="tab" aria-controls="v-pills-clients" aria-selected="true">{{ trans('admin.formRole.clients') }} </a>
-                                    <a class="nav-link" id="v-pills-competitions-tab" data-toggle="pill" href="#v-pills-competitions" role="tab" aria-controls="v-pills-competitions" aria-selected="true">{{ trans('admin.formRole.concursos') }} </a>
-                                    <a class="nav-link" id="v-pills-type_games-tab" data-toggle="pill" href="#v-pills-type_games" role="tab" aria-controls="v-pills-type_games" aria-selected="true">{{ trans('admin.formRole.typeGames') }}  </a>
-                                    <a class="nav-link" id="v-pills-games-tab" data-toggle="pill" href="#v-pills-games" role="tab" aria-controls="v-pills-games" aria-selected="true">{{ trans('admin.formRole.games') }}  </a>
-                                    <a class="nav-link" id="v-pills-draws-tab" data-toggle="pill" href="#v-pills-draws" role="tab" aria-controls="v-pills-draws" aria-selected="true">{{ trans('admin.formRole.sorteio') }}   </a>
+                                    <a class="nav-link active" id="v-pills-clients-tab" data-toggle="pill" href="#v-pills-clients" role="tab" aria-controls="v-pills-clients" aria-selected="true">Clientes</a>
+                                    <a class="nav-link" id="v-pills-competitions-tab" data-toggle="pill" href="#v-pills-competitions" role="tab" aria-controls="v-pills-competitions" aria-selected="true">Concursos</a>
+                                    <a class="nav-link" id="v-pills-type_games-tab" data-toggle="pill" href="#v-pills-type_games" role="tab" aria-controls="v-pills-type_games" aria-selected="true">Tipos de Jogo</a>
+                                    <a class="nav-link" id="v-pills-games-tab" data-toggle="pill" href="#v-pills-games" role="tab" aria-controls="v-pills-games" aria-selected="true">Jogos</a>
+                                    <a class="nav-link" id="v-pills-draws-tab" data-toggle="pill" href="#v-pills-draws" role="tab" aria-controls="v-pills-draws" aria-selected="true">Sorteios</a>
                                 </div>
                             </div>
                             <div class="col-md-9">
@@ -184,9 +184,9 @@
                         <div class="row my-2">
                             <div class="col-md-3">
                                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                    <a class="nav-link active" id="v-pills-extracts-tab" data-toggle="pill" href="#v-pills-extracts" role="tab" aria-controls="v-pills-extracts" aria-selected="true">{{ trans('admin.formRole.extrato') }}  </a>
-                                    <a class="nav-link" id="v-pills-sales-tab" data-toggle="pill" href="#v-pills-sales" role="tab" aria-controls="v-pills-sales" aria-selected="true">{{ trans('admin.formRole.vendas') }}   </a>
-                                    <a class="nav-link" id="v-pills-gains-tab" data-toggle="pill" href="#v-pills-gains" role="tab" aria-controls="v-pills-gains" aria-selected="true">{{ trans('admin.formRole.ganhos') }}  </a>
+                                    <a class="nav-link active" id="v-pills-extracts-tab" data-toggle="pill" href="#v-pills-extracts" role="tab" aria-controls="v-pills-extracts" aria-selected="true">Extrato</a>
+                                    <a class="nav-link" id="v-pills-sales-tab" data-toggle="pill" href="#v-pills-sales" role="tab" aria-controls="v-pills-sales" aria-selected="true">Vendas</a>
+                                    <a class="nav-link" id="v-pills-gains-tab" data-toggle="pill" href="#v-pills-gains" role="tab" aria-controls="v-pills-gains" aria-selected="true">Ganhos</a>
                                 </div>
                             </div>
                             <div class="col-md-9">
@@ -236,8 +236,8 @@
                         <div class="row my-2">
                             <div class="col-md-3">
                                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                    <a class="nav-link active" id="v-pills-payments-commissions-tab" data-toggle="pill" href="#v-pills-payments-commissions" role="tab" aria-controls="v-pills-payments-commissions" aria-selected="true">{{ trans('admin.formRole.comission') }}  </a>
-                                    <a class="nav-link" id="v-pills-payments-draws-tab" data-toggle="pill" href="#v-pills-payments-draws" role="tab" aria-controls="v-pills-payments-draws" aria-selected="true">{{ trans('admin.formRole.sorteio') }}   </a>
+                                    <a class="nav-link active" id="v-pills-payments-commissions-tab" data-toggle="pill" href="#v-pills-payments-commissions" role="tab" aria-controls="v-pills-payments-commissions" aria-selected="true">Comissão</a>
+                                    <a class="nav-link" id="v-pills-payments-draws-tab" data-toggle="pill" href="#v-pills-payments-draws" role="tab" aria-controls="v-pills-payments-draws" aria-selected="true">Sorteio</a>
                                 </div>
                             </div>
                             <div class="col-md-9">
@@ -279,12 +279,12 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.settings.roles.index')}}">
-            <button type="button" class="btn btn-block btn-info">{{ trans('admin.formRole.backTela') }}    </button>
+            <button type="button" class="btn btn-block btn-info">Voltar a tela principal</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">
         <button type="submit"
                 class="btn btn-block btn-success">@if(request()->is('admin/settings/roles/create'))
-                {{ trans('admin.formRole.cadastrar') }}      @else  {{ trans('admin.formRole.atualizar') }}       @endif </button>
+                Cadastrar Função  @else  Atualizar Função @endif </button>
     </div>
 </div>

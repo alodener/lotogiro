@@ -21,7 +21,7 @@
             @enderror
             @can('create_role')
             <a href="{{route('admin.settings.roles.create')}}">
-                <button class="btn btn-info my-2">{{ trans('admin.roleIndex.newFunction') }} </button>
+                <button class="btn btn-info my-2">Nova Função</button>
 
             </a>
             @endcan
@@ -30,9 +30,9 @@
                 <thead>
                 <tr>
                     <th>Id</th>
-                    <th>{{ trans('admin.roleIndex.name') }} </th>
-                    <th>{{ trans('admin.roleIndex.creation') }} </th>
-                    <th class="acoes">{{ trans('admin.roleIndex.acion') }}  </th>
+                    <th>Nome</th>
+                    <th>Criação</th>
+                    <th class="acoes">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,20 +46,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">{{ trans('admin.roleIndex.deleteFunction') }}  </h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Deseja excluir esta função?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                {{ trans('admin.roleIndex.acionRevert') }}  
+                    Está ação não pode ser revertida
                 </div>
                 <div class="modal-footer">
                     <form id="destroy" action="" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.roleIndex.cancel') }}  </button>
-                        <button type="submit" class="btn btn-danger">{{ trans('admin.roleIndex.delete') }} </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Excluir</button>
                     </form>
                 </div>
             </div>
@@ -81,16 +81,7 @@
         $(document).ready(function () {
             var table = $('#role_table').DataTable({
                 language: {
-                    "lengthMenu": "{{ trans ('admin.language.lengthMenu') }}",
-                    "zeroRecords": "{{ trans ('admin.language.zeroRecords') }}",
-                    "info": "{{ trans ('admin.language.info') }}",
-                    "infoEmpty":  "{{ trans ('admin.language.infoEmpty') }}",
-                    "infoFiltered": "{{ trans ('admin.language.infoFiltered') }}",
-                    "search": "{{ trans ('admin.language.search') }}",
-                "paginate": {
-                    "next": "{{ trans ('admin.language.next') }}",
-                    "previous": "{{ trans ('admin.language.previous') }}"
-                }
+                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
                 },
                 processing: true,
                 serverSide: true,
