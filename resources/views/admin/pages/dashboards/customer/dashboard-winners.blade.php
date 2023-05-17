@@ -6,7 +6,7 @@
     <div class="col bg-white p-3">
         <div class="row border-bottom">
             <div class="col">
-                <h1>Visão Detalhada de Clientes Premiados</h1>
+                <h1>{{ trans('admin.customerWinners.visaoD') }} </h1>
             </div>
         </div>
         <div class="row mt-3">
@@ -21,29 +21,28 @@
                 <form class="mb-2" action="{{ route('admin.dashboards.customer.detailed.view.user') }}" method="POST">
                     @csrf
                     <div id="user_name" class="form-group ui-widget w-25">
-                        <label for="input-url4">Selecionar Usuário</label>
-                        <input type="text" class="form-control" name="user_name" placeholder="Digite Aqui ..."
+                        <label for="input-url4">{{ trans('admin.customerWinners.selecU') }}  </label>
+                        <input type="text" class="form-control" name="user_name" placeholder="{{ trans('admin.customerWinners.digite') }} "
                             id="winners_names" />
                         <input type="hidden" name="user_id" id="winners_games_id">
                     </div>
                     <div id="client_name" class="form-group ui-widget w-25 hide">
-                        <label for="input-url4">Selecionar Cliente</label>
-                        <input type="text" class="form-control" name="client_name" placeholder="Digite Aqui ..."
+                        <label for="input-url4">{{ trans('admin.customerWinners.selecC') }} </label>
+                        <input type="text" class="form-control" name="client_name" placeholder="{{ trans('admin.customerWinners.digite') }} "
                             id="winners_names_client" />
                         <input type="hidden" name="client_id" id="winners_games_client_id">
                     </div>
                     <div class="form-group w-25">
-                        <label>Data Inicio</label>
+                        <label>{{ trans('admin.customerWinners.dateI') }} </label>
                         <input type="date" name="initial_date" class="form-control" id="initial_date">
                     </div>
                     <div class="form-group w-25">
-                        <label>Data Final</label>
+                        <label>{{ trans('admin.customerWinners.dateF') }} </label>
                         <input type="date" class="form-control" name="final_date" id="final_date">
                     </div>
-                    <button type="submit" onclick="validate_date(event)" class="btn btn-primary">Filtrar</button>
+                    <button type="submit" onclick="validate_date(event)" class="btn btn-primary">{{ trans('admin.customerWinners.filtrar') }} </button>
                 </form>
-                <p class="mt-3"><b>Obs: Para filtrar todo o histórico do cliente, deixe os campos de data em branco, ou
-                        informe o intervalo desejado</b></p>
+                <p class="mt-3"><b>{{ trans('admin.customerWinners.obs') }} </b></p>
             </div>
 
         </div>

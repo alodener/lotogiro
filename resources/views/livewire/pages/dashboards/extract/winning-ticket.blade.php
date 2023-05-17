@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                <span class="float-left">Bilhetes Premiados</span>
+                <span class="float-left">{{ trans('admin.bilhete.winning-Tickets') }}</span>
                 <span class="float-right">
-                    <a href="{{route('admin.dashboards.extracts.add-winning-ticket')}}" class="btn btn-light">Cadastrar Bilhetes</a>
+                    <a href="{{route('admin.dashboards.extracts.add-winning-ticket')}}" class="btn btn-light">{{ trans('admin.bilhete.register-Tickets') }}</a>
                 </span>
             </div>
         </div>
@@ -16,11 +16,11 @@
         <div class="col-md-2">
             <div class="form-group">
                 <select wire:model="range" class="custom-select" id="range" name="range">
-                    <option value="0">Diário</option>
-                    <option value="1">Ontem</option>
-                    <option value="2">Semanal</option>
-                    <option value="3">Mensal</option>
-                    <option value="4">Personalizado</option>
+                    <option value="0">{{ trans('admin.bilhete.daily') }}</option>
+                    <option value="1">{{ trans('admin.bilhete.yesterday') }}</option>
+                    <option value="2">{{ trans('admin.bilhete.weekly') }}</option>
+                    <option value="3">{{ trans('admin.bilhete.monthly') }}</option>
+                    <option value="4">{{ trans('admin.bilhete.custom') }}</option>
                 </select>
             </div>
         </div>
@@ -70,19 +70,19 @@
                         <div class="d-flex flex-row">
                             <div class="col-12 bg-cyan align-middle text-left pt-1">
                                 <h6>{{ $dado->user->name }} |
-                                    <strong>Sorteado em:
+                                    <strong>{{ trans('admin.bilhete.drawn-on') }} 
                                         {{ \Carbon\Carbon::parse($dado->created_at)->format('d/m/Y') }}
                                     </strong>
                                 </h6>
-                                <small><strong>Sorteado:</strong> {{ $dado->draw->numbers }}</small><br>
-                                <small><strong>Selecionados:</strong> {{ $dado->game->numbers }}</small>
+                                <small><strong>{{ trans('admin.bilhete.drawn') }} </strong> {{ $dado->draw->numbers }}</small><br>
+                                <small><strong>{{ trans('admin.bilhete.selected') }} </strong> {{ $dado->game->numbers }}</small>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         @empty
-            <div class="col-sm-12"><p>Nenhum jogo vendido.</p></div>
+            <div class="col-sm-12"><p>{{ trans('admin.bilhete.no-games') }}</p></div>
         @endforelse
     </div>
 </div>

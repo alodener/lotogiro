@@ -1,20 +1,20 @@
 <div class="col bg-white p-3">
     <div id="table" class="row mt-5">
         <div class="col">
-            <h2>Visão Detalhada do Cliente</h2>
+            <h2>{{ trans ('admin.customerDashboard.visaoCliente') }} </h2>
             <table class="table table-sm">
                 <thead>
                     <tr>
                         <th scope="col"></th>
-                        <th aria-controls="widget-options" scope="col">Concurso</th>
+                        <th aria-controls="widget-options" scope="col">{{ trans ('admin.customerDashboard.concurso') }}  </th>
                         <th scope="col"></th>
-                        <th scope="col">Tipo de Jogo</th>
+                        <th scope="col">{{ trans ('admin.customerDashboard.typeGames') }} </th>
                         <th scope="col"></th>
-                        <th scope="col">Valor Apostado</th>
+                        <th scope="col">{{ trans ('admin.customerDashboard.value') }}  </th>
                         <th scope="col"></th>
-                        <th scope="col">Prêmio</th>
+                        <th scope="col">{{ trans ('admin.customerDashboard.premio') }} </th>
                         <th scope="col"></th>
-                        <th scope="col">Data</th>
+                        <th scope="col">{{ trans ('admin.customerDashboard.date') }} </th>
                     </tr>
                 </thead>
                 <tbody>

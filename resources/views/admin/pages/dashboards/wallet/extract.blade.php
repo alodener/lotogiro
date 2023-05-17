@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Carteira - Extrato de transações')
+@section('title', 'Carteira - Extrato de transações ')
 
 @section('content')
     <div class="row bg-white p-3">

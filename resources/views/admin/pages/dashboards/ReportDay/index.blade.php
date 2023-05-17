@@ -17,10 +17,10 @@
     <div class="container">
         <select id="Filtro" class="form-select" aria-label="Default select example" onchange="Filtro()">
             <option selected value='0'>{{ trans('admin.select-period') }}</option>
-            <option value="1">{{ trans('admin.daily') }}</option>
-            <option value="2">{{ trans('admin.weekly') }}</option>
-            <option value="3">{{ trans('admin.monthly') }}</option>
-            <option value="4">{{ trans('admin.custom') }}</option>
+            <option value="1">{{ trans('admin.vendas.daily') }}</option>
+            <option value="2">{{ trans('admin.vendas.weekly') }}</option>
+            <option value="3">{{ trans('admin.vendas.monthly') }}</option>
+            <option value="4">{{ trans('admin.vendas.custom') }}</option>
         </select>
     </div> 
 
@@ -38,7 +38,7 @@
                 <input id="endDate" name='dataFinal' class="form-control" type="date" />
             </div>
             
-            <button type="submit"  style="margin-top: 20px" class="btn btn-primary">Pesquisar</button>
+            <button type="submit"  style="margin-top: 20px" class="btn btn-primary">{{ trans('admin.vendas.research') }}</button>
 
         </div>
     </form>
@@ -71,7 +71,7 @@
         <table id="relatorio" class="table table-striped" style="width: 100%">
             <thead>
                 <tr>
-                    <th>{{ trans('admin.network-sales.table-id-header') }}</th>
+                    <th>{{ trans('admin.network-sales.table-id-header') }} </th>
                     <th>{{ trans('admin.network-sales.table-name-header') }}</th>
                     <th>{{ trans('admin.network-sales.table-email-header') }}</th>
                     <th>{{ trans('admin.network-sales.table-total-sales-header') }}</th>
@@ -131,13 +131,22 @@ $(document).ready(function(){
    {"className": "dt-center", "targets": "_all"}
 ],
         
-        "language": {
-            "lengthMenu": "Mostrando _MENU_ registros por página",
-            "zeroRecords": "Nada encontrado",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "Nenhum registro disponível",
-            "infoFiltered": "(filtrado de _MAX_ registros no total)"
+"language": {
+            "lengthMenu": "{{ trans ('admin.language.lengthMenu') }}",
+            "zeroRecords": "{{ trans ('admin.language.zeroRecords') }}",
+            "info": "{{ trans ('admin.language.info') }}",
+            "infoEmpty":  "{{ trans ('admin.language.infoEmpty') }}",
+            "infoFiltered": "{{ trans ('admin.language.infoFiltered') }}",
+            "search": "{{ trans ('admin.language.search') }}",
+            "paginate": {
+                "next": "{{ trans ('admin.language.next') }}",
+                "previous": "{{ trans ('admin.language.previous') }}"
+                }
+         
+           
         }
+
+   
     });
 });
 </script>

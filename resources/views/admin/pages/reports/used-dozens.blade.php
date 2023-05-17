@@ -25,11 +25,11 @@
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Número</th>
-                        <th>Tipo de Jogo</th>
-                        <th>Data de Sorteio</th>
-                        <th>Criação</th>
-                        <th class="acoes">Ações</th>
+                        <th>{{ trans ('admin.used-dozensB.number') }} </th>
+                        <th>{{ trans ('admin.used-dozensB.typegame') }}  </th>
+                        <th>{{ trans ('admin.used-dozensB.date') }}   </th>
+                        <th>{{ trans ('admin.used-dozensB.creation') }}    </th>
+                        <th class="acoes">{{ trans ('admin.used-dozensB.actions') }} </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,7 +46,16 @@
         $(document).ready(function () {
             var table = $('#competition_table').DataTable({
                 language: {
-                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
+                    "lengthMenu": "{{ trans ('admin.language.lengthMenu') }}",
+                    "zeroRecords": "{{ trans ('admin.language.zeroRecords') }}",
+                    "info": "{{ trans ('admin.language.info') }}",
+                    "infoEmpty":  "{{ trans ('admin.language.infoEmpty') }}",
+                    "infoFiltered": "{{ trans ('admin.language.infoFiltered') }}",
+                    "search": "{{ trans ('admin.language.search') }}",
+                "paginate": {
+                    "next": "{{ trans ('admin.language.next') }}",
+                    "previous": "{{ trans ('admin.language.previous') }}"
+                }
                 },
                 processing: true,
                 serverSide: true,

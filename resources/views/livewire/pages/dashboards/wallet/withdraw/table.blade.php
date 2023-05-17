@@ -1,11 +1,11 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">CARTEIRA</h3>
+        <h3 class="text-center text-bold">{{ trans('admin.transferenciaSaldo.wallet') }}   </h3>
     </div>
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header indica-card">
-                <h3 class="card-title">Transferência de Saldo</h3>
+                <h3 class="card-title">{{ trans('admin.transferenciaSaldo.tranfer') }}   </h3>
             </div>
             <div class="card-body" style="margin-top: -35px !important;">
                 <div x-data="{data: @entangle('user')}">
@@ -13,20 +13,20 @@
                         <div class="row mt-5">
                             <div class="col-sm-7">
                                 <div class="card-header ganhos-card">
-                                    <h6><b>Dados do Recebedor</b></h6>
+                                    <h6><b>{{ trans('admin.transferenciaSaldo.dados') }} </b></h6>
                                 </div>
                                 <div class="col-sm-12">
-                                    <b>Nome: </b> <span x-text="data.name"></span>
+                                    <b>{{ trans('admin.transferenciaSaldo.name') }} </b> <span x-text="data.name"></span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <b>E-Mail: </b> <span x-text="data.email"></span>
+                                    <b>{{ trans('admin.transferenciaSaldo.email') }}  </b> <span x-text="data.email"></span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <b>Telefone: </b> <span x-text="data.phone"></span>
+                                    <b>{{ trans('admin.transferenciaSaldo.phone') }}   </b> <span x-text="data.phone"></span>
                                 </div>
                                 <div class="col-sm-12">
                                     <b>PIX: </b>
-                                    <small>Ao alterar essa informação, ela passa a ser sua principal.</small>
+                                    <small>{{ trans('admin.transferenciaSaldo.alterar') }} </small>
                                 </div>
                                 <div class="col-sm-12">
                                     <input wire:model.defer="pixSaque" class='col-sm-10' type="text" style="margin-bottom: 15px;"/>
@@ -35,17 +35,16 @@
                             <div class="col-sm-5">
 
                                 <div class="card-header ganhos-card">
-                                <h6><b>Valor a retirar</b></h6>
+                                <h6><b>{{ trans('admin.transferenciaSaldo.valueRetirar') }} </b></h6>
                                 </div>
-                                <small class="text-muted">Valor mínimo de R$ 1,00
+                                <small class="text-muted">{{ trans('admin.transferenciaSaldo.valueMin') }}
 
-                                    <small class="text-muted"><p>O valor inserido, será creditado
-                                            em sua conta assim que formos notificados.</p></small>
+                                    <small class="text-muted"><p> {{ trans('admin.transferenciaSaldo.valueInserido') }} </p></small>
                                 </small>
 
                                 <div class="input-group">
                                     <input wire:model="valueTransfer" x-on:focus="formatInput()" type="text"
-                                           class="search-query form-control" placeholder="Valor a retirar"
+                                           class="search-query form-control" placeholder="{{ trans('admin.transferenciaSaldo.valueRet') }} "
                                            id="valueTransfer" inputmode="numeric" value="0,00" />
                                 </div>
                             </div>
@@ -53,7 +52,7 @@
                                 <div class="input-group">
 
                                     <button wire:click="requestWithdraw" type="button" class="btn btn-info btn-block">
-                                        Solicitar <span class="fa fa-send"></span>
+                                    {{ trans('admin.transferenciaSaldo.solicit') }}  <span class="fa fa-send"></span>
 
                                     </button>
                                 </div>

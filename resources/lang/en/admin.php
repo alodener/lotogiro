@@ -84,6 +84,7 @@ return [
     'table-bet-value' => 'Bet Amount',
     'table-bet-prize' => 'Premium Value',
     'table-receipt' => 'Receipt',
+    
 
     'register' => [
         'page-title' => 'Register',
@@ -123,7 +124,8 @@ return [
         'max-points-title' => 'Congratulations you are on top',
         'max-points-text' => 'You are at the highest level of the career path',
         'games-not-found' => 'There are no game types registered!',
-        'copied-url' => 'Link copied!'
+        'copied-url' => 'Link copied!',
+        'indications' => 'Indications'
     ],
 
     'ranking' => [
@@ -136,7 +138,665 @@ return [
         'table-group-points-header' => 'Group Points',
         'table-total-points-header' => 'Total Points'
     ],
+
+    'menu' => [
+        'page-title' => 'Make your game',
+        'dashboards' => 'Dashboards',
+        'ranking-index' => 'Ranking',
+        'points' => 'Points',
+        'winning-ticket' => 'Winning Tickets',
+        'Reportday' => 'Network Sales',
+        'gains*' => 'Earnings',
+        'sales*' => 'Sales',
+        'bets' => 'Bets',
+        'clients*' => 'Customer',
+        'validate-games*' => 'Validate Game',
+        'competitions*' => 'Contests',
+        'type_games*' => 'Game Types',
+        'games*' => 'Games',
+        'payments*' => 'Payments',
+        'commissions' => 'Commissions',
+        'draws' => 'Prizes',
+        'draws*' => 'Draws',
+        'reports' => 'Reports',
+        'used-dozens*' => 'Used Numbers',
+        'points-by-user*' => 'Points per Customer',
+        'extracts' => 'Statement',
+        'manual-recharge' => 'Manual Reload Statement',
+        'balance' => 'Customer Balances',
+        'sales' => 'Sales Statement',
+        'index*' => 'Wallet',
+        'settings'=> 'Settings',
+        'permissions*'=> 'Permissions',
+        'roles*' => 'Functions',
+        'users*' => 'Users',
+        'qualifications*' => 'Qualifications',
+        'system*' => 'System'
+    ],
+
+    'bilhete' => [
+        'winning-Tickets' => 'Winning Tickets',
+        'register-Tickets' => 'Register Tickets',
+        'daily' => 'Daily',
+        'yesterday' => 'Yesterday',
+        'weekly' => 'Weekly',
+        'monthly' => 'Monthly',
+        'custom' => 'Custom',
+        'drawn-on' => 'Drawn on:',
+        'drawn' => 'Drawn:',
+        'selected' => 'Selected:',
+        'no-games' => 'No games sold.'
+    ],
+
+    'vendas' => [
+        'daily' => 'Daily',
+        'yesterday' => 'Yesterday',
+        'weekly' => 'Weekly',
+        'monthly' => 'Monthly',
+        'custom' => 'Custom',
+        'research' => 'Research'
+    ],
+
+    'navbar' => [
+        'balance' => 'Balance:',
+        'bonus' => 'Bonus:',
+        'recharge' => 'Recharge',
+        'hello' => 'Hello,',
+        'account' => 'Account',
+        'account*' => 'Account',
+        'logout' => 'Logout'
+    ],
+
+    'extrato' => [
+        'balanceS' => 'Balance Statement:',
+        'totalB' => 'Total Balance:',
+        'bonus' => 'Bonus',
+        'filter' => 'Filter By Refills',
+        'date' => 'Date',
+        'responsible' => 'Responsible',
+        'wallet' => 'Wallet',
+        'previousValue' => 'Previous Value',
+        'value' => 'Value',
+        'currentValue' => 'Current Value',
+        'description' => 'Description',
+        'noData' => 'No data to display.'
+    ],
+
+    'carteira' => [
+        'balanceS' => 'Balance Statement',
+        'totalB' => 'Total Balance:',
+        'bonus' => 'Bonus',
+        'filter' => 'Filter By Refills',
+        'date' => 'Date',
+        'responsible' => 'Responsible',
+        'wallet' => 'WALLET',
+        'previousValue' => 'Previous Value',
+        'value' => 'Value',
+        'currentValue' => 'Current Value',
+        'description' => 'Description',
+        'noData' => 'No data to display.',
+        'previous' => 'Previous',
+        'next' => 'Next'
+    ],
+
+    'language' => [
+        'lengthMenu' => 'Showing _MENU_ records per page',
+        'zeroRecords' => 'Nothing found',
+        'info' => 'Showing _PAGE_ page from _PAGES_',
+        'infoEmpty' => 'No record available',
+        'infoFiltered' => '(filtered from _MAX_ total records)',
+        'search' => 'Search: ',
+        'previous' => 'Previous',
+        'next' => 'Next'
+    ],
+
+    'used-dozensB' => [
+        'relatorio' => 'Report - Contests',
+        'number' => 'Number',
+        'typegame' => 'Game Type',
+        'date' => 'Draw Date',
+        'creation' => 'Creation',
+        'actions' => 'Actions'
+    ],
+
+    'datatable-language' => [
+    'datatable-language' => 'admin/layouts/plugins/datatables-bs4/language/en.json',
+    'delete' => 'Delete'
+    ],
+
+    'customer' => [
+        'customerr' => 'Customer balance',
+        'control' => 'Control customer access from here',
+        '30days' => '30 days',
+        '60days' => '60 days',
+        '90days' => '90 days',
+        'clear' => 'Clear',
+        'detailed' => 'To have a detailed view of the winning customers',
+        'clique' => 'Click Here!',
+        'name' => 'Name',
+        'quantity' => '(Quantity)',
+        'lastName' => 'Last name',
+        'number' => 'Number',
+        'email' => 'Email',
+        'games' => 'Games played',
+        'apostado' => 'Amount bet',
+        'received' => 'Prizes received',
+        'profit' => 'Profit/',
+        'loss' => 'Loss',
+        'customeros' => 'Customer of',
+        'risk' => 'Risk',
+        'commission' => 'Commission',
+        'block' => 'Block/',
+        'unblock' => 'Unblock',
+        'contact' => 'Contact made',
+    ],
+
+    'wallet' => [
+        'WALLET' => 'WALLET',
+        'wallet' => 'Wallet',
+        'balance' => 'Balance:',
+        'bonus' => 'Bonus:',
+        'recharge' => 'Recharge',
+        'withdraw' => 'Withdraw',
+        'convert' => 'Convert',
+        'extract' => 'Extract',
+        'request' => 'Withdrawal Requests',
+        'Precharge' => 'Recharge Requests',
+    ],
+
+    'walletAdd' => [
+        'WALLET' => 'WALLET',
+        'addBalance' => 'Add Balance',
+        'valueAdd' => 'Value to be added',
+        'valueMin' => 'Minimum value of R$ 1.00',
+        'value' => 'The added value will be credited to your account as soon as we are notified.',
+        'valuee' => 'Value',
+        'continuar' => 'Continue'
+    ],
+
+    'ordersBlade' => [
+        'WALLET' => 'WALLET',
+        'peRecharge' => 'Precharge Orders',
+        'date' => 'Date',
+        'user' => 'User',
+        'value' => 'Value',
+        'status' => 'Status',
+        'action' => 'Action',
+        'details' => 'Details',
+    ],
+
     
+    'orderDetail' => [
+        'detailP' => 'Order Details',
+        'update' => 'Last update:',
+        'user' => 'User:',
+        'recharge' => 'Recharge:',
+        'statuss' => 'Status:',
+        'date' => 'Date',
+        'status' => 'Status',
+        'try' => 'Try Again'
+    ],
+
+    'convertWallet' => [
+        'conversao' => 'Bonus to Balance Conversion',
+        'balance' => 'Balance:',
+        'bonuss' => 'Bonus:',
+        'valueT' => 'Value to transfer',
+        'valueM' => '(Value must be less than or equal to your',
+        'bonus' => 'BONUS',
+        'convert' => 'Convert'
+    ],
+
+    'tableTransfer' => [
+        'wallet' => 'Wallet - Balance Transfer',
+        'procurar' => 'Search for contact to transfer',
+        'dados' => 'Recipient Information',
+        'name' => 'Name:',
+        'email' => 'E-Mail:',
+        'phone' => 'Phone:',
+        'salvar' => 'Save contact?',
+        'valuet' => 'Value to transfer',
+        'value' => 'Value to transfer',
+        'transf' => 'Transfer',
+        'userS' => 'No user selected to perform the transfer.',
+    ],
+
+    'walletWithdraw' => [
+        'wallet' => 'WALLET',
+        'solicitar' => 'Withdrawal Requests',
+        'visualizar' => 'View History',
+        'date' => 'Date',
+        'respon' => 'Responsible',
+        'pix' => 'Pix',
+        'value' => 'Value',
+        'status' => 'Status',
+        'acao' => 'Action',
+        'feito' => 'Done',
+    ],
+
+    'withBlade' => [
+        'wallet' => 'WALLET',
+        'solicitacao' => 'Withdrawal Requests - View History',
+        'volt' => 'Back',
+        'date' => 'Date',
+        'resp' => 'Responsible',
+        'value' => 'Value',
+        'status' => 'Status',
+        'acao' => 'Action',
+        'feito' => 'Done'
+    ],
+
+    'transferenciaSaldo' => [
+        'wallet' => 'WALLET',
+        'tranfer' => 'Balance Transfer',
+        'dados' => 'Receiver Details',
+        'name' => 'Name: ',
+        'email' => 'E-Mail: ',
+        'phone' => 'Phone: ',
+        'alterar' => 'By changing this information, it becomes your main one.',
+        'valueRetirar' => 'Amount to withdraw',
+        'valueMin' => 'Minimum amount is R$ 1,00',
+        'valueInserido' => 'The amount you enter will be credited to your account once we are notified.',
+        'valueRet' => 'Amount to withdraw',
+        'solicit' => 'Request'
+    ],
+        
+    'permission' => [
+        'newPermission' => 'New Permission',
+        'name' => 'Name',
+        'menu' => 'Menu',
+        'creation' => 'Creation',
+        'action' => 'Actions',
+        'ePermission' => 'Do you want to delete this permission?',
+        'nRevert' => 'This action cannot be reverted',
+        'cancel' => 'Cancel',
+        'exclui' => 'Delete'
+    ],
+
+    
+    'formBlade' => [
+        'permission' => 'Permission',
+        'name' => 'Name',
+        'menu' => 'Menu Tree',
+        'nameVisible' => 'Visible Name',
+        'back' => 'Back to main screen',
+        'cadastrar' => 'Register Permission',
+        'atualizar' => 'Update Permission',
+        'cadast' => 'Ex: Create User'
+    ],
+
+    'formRole' => [
+        'function' => 'Function',
+        'name' => 'Name',
+        'example' => 'Ex: System Administrator',
+        'permissions' => 'Permissions',
+        'config' => 'Configuration',
+        'apostas' => 'Bets',
+        'dashboard' => 'Dashboards',
+        'payments' => 'Payments',
+        'users' => 'Users',
+        'functions' => 'Functions',
+        'permissionss' => 'Permissions',
+        'clients' => 'Clients',
+        'concursos' => 'Contests',
+        'typeGames' => 'Game Types',
+        'games' => 'Games',
+        'sorteio' => 'Draws',
+        'extrato' => 'Statement',
+        'vendas' => 'Sales',
+        'ganhos' => 'Earnings',
+        'comission' => 'Commission',
+        'sorteio' => 'Draw',
+        'backTela' => 'Back to main screen',
+        'cadastrar' => 'Register Function',
+        'atualizar' => 'Update Function'
+    ],
+
+
+    'roleIndex' => [
+        'newFunction' => 'New Function',
+        'name' => 'Name',
+        'creation' => 'Creation',
+        'acion' => 'Actions',
+        'deleteFunction' => 'Do you want to delete this function?',
+        'acionRevert' => 'This action cannot be reverted',
+        'cancel' => 'Cancel',
+        'delete' => 'Delete'
+    ],
+
+    'userForm' => [
+        'user' => 'User',
+        'active' => 'Active?',
+        'name' => 'Name',
+        'last-name' => 'Last Name',
+        'id' => 'Indicator ID',
+        'details' => 'Details',
+        'email' => 'Email',
+        'write' => '*Blank to not alter',
+        'senha' => 'Password',
+        'password' => 'Confirm Password',
+        'phone' => 'Phone',
+        'values' => 'Values',
+        'comission' => 'Commission Percentage',
+        'balance-actual' => 'Current Balance',
+        'add' => 'Add Balance',
+        'balance' => 'Balance Statement',
+        'ajuste' => 'Manual Adjustment',
+        'functions' => 'Functions',
+        'no-functions' => 'No functions registered yet.',
+        'back' => 'Back to main screen',
+        'cadastra' => 'Register',
+        'userr' => 'User',
+        'atual-user' => 'Update User',
+        'entrar' => 'Login as User',
+        'details-indication' => 'Indicator Details',
+        'namee' => 'Name:',
+        'emaill' => 'Email:',
+        'tel' => 'Tel.:',
+        'fecha' => 'Close',
+        'abrir' => 'Open in new tab',
+    ],
+
+    'userForm2' => [
+        'user' => 'User',
+        'active' => 'Active?',
+        'name' => 'Name',
+        'last-name' => 'Last Name',
+        'email' => 'Email',
+        'write' => '*Blank to not change',
+        'senha' => 'Password',
+        'password' => 'Confirm Password',
+        'phone' => 'Phone',
+        'back' => 'Back to main screen',
+        'cadastra' => 'Register User',
+        'atual-user' => 'Update User',
+    ],
+
+    'indexUser' => [
+        'new-user' => 'New User',
+        'name' => 'Name',
+        'email' => 'Email',
+        'phone' => 'Phone',
+        'creation' => 'Creation',
+        'action' => 'Actions',
+        'delete-user' => 'Do you want to delete this user?',
+        'revert-action' => 'This action cannot be reverted',
+        'cancel' => 'Cancel',
+        'delete' => 'Delete'
+        ],
+
+        'statementBalance' => [
+            'balance' => 'Balance Statement',
+            'balanceT' => 'Total Balance:',
+            'bonus' => 'Bonus:',
+            'back' => 'Back',
+            'date' => 'Date',
+            'resp' => 'Responsible',
+            'wallet' => 'Wallet',
+            'valueA' => 'Previous Value',
+            'value' => 'Value',
+            'aValue' => 'Current Value',
+            'descrip' => 'Description',
+            'dado-exibir' => 'No data to display.',
+            'saldo' => 'Balance',
+            'bonus' => 'Bonus'
+            ],
+
+        'emailBlade' => [
+            'esqueceuSenha' => 'Forgot your password? Here you can easily recover it',
+            'solicitarSenha' => 'Request new password',
+            'login' => 'Login',
+            'recuperar' => 'Recover password',
+        ], 
+
+        'resetBlade' => [
+            'recuperaSenha' => 'Recover Password',
+            'senha' => 'Password',
+            'confirm' => 'Confirm Password',
+            'altera' => 'Change password',
+            'login' => 'Login'
+        ],
+
+        'loginBlade' => [
+            'login' => 'Login',
+            'senharec' => 'Recovered Password',
+            'login' => 'Login',
+            'senha' => 'Password',
+            'acess' => 'Access',
+            'poderiaajudar' => 'Hello, could you help me?',
+            'ajuda' => 'Need help?'
+            ],
+
+        'loginBladea' => [
+            'login' => 'Login',
+            'realizarLogin' => 'Perform login to start the session',
+            'password' => 'Password',
+            'manterConectado' => 'Keep me logged in',
+            'acesso' => 'Access',
+            'esqueciSenha' => 'I forgot my password',
+        ],
+
+        'clientForm' => [
+            'password' => 'Password',
+            'write' => '*Leave blank to not change',
+            'confirm' => 'Confirm Password',
+        ],
+
+        'customerDashboard' => [
+            'visaoCliente' => 'Customer Detailed View',
+            'concurso' => 'Contest',
+            'typeGames' => 'Game Type',
+            'value' => 'Bet Value',
+            'premio' => 'Prize',
+            'date' => 'Date',
+        ],
+
+        
+        'customerWinners' => [
+            'visaoD' => 'Detailed View of Winning Customers',
+            'selecU' => 'Select User',
+            'digite' => 'Type Here...',
+            'selecC' => 'Select Customer',
+            'dateI' => 'Start Date',
+            'dateF' => 'End Date',
+            'filtrar' => 'Filter',
+            'obs' => 'Note: To filter the entire customer history, leave the date fields blank, or enter the desired interval'
+    ],
+
+    'customerDetails' => [
+        'totalApost' => 'Total bets placed',
+        'valueApost' => 'Bet amount',
+        'premioC' => 'Customer prize',
+        'lucro/prej' => 'Profit/Loss (House)',
+        'visaoCliente' => 'Detailed Customer View',
+        'concurso' => 'Contest',
+        'typegame' => 'Game type',
+        'valueapost' => 'Bet amount',
+        'premio' => 'Prize',
+        'client' => 'Client',
+        'date' => 'Date',
+        ],
+
+        'detailedView' => [
+            'visaoC' => 'Detailed View of Awarded Customers',
+            'selecC' => 'Select Customer',
+            'dateI' => 'Start Date',
+            'dateF' => 'End Date',
+            'filtrar' => 'Filter',
+            'obs' => 'Note: To filter the entire customer history, leave the date fields blank, or enter the desired interval'
+        ],
+
+        'extratoVendas' => [
+            'extract' => 'Sales Statement',
+            'extratoR' => 'Manual Recharge Statement'
+        ],
+        
+        'walletBlade' => [
+            'saque' => 'Withdrawal - Requests',
+            'conversao' => 'Conversion - Bonus to balance conversion',
+            'wallet' => 'Wallet - Transaction history',
+            'wallett' => 'Wallet',
+            'detailedP' => 'Order Details',
+            'recharge' => 'Reload - Add Balance',
+            'thanks' => 'Thank you!',
+            'recebemosC' => 'We have received your purchase!',
+            'confirm' => 'We will wait for payment confirmation with our intermediary, and soon we will have news for you.',
+            'inicio' => 'Go to home.',
+            'walletTransf' => 'Wallet - Transfer',
+            'walletSolicit' => 'Wallet - Withdrawal Request'
+        ],
+
+        'points-by-user' => [
+            'report' => 'Report - Points per User',
+            'name' => 'Name',
+            'email' => 'Email',
+            'nivel' => 'Level',
+            'pointsp' => 'Personal Points',
+            'pointse' => 'Team Points'
+            ],
+
+            'used-dozens' => [
+                'relatorio' => 'Report - Used Dozens by Lottery',
+                'dozens' => 'Dozens',
+                'quant' => 'Quantity'
+            ],
+
+            'permissionsNew' => [
+                'newperm' => 'New Permission',
+                'edit' => 'Edit Function',
+                'permission' => 'Permissions'
+            ],
+
+            'qualificationBlade' => [
+                'newQual' => 'New Qualification',
+                'qualif' => 'Qualification',
+                'name' => 'Name',
+                'meta' => 'Points Goal',
+                'aproveitamentoP' => 'Personal Performance',
+                'aproveitamentoG' => 'Group Performance',
+                'voltarP' => 'Back to main screen',
+                'cadastrar' => 'Register'
+            ],
+
+            'qualificationBlade2' => [
+                'newEdit' => 'Edit Qualification',
+                'qualif' => 'Qualification',
+                'name' => 'Name',
+                'meta' => 'Points Goal',
+                'aproveitamentoP' => 'Personal Achievement',
+                'aproveitamentoG' => 'Group Achievement',
+                'voltarP' => 'Back to main screen',
+                'alter' => 'Change'
+                ],
+
+                'qualificationIndex' => [
+                    'qualif' => 'Qualifications',
+                    'newQ' => 'New Qualification',
+                    'name' => 'Name',
+                    'metaP' => 'Points Target',
+                    'aprovP' => 'Personal Performance',
+                    'aprovG' => 'Group Performance',
+                    'actions' => 'Actions',
+                    'excluiQ' => 'Do you want to delete this qualification?',
+                    'actionrevert' => 'This action cannot be reverted',
+                    'cancel' => 'Cancel',
+                    'exclui' => 'Delete'
+                    ],
+
+                    'roleCreate' => [
+                        'newFunction' => 'New Function',
+                        'editFunction' => 'Edit Function',
+                        'functions' => 'Functions'
+                    ],
+
+                    'system' => [
+                        'editConfig' => 'Edit Settings',
+                        'editConf' => 'Edit Configuration',
+                        'nameConf' => 'Configuration Name:',
+                        'value' => 'Value',
+                        'planoC' => 'Career Plan: ',
+                        'desat' => 'Disabled',
+                        'ativ' => 'Activate',
+                        'desativ' => 'Deactivate',
+                        'ativad' => 'Activated',
+                        'anexArq' => 'Attach file',
+                        'logo' => 'System Logo',
+                        'config' => 'Settings',
+                        'actions' => 'Actions',
+                        'volt' => 'Go back to main screen',
+                        'salvar' => 'Save Configuration'
+
+
+                        ],
+                    
+                        'homeBladeK' => [
+                            'games' => 'GAMES',
+                            'copLink' => 'Copy Link',
+                            'envWpp' => 'Send via WhatsApp',
+                            'gamesCadast' => 'There are no registered game types!'
+                            ],
+
+                        'forgetPassoword' => [
+                            'recSenha' => 'Recover Your Password',
+                            'linkRec' => 'We will send a recovery link to your email',
+                            'env' => 'Send',
+                            'altSenha' => 'Change Password',
+                            'email' => 'Your Email: ',
+                            'password' => 'Your Password: ',
+                            'confirmP' => 'Confirm Your Password: '
+                       ],
+
+                       'forgetBlade' => [
+                        'reset' => 'Password Reset',
+                        'link' => 'Hello, you requested a password reset. Below is the link for the procedure:',
+                        'recuperarS' => 'Recover Password',
+                        'atenc' => 'Best regards,'
+                        ],
+
+                        'jogoBlade' => [
+                            'bihete' => 'Your Ticket',
+                            'jogoID' => 'Hello, you have just played the game with ID:',
+                            'anexo' => 'Attached is your ticket.',
+                            'thanks' => 'Thank you for playing with us.',
+                            'atencio' => 'Sincerely,'
+                            ],
+
+    'cliente' => [
+        'sEmptyTable' => 'No record found',
+        'sInfo' => 'Showing from _START_ to _END_ of _TOTAL_ records',
+        'sInfoEmpty' => 'Mostrando 0 até 0 de 0 registros',
+        'sInfoFiltered' => '(Filtrados de _MAX_ registros)',
+        'sLengthMenu' => 'Exibir _MENU_ resultados por página',
+        'sLoadingRecords' => 'Carregando...',
+        'sProcessing' => 'Processando...',
+        'sZeroRecords' => 'Nenhum registro encontrado',
+        'sSearch' => 'Pesquisar',
+        'sNext' => 'Próximo',
+        'sPrevious' => 'Anterior',
+        'sFirst' => 'Primeiro',
+        'sLast' => 'Último'
+    ],
+
+    'comissão' => [
+        'commissions' => 'COMMISSIONS',
+        'downloadingPayments' => 'Downloading Payments',
+        'downloadPayment' => 'Download Payment',
+        'paymentInformation' => 'Payment Information',
+        'quantity' => 'Quantity:',
+        'sales' => 'Sales:',
+        'bonus' => 'Bonus:',
+        'total' => 'Total:',
+        'ID' => 'Id',
+        'gameType' => 'Game Type',
+        'customerCPF' => 'Customer CPF ',
+        'client' => 'Client',
+        'user' => 'User',
+        'value' => 'Value',
+        'commission' => 'Commission',
+        'creation' => 'Creation',
+        'no-record-found' => 'No record found.'
+    ],
+
     'points' => [
         'page-title' => 'Points Report',
         'page-header' => 'Summary',

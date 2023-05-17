@@ -3,15 +3,15 @@
     <img src="https://superjogo.loteriabr.com/{{env('logo')}}" alt="" width=150 height=150>
 
 
-    <h1>Reset de Senha</h1>
+    <h1>{{ trans ('admin.forgetBlade.reset') }}  </h1>
 </center>
 
 <pre>
-    Olá, você solicitou o reset de senha, segue o link abaixo para realizar o procedimento:
     
-    <a href="{{ route('reset.password.get', $token) }}">Recuperar Senha</a>
+        {{ trans ('admin.forgetBlade.link') }}  
+    <a href="{{ route('reset.password.get', $token) }}">  {{ trans ('admin.forgetBlade.recuperarS') }}   </a>
 
-    Atenciosamente,
+    {{ trans ('admin.forgetBlade.atenc') }}
 
     {{ env("nome_sistema") }}</pre>
 

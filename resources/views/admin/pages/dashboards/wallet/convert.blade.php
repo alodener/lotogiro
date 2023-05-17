@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Conversão - Conversão de Bônus para Saldo')
+@section('title', 'Conversão - Conversão de Bônus para Saldo ')
 
 @section('content')
     <div class="row bg-white p-3">

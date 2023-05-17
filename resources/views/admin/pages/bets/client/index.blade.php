@@ -83,7 +83,19 @@
         $(document).ready(function () {
             var table = $('#client_table').DataTable({
                 language: {
-                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
+                    "lengthMenu": "{{ trans ('admin.language.lengthMenu') }}",
+            "zeroRecords": "{{ trans ('admin.language.zeroRecords') }}",
+            "info": "{{ trans ('admin.language.info') }}",
+            "infoEmpty":  "{{ trans ('admin.language.infoEmpty') }}",
+            "infoFiltered": "{{ trans ('admin.language.infoFiltered') }}",
+            "search": "{{ trans ('admin.language.search') }}",
+            "paginate": {
+                "next": "{{ trans ('admin.language.next') }}",
+                "previous": "{{ trans ('admin.language.previous') }}"
+                }
+         
+           
+        
                 },
                 processing: true,
                 serverSide: true,
@@ -97,6 +109,7 @@
                 ]
             });
         });
-    </script>
+        </script>
+
 
 @endpush

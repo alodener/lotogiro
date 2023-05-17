@@ -23,9 +23,9 @@
                 <table class="table table-striped table-hover table-sm" id="system_table">
                     <thead>
                     <tr>
-                        <th>Configurações</th>
-                        <th>Valor</th>
-                        <th class="acoes">Ações</th>
+                        <th>{{ trans ('admin.system.config') }}  </th>
+                        <th>{{ trans ('admin.system.value') }}  </th>
+                        <th class="acoes">{{ trans ('admin.system.actions') }} </th>
                     </tr>
                     </thead>
                     <tbody>

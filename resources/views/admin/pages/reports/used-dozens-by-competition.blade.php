@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Relatório - Dezenas Utilizadas por Concurso')
+@section('title', '{{ trans ('admin.customerDetails.relatorio') }} ')
 
 @section('content')
     <div class="row bg-white p-3">
@@ -24,8 +24,8 @@
                 <table class="table table-striped table-hover table-sm" id="competition_table">
                     <thead>
                     <tr>
-                        <th>Dezena</th>
-                        <th>Quantidade</th>
+                        <th>{{ trans ('admin.customerDetails.dozens') }} </th>
+                        <th>{{ trans ('admin.customerDetails.quant') }}</th>
                     </tr>
                     </thead>
                     <tbody>
