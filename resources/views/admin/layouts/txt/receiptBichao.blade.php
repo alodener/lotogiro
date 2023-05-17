@@ -6,7 +6,7 @@ PREMIADO
 @endif
 NÚMERO DO BILHETE: {{$game->id}}°
 
-EMITIDO EM: {{\Carbon\Carbon::parse($game->criado_em)->format('d/m/Y H:i:s')}}
+EMITIDO EM: {{\Carbon\Carbon::parse($game->created_at)->format('d/m/Y H:i:s')}}
 
 BANCA: {{env("nome_sistema")}}
 
@@ -16,7 +16,7 @@ PARTICIPANTE: {{mb_strtoupper($game->cliente_nome . ' ' . $game->cliente_sobreno
 
 E-MAIL: {{$game->cliente_email}}
 
-DATA SORTEIO: {{\Carbon\Carbon::parse($game->criado_em)->format('d/m/Y')}}
+DATA SORTEIO: {{\Carbon\Carbon::parse($game->created_at)->format('d/m/Y')}}
 
 HORA SORTEIO: {{\Carbon\Carbon::parse($game->horario)->format('H:i:s')}}
 
