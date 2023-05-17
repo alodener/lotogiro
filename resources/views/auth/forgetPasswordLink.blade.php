@@ -40,7 +40,7 @@
                     </div>
                     @enderror
                 </div>
-                <h3 class="login-box-msg">{{ trans ('admin.forgetPassoword.recSenha') }}  </h3>
+                <h3 class="login-box-msg">Recupere Sua Senha</h3>
 
                 <center>
                  <form action="{{ route('reset.password.post') }}" method="POST">
@@ -49,7 +49,7 @@
     
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <input placeholder="{{ trans ('admin.forgetPassoword.email') }}  " type="text" id="email_address" class="form-control" name="email" required autofocus>
+                                    <input placeholder="Seu Email: " type="text" id="email_address" class="form-control" name="email" required autofocus>
                                     @if ($errors->has('email'))
                                         <span class="text-danger">{{ $errors->first('email') }}</span>
                                     @endif
@@ -58,7 +58,7 @@
     
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <input placeholder="{{ trans ('admin.forgetPassoword.password') }} " type="password" id="password" class="form-control" name="password" required autofocus>
+                                    <input placeholder="Sua Senha: " type="password" id="password" class="form-control" name="password" required autofocus>
 
                                     @if ($errors->has('password'))
                                         <span class="text-danger">{{ $errors->first('password') }}</span>
@@ -68,7 +68,7 @@
     
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <input placeholder="{{ trans ('admin.forgetPassoword.confirmP') }} " type="password" id="password-confirm" class="form-control" name="password_confirmation" required autofocus>
+                                    <input placeholder="Confirme Sua Senha: " type="password" id="password-confirm" class="form-control" name="password_confirmation" required autofocus>
                                     @if ($errors->has('password_confirmation'))
                                         <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
                                     @endif
@@ -76,7 +76,7 @@
                             </div>
 
                                 <button type="submit" class="btn btn-primary">
-                                <h3 class="login-box-msg">{{ trans ('admin.forgetPassoword.altSenha') }}  </h3>
+                                    Alterar Senha
                                 </button>
 
                         </form>

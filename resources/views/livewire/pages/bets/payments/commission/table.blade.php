@@ -1,6 +1,6 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">{{ trans('admin.comissão.commissions') }} </h3>
+        <h3 class="text-center text-bold">COMISSÕES</h3>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -78,7 +78,7 @@
             <div class="alert alert-warning" role="alert">
                 <button class="btn" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    {{ trans('admin.comissão.downloadingPayments') }}
+                    Baixando Pagamentos
                 </button>
             </div>
         </div>
@@ -93,26 +93,26 @@
             </select>
         </div>
         <div class="form-group offset-md-5 col-md-6 text-right">
-            <button wire:click="pay" type="button" class="btn btn-danger">{{ trans('admin.comissão.downloadPayment') }}</button>
+            <button wire:click="pay" type="button" class="btn btn-danger">Baixar Pagamento</button>
         </div>
     </div>
     <div class="card card-info">
         <div class="card-header indica-card">
-            <h3 class="card-title">{{ trans('admin.comissão.paymentInformation') }}</h3>
+            <h3 class="card-title">Informações de Pagamento</h3>
         </div>
         <div class="card-body">
             <div class="row">
                     <div class="col-md-3">   
-                        <b>{{ trans('admin.comissão.quantity') }} </b> {{$games->count()}}
+                        <b>Quantidade:</b> {{$games->count()}}
                     </div>
                     <div class="col-md-3">
-                        <b>{{ trans('admin.comissão.sales') }} </b> R${{\App\Helper\Money::toReal($value)}} 
+                        <b>Vendas:</b> R${{\App\Helper\Money::toReal($value)}} 
                     </div>
                     <div class="col-md-3">
-                        <b>{{ trans('admin.comissão.bonus') }} </b> R${{\App\Helper\Money::toReal($valueBonus)}} 
+                        <b>Bonus:</b> R${{\App\Helper\Money::toReal($valueBonus)}} 
                     </div>
                     <div class="col-md-3">
-                        <b>{{ trans('admin.comissão.total') }} </b> R${{\App\Helper\Money::toReal($value + $valueBonus)}}
+                        <b>Total:</b> R${{\App\Helper\Money::toReal($value + $valueBonus)}}
                     </div>
             </div>
         </div>
@@ -123,15 +123,15 @@
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
                     <tr>
-                        <th>{{ trans('admin.comissão.ID') }} </th>
-                        <th>{{ trans('admin.comissão.gameType') }} </th>
-                        <th>{{ trans('admin.comissão.customerCPF') }} </th>
-                        <th>{{ trans('admin.comissão.client') }} </th>
-                        <th>{{ trans('admin.comissão.user') }} </th>
-                        <th>{{ trans('admin.comissão.value') }} </th>
+                        <th>Id</th>
+                        <th>Tipo de Jogo</th>
+                        <th>Cpf Cliente</th>
+                        <th>Cliente</th>
+                        <th>Usuário</th>
+                        <th>Valor</th>
                         <th>%</th>
-                        <th>{{ trans('admin.comissão.commission') }} </th>
-                        <th>{{ trans('admin.comissão.creation') }} </th>
+                        <th>Comissão</th>
+                        <th>Criação</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -168,7 +168,7 @@
                     @empty
                         <tr>
                             <td class="text-center" colspan="9">
-                            {{ trans('admin.comissão.no-record-found') }}
+                                Nenhum registro encontrado.
                             </td>
                         </tr>
                     @endforelse

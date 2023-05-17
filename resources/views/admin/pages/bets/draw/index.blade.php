@@ -180,16 +180,7 @@
         $(document).ready(function () {
             var table = $('#draw_table').DataTable({
                 language: {
-                    "lengthMenu": "{{ trans ('admin.language.lengthMenu') }}",
-                    "zeroRecords": "{{ trans ('admin.language.zeroRecords') }}",
-                    "info": "{{ trans ('admin.language.info') }}",
-                    "infoEmpty":  "{{ trans ('admin.language.infoEmpty') }}",
-                    "infoFiltered": "{{ trans ('admin.language.infoFiltered') }}",
-                    "search": "{{ trans ('admin.language.search') }}",
-                "paginate": {
-                    "next": "{{ trans ('admin.language.next') }}",
-                    "previous": "{{ trans ('admin.language.previous') }}"
-                }
+                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
                 },
                 processing: true,
                 serverSide: true,

@@ -27,21 +27,21 @@
             {{-- TODO: Verificar permissões para acessar rota e recurso --}}
             <div class="table-responsive">
                 <div class="row">
-                <h4 class="my-4"> {{ trans('admin.extrato.balanceS') }} | {{ $user->name }} - {{ trans('admin.extrato.totalB') }} {{ \App\Helper\Money::toReal($user->balance) }} | {{ trans('admin.extrato.bonus') }}  R${{\App\Helper\Money::toReal($user->bonus)}}</h4>
+                <h4 class="my-4">Extrato de Saldo | {{ $user->name }} - Saldo Total: {{ \App\Helper\Money::toReal($user->balance) }} | Bônus: R${{\App\Helper\Money::toReal($user->bonus)}}</h4>
                 <table class="table table-striped table-hover table-bordered table-lg" id="statementBalance_table">
                     <div class="my-4 col-md-4 text-right">
-                    <a href= "{{route('admin.settings.users.statementBalanceFiltrado', $user->id)}}" class="btn btn-primary"> {{ trans('admin.extrato.filter') }}  </a>
+                    <a href= "{{route('admin.settings.users.statementBalanceFiltrado', $user->id)}}" class="btn btn-primary"> Filtrar por Recargas </a>
                     </div>
                 </div>
                     <thead>
                     <tr>
-                        <th>{{ trans('admin.extrato.date') }} </th>
-                        <th>{{ trans('admin.extrato.responsible') }}</th> 
-                        <th>{{ trans('admin.extrato.wallet') }}</th> 
-                        <th>{{ trans('admin.extrato.previousValue') }}</th>  
-                        <th>{{ trans('admin.extrato.value') }}</th> 
-                        <th>{{ trans('admin.extrato.currentValue') }}</th> 
-                        <th>{{ trans('admin.extrato.description') }}</th> 
+                        <th>Data</th>
+                        <th>Responsável</th>
+                        <th>Carteira</th>
+                        <th>Valor Anterior</th>
+                        <th>Valor</th>
+                        <th>Valor Atual</th>
+                        <th>Descrição</th>
                         
                     </tr>
                     </thead>
@@ -59,7 +59,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4">{{ trans('admin.extrato.noData') }}</td>
+                            <td colspan="4">Nenhum dado para exibir.</td>
                         </tr>
                     @endforelse
                     </tbody>

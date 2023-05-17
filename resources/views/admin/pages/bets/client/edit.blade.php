@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Atualizar Cliente')
+@section('title', trans('admin.customers.edit-client'))
 
 @section('content')
 

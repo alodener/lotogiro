@@ -1,21 +1,21 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">{{ trans('admin.ordersBlade.WALLET') }}</h3>
+        <h3 class="text-center text-bold">CARTEIRA</h3>
     </div>
     <div class="row bg-white p-3">
         <div class="col-md-12">
             <div class="card-header indica-card">
-            {{ trans('admin.ordersBlade.peRecharge') }}
+                Pedidos de Recarga
             </div>
             <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-bordered table-lg">
                     <thead>
                     <tr>
-                        <th>{{ trans('admin.ordersBlade.date') }} </th>
-                        <th>{{ trans('admin.ordersBlade.user') }} </th>
-                        <th>{{ trans('admin.ordersBlade.value') }} </th>
-                        <th>{{ trans('admin.ordersBlade.status') }} </th>
-                        <th>{{ trans('admin.ordersBlade.action') }} </th>
+                        <th>Data</th>
+                        <th>Usuário</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ação</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -30,7 +30,7 @@
                                    type="button"
                                    class="btn btn-info">
                                     <i class="fa fa-eye"></i>
-                                    {{ trans('admin.ordersBlade.details') }}
+                                    Detalhes
                                 </a>
                             </td>
                         </tr>

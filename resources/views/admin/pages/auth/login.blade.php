@@ -53,7 +53,7 @@
                     </div>
                     @enderror
                 </div>
-                <h3 class="login-box-msg">{{ trans('admin.loginBlade.senha') }}  </h3>
+                <h3 class="login-box-msg">Login</h3>
 
                 <form method="POST" action="{{route('admin.post.login')}}">
                     @csrf
@@ -72,7 +72,7 @@
                     </div>
                     <div class="wrap-input100">
                         <input type="password" class="form-control @error('password') is-invalid @enderror input100"
-                               name="password" placeholder="{{ trans('admin.loginBlade.login') }} ">
+                               name="password" placeholder="Senha">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>
@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="login100-form-btn">{{ trans('admin.loginBlade.acess') }} </button>
+                            <button type="submit" class="login100-form-btn">Acessar</button>
                         </div>
                     </div>
                 </form>
@@ -111,11 +111,11 @@
                             </a>
                         </p>
 
-                        <a href="https://wa.me/558196826967?text= {{ trans('admin.loginBlade.poderiaajudar') }} "
+                        <a href="https://wa.me/558196826967?text=Olá, poderia me ajudar?"
                            class="btn btn-block btn-success"
-                           title=" {{ trans('admin.loginBlade.ajuda') }}"
+                           title="Precisa de ajuda?"
                            target="_blank">
-                            <i style="border:none;"class="fa fa-whatsapp"></i> {{ trans('admin.loginBlade.ajuda') }}
+                            <i style="border:none;"class="fa fa-whatsapp"></i> Precisa de ajuda?
                         </a>
                     </div>
                 </div>

@@ -17,7 +17,7 @@
                 role="menu" data-accordion="false">
                 <center>
                     <li>
-                        <a href="/" class="nav-link"><button type="button" class="btn btn-success">{{ trans('admin.menu.page-title') }} </button></a>
+                        <a href="/" class="nav-link"><button type="button" class="btn btn-success">Faça Seu Jogo</button></a>
                     </li>
                 </center>
                 @canany(['read_sale', 'read_gain'])
@@ -25,7 +25,7 @@
                         <a href="#" class="nav-link @if(request()->is('admin/dashboards/*'))menu-open @endif">
                             <i class="nav-icon fas fa-chart-line"></i>
                             <p>
-                            {{ trans('admin.menu.dashboards') }}
+                                Dashboards
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -38,7 +38,7 @@
                                     <a href="{{route('admin.dashboards.ranking.index')}}"
                                         class="nav-link @if(request()->is('admin/ranking')) active @endif">
                                         <i class="fas fa-star nav-icon"></i>
-                                        <p>{{ trans('admin.menu.ranking-index') }}</p>
+                                        <p>Ranking</p>
                                     </a>
                                 </li>
                                 
@@ -50,7 +50,7 @@
                                     <a href="{{route('admin.dashboards.extracts.points.index')}}"
                                         class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
                                         <i class="fas fa-star nav-icon"></i>
-                                        <p>{{ trans('admin.menu.points') }}</p>
+                                        <p>Pontos</p>
                                     </a>
                                 </li>
                                 @endcan
@@ -60,7 +60,7 @@
                                     <a href="{{route('admin.dashboards.extracts.winning-ticket')}}"
                                        class="nav-link @if(request()->is('admin/dashboards/extracts/winning-ticket')) active @endif">
                                         <i class="fas fa-file-alt nav-icon"></i>
-                                        <p>{{ trans('admin.menu.winning-ticket') }}</p>
+                                        <p>Bilhetes Premiados</p>
                                     </a>
                                 </li>
                             @endif
@@ -69,7 +69,7 @@
                                 <a href="/admin/dashboards/Reportday" class="nav-link">
                                 <i class="nav-icon fas fa-list-alt "></i>
                                     <p>
-                                    {{ trans('admin.menu.Reportday') }}
+                                        Vendas da Rede
                                     </p>
                                 </a>
                             </li>
@@ -77,7 +77,7 @@
                                     <a href="{{route('admin.dashboards.gains.index')}}"
                                        class="nav-link @if(request()->is('admin/dashboards/gains*')) active @endif">
                                         <i class="fas fa-hand-holding-usd nav-icon"></i>
-                                        <p>{{ trans('admin.menu.gains*') }}</p>
+                                        <p>Ganhos</p>
                                     </a>
                                 </li>                             
                             @endcan
@@ -86,7 +86,7 @@
                                     <a href="{{route('admin.dashboards.sales.index')}}"
                                        class="nav-link @if(request()->is('admin/dashboards/sales')) active @endif">
                                         <i class="fas fa-funnel-dollar nav-icon"></i>
-                                        <p>{{ trans('admin.menu.sales*') }} </p>
+                                        <p>Vendas</p>
                                     </a>
                                 </li>
                             @endcan
@@ -109,7 +109,7 @@
                         <a href="#" class="nav-link @if(request()->is('admin/bets/*')) active @endif">
                             <i class="nav-icon fas fa-ticket-alt"></i>
                             <p>
-                            {{ trans('admin.menu.bets') }}
+                                Apostas
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -119,7 +119,7 @@
                                     <a href="{{route('admin.bets.clients.index')}}"
                                        class="nav-link @if(request()->is('admin/bets/clients*')) active @endif">
                                         <i class="fas fa-users nav-icon"></i>
-                                        <p>{{ trans('admin.menu.clients*') }}</p>
+                                        <p>Clientes</p>
                                     </a>
                                 </li>
                             @endcan
@@ -128,7 +128,7 @@
                                  <a href="{{route('admin.bets.validate-games.index')}}"
                                    class="nav-link @if(request()->is('admin/bets/validate-games*')) active @endif">
                                      <i class="fas fa-check nav-icon"></i>
-                                     <p>{{ trans('admin.menu.validate-games*') }}</p>
+                                     <p>Validar Jogo</p>
                                     </a>
                                 </li>
                             @endcan
@@ -137,7 +137,7 @@
                                     <a href="{{route('admin.bets.competitions.index')}}"
                                        class="nav-link @if(request()->is('admin/bets/competitions*')) active @endif">
                                         <i class="fas fa-trophy nav-icon"></i>
-                                        <p>{{ trans('admin.menu.competitions*') }}</p>
+                                        <p>Concursos</p>
                                     </a>
                                 </li>
                             @endcan
@@ -146,7 +146,7 @@
                                     <a href="{{route('admin.bets.type_games.index')}}"
                                        class="nav-link @if(request()->is('admin/bets/type_games*')) active @endif">
                                         <i class="fas fa-tags nav-icon"></i>
-                                        <p>{{ trans('admin.menu.type_games*') }}</p>
+                                        <p>Tipos de Jogo</p>
                                     </a>
                                 </li>
                             @endcan
@@ -156,7 +156,7 @@
                                     <a href="#"
                                        class="nav-link">
                                         <i class="fas fa-ticket-alt nav-icon"></i>
-                                        <p>{{ trans('admin.menu.games*') }}</p>
+                                        <p>Jogos</p>
                                         <i class="right fas fa-angle-left"></i>
                                     </a>
                                     <ul class="nav nav-treeview">
@@ -190,7 +190,7 @@
                                     <a href="#"
                                        class="nav-link">
                                         <i class="fas fa-dollar-sign nav-icon"></i>
-                                        <p>{{ trans('admin.menu.payments*') }}</p>
+                                        <p>Pagamentos</p>
                                         <i class="right fas fa-angle-left"></i>
                                     </a>
                                     <ul class="nav nav-treeview">
@@ -199,7 +199,7 @@
                                                 <a href="{{route('admin.bets.payments.commissions.index')}}"
                                                    class="nav-link @if(request()->is('admin/bets/payments/commissions')) active @endif">
                                                     <i class="fas fa-comments-dollar nav-icon"></i>
-                                                    <p>{{ trans('admin.menu.commissions') }}</p>
+                                                    <p>Comissões</p>
                                                 </a>
                                             </li>
                                         @endcan
@@ -208,7 +208,7 @@
                                                 <a href="{{route('admin.bets.payments.draws.index')}}"
                                                    class="nav-link @if(request()->is('admin/bets/payments/draws')) active @endif">
                                                     <i class="fas fa-donate nav-icon"></i>
-                                                    <p>{{ trans('admin.menu.draws') }}</p>
+                                                    <p>Prêmios</p>
                                                 </a>
                                             </li>
                                         @endcan
@@ -252,7 +252,7 @@
                                     <a href="{{route('admin.bets.draws.index')}}"
                                        class="nav-link @if(request()->is('admin/bets/draws')) active @endif">
                                         <i class="fas fa-hand-scissors nav-icon"></i>
-                                        <p>{{ trans('admin.menu.draws*') }}</p>
+                                        <p>Sorteios</p>
                                     </a>
                                 </li>
                                 @endcan
@@ -265,7 +265,7 @@
                         <a href="#" class="nav-link @if(request()->is('admin/reports/*')) active @endif">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p>
-                            {{ trans('admin.menu.reports') }}
+                                Relatórios
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -275,13 +275,13 @@
                                 <a href="{{route('admin.reports.used.dozens')}}"
                                     class="nav-link @if(request()->is('admin/settings/used-dozens*')) active @endif">
                                     <i class="fas fa-star nav-icon"></i>
-                                    <p>{{ trans('admin.menu.used-dozens*') }}</p>
+                                    <p>Dezenas Utilizadas</p>
                                 </a>
 
                                 <a href="{{route('admin.reports.points-by-user')}}"
                                     class="nav-link @if(request()->is('admin/settings/points-by-user*')) active @endif">
                                     <i class="fas fa-users nav-icon"></i>
-                                    <p>{{ trans('admin.menu.points-by-user*') }}</p>
+                                    <p>Pontos por Cliente</p>
                                 </a>
 
                                 @can('read_extract')
@@ -289,7 +289,7 @@
                                     <a href="{{route('admin.dashboards.extracts.index')}}"
                                        class="nav-link @if(request()->is('admin/dashboards/extracts/')) active @endif">
                                         <i class="fas fa-file-alt nav-icon"></i>
-                                        <p>{{ trans('admin.menu.extracts') }}</p>
+                                        <p>Extrato</p>
                                     </a>
                                 </li>
                             @endcan
@@ -298,7 +298,7 @@
                                     <a href="{{route('admin.dashboards.extracts.manualRecharge')}}"
                                        class="nav-link @if(request()->is('admin/dashboards/extracts/manual-recharge')) active @endif">
                                         <i class="fas fa-file-alt nav-icon"></i>
-                                        <p>{{ trans('admin.menu.manual-recharge') }}</p>
+                                        <p>Extrato Recarga Manual</p>
                                     </a>
                                 </li>
                             @endif
@@ -307,7 +307,7 @@
                                     <a href="{{ route('admin.dashboards.customer.balance') }}"
                                         class="nav-link @if (request()->is('admin/dashboards/custome/balance')) active @endif">
                                         <i class="fas fa-file-alt nav-icon"></i>
-                                        <p>{{ trans('admin.menu.balance') }}</p>
+                                        <p>Saldo de Clientes</p>
                                     </a>
                                 </li>
                             @endif
@@ -316,7 +316,7 @@
                                     <a href="{{route('admin.dashboards.extracts.sales')}}"
                                        class="nav-link @if(request()->is('admin/dashboards/extracts/sales')) active @endif">
                                         <i class="fas fa-file-alt nav-icon"></i>
-                                        <p>{{ trans('admin.menu.sales') }}</p>
+                                        <p>Extrato de Vendas</p>
                                     </a>
                                 </li>
                             @endif
@@ -344,7 +344,7 @@
                         <i class="nav-icon fas fa-wallet"></i>
                         <i class="fas fa-dice-d8 "></i>
                             <p>
-                            {{ trans('admin.menu.index*') }}
+                                Carteira
                             </p>
                         </a>
                     </li>
@@ -353,7 +353,7 @@
                     <a href="#" class="nav-link @if(request()->is('admin/settings/*')) active @endif">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>
-                        {{ trans('admin.menu.settings') }}
+                            Configurações
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -363,7 +363,7 @@
                                 <a href="{{route('admin.settings.permissions.index')}}"
                                    class="nav-link @if(request()->is('admin/settings/permissions*')) active @endif">
                                     <i class="fas fa-user-lock nav-icon"></i>
-                                    <p>{{ trans('admin.menu.permissions*') }}</p>
+                                    <p>Permissões</p>
                                 </a>
                             </li>
                         @endcan
@@ -372,7 +372,7 @@
                                 <a href="{{route('admin.settings.roles.index')}}"
                                    class="nav-link @if(request()->is('admin/settings/roles*')) active @endif">
                                     <i class="fas fa-user-tag nav-icon"></i>
-                                    <p>{{ trans('admin.menu.roles*') }}</p>
+                                    <p>Funções</p>
                                 </a>
                             </li>
                         @endcan
@@ -381,7 +381,7 @@
                                 <a href="{{route('admin.settings.users.index')}}"
                                    class="nav-link @if(request()->is('admin/settings/users*')) active @endif">
                                     <i class="fas fa-user nav-icon"></i>
-                                    <p>{{ trans('admin.menu.users*') }}</p>
+                                    <p>Usuários</p>
                                 </a>
                             </li>
                         @endcan
@@ -392,7 +392,7 @@
                             <a href="{{route('admin.settings.qualifications.index')}}"
                                 class="nav-link @if(request()->is('admin/settings/qualifications*')) active @endif">
                                 <i class="fas fa-star nav-icon"></i>
-                                <p>{{ trans('admin.menu.qualifications*') }}</p>
+                                <p>Qualificações</p>
                             </a>
                         </li>
                         @endcan
@@ -402,7 +402,7 @@
                             <a href="{{route('admin.settings.systems.index')}}"
                                 class="nav-link @if(request()->is('admin/settings/system*')) active @endif">
                                 <i class="nav-icon fas fa-cog"></i>
-                                <p>{{ trans('admin.menu.system*') }}</p>
+                                <p>Sistema</p>
                             </a>
                         </li>
                         @endcan

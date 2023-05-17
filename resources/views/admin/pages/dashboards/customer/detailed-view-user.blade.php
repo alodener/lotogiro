@@ -9,7 +9,7 @@
                 <div class="p-3 bg-body shadow-sm rounded border border-1">
                     <div class="d-flex justify-content-between">
                         <div class="float-start">
-                            <h5 class="value">{{ trans ('admin.customerDetails.totalApost') }} </h5>
+                            <h5 class="value">Total de apostas feitas</h5>
                             <p class="mb-0" style="font-size: 20px;"><b>{{ $total_bets }}</b></p>
                         </div>
                         <div class="float-end d-inline-block bg-light shadow-light rounded-3 p-2">
@@ -23,7 +23,7 @@
                 <div class="p-3 bg-body shadow-sm rounded border border-1">
                     <div class="d-flex justify-content-between">
                         <div class="float-start">
-                            <h5 class="value">{{ trans ('admin.customerDetails.valueApost') }} </h5>
+                            <h5 class="value">Valor Apostado</h5>
                             <p class="mb-0" style="font-size: 20px;">{{ 'R$ ' . number_format($total_apostado, 2, '.', ',') }}</p>
                         </div>
                         <div class="float-end d-inline-block bg-light shadow-light rounded-3 p-2">
@@ -36,7 +36,7 @@
                 <div class="p-2 bg-body shadow-sm rounded border border-1">
                     <div class="d-flex justify-content-between">
                         <div class="float-start">
-                            <h4 class="value">{{ trans ('admin.customerDetails.premioC') }} </h4>
+                            <h4 class="value">Prêmio Cliente</h4>
                             <p class="text-dark" class="mb-0">{{ 'R$' . number_format($total_apostado - $lucro_prejuizo, 2, '.', ',')  }}</p>
                         </div>
                         <div class="float-end d-inline-block bg-light shadow-light rounded-3 p-2">
@@ -50,7 +50,7 @@
                 <div class="p-2 bg-body shadow-sm rounded border border-1">
                     <div class="d-flex justify-content-between">
                         <div class="float-start">
-                            <h4 class="value">{{ trans ('admin.customerDetails.lucro/prej') }}  </h4>
+                            <h4 class="value">Lucro/Prejuizo(Casa)</h4>
                             @if ($lucro_prejuizo > 0)
                                 <p class="text-success" class="mb-0">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',')  }}</p>
                             @elseif ($lucro_prejuizo == 0)
@@ -69,24 +69,24 @@
         </div>
         <div class="row mt-5">
             <div class="col">
-                <h3>{{ trans ('admin.customerDetails.visaoCliente') }}   {{$user->name}} {{$user->last_name}} #{{$user->id}}</h3>
+                <h3>Visão Detalhada do Cliente {{$user->name}} {{$user->last_name}} #{{$user->id}}</h3>
                 <table id="table" class="table table-sm">
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th aria-controls="widget-options" scope="col">{{ trans ('admin.customerDetails.concurso') }} </th>
+                            <th aria-controls="widget-options" scope="col">Concurso</th>
                             <th scope="col"></th>
-                            <th scope="col">{{ trans ('admin.customerDetails.typegame') }} </th>
+                            <th scope="col">Tipo de Jogo</th>
                             <th scope="col"></th>
-                            <th scope="col">{{ trans ('admin.customerDetails.valueapost') }}  </th>
+                            <th scope="col">Valor Apostado</th>
                             <th scope="col"></th>
-                            <th scope="col">{{ trans ('admin.customerDetails.premio') }} </th>
+                            <th scope="col">Prêmio</th>
                             <th scope="col"></th>
                             @if ($user_type === 'user_id')
-                            <th scope="col">{{ trans ('admin.customerDetails.client') }}  </th>
+                            <th scope="col">Cliente</th>
                             <th scope="col"></th>
                             @endif
-                            <th scope="col">{{ trans ('admin.customerDetails.date') }} </th>
+                            <th scope="col">Data</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -165,7 +165,7 @@
         $('#table').DataTable({
               "language": {
                   "search": 'Buscar',
-                  "lengthMenu": "Mostrando  registros por página",
+                  "lengthMenu": "Mostrando _MENU_ registros por página",
                   "zeroRecords": "Nada encontrado",
                   "info": "Mostrando página _PAGE_ de _PAGES_",
                   "infoEmpty": "Nenhum registro disponível",

@@ -88,7 +88,7 @@
                                 <tr>
                                     <th scope="col">{{ trans('admin.validate-games.table-id-header') }}</th>
                                     <th scope="col">{{ trans('admin.validate-games.table-game-type-header') }}</th>
-                                    <th scope="col">{{ trans('admin.validate-games.table--header') }}</th>
+                                    <th scope="col">{{ trans('admin.validate-games.table-competitions-header') }}</th>
                                     <th scope="col">{{ trans('admin.validate-games.table-dozens-header') }}</th>
                                     <th scope="col">{{ trans('admin.validate-games.table-value-header') }}</th>
                                     <th scope="col">{{ trans('admin.validate-games.table-prize-header') }}</th>
@@ -146,7 +146,7 @@
                                 @endforelse
                                 <tfoot>
                                 <tr>
-                                    <th scope="col">Total </th>
+                                    <th scope="col">Total</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                     <th scope="col">R${{\App\Helper\Money::toReal($totalValue)}}</th>

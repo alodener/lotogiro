@@ -21,7 +21,7 @@
             @enderror
             @can('create_user')
                 <a href="{{route('admin.settings.qualifications.create')}}">
-                    <button class="btn btn-info my-2"> {{ trans ('admin.qualificationIndex.newQ') }} </button>
+                    <button class="btn btn-info my-2">Nova Qualificação</button>
 
                 </a>
             @endcan
@@ -30,11 +30,11 @@
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>{{ trans ('admin.qualificationIndex.name') }} </th>
-                        <th> {{ trans ('admin.qualificationIndex.metaP') }}  </th>
-                        <th>{{ trans ('admin.qualificationIndex.aprovP') }} (%)</th>
-                        <th>{{ trans ('admin.qualificationIndex.aprovG') }} (%)</th>
-                        <th class="acoes">{{ trans ('admin.qualificationIndex.actions') }} </th>
+                        <th>Nome</th>
+                        <th>Meta de Pontos</th>
+                        <th>Aproveitamento Pessoal (%)</th>
+                        <th>Aproveitamento Grupo (%)</th>
+                        <th class="acoes">Ações</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -48,20 +48,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">{{ trans ('admin.qualificationIndex.excluiQ') }} </h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Deseja excluir esta qualificação?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                {{ trans ('admin.qualificationIndex.actionrevert') }} 
+                    Está ação não pode ser revertida
                 </div>
                 <div class="modal-footer">
                     <form id="destroy" action="" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans ('admin.qualificationIndex.cancel') }}  </button>
-                        <button type="submit" class="btn btn-danger"> {{ trans ('admin.qualificationIndex.exclui') }}  </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Excluir</button>
                     </form>
                 </div>
             </div>
@@ -83,16 +83,7 @@
         $(document).ready(function () {
             var table = $('#user_table').DataTable({
                 language: {
-                    "lengthMenu": "{{ trans ('admin.language.lengthMenu') }}",
-                    "zeroRecords": "{{ trans ('admin.language.zeroRecords') }}",
-                    "info": "{{ trans ('admin.language.info') }}",
-                    "infoEmpty":  "{{ trans ('admin.language.infoEmpty') }}",
-                    "infoFiltered": "{{ trans ('admin.language.infoFiltered') }}",
-                    "search": "{{ trans ('admin.language.search') }}",
-                "paginate": {
-                    "next": "{{ trans ('admin.language.next') }}",
-                    "previous": "{{ trans ('admin.language.previous') }}"
-                }
+                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
                 },
                 processing: true,
                 serverSide: true,

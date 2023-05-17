@@ -43,7 +43,7 @@
         <div class="form-group col-md-12">
             <div wire:ignore>
                 <div class="card-header ganhos-card">
-                    <h4> Cliente</h4>
+                    <h4>Cliente</h4>
                 </div>
             </div>        
             <div class="row">

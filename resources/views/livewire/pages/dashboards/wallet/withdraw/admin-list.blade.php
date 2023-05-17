@@ -1,6 +1,6 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">{{ trans('admin.walletWithdraw.wallet') }} </h3>
+        <h3 class="text-center text-bold">CARTEIRA</h3>
     </div>
     <div class="row bg-white p-3">
         <div class="col-md-12">
@@ -8,10 +8,10 @@
             <div class="card-header indica-card">
                 <div class="row">
                     <div class="col-md-6">
-                    {{ trans('admin.walletWithdraw.solicitar') }}
+                Solicitações de Saque
                     </div>
                 <div class="col-md-6 text-right">
-                <a href="{{route('admin.dashboards.wallet.withdraw-visualizacao')}}" class="btn btn-warning"> {{ trans('admin.walletWithdraw.visualizar') }} </a>
+                <a href="{{route('admin.dashboards.wallet.withdraw-visualizacao')}}" class="btn btn-warning"> Visualizar Histórico</a>
                 </div>
             </div>
             </div>
@@ -19,14 +19,14 @@
                 <table class="table table-striped table-hover table-bordered table-lg">
                     <thead>
                     <tr>
-                        <th>{{ trans('admin.walletWithdraw.date') }} </th>
-                        <th>{{ trans('admin.walletWithdraw.respon') }} </th>
+                        <th>Data</th>
+                        <th>Responsável</th>
                         @if(\App\Helper\UserValidate::iAmAdmin())
                             <th>Pix</th>
                         @endif
-                        <th>{{ trans('admin.walletWithdraw.value') }} </th>
-                        <th>{{ trans('admin.walletWithdraw.status') }} </th>
-                        <th>{{ trans('admin.walletWithdraw.acao') }} </th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ação</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -45,7 +45,7 @@
                                     <button wire:click="withdrawDone({{ $withdraw->id }})" type="button" class="btn
                                         btn-warning">
                                         <i class="fa fa-check-circle"></i>
-                                        {{ trans('admin.walletWithdraw.feito') }}
+                                        Feito
                                     </button>
                                 @else
                                     <button disabled type="button" class="btn btn-success"><i class="fa

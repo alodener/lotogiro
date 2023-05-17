@@ -27,21 +27,21 @@
             {{-- TODO: Verificar permissões para acessar rota e recurso --}}
             <div class="table-responsive">
                 <div class="row">
-                <h4 class="my-4">{{ trans('admin.statementBalance.balance') }}  | {{ $user->name }} - {{ trans('admin.statementBalance.balanceT') }}   {{ \App\Helper\Money::toReal($user->balance) }} | {{ trans('admin.statementBalance.bonus') }}  R${{\App\Helper\Money::toReal($user->bonus)}}</h4>
+                <h4 class="my-4">Extrato de Saldo | {{ $user->name }} - Saldo Total: {{ \App\Helper\Money::toReal($user->balance) }} | Bônus: R${{\App\Helper\Money::toReal($user->bonus)}}</h4>
                 <table class="table table-striped table-hover table-bordered table-lg" id="statementBalance_table">
                     <div class="my-4 col-md-4 text-right">
-                    <a href= "{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary"> {{ trans('admin.statementBalance.back') }}   </a>
+                    <a href= "{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary"> Voltar </a>
                     </div>
                 </div>
                     <thead>
                     <tr>
-                        <th>{{ trans('admin.statementBalance.date') }}  </th>
-                        <th>{{ trans('admin.statementBalance.resp') }} </th>
-                        <th>{{ trans('admin.statementBalance.wallet') }} </th>
-                        <th>{{ trans('admin.statementBalance.valueA') }}  </th>
-                        <th>{{ trans('admin.statementBalance.value') }}   </th>
-                        <th>{{ trans('admin.statementBalance.aValue') }}   </th>
-                        <th>{{ trans('admin.statementBalance.descrip') }}   </th>
+                        <th>Data</th>
+                        <th>Responsável</th>
+                        <th>Carteira</th>
+                        <th>Valor Anterior</th>
+                        <th>Valor</th>
+                        <th>Valor Atual</th>
+                        <th>Descrição</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,7 +49,7 @@
                         <tr>
                             <td>{{ $history->data }}</td>
                             <td>{{ $history->responsavel }}</td>
-                            <td>{{ $history->wallet == 'balance' ? '{{ trans('admin.statementBalance.saldo') }}' : '{{ trans('admin.statementBalance.bonus') }}' }}</td>
+                            <td>{{ $history->wallet == 'balance' ? 'Saldo' : 'Bônus' }}</td>
                             <td>{{ $history->old_value }}</td>
                             <td>{{ $history->value }}</td>
                             <td>{{ $history->value_a }}</td>
@@ -57,7 +57,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4">{{ trans('admin.statementBalance.dado-exibir') }}  </td>
+                            <td colspan="4">Nenhum dado para exibir.</td>
                         </tr>
                     @endforelse
                     </tbody>

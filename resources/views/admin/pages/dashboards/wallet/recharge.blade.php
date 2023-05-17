@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Recarga - Adicione Saldo ')
+@section('title', 'Recarga - Adicione Saldo')
 
 @section('content')
     <div class="row bg-white p-3">

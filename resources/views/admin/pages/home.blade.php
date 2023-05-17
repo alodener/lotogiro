@@ -33,7 +33,7 @@
 <div class="col-md-12 p-4">
     <div class="card w-100">
         <div class="card-header indica-card">
-        {{ trans('admin.dashboard.indications') }} 
+            Indicações
         </div>
         <div class="container">
             <div class="row">
@@ -108,8 +108,6 @@
         </div>
     </div>
 </div>
-
-
 @if(\App\Helper\Configs::getPlanoDeCarreira() == "Ativado")
 <div class="col-md-12 p-4">
     <div class="card w-100">

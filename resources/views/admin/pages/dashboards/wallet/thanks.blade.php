@@ -6,11 +6,12 @@
     <div class=content>
         <div class="wrapper-1">
             <div class="wrapper-2">
-                <h1> {{ trans ('admin.walletBlade.thanks') }} </h1>
-                <p>{{ trans ('admin.walletBlade.recebemosC') }} </p>
-                <p> {{ trans ('admin.walletBlade.confirm') }}  </p>
+                <h1>Obrigado!</h1>
+                <p>Recebemos sua compra!</p>
+                <p>Aguardaremos a confirmação do pagamento com nosso intermediador, e em breve teremos novidades
+                    para você.</p>
                 <button class="go-home">
-                {{ trans ('admin.walletBlade.inicio') }}  
+                    Ir para o início.
                 </button>
             </div>
         </div>

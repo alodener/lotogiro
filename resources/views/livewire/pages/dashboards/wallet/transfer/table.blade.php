@@ -2,12 +2,12 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">{{ trans('admin.tableTransfer.wallet') }} </h3>
+                <h3 class="card-title">Carteira - Transferência de Saldo</h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                        <h4>{{ trans('admin.tableTransfer.procurar') }} </h4>
+                        <h4>Procurar contato para transferência</h4>
                     </div>
                     <div class="col-12">
                         <div id="custom-search-input">
@@ -29,18 +29,18 @@
                         <form wire:submit.prevent="transferToClient()">
                             <div class="row mt-5">
                                 <div class="col-sm-7">
-                                    <h6>{{ trans('admin.tableTransfer.dados') }}  </h6>
+                                    <h6>Dados do Recebedor</h6>
                                     <div class="col-sm-12">
-                                        <b>{{ trans('admin.tableTransfer.name') }}  </b> <span x-text="data.name"></span>
+                                        <b>Nome: </b> <span x-text="data.name"></span>
                                     </div>
                                     <div class="col-sm-12">
-                                        <b>{{ trans('admin.tableTransfer.email') }} </b> <span x-text="data.email"></span>
+                                        <b>E-Mail: </b> <span x-text="data.email"></span>
                                     </div>
                                     <div class="col-sm-12">
-                                        <b>{{ trans('admin.tableTransfer.phone') }} </b> <span x-text="data.phone"></span>
+                                        <b>Telefone: </b> <span x-text="data.phone"></span>
                                     </div>
                                     <div class="col-sm-12">
-                                        <b> {{ trans('admin.tableTransfer.salvar') }} </b>
+                                        <b>Salvar contato? </b>
 
                                         <div x-data="{storeContact: @entangle('storeContact').defer}" class="col-sm-5">
                                             <button x-on:click.prevent="storeContact = !storeContact" type="button"
@@ -52,10 +52,10 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-5">
-                                    <h6>  {{ trans('admin.tableTransfer.valuet') }}  </h6>
+                                    <h6>Valor a transferir</h6>
                                     <div class="input-group">
                                         <input wire:model="valueTransfer" x-on:focus="formatInput()" type="text"
-                                           class="search-query form-control" placeholder="{{ trans('admin.tableTransfer.value') }}  "
+                                           class="search-query form-control" placeholder="Valor a transferir"
                                            id="valueTransfer" inputmode="numeric" value="0,00" />
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                     <div class="input-group">
                                         <button wire:click="transferBalance" type="button" class="btn btn-dark
                                         btn-block">
-                                        {{ trans('admin.tableTransfer.transf') }}  <span class="fa fa-send" style="color: #fff938"></span>
+                                            Transferir <span class="fa fa-send" style="color: #fff938"></span>
                                         </button>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                     </template>
                     <template x-if="!data">
                         <div class="alert alert-warning mt-5" role="alert">
-                        {{ trans('admin.tableTransfer.userS') }}  
+                            Nenhum usuário selecionado para efetuar a transferência.
                         </div>
                     </template>
                 </div>

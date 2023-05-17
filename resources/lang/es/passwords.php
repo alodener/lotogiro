@@ -13,12 +13,11 @@ return [
     |
     */
 
-    
-    'password' => 'La contraseña y la confirmación deben coincidir y tener al menos seis caracteres.',
-    'reset' => '¡Tu contraseña ha sido restablecida!',
-    'sent' => '¡Le hemos enviado su enlace de restablecimiento de contraseña por correo electrónico!',
-    'throttled' => 'Espere antes de volver a intentarlo.',
-    'token' => 'Este token de restablecimiento de contraseña no es válido.',
-    'user' => "No pudimos encontrar un usuario con esa dirección de correo electrónico.",
+    'password' => 'A senha e a confirmação devem combinar e possuir pelo menos seis caracteres.',
+    'reset' => 'Sua senha foi redefinida!',
+    'sent' => 'Enviamos seu link de redefinição de senha por e-mail!',
+    'throttled' => 'Aguarde antes de tentar novamente.',
+    'token' => 'Este token de redefinição de senha é inválido.',
+    'user' => "Não encontramos um usuário com esse endereço de e-mail.",
 
 ];

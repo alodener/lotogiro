@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', trans('admin.s.create-page-title'))
+@section('title', trans('admin.competitions.create-page-title'))
 
 @section('content')
 
