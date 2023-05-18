@@ -317,8 +317,8 @@ class UserController extends Controller
                 $ddd = Str::of($telefoneCompleto)->substr(0, 2); 
                 $telefone = Str::of($telefoneCompleto)->substr(2);
             }
+
             $userClient = Client::where("email", $user->email)->first();
-            
             if ($userClient) {
                 if (!is_null($request->name)) {
                     $userClient->name = $request->name;
@@ -340,6 +340,8 @@ class UserController extends Controller
                 $userClient->save();
                 
             }
+
+
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
