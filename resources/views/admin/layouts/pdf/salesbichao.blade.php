@@ -159,7 +159,7 @@
             <table style="width: 100%">
                 <tr class="bg-secondary">
                     <th class="text-left">ID</th>
-                    <th class="text-left">CPF CLIENTE</th>
+                    <th class="text-left">PIX CLIENTE</th>
                     <th class="text-left">NOME CLIENTE</th>
                     <th class="text-left">CRIAÇÃO</th>
                     <th class="text-left">STATUS</th>
@@ -174,7 +174,7 @@
                             {{ $game['id'] }}
                         </td>
                         <td class="font border-bottom">
-                            {{ \App\Helper\Mask::addMaskCpf($game['client']['cpf']) }}
+                            {{ \App\Helper\Mask::addMaskCpf($game['client']['pix']) }}
                         </td>
                         <td class="font border-bottom">
                             {{ $game['client']['name'] }}

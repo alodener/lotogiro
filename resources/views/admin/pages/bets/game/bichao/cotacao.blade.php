@@ -44,14 +44,33 @@
                     </thead>
                     <tbody>
                         @foreach ($cotacoes as $cotacao)
-                        <tr>
-                            <th scope="row">
-                                <td>{{ $cotacao['nome'] }}</td>
-                            </th>
-                            <th scope="row">
-                                <td>{{'1x R$'. number_format($cotacao['multiplicador'], 2, ',', '.') }}</td>
-                            </th>
-                        </tr>
+                        @if ($cotacao->id == 7)
+                            <tr>
+                                <th scope="row">
+                                    <td>{{ $cotacao['nome'] }} 1 ao 3</td>
+                                </th>
+                                <th scope="row">
+                                    <td>{{'1x R$'. number_format($cotacao['multiplicador'], 2, ',', '.') }}</td>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <td>{{ $cotacao['nome'] }} 1 ao 5</td>
+                                </th>
+                                <th scope="row">
+                                    <td>{{'1x R$'. number_format($cotacao['multiplicador_2'], 2, ',', '.') }}</td>
+                                </th>
+                            </tr>
+                        @else
+                            <tr>
+                                <th scope="row">
+                                    <td>{{ $cotacao['nome'] }}</td>
+                                </th>
+                                <th scope="row">
+                                    <td>{{'1x R$'. number_format($cotacao['multiplicador'], 2, ',', '.') }}</td>
+                                </th>
+                            </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>
