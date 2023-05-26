@@ -152,6 +152,7 @@
                     
                     const html = data.map((jogo) => {
                         let subhtml = '';
+                        
                         jogo.placement.forEach((placement, index) => {
                             subhtml = subhtml + `
                                 <tr>
@@ -162,6 +163,10 @@
                                 </tr>
                             `;
                         });
+                        
+                        if (!jogo.placement.length) {
+                            subhtml = '<tr><td colspan="4"><p>Aguardando divulgação de resultados.</p></td></tr>';
+                        }
 
                         return (`
                             <div class="col-md-3 col-12">
