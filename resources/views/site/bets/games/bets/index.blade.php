@@ -8,14 +8,14 @@
             <div class="col-md-12">
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Apostas</h3>
-                        @if(!empty($bet) && $bet->status && $bet->botao_finalizar == 0)
-                         <div class=" text-right">
-                                <form action="{{route('games.bet.update', ['user' => $bet->user->id, 'bet' => $bet])}}"
-                                      method="post">
-                                    @csrf
-                                    <button type="submit" class="btn btn-warning btn-sm">Finalizar Aposta</button>
-                                     
+                    <h3 class="card-title"> {{ trans('admin.sitePages.apost') }}</h3>
+                         @if(!empty($bet) && $bet->status && $bet->botao_finalizar == 0)
+                          <div class=" text-right">
+                                 <form action="{{route('games.bet.update', ['user' => $bet->user->id, 'bet' => $bet])}}"
+                                       method="post">
+                                     @csrf
+                                    <button type="submit" class="btn btn-warning btn-sm">{{ trans('admin.sitePages.fimApost') }}</button>
+                                      
                                 </form>
                             </div>
                         @endif
@@ -25,12 +25,11 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="alert alert-danger" role="alert">
-                                        <h4 class="alert-heading">Atenção!</h4>
-                                        <p>Não é possível adicionar novos jogos para a aposta pois a mesmo já foi
-                                            finalizada:</p>
-                                        <hr>
-                                        <p class="mb-0">Se desejar criar novos jogos, incie uma nova aposta <a
-                                                href="{{route('games.bet', ['user' => $user->id])}}">clicando aqui</a>
+                                    <h4 class="alert-heading">{{ trans('admin.sitePages.atencao') }} </h4>
+                                        <p>{{ trans('admin.sitePages.npossivel') }}  </p>
+                                         <hr>
+                                        <p class="mb-0">{{ trans('admin.sitePages.iniccApost') }}   <a
+                                                href="{{route('games.bet', ['user' => $user->id])}}">{{ trans('admin.sitePages.clicAq') }}  </a>
                                         </p>
                                     </div>
                                 </div>
@@ -58,8 +57,7 @@
                                         <form action="{{route('games.bet.store', ['user' => $user->id])}}"
                                               method="post">
                                             @csrf
-                                            <button type="submit" class="btn btn-warning btn-block">Criar uma nova
-                                                aposta
+                                            <button type="submit" class="btn btn-warning btn-block">{{ trans('admin.sitePages.criarApost') }}  
                                             </button>
                                         </form>
                                     </div>
@@ -81,7 +79,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th scope="col">Cpf</th>
-                                                    <th scope="col">Nome</th>
+                                                    <th scope="col">{{ trans('admin.sitePages.name') }}</th>
                                                     <th scope="col">Pix</th>
                                                 </tr>
                                                 </thead>
@@ -98,7 +96,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 text-center">
-                                            <h5>Selecione o jogo que deseja criar</h5>
+                                        <h5>{{ trans('admin.sitePages.selecGame') }} </h5>
                                         </div>
                                         @forelse($typeGames as $typeGame)
                                             <div class="col-md-6 my-3">
@@ -117,10 +115,10 @@
                                         <table class="table">
                                             <thead>
                                             <tr>
-                                                <th scope="col">Tipo de Jogo</th>
-                                                <th scope="col">Dezenas</th>
-                                                <th scope="col">Valor</th>
-                                                <th scope="col">Prêmio</th>
+                                            <th scope="col">{{ trans('admin.sitePages.typeGame') }}</th>
+                                                <th scope="col">{{ trans('admin.sitePages.doz') }}</th>
+                                                <th scope="col">{{ trans('admin.sitePages.value') }} </th>
+                                                <th scope="col">{{ trans('admin.sitePages.premio') }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -139,7 +137,7 @@
                                                 @php($totalPrize += $game->premio)
                                             @empty
                                                 <tr class="text-center">
-                                                    <td colspan="4">Não existem jogos criados para essa  aposta!</td>
+                                                <td colspan="4">{{ trans('admin.sitePages.naoExist') }}</td>
                                                 </tr>
                                             </tbody>
                                             @endforelse

@@ -4,14 +4,14 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item pl-3">
-            Saldo: R${{\App\Helper\Money::toReal(auth()->user()->balance)}} |
-            Bônus:  R${{\App\Helper\Money::toReal(auth()->user()->bonus)}}
+        {{ trans('admin.pagesF.saldo') }} R${{\App\Helper\Money::toReal(auth()->user()->balance)}} |
+        {{ trans('admin.pagesF.bonus') }}  R${{\App\Helper\Money::toReal(auth()->user()->bonus)}}
         </li>
         <li class="nav-item pl-3">
                         <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">
                             <i class="fas fa-piggy-bank"></i>
-                            Recarregar 
+                            {{ trans('admin.pagesF.recarregar') }} 
                         </a>
         </li>
     </ul>
@@ -24,13 +24,14 @@
         </li>
         @php $unreadNotifications = auth()->user()->unreadNotifications; @endphp
 
+        <!-- icone -->
         @if(!empty(auth()->user()->notifications) && count(auth()->user()->notifications) > 0)
             <li class="nav-item dropdown notification_dropdown">
                 <a class="nav-link bell ai-icon {{ $unreadNotifications->count() > 0 ? 'show-notifcations-indicatior' : '' }}" href="#" role="button" data-toggle="dropdown">
                     <svg id="icon-user" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                         <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
+                    </svg> 
 
                     {{-- @if($unreadNotifications->count() > 0) --}}
                         <div class="notifications-count">{{ $unreadNotifications->count() }}</div>
@@ -58,6 +59,7 @@
             </li>
         @endif
 
+        <!--menu de linguagens -->
         <li>
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
@@ -75,7 +77,7 @@
                     @endif
                 </ul>
             </li>
-        </li>
+        </li> 
 
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
@@ -88,18 +90,18 @@
                 @can('read_user')
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('admin.settings.users.edit', ['user' => auth()->user()->id])}}">
-                    <i class="fas fa-user mr-2"></i> Conta
+                    <i class="fas fa-user mr-2"></i> {{ trans('admin.pagesF.conta') }}
                 </a>
                 @endcan
                 @can('edit_all')
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('admin.settings.users.edit', ['user' => auth()->user()->id])}}">
-                    <i class="fas fa-user mr-2"></i> Conta
+                    <i class="fas fa-user mr-2"></i> {{ trans('admin.pagesF.conta') }}
                 </a>
                 @endcan
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('admin.logout')}}">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                    <i class="fas fa-sign-out-alt"></i> {{ trans('admin.pagesF.logout') }}
                 </a>
             </div>
         </li>
