@@ -833,7 +833,7 @@ class BichaoController extends Controller
         $horariosApi = self::request_api_results($estados, $searchData);
         foreach ($horariosApi as $estado_id => $horarioApi) {
             $result = json_decode($horarioApi);
-            
+
             if ($result) {
                 $horarios = BichaoHorarios::where('estado_id', $estado_id)->get();
                 
@@ -851,8 +851,8 @@ class BichaoController extends Controller
 
                     if (sizeof($horario) > 0 && $horario[0]['banca'] == $game->lottery) {
                         $checkResultExist = BichaoResultados::where('horario_id', $horario[0]['id'])->where('created_at', date('Y-m-d'))->first();
-    
-                        if (!$checkResultExist) {
+
+                        if (!$checkResultExist && (!isset($game->empty) || $game->empty != 1)) {
                             $resultadosDto[] = [
                                 'horario_id' => $horario[0]['id'],
                                 'horario' => $horario[0]['horario'],
