@@ -114,7 +114,8 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @can('read_client')
+
+                        <!--@can('read_client')
                                 <li class="nav-item">
                                     <a href="{{route('admin.bets.clients.index')}}"
                                        class="nav-link @if(request()->is('admin/bets/clients*')) active @endif">
@@ -122,7 +123,8 @@
                                         <p>Clientes</p>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan-->
+
                             @can('read_client')
                                 <li class="nav-item">
                                  <a href="{{route('admin.bets.validate-games.index')}}"
@@ -293,6 +295,7 @@
                                     </a>
                                 </li>
                             @endcan
+                            <!--
                             @if(\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.manualRecharge')}}"
@@ -301,7 +304,7 @@
                                         <p>Extrato Recarga Manual</p>
                                     </a>
                                 </li>
-                            @endif
+                            @endif-->
                             @if (\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{ route('admin.dashboards.customer.balance') }}"
@@ -317,6 +320,16 @@
                                        class="nav-link @if(request()->is('admin/dashboards/extracts/sales')) active @endif">
                                         <i class="fas fa-file-alt nav-icon"></i>
                                         <p>Extrato de Vendas</p>
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if(\App\Helper\UserValidate::iAmAdmin())
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.extracts.extractsAll')}}"
+                                       class="nav-link @if(request()->is('')) active @endif">
+                                        <i class="fas fa-file-alt nav-icon"></i>
+                                        <p>Extrato Geral</p>
                                     </a>
                                 </li>
                             @endif
