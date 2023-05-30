@@ -600,16 +600,17 @@ class BichaoController extends Controller
             $resultado = array_values(array_filter($resultados, fn ($resultado) => $resultado['horario_id'] == $game['horario_id']));
             if (sizeof($resultado) == 0) continue;
             $resultado = $resultado[0];
-            $horaGame = Carbon::parse($data['created_at'])->format('H:i:s');
-
+            $horaGame = Date('H:i:s', strtotime($game['created_at']));
+            $datetimeGame = Date('Y-m-d H:i:s', strtotime($game['created_at']));
+            
             if ($horaGame > $game['horario']) {
                 $resultadoPeriodoInicio = $dataAnterior.' '.$resultado['horario'];
                 $resultadoPeriodoFim = $dataAtual.' '.$resultado['horario'];
-                if (Carbon::parse($data['created_at'])->format('Y-m-d H:i:s') <= $resultadoPeriodoInicio || Carbon::parse($data['created_at'])->format('Y-m-d H:i:s') >= $resultadoPeriodoFim) continue;
+                if ($datetimeGame <= $resultadoPeriodoInicio || $datetimeGame >= $resultadoPeriodoFim) continue;
             } else {
                 $resultadoPeriodoInicio = $dataAnterior.' '.$resultado['horario'];
                 $resultadoPeriodoFim = $dataSeguinte.' '.$resultado['horario'];
-                if (Carbon::parse($data['created_at'])->format('Y-m-d H:i:s') <= $resultadoPeriodoInicio || Carbon::parse($data['created_at'])->format('Y-m-d H:i:s') >= $resultadoPeriodoFim) continue;
+                if ($datetimeGame <= $resultadoPeriodoInicio || $datetimeGame >= $resultadoPeriodoFim) continue;
             }
 
             $premios_quantia = 0;
