@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\TypeGame;
 use App\Models\TypeGameValue;
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -15,6 +16,7 @@ class Copiacola extends Component
     public $dezena = [];
     public $typeGame;
     public $clients;
+    public $users;
     public $clientId;
     public $showList = false;
     public $search;
@@ -80,26 +82,56 @@ class Copiacola extends Component
     }
  
     }
-         public function setId($client)
+    public function setId($client)
     {
-            $this->clientId = $client["id"];
-            $this->search = $client["name"] . ' ' . $client["last_name"] . ' - ' . $client["cpf"]. ' ' . $client["email"]. ' - ' . $client["ddd"].' - ' . $client["phone"];
-            $this->showList = false;
-        
+        $this->clientId = $client["id"];
+        $this->search = $client["name"] . ' ' . $client["last_name"] . ' - ' . ($client["cpf"] ?? '') . ' ' . $client["email"] . ' - ' . $client["ddd"] . ' - ' . $client["phone"];
+        $this->showList = false;
     }
-        public function updatedSearch($value)
-    {
-        
-            $this->clients = Client::where(function($query) {
-            $query->where("name", "like", "%{$this->search}%")
-            ->orWhere("last_name", "like", "%{$this->search}%");
-            })
+    
 
-        ->get(); //executar a consulta SQL que busca e mostra os nomes e sobrenomes dos clientes
+    public function updatedSearch($value)
+{
+    $this->search = $value;
+
+    $searchTerms = explode(' ', $this->search);
+    $firstName = $searchTerms[0] ?? '';
+    $lastName = $searchTerms[1] ?? '';
+
+    $clientsFromClients = Client::query();
+    $clientsFromUsers = User::query();
+
+    if (!empty($firstName)) {
+        $clientsFromClients->where('name', 'like', $firstName . '%');
+        $clientsFromUsers->where('name', 'like', $firstName . '%');
+    }
+
+    if (!empty($lastName)) {
+        $clientsFromClients->where('last_name', 'like', $lastName . '%');
+        $clientsFromUsers->where('last_name', 'like', $lastName . '%');
+    }
+
+    $clientsFromClients->select('id', 'name', 'last_name', 'email', 'ddd', 'phone');
+    $clientsFromUsers->select('id', 'name', 'last_name', 'email', \DB::raw('NULL as ddd'), \DB::raw('NULL as phone'));
+
+    $clients = $clientsFromClients->union($clientsFromUsers)
+        ->select('id', 'name', 'last_name', 'email', 'ddd', 'phone')
+        ->get();
+
+    $uniqueClients = $clients->unique(function ($client) {
+        return $client['name'] . $client['last_name'] . $client['email'];
+    });
+
+    $this->clients = $uniqueClients->values();
 
     $this->showList = true;
+}
 
-        }
+    
+    
+    
+    
+    
     
 
     public function clearUser()
