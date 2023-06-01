@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="login100-form-btn">Acessar</button>
+                            <button type="submit" class="login100-form-btn">{{ trans('admin.pagesF.acessar') }}</button>
                         </div>
                     </div>
                 </form>
@@ -115,7 +115,7 @@
                            class="btn btn-block btn-success"
                            title="Precisa de ajuda?"
                            target="_blank">
-                            <i style="border:none;"class="fa fa-whatsapp"></i> Precisa de ajuda?
+                            <i style="border:none;"class="fa fa-whatsapp"></i> {{ trans('admin.pagesF.precisaAjuda') }}
                         </a>
                     </div>
                 </div>

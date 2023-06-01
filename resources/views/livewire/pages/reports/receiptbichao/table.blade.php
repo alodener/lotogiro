@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                Bilhetes Bichão
+            {{ trans('admin.bichao.bilhete') }}
             </div>
         </div>
     </div>

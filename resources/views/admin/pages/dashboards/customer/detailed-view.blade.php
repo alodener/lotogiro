@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="col bg-white p-3">
-        <h1>Visão Detalhada de Clientes Premiados</h1>
+        <h1>{{ trans('admin.pagesF.visaoPremiado') }}</h1>
         <hr/>
         <form method="POST" action="{{ route('admin.dashboards.customer.filter.winner')}}">
             @csrf
@@ -12,7 +12,7 @@
                 <div class="col">
                     <a href="{{ route('admin.dashboards.customer.balance')}}"><button type="button" class="btn btn-secondary"><i class="bi bi-arrow-left-square-fill"></i></button></a>
                     <div class="form-group w-25 mt-3">
-                        <label for="exampleFormControlSelect1">Selecionar Cliente</label>
+                        <label for="exampleFormControlSelect1">{{ trans('admin.pagesF.selecClient') }}</label>
                         <select class="form-control" id="select-names" name="select_names">
                             @foreach ($winners as $winner)
                                 <option value="{{ $winner[0] }}">{{ $winner[1] }}</option>
@@ -23,23 +23,23 @@
             </div>
             <div class="row mb-3">
                 <div class="col-2">
-                    <label for="">Data Inicio</label>
+                    <label for="">{{ trans('admin.pagesF.dataInicio') }}</label>
                     <input type="date" id="initial_date" class="form-control" name="initial_date" value="initial_date">
                 </div>
             </div>
             <div class="row">
                 <div class="col-2">
-                    <label for="">Data Final</label>
+                    <label for="">{{ trans('admin.pagesF.dataFinal') }}</label>
                     <input type="date" id="final_date" class="form-control" name="final_date" value="initial_date">
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="col-2">
-                    <button  type="submit" class="btn btn-primary">Filtrar</button>
+                    <button  type="submit" class="btn btn-primary">{{ trans('admin.pagesF.filtrar') }}</button>
                 </div>
             </div>
             <div class="row mt-2">
-                <p><b>Obs: Para filtrar todo o histórico do cliente, deixe os campos de data em branco, ou informe o intervalo desejado</b></p>
+                <p><b>{{ trans('admin.pagesF.obs') }}</b></p>
             </div>
         </form>
     </div>

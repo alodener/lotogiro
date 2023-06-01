@@ -6,25 +6,29 @@
     <div class="col bg-white p-3">
         <div class="row">
             <div class="col-md-8 col-12 d-flex justify-content-end container-menu-items">
-                <a href="{{ route('admin.bets.bichao.index') }}">
-                    <button class="btn btn-info my-2 ml-1">Apostar</button>
+            <a href="{{ route('admin.bets.bichao.index') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.apostar') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.resultados') }}">
-                    <button class="btn btn-info my-2 ml-1">Resultados</button>
+            <a href="{{ route('admin.bets.bichao.resultados') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.resultados') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
-                    <button class="btn btn-info my-2 ml-1">Minhas apostas</button>
+            <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.minhasaposts') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.cotacao') }}">
-                    <button class="btn btn-info my-2 ml-1">Cotação</button>
+            <a href="{{ route('admin.bets.bichao.cotacao') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.cotacao') }}</button>
                 </a>
             </div>
         </div>
         <hr />
         <div class="row">
             <div class="col-12">
-                <h1>Resultados</h1>
-                <p>Acompanhe diariamente os principais resultados do Jogo do Bicho</p>
+            <h1>{{ trans('admin.bichao.resultados') }}</h1>
+                <p>{{ trans('admin.bichao.acompanheResults') }}</p>
             </div>
         </div>
         <hr />
@@ -33,13 +37,13 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label>Escolha uma data</label>
+                        <label>{{ trans('admin.bichao.escolhaData') }}</label>
                             <input type="date" name="initial_date" class="form-control" id="initial_date" value="{{date('Y-m-d')}}" max="{{date('Y-m-d')}}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="selecionar-estado-bichao">Selecione um estado</label>
+                        <label for="selecionar-estado-bichao">{{ trans('admin.bichao.selecEstado') }}</label>
                             <select class="form-control" id="selecionar-estado-bichao">
                                 <option value="RJ" selected>Rio de Janeiro</option>
                                 <option value="SP">São Paulo</option>
@@ -53,14 +57,14 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-12">
-                        <button class="btn btn-success" id="bichao-buscar-resultados" type="button">Buscar resultados</button>
+                        <button class="btn btn-success" id="bichao-buscar-resultados" type="button">{{ trans('admin.bichao.buscResults') }}</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt-5" id="bichao-resultado-busca">
             <div class="col-12">
-                <p>Procurando resultados...</p>
+                <p>{{ trans('admin.bichao.procurando') }}</p>
             </div>
         </div>
     </div>

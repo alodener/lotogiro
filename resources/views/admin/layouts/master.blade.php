@@ -42,8 +42,8 @@
 
 @impersonating($guard = null)
     <div class="leave-current-user-wrapper">
-        <span><strong>Conectado Como: </strong> {{ auth()->user()->name }}</span>
-        <a href="{{ route('admin.settings.users.logout-as') }}" class="text-white">X Sair da Sessão</a>
+        <span><strong>{{ trans('admin.pagesF.conectadocomo') }} </strong> {{ auth()->user()->name }}</span>
+        <a href="{{ route('admin.settings.users.logout-as') }}" class="text-white">X {{ trans('admin.pagesF.sairsessao') }}</a>
     </div>
 
     <style>
@@ -86,6 +86,7 @@
 
     <div class="content-wrapper">
         <div class="container-fluid pt-3">
+            
             @yield('content')
         </div>
     </div>
