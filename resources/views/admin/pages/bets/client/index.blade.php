@@ -1,3 +1,4 @@
+<!--@can('read_user')
 @extends('admin.layouts.master')
 
 @section('title', trans('admin.customers.page-title'))
@@ -107,3 +108,5 @@
     </script>
 
 @endpush
+@endcan
+    -->
