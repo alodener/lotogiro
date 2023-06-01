@@ -324,15 +324,7 @@
                                 </li>
                             @endif
 
-                            @if(\App\Helper\UserValidate::iAmAdmin())
-                                <li class="nav-item">
-                                    <a href="{{route('admin.dashboards.extracts.extractsAll')}}"
-                                       class="nav-link @if(request()->is('')) active @endif">
-                                        <i class="fas fa-file-alt nav-icon"></i>
-                                        <p>Extrato Geral</p>
-                                    </a>
-                                </li>
-                            @endif
+
                             @if(\App\Helper\Configs::getBichao() == "Ativado")
                             @if(\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
