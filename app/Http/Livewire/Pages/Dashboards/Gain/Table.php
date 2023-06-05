@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\Client;
 
 class Table extends Component
 {
@@ -47,19 +48,75 @@ class Table extends Component
     public function updatedSearch($value)
     {
         if ($this->auth->hasPermissionTo('read_all_gains')) {
-            $this->users = User::where("name", "like", "%{$this->search}%")->get();
+            $searchTerms = explode(' ', $this->search);
+            $firstName = $searchTerms[0] ?? '';
+            $lastName = $searchTerms[1] ?? '';
+
+            $usersQuery = User::query();
+            $clientsQuery = Client::query();
+
+            if ($firstName) {
+                $usersQuery->where(function ($query) use ($firstName, $lastName) {
+                    $query->where('name', 'LIKE', "%{$firstName}%")
+                        ->orWhere('last_name', 'LIKE', "%{$firstName}%")
+                        ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$firstName}%"]);
+                });
+
+                $clientsQuery->where(function ($query) use ($firstName, $lastName) {
+                    $query->where('name', 'LIKE', "%{$firstName}%")
+                        ->orWhere('last_name', 'LIKE', "%{$firstName}%")
+                        ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$firstName}%"]);
+                });
+            }
+
+            if ($lastName) {
+                $usersQuery->where(function ($query) use ($lastName) {
+                    $query->where('last_name', 'LIKE', "%{$lastName}%")
+                        ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$lastName}%"]);
+                });
+
+                $clientsQuery->where(function ($query) use ($lastName) {
+                    $query->where('last_name', 'LIKE', "%{$lastName}%")
+                        ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$lastName}%"]);
+                });
+            }
+
+            $userResults = $usersQuery->get()->toArray();
+            $clientResults = $clientsQuery->get()->toArray();
+
+            $results = array_merge($userResults, $clientResults);
+
+            $uniqueResults = collect($results)->unique(function ($result) {
+                return $result['name'] . $result['last_name'] . $result['email'];
+            })->values()->toArray();
+
+            $uniqueResults = array_map(function ($result) {
+                return array_map('htmlspecialchars', $result);
+            }, $uniqueResults);
+
+            $this->users = $uniqueResults;
             $this->showList = true;
         }
     }
 
-    public function setId($user)
+    
+    public function setId($id)
     {
-        if ($this->auth->hasPermissionTo('read_all_gains')) {
-            $this->userId = $user["id"];
-            $this->search = $user["name"] . ' ' . $user["last_name"] . ' - ' . $user["email"];
+        $user = null;
+        foreach ($this->users as $userData) {
+            if ($userData['id'] == $id) {
+                $user = $userData;
+                break;
+            }
+        }
+    
+        if ($user) {
+            $this->selectedUser = $user;
+            $this->search = $user['name'] . ' ' . $user['last_name'];
             $this->showList = false;
         }
     }
+
 
     public function clearUser()
     {
