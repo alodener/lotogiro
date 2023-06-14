@@ -295,7 +295,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            <!--
+                            
                             @if(\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.manualRecharge')}}"
@@ -304,7 +304,7 @@
                                         <p>{{ trans('admin.menu.extratoRecarga') }} </p>
                                     </a>
                                 </li>
-                            @endif-->
+                            @endif
                             @if (\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{ route('admin.dashboards.customer.balance') }}"
