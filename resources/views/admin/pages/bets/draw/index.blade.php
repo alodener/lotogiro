@@ -24,18 +24,11 @@
                     <button class="btn btn-info my-2">{{ trans('admin.draws.new-draw') }}</button>
                 </a>
 
-                <label class="dropdown">
-                    <div class="dd-button">
-                        {{ trans('admin.draws.send-daily-report') }}
-                    </div>
-                    <input type="checkbox" class="dd-input" id="test">
+                <a href="{{ route('admin.bets.report-draws-index')  }}" >
+                    <button class="btn btn-success">Visualizar Relatório</button>
+                </a>
 
-                    <ul class="dd-menu">
-                        <li><a class="link-muted" href="{{ route('admin.bets.report-draws', 'geral') }}">{{ trans('admin.general') }}</a></li>
-                        <li><a class="link-muted" href="{{ route('admin.bets.report-draws', 'financeiro')
-                        }}">{{ trans('admin.finances') }}</a></li>
-                    </ul>
-                </label>
+
             @endcan
             <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-sm" id="draw_table">

@@ -98,6 +98,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/winning-ticket', [ExtractController::class, 'winningTicket'])->name('winning-ticket');
                 Route::get('/add-winning-ticket', [ExtractController::class, 'addWinningTicket'])->name('add-winning-ticket');
                 Route::get('/manual-recharge', [ExtractController::class, 'manualRecharge'])->name('manualRecharge');
+                Route::get('/extracts-all', [ExtractController::class, 'extractsAll'])->name('extractsAll');
                 Route::resource('points', ExtractPointsController::class);
             });
 
@@ -184,7 +185,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 'index', 'create'
             ]);
             Route::resource('draws', DrawController::class);
-            Route::get('report-draws/{type}', [DrawController::class, 'reportDraws'])->name('report-draws');
+            Route::get('report-draws-index', [DrawController::class, 'reportDrawsIndex'])->name('report-draws-index');
+            Route::get('report-draws', [DrawController::class, 'reportDraws'])->name('report-draws');
             Route::resource('validate-games', ValidateGamesController::class)->except([
                 'store'
             ]);;

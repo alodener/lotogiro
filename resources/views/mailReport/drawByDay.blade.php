@@ -9,7 +9,9 @@
     @php $gameName = '' @endphp
         <div style="width: 100%; background-color: #2b97ff">
             <h2 style="color: #FFF; font-size: 2rem; text-align: center">🤑 SLG  🤑</h2>
-            <h2 style="color: #FFF; text-align: center;"> {{ trans('admin.sitePages.sortDia') }} {{ \Carbon\Carbon::today()->format('d/m/Y')
+
+            <h2 style="color: #FFF; text-align: center;"> SORTEIOS DO DIA: {{ \Carbon\Carbon::parse($drawsByDay->dataHoje)->format('d/m/Y')
+
             }}</h2>
             <h2 style="color: #FFF; text-align: center;"> {{ $drawsByDay->totalCupons }} BILHETES PREMIADOS🤑</h2>
             <h2 style="color: #FFF; text-align: center;"> {{ trans('admin.sitePages.totalP') }} 💰 R$ {{ $drawsByDay->totalPremio }} 💰</h2>

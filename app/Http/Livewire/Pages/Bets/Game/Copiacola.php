@@ -25,7 +25,8 @@ class Copiacola extends Component
     public $msg;
     public $controle;
     public $contadorJogos = 0;
-
+    public $auth;
+    
     public function mount($typeGame, $clients)
     {
         $this->dezena = [];
@@ -89,7 +90,6 @@ class Copiacola extends Component
         $this->showList = false;
     }
     
-
     public function updatedSearch($value)
 {
     $this->search = $value;
@@ -102,13 +102,27 @@ class Copiacola extends Component
     $clientsFromUsers = User::query();
 
     if (!empty($firstName)) {
-        $clientsFromClients->where('name', 'like', $firstName . '%');
-        $clientsFromUsers->where('name', 'like', $firstName . '%');
+        $clientsFromClients->where(function ($query) use ($firstName) {
+            $query->where('name', 'like', $firstName . '%')
+                ->orWhere('last_name', 'like', $firstName . '%');
+        });
+
+        $clientsFromUsers->where(function ($query) use ($firstName) {
+            $query->where('name', 'like', $firstName . '%')
+                ->orWhere('last_name', 'like', $firstName . '%');
+        });
     }
 
     if (!empty($lastName)) {
-        $clientsFromClients->where('last_name', 'like', $lastName . '%');
-        $clientsFromUsers->where('last_name', 'like', $lastName . '%');
+        $clientsFromClients->where(function ($query) use ($lastName) {
+            $query->where('name', 'like', $lastName . '%')
+                ->orWhere('last_name', 'like', $lastName . '%');
+        });
+
+        $clientsFromUsers->where(function ($query) use ($lastName) {
+            $query->where('name', 'like', $lastName . '%')
+                ->orWhere('last_name', 'like', $lastName . '%');
+        });
     }
 
     $clientsFromClients->select('id', 'name', 'last_name', 'email', 'ddd', 'phone');
@@ -127,18 +141,17 @@ class Copiacola extends Component
     $this->showList = true;
 }
 
-    
-    
-    
-    
-    
-    
-
     public function clearUser()
     {
-            $this->reset(['search', 'clientId']);
-           
+        $user = Auth::user();
+
+        if ($user && $user->hasPermissionTo('read_all_gains')) {
+            $this->reset(['search']);
+            $this->updatedSearch('Admin');
+        }
     }
+
+
 
     public function render()
     {
