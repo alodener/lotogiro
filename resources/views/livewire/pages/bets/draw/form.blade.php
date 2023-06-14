@@ -39,7 +39,9 @@
                                              <option
                                                  value="{{$typeGame->id}}">{{$typeGame->name}}</option>
                                          @endforeach
-
+                                        @endif
+                                </select>
+                                 @error('typeGame')
                                          {{ $message }}
                                      </span>
                                  @enderror
@@ -58,7 +60,9 @@
                                              <option
                                                  value="{{$competition->id}}">{{$competition->number}}</option>
                                          @endforeach
-
+                                    @endif
+                                </select>
+                                 @error('competition')
                                          {{ $message }}
                                      </span>
                                  @enderror
@@ -71,7 +75,12 @@
                                         name="numbers"
                                         maxlength="60" value="{{old('numbers', $typeGame->name ?? null)}}">
                                  @error('numbers')
-
+ <span class="invalid-feedback" role="alert">
+                                    {{ $message }}
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
                          <div class="form-row">
                              <div class="form-group col-md-12">
                                  <button type="submit" class="btn btn-block btn-outline-success">
@@ -93,7 +102,7 @@
                                          Id: {{$draw->id}}<br/>                                    
                                         {{ trans('admin.lwDraw.concurs') }}  {{$draw->competition}}<br/>
                                         {{ trans('admin.lwDraw.number') }}   {{$draw->numbers}}<br/>
-                                        {{ trans('admin.lwDraw.gamesG') }}   {{!empty($draw->games) ? $draw->games : 'Não houve'}}<br/>
+                                        {{ trans('admin.lwDraw.gamesG') }}   {{!empty($draw->games) ? $draw->games : 'N達o houve'}}<br/>
                                      </p>
                                  </div>
                              </div>
@@ -115,6 +124,7 @@
                              @if(isset($games))
                                  <tbody>
                                  @if($games->count() > 0)
+                                 @foreach($games as $game)
 
                                              <td>{{\App\Helper\Money::toReal($game->value)}}</td>
                                              <td>{{\App\Helper\Money::toReal($game->premio)}}</td>
