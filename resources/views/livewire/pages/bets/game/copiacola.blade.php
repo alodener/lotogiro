@@ -94,7 +94,7 @@
 <input type="hidden" name="dezena" >
 <input type="hidden" name="qtdDezena" value="{{$qtdDezena}}" >
 
-
+<textarea wire:model="dezena" id="dezena"  onclick="bloqueia();"name="dezena" rows="20" cols="90"></textarea>
 
 </div>
 </div>
