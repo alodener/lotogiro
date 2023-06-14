@@ -40,7 +40,7 @@
                     </div>
                     @enderror
                 </div>
-                <h3 class="login-box-msg">Recupere Sua Senha</h3>
+                <h3 class="login-box-msg">{{ trans('admin.pagesF.recSenha') }}</h3>
 
                 <center>
                  <form action="{{ route('reset.password.post') }}" method="POST">
@@ -76,7 +76,7 @@
                             </div>
 
                                 <button type="submit" class="btn btn-primary">
-                                    Alterar Senha
+                                {{ trans('admin.pagesF.altSenha') }}
                                 </button>
 
                         </form>

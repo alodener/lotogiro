@@ -317,7 +317,31 @@ class UserController extends Controller
                 $ddd = Str::of($telefoneCompleto)->substr(0, 2); 
                 $telefone = Str::of($telefoneCompleto)->substr(2);
             }
-          
+
+            $userClient = Client::where("email", $user->email)->first();
+            if ($userClient) {
+                if (!is_null($request->name)) {
+                    $userClient->name = $request->name;
+                }
+                
+                if (!is_null($request->last_name)) {
+                    $userClient->last_name = $request->last_name;
+                }
+                
+                if (!is_null($request->email)) {
+                    $userClient->email = $request->email;
+                }
+                
+                if (!is_null($telefone)) {
+                    $userClient->ddd = $ddd;
+                    $userClient->phone = $telefone;
+                }
+                
+                $userClient->save();
+                
+            }
+
+
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
@@ -328,16 +352,11 @@ class UserController extends Controller
             $user->ddd = $ddd;
             $user->phone = $telefone;
             }
-            
-            if($user->type_client == 1){
-                if(!is_null($telefone)){
-                $userClient = Client::where("email", $user->email)->update(['ddd'=>$ddd, 'phone'=>$telefone]);
-                }
-            }
 
-          
             if($auxRole != 6){
                 $user->type_client = null;
+            }else if($auxRole == 6){
+                $user->type_client = 1;
             }
             
             if($newBalance > 0){

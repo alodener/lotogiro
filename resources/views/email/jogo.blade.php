@@ -3,16 +3,15 @@
     <img src="https://superjogo.loteriabr.com/{{env('logo')}}" alt="" width=150 height=150>
 
 
-    <h1>Seu Bilhete</h1>
+    <h1> {{ trans('admin.pagesF.seuBilhete') }}</h1>
     <p>
-    Olá, você acaba de realizar o
-    Jogo de ID: {{ $idjogo }}
+    {{ trans('admin.pagesF.olaAcab') }} {{ $idjogo }}
     <br>
-    Segue anexo o seu bilhete.
+    {{ trans('admin.pagesF.segueAnex') }}
     <br>
-    Obrigado por jogar conosco.
+    {{ trans('admin.pagesF.obgJogar') }}
     <br>
-    Atenciosamente,
+    {{ trans('admin.pagesF.atenc') }}
 
     {{ env("nome_sistema") }}
 

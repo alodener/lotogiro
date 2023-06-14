@@ -70,43 +70,47 @@
                     <button  class="btn btn-success" type="button">{{ trans('admin.games.calculate') }}</button>
                 @endforeach
     
-                    <br>
-                    <label for="quantidadeJogos">Quantidade Jogos:</label>
-                    <input type="text" id="contadorJogos" disabled value="{{$contadorJogos}}" name="contadorJogos">
-                    
-                    {{-- valor total --}}
-                    <label for="quantidadeJogos">Valor Total R$</label>
-                    <input type="text" id="ValorTotal" value="" disabled name="ValorTotal">       
-            @endif
-    </div>
-                    @if(!@empty($msg))
-                 <div class="alert alert-danger" role="alert">
-                                            <h4 class="alert-heading">{{$msg}}!</h4>
-                               
-                                            </div>
-                                            @endif
-            <input type="hidden" name="controle"  id="controle" value="{{$controle}}" >
-     <label for="dezena">Dezenas:</label>             
-    <div class="row">
-        <div class="col-12 dezena">
-             <input type="hidden" name="dezena" >
-             <input type="hidden" name="qtdDezena" value="{{$qtdDezena}}" >
+                <br>
 
-            <textarea wire:model="dezena" id="dezena"  onclick="bloqueia();"name="dezena" rows="20" cols="90"></textarea>
+<label for="quantidadeJogos">{{ trans('admin.lwGame.quantJ') }} </label>
+ <input type="text" id="contadorJogos" disabled value="{{$contadorJogos}}" name="contadorJogos">
+ 
+ {{-- valor total --}}
 
-        </div>
-    </div>
-        <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
-        <input hidden value="1" id="xml" name="xml">    
-        <button type="button"  class="btn btn-secondary" wire:click="dezenas" >Computar</button>   
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-info" id="submit_game">Criar</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+<label for="quantidadeJogos">{{ trans('admin.lwGame.valueT') }}  R$</label>
+ <input type="text" id="ValorTotal" value="" disabled name="ValorTotal">       
+@endif
+</div>
+ @if(!@empty($msg))
+<div class="alert alert-danger" role="alert">
+                         <h4 class="alert-heading">{{$msg}}!</h4>
             
-        </div>
-       
-    </div>    
-      @push('scripts')
+                         </div>
+                         @endif
+<input type="hidden" name="controle"  id="controle" value="{{$controle}}" >           
+<label for="dezena">{{ trans('admin.lwGame.doz') }}   </label>             
+<div class="row">
+<div class="col-12 dezena">
+<input type="hidden" name="dezena" >
+<input type="hidden" name="qtdDezena" value="{{$qtdDezena}}" >
+
+<textarea wire:model="dezena" id="dezena"  onclick="bloqueia();"name="dezena" rows="20" cols="90"></textarea>
+
+</div>
+</div>
+<input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
+<input hidden value="1" id="xml" name="xml">    
+
+<button type="button"  class="btn btn-secondary" wire:click="dezenas" >{{ trans('admin.lwGame.comput') }}   </button>   
+<div class="modal-footer">
+<button type="submit" class="btn btn-info" id="submit_game">{{ trans('admin.lwGame.creat') }} </button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.lwGame.fech') }}</button>
+
+</div>
+
+</div>    
+@push('scripts')
+
     
     {{-- evento dispara quando retira o foco do campo texto --}}
     <script>
