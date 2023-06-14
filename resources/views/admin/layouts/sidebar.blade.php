@@ -342,6 +342,7 @@
 
                         </ul>
                     </li>
+
                 @endcanany
                     <li class="nav-link ">
                         <a href="{{route('admin.dashboards.wallet.index')}}"
@@ -352,6 +353,16 @@
                             {{ trans('admin.menu.carteira') }}
                             </p>
                         </a>
+                    </li>
+
+                    
+                    <li class="nav-item">
+                            <a href="{{route('admin.dashboards.help.index')}}"
+                                class="nav-link @if(request()->is('/admin/dashboards/tutoriais')) active @endif">
+                                <i class="fas fa-book-open nav-icon"></i>
+                                <p>Tutoriais</p>
+                            </a>
+                        </li>
                     </li>
                 @canany(['read_user', 'read_role', 'read_permission'])
                 <li class="nav-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
@@ -422,8 +433,8 @@
                             </li>
                             @endcan
                         @endif
-                </li>
             @endcanany
+            
             </ul>
         </nav>
     </div>
