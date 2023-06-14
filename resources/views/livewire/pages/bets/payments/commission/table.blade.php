@@ -1,6 +1,6 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">COMISSÕES</h3>
+        <h3 class="text-center text-bold">{{ trans('admin.pagesF.comissoess') }}</h3>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -78,7 +78,7 @@
             <div class="alert alert-warning" role="alert">
                 <button class="btn" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    Baixando Pagamentos
+                    {{ trans('admin.pagesF.baixandoPag') }}
                 </button>
             </div>
         </div>
@@ -93,23 +93,23 @@
             </select>
         </div>
         <div class="form-group offset-md-5 col-md-6 text-right">
-            <button wire:click="pay" type="button" class="btn btn-danger">Baixar Pagamento</button>
+            <button wire:click="pay" type="button" class="btn btn-danger">{{ trans('admin.pagesF.baixarPag') }}</button>
         </div>
     </div>
     <div class="card card-info">
         <div class="card-header indica-card">
-            <h3 class="card-title">Informações de Pagamento</h3>
+            <h3 class="card-title">{{ trans('admin.pagesF.infosPag') }}</h3>
         </div>
         <div class="card-body">
             <div class="row">
                     <div class="col-md-3">   
-                        <b>Quantidade:</b> {{$games->count()}}
+                        <b>{{ trans('admin.pagesF.qtd') }}:</b> {{$games->count()}}
                     </div>
                     <div class="col-md-3">
-                        <b>Vendas:</b> R${{\App\Helper\Money::toReal($value)}} 
+                        <b>{{ trans('admin.pagesF.vendas') }}:</b> R${{\App\Helper\Money::toReal($value)}} 
                     </div>
                     <div class="col-md-3">
-                        <b>Bonus:</b> R${{\App\Helper\Money::toReal($valueBonus)}} 
+                        <b>{{ trans('admin.pagesF.bonus') }}:</b> R${{\App\Helper\Money::toReal($valueBonus)}} 
                     </div>
                     <div class="col-md-3">
                         <b>Total:</b> R${{\App\Helper\Money::toReal($value + $valueBonus)}}
@@ -124,14 +124,14 @@
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Tipo de Jogo</th>
-                        <th>Cpf Cliente</th>
-                        <th>Cliente</th>
-                        <th>Usuário</th>
-                        <th>Valor</th>
+                        <th>{{ trans('admin.pagesF.tipoJogo') }}</th>
+                        <th>Cpf {{ trans('admin.pagesF.client') }}</th>
+                        <th>{{ trans('admin.pagesF.valor') }}</th>
+                        <th>{{ trans('admin.pagesF.usuario') }}</th>
+                        <th>{{ trans('admin.pagesF.client') }}</th>
                         <th>%</th>
-                        <th>Comissão</th>
-                        <th>Criação</th>
+                        <th>{{ trans('admin.pagesF.comissao') }}</th>
+                        <th>{{ trans('admin.pagesF.criacao') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -168,7 +168,7 @@
                     @empty
                         <tr>
                             <td class="text-center" colspan="9">
-                                Nenhum registro encontrado.
+                            {{ trans('admin.pagesF.nhmRegs') }}
                             </td>
                         </tr>
                     @endforelse

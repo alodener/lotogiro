@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\Client;
 
 class Table extends Component
 {
@@ -28,7 +29,29 @@ class Table extends Component
 
     public function updatedSearch($value)
     {
-        $this->users = User::where("name", "like", "%{$this->search}%")->get();
+        $this->search = $value;
+    
+        $clients = Client::select('id', 'name', 'last_name', 'email', 'ddd', 'phone')
+            ->where(function ($query) {
+                $query->where('name', 'like', "%{$this->search}%")
+                    ->orWhere('last_name', 'like', "%{$this->search}%")
+                    ->orWhere('email', 'like', "%{$this->search}%");
+            })
+            ->orWhereRaw("CONCAT(name, ' ', last_name) like ?", ["%{$this->search}%"]);
+    
+        $users = User::select('id', 'name', 'last_name', 'email', \DB::raw('null as ddd'), \DB::raw('null as phone'))
+            ->where(function ($query) {
+                $query->where('name', 'like', "%{$this->search}%")
+                    ->orWhere('last_name', 'like', "%{$this->search}%")
+                    ->orWhere('email', 'like', "%{$this->search}%");
+            })
+            ->orWhereRaw("CONCAT(name, ' ', last_name) like ?", ["%{$this->search}%"]);
+    
+        $results = $clients->unionAll($users)->get();
+    
+        $uniqueResults = collect($results)->unique('email')->values();
+    
+        $this->users = $uniqueResults;
         $this->showList = true;
     }
 

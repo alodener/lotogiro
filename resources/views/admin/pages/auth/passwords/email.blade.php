@@ -15,7 +15,7 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <p class="login-box-msg">Esqueceu sua senha? Aqui você pode recuperar facilmente</p>
+                <p class="login-box-msg">{{ trans('admin.pagesF.esqSenha') }}</p>
                 <form method="POST" action="{{ route('password.email') }}">
                     @csrf
                     <input type="hidden" name="token" value='@csrf'>
@@ -36,13 +36,13 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary btn-block">Solicitar nova senha</button>
+                            <button type="submit" class="btn btn-primary btn-block">{{ trans('admin.pagesF.solicitNv') }}</button>
                         </div>
                     </div>
                 </form>
                 @if (Route::has('login'))
                     <p class="mt-3 mb-1">
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">{{ trans('admin.pagesF.login') }}</a>
                     </p>
                 @endif
             </div>

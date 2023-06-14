@@ -1,24 +1,32 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">CARTEIRA</h3>
+        <h3 class="text-center text-bold">{{ trans('admin.pagesF.carteira') }}</h3>
     </div>
     <div class="row bg-white p-3">
         <div class="col-md-12">
+            
             <div class="card-header indica-card">
-                Solicitações de Saque
+                <div class="row">
+                    <div class="col-md-6">
+                    {{ trans('admin.pagesF.solicitSaquee') }}
+                    </div>
+                <div class="col-md-6 text-right">
+                <a href="{{route('admin.dashboards.wallet.withdraw-visualizacao')}}" class="btn btn-warning"> {{ trans('admin.pagesF.visuHist') }}</a>
+                </div>
+            </div>
             </div>
             <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-bordered table-lg">
                     <thead>
                     <tr>
-                        <th>Data</th>
-                        <th>Responsável</th>
+                        <th>{{ trans('admin.pagesF.date') }}</th>
+                        <th>{{ trans('admin.pagesF.responsavel') }}</th>
                         @if(\App\Helper\UserValidate::iAmAdmin())
                             <th>Pix</th>
                         @endif
-                        <th>Valor</th>
-                        <th>Status</th>
-                        <th>Ação</th>
+                        <th>{{ trans('admin.pagesF.valor') }}</th>
+                        <th>{{ trans('admin.pagesF.status') }}</th>
+                        <th>{{ trans('admin.pagesF.acoes') }}</th>
                     </tr>
                     </thead>
                     <tbody>

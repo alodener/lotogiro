@@ -5,6 +5,8 @@ namespace App\Helper;
 use App\Models\RechargeOrder;
 use App\Models\User;
 use App\Models\TransactBalance;
+use App\Helper\Configs;
+use App\Helper\MensagemTelegram;
 
 class Wallet
 {
@@ -63,12 +65,20 @@ class Wallet
                         'user_id' => $user->id,
                         'value' => $totalRecharge,
                         'old_value' => $user->balance,
+                        'value_a' => $user->balance + $totalRecharge,
                         'type' => "Recarga efetuada por meio da plataforma. {$msgCommission}"
                     ]);
 
                     $user->balance += $newRechargeOrder->value + $commission;
                     $user->save();
                 }
+
+                $telegrambot = Configs::getTelegramUrlBot();                
+                $telegramchatid = Configs::getTelegramChatId();
+                if(!empty($telegrambot)) {
+                $menssagemtelegran = MensagemTelegram::enviarMensagemTelegram($telegramchatid, $totalRecharge, $telegrambot);
+                }
+                
 
                 return response()->json(['status' => 201]);
             }

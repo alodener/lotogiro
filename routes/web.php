@@ -2,6 +2,7 @@
 
     use App\Http\Controllers\Admin\Pages\Auth\RegisterController;
     use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
+    use App\Http\Controllers\Admin\Pages\Dashboards\CustomeBalanceController;
     use App\Http\Controllers\Admin\Pages\Dashboards\WinningTicketController;
     use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
@@ -25,6 +26,10 @@ use App\Http\Controllers\Admin\Pages\Dashboards\ExtractPointsController;
 use App\Http\Controllers\Admin\Pages\Dashboards\RankingController;
 use App\Http\Controllers\Admin\Pages\Settings\QualificationController;
 use App\Http\Controllers\Admin\Pages\Reports\ReportController;
+use App\Http\Controllers\Admin\Pages\Settings\SystemController;
+use App\Http\Controllers\Admin\Pages\Settings\LogosController;
+use App\Http\Controllers\Admin\Pages\Bets\BichaoController;
+use App\Http\Controllers\Admin\Pages\Dashboards\TutoriaisController;
 
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
@@ -67,7 +72,7 @@ Route::middleware('guest:web')->group(function () {
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('get.login');
-        Route::post('/login', [LoginController::class, 'login'])->name('post.login');
+        Route::post('/login', [LoginController::class, 'login'])->name('post.login')->middleware('is.active');;
     });
     Route::middleware(['auth:admin', 'check.openModal'])->group(function () {
         Route::get('change-locale/{locale}', [HomeController::class, 'changeLocale'])->name('changeLocale');
@@ -77,6 +82,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::prefix('dashboards')->name('dashboards.')->group(function () {
             Route::prefix('sales')->name('sales.')->group(function () {
                 Route::get('/', [SaleController::class, 'index'])->name('index');
+                Route::get('/bichao', [SaleController::class, 'bichaoSales'])->name('bichao');
             });
             Route::prefix('Reportday')->name('Reportday.')->group(function () {
                 Route::get('/', [ReportDayController::class, 'index'])->name('index');
@@ -92,11 +98,15 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/winning-ticket', [ExtractController::class, 'winningTicket'])->name('winning-ticket');
                 Route::get('/add-winning-ticket', [ExtractController::class, 'addWinningTicket'])->name('add-winning-ticket');
                 Route::get('/manual-recharge', [ExtractController::class, 'manualRecharge'])->name('manualRecharge');
+                Route::get('/extracts-all', [ExtractController::class, 'extractsAll'])->name('extractsAll');
                 Route::resource('points', ExtractPointsController::class);
             });
 
             Route::prefix('ranking')->name('ranking.')->group(function () {
                 Route::get('/', [RankingController::class, 'index'])->name('index');
+            });
+            Route::prefix('help')->name('help.')->group(function () {
+                Route::get('/tutoriais', [TutoriaisController::class, 'index'])->name('index');
             });
 
             Route::prefix('wallet')->name('wallet.')->group(function () {
@@ -105,6 +115,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/recharge', [WalletController::class, 'recharge'])->name('recharge');
                 Route::get('/transfer', [WalletController::class, 'transfer'])->name('transfer');
                 Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
+                Route::get('/withdraw-visualizacao', [WalletController::class, 'withdrawVisualizacao'])->name('withdraw-visualizacao');
                 Route::get('/extract', [WalletController::class, 'extract'])->name('extract');
                 Route::get('/withdraw-list', [WalletController::class, 'withdrawList'])->name('withdraw-list');
                 Route::get('/recharge-order', [WalletController::class, 'rechargeOrder'])->name('recharge-order');
@@ -112,8 +123,52 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/updateStatusPayment/2de1ce3ddcb20dda6e6ea9fba8031de4/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPayment');
                 Route::get('/thanks/', [WalletController::class, 'thanks'])->name('thanks');
             });
+            Route::prefix('customer')->name('customer.')->group(function (){
+                Route::get('/', [CustomeBalanceController::class, 'index'])->name('balance');
+                Route::get('/dashboard/winners', [CustomeBalanceController::class, 'dashboard_winners'])->name('dashboard.winners');
+                Route::post('/detailed/view/user', [CustomeBalanceController::class, 'filter'])->name('detailed.view.user');
+                Route::get('/lock/{id}', [CustomeBalanceController::class, 'lock_account'])->name('lock');
+                Route::get('/unlock/{id}', [CustomeBalanceController::class, 'unlock_account'])->name('unlock');
+                Route::get('/contact/made{id}', [CustomeBalanceController::class, 'contact_made'])->name('contact.made');
+                Route::get('/contact/not/made{id}', [CustomeBalanceController::class, 'contact_not_made'])->name('contact.not.made');
+                Route::put('/save/{id}', [CustomeBalanceController::class, 'save_changes'])->name('save');
+                Route::get('/pdf/{id}/{date_initial}/{date_final}', [CustomeBalanceController::class, 'get_pdf'])->name('get.pdf');
+            });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
+            Route::prefix('/draws')->name('draws.')->group(function() {
+                Route::get('bichao', [BichaoController::class, 'draws'])->name('bichao');
+            });
+
+            Route::prefix('/comissions')->name('comissions.')->group(function() {
+                Route::get('bichao', [BichaoController::class, 'comissions'])->name('bichao');
+            });
+            Route::prefix('/bichao')->name('bichao.')->group(function (){
+                Route::get('/', [BichaoController::class, 'index'])->name('index');
+                Route::get('centena', [BichaoController::class, 'centena'])->name('centena');
+                Route::get('cotacao', [BichaoController::class, 'cotacao'])->name('cotacao');
+                Route::get('group', [BichaoController::class, 'group'])->name('group');
+                Route::get('dezena', [BichaoController::class, 'dezena'])->name('dezena');
+                Route::get('milhar/centena', [BichaoController::class, 'milhar_centena'])->name('milhar.centena');
+                Route::get('minhas/apostas', [BichaoController::class, 'my_bets'])->name('minhas.apostas');
+                Route::get('terno/dezena', [BichaoController::class, 'terno_dezena'])->name('terno.dezena');
+                Route::get('terno/grupo', [BichaoController::class, 'terno_grupo'])->name('terno.grupo');
+                Route::get('duque/dezena', [BichaoController::class, 'duque_dezena'])->name('duque.dezena');
+                Route::get('duque/grupo', [BichaoController::class, 'duque_grupo'])->name('duque.grupo');
+                Route::get('resultados', [BichaoController::class, 'results'])->name('resultados');
+                Route::get('draws', [BichaoController::class, 'draws'])->name('draws');
+                Route::post('draws/reports', [BichaoController::class, 'draws_reports'])->name('draws.reports');
+                Route::post('add/chart', [BichaoController::class, 'add_in_chart'])->name('bichao.add.chart');
+                Route::post('marcar-premio-pago', [BichaoController::class, 'pay_prize'])->name('bichao.payprize');
+                Route::get('remove/chart/{index}', [BichaoController::class, 'remove_chart'])->name('bichao.remove.chart');
+                Route::get('remove-all/chart', [BichaoController::class, 'remove_all_chart'])->name('bichao.remove_all.chart');
+                Route::post('horarios', [BichaoController::class, 'get_horarios'])->name('bichao.horarios');
+                Route::post('checkout', [BichaoController::class, 'checkout'])->name('bichao.checkout');
+                Route::post('get-results-json', [BichaoController::class, 'get_results_json'])->name('bichao.get_results_json');
+                Route::get('receipt/{id}/{tipo}', [BichaoController::class, 'getReceipt'])->name('receipt');
+                Route::post('save/settings', [BichaoController::class, 'save_settings'])->name('bichao.save.settings');
+            });
+
             Route::resource('clients', ClientController::class);
             Route::resource('competitions', CompetitionController::class);
             Route::resource('type_games', TypeGameController::class);
@@ -130,7 +185,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 'index', 'create'
             ]);
             Route::resource('draws', DrawController::class);
-            Route::get('report-draws/{type}', [DrawController::class, 'reportDraws'])->name('report-draws');
+            Route::get('report-draws-index', [DrawController::class, 'reportDrawsIndex'])->name('report-draws-index');
+            Route::get('report-draws', [DrawController::class, 'reportDraws'])->name('report-draws');
             Route::resource('validate-games', ValidateGamesController::class)->except([
                 'store'
             ]);;
@@ -145,6 +201,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         });
         Route::prefix('settings')->name('settings.')->group(function () {
             Route::resource('qualifications', QualificationController::class);
+            Route::get('bichao', [BichaoController::class, 'settings'])->name('bichao.index');
 
             Route::get('user/{user}/login-as', [UserController::class, 'logInAs'])->name('users.login-as');
             Route::get('user/loggout-as', [UserController::class, 'logoutAs'])->name('users.logout-as');
@@ -152,10 +209,15 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('users/list/select', [UserController::class, 'listSelect'])->name('users.list.select');
             Route::get('clients/list/select', [ClientController::class, 'listSelect'])->name('clients.list.select');
 
+            Route::resource('systems', SystemController::class);
+            Route::resource('logos', LogosController::class);
+            
+
             Route::resource('users', UserController::class);
             Route::get('indicated', [UserController::class, 'indicated'])->name('users.indicated');
             Route::get('indicated/{userId}', [UserController::class, 'indicatedByLevel'])->name('users.indicatedByLevel');
-            Route::get('users/{userId}/statementBalance', [UserController::class, 'statementBalance'])->name('users.statementBalance');
+            Route::get('users/{userId}/stateBalanceFiltrado', [UserController::class, 'statementBalancea'])->name('users.statementBalanceFiltrado');
+            Route::get('users/{userId}/statementBalance', [UserController::class, 'Balance'])->name('users.statementBalance');
             Route::resource('permissions', PermissionController::class);
             Route::resource('roles', RoleController::class);
         });
@@ -164,6 +226,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('used-dozens/competitions', [ReportController::class, 'usedDozensListCompetitions'])->name('used.dozens');
             Route::get('{competition}/used-dozens', [ReportController::class, 'usedDozensByCompetition'])->name('used.dozens.by-competition');
             Route::get('points-by-user', [ReportController::class, 'pointsByUser'])->name('points-by-user');
+            Route::get('bichao/bilhetes', [ReportController::class, 'bichaoReceipt'])->name('bichao.bilhetes');
+            Route::post('bichao/bilhetes/remove/{game}', [ReportController::class, 'bichaoReceiptDestroy'])->name('bichao.bilhetes.destroy');
         });
 
         Route::prefix('notifications')->name('notifications.')->group(function () {
@@ -173,3 +237,5 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     });
 });
 
+Route::get('/users/winners', [CustomeBalanceController::class, 'userswinnersAPI']);
+Route::get('/users/winners-clients', [CustomeBalanceController::class, 'userswinnersClientesAPI']);

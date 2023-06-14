@@ -38,7 +38,7 @@ class HomeController extends Controller
                 WHERE games.id IN (SELECT regexp_replace(games, ',.*', '') games
                 FROM unwound
                 ORDER BY id) 
-                GROUP BY client_id
+                GROUP BY client_id,cli.name
                 ORDER BY 2 DESC;"
             )
         ));
