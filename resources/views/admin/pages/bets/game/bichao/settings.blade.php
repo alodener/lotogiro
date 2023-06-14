@@ -5,13 +5,13 @@
 @section('content')
 <div class="card card-danger">
     <div class="card-header">
-        <h3 class="card-title">Configurar Bichão da sorte</h3>
+    <h3 class="card-title">{{ trans('admin.bichao.confBichao') }}</h3>
     </div>
     <div class="card-body">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-settings-estados" data-toggle="tab" href="#nav-estados" role="tab" aria-controls="nav-estados" aria-selected="true">Estados</a>
-                <a class="nav-item nav-link" id="nav-settings-cotacoes" data-toggle="tab" href="#nav-cotacoes" role="tab" aria-controls="nav-cotacoes" aria-selected="true">Cotações</a>
+                <a class="nav-item nav-link active" id="nav-settings-estados" data-toggle="tab" href="#nav-estados" role="tab" aria-controls="nav-estados" aria-selected="true">{{ trans('admin.pagesF.estados') }}</a>
+                <a class="nav-item nav-link" id="nav-settings-cotacoes" data-toggle="tab" href="#nav-cotacoes" role="tab" aria-controls="nav-cotacoes" aria-selected="true">{{ trans('admin.pagesF.cotacoes') }}</a>
             </div>
         </nav>
         <div class="tab-content p-4" id="nav-tabContent">
@@ -80,7 +80,7 @@
 <div class="row">
     <div class="col-md-6"></div>
     <div class="col-md-6 mb-3">
-        <button type="button" id="settings-atualizar-bichao" class="btn btn-block btn-success">Atualizar informações</button>
+        <button type="button" id="settings-atualizar-bichao" class="btn btn-block btn-success">{{ trans('admin.bichao.atInfos') }}</button>
     </div>
 </div>
 @endsection

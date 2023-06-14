@@ -6,17 +6,21 @@
     <div class="col bg-white p-3">
         <div class="row">
             <div class="col-md-8 col-12 d-flex justify-content-end container-menu-items">
-                <a href="{{ route('admin.bets.bichao.index')}}">
-                    <button class="btn btn-info my-2 ml-1">Apostar</button>
+            <a href="{{ route('admin.bets.bichao.index')}}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.apostar') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.resultados') }}">
-                    <button class="btn btn-info my-2 ml-1">Resultados</button>
+            <a href="{{ route('admin.bets.bichao.resultados') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.resultados') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
-                    <button class="btn btn-info my-2 ml-1">Minhas apostas</button>
+            <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.minhasaposts') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.cotacao')}}">
-                    <button class="btn btn-info my-2 ml-1">Cotação</button>
+            <a href="{{ route('admin.bets.bichao.cotacao')}}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.cotacao') }}</button>
                 </a>
             </div>
         </div>
@@ -26,31 +30,34 @@
                 <div class="row">
                     <div class="col">
                         <h1>Bichão da Sorte</h1>
-                        <p>Aposte agora mesmo no Bichão da Sorte!</p>
-                        <hr/>
-                        <p><u>Entenda como funciona a premiação:</u></p>
-                        <p>
-                            1° prêmio equivale ao valor cheio,
-                            ou seja - se o fator multiplicador
-                            de sua aposta for 5000x e valor de
-                            sua aposta for de R$ 1,00 logo seu
-                            prêmio será de R$ 5.000,00.
-                        </p>
-                        <p>
-                            Do 2° prêmio em diante o valor é
-                            dividido proporcionalmente.
-                        </p>
-                        <p>
-                            1° e 2° prêmio: fator multiplicador/2
-                        </p>
-                        <p>
-                            1°,2° e 3° prêmio: fator multiplicador/3
-                        </p>
-                            1°,2°,3° e 4° prêmio: fator multiplicador/4
-                        </p>
-                            1° ao 5° prêmio: fator multiplicador/5
-                        </p>
-                        <p>Veja mais detalhes na aba <b>"cotação."</b></p>
+                        <p>{{ trans('admin.bichao.aposte') }}</p>
+                         <hr/>
+
+                        <p><u>{{ trans('admin.bichao.comofunciona') }}</u></p>
+                         <p>
+
+                        {{ trans('admin.bichao.primerpremio') }}
+                         </p>
+                         <p>
+
+                        {{ trans('admin.bichao.segunpremio') }}
+                         </p>
+                         <p>
+
+                        {{ trans('admin.bichao.fatormult2') }}
+                         </p>
+                         <p>
+
+                        {{ trans('admin.bichao.fatormult3') }}
+                         </p>
+
+                        {{ trans('admin.bichao.fatormult4') }}
+                         </p>
+
+                        {{ trans('admin.bichao.fatormult5') }}
+                         </p>
+
+                        <p>{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
                     </div>
                 </div>
             </div>
@@ -59,20 +66,20 @@
         <hr />
         <div class="row">
             <div class="col">
-                <p>Escolha a modalidade:</p>
+            <p>{{ trans('admin.bichao.escolha') }}</p>
             </div>
         </div>
         <div class="row">
             <div class="col button-group overflow-auto">
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.index')}}"><b>Milhar</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.centena')}}"><b>Centena</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.dezena') }}"><b>Dezena</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" id="btn-group" href="{{ route('admin.bets.bichao.group') }}"><b>Grupo</b></a>
-                <a type="button" class="btn btn-primary mb-1" href="#"><b>Milhar/Centena</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.dezena')}}"><b>Terno de Dezena</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.grupo')}}"><b>Terno de Grupo</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.dezena')}}"><b>Duque de Dezena</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.grupo')}}"><b>Duque de Grupo</b></a>
+            <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.index')}}"><b>{{ trans('admin.bichao.milhar') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.centena')}}"><b>{{ trans('admin.bichao.centena') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.dezena') }}"><b>{{ trans('admin.bichao.dezena') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" id="btn-group" href="{{ route('admin.bets.bichao.group') }}"><b>{{ trans('admin.bichao.grupo') }}</b></a>
+               <a type="button" class="btn btn-primary mb-1" href="#"><b>{{ trans('admin.bichao.milhcent') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.dezena')}}"><b>{{ trans('admin.bichao.terndez') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.grupo')}}"><b>{{ trans('admin.bichao.terngrup') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.dezena')}}"><b>{{ trans('admin.bichao.duqdez') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.grupo')}}"><b>{{ trans('admin.bichao.duqgrup') }}</b></a>
             </div>
         </div>
         <hr/>
@@ -80,7 +87,7 @@
             <div class="form-group col-md-12">
                 <div wire:ignore>
                     <div class="card-header ganhos-card">
-                        <h4>Cliente</h4>
+                    <h4>{{ trans('admin.bichao.client') }}</h4>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
@@ -107,7 +114,7 @@
             <hr />
             <div class="row align-items-center">
                 <div class="col-md-1 col-6">
-                    <p>Insira seu jogo:</p>
+                <p>{{ trans('admin.bichao.insiraJ') }}</p>
                 </div>
                 <div class="col-md-6 col-6">
                     <div class="input-group mb-3">
@@ -116,14 +123,14 @@
                     </div>
                 </div>
                 <div class="col-md-5 col-12">
-                    <button id="btn-gerar-milhar" onclick="insere_valor()" type="button" class="btn btn-secondary">Gerar Milhar/Centena</button>
+                    <button id="btn-gerar-milhar" onclick="insere_valor()" type="button" class="btn btn-secondary">{{ trans('admin.bichao.gerarMC') }}</button>
                 </div>
             </div>
             <hr />
         </div>
         <div class="row">
             <div class="col">
-                <p>Selecione os prêmios</p>
+            <p>{{ trans('admin.bichao.selecPremios') }}</p>
             </div>
         </div>
         <div class="row">
@@ -138,13 +145,13 @@
         </div>
         <div class="row mt-4">
             <div class="col">
-                <span id="message-award-value" class="text-danger d-none"><b>Favor selecionar ao menos um prêmio</b></span>
+                <span id="message-award-value" class="text-danger d-none"><b>{{ trans('admin.bichao.favSelec') }}</b></span>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col">
-                <p>Insira o valor da aposta:</p>
+            <p>{{ trans('admin.bichao.insValor') }}</p>
             </div>
         </div>
         <div class="row">
@@ -159,14 +166,14 @@
             </div>
         </div>
         <div id="message-minimum-value" class="col-12 hide">
-            <span class="text-danger"><b>Valor mínimo de 0,02</b></span>
+            <span class="text-danger"><b>{{ trans('admin.bichao.valorM') }} 0,02</b></span>
         </div>
         <div id="message-maximum-value" class="col-12 hide">
-            <span class="text-danger"><b>Premiação: Limite de R$ 20.000,00 excedido</b></span>
+            <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoL') }}</b></span>
         </div>
         <div class="row" id="price_award_check">
             <div class="col">
-                <p>Premiação
+                <p>{{ trans('admin.bichao.premiacao') }}
                     <span id="price_award" class="text-success">R$0,00</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" fill="currentColor"
                         class="bi bi-question-circle-fill" viewBox="0 0 16 16">
@@ -180,7 +187,7 @@
         <hr />
         <div class="row">
             <div class="col mb-2">
-                <a><button id="btn-add-to-chart" class="btn btn-success disabled" disabled><b>Adicionar ao Carrinho</b></button></a>
+                <a><button id="btn-add-to-chart" class="btn btn-success disabled" disabled><b>{{ trans('admin.bichao.addCarrinho') }}</b></button></a>
             </div>
         </div>
     </div>

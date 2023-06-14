@@ -7,16 +7,16 @@
         <div class="row">
             <div class="col-md-8 col-12 d-flex justify-content-end container-menu-items">
                 <a href="{{ route('admin.bets.bichao.index')}}">
-                    <button class="btn btn-info my-2 ml-1">Apostar</button>
-                </a>
-                <a href="{{ route('admin.bets.bichao.resultados') }}">
-                    <button class="btn btn-info my-2 ml-1">Resultados</button>
-                </a>
-                <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
-                    <button class="btn btn-info my-2 ml-1">Minhas apostas</button>
-                </a>
-                <a href="{{ route('admin.bets.bichao.cotacao')}}">
-                    <button class="btn btn-info my-2 ml-1">Cotação</button>
+                <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.apostar') }}</button>
+                 </a>
+                 <a href="{{ route('admin.bets.bichao.resultados') }}">
+                    <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.resultados') }}</button>
+                 </a>
+                 <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
+                    <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.minhasaposts') }}</button>
+                 </a>
+                 <a href="{{ route('admin.bets.bichao.cotacao')}}">
+                    <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.cotacao') }}</button>
                 </a>
             </div>
         </div>
@@ -26,31 +26,34 @@
                 <div class="row">
                     <div class="col">
                         <h1>Bichão da Sorte</h1>
-                        <p>Aposte agora mesmo no Bichão da Sorte!</p>
-                        <hr/>
-                        <p><u>Entenda como funciona a premiação:</u></p>
-                        <p>
-                            1° prêmio equivale ao valor cheio,
-                            ou seja - se o fator multiplicador
-                            de sua aposta for 5000x e valor de
-                            sua aposta for de R$ 1,00 logo seu
-                            prêmio será de R$ 5.000,00.
-                        </p>
-                        <p>
-                            Do 2° prêmio em diante o valor é
-                            dividido proporcionalmente.
-                        </p>
-                        <p>
-                            1° e 2° prêmio: fator multiplicador/2
-                        </p>
-                        <p>
-                            1°,2° e 3° prêmio: fator multiplicador/3
-                        </p>
-                            1°,2°,3° e 4° prêmio: fator multiplicador/4
-                        </p>
-                            1° ao 5° prêmio: fator multiplicador/5
-                        </p>
-                        <p>Veja mais detalhes na aba <b>"cotação."</b></p>
+                        <p>{{ trans('admin.bichao.aposte') }}</p>
+                         <hr/>
+                  
+                        <p><u>{{ trans('admin.bichao.comofunciona') }}</u></p>
+                         <p>
+                        
+                        {{ trans('admin.bichao.primerpremio') }}
+                         </p>
+                         <p>
+                           
+                        {{ trans('admin.bichao.segunpremio') }}
+                         </p>
+                         <p>
+                         
+                        {{ trans('admin.bichao.fatormult2') }}
+                         </p>
+                         <p>
+
+                        {{ trans('admin.bichao.fatormult3') }}
+                         </p>
+
+                        {{ trans('admin.bichao.fatormult4') }}
+                         </p>
+                    
+                        {{ trans('admin.bichao.fatormult5') }}
+                         </p>
+                      
+                        <p>{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
                     </div>
                 </div>
             </div>
@@ -59,20 +62,20 @@
         <hr />
         <div class="row">
             <div class="col">
-                <p>Escolha a modalidade:</p>
+            <p>{{ trans('admin.bichao.escolha') }}</p>
             </div>
         </div>
         <div class="row">
             <div class="col button-group overflow-auto">
-                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.index') }}"><b>Milhar</b></a>
-                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.centena') }}"><b>Centena</b></a>
-                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.dezena') }}"><b>Dezena</b></a>
-                <a class="btn btn-outline-primary mb-1" id="btn-group" href="{{ route('admin.bets.bichao.group')}}"><b>Grupo</b></a>
-                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.milhar.centena')}}"><b>Milhar/Centena</b></a>
-                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.dezena')}}"><b>Terno de Dezena</b></a>
-                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.grupo') }}"><b>Terno de Grupo</b></a>
-                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.dezena')}}"><b>Duque de Dezena</b></a>
-                <a class="btn btn-primary mb-1" href="#"><b>Duque de Grupo</b></a>
+            <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.index') }}"><b>{{ trans('admin.bichao.milhar') }}</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.centena') }}"><b>{{ trans('admin.bichao.centena') }}</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.dezena') }}"><b>{{ trans('admin.bichao.dezena') }}</b></a>
+                <a class="btn btn-outline-primary mb-1" id="btn-group" href="{{ route('admin.bets.bichao.group')}}"><b>{{ trans('admin.bichao.grupo') }}</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.milhar.centena')}}"><b>{{ trans('admin.bichao.milhcent') }}</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.dezena')}}"><b>{{ trans('admin.bichao.terndez') }}</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.grupo') }}"><b>{{ trans('admin.bichao.terngrup') }}</b></a>
+                <a class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.dezena')}}"><b>{{ trans('admin.bichao.duqdez') }}</b></a>
+                <a class="btn btn-primary mb-1" href="#"><b>{{ trans('admin.bichao.duqgrup') }}</b></a>
             </div>
         </div>
         <hr/>
@@ -80,7 +83,7 @@
             <div class="form-group col-md-12">
                 <div wire:ignore>
                     <div class="card-header ganhos-card">
-                        <h4>Cliente</h4>
+                    <h4>{{ trans('admin.bichao.client') }}</h4>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
@@ -107,7 +110,7 @@
             <hr />
             <div class="row">
                 <div class="col">
-                    <p>Escolha o grupo</p>
+                <p>{{ trans('admin.bichao.escGrup') }}</p>
                 </div>
             </div>
             <div class="row">
@@ -122,727 +125,319 @@
                                     <div class="col-8">
                                         <img src="{{ asset('site/images/painel/bichos/avestruz.png') }}" height="52"
                                             width="52" alt="Avestruz" class="animal-img">
-                                        <p>Avestruz</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        01
-                                    </div>
-                                    <div class="col">
-                                        02
-                                    </div>
-                                    <div class="col">
-                                        03
-                                    </div>
-                                    <div class="col">
-                                        04
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-2" onclick="select_animals_2()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        02
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/aguia.png') }}" height="52"
-                                            width="52" alt="Águia" class="animal-img">
-                                        <p>Águia</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        05
-                                    </div>
-                                    <div class="col">
-                                        06
-                                    </div>
-                                    <div class="col">
-                                        07
-                                    </div>
-                                    <div class="col">
-                                        08
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-3" onclick="select_animals_3()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        03
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/burro.png') }}" height="52px"
-                                            width="52px" alt="Burro" class="animal-img">
-                                        <p>Burro</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        09
-                                    </div>
-                                    <div class="col">
-                                        10
-                                    </div>
-                                    <div class="col">
-                                        11
-                                    </div>
-                                    <div class="col">
-                                        12
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-4" onclick="select_animals_4()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        04
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/borboleta.png') }}" height="52px"
-                                            width="52" alt="Borboleta" class="animal-img">
-                                        <p>Borboleta</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        13
-                                    </div>
-                                    <div class="col">
-                                        14
-                                    </div>
-                                    <div class="col">
-                                        15
-                                    </div>
-                                    <div class="col">
-                                        16
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-5" onclick="select_animals_5()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        05
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/cachorro.png') }}" height="52px"
-                                            width="52" alt="Cachorro" class="animal-img">
-                                        <p>Cachorro</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        17
-                                    </div>
-                                    <div class="col">
-                                        18
-                                    </div>
-                                    <div class="col">
-                                        19
-                                    </div>
-                                    <div class="col">
-                                        20
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-6" onclick="select_animals_6()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        06
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/cabra.png') }}" height="52px"
-                                            width="52" alt="Cabra" class="animal-img">
-                                        <p>Cabra</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        21
-                                    </div>
-                                    <div class="col">
-                                        22
-                                    </div>
-                                    <div class="col">
-                                        23
-                                    </div>
-                                    <div class="col">
-                                        24
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-7" onclick="select_animals_7()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        07
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/carneiro.png') }}" height="52px"
-                                            width="52" alt="Carneiro" class="animal-img">
-                                        <p>Carneiro</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        25
-                                    </div>
-                                    <div class="col">
-                                        26
-                                    </div>
-                                    <div class="col">
-                                        27
-                                    </div>
-                                    <div class="col">
-                                        28
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-8" onclick="select_animals_8()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        08
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/camelo.png') }}" height="52px"
-                                            width="52" alt="Camelo" class="animal-img">
-                                        <p>Camelo</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        29
-                                    </div>
-                                    <div class="col">
-                                        30
-                                    </div>
-                                    <div class="col">
-                                        31
-                                    </div>
-                                    <div class="col">
-                                        32
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-9" onclick="select_animals_9()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        09
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/cobra.png') }}" height="52px"
-                                            width="52" alt="Cobra" class="animal-img">
-                                        <p>Cobra</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        33
-                                    </div>
-                                    <div class="col">
-                                        34
-                                    </div>
-                                    <div class="col">
-                                        35
-                                    </div>
-                                    <div class="col">
-                                        36
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-10" onclick="select_animals_10()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        10
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/coelho.png') }}" height="52px"
-                                            width="52" alt="Coelho" class="animal-img">
-                                        <p>Coelho</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        37
-                                    </div>
-                                    <div class="col">
-                                        38
-                                    </div>
-                                    <div class="col">
-                                        39
-                                    </div>
-                                    <div class="col">
-                                        40
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-11" onclick="select_animals_11()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        11
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/cavalo.png') }}" height="52px"
-                                            width="52" alt="Cavalo" class="animal-img">
-                                        <p>Cavalo</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        41
-                                    </div>
-                                    <div class="col">
-                                        42
-                                    </div>
-                                    <div class="col">
-                                        43
-                                    </div>
-                                    <div class="col">
-                                        44
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-12" onclick="select_animals_12()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        12
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/elefante.png') }}" height="52px"
-                                            width="52" alt="elefante" class="animal-img">
-                                        <p>Elefante</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        45
-                                    </div>
-                                    <div class="col">
-                                        46
-                                    </div>
-                                    <div class="col">
-                                        47
-                                    </div>
-                                    <div class="col">
-                                        48
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-13" onclick="select_animals_13()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        13
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/galo.png') }}" height="52px"
-                                            width="52" alt="Galo" class="animal-img">
-                                        <p>Galo</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        49
-                                    </div>
-                                    <div class="col">
-                                        50
-                                    </div>
-                                    <div class="col">
-                                        51
-                                    </div>
-                                    <div class="col">
-                                        52
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-14" onclick="select_animals_14()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        14
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/gato.png') }}" height="52px"
-                                            width="52" alt="gato" class="animal-img">
-                                        <p>Gato</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        53
-                                    </div>
-                                    <div class="col">
-                                        54
-                                    </div>
-                                    <div class="col">
-                                        55
-                                    </div>
-                                    <div class="col">
-                                        56
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-15" onclick="select_animals_15()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        15
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/jacare.png') }}" height="52px"
-                                            width="52" alt="Jacaré" class="animal-img">
-                                        <p>Jacaré</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        57
-                                    </div>
-                                    <div class="col">
-                                        58
-                                    </div>
-                                    <div class="col">
-                                        59
-                                    </div>
-                                    <div class="col">
-                                        60
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-16" onclick="select_animals_16()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        16
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/leao.png') }}" height="52px"
-                                            width="52" alt="Leao" class="animal-img">
-                                        <p>Leão</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        61
-                                    </div>
-                                    <div class="col">
-                                        62
-                                    </div>
-                                    <div class="col">
-                                        63
-                                    </div>
-                                    <div class="col">
-                                        64
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-17" onclick="select_animals_17()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        17
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/macaco.png') }}" height="52px"
-                                            width="52" alt="Macaco" class="animal-img">
-                                        <p>Macaco</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        65
-                                    </div>
-                                    <div class="col">
-                                        66
-                                    </div>
-                                    <div class="col">
-                                        67
-                                    </div>
-                                    <div class="col">
-                                        68
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-18" onclick="select_animals_18()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        18
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/porco.png') }}" height="52px"
-                                            width="52" alt="Porco" class="animal-img">
-                                        <p>Porco</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        69
-                                    </div>
-                                    <div class="col">
-                                        70
-                                    </div>
-                                    <div class="col">
-                                        71
-                                    </div>
-                                    <div class="col">
-                                        72
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-19" onclick="select_animals_19()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        19
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/pavao.png') }}" height="52px"
-                                            width="52" alt="Pavao" class="animal-img">
-                                        <p>Pavão</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        73
-                                    </div>
-                                    <div class="col">
-                                        74
-                                    </div>
-                                    <div class="col">
-                                        75
-                                    </div>
-                                    <div class="col">
-                                        76
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-20" onclick="select_animals_20()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        20
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/peru.png') }}" height="52px"
-                                            width="52" alt="Peru" class="animal-img">
-                                        <p>Peru</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        77
-                                    </div>
-                                    <div class="col">
-                                        78
-                                    </div>
-                                    <div class="col">
-                                        79
-                                    </div>
-                                    <div class="col">
-                                        80
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-21" onclick="select_animals_21()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        21
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/touro.png') }}" height="52px"
-                                            width="52" alt="Touro" class="animal-img">
-                                        <p>Touro</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        81
-                                    </div>
-                                    <div class="col">
-                                        82
-                                    </div>
-                                    <div class="col">
-                                        83
-                                    </div>
-                                    <div class="col">
-                                        84
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-22" onclick="select_animals_22()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        22
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/tigre.png') }}" height="52px"
-                                            width="52" alt="Tigre" class="animal-img">
-                                        <p>Tigre</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        85
-                                    </div>
-                                    <div class="col">
-                                        86
-                                    </div>
-                                    <div class="col">
-                                        87
-                                    </div>
-                                    <div class="col">
-                                        88
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-23" onclick="select_animals_23()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        23
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/urso.png') }}" height="52px"
-                                            width="52" alt="Urso" class="animal-img">
-                                        <p>Urso</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        89
-                                    </div>
-                                    <div class="col">
-                                        90
-                                    </div>
-                                    <div class="col">
-                                        91
-                                    </div>
-                                    <div class="col">
-                                        92
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-24" onclick="select_animals_24()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        24
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/veado.png') }}" height="52px"
-                                            width="52" alt="Veado" class="animal-img">
-                                        <p>Veado</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        93
-                                    </div>
-                                    <div class="col">
-                                        94
-                                    </div>
-                                    <div class="col">
-                                        95
-                                    </div>
-                                    <div class="col">
-                                        96
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-25" onclick="select_animals_25()" class="btn btn-outline-primary animal-container-choose">
-                            <div class="animal container">
-                                <div class="row">
-                                    <div class="col-2 ">
-                                        25
-                                    </div>
-                                    <div class="col-8">
-                                        <img src="{{ asset('site/images/painel/bichos/vaca.png') }}" height="52px"
-                                            width="52" alt="Vaca" class="animal-img">
-                                        <p>Vaca</p>
+                                            <p>{{ trans('admin.bichao.avestruz') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         01
+
+                                         02
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/aguia.png') }}" height="52"
+                                             width="52" alt="Águia" class="animal-img">
+
+                                        <p>{{ trans('admin.bichao.aguia') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         05
+
+                                         03
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/burro.png') }}" height="52px"
+                                             width="52px" alt="Burro" class="animal-img">
+                                       
+                                        <p>{{ trans('admin.bichao.burro') }} </p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         09
+
+                                         04
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/borboleta.png') }}" height="52px"
+                                             width="52" alt="Borboleta" class="animal-img">
+                                       
+                                        <p>{{ trans('admin.bichao.borboleta') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         13
+
+                                         05
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/cachorro.png') }}" height="52px"
+                                             width="52" alt="Cachorro" class="animal-img">
+                                  
+                                        <p>{{ trans('admin.bichao.cachorro') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         17
+
+                                         06
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/cabra.png') }}" height="52px"
+                                             width="52" alt="Cabra" class="animal-img">
+                                
+                                        <p>{{ trans('admin.bichao.cabra') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         21
+
+                                         07
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/carneiro.png') }}" height="52px"
+                                             width="52" alt="Carneiro" class="animal-img">
+                                
+                                        <p>{{ trans('admin.bichao.carneiro') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         25
+
+                                         08
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/camelo.png') }}" height="52px"
+                                             width="52" alt="Camelo" class="animal-img">
+                                 
+                                        <p>{{ trans('admin.bichao.camelo') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         29
+
+                                         09
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/cobra.png') }}" height="52px"
+                                             width="52" alt="Cobra" class="animal-img">
+                                 
+                                        <p>{{ trans('admin.bichao.cobra') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         33
+
+                                         10
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/coelho.png') }}" height="52px"
+                                             width="52" alt="Coelho" class="animal-img">
+
+                                        <p>{{ trans('admin.bichao.coelho') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         37
+
+                                         11
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/cavalo.png') }}" height="52px"
+                                             width="52" alt="Cavalo" class="animal-img">
+
+                                        <p>{{ trans('admin.bichao.cavalo') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         41
+
+                                         12
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/elefante.png') }}" height="52px"
+                                             width="52" alt="elefante" class="animal-img">
+                            
+                                        <p>{{ trans('admin.bichao.elefante') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         45
+
+                                         13
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/galo.png') }}" height="52px"
+                                             width="52" alt="Galo" class="animal-img">
+
+                                        <p>{{ trans('admin.bichao.galo') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         49
+
+                                         14
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/gato.png') }}" height="52px"
+                                             width="52" alt="gato" class="animal-img">
+
+                                        <p>{{ trans('admin.bichao.gato') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         53
+
+                                         15
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/jacare.png') }}" height="52px"
+                                             width="52" alt="Jacaré" class="animal-img">
+
+                                        <p>{{ trans('admin.bichao.jacare') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         57
+
+                                         16
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/leao.png') }}" height="52px"
+                                             width="52" alt="Leao" class="animal-img">
+     
+                                        <p>{{ trans('admin.bichao.leao') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         61
+
+                                         17
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/macaco.png') }}" height="52px"
+                                             width="52" alt="Macaco" class="animal-img">
+
+                                        <p>{{ trans('admin.bichao.macaco') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         65
+
+                                         18
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/porco.png') }}" height="52px"
+                                             width="52" alt="Porco" class="animal-img">
+
+                                        <p>{{ trans('admin.bichao.porco') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         69
+
+                                         19
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/pavao.png') }}" height="52px"
+                                             width="52" alt="Pavao" class="animal-img">
+                              
+                                        <p>{{ trans('admin.bichao.pavao') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         73
+
+                                         20
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/peru.png') }}" height="52px"
+                                             width="52" alt="Peru" class="animal-img">
+   
+                                        <p>{{ trans('admin.bichao.peru') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         77
+
+                                         21
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/touro.png') }}" height="52px"
+                                             width="52" alt="Touro" class="animal-img">
+                
+                                        <p>{{ trans('admin.bichao.touro') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         81
+
+                                         22
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/tigre.png') }}" height="52px"
+                                             width="52" alt="Tigre" class="animal-img">
+
+                                        <p>{{ trans('admin.bichao.tigre') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         85
+
+                                         23
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/urso.png') }}" height="52px"
+                                             width="52" alt="Urso" class="animal-img">
+
+                                        <p>{{ trans('admin.bichao.urso') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         89
+
+                                         24
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/veado.png') }}" height="52px"
+                                             width="52" alt="Veado" class="animal-img">
+            
+                                        <p>{{ trans('admin.bichao.veado') }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="col">
+                                         93
+
+                                         25
+                                     </div>
+                                     <div class="col-8">
+                                         <img src="{{ asset('site/images/painel/bichos/vaca.png') }}" height="52px"
+                                             width="52" alt="Vaca" class="animal-img">
+                 
+                                        <p>{{ trans('admin.bichao.vaca') }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -868,7 +463,7 @@
         <hr />
         <div class="row">
             <div class="col">
-                <p>Selecione os prêmios</p>
+            <p>{{ trans('admin.bichao.selecPremios') }} </p>
             </div>
         </div>
         <div class="row">
@@ -879,7 +474,7 @@
         <hr>
         <div class="row">
             <div class="col">
-                <p>Insira o valor da aposta:</p>
+            <p>{{ trans('admin.bichao.insValor') }}</p>
             </div>
         </div>
         <div class="row">
@@ -895,17 +490,17 @@
         </div>
         <div id="message-minimum-value" class="row hide">
             <div class="col">
-                <span class="text-danger"><b>Valor mínimo de 0,01</b></span>
+                <span class="text-danger"><b>{{ trans('admin.bichao.valorM') }} 0,01</b></span>
             </div>
         </div>
         <div id="message-maximum-value" class="row hide">
             <div class="col">
-                <span class="text-danger"><b>Premiação: Limite de R$ 20.000,00 excedido</b></span>
+                <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoL') }}</b></span>
             </div>
         </div>
         <div class="row" id="price_award_check">
             <div class="col">
-                <p>Premiação
+                <p>{{ trans('admin.bichao.premiacao') }}
                     <span id="price_award" class="text-success">R$0,00</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" fill="currentColor"
                         class="bi bi-question-circle-fill" viewBox="0 0 16 16">
@@ -918,7 +513,7 @@
         <hr />
         <div class="row">
             <div class="col mb-2">
-                <a><button id="btn-add-to-chart" class="btn btn-success disabled" disabled><b>Adicionar ao Carrinho</b></button></a>
+                <a><button id="btn-add-to-chart" class="btn btn-success disabled" disabled><b>{{ trans('admin.bichao.addCarrinho') }}</b></button></a>
             </div>
         </div>
     </div>

@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\Pages\Reports\ReportController;
 use App\Http\Controllers\Admin\Pages\Settings\SystemController;
 use App\Http\Controllers\Admin\Pages\Settings\LogosController;
 use App\Http\Controllers\Admin\Pages\Bets\BichaoController;
+use App\Http\Controllers\Admin\Pages\Dashboards\TutoriaisController;
 
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
@@ -104,6 +105,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::prefix('ranking')->name('ranking.')->group(function () {
                 Route::get('/', [RankingController::class, 'index'])->name('index');
             });
+            Route::prefix('help')->name('help.')->group(function () {
+                Route::get('/tutoriais', [TutoriaisController::class, 'index'])->name('index');
+            });
 
             Route::prefix('wallet')->name('wallet.')->group(function () {
                 Route::get('/', [WalletController::class, 'index'])->name('index');
@@ -135,6 +139,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::prefix('/draws')->name('draws.')->group(function() {
                 Route::get('bichao', [BichaoController::class, 'draws'])->name('bichao');
             });
+
             Route::prefix('/comissions')->name('comissions.')->group(function() {
                 Route::get('bichao', [BichaoController::class, 'comissions'])->name('bichao');
             });
