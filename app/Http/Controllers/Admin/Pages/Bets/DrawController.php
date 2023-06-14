@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 
+
 class DrawController extends Controller
 {
     protected $draw;
@@ -157,19 +158,27 @@ class DrawController extends Controller
 
         }
     }
+    public function reportDrawsIndex(){
 
+        $startDate= Carbon::now();
+        $endDate= Carbon::now();
+        return view('admin.pages.bets.draw.drawsReport', compact('startDate', 'endDate'));
 
-    public function reportDraws()
+    }
+    public function reportDraws(Request $request)
     {
         $totalCupons = 0;
         $totalPremio = 0;
-        $type = request('type');
+        $type = $request->input('type');
+        $startDate = Carbon::parse($request->input('date'))->startOfDay();
+        $endDate = Carbon::parse($request->input('date'))->endOfDay();
+
         $drawsByDay = Draw::with('typeGame')
-            ->whereDate('created_at', Carbon::today())
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('type_game_id')
             ->get();
 
-        foreach($drawsByDay as $draw) {
+        foreach ($drawsByDay as $draw) {
             $totalCupons += count(explode(',', $draw->games));
             $games = DB::table('games')
                 ->join('clients', 'clients.id', '=', 'games.client_id')
@@ -178,20 +187,23 @@ class DrawController extends Controller
                     DB::raw('concat(clients.name, " ", clients.last_name) as fullName'),
                     'clients.pix',
                     'client_id',
-                    DB::raw('count(*) as cupons, sum(premio) as total'))
-                ->groupBy('client_id')->get()->toArray();
+                    DB::raw('count(*) as cupons, sum(premio) as total')
+                )
+                ->groupBy('client_id')
+                ->get()
+                ->toArray();
 
             $totalPremio += array_sum(array_column($games, 'total'));
             $draw->setAttribute('game', $games);
             $draw->setAttribute('typeRequest', $type);
         }
+
         $drawsByDay->totalCupons = $totalCupons;
+        $drawsByDay->dataHoje = $startDate;
         $drawsByDay->totalPremio = Money::toReal($totalPremio);
 
         return new reportDrawsByDay($drawsByDay);
-//        \App\Jobs\reportDrawsByDay::dispatch($drawsByDay);
-//        Mail::send(new \App\Mail\reportDrawsByDay($drawsByDay));
-
         return redirect()->back();
+       // return view('admin.pages.bets.draw.test', compact('drawsByDay', 'startDate', 'endDate'));
     }
 }
