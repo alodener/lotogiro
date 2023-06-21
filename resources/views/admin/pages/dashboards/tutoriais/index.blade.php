@@ -196,6 +196,14 @@
 </div>
     </div>
   </div>
+
+  <div class="col-sm-6 col-md-4">
+  <div class="card" onclick="openModal21()">
+    <div class="card-content">
+      <h3 class="card-title">Apostar na Quina de São João</h3>
+</div>
+    </div>
+  </div>
   </body>
 
   <!-- modal 1-->
@@ -674,6 +682,29 @@
       <div class="d-flex align-items-center justify-content-center">
   <video controls width = "500">
     <source src="{{asset('admin/videos/quina.mp4')}}" type="video/mp4">
+  </video>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal 22-->
+
+<div class="modal fade" id="video-modal-20" tabindex="-20" aria-labelledby="video-modal-20-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-20-label">Apostar na Quina de São João</h5>
+        <div class="close-button">
+    <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+
+      <div class="d-flex align-items-center justify-content-center">
+  <video controls width = "500">
+    <source src="{{asset('admin/videos/apostar-quina-saojoao.mp4')}}" type="video/mp4">
   </video>
 </div>
       </div>

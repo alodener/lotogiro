@@ -367,6 +367,29 @@ return [
         'valueA' => 'Bet Value',
         'valueP' => 'Prize Value',
         'rec' => 'Receipt',
+        'gerarP' => 'Generate PDF',
+        'gerarT' => 'Generate TXT',
+        'nHouve' => 'There were no winners for the numbers:',
+        'game' => 'Game'
+    ],
+
+    /*'lwDraw' => [
+        'sorteio' => 'Draw',
+        'typegame' => 'Game Type',
+        'selecgame' => 'Select Game Type',
+        'concur' => 'Contest',
+        'selec' => 'Select',
+        'numsort' => 'Drawn Numbers',
+        'sepvirg' => '(Separated by comma)',
+        'buscganh' => 'Search Winners',
+        'sortregis' => 'Registered Draw',
+        'concurs' => 'Contest:',
+        'number' => 'Numbers:',
+        'gamesG' => 'Winning Games:',
+        'name' => 'Name',
+        'valueA' => 'Bet Value',
+        'valueP' => 'Prize Value',
+        'rec' => 'Receipt',
         'gerarP' => 'Generate Pdf',
         'gerarT' => 'Generate Txt',
         'nHouve' => 'There were no winners for the numbers:',
@@ -393,7 +416,7 @@ return [
         'calcu' => 'Calculate',
         'selecN' => 'Select All Numbers',
         'selecQuant' => 'Select the number of numbers to generate an automatic game:'
-    ],
+    ], */
 
     'lwGame' => [
         'quantJ' => 'Number of Games:',
@@ -951,7 +974,41 @@ to your account as soon as we are notified.',
             'usuarios' => 'Users',
             'qualificacoes' => 'Qualifications',
             'sistema' => 'System',
-            ]
+        ],
+
+        'language' => [
+            'lengthMenu' => 'Showing _MENU_ records per page',
+            'zeroRecords' => 'No records found',
+            'info' => 'Showing page _PAGE_ of _PAGES_',
+            'infoEmpty' => 'No records available',
+            'infoFiltered' => '(filtered from _MAX_ total records)',
+            'search' => 'Search:',
+            'previous' => 'Anterior',
+            'next' => 'Siguiente',
+        ],
+    
+        'sorteio' => [
+            'sorteio' => 'Draw',
+            'tipo-jogo' => 'Game Type',
+            'selec-tipojogo' => 'Select Game Type',
+            'concurso' => 'Contest',
+            'selec' => 'Select',
+            'num-sort' => 'Drawn Numbers',
+            'sep-virgula' => '(Separated by comma)',
+            'busc-ganhadores' => 'Search Winners',
+            'sort-registrados' => 'Registered Draw',
+            'concurso' => 'Contest',
+            'numeros' => 'Numbers',
+            'jogos-ganhadores' => 'Winning Games',
+            'jogo' => 'Game',
+            'nome' => 'Name',
+            'valor-aposta' => 'Bet Value',
+            'valor-premio' => 'Prize Value',
+            'recibo' => 'Receipt',
+            'gerar-pdf' => 'Generate PDF',
+            'gerar-txt' => 'Generate TXT',
+            'nhouvganh' => 'There were no winners for the numbers'
+        ],
             
             
             
