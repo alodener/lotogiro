@@ -53,7 +53,7 @@
                             <th scope="col" style="max-width: 150px">ID</th>
                             <th scope="col">{{ trans('admin.bichao.client') }}</th>
                             <th scope="col">{{ trans('admin.bichao.value') }}</th>
-                            <th scope="col">{{ trans('admin.bichao.resultados') }} <br />(Valor a pagar)</th>
+                            <th scope="col">{{ trans('admin.bichao.resultados') }} <br />({{ trans('admin.falta.valorPagar') }})</th>
                              <th scope="col">PIX</th>
                             <th scope="col" style="max-width: 250px">{{ trans('admin.bichao.loteria') }}</th>
                             <th scope="col" style="max-width: 180px">{{ trans('admin.bichao.modalidade') }}</th>

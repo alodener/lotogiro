@@ -5,7 +5,6 @@
      <div class="row">
          <div class="col-md-12">
              <div class="card-header indica-card">
-
                 <span class="float-left">{{ trans('admin.lwTicket.cadast') }} </span>
              </div>
          </div>
@@ -23,20 +22,78 @@
                  </select>
              </div>
          </div>
+
          <div class="col-md-6">
              <form wire:submit.prevent="submit">
+             <div class="form-row">
+                    <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                        <input wire:model="dateStart" type="text"
+                               class="form-control @error('dateStart') is-invalid @enderror"
+                               id="date_start"
+                               name="dateStart"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="Data Inicial"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
+                        @error('dateStart')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                        <input wire:model="dateEnd" type="text"
+                               class="form-control date @error('dateEnd') is-invalid @enderror"
+                               id="date_end"
+                               name="dateEnd"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="Data Final"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
+                        @error('dateEnd')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <div class="row bg-white p-3">
+        @php
+            $idGame = 0;
+        @endphp
+
+        @forelse($dados as $dado)
+            @php
+                $nameGame = '';
+            @endphp
+
+            @if($idGame !== $dado->typeGame->id)
+                @php
+                    $nameGame = "<h4 class='alert-heading'>{$dado->typeGame->name}</h4><hr>";
+                    $idGame = $dado->typeGame->id;
+                @endphp
+            @endif
+
+            @forelse($dado->games as $game)
+                <div class="col-sm-12 col-md-12">
+                    <div class="alert">
+                        {!! $nameGame !!}
+                        @php
+                            $nameGame = '';
+                        @endphp
  
                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                              <div class="d-flex flex-row">
                                  <div class="col-10 bg-cyan align-middle text-left pt-1">
                                      <h5>{{ $game->user->name }} |
-
                                         <strong>{{ trans('admin.lwTicket.sortEm') }}
                                              {{ \Carbon\Carbon::parse($dado->created_at)->format('d/m/Y') }}
                                          </strong>
                                      </h5>
-
                                     <small><strong>{{ trans('admin.lwTicket.sort') }}</strong> {{ $dado->numbers }}</small><br>
                                     <small><strong>{{ trans('admin.lwTicket.selec') }}</strong> {{ $game->numbers }}</small>
                                  </div>
@@ -46,7 +103,6 @@
                                          btn-outline-success btn-block btn-circle btn-xl m-auto">
                                          <i class="fa fa-check-circle"></i>
                                      </button>
-
                                     <span class="text-bold">{{ trans('admin.lwTicket.aprov') }} </span>
                                  </div>
                              </div>
@@ -57,7 +113,6 @@
  
              @endforelse
          @empty
-
             <div class="col-sm-12"><p>{{ trans('admin.lwTicket.nenhumJ') }}</p></div>
          @endforelse
      </div>

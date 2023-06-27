@@ -48,8 +48,8 @@
                 @endif
                 <!-- button indique e ganhe -->
                 @if($User['type_client'] == 1)
-                <div class="card-body   col-lg-4 col-sm-6">
-                    <div class="col-lg-12 card text-white   my-2 alert bg-light indica-corpo" role="alert" >
+                <div class="card-body   col-lg-4 col-sm-6 mx-auto" >
+                    <div class="col-lg-12 card text-white   my-2 alert bg-light indica-corpo text-center" role="alert" >
                         <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link " value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador}}" />
                         <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
                         <button type="button" id="btn_copy_link2" class="btn btn-success btn-block" onclick="CopyMe(getUrl())"> {{ trans('admin.dashboard.referral-button-text-client') }} </button>                        
@@ -65,13 +65,18 @@
                 </div> 
                 @endif
 
-                <!-- button copiar link -->
+                <!-- button copiar link  -->
+                @if($User['type_client'] == 1)
                 <div class="card-body col-lg-4 col-sm-5">
-                    <div class="col-lg-12 card text-white my-2 alert bg-light indica-corpo" style="float:left;">  
-                    <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
-                        <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{ trans('admin.copy-link-button') }}</button>
-                    </div>
-                </div> 
+                </div>  
+            @elseif($User['type_client'] != 1)
+            <div class="card-body col-lg-4 col-sm-5">
+    <div class="col-lg-12 card text-white my-2 alert bg-light indica-corpo" style="float:left;">
+        <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
+        <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{ trans('admin.copy-link-button') }}</button>
+    </div>
+</div> 
+@endif
 
                 <!-- button seus indicados 
                 <div class="card-body col-lg-4 col-sm-6">

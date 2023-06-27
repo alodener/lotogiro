@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card-header indica-card">
-                    Tutoriais
+                {{ trans('admin.menu.tutoriais') }}
                 </div>
             </div>
         </div>
@@ -22,8 +22,7 @@
       <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal1()">
     <div class="card-content">
-      <h3 class="card-title">Como jogar em Grupo</h3>
-      <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#video-modal-1">Assistir</button> -->
+      <h3 class="card-title">{{ trans('admin.tutoriais.jogaremgrupo') }}</h3>
     </div>
   </div>
   </div>
@@ -31,7 +30,7 @@
       <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal2()">
     <div class="card-content">
-      <h3 class="card-title">Duque de Dezena</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.duquededezena') }}</h3>
     </div>
     </a>
   </div>
@@ -41,7 +40,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal3()">
     <div class="card-content">
-      <h3 class="card-title">Duque de Grupo</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.duquedegrupo') }}</h3>
     </div>
   </div>
   </div>
@@ -49,7 +48,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal4()">
     <div class="card-content">
-      <h3 class="card-title">Milhar e Centena</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.milharcentena') }}</h3>
     </div>
   </div>
   </div>
@@ -58,7 +57,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal5()">
     <div class="card-content">
-      <h3 class="card-title">Resultado Jogo do Bichão</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.resultbichao') }}</h3>
     </div>
   </div>
   </div>
@@ -67,7 +66,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal6()">
     <div class="card-content">
-      <h3 class="card-title">Terno de Dezena</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.ternodezena') }}</h3>
     </div>
   </div>
   </div>
@@ -76,7 +75,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal7()">
     <div class="card-content">
-      <h3 class="card-title">Terno de Grupo</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.ternogrupo') }}</h3>
     </div>
   </div>
   </div>
@@ -84,7 +83,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal8()">
     <div class="card-content">
-      <h3 class="card-title">Apostar na Loto Facil</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.apostarlotofacil') }}</h3>
     </div>
   </div>
   </div>
@@ -93,7 +92,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal9()">
     <div class="card-content">
-      <h3 class="card-title">Como Jogar na Timemania</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.jogartimemania') }}</h3>
     </div>
   </div>
   </div>
@@ -101,7 +100,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal10()"> 
     <div class="card-content">
-      <h3 class="card-title">Como Atualizar o Cadastro</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.atualizarcadastro') }}</h3>
     </div>
   </div>
   </div>
@@ -110,7 +109,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal11()">
     <div class="card-content">
-      <h3 class="card-title">Como Convidar Clientes</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.convclientes') }}</h3>
     </div>
   </div>
   </div>
@@ -119,7 +118,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal12()">
     <div class="card-content">
-      <h3 class="card-title">Como Jogar na Die de Sorte</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.jogardie') }}</h3>
     </div>
   </div>
   </div>
@@ -128,7 +127,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal13()">
     <div class="card-content">
-      <h3 class="card-title">Como Jogar na Dupla Sena</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.jogarduplasena') }}</h3>
     </div>
   </div>
   </div>
@@ -136,7 +135,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal14()">
     <div class="card-content">
-      <h3 class="card-title">Como Jogar na Mega Sena</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.jogarmegasena') }}</h3>
     </div>
   </div>
   </div>
@@ -144,7 +143,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal15()">
     <div class="card-content">
-      <h3 class="card-title">Como Realizar Recarga</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.realrecargas') }}</h3>
     </div>
   </div>
   </div>
@@ -152,7 +151,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal16()">
     <div class="card-content">
-      <h3 class="card-title">Como Validar Bilhetes</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.validbilhetes') }}</h3>
     </div>
   </div>
   </div>
@@ -160,7 +159,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal17()">
     <div class="card-content">
-      <h3 class="card-title">Como Ver Apostas no Jogo do Bicho</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.verapostasb') }}</h3>
     </div>
   </div>
   </div>
@@ -168,7 +167,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal18()">
     <div class="card-content">
-      <h3 class="card-title">Como Ver Meus Jogos</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.verjogos') }}</h3>
     </div>
   </div>
   </div>
@@ -176,7 +175,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal19()">
     <div class="card-content">
-      <h3 class="card-title">Converter Bônus em Saldo</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.converter') }}</h3>
     </div>
   </div>
   </div>
@@ -184,7 +183,7 @@
   <div class="col-sm-6 col-md-4">
       <div class="card" onclick="openModal20()">
     <div class="card-content">
-      <h3 class="card-title">Loto Fácil para Clientes</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.lotofacil') }}</h3>
     </div>
   </div>
   </div>
@@ -192,7 +191,7 @@
   <div class="col-sm-6 col-md-4">
   <div class="card" onclick="openModal21()">
     <div class="card-content">
-      <h3 class="card-title">Quina</h3>
+      <h3 class="card-title">{{ trans('admin.tutoriais.quina') }}</h3>
 </div>
     </div>
   </div>
@@ -204,7 +203,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-1-label">Como jogar em Grupo</h5>
+        <h5 class="modal-title" id="video-modal-1-label">{{ trans('admin.tutoriais.jogaremgrupo') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -227,7 +226,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-2-label">Duque de Dezena</h5>
+        <h5 class="modal-title" id="video-modal-2-label">{{ trans('admin.tutoriais.duquededezena') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -250,7 +249,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-3-label">Duque de Grupo</h5>
+        <h5 class="modal-title" id="video-modal-3-label">{{ trans('admin.tutoriais.duquedegrupo') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -273,7 +272,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-4-label">Milhar e Centena</h5>
+        <h5 class="modal-title" id="video-modal-4-label">{{ trans('admin.tutoriais.milharcentena') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -296,7 +295,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-5-label">Resultado Jogo do Bichão</h5>
+        <h5 class="modal-title" id="video-modal-5-label">{{ trans('admin.tutoriais.resultbichao') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -319,7 +318,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-6-label">Terno de Dezena</h5>
+        <h5 class="modal-title" id="video-modal-6-label">{{ trans('admin.tutoriais.ternodezena') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -342,7 +341,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-7-label">Terno de Grupo</h5>
+        <h5 class="modal-title" id="video-modal-7-label">{{ trans('admin.tutoriais.ternogrupo') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -365,7 +364,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-8-label">Apostar na Loto Facil</h5>
+        <h5 class="modal-title" id="video-modal-8-label">{{ trans('admin.tutoriais.apostarlotofacil') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -388,7 +387,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-9-label">Como Jogar na Timemania</h5>
+        <h5 class="modal-title" id="video-modal-9-label">{{ trans('admin.tutoriais.jogartimemania') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -411,7 +410,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-10-label">Como Atualizar o Cadastro</h5>
+        <h5 class="modal-title" id="video-modal-10-label">{{ trans('admin.tutoriais.atualizarcadastro') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -434,7 +433,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-11-label">Como Convidar Clientes</h5>
+        <h5 class="modal-title" id="video-modal-11-label">{{ trans('admin.tutoriais.convclientes') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -457,7 +456,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-12-label">Como Jogar na Die de Sorte</h5>
+        <h5 class="modal-title" id="video-modal-12-label">{{ trans('admin.tutoriais.jogardie') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -480,7 +479,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-13-label">Como Jogar na Dupla Sena</h5>
+        <h5 class="modal-title" id="video-modal-13-label">{{ trans('admin.tutoriais.jogarduplasena') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -503,7 +502,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-14-label">Como Jogar na Mega Sena</h5>
+        <h5 class="modal-title" id="video-modal-14-label">{{ trans('admin.tutoriais.jogarmegasena') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -526,7 +525,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-15-label">Como Realizar Recarga</h5>
+        <h5 class="modal-title" id="video-modal-15-label">{{ trans('admin.tutoriais.realrecargas') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -549,7 +548,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-16-label">Como Validar Bilhetes</h5>
+        <h5 class="modal-title" id="video-modal-16-label">{{ trans('admin.tutoriais.validbilhetes') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -572,7 +571,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-17-label">Como Ver Apostas no Jogo do Bicho</h5>
+        <h5 class="modal-title" id="video-modal-17-label">{{ trans('admin.tutoriais.verapostasb') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -595,7 +594,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-18-label">Como Ver Meus Jogos</h5>
+        <h5 class="modal-title" id="video-modal-18-label">{{ trans('admin.tutoriais.verjogos') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -618,7 +617,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-19-label">Converter Bônus em Saldo</h5>
+        <h5 class="modal-title" id="video-modal-19-label">{{ trans('admin.tutoriais.converter') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -641,7 +640,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-20-label">Loto Fácil para Clientes</h5>
+        <h5 class="modal-title" id="video-modal-20-label">{{ trans('admin.tutoriais.lotofacil') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -664,7 +663,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-21-label">Quina</h5>
+        <h5 class="modal-title" id="video-modal-21-label">{{ trans('admin.tutoriais.quina') }}</h5>
         <div class="close-button">
     <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
