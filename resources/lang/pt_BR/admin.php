@@ -1000,7 +1000,8 @@ return [
                 'converter' => 'Converter Bônus em Saldo', 
                 'lotofacil' => 'Loto Fácil para Clientes', 
                 'quina' => 'Quina', 
-                'bichaos' => 'Bichão da Sorte'
+                'bichaos' => 'Bichão da Sorte',
+            ],
 
             'language' => [
                 'lengthMenu' => 'Mostrando _MENU_ registros por página',
