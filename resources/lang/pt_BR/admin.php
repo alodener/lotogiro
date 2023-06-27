@@ -935,6 +935,7 @@ return [
                 'tutoriais' => 'Tutoriais'
             ],  
 
+
             'falta' => [
                 'aposta' => 'Sua aposta',
                 'processada' => 'foi processada',
@@ -1000,5 +1001,39 @@ return [
                 'lotofacil' => 'Loto Fácil para Clientes', 
                 'quina' => 'Quina', 
                 'bichaos' => 'Bichão da Sorte'
+
+            'language' => [
+                'lengthMenu' => 'Mostrando _MENU_ registros por página',
+                'zeroRecords' => 'Nada encontrado',
+                'info' => 'Mostrando página _PAGE_ de _PAGES_',
+                'infoEmpty' => 'Nenhum registro disponível',
+                'infoFiltered' => '(filtrado de _MAX_ registros no total)',
+                'search' => 'Pesquisar:',
+                'previous' => 'Anterior',
+                'next' => 'Próximo'
+            ],
+        
+            'sorteio' => [
+                'sorteio' => 'Sorteio',
+                'tipo-jogo' => 'Tipo de Jogo',
+                'selec-tipojogo' => 'Selecione o Tipo de Jogo', 
+                'concurso' => 'Concurso',
+                'selec' => 'Selecione',
+                'num-sort' => 'Numeros sorteados',
+                'sep-virgula' => '(Separados por virgula)',
+                'busc-ganhadores' => 'Buscar Ganhadores',
+                'sort-registrados' => 'Sorteio registrado',
+                'concurso' => 'Concurso',
+                'numeros' => 'Numeros',
+                'jogos-ganhadores' => 'Jogos Ganhadores',
+                'jogo' => 'Jogo',
+                'nome' => 'Nome',
+                'valor-aposta' => 'Valor Aposta',
+                'valor-premio' => 'Valor Prêmio',
+                'recibo' => 'Recibo',
+                'gerar-pdf' => 'Gerar Pdf',
+                'gerar-txt' => 'Gerar Txt',
+                'nhouvganh' => 'Não houve nenhum ganhador para os números'
+
             ],
 ];

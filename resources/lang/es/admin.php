@@ -586,7 +586,30 @@ return [
         'addGame' => 'Agregar Nuevo Juego'
     ],
 
+    'lwDraw' => [
+        'sorteio' => 'Sorteo',
+        'typegame' => 'Tipo de Juego',
+        'selecgame' => 'Seleccionar Tipo de Juego',
+        'concur' => 'Concurso',
+        'selec' => 'Seleccionar',
+        'numsort' => 'Números sorteados',
+        'sepvirg' => '(Separados por coma)',
+        'buscganh' => 'Buscar Ganadores',
+        'sortregis' => 'Sorteo registrado',
+        'concurs' => 'Concurso:',
+        'number' => 'Números:',
+        'gamesG' => 'Juegos Ganadores:',
+        'name' => 'Nombre',
+        'valueA' => 'Valor Apuesta',
+        'valueP' => 'Valor Premio',
+        'rec' => 'Recibo',
+        'gerarP' => 'Generar PDF',
+        'gerarT' => 'Generar TXT',
+        'nHouve' => 'No hubo ganadores para los números:',
+        'game' => 'Juego'
+    ],
 
+/*
 	'lwDraw' => [
                 'sorteio' => 'Sorteo',
                 'typegame' => 'Tipo de Juego',
@@ -630,7 +653,7 @@ return [
                 'calcu' => 'Calcular',
                 'selecN' => 'Seleccionar Todos los Números',
                 'selecQuant' => 'Seleccione la cantidad de números para generar un juego automático:'
-            ],
+            ], */
 
 
             'lwTypeGame' => [
@@ -997,6 +1020,7 @@ a tu cuenta tan pronto como seamos notificados.',
         'selecQuant' => 'Seleccione la cantidad de números para generar un juego automático',        
     ],
 
+
     'lwDraw' => [
         'sorteio' => 'Sorteo',
         'typegame' => 'Tipo de Juego',
@@ -1045,6 +1069,38 @@ a tu cuenta tan pronto como seamos notificados.',
         'bichaos' => 'Bichão de la Fortuna'
     ],
     
-    
-    
+    'language' => [
+        'lengthMenu' => 'Mostrando _MENU_ registros por página',
+        'zeroRecords' => 'No se encontraron registros',
+        'info' => 'Mostrando página _PAGE_ de _PAGES_',
+        'infoEmpty' => 'No hay registros disponibles',
+        'infoFiltered' => '(filtrado de _MAX_ registros en total)',
+        'search' => 'Buscar:',
+        'previous' => 'Anterior',
+        'next' => 'Próximo',
+    ],
+
+    'sorteio' => [
+        'sorteio' => 'Sorteo',
+        'tipo-jogo' => 'Tipo de Juego',
+        'selec-tipojogo' => 'Seleccione el Tipo de Juego',
+        'concurso' => 'Concurso',
+        'selec' => 'Seleccionar',
+        'num-sort' => 'Números sorteados',
+        'sep-virgula' => '(Separados por coma)',
+        'busc-ganhadores' => 'Buscar Ganadores',
+        'sort-registrados' => 'Sorteo registrado',
+        'concurso' => 'Concurso',
+        'numeros' => 'Números',
+        'jogos-ganhadores' => 'Juegos Ganadores',
+        'jogo' => 'Juego',
+        'nome' => 'Nombre',
+        'valor-aposta' => 'Valor de Apuesta',
+        'valor-premio' => 'Valor del Premio',
+        'recibo' => 'Recibo',
+        'gerar-pdf' => 'Generar PDF',
+        'gerar-txt' => 'Generar TXT',
+        'nhouvganh' => 'No hubo ningún ganador para los números'
+    ],
+
 ];
