@@ -2,7 +2,6 @@
      <div>
          <div class="form-row">
              <div class="form-group col-md-3">
-
                 <label for="name">{{ trans('admin.lwTypeGame.name') }}</label>
                  <input wire:model="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                         name="name"
@@ -26,7 +25,6 @@
                  @enderror
              </div>
              <div class="form-group col-md-3">
-
                 <label for="columns">{{ trans('admin.lwTypeGame.numC') }} </label>
                  <input wire:model="columns" type="text" class="form-control @error('columns') is-invalid @enderror"
                         id="columns"

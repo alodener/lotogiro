@@ -25,7 +25,7 @@
                 </a>
 
                 <a href="{{ route('admin.bets.report-draws-index')  }}" >
-                    <button class="btn btn-success">Visualizar Relatório</button>
+                    <button class="btn btn-success">{{ trans('admin.falta.visuRelatorio') }}</button>
                 </a>
 
 

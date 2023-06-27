@@ -180,7 +180,7 @@
                                                 class="nav-link @if (request()->is('admin/bets/bichao*')) active @endif"
                                             >
                                                 <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Bichão da Sorte</p>
+                                                <p>{{ trans('admin.tutoriais.bichaos') }}</p>
                                             </a>
                                         </li>
                                         @endif
@@ -360,7 +360,7 @@
                             <a href="{{route('admin.dashboards.help.index')}}"
                                 class="nav-link @if(request()->is('/admin/dashboards/tutoriais')) active @endif">
                                 <i class="fas fa-book-open nav-icon"></i>
-                                <p>Tutoriais</p>
+                                <p> {{ trans('admin.menu.tutoriais') }} </p>
                             </a>
                         </li>
                     </li>
@@ -428,7 +428,7 @@
                                 <a href="{{ route('admin.settings.bichao.index') }}"
                                     class="nav-link @if (request()->is('admin/settings/bichao*')) active @endif">
                                     <i class="nav-icon fas fa-ticket-alt"></i>
-                                    <p>Bichão da sorte</p>
+                                    <p>{{ trans('admin.tutoriais.bichaos') }}</p>
                                 </a>
                             </li>
                             @endcan

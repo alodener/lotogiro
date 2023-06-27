@@ -136,9 +136,10 @@
             {{ csrf_field() }}
             <div class="col-12">
                 <div class="row">
-                    <div class="col">
-                    class="btn btn-secondary">{{ trans('admin.bichao.gerarM') }}</button>
-                    </div>
+            <div class="col">
+                <p>{{ trans('admin.falta.selecPremios') }}</p>
+            </div>
+                </div>
                 </div>
                 <div class="row">
                     <div class="col button-group">
