@@ -115,7 +115,7 @@
                         </a>
                         <ul class="nav nav-treeview">
 
-                        <!--@can('read_client')
+                            @can('read_client')
                                 <li class="nav-item">
                                     <a href="{{route('admin.bets.clients.index')}}"
                                        class="nav-link @if(request()->is('admin/bets/clients*')) active @endif">
@@ -123,8 +123,8 @@
                                         <p>{{ trans('admin.menu.cliente') }}</p>
                                     </a>
                                 </li>
-                            @endcan-->
-
+                            @endcan
+                        @if(\App\Helper\UserValidate::iAmAdmin())
                             @can('read_client')
                                 <li class="nav-item">
                                  <a href="{{route('admin.bets.validate-games.index')}}"
@@ -134,6 +134,8 @@
                                     </a>
                                 </li>
                             @endcan
+                        @endif
+
                             @can('read_competition')
                                 <li class="nav-item">
                                     <a href="{{route('admin.bets.competitions.index')}}"

@@ -1,4 +1,4 @@
-<!--@can('read_user')
+@can('read_user')
 @extends('admin.layouts.master')
 
 @section('title', trans('admin.customers.new-customer-page-title'))
@@ -15,5 +15,5 @@
     </div>
 @endsection
 @endcan
--->
+
 

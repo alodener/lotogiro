@@ -1,4 +1,4 @@
-<!--@can('read_user')
+@can('read_user')
 @extends('admin.layouts.master')
 
 @section('title', trans('admin.customers.edit-client'))
@@ -27,4 +27,3 @@
 
 @endpush
 @endcan
-    -->

@@ -246,7 +246,7 @@ class UserController extends Controller
     {
         if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all')){
             abort(403);
-        }
+        }   
 
         $roles = Role::orderBy('name')->get();
         foreach ($roles as $role){
@@ -290,7 +290,9 @@ class UserController extends Controller
         if($indicador == null || $indicador == 0){
             $indicador = 1;
         }
-    
+
+        $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
+        
         try
         {
             if(auth()->user()->hasPermissionTo('update_user')){
@@ -331,10 +333,18 @@ class UserController extends Controller
                 if (!is_null($request->email)) {
                     $userClient->email = $request->email;
                 }
+
+                if (!is_null($request->cpf)) {
+                    $userClient->cpf = $request->cpf;
+                }
                 
                 if (!is_null($telefone)) {
                     $userClient->ddd = $ddd;
                     $userClient->phone = $telefone;
+                }
+
+                if (!is_null($request->pix)) {
+                    $userClient->pix = $request->pix;  
                 }
                 
                 $userClient->save();

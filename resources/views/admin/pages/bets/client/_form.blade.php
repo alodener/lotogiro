@@ -1,5 +1,4 @@
-
-<!--<div class="row">
+<div class="row">
     <div class="col-md-12">
         @error('success')
         @push('scripts')
@@ -201,4 +200,4 @@
     </script>
 
 @endpush
-    -->
+    
