@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Resources\ClientResource;
+use App\Models\User;
+use Illuminate\Support\Str;
 
 class ClientController extends Controller
 {
@@ -90,18 +92,18 @@ class ClientController extends Controller
         }
 
         $validatedData = $request->validate([
-            'name' => 'required|max:50',
-            'last_name' => 'required|max:100',
-           // 'cpf' => 'required|max:14',
-            'phone' => 'required|max:100',
-           // 'email' => 'unique:App\Models\User|email:rfc|required|max:100',
-           // 'bank' => 'required|max:100',
-            //'agency' => 'required|max:20',
-           // 'type_account' => 'required|max:20',
-          //  'account' => 'required|max:50',
-          //  'pix' => 'required|max:50',
-//            'password' => 'min:8|same:password_confirmation|required|max:15',
-//            'password_confirmation' => 'required|max:15',
+         'name' => 'required|max:50',
+         'last_name' => 'required|max:100',
+         // 'cpf' => 'required|max:14',
+         'phone' => 'required|max:100',
+         // 'email' => 'unique:App\Models\User|email:rfc|required|max:100',
+         // 'bank' => 'required|max:100',
+         //'agency' => 'required|max:20',
+         //'type_account' => 'required|max:20',
+         //'account' => 'required|max:50',
+         //'pix' => 'required|max:50',
+         //'password' => 'min:8|same:password_confirmation|required|max:15',
+         //'password_confirmation' => 'required|max:15',
         ]);
 
         $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
@@ -120,7 +122,7 @@ class ClientController extends Controller
             $client->agency = $request->agency;
             $client->account = $request->account;
             $client->pix = $request->pix;
-//            $client->password = Hash::make('alterar123');
+            //$client->password = Hash::make('alterar123');
             $client->save();
 
             return redirect()->route('admin.bets.clients.index')->withErrors([
@@ -132,7 +134,7 @@ class ClientController extends Controller
             return redirect()->route('admin.bets.clients.create')->withErrors([
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o cliente, tente novamente'
             ]);
-        }
+         }
     }
 
     /**
@@ -159,56 +161,82 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        if(!auth()->user()->hasPermissionTo('update_client')){
+        if (!auth()->user()->hasPermissionTo('update_client')) {
             abort(403);
         }
-
+    
         $validatedData = $request->validate([
             'name' => 'required|max:50',
             'last_name' => 'required|max:100',
-            //'cpf' => 'required|max:14',
             'phone' => 'required|max:100',
-            //'email' => 'email:rfc|required|max:100|unique:users,email,' . $client->id,
-           // 'bank' => 'required|max:100',
-            //'agency' => 'required|max:20',
-           // 'type_account' => 'required|max:20',
-           // 'account' => 'required|max:50',
-           // 'pix' => 'required|max:50',
-//            'password' => 'min:8|same:password_confirmation|required|max:15',
-//            'password_confirmation' => 'required|max:15',
         ]);
 
+        
         $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
         $request['phone'] = preg_replace('/[^0-9]/', '', $request->phone);
-
+    
         try {
+            $user = User::where('email', $client->email)->first();
+    
+            if ($user) {
+                $telefone = null;
+                
+                if (!is_null($request->name)) {
+                    $user->name = $request->name;
+                }
+    
+                if (!is_null($request->last_name)) {
+                    $user->last_name = $request->last_name;
+                }
+    
+                if (!is_null($request->email)) {
+                    $user->email = $request->email;  
+                }
+    
+                if (!is_null($request->cpf)) {
+                    $user->cpf = $request->cpf;
+                }
 
+                if (!is_null($request->pix)) {
+                    $user->pixSaque = $request->pix;  
+                }
+                
+                if (!is_null($request->phone)) {
+                $telefoneCompleto = Str::of($request->phone)->replaceMatches('/[^A-Za-z0-9]++/', '');
+                $ddd = Str::of($telefoneCompleto)->substr(0, 2); 
+                $telefone = Str::of($telefoneCompleto)->substr(2);
+                
+                $user->ddd = $ddd;
+                $user->phone = $telefone;
+            }
+    
+                $user->save();
+            }
+    
             $client->cpf = $request->cpf;
             $client->name = $request->name;
             $client->last_name = $request->last_name;
             $client->ddd = substr($request->phone, 0, 2);
             $client->phone = substr($request->phone, 2);
             $client->email = $request->email;
-            $client->email = $request->email;
             $client->bank = $request->bank;
             $client->type_account = $request->type_account;
             $client->agency = $request->agency;
             $client->account = $request->account;
             $client->pix = $request->pix;
-//            $client->password = Hash::make('alterar123');
             $client->save();
-
+    
             return redirect()->route('admin.bets.clients.index')->withErrors([
                 'success' => 'Cliente alterado com sucesso'
             ]);
-
+    
         } catch (\Exception $exception) {
-
-            return redirect()->route('admin.bets.clients.edit')->withErrors([
+            return redirect()->route('admin.bets.clients.edit', ['client' => $client->id])->withErrors([
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao alterar o cliente, tente novamente'
             ]);
         }
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -245,3 +273,4 @@ class ClientController extends Controller
         return ClientResource::collection($clients);
     }
 }
+
