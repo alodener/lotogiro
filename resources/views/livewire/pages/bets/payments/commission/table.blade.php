@@ -54,8 +54,8 @@
                 <input wire:model="search" type="text" id="author" class="form-control" placeholder="Pesquisar Usuário"
                        autocomplete="off">
                 <div class="input-group-append">
-                    <span wire:click="clearUser" class="input-group-text" title="Limpar"><i
-                            class="fas fa-user-times"></i></span>
+                    <span wire:click="clearUser" class="input-group-text" title="Limpar">
+                        <i class="fas fa-user-times"></i></span>
                 </div>
             </div>
         </div>
