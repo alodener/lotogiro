@@ -15,6 +15,8 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use App\Models\LogUsuario;
+
 
 
 class UserController extends Controller
@@ -305,8 +307,6 @@ class UserController extends Controller
         $user->indicador = $indicador;
         $user->save();
 
-
-        return redirect()->back()->with('success', 'O campo indicador foi atualizado com sucesso.');
         $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
         
         try
@@ -378,7 +378,6 @@ class UserController extends Controller
             $user->ddd = $ddd;
             $user->phone = $telefone;
             }
-
             if($auxRole != 6){
                 $user->type_client = null;
             }else if($auxRole == 6){
@@ -427,6 +426,14 @@ class UserController extends Controller
             }
             $user->save();
             } 
+
+            // alteração na tela de usuario/ guardar no log
+            $logUsuario = new LogUsuario();
+            $logUsuario->user_id_sender = auth()->user()->id;
+            $logUsuario->user_id = $user;
+            $logUsuario->nome_funcao = 'Edição';
+            $logUsuario->description = 'O usuário ID ' . $user . ' foi atualizado.';
+            $logUsuario->save();
 
             if($request->type_client == 1 || auth()->user()->hasPermissionTo('edit_all')){
                 return redirect()->route('admin.home')->withErrors([
