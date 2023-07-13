@@ -305,10 +305,9 @@ class UserController extends Controller
         $user->indicador = $indicador;
         $user->save();
 
-
-        return redirect()->back()->with('success', 'O campo indicador foi atualizado com sucesso.');
         $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
         
+
         try
         {
             if(auth()->user()->hasPermissionTo('update_user')){
@@ -378,6 +377,8 @@ class UserController extends Controller
             $user->ddd = $ddd;
             $user->phone = $telefone;
             }
+
+            
 
             if($auxRole != 6){
                 $user->type_client = null;
