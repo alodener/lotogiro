@@ -55,14 +55,10 @@ class HomeController extends Controller
 
         //UsersHasQualifications::generateByUser(auth()->user());
 
-        $qualificationAtived = UsersHasQualifications::getActivedByUser(auth()->user());
+        $qualificationAtived = null;//UsersHasQualifications::getActivedByUser(auth()->user());
         $nextGoal = null;
         $goalCalculation = null;
-        if ($qualificationAtived) {
-            $nextGoal = Qualifications::getDiffNextGoal($qualificationAtived->getQualification(), $balances['personal_balance'], $balances['group_balance']);
-            $goalCalculation = Qualifications::getGoalCalculation($qualificationAtived->getQualification(), $balances['personal_balance'], $balances['group_balance']);
-        }
-
+        
         // mandando valores para dashboar
         return view('admin.pages.home', compact('User', 'FiltroUser', 'JogosFeitos', 'saldo', 'qualificationAtived', 'nextGoal','goalCalculation'));
     }

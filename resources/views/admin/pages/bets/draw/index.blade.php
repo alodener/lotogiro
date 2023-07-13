@@ -25,7 +25,7 @@
                 </a>
 
                 <a href="{{ route('admin.bets.report-draws-index')  }}" >
-                    <button class="btn btn-success">Visualizar Relatório</button>
+                    <button class="btn btn-success">{{ trans('admin.falta.visuRelatorio') }}</button>
                 </a>
 
 
@@ -173,7 +173,14 @@
         $(document).ready(function () {
             var table = $('#draw_table').DataTable({
                 language: {
-                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
+                    "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
+            "zeroRecords": "{{ trans('admin.pagesF.ndEncont') }}",
+            "info": "{{ trans('admin.pagesF.mostrandoPags') }}",
+            "infoEmpty": "{{ trans('admin.pagesF.nhmRegs') }}",
+            "infoFiltered": "{{ trans('admin.pagesF.filtrado') }}",
+            "search" : "{{ trans('admin.pagesF.search') }}",
+            "previous": "{{ trans('admin.pagesF.previous') }}",
+            "next": "{{ trans('admin.pagesF.next') }}"
                 },
                 processing: true,
                 serverSide: true,

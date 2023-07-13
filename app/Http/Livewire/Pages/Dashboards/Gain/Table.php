@@ -53,16 +53,9 @@ class Table extends Component
             $lastName = $searchTerms[1] ?? '';
 
             $usersQuery = User::query();
-            $clientsQuery = Client::query();
 
             if ($firstName) {
                 $usersQuery->where(function ($query) use ($firstName, $lastName) {
-                    $query->where('name', 'LIKE', "%{$firstName}%")
-                        ->orWhere('last_name', 'LIKE', "%{$firstName}%")
-                        ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$firstName}%"]);
-                });
-
-                $clientsQuery->where(function ($query) use ($firstName, $lastName) {
                     $query->where('name', 'LIKE', "%{$firstName}%")
                         ->orWhere('last_name', 'LIKE', "%{$firstName}%")
                         ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$firstName}%"]);
@@ -74,17 +67,11 @@ class Table extends Component
                     $query->where('last_name', 'LIKE', "%{$lastName}%")
                         ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$lastName}%"]);
                 });
-
-                $clientsQuery->where(function ($query) use ($lastName) {
-                    $query->where('last_name', 'LIKE', "%{$lastName}%")
-                        ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$lastName}%"]);
-                });
             }
 
             $userResults = $usersQuery->get()->toArray();
-            $clientResults = $clientsQuery->get()->toArray();
 
-            $results = array_merge($userResults, $clientResults);
+            $results = array_merge($userResults);
 
             $uniqueResults = collect($results)->unique(function ($result) {
                 return $result['name'] . $result['last_name'] . $result['email'];

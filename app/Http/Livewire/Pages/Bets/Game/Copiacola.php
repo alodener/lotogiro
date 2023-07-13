@@ -91,55 +91,18 @@ class Copiacola extends Component
     }
     
     public function updatedSearch($value)
-{
-    $this->search = $value;
+    {
+        
+            $this->clients = Client::where(function($query) {
+            $query->where("name", "like", "%{$this->search}%")
+            ->orWhere("last_name", "like", "%{$this->search}%");
+            })
 
-    $searchTerms = explode(' ', $this->search);
-    $firstName = $searchTerms[0] ?? '';
-    $lastName = $searchTerms[1] ?? '';
-
-    $clientsFromClients = Client::query();
-    $clientsFromUsers = User::query();
-
-    if (!empty($firstName)) {
-        $clientsFromClients->where(function ($query) use ($firstName) {
-            $query->where('name', 'like', $firstName . '%')
-                ->orWhere('last_name', 'like', $firstName . '%');
-        });
-
-        $clientsFromUsers->where(function ($query) use ($firstName) {
-            $query->where('name', 'like', $firstName . '%')
-                ->orWhere('last_name', 'like', $firstName . '%');
-        });
-    }
-
-    if (!empty($lastName)) {
-        $clientsFromClients->where(function ($query) use ($lastName) {
-            $query->where('name', 'like', $lastName . '%')
-                ->orWhere('last_name', 'like', $lastName . '%');
-        });
-
-        $clientsFromUsers->where(function ($query) use ($lastName) {
-            $query->where('name', 'like', $lastName . '%')
-                ->orWhere('last_name', 'like', $lastName . '%');
-        });
-    }
-
-    $clientsFromClients->select('id', 'name', 'last_name', 'email', 'ddd', 'phone');
-    $clientsFromUsers->select('id', 'name', 'last_name', 'email', \DB::raw('NULL as ddd'), \DB::raw('NULL as phone'));
-
-    $clients = $clientsFromClients->union($clientsFromUsers)
-        ->select('id', 'name', 'last_name', 'email', 'ddd', 'phone')
-        ->get();
-
-    $uniqueClients = $clients->unique(function ($client) {
-        return $client['name'] . $client['last_name'] . $client['email'];
-    });
-
-    $this->clients = $uniqueClients->values();
+        ->get(); //executar a consulta SQL que busca e mostra os nomes e sobrenomes dos clientes
 
     $this->showList = true;
-}
+
+        }
 
     public function clearUser()
     {

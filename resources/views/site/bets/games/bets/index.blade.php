@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <div class="card card-info">
                     <div class="card-header">
-                    <h3 class="card-title"> {{ trans('admin.sitePages.apost') }}</h3>
+                    <h3 class="card-title"> {{ trans('admin.sitePages.apost') }} </h3>
                          @if(!empty($bet) && $bet->status && $bet->botao_finalizar == 0)
                           <div class=" text-right">
                                  <form action="{{route('games.bet.update', ['user' => $bet->user->id, 'bet' => $bet])}}"
@@ -50,7 +50,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
                             @if(empty($bet))
                                 <div class="row mt-3 d-flex justify-content-center">
                                     <div class="col-md-6">
@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                             @else
-                                @if(isset($bet) && empty($bet->client_id))
+                               @if(isset($bet) && empty($bet->client_id))
                                     <div class="row">
                                         <div class="col-md-12">
                                             @livewire('site.pages.bets.games.bet.client', ['bet' => $bet, 'typeGames'
@@ -118,7 +118,7 @@
                                             <th scope="col">{{ trans('admin.sitePages.typeGame') }}</th>
                                                 <th scope="col">{{ trans('admin.sitePages.doz') }}</th>
                                                 <th scope="col">{{ trans('admin.sitePages.value') }} </th>
-                                                <th scope="col">{{ trans('admin.sitePages.premio') }}</th>
+                                                <th scope="col">{{ trans('admin.sitePages.premio') }} </th>
                                             </tr>
                                             </thead>
                                             <tbody>

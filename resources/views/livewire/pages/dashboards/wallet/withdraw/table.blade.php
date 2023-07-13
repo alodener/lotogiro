@@ -1,11 +1,11 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">CARTEIRA</h3>
+        <h3 class="text-center text-bold">{{ trans('admin.pagesF.carteira') }}</h3>
     </div>
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header indica-card">
-                <h3 class="card-title">Transferência de Saldo</h3>
+                <h3 class="card-title">{{ trans('admin.falta.transfSaldo') }}</h3>
             </div>
             <div class="card-body" style="margin-top: -35px !important;">
                 <div x-data="{data: @entangle('user')}">

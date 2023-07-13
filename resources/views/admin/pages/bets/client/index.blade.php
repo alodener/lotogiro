@@ -1,4 +1,4 @@
-<!--@can('read_user')
+@can('read_user')
 @extends('admin.layouts.master')
 
 @section('title', trans('admin.customers.page-title'))
@@ -20,13 +20,13 @@
                     </script>
                 @endpush
             @enderror
-            @can('create_client')
+          <!--  @can('create_client')
                 <div class="new-client">
                     <a href="{{route('admin.bets.clients.create')}}">
                         <button class="btn btn-info my-2">{{ trans('admin.customers.new-customer') }}</button>
                     </a> 
                 </div>
-            @endcan
+            @endcan -->
             <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-sm" id="client_table">
                     <thead>
@@ -109,4 +109,3 @@
 
 @endpush
 @endcan
-    -->

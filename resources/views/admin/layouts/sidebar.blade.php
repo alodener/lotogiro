@@ -115,7 +115,7 @@
                         </a>
                         <ul class="nav nav-treeview">
 
-                        <!--@can('read_client')
+                            @can('read_client')
                                 <li class="nav-item">
                                     <a href="{{route('admin.bets.clients.index')}}"
                                        class="nav-link @if(request()->is('admin/bets/clients*')) active @endif">
@@ -123,8 +123,8 @@
                                         <p>{{ trans('admin.menu.cliente') }}</p>
                                     </a>
                                 </li>
-                            @endcan-->
-
+                            @endcan
+                        
                             @can('read_client')
                                 <li class="nav-item">
                                  <a href="{{route('admin.bets.validate-games.index')}}"
@@ -180,7 +180,7 @@
                                                 class="nav-link @if (request()->is('admin/bets/bichao*')) active @endif"
                                             >
                                                 <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Bichão da Sorte</p>
+                                                <p>{{ trans('admin.tutoriais.bichaos') }}</p>
                                             </a>
                                         </li>
                                         @endif
@@ -295,7 +295,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            <!--
+                            
                             @if(\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.manualRecharge')}}"
@@ -304,7 +304,7 @@
                                         <p>{{ trans('admin.menu.extratoRecarga') }} </p>
                                     </a>
                                 </li>
-                            @endif-->
+                            @endif
                             @if (\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{ route('admin.dashboards.customer.balance') }}"
@@ -360,7 +360,7 @@
                             <a href="{{route('admin.dashboards.help.index')}}"
                                 class="nav-link @if(request()->is('/admin/dashboards/tutoriais')) active @endif">
                                 <i class="fas fa-book-open nav-icon"></i>
-                                <p>Tutoriais</p>
+                                <p> {{ trans('admin.menu.tutoriais') }} </p>
                             </a>
                         </li>
                     </li>
@@ -428,7 +428,7 @@
                                 <a href="{{ route('admin.settings.bichao.index') }}"
                                     class="nav-link @if (request()->is('admin/settings/bichao*')) active @endif">
                                     <i class="nav-icon fas fa-ticket-alt"></i>
-                                    <p>Bichão da sorte</p>
+                                    <p>{{ trans('admin.tutoriais.bichaos') }}</p>
                                 </a>
                             </li>
                             @endcan

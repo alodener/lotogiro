@@ -43,7 +43,7 @@
                                             {{ trans('admin.table-competition') }}
                                         </td>
                                         <td>
-                                            {{ trans('admin.numbers') }}
+                                        {{ trans('admin.falta.numeros') }}
                                         </td>
                                         <td>
                                             {{ trans('admin.table-withdraw-date') }}
