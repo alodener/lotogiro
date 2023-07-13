@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -130,9 +131,9 @@ class UserController extends Controller
         ]);
         $indicador = $request->indicador;
         if($indicador == null || $indicador == 0){
-            $indicador = 1;
+            $indicador = 1; 
         }
-
+        
         $auxRole;
         foreach ($request->roles as $role){
             $auxRole = $role;
@@ -290,7 +291,22 @@ class UserController extends Controller
         if($indicador == null || $indicador == 0){
             $indicador = 1;
         }
+       // verifica se o novo indicador é igual ao ID do usuário atual
+        if ($indicador == $user->id) {
+        return back()->withErrors(['error' => 'Você não pode indicar a si mesmo.']);
+}
 
+        // verifica se o novo indicador já foi indicado pelo usuário atual
+        $indicadorVerificated = User::find($indicador);
+        if ($indicadorVerificated && $indicadorVerificated->indicador == $user->id) {
+        return back()->withErrors(['error' => 'O usuário indicador já é indicado pelo usuário.']);
+}
+        // atualiza o campo indicador normalmente
+        $user->indicador = $indicador;
+        $user->save();
+
+
+        return redirect()->back()->with('success', 'O campo indicador foi atualizado com sucesso.');
         $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
         
         try
