@@ -9,6 +9,7 @@ use App\Models\TypeGameValue;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class Copiacola extends Component
@@ -93,16 +94,27 @@ class Copiacola extends Component
     public function updatedSearch($value)
     {
         
+        $userlogado = Auth::user(); 
+    
+        if (auth()->user()->hasRole('Administrador')) {
+            
             $this->clients = Client::where(function($query) {
-            $query->where("name", "like", "%{$this->search}%")
-            ->orWhere("last_name", "like", "%{$this->search}%");
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
             })
-
-        ->get(); //executar a consulta SQL que busca e mostra os nomes e sobrenomes dos clientes
-
-    $this->showList = true;
-
+            ->get();
+    
+        } else {
+            
+            $this->clients = User::where('indicador', $userlogado->id)
+                ->where(function($query) {
+                   $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+            })
+            ->get();
         }
+    
+        $this->showList = true;
+
+    }
 
     public function clearUser()
     {
