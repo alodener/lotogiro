@@ -56,8 +56,21 @@
                         class="form-control @error('last_name') is-invalid @enderror"
                         id="last_name"
                         name="last_name"
-                        maxlength="100"
+                        maxlength="100">
          </div>
+         <div class="form-group col-md-3">
+                <label for="pix">Pix</label>
+                <input wire:model="pix" type="text"
+                       class="form-control @error('pix') is-invalid @enderror" id="pix"
+                       name="pix"
+                       maxlength="50" value="{{old('pix', $client->pix ?? null)}}">
+                @error('pix')
+                <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                @enderror
+            </div>
+            </div>
          <div class="row">
              <div class="form-group col-md-12">
                  <button class="btn btn-success btn-block">

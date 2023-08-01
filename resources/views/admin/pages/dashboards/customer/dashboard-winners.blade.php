@@ -40,7 +40,7 @@
                         <label>{{ trans('admin.pagesF.dataFinal') }}</label>
                         <input type="date" class="form-control" name="final_date" id="final_date">
                     </div>
-                    <button type="submit" onclick="validate_date(event)" class="btn btn-primary">Filtrar</button>
+                    <button type="submit" onclick="validate_date(event)" class="btn btn-primary">{{ trans('admin.falta.filtrar') }}</button>
                 </form>
                 <p class="mt-3"><b>{{ trans('admin.pagesF.obs') }}</b></p>
             </div>

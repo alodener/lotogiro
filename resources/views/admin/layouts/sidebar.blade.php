@@ -147,7 +147,7 @@
                                     </a>
                                 </li>
                             @endcan
-                        
+                        @endif
 
                             @can('read_competition')
                                 <li class="nav-item">

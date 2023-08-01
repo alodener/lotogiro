@@ -115,7 +115,7 @@
 </div>
 </div>
 
-</div>
+
 
 <div class="col-md-15">
     @if(\App\Models\TypeGame::count() > 0)

@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\LogUsuario;
 
 class UserController extends Controller
 {
@@ -101,11 +102,12 @@ class UserController extends Controller
         if(!auth()->user()->hasPermissionTo('create_user')){
             abort(403);
         }
-
+        
         $roles = Role::orderBy('name')->get();
 
         return view('admin.pages.settings.user.create', compact('roles'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -130,9 +132,9 @@ class UserController extends Controller
         ]);
         $indicador = $request->indicador;
         if($indicador == null || $indicador == 0){
-            $indicador = 1;
+            $indicador = 1; 
         }
-
+        
         $auxRole;
         foreach ($request->roles as $role){
             $auxRole = $role;
@@ -168,9 +170,7 @@ class UserController extends Controller
             if (!empty($request->link)) {
                 $user->link = $request->link;
             }
-
-
-            
+           
 
                 $data = $request->only('pix', 'cpf');
                 $passardados = New Client;
@@ -204,15 +204,62 @@ class UserController extends Controller
 
             $user->save();
 
-        TransactBalance::create([
-            'user_id_sender' => auth()->id(),
-            'user_id' => $user->id,
-            'value' => (float) Money::toDatabase($request->balance),
-            'old_value' => (float) Money::toDatabase(0),
-            'value_a' => (float) Money::toDatabase(0),
-        ]);
+           // registrar a criação no banco de dados/tabela log
+           
+           //Converter o Array de Permissões em String para Salvar no Banco
+           $permissoes_string = implode(",", $request->roles);
 
 
+            $logUsuario = new LogUsuario();
+            $logUsuario->user_id_sender = auth()->id();
+            $logUsuario->nome_funcao = 'Criação';
+            $logUsuario->user_id = $user->id; //guardar o id do usuario que esta sendo modificado
+            $createdUser = [
+                'name' => $user->name,
+                'last_name' => $user->last_name,
+                'email' => $user->email,
+                'password' => $user->password,
+                'type_client' => $user->type_client,
+                'telefone' => $request->telefone,
+                'pix' => $user->pix,
+                'cpf' => $data['cpf'],
+                'indicador' => $user->indicador,
+                'balance' => $user->balance,
+                'balanceAtual' => $user->balanceAtual,
+                'commission' => $user->commission,
+                'Permissoes' => $permissoes_string,
+            ];
+            // informações do user criado 
+
+            // filtrar os campos preenchidos do array $createdUser
+            
+            foreach ($createdUser as $field => $value) { //unidade individual de armazenamento de informações que pode conter dados específicos
+                if ($value !== null && $value !== '') {
+                    $usuarioNovo[$field] = $value;
+                }
+                else if ($value == null && $value == '') {
+                    // se nao existir no campo um novo valor, remover o campo do array $createdUser
+                    unset($createdUser[$field]);
+                }
+            }
+            
+            $description = 'Usuário ' . auth()->id() . ' criou o usuário ' . $user->id . ' com os seguintes dados:' . PHP_EOL;
+            foreach ($createdUser as $field => $value) {
+                $description .= $field . ': ' . $value . PHP_EOL;
+            }
+            $logUsuario->description = $description;
+            $logUsuario->save();
+            
+            
+            TransactBalance::create([
+                'user_id_sender' => auth()->id(),
+                'user_id' => $user->id,
+                'value' => (float) Money::toDatabase($request->balance),
+                'old_value' => (float) Money::toDatabase(0),
+                'value_a' => (float) Money::toDatabase(0),
+            ]);
+            
+            $usuarioNovo = [];
             if (!empty($request->roles)) {
                 foreach ($request->roles as $role){
                     $userRoles[] = Role::whereId($role)->first();
@@ -285,14 +332,64 @@ class UserController extends Controller
             'password_confirmation' => 'sometimes|required_with:password|max:15',
             'commission' => 'integer|between:0,100',
         ]);
-    
+     
+        
+         // campos editaveis do formulario
+         //Converter o Array de Permissões em String para Salvar no Banco
+         $roles_request;
+         foreach ($request->roles as $role){
+            $roles_request = $role;
+        }
+
+         //$permissoes_string = implode(",", $request->roles);
+
+         $camposForms = [
+            'name' => $request->input('name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'telefone' => $request->input('telefone'),
+            'password' => $request->input('password'),
+            'type_client' => $request->input('type_client'),
+            'pix' => $request->input('pix'),
+            'cpf' => $request->input('cpf'),
+            'indicador' => $request->input('indicador'),
+            'balance' => $request->input('balance'),
+            'balanceAtual' => $request->input('balanceAtual'),
+            'commission' => $request->input('commission'),
+            'Permissoes' => $roles_request,
+            ];
+
+            if($request->input('balance')  <= 0){
+                unset($camposForms['balance']);      
+            }
+
+            if($request->password === null){
+                unset($camposForms['password']);
+            }
+            if($request->type_client === null){
+                unset($camposForms['type_client']);
+            }
+
         $indicador = $request->indicador;
         if($indicador == null || $indicador == 0){
             $indicador = 1;
         }
+       // verifica se o novo indicador é igual ao ID do usuário atual
+        if ($indicador == $user->id) {
+        return back()->withErrors(['error' => 'Você não pode indicar a si mesmo.']);
+}
+
+        // verifica se o novo indicador já foi indicado pelo usuário atual
+        $indicadorVerificated = User::find($indicador);
+        if ($indicadorVerificated && $indicadorVerificated->indicador == $user->id) {
+        return back()->withErrors(['error' => 'O usuário indicador já é indicado pelo usuário.']);
+}
+        // atualiza o campo indicador normalmente
+        $user->indicador = $indicador;
+        $user->save();
 
         $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
-        
+
         try
         {
             if(auth()->user()->hasPermissionTo('update_user')){
@@ -303,6 +400,7 @@ class UserController extends Controller
         foreach ($request->roles as $role){
             $auxRole = $role;
         }
+
             if($request->has('balance') && !is_null($request->balance)){
                 if($user->balance != $request->balance ){
                 $oldBalance = $user->balance;
@@ -351,7 +449,66 @@ class UserController extends Controller
                 
             }
 
+            // armazena os valores originais dos campos que serão rastreados
+            $userRoles = [];
+            foreach ($user->roles as $role){
+                $userRoles[] = $role->id;
+            }
+            $user_string_roles = implode(",", $userRoles);
+    
+            
+            $originalValues = [
+            'name' => $user->name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
+            'password' => $user->password,
+            'type_client' => $user->type_client,
+            'telefone' => $user->telefone,
+            'pix' => $user->pix,
+            'cpf' => $user->cpf,
+            'indicador' => $user->indicador,
+            'balance' => $user->balance,
+            'balanceAtual' => $user->balanceAtual,
+            'commission' => $user->commission,
+            'Permissoes' => $user_string_roles,
+            ];
 
+            // array para armazenar as alterações
+            $alteracoes = [];
+
+            // comparar os valores recebidos com os valores originais
+            foreach ($camposForms as $campo => $novoValor) {
+            $valorAntigo = $originalValues[$campo];
+            if ($novoValor !== $valorAntigo) {
+            // se o novo valor for diferente do valor original, armazene a alteração no array $alteracoes
+            $alteracoes[$campo] = [
+            'valorAntigo' => $valorAntigo,
+            'novoValor' => $novoValor,
+                    ];
+                }
+                else if($valorAntigo == null && $novoValor == null){
+                // se o novo valor for igual ao valor original, remover o campo do array $alteracoes
+                unset($alteracoes[$campo]);
+                }
+            }
+
+            // descrição das alterações feitas pelo usuário
+            $description = 'Usuário ' . auth()->id() . ' fez alterações em: ' . PHP_EOL; //caractere de quebra de linha adequado para o sistema operacional em que o código está sendo executado
+            foreach ($alteracoes as $campo => $dadosAlterados) {
+            $valorAntigo = $dadosAlterados['valorAntigo'];
+            $novoValor = $dadosAlterados['novoValor'];
+            $description .= " - $campo: valor antigo '$valorAntigo', novo valor '$novoValor'" . PHP_EOL;
+            }
+
+            // registrar a alteração de edição no banco de dados/tabela log
+            $logUsuario = new LogUsuario();
+            $logUsuario->user_id_sender = auth()->id();
+            $logUsuario->user_id = $user->id; //guardar o id do usuario que esta sendo modificado
+            $logUsuario->nome_funcao = 'Edição';
+            $logUsuario->description = $description;
+            $logUsuario->save();
+
+            // atualizar o $user com os novos valores
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
@@ -381,13 +538,15 @@ class UserController extends Controller
                 $user->bonus = $newBonus;
             }*/
             
-
             $user->indicador = $indicador;
 
             if (!empty($request->link)) {
                 $user->link = $request->link;
             }
+            // salvar no banco de dados
             $user->save();
+
+            
 
             if((float) $newBonus > 0){
                
@@ -459,6 +618,15 @@ class UserController extends Controller
         try {
             $user->delete();
 
+            // registrar a alteração de excluir no banco de dados/tabela log
+            $logUsuario = new LogUsuario();
+            $logUsuario->user_id_sender = auth()->id();
+            $logUsuario->user_id = $user->id; //guardar o id do usuario que esta sendo modificado
+            $logUsuario->nome_funcao = 'Exclusão';
+            $logUsuario->description = 'Usuário ' . auth()->id() . ' excluiu o usuário ' . $user->id; //colocar tudo que foi modificado
+            $logUsuario->save();
+
+
             return redirect()->route('admin.settings.users.index')->withErrors([
                 'success' => 'Usuário deletado com sucesso'
             ]);
@@ -470,6 +638,7 @@ class UserController extends Controller
             ]);
 
         }
+
     }
 
     public function Balance($userId)
