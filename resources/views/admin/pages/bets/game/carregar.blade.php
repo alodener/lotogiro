@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Novo Jogo')
+@section('title', trans('admin.games.create-page-title'))
 
 @section('content')
  <form action="{{route('admin.bets.games.store')}}" method="POST" id="form_game">

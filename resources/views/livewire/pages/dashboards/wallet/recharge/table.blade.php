@@ -1,11 +1,11 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">CARTEIRA</h3>
+        <h3 class="text-center text-bold">{{ trans('admin.pagesF.carteira') }}</h3>
     </div>
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header indica-card">
-                <h3 class="card-title">Adicionar Saldo</h3>
+                <h3 class="card-title">{{ trans('admin.pagesF.addSaldo') }}</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -18,11 +18,10 @@
                                             <li class="list-group-item">
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-7">
-                                                        <h6 class="my-0">Valor a ser adicionado</h6>
-                                                        <small class="text-muted">Valor mínimo de R$ 1,00
+                                                        <h6 class="my-0">{{ trans('admin.pagesF.valorAdd') }}</h6>
+                                                        <small class="text-muted">{{ trans('admin.pagesF.valorMin') }} R$ 1,00
 
-                                                            <small class="text-muted"><p>O valor inserido, será creditado
-                                                                em sua conta assim que formos notificados.</p></small>
+                                                            <small class="text-muted"><p>{{ trans('admin.pagesF.valorInserido') }}</p></small>
                                                         </small>
                                                     </div>
 
@@ -36,9 +35,21 @@
                                         </ul>
 
                                         <div class="input-group-append bt-recharge">
-                                            <button wire:click.prevent="callMP" type="submit"
-                                                    @if($valueAdd <= .99) disabled @endif
-                                                    class="btn btn-info btn-md btn-block">Continuar {{$valueAdd}}</button>
+                                             @if(config('services.activeGateway') == 'MP')
+                                                 <button wire:click.prevent="callMP" type="submit"
+                                                         @if($valueAdd <= 0.99) disabled @endif
+
+                                                        class="btn btn-info btn-md btn-block">{{ trans('admin.lwIndicated.cont') }} {{$valueAdd}}</button>
+                                             @elseif(config('services.activeGateway') == 'doBank')
+                                             <button wire:click.prevent="callDoBank" type="submit"
+                                                     @if($valueAdd <= 9.99) disabled @endif
+
+                                                    class="btn btn-info btn-md btn-block">{{ trans('admin.lwIndicated.cont') }}  {{$valueAdd}}</button>
+                                             @else
+                                                 <button wire:click.prevent="callZoop" type="submit"
+                                                     @if($valueAdd <= 9.99) disabled @endif
+                                                     class="btn btn-info btn-md btn-block"> {{ trans('admin.lwIndicated.cont') }} {{$valueAdd}}</button>
+                                             @endif
                                         </div>
                                     </div>
                                 </div>
@@ -69,8 +80,8 @@
             VMasker(document.getElementById("valueAdd")).maskMoney();
         }
 
-        function redirect(link){
-            window.open(link, "_blank");
+        function redirect(){
+           
             window.location.href = 'recharge-order';
         }
     </script>

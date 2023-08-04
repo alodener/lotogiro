@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Apostas</h3>
+                    <h3 class="card-title">{{ trans('admin.sitePages.apost') }}</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -42,7 +42,7 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">Cpf</th>
-                                            <th scope="col">Nome</th>
+                                            <th scope="col">{{ trans('admin.sitePages.name') }}</th>
                                             <th scope="col">Pix</th>
                                         </tr>
                                         </thead>
@@ -61,10 +61,10 @@
                                 @csrf
                                 <div class="form-row">
                                     <div class="col-md-12">
-                                        <label for="type_game">Tipo de Jogo</label>
+                                    <label for="type_game">{{ trans('admin.sitePages.typeGame') }}</label>
                                         <select class="custom-select @error('type_game') is-invalid @enderror"
                                                 id="type_game" name="type_game">
-                                            <option value="" selected>Selecione</option>
+                                                <option value="" selected>{{ trans('admin.sitePages.selec') }}</option>
                                             @forelse($typeGames as $typeGame)
                                                 <option value="{{$typeGame->id}}">{{$typeGame->name}}</option>
                                             @empty
@@ -80,7 +80,7 @@
                                 <div class="row my-3">
                                     <div class="col-md-12">
                                         <button class="btn btn-success btn-block">
-                                            Adicionar Novo Jogo
+                                        {{ trans('admin.sitePages.addGame') }}
                                         </button>
                                     </div>
                                 </div>
@@ -91,10 +91,10 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Tipo de Jogo</th>
-                                        <th scope="col">Dezenas</th>
-                                        <th scope="col">Valor</th>
-                                        <th scope="col">Prêmio</th>
+                                    <th scope="col">{{ trans('admin.sitePages.typeGame') }} </th>
+                                        <th scope="col">{{ trans('admin.sitePages.doz') }} </th>
+                                        <th scope="col">{{ trans('admin.sitePages.value') }}</th>
+                                        <th scope="col">{{ trans('admin.sitePages.premio') }} </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -111,7 +111,7 @@
                                         @php($totalPrize += $game->typeGameValue->prize)
                                     @empty
                                         <tr class="text-center">
-                                            <td colspan="4">Não existem jogos criados para essa aposta!</td>
+                                        <td colspan="4">{{ trans('admin.sitePages.naoExist') }}  </td>
                                         </tr>
                                     </tbody>
                                     @endforelse

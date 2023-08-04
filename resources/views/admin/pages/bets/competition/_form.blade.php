@@ -16,13 +16,13 @@
         @enderror
         <div class="card card-info">
             <div class="card-header indica-card">
-                <h3 class="card-title">Concurso</h3>
+                <h3 class="card-title">{{ trans('admin.competitions.form-title') }}</h3>
             </div>
             <div class="card-body">
                 <div class="form-row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="number">Número</label>
+                            <label for="number">{{ trans('admin.competitions.number-input-label') }}</label>
                             <input type="text" class="form-control @error('number') is-invalid @enderror"
                                    id="number" name="number"
                                    maxlength="50" value="{{ old('number', $competition->number ?? null) }}">
@@ -35,10 +35,10 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="type_game">Tipo de Jogo</label>
+                            <label for="type_game">{{ trans('admin.competitions.game-type-input-label') }}</label>
                             <select class="custom-select @error('type_game') is-invalid @enderror" id="type_game"
                                     name="type_game">
-                                <option value="">Selecione</option>
+                                <option value="">{{ trans('admin.select') }}</option>
                                 @if($typeGames->count() > 0)
                                     @foreach($typeGames as $typeGame)
                                         <option value="{{$typeGame->id}}" @if(old('type_game') == $typeGame->id || isset($competition) && $competition->type_game_id == $typeGame->id) selected @endif>{{$typeGame->name}}</option>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="sort_date">Data do Sorteio</label>
+                            <label for="sort_date">{{ trans('admin.competitions.draw-date-input-label') }}</label>
                             <input type="text" class="form-control @error('sort_date') is-invalid @enderror"
                                    id="sort_date" name="sort_date"
                                    autocomplete="off"
@@ -74,13 +74,13 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.bets.competitions.index')}}">
-            <button type="button" class="btn btn-block btn-outline-secondary">Voltar a tela principal</button>
+            <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.back-to-main-page') }}</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">
         <button type="submit"
                 class="btn btn-block btn-outline-success">@if(request()->is('admin/bets/competitions/create'))
-                Cadastrar Concurso  @else  Atualizar Concurso @endif </button>
+                {{ trans('admin.falta.cadastrar') }}  @else  {{ trans('admin.falta.atualizar') }} @endif </button>
     </div>
 </div>
 

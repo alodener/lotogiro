@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                Período
+                {{ trans('admin.period') }}
             </div>
         </div>
     </div>
@@ -11,10 +11,10 @@
             <div class="form-group">
                 <select wire:model="range" class="custom-select" id="range" name="range">
                     <option></option>
-                    <option value="1">Mensal</option>
-                    <option value="2">Semanal</option>
-                    <option value="3">Diário</option>
-                    <option value="4">Personalizado</option>
+                    <option value="1">{{ trans('admin.monthly') }}</option>
+                    <option value="2">{{ trans('admin.weekly') }}</option>
+                    <option value="3">{{ trans('admin.daily') }}</option>
+                    <option value="4">{{ trans('admin.custom') }}</option>
                 </select>
             </div>
         </div>
@@ -60,7 +60,7 @@
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3>{{$extracts->count()}}</h3>
-                    <p>Quantidade de Transações</p>
+                    <p>{{ trans('admin.transactions-quantity') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-balance-scale-left"></i>
@@ -72,7 +72,7 @@
             <div class="small-box @if($value < 0) bg-danger @else bg-success @endif">
                 <div class="inner">
                     <h3>R${{\App\Helper\Money::toReal($value)}}</h3>
-                    <p>Saldo</p>
+                    <p>{{ trans('admin.balance') }}</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-dollar-sign"></i>
@@ -91,7 +91,7 @@
             </select>
         </div>
         <div class="form-group offset-md-8 col-md-3">
-            <button wire:click="getReport" type="button" class="btn btn-info btn-block">Gerar Relatório</button>
+            <button wire:click="getReport" type="button" class="btn btn-info btn-block">{{ trans('admin.generate-report') }}</button>
         </div>
     </div>
     <div class="row">
@@ -100,13 +100,13 @@
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Tipo</th>
-                        <th>Valor</th>
-                        <th>Descrição</th>
-                        <th>Usuário</th>
-                        <th>Cliente</th>
-                        <th>Criação</th>
+                        <th>{{ trans('admin.extracts.table-id-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-type-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-value-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-description-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-user-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-customer-header') }}</th>
+                        <th>{{ trans('admin.extracts.table-creation-header') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -116,17 +116,17 @@
                                 {{ $extract->id }}
                             </td>
                             <td>
-                                @if($extract->type == 1)
-                                    <span class="text-success">Crédito</span>
-                                @elseif($extract->type == 2)
-                                    <span class="text-danger">Débito</span>
+                                @if($extract->type == 1 || $extract->type == 10)
+                                    <span class="text-success">{{ trans('admin.credit') }}</span>
+                                @elseif($extract->type == 2  || $extract->type == 11)
+                                    <span class="text-danger">{{ trans('admin.debit') }}</span>
                                 @endif
                             </td>
                             <td>
                                 R${{ \App\Helper\Money::toReal($extract->value) }}
                             </td>
                             <td>
-                                {{ $extract->description }} do tipo: {{$extract->typeGame->name ?? null}}
+                                {{ $extract->description }} do tipo: {{ $extract->type == 10 || $extract->type == 11 ? 'Bichão da Sorte-'.$extract->modalidadeGame->nome ?? null : $extract->typeGame->name ?? null}}
                             </td>
                             <td>
                                 {{ !empty($extract->user->name) ? $extract->user->name .' '. $extract->user->last_name: null }}
@@ -141,7 +141,7 @@
                     @empty
                         <tr>
                             <td class="text-center" colspan="9">
-                                Nenhum registro encontrado.
+                                {{ trans('admin.entries-not-found') }}
                             </td>
                         </tr>
                     @endforelse

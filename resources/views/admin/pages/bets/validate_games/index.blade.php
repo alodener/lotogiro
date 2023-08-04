@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Jogos')
+@section('title', trans('admin.validate-games.listing-page-title'))
 
 @section('content')
     <div class="row bg-white p-3">
@@ -20,16 +20,16 @@
             @endpush
             @enderror
             <h4 class="text-center mb-4 validate-msg">
-                Acesse as apostas em aberto para validar os jogos e valores
+                {{ trans('admin.validate-games.listing-message') }}
             </h4>
             <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-sm" id="bet_table">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Cliente</th>
-                        <th>Criação</th>
-                        <th style="width: 80px">Ações</th>
+                        <th>{{ trans('admin.validate-games.table-id-header') }}</th>
+                        <th>{{ trans('admin.validate-games.table-client-header') }}</th>
+                        <th>{{ trans('admin.validate-games.table-created-header') }}</th>
+                        <th style="width: 80px">{{ trans('admin.validate-games.table-actions-header') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,20 +43,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Deseja excluir está aposta?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">{{ trans('admin.validate-games.delete-modal-header') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Está ação não pode ser revertida
+                    {{ trans('admin.validate-games.delete-modal-body') }}
                 </div>
                 <div class="modal-footer">
                     <form id="destroy" action="" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Excluir</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.validate-games.exclude-game-cancel') }}</button>
+                        <button type="submit" class="btn btn-danger">{{ trans('admin.validate-games.exclude-game-confirm') }}</button>
                     </form>
                 </div>
             </div>
@@ -79,7 +79,14 @@
         $(document).ready(function () {
             var table = $('#bet_table').DataTable({
                 language: {
-                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
+                    "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
+            "zeroRecords": "{{ trans('admin.pagesF.ndEncont') }}",
+            "info": "{{ trans('admin.pagesF.mostrandoPags') }}",
+            "infoEmpty": "{{ trans('admin.pagesF.nhmRegs') }}",
+            "infoFiltered": "{{ trans('admin.pagesF.filtrado') }}",
+            "search" : "{{ trans('admin.pagesF.search') }}",
+            "previous": "{{ trans('admin.pagesF.previous') }}",
+            "next": "{{ trans('admin.pagesF.next') }}"
                 },
                 processing: true,
                 serverSide: true,

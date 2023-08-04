@@ -4,31 +4,30 @@
 
 @section('content')
 
-
   <div class="container-login100">
 
-         @if (session('success'))
-            <div class="alert alert-success" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
-        
         @if (session('SenhaRecuperada'))
             <div class="alert alert-success" role="alert">
                 {{ session('SenhaRecuperada') }}
             </div>
         @endif
-        
+
         @if (session('error'))
             <div class="alert alert-danger" role="alert">
                 {{ session('error') }}
             </div>
         @endif
         <div class="wrap-login100">
-            <div class="card-body login-card-body">
-                        <div class="login-logo mt-md-5">
 
-            <img src="{{ asset(env('logo')) }}" alt="" width="150" height="150">
+            <div class="card-body login-card-body">
+            @if (session('success'))
+            <div class="col-md-12 alert alert-success" style=" margin-right:0%;" role="alert">
+                {{ session('success') }}
+            </div>
+            @endif
+            <div class="login-logo mt-md-5">
+
+            <img src="{{ App\Helper\Configs::getConfigLogo() }}" alt="" width="150" height="150">
 
         </div>
                 <div class="col-md-12 px-4">
@@ -40,6 +39,11 @@
                         </button>
                     </div>
                     @enderror
+                    @if (session('erro'))
+                    <div class="col-md-12 alert alert-danger" style=" margin-right:0%;" role="alert">
+                        {{ session('erro') }}
+                    </div>
+                    @endif
                     @error('error')
                     <div class="alert alert-default-danger alert-dismissible fade show">
                         {{ $message }}
@@ -85,25 +89,25 @@
                                 <input type="checkbox" name="remember"
                                        id="remember" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="remember">
-                                    Manter conectado
+                                    {{ trans('admin.keep-connected') }}
                                 </label>
                             </div>
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="login100-form-btn">Acessar</button>
+                            <button type="submit" class="login100-form-btn">{{ trans('admin.pagesF.acessar') }}</button>
                         </div>
                     </div>
                 </form>
-                
-                <a href="{{ route('forget.password.get') }}">Esqueceu sua Senha?</a>
+
+                <a href="{{ route('forget.password.get') }}">{{ trans('admin.forgot-password-link') }}</a>
 
                 <div class="row">
                     <div class="col-sm-12">
                         <p class="mb-1 text-bold">
-                            Não é cadastrado?<br>
+                            {{ trans('admin.register-label') }}<br>
                             <a class="btn btn-block btn-info right"
                                href="{{ route('register') }}">
-                                Cadastre-se
+                                {{ trans('admin.register-button') }}
                             </a>
                         </p>
 
@@ -111,7 +115,7 @@
                            class="btn btn-block btn-success"
                            title="Precisa de ajuda?"
                            target="_blank">
-                            <i style="border:none;"class="fa fa-whatsapp"></i> Precisa de ajuda?
+                            <i style="border:none;"class="fa fa-whatsapp"></i> {{ trans('admin.pagesF.precisaAjuda') }}
                         </a>
                     </div>
                 </div>

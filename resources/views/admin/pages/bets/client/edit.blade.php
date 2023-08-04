@@ -1,6 +1,7 @@
+@can('read_user')
 @extends('admin.layouts.master')
 
-@section('title', 'Editar Usuário')
+@section('title', trans('admin.customers.edit-client'))
 
 @section('content')
 
@@ -25,3 +26,4 @@
     </script>
 
 @endpush
+@endcan

@@ -1,6 +1,6 @@
 <div>
     <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">PRÊMIOS</h3>
+        <h3 class="text-center text-bold">{{ trans('admin.draws.table-title') }}</h3>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -53,7 +53,7 @@
             <div class="alert alert-warning" role="alert">
                 <button class="btn" type="button" disabled>
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    Baixando Pagamentos
+                    {{ trans('admin.draws.export-payments-loader') }}
                 </button>
             </div>
         </div>
@@ -67,21 +67,21 @@
                 <option>100</option>
             </select>
         </div>
-        <div class="form-group offset-md-5 col-md-6 text-right">
-            <button wire:click="pay" type="button" class="btn btn-danger">Baixar Pagamento</button>
-        </div>
+        <!--<div class="form-group offset-md-5 col-md-6 text-right">
+            <button wire:click="pay" type="button" class="btn btn-danger">{{ trans('admin.draws.export-payments-button') }}</button>
+        </div>-->
     </div>
     <div class="card card-info">
         <div class="card-header indica-card">
-            <h3 class="card-title">Informações de Pagamento</h3>
+            <h3 class="card-title">{{ trans('admin.draws.payment-info-title') }}</h3>
         </div>
         <div class="card-body">
             <div class="row">
                     <div class="col-md-6">   
-                        <b>Quantidade:</b> {{$games->count()}}
+                        <b>{{ trans('admin.draws.game-count') }}:</b> {{$games->count()}}
                     </div>
                     <div class="col-md-6">
-                        <b>Total:</b> R${{\App\Helper\Money::toReal($value)}}
+                        <b>{{ trans('admin.total') }}:</b> R${{\App\Helper\Money::toReal($value)}}
                     </div>
             </div>
         </div>
@@ -92,15 +92,15 @@
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Tipo de Jogo</th>
-                        <th>Cpf Cliente</th>
-                        <th>Cliente</th>
-                        <th>Usuário</th>
-                        <th>Concurso</th>
-                        <th>Números</th>
-                        <th>Prêmio</th>
-                        <th>Criação</th>
+                        <th>{{ trans('admin.draws.table-id') }}</th>
+                        <th>{{ trans('admin.draws.table-game-type') }}</th>
+                        <th>{{ trans('admin.draws.table-game-customer-document') }}</th>
+                        <th>{{ trans('admin.draws.table-customer') }}</th>
+                        <th>{{ trans('admin.draws.table-user') }}</th>
+                        <th>{{ trans('admin.draws.table-competition') }}</th>
+                        <th>{{ trans('admin.draws.table-numbers') }}</th>
+                        <th>{{ trans('admin.draws.table-prize') }}</th>
+                        <th>{{ trans('admin.draws.table-created-at') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -137,7 +137,7 @@
                     @empty
                         <tr>
                             <td class="text-center" colspan="9">
-                                Nenhum registro encontrado.
+                                {{ trans('admin.entries-not-found') }}.
                             </td>
                         </tr>
                     @endforelse

@@ -1,7 +1,5 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Novo Valor')
-
 @section('content')
 
     <div class="col-md-12">
