@@ -22,6 +22,7 @@ use Illuminate\Http\Response;
 use App\Models\Cotacao;
 use App\Models\TypeGame;
 use App\Models\User;
+use App\Helper\BichaoResultadosCrawler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 use Carbon\Carbon;
@@ -312,6 +313,7 @@ class BichaoController extends Controller
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
+
         return view('admin.pages.bets.game.bichao.resultados');
     }
 
@@ -756,8 +758,7 @@ class BichaoController extends Controller
         $estado_uf = $data['estado'];
         $resultadosDto = [];
 
-        $url = "https://api.pontodobicho.com/results?date=$dia%2F$mes%2F$ano&state=$estado_uf";
-        $resultados = json_decode(file_get_contents($url));
+        $resultados = BichaoResultadosCrawler::getResults($estado_uf, $dia, $mes, $ano);
 
         if (!$resultados) return json_encode([]);
         usort($resultados, fn ($a, $b) => $a->time - $b->time);
@@ -804,6 +805,7 @@ class BichaoController extends Controller
             $mes = $searchData[1];
             $ano = $searchData[2];
 
+            $resultados = BichaoResultadosCrawler::getResults($estado_uf, $dia, $mes, $ano);
             $url = "https://api.pontodobicho.com/results?date=$dia%2F$mes%2F$ano&state=$estado_uf";
             $curl_handles[$estado->id] = curl_init();
             curl_setopt($curl_handles[$estado->id], CURLOPT_URL, $url);
@@ -829,11 +831,15 @@ class BichaoController extends Controller
     public function get_resultados(Request $request) {
         $estados = BichaoEstados::where('uf', '!=', 'FED')->get();
         $searchData = explode('-', date('d-m-Y'));
+        $dia = $searchData[0];
+        $mes = $searchData[1];
+        $ano = $searchData[2];
         $resultadosDto = [];
-        
-        $horariosApi = self::request_api_results($estados, $searchData);
-        foreach ($horariosApi as $estado_id => $horarioApi) {
-            $result = json_decode($horarioApi);
+
+        foreach ($estados as $estado) {
+            $estado_id = $estado->id;
+            $estado_uf = $estado->uf;
+            $result = BichaoResultadosCrawler::getResults($estado_uf, $dia, $mes, $ano);
 
             if ($result) {
                 $horarios = BichaoHorarios::where('estado_id', $estado_id)->get();
