@@ -165,12 +165,22 @@ class GameController extends Controller
                         'error' => 'Apostas Encerradas!'
                     ]);
                 }
-
+               $userclient = User::where('id', $request->client)->first();
+               if($userclient != null){
+                   
+                    $clientuser = Client::where('email', $userclient->email)->first();
+                }else{
+                    $clientuser = $request->client;
+                }
                 $chaveregistro = ChaveAleatoria::generateKey(8);
                 $user = Auth()->user()->id;
                 $bet = new Bet();
                 $bet->user_id = Auth()->user()->id;
-                $bet->client_id = $request->client;
+               if($userclient != null){
+                $bet->client_id = $clientuser->id;
+                }else{
+                    $bet->client_id = $request->client;
+                }
                 $bet->status_xml = 1;
                 $bet->key_reg = $chaveregistro;
                 $bet->save();
@@ -321,9 +331,18 @@ class GameController extends Controller
                         'error' => 'Esse sorteio já foi finalizado!'
                     ]);
                 }
-
+                $userclient = User::where('id', $request->client)->first();
+                if($userclient != null){
+                    $clientuser = Client::where('email', $userclient->email)->first();
+                }else{
+                    $clientuser = $request->client;
+                }
                 $game = new $this->game;
-                $game->client_id = $request->client;
+                if($userclient != null){
+                $game->client_id = $clientuser->id;
+                }else{
+                    $game->client_id = $request->client;
+                }
                 $game->user_id = auth()->id();
                 $game->type_game_id = $request->type_game;
                 $game->type_game_value_id = $request->valueId;
