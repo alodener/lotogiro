@@ -18,6 +18,10 @@ class BichaoResultadosCrawler {
                 'lottery' => 'PTV-RIO',
                 'time' => 16.2
             ],
+            '18:20' => [
+                'lottery' => 'PTN-RIO',
+                'time' => 18.2
+            ],
             '21:20' => [
                 'lottery' => 'CORUJA-RIO',
                 'time' => 21.2
@@ -148,14 +152,13 @@ class BichaoResultadosCrawler {
     ];
 
     private static function getParams($content, $state, $federal) {
-        if ($federal && $state === 'RJ') {
+        if ($federal) {
             return [
                 'state' => 'PO',
                 'lottery' => 'FEDERAL',
                 'time' => 19,
             ];
         }
-        if ($federal && $state !== 'RJ') return false;
 
         $response = [
             'state' => $state,
@@ -217,7 +220,7 @@ class BichaoResultadosCrawler {
         return $response;
     }
 
-    public static function parseResult($html, $state) {
+    public static function parseResult($html, $state, $get_federal = false) {
         $dom = new DOMDocument();
         @$dom->loadHTML($html);
         $resultado = [];
@@ -227,6 +230,8 @@ class BichaoResultadosCrawler {
             $content = explode(',', $node->textContent);
             $title = $node->textContent;
             $federal = str_contains($node->textContent, 'FEDERAL');
+            if (!$get_federal && $federal) continue;
+            if ($get_federal && !$federal) continue;
             $content = static::getParams($content, $state, $federal);
             if (!$content) continue;
 
@@ -258,6 +263,8 @@ class BichaoResultadosCrawler {
 
     public static function getResults($state, $d, $m, $y) {
         ini_set('user_agent', 'My-Application/2.5');
+        $get_federal = $state === 'PO';
+        if ($get_federal) $state = 'RJ';
         $html = @file_get_contents("https://www.resultadofacil.com.br/resultado-do-jogo-do-bicho/$state/do-dia/$y-$m-$d");
         if (!$html) return [];
         $dom = new DOMDocument();
@@ -281,7 +288,7 @@ class BichaoResultadosCrawler {
             foreach ($dom->getElementsByTagName('div') as $node) {
                 if ($node->getAttribute('class') === 'row collapse in') {
                     foreach ($node->childNodes as $child) {
-                        $result = static::parseResult($dom->saveHTML($child), $state);
+                        $result = static::parseResult($dom->saveHTML($child), $state, $get_federal);
                         if ($result === false) continue;
                         $result['date'] = "$d/$m/$y";
                         $content[] = $result;

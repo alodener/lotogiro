@@ -829,7 +829,7 @@ class BichaoController extends Controller
     }
 
     public function get_resultados(Request $request) {
-        $estados = BichaoEstados::where('uf', '!=', 'FED')->get();
+        $estados = BichaoEstados::get();
         $searchData = explode('-', date('d-m-Y'));
         $dia = $searchData[0];
         $mes = $searchData[1];
@@ -839,16 +839,13 @@ class BichaoController extends Controller
         foreach ($estados as $estado) {
             $estado_id = $estado->id;
             $estado_uf = $estado->uf;
+            if ($estado_uf === 'FED') $estado_uf = 'PO';
             $result = BichaoResultadosCrawler::getResults($estado_uf, $dia, $mes, $ano);
 
             if ($result) {
                 $horarios = BichaoHorarios::where('estado_id', $estado_id)->get();
                 
                 foreach ($result as $game) {
-                    if ($estado_id == 1 && $game->lottery == 'FEDERAL') {
-                        $estadoFed = BichaoEstados::where('uf', 'FED')->first();
-                        $horarios = BichaoHorarios::where('estado_id', $estadoFed->id)->get();
-                    }
                     $timeRaw = explode('.', $game->time);
                     $hora = str_pad($timeRaw[0], 2, '0', STR_PAD_LEFT);
                     $minuto = isset($timeRaw[1]) ? str_pad($timeRaw[1], 2, '0', STR_PAD_RIGHT) : '00';
