@@ -12,6 +12,7 @@
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-settings-estados" data-toggle="tab" href="#nav-estados" role="tab" aria-controls="nav-estados" aria-selected="true">{{ trans('admin.pagesF.estados') }}</a>
                 <a class="nav-item nav-link" id="nav-settings-cotacoes" data-toggle="tab" href="#nav-cotacoes" role="tab" aria-controls="nav-cotacoes" aria-selected="true">{{ trans('admin.pagesF.cotacoes') }}</a>
+                <a class="nav-item nav-link" id="nav-settings-premio_maximo" data-toggle="tab" href="#nav-premio_maximo" role="tab" aria-controls="nav-premio_maximo" aria-selected="true">{{ trans('admin.pagesF.premio_maximo') }}</a>
             </div>
         </nav>
         <div class="tab-content p-4" id="nav-tabContent">
@@ -74,6 +75,26 @@
                     @endforeach
                 </div>
             </div>
+            <div class="tab-pane fade show" id="nav-premio_maximo" role="tabpanel" aria-labelledby="nav-settings-premio_maximo">
+                <div class="row">
+                    @foreach($cotacoes as $cotacao)
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="name">{{ $cotacao->nome }}</label>
+                                <input
+                                    type="text" 
+                                    class="form-control settings-bichao-premio_maximo"
+                                    data-id="{{ $cotacao->id }}"
+                                    id="campo-premio-{{ $cotacao->id }}" 
+                                    name="campo-premio-{{ $cotacao->id }}" 
+                                    placeholder="{{ $cotacao->nome }}"
+                                    value="{{ $cotacao->premio_maximo ?? null }}"
+                                >
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -115,6 +136,7 @@
     $('#settings-atualizar-bichao').click(function() {
         const estados = [];
         const cotacoes = [];
+        const premio_maximo = [];
         
         $('input[name=settings-bichao-estado]').each(function() {
             estados.push({ id: $(this).val(), active: $(this).is(':checked') ? 1 : 0 });
@@ -124,11 +146,15 @@
             cotacoes.push({ id: $(this).attr('data-id'), value: $(this).val() });
         });
 
+        $('.settings-bichao-premio_maximo').each(function() {
+            premio_maximo.push({ id: $(this).attr('data-id'), value: $(this).val() });
+        });
+
         $.ajax({
             url: '{{url('/')}}/admin/bets/bichao/save/settings',
             type: 'POST',
             dataType: 'json',
-            data: { estados, cotacoes },
+            data: { estados, cotacoes, premio_maximo },
             success: function(data) {
                 alert('Configurações salvas com sucesso!');
             }
