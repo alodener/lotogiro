@@ -942,11 +942,12 @@
         </div>
         <div id="message-maximum-value" class="row hide">
             <div class="col">
-                @if ($premio_maximo > 0)
-                    <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoLCustom') }} R$ {{ number_format($premio_maximo, 2, ',', '.') }} {{ trans('admin.bichao.premiacaoRCustom') }}</b></span>
-                @else
-                    <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoSemLimite') }}</b></span>
-                @endif
+                <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoLCustom') }} R$ <span id="maximum-prize-value"></span> {{ trans('admin.bichao.premiacaoRCustom') }}</b></span>
+            </div>
+        </div>
+        <div id="message-no-prize" class="row hide">
+            <div class="col">
+                <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoSemLimite') }}</b></span>
             </div>
         </div>
         <div class="row" id="price_award_check">
@@ -1044,7 +1045,6 @@
 
         const award = parseInt('{{$modalidade->multiplicador}}');
         const award_2 = parseInt('{{$modalidade->multiplicador_2}}');
-        const premio_maximo = parseInt('{{$premio_maximo}}');
         const initial_value = 0;
         const button_first = $('#btn-award-first');
         const button_second = $('#btn-award-second');
@@ -1086,41 +1086,62 @@
             const limit_minimum_bet = 0.01;
             const message = $('#message-minimum-value');
             const award_total= parseInt('{{$modalidade->multiplicador}}');
-                
-            let limit_maximum_bet = premio_maximo / award;
-            let value = 0;
+            const game = animais_escolhidos.map((i) => String(i).padStart(2, '0')).join('-');
 
-            if (award_type == 2) limit_maximum_bet = premio_maximo / award_2;
+            if (animais_escolhidos.length < 3) return;
 
-            const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
+            $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
+            $.ajax({
+                url: '{{url('/')}}/admin/bets/bichao/premio-maximo-json',
+                type: 'POST',
+                dataType: 'json',
+                data: { modalidade_id: '{{$modalidade->id}}', game },
+                success: function(data) {
+                    message_maximum.addClass('hide');
+                    message_minimum.addClass('hide');
+                    $('#message-no-prize').addClass('hide');
 
-            $('#price_award_check').hide();
-            if(value_input_bet < limit_minimum_bet){
-                message_maximum.addClass('hide');
-                message_minimum.removeClass('hide');
-            } else if(!limit_maximum_bet > 0 || value_input_bet > limit_maximum_bet){
-                message_maximum.removeClass('hide');
-                message_minimum.addClass('hide');
-            } else{
-                $('#price_award_check').show();
-                message_maximum.addClass('hide');
-                message_minimum.addClass('hide');
+                    $('#price_award_check').hide();
+                    const { premio_maximo } = data;
+                    if (premio_maximo === 0) {
+                        $('#message-no-prize').removeClass('hide');
+                        return;
+                    }
 
-                if(award_type == 1) {
-                    value = award_total;
-                }else if(award_type == 2){
-                    value = parseInt('{{$modalidade->multiplicador_2}}');
+                    let limit_maximum_bet = premio_maximo / award;
+                    let value = 0;
+    
+                    if (award_type == 2) limit_maximum_bet = premio_maximo / award_2;
+    
+                    const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
+    
+                    $('#price_award_check').hide();
+                    if (value_input_bet < limit_minimum_bet) {
+                        message_minimum.removeClass('hide');
+                    } else if (!limit_maximum_bet > 0 || value_input_bet > limit_maximum_bet) {
+                        $('#maximum-prize-value').text(premio_maximo.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        message_maximum.removeClass('hide');
+                    } else {
+                        $('#price_award_check').show();
+    
+                        if(award_type == 1) {
+                            value = award_total;
+                        }else if(award_type == 2){
+                            value = parseInt('{{$modalidade->multiplicador_2}}');
+                        }
+
+                        const result = value * value_input_bet;
+                        
+                        if (result > 0 && animais_escolhidos.length === 3) {
+                            $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
+                        } else {
+                            $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
+                        }
+    
+                        label_award.text('R$' + result.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                    }
                 }
-
-                const result = value * value_input_bet;
-                
-                if (result > 0 && animais_escolhidos.length === 3) {
-                    $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
-                } else {
-                    $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
-                }
-                label_award.text('R$' + result.toLocaleString('pt-br', {minimumFractionDigits: 2}));
-            }
+            });
         }
 
         input_value_bet.keyup(function (){

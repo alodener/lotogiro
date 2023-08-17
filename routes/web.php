@@ -163,6 +163,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('remove/chart/{index}', [BichaoController::class, 'remove_chart'])->name('bichao.remove.chart');
                 Route::get('remove-all/chart', [BichaoController::class, 'remove_all_chart'])->name('bichao.remove_all.chart');
                 Route::post('horarios', [BichaoController::class, 'get_horarios'])->name('bichao.horarios');
+                Route::post('premio-maximo-json', [BichaoController::class, 'get_premio_maximo_json'])->name('bichao.premio_maximo');
                 Route::post('checkout', [BichaoController::class, 'checkout'])->name('bichao.checkout');
                 Route::post('get-results-json', [BichaoController::class, 'get_results_json'])->name('bichao.get_results_json');
                 Route::get('receipt/{id}/{tipo}', [BichaoController::class, 'getReceipt'])->name('receipt');
