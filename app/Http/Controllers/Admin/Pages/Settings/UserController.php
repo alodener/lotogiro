@@ -342,24 +342,45 @@ class UserController extends Controller
         }
 
          //$permissoes_string = implode(",", $request->roles);
-
+        
+        $dddInteiro = null;
+        $telefoneInteiro = null;
+    
+        if(!is_null($request->telefone)){
+            $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
+            $ddd = Str::of($telefoneCompleto)->substr(0, 2); 
+            $telefone = Str::of($telefoneCompleto)->substr(2);
+            $telefoneString = strval($telefone);
+            $telefoneInteiro = intval($telefoneString);
+            $dddString = strval($ddd);
+            $dddInteiro = intval($dddString);
+        }
+    
+         //novos valores 
          $camposForms = [
             'name' => $request->input('name'),
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
-            'telefone' => $request->input('telefone'),
+            'ddd' => $dddInteiro,
+            'telefone' => $telefoneInteiro,
             'password' => $request->input('password'),
             'type_client' => $request->input('type_client'),
             'pix' => $request->input('pix'),
             'cpf' => $request->input('cpf'),
-            'indicador' => $request->input('indicador'),
+            'indicador' => $request->input('indicador'), 
             'balance' => $request->input('balance'),
-            'balanceAtual' => $request->input('balanceAtual'),
+            'balanceAtual' => strval((float) Money::toDatabase($request->input('balanceAtual'))),
             'commission' => $request->input('commission'),
             'Permissoes' => $roles_request,
             ];
+            //dd($camposForms);
+        
 
             if($request->input('balance')  <= 0){
+                unset($camposForms['balance']);      
+            }
+
+            if($request->input('balance') === null){
                 unset($camposForms['balance']);      
             }
 
@@ -371,9 +392,11 @@ class UserController extends Controller
             }
 
         $indicador = $request->indicador;
+        $indicadorAntigo = strval($user->indicador); // Deixar aqui para LogUser //transformou em uma string 
         if($indicador == null || $indicador == 0){
             $indicador = 1;
         }
+        
        // verifica se o novo indicador é igual ao ID do usuário atual
         if ($indicador == $user->id) {
         return back()->withErrors(['error' => 'Você não pode indicar a si mesmo.']);
@@ -401,7 +424,7 @@ class UserController extends Controller
             $auxRole = $role;
         }
 
-            if($request->has('balance') && !is_null($request->balance)){
+            if($request->has('balance') && !is_null($request->balance) && $request->balance > 0){
                 if($user->balance != $request->balance ){
                 $oldBalance = $user->balance;
                 $oldBonus = $user->bonus;
@@ -412,11 +435,7 @@ class UserController extends Controller
                 //$newBalance = $user->balance +  $balanceRequest;
                 }
             }
-            if(!is_null($request->telefone)){
-                $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
-                $ddd = Str::of($telefoneCompleto)->substr(0, 2); 
-                $telefone = Str::of($telefoneCompleto)->substr(2);
-            }
+        
 
             $userClient = Client::where("email", $user->email)->first();
             if ($userClient) {
@@ -439,12 +458,16 @@ class UserController extends Controller
                 if (!is_null($telefone)) {
                     $userClient->ddd = $ddd;
                     $userClient->phone = $telefone;
+                } else{
+                    $userClient->ddd = null; //definir como nulo se nao houver telefone
+                    $userClient->phone = null;
                 }
 
                 if (!is_null($request->pix)) {
                     $userClient->pix = $request->pix;  
                 }
-                
+    
+        
                 $userClient->save();
                 
             }
@@ -455,23 +478,27 @@ class UserController extends Controller
                 $userRoles[] = $role->id;
             }
             $user_string_roles = implode(",", $userRoles);
-    
-            
+
+
+            //valor antigo
             $originalValues = [
             'name' => $user->name,
             'last_name' => $user->last_name,
             'email' => $user->email,
             'password' => $user->password,
             'type_client' => $user->type_client,
-            'telefone' => $user->telefone,
+            'ddd' => $user->ddd,
+            'telefone' => $user->phone,
             'pix' => $user->pix,
             'cpf' => $user->cpf,
-            'indicador' => $user->indicador,
+            'indicador' => $indicadorAntigo, 
             'balance' => $user->balance,
-            'balanceAtual' => $user->balanceAtual,
+            'balanceAtual' => $user->balance,
             'commission' => $user->commission,
             'Permissoes' => $user_string_roles,
             ];
+            //dd($originalValues);
+
 
             // array para armazenar as alterações
             $alteracoes = [];
@@ -479,6 +506,8 @@ class UserController extends Controller
             // comparar os valores recebidos com os valores originais
             foreach ($camposForms as $campo => $novoValor) {
             $valorAntigo = $originalValues[$campo];
+
+
             if ($novoValor !== $valorAntigo) {
             // se o novo valor for diferente do valor original, armazene a alteração no array $alteracoes
             $alteracoes[$campo] = [
@@ -507,7 +536,7 @@ class UserController extends Controller
             $logUsuario->nome_funcao = 'Edição';
             $logUsuario->description = $description;
             $logUsuario->save();
-
+  
             // atualizar o $user com os novos valores
             $user->name = $request->name;
             $user->last_name = $request->last_name;
@@ -515,6 +544,7 @@ class UserController extends Controller
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
+            $user->pix = $request->pix;
             if(!is_null($telefone)){
             $user->ddd = $ddd;
             $user->phone = $telefone;
@@ -532,6 +562,7 @@ class UserController extends Controller
                 $ajuste = 1;
                 $oldBalance = $user->balance;
                 $user->balance = (float) Money::toDatabase($request->balanceAtual);
+
             }
 
            /* if($newBonus > 0){
