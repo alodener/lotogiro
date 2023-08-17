@@ -116,9 +116,9 @@
                                 {{ $extract->id }}
                             </td>
                             <td>
-                                @if($extract->type == 1)
+                                @if($extract->type == 1 || $extract->type == 10)
                                     <span class="text-success">{{ trans('admin.credit') }}</span>
-                                @elseif($extract->type == 2)
+                                @elseif($extract->type == 2  || $extract->type == 11)
                                     <span class="text-danger">{{ trans('admin.debit') }}</span>
                                 @endif
                             </td>
@@ -126,7 +126,7 @@
                                 R${{ \App\Helper\Money::toReal($extract->value) }}
                             </td>
                             <td>
-                                {{ $extract->description }} do tipo: {{$extract->typeGame->name ?? null}}
+                                {{ $extract->description }} do tipo: {{ $extract->type == 10 || $extract->type == 11 ? 'Bichão da Sorte-'.$extract->modalidadeGame->nome ?? null : $extract->typeGame->name ?? null}}
                             </td>
                             <td>
                                 {{ !empty($extract->user->name) ? $extract->user->name .' '. $extract->user->last_name: null }}

@@ -7,7 +7,9 @@ use Livewire\Component;
 use App\Models\TypeGame;
 use App\Models\TypeGameValue;
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class Copiacola extends Component
@@ -15,6 +17,7 @@ class Copiacola extends Component
     public $dezena = [];
     public $typeGame;
     public $clients;
+    public $users;
     public $clientId;
     public $showList = false;
     public $search;
@@ -23,7 +26,8 @@ class Copiacola extends Component
     public $msg;
     public $controle;
     public $contadorJogos = 0;
-
+    public $auth;
+    
     public function mount($typeGame, $clients)
     {
         $this->dezena = [];
@@ -80,33 +84,49 @@ class Copiacola extends Component
     }
  
     }
-         public function setId($client)
+    public function setId($client)
     {
-            $this->clientId = $client["id"];
-            $this->search = $client["name"] . ' ' . $client["last_name"] . ' - ' . $client["cpf"]. ' ' . $client["email"]. ' - ' . $client["ddd"].' - ' . $client["phone"];
-            $this->showList = false;
-        
+        $this->clientId = $client["id"];
+        $this->search = $client["name"] . ' ' . $client["last_name"] . ' - ' . ($client["cpf"] ?? '') . ' ' . $client["email"] . ' - ' . $client["ddd"] . ' - ' . $client["phone"];
+        $this->showList = false;
     }
-        public function updatedSearch($value)
+    
+    public function updatedSearch($value)
     {
         
+        $userlogado = Auth::user(); 
+    
+        if (auth()->user()->hasRole('Administrador')) {
+            
             $this->clients = Client::where(function($query) {
-            $query->where("name", "like", "%{$this->search}%")
-            ->orWhere("last_name", "like", "%{$this->search}%");
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
             })
-
-        ->get(); //executar a consulta SQL que busca e mostra os nomes e sobrenomes dos clientes
-
-    $this->showList = true;
-
+            ->get();
+    
+        } else {
+            
+            $this->clients = User::where('indicador', $userlogado->id)
+                ->where(function($query) {
+                   $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+            })
+            ->get();
         }
     
+        $this->showList = true;
+
+    }
 
     public function clearUser()
     {
-            $this->reset(['search', 'clientId']);
-           
+        $user = Auth::user();
+
+        if ($user && $user->hasPermissionTo('read_all_gains')) {
+            $this->reset(['search']);
+            $this->updatedSearch('Admin');
+        }
     }
+
+
 
     public function render()
     {
