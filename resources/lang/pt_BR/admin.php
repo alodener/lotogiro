@@ -500,6 +500,9 @@ return [
                 'insiValor' => 'Insira o valor da aposta:',
                 'valorM' => 'Valor mí­nimo de',
                 'premiacaoL' => 'Premiação: Limite de R$ 20.000,00 excedido',
+                'premiacaoLCustom' => 'Premiação: Limite de',
+                'premiacaoRCustom' => 'excedido',
+                'premiacaoSemLimite' => 'No momento, atingimos o limite de prêmios pra essa modalidade. Tente novamente mais tarde, ou no próximo sorteio.',
                 'premiacao' => 'Premiação',
                 'addCarrinho' => 'Adicionar ao Carrinho',
         
@@ -789,6 +792,7 @@ return [
                 'contatoRealiz' => 'Contato Realizado',
                 'estados' => 'Estados',
                 'cotacoes' => 'Cotações',
+                'premio_maximo' => 'Prêmio Máximo',
 
                 'esqSenha' => 'Esqueceu sua senha? Aqui você pode recuperar facilmente',
                 'solicitNv' => 'Solicitar nova senha',

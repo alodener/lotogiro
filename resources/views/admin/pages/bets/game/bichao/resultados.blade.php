@@ -53,6 +53,7 @@
                                 <option value="PB">Paraíba</option>
                                 <option value="DF">Brasília</option>
                                 <option value="CE">Ceará</option>
+                                <option value="PO">Federal</option>
                             </select>
                         </div>
                     </div>

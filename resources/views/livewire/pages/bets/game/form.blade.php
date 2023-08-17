@@ -26,7 +26,7 @@
 
     <input type="text" value="{{ $FiltroUser['name'] }}" disabled class="form-control">
     <input type="hidden" name="client" value="{{ $FiltroUser['id'] }}" readonly>
-
+    <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
     @endif
 
 

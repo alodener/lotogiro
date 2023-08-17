@@ -114,7 +114,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-
+                           @if(auth()->user()->hasRole('Administrador'))
                             @can('read_client')
                                 <li class="nav-item">
                                     <a href="{{route('admin.bets.clients.index')}}"
@@ -124,6 +124,19 @@
                                     </a>
                                 </li>
                             @endcan
+                            @endif
+                            @unless(auth()->user()->hasRole('Administrador'))
+                            @can('read_client')
+                                <li class="nav-item">
+                                    <a href="{{route('admin.bets.consultor')}}"
+                                       class="nav-link @if(request()->is('admin/bets/clients*')) active @endif">
+                                        <i class="fas fa-users nav-icon"></i>
+                                        <p>{{ trans('admin.menu.cliente') }}</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @endunless
+                        
                         
                             @can('read_client')
                                 <li class="nav-item">
@@ -134,6 +147,8 @@
                                     </a>
                                 </li>
                             @endcan
+                        @endif
+
                             @can('read_competition')
                                 <li class="nav-item">
                                     <a href="{{route('admin.bets.competitions.index')}}"
