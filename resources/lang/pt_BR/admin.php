@@ -503,6 +503,7 @@ return [
                 'premiacaoLCustom' => 'Premiação: Limite de',
                 'premiacaoRCustom' => 'excedido',
                 'premiacaoSemLimite' => 'No momento, atingimos o limite de prêmios pra essa modalidade. Tente novamente mais tarde, ou no próximo sorteio.',
+                'premiacaoSemLimiteMilharCentena' => 'No momento, atingimos o limite de prêmios pra essa modalidade. Tente novamente mais tarde, ou no próximo sorteio. Você pode tentar jogar a milhar ou centena separadamente.',
                 'premiacao' => 'Premiação',
                 'addCarrinho' => 'Adicionar ao Carrinho',
         
