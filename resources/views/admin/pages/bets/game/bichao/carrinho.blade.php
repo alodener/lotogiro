@@ -86,8 +86,9 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">{{ trans('admin.falta.valor') }}</th>
+                            <th scope="col">{{ trans('admin.falta.jogo') }}</th>
                             <th scope="col">{{ trans('admin.falta.modalidade') }}</th>
-                            <th scope="col">{{ trans('admin.falta.bilhete') }}</th>
+                            <th scope="col" style="min-width: 160px">{{ trans('admin.falta.bilhete') }}</th>
                         </tr>
                     </thead>
                     <tbody id="jogos-realizados-table">

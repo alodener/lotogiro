@@ -955,6 +955,7 @@ return [
                 'cadastJogos' => 'Cadastrar Jogos',
                 'jogosCadast' => 'Jogos cadastrados com sucesso',
                 'valor' => 'Valor',
+                'jogo' => 'Jogo',
                 'modalidade' => 'Modalidade',
                 'bilhete' => 'Bilhete',
                 'fechar' => 'Fechar',
