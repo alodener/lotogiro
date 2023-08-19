@@ -539,6 +539,7 @@ class BichaoController extends Controller
         if (!$balance) return json_encode(['status' => false, 'message' => 'Saldo insuficiente.']);
 
         foreach ($checkout as $index => $checkoutDto) {
+            $checkout[$index]['status'] = true;
             $apostas = [];
             $premios = [];
             
@@ -562,6 +563,14 @@ class BichaoController extends Controller
             if ($checkout[$index]['modalidade_id'] == 7) {
                 $premioMaximo = sizeof($premios) == 3 ? $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador : $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador_2;
             }
+
+            $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
+            $premio_maximo_db = self::get_premio_maximo($checkout[$index]['modalidade_id'], str_pad(join('-', $apostas), 2, 0, STR_PAD_LEFT));
+            if ($premio_maximo_db < $premioMaximo) {
+                $checkout[$index]['status'] = false;
+                $checkout[$index]['error'] = 'No momento, atingimos o limite de prêmios pra essa modalidade. Tente novamente mais tarde, ou no próximo sorteio.';
+                continue;
+            }
             
             $checkout[$index]['id'] = BichaoGames::insertGetId($checkoutDto);
             $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
@@ -572,6 +581,7 @@ class BichaoController extends Controller
         }
 
         foreach ($checkout as $checkoutItem) {
+            if ($checkoutItem['status'] == false) continue;
 
             $transact_balance = new TransactBalance;
             $transact_balance->user_id_sender = auth()->id();
