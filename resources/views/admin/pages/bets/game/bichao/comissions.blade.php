@@ -6,7 +6,7 @@
     <div class="col bg-white p-3">
         <hr />
         <div class="row">
-            <h1>Comissões</h1>
+            <h1>{{ trans('admin.bichao.comissions') }}</h1>
         </div>
         <hr />
         <div class="row">
@@ -22,9 +22,9 @@
                     </div>
                     <div class="col-md-2 col-6">
                         <select class="change-busca form-control" name="busca-intervalo" data-busca-param="intervalo">
-                            <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >30 dias</option>
-                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >60 dias</option>
-                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >90 dias</option>
+                            <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >{{ trans('admin.bichao.30days') }}</option>
+                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >{{ trans('admin.bichao.60days') }}</option>
+                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >{{ trans('admin.bichao.90days') }}</option>
                         </select>
                     </div>
                 </div>
@@ -35,15 +35,15 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th scope="col" style="max-width: 150px">ID</th>
-                            <th scope="col">Usuário</th>
-                            <th scope="col" style="max-width: 250px">Loteria</th>
-                            <th scope="col" style="max-width: 180px">Modalidade</th>
-                            <th scope="col">Valor</th>
-                            <th scope="col">%</th>
-                            <th scope="col">Comissão do <br />Indicador</th>
-                            <th scope="col" style="max-width: 50px">Pago</th>
-                            <th scope="col" style="max-width: 180px">Criado em</th>
+                        <th scope="col" style="max-width: 150px">ID</th>
+                            <th scope="col">{{ trans('admin.bichao.user') }}</th>
+                            <th scope="col" style="max-width: 250px">{{ trans('admin.bichao.loteria') }}</th>
+                            <th scope="col" style="max-width: 180px">{{ trans('admin.bichao.modalidade') }}</th>
+                            <th scope="col">{{trans('admin.bichao.value') }}</th>
+                             <th scope="col">%</th>
+                            <th scope="col">{{trans('admin.bichao.comissionDo') }} <br />{{trans('admin.bichao.indicador') }}</th>
+                            <th scope="col" style="max-width: 50px">{{trans('admin.bichao.pago') }}</th>
+                            <th scope="col" style="max-width: 180px">{{trans('admin.bichao.criadoem') }}</th>
                             <!-- <th scope="col" style="max-width: 50px">Ações</th> -->
                         </tr>
                     </thead>

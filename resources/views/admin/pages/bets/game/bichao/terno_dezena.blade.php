@@ -6,17 +6,21 @@
     <div class="col bg-white p-3">
         <div class="row">
             <div class="col-md-8 col-12 d-flex justify-content-end container-menu-items">
-                <a href="{{ route('admin.bets.bichao.index')}}">
-                    <button class="btn btn-info my-2 ml-1">Apostar</button>
+            <a href="{{ route('admin.bets.bichao.index')}}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.apostar') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.resultados') }}">
-                    <button class="btn btn-info my-2 ml-1">Resultados</button>
+            <a href="{{ route('admin.bets.bichao.resultados') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.resultados') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
-                    <button class="btn btn-info my-2 ml-1">Minhas apostas</button>
+            <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.minhasaposts') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.cotacao')}}">
-                    <button class="btn btn-info my-2 ml-1">Cotação</button>
+            <a href="{{ route('admin.bets.bichao.cotacao')}}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.cotacao') }}</button>
                 </a>
             </div>
         </div>
@@ -26,31 +30,34 @@
                 <div class="row">
                     <div class="col">
                         <h1>Bichão da Sorte</h1>
-                        <p>Aposte agora mesmo no Bichão da Sorte!</p>
-                        <hr/>
-                        <p><u>Entenda como funciona a premiação:</u></p>
-                        <p>
-                            1° prêmio equivale ao valor cheio,
-                            ou seja - se o fator multiplicador
-                            de sua aposta for 5000x e valor de
-                            sua aposta for de R$ 1,00 logo seu
-                            prêmio será de R$ 5.000,00.
-                        </p>
-                        <p>
-                            Do 2° prêmio em diante o valor é
-                            dividido proporcionalmente.
-                        </p>
-                        <p>
-                            1° e 2° prêmio: fator multiplicador/2
-                        </p>
-                        <p>
-                            1°,2° e 3° prêmio: fator multiplicador/3
-                        </p>
-                            1°,2°,3° e 4° prêmio: fator multiplicador/4
-                        </p>
-                            1° ao 5° prêmio: fator multiplicador/5
-                        </p>
-                        <p>Veja mais detalhes na aba <b>"cotação."</b></p>
+                        <p>{{ trans('admin.bichao.aposte') }}</p>
+                         <hr/>
+
+                        <p><u>{{ trans('admin.bichao.comofunciona') }}</u></p>
+                         <p>
+
+                        {{ trans('admin.bichao.primerpremio') }}
+                         </p>
+                         <p>
+
+                        {{ trans('admin.bichao.segunpremio') }}
+                         </p>
+                         <p>
+
+                        {{ trans('admin.bichao.fatormult2') }}
+                         </p>
+                         <p>
+
+                        {{ trans('admin.bichao.fatormult3') }}
+                         </p>
+
+                        {{ trans('admin.bichao.fatormult4') }}
+                         </p>
+
+                        {{ trans('admin.bichao.fatormult5') }}
+                         </p>
+
+                        <p>{{ trans('admin.bichao.details') }}<b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
                     </div>
                 </div>
             </div>
@@ -59,20 +66,21 @@
         <hr />
         <div class="row">
             <div class="col">
-                <p>Escolha a modalidade:</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col button-group overflow-auto">
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.index')}}"><b>Milhar</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.centena')}}"><b>Centena</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.dezena') }}"><b>Dezena</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" id="btn-group" href="{{ route('admin.bets.bichao.group') }}"><b>Grupo</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.milhar.centena') }}"><b>Milhar/Centena</b></a>
-                <a type="button" class="btn btn-primary mb-1" href="#"><b>Terno de Dezena</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.grupo')}}"><b>Terno de Grupo</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.dezena')}}"><b>Duque de Dezena</b></a>
-                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.grupo')}}"><b>Duque de Grupo</b></a>
+            <p>{{ trans('admin.bichao.escolha') }}</p>
+             </div>
+         </div>
+         <div class="row">
+             <div class="col button-group overflow-auto">
+
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.index')}}"><b>{{ trans('admin.bichao.milhar') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.centena')}}"><b>{{ trans('admin.bichao.centena') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.dezena') }}"><b>{{ trans('admin.bichao.dezena') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" id="btn-group" href="{{ route('admin.bets.bichao.group') }}"><b>{{ trans('admin.bichao.grupo') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.milhar.centena') }}"><b>{{ trans('admin.bichao.milhcent') }}</b></a>
+                <a type="button" class="btn btn-primary mb-1" href="#"><b>{{ trans('admin.bichao.terndez') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.terno.grupo')}}"><b>{{ trans('admin.bichao.terngrup') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.dezena')}}"><b>{{ trans('admin.bichao.duqdez') }}</b></a>
+                <a type="button" class="btn btn-outline-primary mb-1" href="{{ route('admin.bets.bichao.duque.grupo')}}"><b>{{ trans('admin.bichao.duqgrup') }}</b></a>
             </div>
         </div>
         <hr/>
@@ -80,7 +88,7 @@
             <div class="form-group col-md-12">
                 <div wire:ignore>
                     <div class="card-header ganhos-card">
-                        <h4>Cliente</h4>
+                    <h4>{{ trans('admin.bichao.client') }}</h4>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
@@ -107,7 +115,7 @@
             <hr />
             <div class="row align-items-center">
                 <div class="col-md-1 col-6">
-                    <p>Insira seu jogo:</p>
+                <p>{{ trans('admin.bichao.insiraJ') }}</p>
                 </div>
                 <div class="col-6">
                     <div class="input-group mb-3">
@@ -123,7 +131,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <p>Selecione os prêmios</p>
+            <p>{{ trans('admin.bichao.selecPremios') }}</p>
             </div>
         </div>
         <div class="row">
@@ -133,13 +141,13 @@
         </div>
         <div class="row mt-4">
             <div class="col">
-                <span id="message-award-value" class="text-danger d-none"><b>Favor selecionar ao menos um prêmio</b></span>
+            <span id="message-award-value" class="text-danger d-none"><b>{{ trans('admin.bichao.favSelec') }}</b></span>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col">
-                <p>Insira o valor da aposta:</p>
+            <p>{{ trans('admin.bichao.insValor') }}</p>
             </div>
         </div>
         <div class="row">
@@ -154,14 +162,17 @@
             </div>
         </div>
         <div id="message-minimum-value" class="col-12 hide">
-            <span class="text-danger"><b>Valor mínimo de 0,01</b></span>
+            <span class="text-danger"><b>{{ trans('admin.bichao.valorM') }} 0,01</b></span>
         </div>
         <div id="message-maximum-value" class="col-12 hide">
-            <span class="text-danger"><b>Premiação: Limite de R$ 20.000,00 excedido</b></span>
+            <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoLCustom') }} R$ <span id="maximum-prize-value"></span> {{ trans('admin.bichao.premiacaoRCustom') }}</b></span>
+        </div>
+        <div id="message-no-prize" class="col-12 hide">
+            <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoSemLimite') }}</b></span>
         </div>
         <div class="row" id="price_award_check">
             <div class="col">
-                <p>Premiação
+                <p>{{ trans('admin.bichao.premiacao') }}
                     <span id="price_award" class="text-success">R$0,00</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="0.9em" height="0.9em" fill="currentColor"
                         class="bi bi-question-circle-fill" viewBox="0 0 16 16">
@@ -175,7 +186,7 @@
         <hr />
         <div class="row">
             <div class="col mb-2">
-                <a><button id="btn-add-to-chart" class="btn btn-success disabled" disabled><b>Adicionar ao Carrinho</b></button></a>
+                <a><button id="btn-add-to-chart" class="btn btn-success disabled" disabled><b>{{ trans('admin.bichao.addCarrinho') }}</b></button></a>
             </div>
         </div>
     </div>
@@ -288,53 +299,77 @@
         function calculate_awards() {
             const input_value_bet = $('#input_value_bet');
             const label_award = $('#price_award');
-            const limit_maximum_bet = 20000 / award;
             const limit_minimum_bet = 0.01;
             const message = $('#message-minimum-value');
             const award_total=parseInt('{{$modalidade->multiplicador}}');
-            let value = 0;
+            if (!validateGame()) return;
+            
+            const game = $('#input-milhar').val().replaceAll(' ', '');
+            $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
+            $.ajax({
+                url: '{{url('/')}}/admin/bets/bichao/premio-maximo-json',
+                type: 'POST',
+                dataType: 'json',
+                data: { modalidade_id: '{{$modalidade->id}}', game },
+                success: function(data) {
+                    message_maximum.addClass('hide');
+                    message_minimum.addClass('hide');
+                    $('#message-no-prize').addClass('hide');
 
-            const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
+                    $('#price_award_check').hide();
+                    const { premio_maximo } = data;
+                    if (premio_maximo === 0) {
+                        $('#message-no-prize').removeClass('hide');
+                        return;
+                    }
 
-            $('#price_award_check').hide();
-            if (value_input_bet < limit_minimum_bet) {
-                message_maximum.addClass('hide');
-                message_minimum.removeClass('hide');
-            } else if (value_input_bet > limit_maximum_bet) {
-                message_maximum.removeClass('hide');
-                message_minimum.addClass('hide');
-            } else {
-                $('#price_award_check').show();
-                message_maximum.addClass('hide');
-                message_minimum.addClass('hide');
+                    let limit_maximum_bet = premio_maximo / award;
+                    let value = 0;
 
-                const option_award = validate_award();
+                    const option_award = validate_award();
+    
+                    if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
+    
+                    const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
+    
+                    $('#price_award_check').hide();
+                    if (value_input_bet < limit_minimum_bet) {
+                        message_minimum.removeClass('hide');
+                    } else if (!limit_maximum_bet > 0 || value_input_bet > limit_maximum_bet) {
+                        $('#maximum-prize-value').text(premio_maximo.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        message_maximum.removeClass('hide');
+                    } else {
+                        $('#price_award_check').show();
 
-                if(option_award == 1){
-                    value = award_total;
-                }else if(option_award == 2){
-                    value = (award_total/2);
-                }else if(option_award == 3){
-                    value = (award_total/3);
-                }else if(option_award == 4){
-                    value = (award_total/4);
-                }else if(option_award == 5){
-                    value = (award_total/5);
-                }else if(option_award == 6){
-                    value = (award_total/5);
+                        const option_award = validate_award();
+    
+                        if (option_award == 1) {
+                            value = award_total;
+                        } else if (option_award == 2) {
+                            value = (award_total / 2);
+                        } else if (option_award == 3) {
+                            value = (award_total / 3);
+                        } else if (option_award == 4) {
+                            value = (award_total / 4);
+                        } else if (option_award == 5) {
+                            value = (award_total / 5);
+                        } else if (option_award == 6) {
+                            value = (award_total / 5);
+                        }
+    
+                        const result = value * value_input_bet;
+    
+                        if ($('#input-milhar').val() != '' && !validateGame()) return alert('O jogo precisa ser um terno de dezena');
+                        if (result > 0) {
+                            $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
+                        } else {
+                            $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
+                        }
+    
+                        label_award.text('R$' + result.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                    }
                 }
-
-                const result = value * value_input_bet;
-
-                if ($('#input-milhar').val() != '' && !validateGame()) return alert('O jogo precisa ser um terno de dezena');
-                if (result > 0) {
-                    $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
-                } else {
-                    $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
-                }
-
-                label_award.text('R$' + result.toLocaleString('pt-br', {minimumFractionDigits: 2}));
-            }
+            });
         }
 
         input_value_bet.keyup(function (){

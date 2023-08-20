@@ -24,8 +24,8 @@
                 <table class="table table-striped table-hover table-sm" id="competition_table">
                     <thead>
                     <tr>
-                        <th>Dezena</th>
-                        <th>Quantidade</th>
+                        <th>{{ trans('admin.pagesF.dezena') }}</th>
+                        <th>{{ trans('admin.pagesF.qtd') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,7 +56,14 @@
         $(document).ready(function () {
             var table = $('#competition_table').DataTable({
                 language: {
-                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
+                    "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
+            "zeroRecords": "{{ trans('admin.pagesF.ndEncont') }}",
+            "info": "{{ trans('admin.pagesF.mostrandoPags') }}",
+            "infoEmpty": "{{ trans('admin.pagesF.nhmRegs') }}",
+            "infoFiltered": "{{ trans('admin.pagesF.filtrado') }}",
+            "search" : "{{ trans('admin.pagesF.search') }}",
+            "previous": "{{ trans('admin.pagesF.previous') }}",
+            "next": "{{ trans('admin.pagesF.next') }}"
                 },
                 columns: [
                     {data: 'dozen', name: 'dozen'},
