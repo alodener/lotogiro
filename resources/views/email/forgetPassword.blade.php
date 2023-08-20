@@ -3,15 +3,15 @@
     <img src="https://superjogo.loteriabr.com/{{env('logo')}}" alt="" width=150 height=150>
 
 
-    <h1>Reset de Senha</h1>
+    <h1>{{ trans('admin.pagesF.resetSenha') }}</h1>
 </center>
 
 <pre>
-    Olá, você solicitou o reset de senha, segue o link abaixo para realizar o procedimento:
+        {{ trans('admin.pagesF.ola') }}
     
-    <a href="{{ route('reset.password.get', $token) }}">Recuperar Senha</a>
+    <a href="{{ route('reset.password.get', $token) }}">{{ trans('admin.pagesF.recSenha') }}</a>
 
-    Atenciosamente,
+    {{ trans('admin.pagesF.atenc') }}
 
     {{ env("nome_sistema") }}</pre>
 

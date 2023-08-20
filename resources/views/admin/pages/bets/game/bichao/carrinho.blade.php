@@ -1,7 +1,7 @@
 <div style="background-color:#E9ECEF;" class="col-md-4 col-12 h-auto">
     <div class="row align-items-center mt-4">
         <div class="col">
-            <h4 class="text-center">Lista de Jogos</h4>
+            <h4 class="text-center">{{ trans('admin.falta.listaJogos') }}</h4>
         </div>
     </div>
     <div class="row">
@@ -13,17 +13,17 @@
                     </div>
                     <div class="chart-item-description">
                         <p><b>{{$chart['modality']}}:</b> {{$chart['game']}}</p>
-                        <p><b>Prêmio:</b> {{join('°, ', $chart['award_type'])}}°</p>
-                        <p><b>Valor:</b> R${{number_format($chart['value'], 2, ',', '.')}}</p>
+                        <p><b>{{ trans('admin.falta.premio') }}:</b> {{join('°, ', $chart['award_type'])}}°</p>
+                        <p><b>{{ trans('admin.falta.valor') }}:</b> R${{number_format($chart['value'], 2, ',', '.')}}</p>
                     </div>
                     <div class="chart-item-button"><a class="chart-remove-item" href="#" url="{{url('/')}}/admin/bets/bichao/remove/chart/{{$key}}">X</a></div>
                 </div>
             @endforeach
             @if (sizeof($chart) == 0)
-                <p class="text-center">Seu carrinho está vazio, faça um jogo para realizar uma aposta.</p>
+                <p class="text-center">{{ trans('admin.falta.carrinhoVazio') }}</p>
             @else
                 <div class="clear-chart-container">
-                    <button class="btn btn-danger" id="clear-all-chart" type="button">Limpar carrinho</button>
+                    <button class="btn btn-danger" id="clear-all-chart" type="button">{{ trans('admin.falta.limpCarrinho') }}</button>
                 </div>
             @endif
         </div>
@@ -31,9 +31,9 @@
     <div class="row">
         <div class="col">
             <div class="form-group text-center">
-                <label for="selecionar-estado-bichao">Selecione um estado</label>
+                <label for="selecionar-estado-bichao">{{ trans('admin.falta.selecEstado') }}</label>
                 <select class="form-control" id="selecionar-estado-bichao">
-                    <option selected disabled>Selecione um estado</option>
+                    <option selected disabled>{{ trans('admin.falta.selecEstado') }}</option>
                     @foreach ($estados as $estado)
                         @if ($estado->uf != 'FED' || ($estado->uf == 'FED' && (date('w') == 3 || date('w') == 6)))
                         <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
@@ -45,7 +45,7 @@
     </div>
     <div class="row hide" id="estado-sorteio">
         <div class="col estado-sorteio">
-            <p class="mb-1"><b>Escolha o sorteio:</b></p>
+            <p class="mb-1"><b>{{ trans('admin.falta.escSorteio') }}:</b></p>
             <div id="horarios-resultados"></div>
         </div>
     </div>
@@ -56,7 +56,7 @@
     </div>
     <div class="row">
         <div class="col text-center align-items-end mb-4">
-            <button class="btn btn-success" id="cadastrar-jogos" type="button">Cadastrar Jogos</button>
+            <button class="btn btn-success" id="cadastrar-jogos" type="button">{{ trans('admin.falta.cadastJogos') }}</button>
         </div>
     </div>
     <div class="row">
@@ -75,7 +75,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="jogos-realizadosLabel">Jogos cadastrados com sucesso!</h5>
+                <h5 class="modal-title" id="jogos-realizadosLabel">{{ trans('admin.falta.jogosCadast') }}!</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -85,9 +85,10 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Valor</th>
-                            <th scope="col">Modalidade</th>
-                            <th scope="col">Bilhete</th>
+                            <th scope="col">{{ trans('admin.falta.valor') }}</th>
+                            <th scope="col">{{ trans('admin.falta.jogo') }}</th>
+                            <th scope="col">{{ trans('admin.falta.modalidade') }}</th>
+                            <th scope="col" style="min-width: 160px">{{ trans('admin.falta.bilhete') }}</th>
                         </tr>
                     </thead>
                     <tbody id="jogos-realizados-table">
@@ -96,7 +97,7 @@
                   </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.falta.fechar') }}</button>
             </div>
         </div>
     </div>

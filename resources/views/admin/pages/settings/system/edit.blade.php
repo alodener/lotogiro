@@ -23,7 +23,7 @@
         @enderror
         <div class="card card-danger">
             <div class="card-header">
-                <h3 class="card-title"> Editar Configuração</h3>
+                <h3 class="card-title"> {{ trans('admin.pagesF.editConfig') }} </h3>
             </div>
 
     <form action="{{route('admin.settings.systems.update', ['system' => $system->id])}}" method="POST" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
      
                     <div class="form-row" >
                         <div class="col-md-6">
-                            <label for="file">Nome da configuração:</label>
+                            <label for="file">{{ trans('admin.pagesF.nomeConfig') }}:</label>
                                 <br>
 
                             <label for="file">{{$system->nome_config}}</label>
@@ -49,7 +49,7 @@
                         @if ($system->nome_config == "Accesstoken MercadoPago")
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="alias">Valor</label> 
+                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label> 
                                     <input type="text" name="token" class="form-control ">
                                     @error('text')
                                     <span class="invalid-feedback" role="alert">
@@ -63,20 +63,20 @@
                             @if ($system->nome_config == "Plano de Carreira")
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="alias"><h5><b>Plano de Carreira</b></h5></label>
+                                    <label for="alias"><h5><b>{{ trans('admin.pagesF.planoCarreira') }}</b></h5></label>
                                     <div class="form-check">
                                         @if ($system->value == "Desativado" )
 
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Ativado" >
                                                     <label class="form-check-label" for="exampleRadios1">
-                                                    <b>   Ativar </b>
+                                                    <b>   {{ trans('admin.pagesF.ativar') }} </b>
                                                     </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Desativado"checked>
                                                     <label class="form-check-label" for="exampleRadios2">
-                                                        <b>   Desativar </b>
+                                                        <b>   {{ trans('admin.pagesF.desativar') }} </b>
                                                     </label>
                                             </div>
                                             @endif 
@@ -86,13 +86,13 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Ativado" checked>
                                         <label class="form-check-label" for="exampleRadios1">
-                                        <b>  Ativar </b>
+                                        <b>  {{ trans('admin.pagesF.ativar') }} </b>
                                         </label>
                                       </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Desativado">
                                             <label class="form-check-label" for="exampleRadios2">
-                                                <b>   Desativar </b>
+                                                <b>   {{ trans('admin.pagesF.desativar') }} </b>
                                             </label>
                                       </div>
                                    @endif
@@ -107,7 +107,7 @@
                                     <label for="alias">E-mail</label> 
                                     <input type="text" name="mail" class="form-control ">
                                     <br>
-                                    <label for="alias">Remetente</label>
+                                    <label for="alias">{{ trans('admin.pagesF.remetente') }}</label>
                                     <input type="text" name="remetente" class="form-control ">
                                     @error('text')
                                     <span class="invalid-feedback" role="alert">
@@ -128,13 +128,13 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Ativado" >
                                                     <label class="form-check-label" for="exampleRadios1">
-                                                    <b>   Ativar </b>
+                                                    <b>   {{ trans('admin.pagesF.ativar') }} </b>
                                                     </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Desativado"checked>
                                                     <label class="form-check-label" for="exampleRadios2">
-                                                        <b>   Desativar </b>
+                                                        <b>   {{ trans('admin.pagesF.desativar') }} </b>
                                                     </label>
                                             </div>
                                             @endif 
@@ -144,13 +144,13 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Ativado" checked>
                                         <label class="form-check-label" for="exampleRadios1">
-                                        <b>  Ativar </b>
+                                        <b>  {{ trans('admin.pagesF.ativar') }} </b>
                                         </label>
                                       </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Desativado">
                                             <label class="form-check-label" for="exampleRadios2">
-                                                <b>   Desativar </b>
+                                                <b>   {{ trans('admin.pagesF.desativar') }} </b>
                                             </label>
                                       </div>
                                    @endif
@@ -163,7 +163,7 @@
                         @if ($system->nome_config == "Logo do Sistema")
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="alias">Anexar arquivo</label> 
+                                <label for="alias">{{ trans('admin.pagesF.anexArq') }}</label> 
                                 <input type="file"  name="image" class="form-control ">
                                 @error('file')
                                     <span class="invalid-feedback" role="alert">
@@ -177,7 +177,7 @@
                         @if ($system->nome_config == "TelegramUrlBot")
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="alias">Valor</label> 
+                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label> 
                                     <input type="text" name="telegrambot" class="form-control ">
                                     @error('text')
                                     <span class="invalid-feedback" role="alert">
@@ -191,7 +191,7 @@
                             @if ($system->nome_config == "TelegramChatId")
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="alias">Valor</label> 
+                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label> 
                                     <input type="text" name="telegramchatid" class="form-control ">
                                     @error('text')
                                     <span class="invalid-feedback" role="alert">
@@ -212,12 +212,12 @@
     <div class="row">
                         <div class="col-md-6 mb-3">
                             <a href="{{route('admin.settings.systems.index')}}">
-                                <button type="button" class="btn btn-block btn-info">Voltar a tela principal</button>
+                                <button type="button" class="btn btn-block btn-info">{{ trans('admin.pagesF.voltTela') }}</button>
                             </a>
                         </div>
                         <div class="col-md-6 mb-3">       
                             <button type="submit" class="btn btn-block btn-success">  
-                                    Salvar Configuração </button>
+                            {{ trans('admin.pagesF.salvConfig') }} </button>
                             
                         </div>
                     </div>

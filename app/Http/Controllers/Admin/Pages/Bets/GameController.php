@@ -144,6 +144,8 @@ class GameController extends Controller
 
     public function store(Request $request, Bet $validate_game, Game $game)
     {
+        
+     
         if ($request->controle == 1) {
             if (!auth()->user()->hasPermissionTo('create_game')) {
                 abort(403);
@@ -165,12 +167,32 @@ class GameController extends Controller
                         'error' => 'Apostas Encerradas!'
                     ]);
                 }
-
+                
+                
                 $chaveregistro = ChaveAleatoria::generateKey(8);
                 $user = Auth()->user()->id;
                 $bet = new Bet();
+
+                if(!auth()->user()->hasRole('Administrador') && ($request->type_client != 1 || $request->type_client == null) ){
+                                    
+                $userclient = User::where('id', $request->client)->first();
+
+                    if($userclient != null){
+                        $clientuser = Client::where('email', $userclient->email)->first();
+                    }else{
+                $clientuser = $request->client;
+                }
+                if($userclient != null){
+                    $bet->client_id = $clientuser->id;
+                }else{
+                    $bet->client_id = $request->client;
+                }
+                }else{
+
+                    $bet->client_id = $request->client;
+                }
+                
                 $bet->user_id = Auth()->user()->id;
-                $bet->client_id = $request->client;
                 $bet->status_xml = 1;
                 $bet->key_reg = $chaveregistro;
                 $bet->save();
@@ -321,9 +343,27 @@ class GameController extends Controller
                         'error' => 'Esse sorteio já foi finalizado!'
                     ]);
                 }
+                
+                
+                
+                 $game = new $this->game;
+                if($request->type_client != 1){
+                $userclient = User::where('id', $request->client)->first();
+                    if($userclient != null){
+                        $clientuser = Client::where('email', $userclient->email)->first();
+                    }else{
+                $clientuser = $request->client;
+                }
+                if($userclient != null){
+                $game->client_id = $clientuser->id;
+                }else{
+                    $game->client_id = $request->client;
+                }
+                }else{
 
-                $game = new $this->game;
-                $game->client_id = $request->client;
+                    $game->client_id = $request->client;
+                }
+                    
                 $game->user_id = auth()->id();
                 $game->type_game_id = $request->type_game;
                 $game->type_game_value_id = $request->valueId;

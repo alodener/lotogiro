@@ -42,8 +42,8 @@
 
 @impersonating($guard = null)
     <div class="leave-current-user-wrapper">
-        <span><strong>Conectado Como: </strong> {{ auth()->user()->name }}</span>
-        <a href="{{ route('admin.settings.users.logout-as') }}" class="text-white">X Sair da Sessão</a>
+        <span><strong>{{ trans('admin.pagesF.conectadocomo') }} </strong> {{ auth()->user()->name }}</span>
+        <a href="{{ route('admin.settings.users.logout-as') }}" class="text-white">X {{ trans('admin.pagesF.sairsessao') }}</a>
     </div>
 
     <style>
@@ -86,6 +86,7 @@
 
     <div class="content-wrapper">
         <div class="container-fluid pt-3">
+            
             @yield('content')
         </div>
     </div>
@@ -261,10 +262,11 @@
                     return alert(data.message);
                 }
 
-                let htmlTable = data.chart.map((item) => (`
+                let htmlTable = data.chart.map((item) => (item.status == true ? `
                     <tr>
                         <td>${item.id}</td>
                         <td>R$ ${item.valor.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td>${item.aposta}</td>
                         <td>${item.modalidade.nome}</td>
                         <td>
                             <a href="{{url('/')}}/admin/bets/bichao/receipt/${item.id}/txt">
@@ -282,6 +284,17 @@
                                     <i class="bi bi-whatsapp"></i>
                                 </button>
                             </a>
+                        </td>
+                    </tr>
+                ` :
+                `
+                    <tr>
+                        <td>--</td>
+                        <td>R$ ${item.valor.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td>${item.aposta}</td>
+                        <td>${item.modalidade.nome}</td>
+                        <td>
+                            ${item.error}
                         </td>
                     </tr>
                 `));

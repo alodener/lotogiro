@@ -7,26 +7,31 @@
     <div class="col bg-white p-3">
         <div class="row">
             <div class="col-8 d-flex justify-content-end">
-                <a href="{{ route('admin.bets.bichao.index') }}">
-                    <button class="btn btn-info my-2 ml-1">Apostar</button>
+            <a href="{{ route('admin.bets.bichao.index') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.apostar') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.resultados') }}">
-                    <button class="btn btn-info my-2 ml-1">Resultados</button>
+            <a href="{{ route('admin.bets.bichao.resultados') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.resultados') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
-                    <button class="btn btn-info my-2 ml-1">Minhas apostas</button>
+            <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.minhasaposts') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.cotacao') }}">
-                    <button class="btn btn-info my-2 ml-1">Cotação</button>
+            <a href="{{ route('admin.bets.bichao.cotacao') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.cotacao') }}</button>
                 </a>
             </div>
         </div>
         <hr/>
         <div class="row">
-            <h1>Resultados do Jogo do Bicho</h1>
-        </div>
-        <div class="row">
-            <p>Acompanhe diariamente os principais resultados do Jogo do Bicho</p>
+        <h1>{{ trans('admin.bichao.resultJogos') }}</h1>
+         </div>
+         <div class="row">
+
+            <p>{{ trans('admin.bichao.acompanheResults') }}</p>
         </div>
         <hr/>
         @foreach ($results as $result)
@@ -37,10 +42,10 @@
                         <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">Prêmio</th>
-                            <th scope="col">Milhar</th>
-                            <th scope="col">Grupo</th>
-                            <th scope="col">Bicho</th>
+                            <th scope="col">{{ trans('admin.bichao.premio') }}</th>
+                            <th scope="col">{{ trans('admin.bichao.milhar') }}</th>
+                            <th scope="col">{{ trans('admin.bichao.grupo') }}</th>
+                            <th scope="col">{{ trans('admin.bichao.bicho') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,13 +64,8 @@
             </div>
         @endforeach
         <div class="row">
-            <h4>Resultados</h4>
-            <p>Está em busca dos resultados do Jogo do Bicho?
-                Neste lugar, você encontrará atualizações regulares referentes ao desfecho do Bicho Rio,
-                Bicho São Paulo, Bicho Minas, Bicho Bahia, Bicho Goiás,Bicho Brasília, Bicho Paraíba e Bicho Ceará.
-                Além disso, disponibilizamos informações acerca do poste do jogo federal e sugestões e palpites para
-                auxiliá-lo na escolha dos seus números. Mantenha-se alerta ao nosso site eletrônico para obter os resultados
-                mais recentes do Jogo do Bicho.
+        <h4>{{ trans('admin.bichao.resultados') }}</h4>
+            <p>{{ trans('admin.bichao.estaembusca') }}
             </p>
         </div>
     </div>
