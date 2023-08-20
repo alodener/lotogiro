@@ -49,10 +49,9 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Milhar')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $premio_maximo = self::get_premio_maximo($modalidade->id, $modalidade->premio_maximo);
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.index', compact('clientId','premio_maximo', 'showList','totalCarrinho', 'modalidade', 'chart', 'estados'));
+        return view('admin.pages.bets.game.bichao.index', compact('clientId','showList','totalCarrinho', 'modalidade', 'chart', 'estados'));
     }
 
     public function centena()
@@ -63,11 +62,9 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Centena')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $premio_maximo = self::get_premio_maximo($modalidade->id, $modalidade->premio_maximo);
-        // echo'<pre>';print_r([$premio_maximo]);exit;
         
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.centena', compact('modalidade','premio_maximo', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.centena', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
     public function dezena()
@@ -78,10 +75,9 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Dezena')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $premio_maximo = self::get_premio_maximo($modalidade->id, $modalidade->premio_maximo);
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.dezena', compact('modalidade','premio_maximo', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.dezena', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
     public function group()
@@ -92,10 +88,9 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Grupo')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $premio_maximo = self::get_premio_maximo($modalidade->id, $modalidade->premio_maximo);
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.group', compact('modalidade','premio_maximo', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.group', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
     public function milhar_centena()
@@ -106,10 +101,9 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Milhar/Centena')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $premio_maximo = self::get_premio_maximo($modalidade->id, $modalidade->premio_maximo);
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.milhar_centena', compact('modalidade','premio_maximo', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.milhar_centena', compact('modalidade','chart','totalCarrinho', 'estados'));
     }
 
     public function terno_dezena()
@@ -120,10 +114,9 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Terno de Dezena')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $premio_maximo = self::get_premio_maximo($modalidade->id, $modalidade->premio_maximo);
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.terno_dezena', compact('modalidade','premio_maximo', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.terno_dezena', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
     public function terno_grupo()
@@ -134,10 +127,9 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Terno de Grupos')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $premio_maximo = self::get_premio_maximo($modalidade->id, $modalidade->premio_maximo);
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.terno_grupo', compact('modalidade','premio_maximo', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.terno_grupo', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
     public function duque_dezena()
@@ -148,10 +140,9 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Duque de Dezena')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $premio_maximo = self::get_premio_maximo($modalidade->id, $modalidade->premio_maximo);
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.duque_dezena', compact('modalidade','premio_maximo', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.duque_dezena', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
     public function duque_grupo()
@@ -162,10 +153,9 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Duque de Grupo')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $premio_maximo = self::get_premio_maximo($modalidade->id, $modalidade->premio_maximo);
 
         $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
-        return view('admin.pages.bets.game.bichao.duque_grupo', compact('modalidade','premio_maximo', 'chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.duque_grupo', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
     public function cotacao(Response $response)
@@ -332,10 +322,37 @@ class BichaoController extends Controller
         return view('admin.pages.bets.game.bichao.resultados');
     }
 
-    private static function get_premio_maximo($modalidade_id, $premio_maximo = 0) {
+    public function get_premio_maximo_json(Request $request) {
+        $data = $request->all();
+
+        if (isset($data['modalidade_id']) && isset($data['game'])) {
+            if ($data['modalidade_id'] == 5) {
+                $premio_maximo_milhar = self::get_premio_maximo(1, $data['game']);
+                $premio_maximo_centena = self::get_premio_maximo(2, substr($data['game'], 1));
+                $premio_maximo = ($premio_maximo_milhar + $premio_maximo_centena) / 2;
+
+                if ($premio_maximo_milhar == 0 || $premio_maximo_centena == 0) $premio_maximo = 0;
+                // echo json_encode(['premio_maximo' => 0, 'milhar' => $premio_maximo_milhar, 'centena' => $premio_maximo_centena, 'game' => $data['game'], 'game_dezena' => substr($data['game'], 1) ]);exit;
+            } else {
+                $premio_maximo = self::get_premio_maximo($data['modalidade_id'], $data['game']);
+            }
+            echo json_encode(['premio_maximo' => $premio_maximo > 0 ? $premio_maximo : 0]);
+            exit;
+        }
+
+        echo json_encode(['premio_maximo' => 0]);
+        exit;
+    }
+
+    private static function get_premio_maximo($modalidade_id, $game_value) {
+        $modalidade = BichaoModalidades::where('id', $modalidade_id)->first();
+        $premio_maximo = $modalidade->premio_maximo;
+
         $dataAtual = date('Y-m-d');
         $horaAtual = date('H:i:s');
         $log = $premio_maximo;
+        $game_log = $game_value;
+        $teste = [];
 
         $games = BichaoGames::select('bichao_games.*', 'bichao_games_vencedores.valor_premio', 'bichao_horarios.horario', 'bichao_modalidades.multiplicador', 'bichao_modalidades.multiplicador_2')
             ->join('bichao_horarios', 'bichao_horarios.id', '=', 'bichao_games.horario_id')
@@ -347,6 +364,21 @@ class BichaoController extends Controller
             ->toArray();
         
         foreach ($games as $game) {
+            $apostas = [];
+
+            if (strval($game['game_1']) > 0) $apostas[] = $game['game_1'];
+            if (strval($game['game_2']) > 0) $apostas[] = $game['game_2'];
+            if (strval($game['game_3']) > 0) $apostas[] = $game['game_3'];
+            sort($apostas);
+
+            $game_value = explode('-', $game_value);
+            sort($game_value);
+            $game_value = str_pad(join('-', $game_value), 2, 0, STR_PAD_LEFT);
+
+            $aposta = str_pad(join('-', $apostas), 2, 0, STR_PAD_LEFT);
+            $teste[] = $aposta;
+
+            if ($game_value != $aposta) continue;
             if ($game['valor_premio']) {
                 $premio_maximo = $premio_maximo - $game['valor_premio'];
             } else {
@@ -377,6 +409,8 @@ class BichaoController extends Controller
             }
         }
 
+        // echo'<pre>';print_r(['premio_maximo' => 0, 'game_log' => $game_log, 'game_value' => $game_value, 'log' => $log, 'premio_final' => $premio_maximo, 'teste' => $teste]);exit;
+        // echo json_encode(['premio_maximo' => 0, 'game_log' => $game_log, 'game_value' => $game_value, 'log' => $log, 'premio_final' => $premio_maximo, 'teste' => $teste]);exit;
         return $premio_maximo;
 
     }
@@ -505,6 +539,7 @@ class BichaoController extends Controller
         if (!$balance) return json_encode(['status' => false, 'message' => 'Saldo insuficiente.']);
 
         foreach ($checkout as $index => $checkoutDto) {
+            $checkout[$index]['status'] = true;
             $apostas = [];
             $premios = [];
             
@@ -528,6 +563,14 @@ class BichaoController extends Controller
             if ($checkout[$index]['modalidade_id'] == 7) {
                 $premioMaximo = sizeof($premios) == 3 ? $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador : $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador_2;
             }
+
+            $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
+            $premio_maximo_db = self::get_premio_maximo($checkout[$index]['modalidade_id'], str_pad(join('-', $apostas), 2, 0, STR_PAD_LEFT));
+            if ($premio_maximo_db < $premioMaximo) {
+                $checkout[$index]['status'] = false;
+                $checkout[$index]['error'] = 'No momento, atingimos o limite de prêmios pra essa modalidade. Tente novamente mais tarde, ou no próximo sorteio.';
+                continue;
+            }
             
             $checkout[$index]['id'] = BichaoGames::insertGetId($checkoutDto);
             $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
@@ -538,6 +581,7 @@ class BichaoController extends Controller
         }
 
         foreach ($checkout as $checkoutItem) {
+            if ($checkoutItem['status'] == false) continue;
 
             $transact_balance = new TransactBalance;
             $transact_balance->user_id_sender = auth()->id();
