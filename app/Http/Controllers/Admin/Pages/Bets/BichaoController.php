@@ -326,16 +326,9 @@ class BichaoController extends Controller
         $data = $request->all();
 
         if (isset($data['modalidade_id']) && isset($data['game'])) {
-            if ($data['modalidade_id'] == 5) {
-                $premio_maximo_milhar = self::get_premio_maximo(1, $data['game']);
-                $premio_maximo_centena = self::get_premio_maximo(2, substr($data['game'], 1));
-                $premio_maximo = ($premio_maximo_milhar + $premio_maximo_centena) / 2;
+            $modalidade = BichaoModalidades::where('id', $data['modalidade_id'])->first();
+            $premio_maximo = $modalidade->premio_maximo;
 
-                if ($premio_maximo_milhar == 0 || $premio_maximo_centena == 0) $premio_maximo = 0;
-                // echo json_encode(['premio_maximo' => 0, 'milhar' => $premio_maximo_milhar, 'centena' => $premio_maximo_centena, 'game' => $data['game'], 'game_dezena' => substr($data['game'], 1) ]);exit;
-            } else {
-                $premio_maximo = self::get_premio_maximo($data['modalidade_id'], $data['game']);
-            }
             echo json_encode(['premio_maximo' => $premio_maximo > 0 ? $premio_maximo : 0]);
             exit;
         }
@@ -344,7 +337,7 @@ class BichaoController extends Controller
         exit;
     }
 
-    private static function get_premio_maximo($modalidade_id, $game_value) {
+    private static function get_premio_maximo($modalidade_id, $horario_id, $game_value) {
         $modalidade = BichaoModalidades::where('id', $modalidade_id)->first();
         $premio_maximo = $modalidade->premio_maximo;
 
@@ -360,6 +353,7 @@ class BichaoController extends Controller
             ->leftJoin('bichao_games_vencedores', 'bichao_games_vencedores.game_id', 'bichao_games.id')
             ->where('bichao_games.created_at', '>=', $dataAtual.' 00:00:00')
             ->where('bichao_modalidades.id', $modalidade_id)
+            ->where('bichao_games.horario_id', $horario_id)
             ->get()
             ->toArray();
         
@@ -565,10 +559,14 @@ class BichaoController extends Controller
             }
 
             $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
-            $premio_maximo_db = self::get_premio_maximo($checkout[$index]['modalidade_id'], str_pad(join('-', $apostas), 2, 0, STR_PAD_LEFT));
+            $premio_maximo_db = self::get_premio_maximo($checkout[$index]['modalidade_id'], $checkout[$index]['horario_id'], str_pad(join('-', $apostas), 2, 0, STR_PAD_LEFT));
             if ($premio_maximo_db < $premioMaximo) {
                 $checkout[$index]['status'] = false;
                 $checkout[$index]['error'] = 'No momento, atingimos o limite de prêmios pra essa modalidade. Tente novamente mais tarde, ou no próximo sorteio.';
+                if ($premio_maximo_db > 0) {
+                    $premio_restante = number_format($premio_maximo_db, 2, ",", ".");
+                    $checkout[$index]['error'] = "O prêmio máximo disponível para essa modalidade é de R$ $premio_restante. Ajuste o valor da sua aposta.";
+                }
                 continue;
             }
             

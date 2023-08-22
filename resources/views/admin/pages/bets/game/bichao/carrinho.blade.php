@@ -33,7 +33,7 @@
             <div class="form-group text-center">
                 <label for="selecionar-estado-bichao">{{ trans('admin.falta.selecEstado') }}</label>
                 <select class="form-control" id="selecionar-estado-bichao">
-                    <option selected disabled>{{ trans('admin.falta.selecEstado') }}</option>
+                    <option selected value="none" disabled>{{ trans('admin.falta.selecEstado') }}</option>
                     @foreach ($estados as $estado)
                         @if ($estado->uf != 'FED' || ($estado->uf == 'FED' && (date('w') == 3 || date('w') == 6)))
                         <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
@@ -51,7 +51,7 @@
     </div>
     <div class="row">
         <div class="col text-center mt-4 p-4">
-            <h5><b>Total: R${{ number_format($totalCarrinho, 2, ',', ' ') }}</b></h5>
+            <h5><b>Total: R$ <span id="total-carrinho-text">{{ number_format($totalCarrinho, 2, ',', ' ') }}</span></b></h5>
         </div>
     </div>
     <div class="row">
