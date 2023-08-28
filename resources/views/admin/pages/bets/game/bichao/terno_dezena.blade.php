@@ -268,10 +268,15 @@
         });
 
         function validateGame() {
-            const game_input = $('#input-milhar').val().split(' - ');
-            if (game_input.length != 3) return false;
-            const check_dezena = game_input.filter((i) => i.length != 2 || i.match(/^[0-9]+$/) == null);
-            if (check_dezena.length > 0) return false;
+            const games = $('#input-milhar').val().replaceAll(' ', '').split(',');
+
+            for (const game of games) {
+                const game_input = game.split('-');
+                if (game_input.length != 3) return false;
+                const check_dezena = game_input.filter((i) => i.length != 2 || i.match(/^[0-9]+$/) == null);
+                if (check_dezena.length > 0) return false;
+            }
+
             return true;
         }
 
@@ -376,11 +381,15 @@
             calculate_awards();
         });
 
-        function insere_valor(){
-            const btn_gerar_milhar = $('#btn-gerar-milhar');
-            const input_milhar = $('#input-milhar');
+        function insere_valor() {
+            const field = $('#input-milhar');
 
-            input_milhar.val((randomNumber(0, 9)+''+randomNumber(0, 9)+' - '+randomNumber(0, 9)+''+randomNumber(0, 9)+' - '+randomNumber(0, 9)+''+randomNumber(0, 9)));
+            const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}-${randomNumber(0, 9)}${randomNumber(0, 9)}-${randomNumber(0, 9)}${randomNumber(0, 9)}`;
+            if (!field.val()) return field.val(value);
+
+            const old = field.val().split(',');
+            old.push(value);
+            field.val(old.join(','));
             calculate_awards();
         }
 

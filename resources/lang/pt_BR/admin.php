@@ -507,6 +507,7 @@ return [
                 'premiacao' => 'Premiação',
                 'addCarrinho' => 'Adicionar ao Carrinho',
         
+                'gerarA' => 'Gerar Aposta',
                 'gerarD' => 'Gerar Dezena',
                 'vencendores' => 'Vencedores',
                 'gerarRelat' => 'Gerar relatório',

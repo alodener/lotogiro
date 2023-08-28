@@ -427,23 +427,30 @@ class BichaoController extends Controller
             $data['item']['client_id'] = $client->id;
         }
 
+        $games = explode(',', $data['item']['game']);
         if ($data['item']['modality'] === 'Milhar/Centena') {
-            $data['item']['value'] = floatval($data['item']['value']) / 2;
-            
-            $data['item']['modality'] = 'Milhar';
-            $chart[] = $data['item'];
-
-            $data['item']['modality'] = 'Centena';
-            $data['item']['game'] = substr($data['item']['game'], 1);
-            $chart[] = $data['item'];
+            foreach ($games as $game) {
+                $data['item']['value'] = floatval($data['item']['value']) / 2;
+                
+                $data['item']['modality'] = 'Milhar';
+                $data['item']['game'] = $game;
+                $chart[] = $data['item'];
+    
+                $data['item']['modality'] = 'Centena';
+                $data['item']['game'] = substr($game, 1);
+                $chart[] = $data['item'];
+            }
         } else {
-            $chart[] = $data['item'];
+            foreach ($games as $game) {
+                $data['item']['game'] = $game;
+                $chart[] = $data['item'];
+            }
         }
 
         
         session(['@loteriasbr/chart' => $chart]);
         
-        session()->flash('success', 'Jogo adicionado com sucesso.');
+        session()->flash('success', 'Adicionado com sucesso.');
 
         echo json_encode(['status' => 200]);
     }

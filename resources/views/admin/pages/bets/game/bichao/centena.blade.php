@@ -260,6 +260,12 @@
         let award_type = [];
         let value = 0;
 
+        function checkGame() {
+            const games = $('#input-centena').val().split(',');
+            const match = games.filter((item) => item.length === 3);
+            return games.length === match.length;
+        }
+
         function randomNumber(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
         }
@@ -277,7 +283,7 @@
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
             if (!client_id > 0) return alert('Escolha um cliente');
-            if (centena_input.length !== 3) return alert('O jogo precisa ser uma centena');
+            if (!checkGame()) return alert('O jogo precisa ser uma centena');
 
             award_type.sort();
             
@@ -301,7 +307,7 @@
             const option_award = validate_award() === 6 ? 5 : validate_award();
             const game = $('#input-centena').val();
 
-            if (game.length !== 3) return;
+            if (!checkGame()) return;
 
             $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
             $.ajax({
@@ -353,7 +359,7 @@
     
                         const result = value * value_input_bet;
     
-                        if (result > 0 && $('#input-centena').val().length === 3) {
+                        if (result > 0) {
                             $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
                         } else {
                             $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
@@ -369,11 +375,16 @@
             calculate_awards();
         });
 
-        function insere_valor(){
-            const btn_gerar_milhar = $('#btn-gerar-centena');
-            const input_milhar = $('#input-centena');
+        function insere_valor() {
+            const btn_gerar_centena = $('#btn-gerar-centena');
+            const input_centena = $('#input-centena');
 
-            input_milhar.val((randomNumber(0, 9)+''+randomNumber(0, 9)+''+randomNumber(0, 9)));
+            const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}`;
+            if (!input_centena.val()) return input_centena.val(value);
+
+            const old = input_centena.val().split(',');
+            old.push(value);
+            input_centena.val(old.join(','));
             calculate_awards();
         }
 

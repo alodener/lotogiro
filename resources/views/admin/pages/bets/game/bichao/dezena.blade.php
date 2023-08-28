@@ -262,6 +262,12 @@
         let award_type = [];
         let value = 0;
 
+        function checkGame() {
+            const games = $('#input-dezena').val().split(',');
+            const match = games.filter((item) => item.length === 2);
+            return games.length === match.length;
+        }
+
         function randomNumber(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
         }
@@ -279,7 +285,7 @@
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
             if (!client_id > 0) return alert('Escolha um cliente');
-            if (dezena_input.length !== 2) return alert('O jogo precisa ser uma dezena');
+            if (!checkGame()) return alert('O jogo precisa ser uma dezena');
 
             award_type.sort();
             
@@ -294,11 +300,16 @@
             addChartItem(item);
         });
 
-        function insere_valor(){
+        function insere_valor() {
             const btn_gerar_dezena = $('#btn-gerar-dezena');
             const input_dezena = $('#input-dezena');
 
-            input_dezena.val((randomNumber(0, 9)+''+randomNumber(0, 9)));
+            const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}`;
+            if (!input_dezena.val()) return input_dezena.val(value);
+
+            const old = input_dezena.val().split(',');
+            old.push(value);
+            input_dezena.val(old.join(','));
             calculate_awards();
         }
 
@@ -311,7 +322,7 @@
             const option_award = validate_award() === 6 ? 5 : validate_award();
             const game = $('#input-dezena').val();
 
-            if (game.length !== 2) return;
+            if (!checkGame()) return;
 
             $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
             $.ajax({
@@ -363,7 +374,7 @@
     
                         const result = value * value_input_bet;
     
-                        if (result > 0 && $('#input-dezena').val().length === 2) {
+                        if (result > 0) {
                             $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
                         } else {
                             $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
