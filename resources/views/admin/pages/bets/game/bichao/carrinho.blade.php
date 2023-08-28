@@ -1,74 +1,92 @@
-<div style="background-color:#E9ECEF;" class="col-md-4 col-12 h-auto">
-    <div class="row align-items-center mt-4">
-        <div class="col">
-            <h4 class="text-center">{{ trans('admin.falta.listaJogos') }}</h4>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col mb-4" id="chart-text">
-            @foreach ($chart as $key => $chart)
-                <div class="chart-item">
-                    <div class="chart-item-number">
-                        {{$key + 1}}
+<!-- Modal -->
+<div class="modal fade" id="jogos-carrinho" tabindex="-1" role="dialog" aria-labelledby="jogos-carrinhoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jogos-carrinhoLabel">{{ trans('admin.bichao.labelCarrinho') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="p-2" style="background-color:#E9ECEF;">
+                    <div class="row align-items-center mt-4">
+                        <div class="col">
+                            <h4 class="text-center">{{ trans('admin.falta.listaJogos') }}</h4>
+                        </div>
                     </div>
-                    <div class="chart-item-description">
-                        <p><b>{{$chart['modality']}}:</b> {{$chart['game']}}</p>
-                        <p><b>{{ trans('admin.falta.premio') }}:</b> {{join('°, ', $chart['award_type'])}}°</p>
-                        <p><b>{{ trans('admin.falta.valor') }}:</b> R${{number_format($chart['value'], 2, ',', '.')}}</p>
+                    <div class="row">
+                        <div class="col mb-4" id="chart-text">
+                            @foreach ($chart as $key => $chart)
+                                <div class="chart-item">
+                                    <div class="chart-item-number">
+                                        {{$key + 1}}
+                                    </div>
+                                    <div class="chart-item-description">
+                                        <p><b>{{$chart['modality']}}:</b> {{$chart['game']}}</p>
+                                        <p><b>{{ trans('admin.falta.premio') }}:</b> {{join('°, ', $chart['award_type'])}}°</p>
+                                        <p><b>{{ trans('admin.falta.valor') }}:</b> R${{number_format($chart['value'], 2, ',', '.')}}</p>
+                                    </div>
+                                    <div class="chart-item-button"><a class="chart-remove-item" href="#" url="{{url('/')}}/admin/bets/bichao/remove/chart/{{$key}}">X</a></div>
+                                </div>
+                            @endforeach
+                            @if (sizeof($chart) == 0)
+                                <p class="text-center">{{ trans('admin.falta.carrinhoVazio') }}</p>
+                            @else
+                                <div class="clear-chart-container">
+                                    <button class="btn btn-danger" id="clear-all-chart" type="button">{{ trans('admin.falta.limpCarrinho') }}</button>
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                    <div class="chart-item-button"><a class="chart-remove-item" href="#" url="{{url('/')}}/admin/bets/bichao/remove/chart/{{$key}}">X</a></div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group text-center">
+                                <label for="selecionar-estado-bichao">{{ trans('admin.falta.selecEstado') }}</label>
+                                <select class="form-control" id="selecionar-estado-bichao">
+                                    <option selected value="none" disabled>{{ trans('admin.falta.selecEstado') }}</option>
+                                    @foreach ($estados as $estado)
+                                        @if ($estado->uf != 'FED' || ($estado->uf == 'FED' && (date('w') == 3 || date('w') == 6)))
+                                        <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row hide" id="estado-sorteio">
+                        <div class="col estado-sorteio">
+                            <p class="mb-1"><b>{{ trans('admin.falta.escSorteio') }}:</b></p>
+                            <div id="horarios-resultados"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center mt-4 p-4">
+                            <h5><b>Total: R$ <span id="total-carrinho-text">{{ number_format($totalCarrinho, 2, ',', ' ') }}</span></b></h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center align-items-end mb-4">
+                            <button class="btn btn-success" id="cadastrar-jogos" type="button">{{ trans('admin.falta.cadastJogos') }}</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <script language=javascript type="text/javascript">
+                                now = new Date
+                                document.write(now.toLocaleString())
+                                document.write("- Horário de Brasília.")
+                            </script>
+                        </div>
+                    </div>
                 </div>
-            @endforeach
-            @if (sizeof($chart) == 0)
-                <p class="text-center">{{ trans('admin.falta.carrinhoVazio') }}</p>
-            @else
-                <div class="clear-chart-container">
-                    <button class="btn btn-danger" id="clear-all-chart" type="button">{{ trans('admin.falta.limpCarrinho') }}</button>
-                </div>
-            @endif
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="form-group text-center">
-                <label for="selecionar-estado-bichao">{{ trans('admin.falta.selecEstado') }}</label>
-                <select class="form-control" id="selecionar-estado-bichao">
-                    <option selected value="none" disabled>{{ trans('admin.falta.selecEstado') }}</option>
-                    @foreach ($estados as $estado)
-                        @if ($estado->uf != 'FED' || ($estado->uf == 'FED' && (date('w') == 3 || date('w') == 6)))
-                        <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
-                        @endif
-                    @endforeach
-                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.falta.fechar') }}</button>
             </div>
         </div>
     </div>
-    <div class="row hide" id="estado-sorteio">
-        <div class="col estado-sorteio">
-            <p class="mb-1"><b>{{ trans('admin.falta.escSorteio') }}:</b></p>
-            <div id="horarios-resultados"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-center mt-4 p-4">
-            <h5><b>Total: R$ <span id="total-carrinho-text">{{ number_format($totalCarrinho, 2, ',', ' ') }}</span></b></h5>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-center align-items-end mb-4">
-            <button class="btn btn-success" id="cadastrar-jogos" type="button">{{ trans('admin.falta.cadastJogos') }}</button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-center">
-            <script language=javascript type="text/javascript">
-                now = new Date
-                document.write(now.toLocaleString())
-                document.write("- Horário de Brasília.")
-            </script>
-        </div>
-    </div>
-</div>
+  </div>
 
 <!-- Modal -->
 <div class="modal fade" id="jogos-realizados" tabindex="-1" role="dialog" aria-labelledby="jogos-realizadosLabel" aria-hidden="true">
