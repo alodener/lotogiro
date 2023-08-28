@@ -164,8 +164,12 @@ class BichaoController extends Controller
             abort(403);
         }
         $cotacoes = BichaoModalidades::orderBy('multiplicador', 'DESC')->get();
+        $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
+        $estados = BichaoEstados::where('active', 1)->get();
 
-        return view('admin.pages.bets.game.bichao.cotacao',compact('cotacoes'));
+        $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
+
+        return view('admin.pages.bets.game.bichao.cotacao',compact('cotacoes', 'chart', 'estados', 'totalCarrinho'));
     }
 
     public function settings(Response $response)
@@ -217,6 +221,11 @@ class BichaoController extends Controller
         $intervalo = $request->has('intervalo') ? $request->input('intervalo') : 30;
         $buscaIntervalo = now()->subDays($intervalo)->endOfDay();
 
+        $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
+        $estados = BichaoEstados::where('active', 1)->get();
+
+        $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
+
         $apostas = BichaoGames::select('bichao_games.*', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'bm.multiplicador', 'bm.multiplicador_2', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.ddd as cliente_ddd', 'c.phone as cliente_phone')
             ->join('clients as c', 'c.id', 'bichao_games.client_id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
@@ -230,6 +239,9 @@ class BichaoController extends Controller
             'apostas' => $apostas,
             'perPage' => $perPage,
             'intervalo' => $intervalo,
+            'chart' => $chart,
+            'estados' => $estados,
+            'totalCarrinho' => $totalCarrinho
         ]);
     }
 
@@ -319,7 +331,11 @@ class BichaoController extends Controller
             abort(403);
         }
 
-        return view('admin.pages.bets.game.bichao.resultados');
+        $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
+        $estados = BichaoEstados::where('active', 1)->get();
+        $totalCarrinho = array_reduce($chart, fn ($acc, $item) => $acc + $item['value'], 0);
+
+        return view('admin.pages.bets.game.bichao.resultados', compact('chart', 'totalCarrinho', 'estados'));
     }
 
     public function get_premio_maximo_json(Request $request) {

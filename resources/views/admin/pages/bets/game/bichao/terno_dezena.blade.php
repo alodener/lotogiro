@@ -22,6 +22,13 @@
 
             <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.cotacao') }}</button>
                 </a>
+                <button data-toggle="modal" data-target="#jogos-carrinho" class="btn btn-success my-2 ml-1 position-relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    @if (sizeof($chart) > 0)
+                        <div id="has-cart-alert" class="position-absolute rounded" style="background-color: red; height: 10px; width: 10px; top: -3px; right: -3px;"></div>
+                    @endif
+                    {{ trans('admin.bichao.labelCarrinho') }}
+                </button>
             </div>
         </div>
         <hr/>

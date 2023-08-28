@@ -514,6 +514,8 @@ return [
                 'aposta' => 'Aposta',
                 'premios' => 'Prêmios',
                 'acoes' => 'Ações',
+                'verCarrinho' => 'Ver carrinho',
+                'labelCarrinho' => 'Carrinho',
                 
                 'gerarDuque' => 'Gerar Duque de Dezena',
                 'selecPremios' => 'Selecione os prêmios',
