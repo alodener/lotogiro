@@ -21,6 +21,13 @@
 
                     <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.cotacao') }}</button>
                 </a>
+                <button data-toggle="modal" data-target="#jogos-carrinho" class="btn btn-success my-2 ml-1 position-relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    @if (sizeof($chart) > 0)
+                        <div id="has-cart-alert" class="position-absolute rounded" style="background-color: red; height: 10px; width: 10px; top: -3px; right: -3px;"></div>
+                    @endif
+                    {{ trans('admin.bichao.labelCarrinho') }}
+                </button>
             </div>
         </div>
         <hr />
@@ -283,6 +290,12 @@
             let award_type = [];
             let value = 0;
 
+            function checkGame() {
+                const games = $('#input-milhar').val().split(',');
+                const match = games.filter((item) => item.length === 4);
+                return games.length === match.length;
+            }
+
             $('#input-milhar').change(function() {
                 calculate_awards();
             });
@@ -296,7 +309,7 @@
                 if (!option_award > 0) return alert('Selecione um dos prêmios');
                 if (!value > 0) return alert('Insira um valor pra aposta');
                 if (!client_id > 0) return alert('Escolha um cliente');
-                if (milhar_input.length !== 4) return alert('O jogo precisa ser um milhar');
+                if (!checkGame()) return alert('O jogo precisa ser um milhar');
 
                 award_type.sort();
                 
@@ -324,7 +337,7 @@
                 const option_award = validate_award() === 6 ? 5 : validate_award();
                 const game = $('#input-milhar').val();
 
-                if (game.length !== 4) return;
+                if (!checkGame()) return;
 
                 $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
                 $.ajax({
@@ -376,7 +389,7 @@
         
                             const result = value * value_input_bet;
         
-                            if (result > 0 && $('#input-milhar').val().length === 4) {
+                            if (result > 0) {
                                 $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
                             } else {
                                 $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
@@ -396,7 +409,12 @@
                 const btn_gerar_milhar = $('#btn-gerar-milhar');
                 const input_milhar = $('#input-milhar');
 
-                input_milhar.val((randomNumber(0, 9) + '' + randomNumber(0, 9) + '' + randomNumber(0, 9) + '' + randomNumber(0,9)));
+                const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}`;
+                if (!input_milhar.val()) return input_milhar.val(value);
+
+                const old = input_milhar.val().split(',');
+                old.push(value);
+                input_milhar.val(old.join(','));
                 calculate_awards();
             }
 

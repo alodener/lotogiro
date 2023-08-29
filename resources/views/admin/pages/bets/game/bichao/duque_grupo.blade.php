@@ -18,6 +18,13 @@
                  <a href="{{ route('admin.bets.bichao.cotacao')}}">
                     <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.cotacao') }}</button>
                 </a>
+                <button data-toggle="modal" data-target="#jogos-carrinho" class="btn btn-success my-2 ml-1 position-relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    @if (sizeof($chart) > 0)
+                        <div id="has-cart-alert" class="position-absolute rounded" style="background-color: red; height: 10px; width: 10px; top: -3px; right: -3px;"></div>
+                    @endif
+                    {{ trans('admin.bichao.labelCarrinho') }}
+                </button>
             </div>
         </div>
         <hr/>
@@ -116,7 +123,7 @@
             <div class="row">
                 <div class="col animal-wrapper">
                     <div id="animal-container" button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-1" onclick="select_animals_1()" class="btn btn-outline-primary animal-container-choose">   
+                        <label onclick="select_animals_1()" class="btn btn-outline-primary animal-container-choose">   
                         <div class="animal-container">
                                 <div class="row">
                                     <div class="col-2">
@@ -147,7 +154,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-2" onclick="select_animals_2()" class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_2()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -178,7 +185,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-3" onclick="select_animals_3()" class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_3()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -209,7 +216,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-4" onclick="select_animals_4()" class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_4()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                 <div class="col-2 ">
@@ -241,7 +248,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-5" onclick="select_animals_5()" class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_5()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                             <div class="row">
                                     <div class="col-2 ">
@@ -272,7 +279,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-6" onclick="select_animals_6()" class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_6()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                             <div class="row">
                                     <div class="col-2 ">
@@ -304,7 +311,7 @@
 
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-7" onclick="select_animals_7()" class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_7()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -335,7 +342,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-8" onclick="select_animals_8()" class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_8()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -366,7 +373,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-9" onclick="select_animals_9()" class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_9()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -397,7 +404,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-10" onclick="select_animals_10()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_10()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -429,7 +436,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-11" onclick="select_animals_11()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_11()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -460,7 +467,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-12" onclick="select_animals_12()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_12()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -491,7 +498,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-13" onclick="select_animals_13()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_13()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -522,7 +529,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-14" onclick="select_animals_14()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_14()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -553,7 +560,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-15" onclick="select_animals_15()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_15()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -584,7 +591,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-16" onclick="select_animals_16()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_16()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -615,7 +622,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-17" onclick="select_animals_17()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_17()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -646,7 +653,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-18" onclick="select_animals_18()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_18()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -677,7 +684,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-19" onclick="select_animals_19()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_19()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -708,7 +715,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-20" onclick="select_animals_20()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_20()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -739,7 +746,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-21" onclick="select_animals_21()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_21()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -770,7 +777,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-22" onclick="select_animals_22()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_22()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -801,7 +808,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-23" onclick="select_animals_23()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_23()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -832,7 +839,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-24" onclick="select_animals_24()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_24()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -863,7 +870,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label id="animal-container-25" onclick="select_animals_25()" class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_25()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -896,6 +903,25 @@
             </div>
         </div>
         <hr/>
+        <div class="row">
+            <div class="col-12" id="group">
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col-md-1 col-6">
+                        <p>{{ trans('admin.bichao.insiraj') }}</p>
+                    </div>
+                    <div class="col-md-6 col-6">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="input-group" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-12">
+                        <button onclick="insere_valor()" type="button" class="btn btn-secondary">{{ trans('admin.bichao.gerarA') }}</button>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
         <div class="row">
             <div class="col">
             <p>{{ trans('admin.bichao.selecPremios') }} </p>
@@ -986,6 +1012,11 @@
             color: #fff !important;
         }
 
+        .wrap-animal:hover, .animal-container-choose:hover {
+            background-color: transparent !important;
+            color: #007bff !important;
+        }
+
         @media(max-width: 467px) {
             #filterForm .form-row {
                 flex-direction: column;
@@ -1044,6 +1075,30 @@
         let animais_escolhidos = [];
         let value = 0;
 
+        function checkGame() {
+            const games = $('#input-group').val().replaceAll(' ', '').split(',');
+
+            for (const game of games) {
+                const game_input = game.split('-');
+                if (game_input.length != 2) return false;
+                const match = game_input.filter((item) => item >= 0 && item <= 25);
+                if (game_input.length !== match.length) return false;
+            }
+
+            return true;
+        }
+
+        function insere_valor() {
+            const field = $('#input-group');
+
+            const value = `${String(randomNumber(1, 25)).padStart(2, '0')}-${String(randomNumber(1, 25)).padStart(2, '0')}`;
+            if (!field.val()) return field.val(value);
+
+            const old = field.val().split(',');
+            old.push(value);
+            field.val(old.join(','));
+            calculate_award();
+        }
 
         function randomNumber(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
@@ -1053,10 +1108,11 @@
             const option_award = validate_award();
             const value = $('#input_value_bet').val();
             const client_id = $('#livewire-client-id').val();
+            const game = $('#input-group').val().replaceAll(' ', '');
 
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
-            if (animais_escolhidos.length < 2) return alert('Escolha dois grupos');
+            if (!checkGame()) return alert('Escolha dois grupos');
             if (!client_id > 0) return alert('Escolha um cliente');
             
             const item = {
@@ -1064,7 +1120,7 @@
                 value: value.replace(',', '.'),
                 client_id,
                 modality: '{{$modalidade->nome}}',
-                game: animais_escolhidos.map((i) => String(i).padStart(2, '0')).join('-'),
+                game,
             };
 
             addChartItem(item);
@@ -1076,9 +1132,9 @@
             const limit_minimum_bet = 0.01;
             const message = $('#message-minimum-value');
             const award_total=parseInt('{{$modalidade->multiplicador}}');
-            const game = animais_escolhidos.map((i) => String(i).padStart(2, '0')).join('-');
+            const game = $('#input-group').val().replaceAll(' ', '');
 
-            if (animais_escolhidos.length < 2) return;
+            if (!checkGame()) return;
 
             $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
             $.ajax({
@@ -1130,7 +1186,7 @@
 
                         const result = value*value_input_bet;
                         
-                        if (result > 0 && animais_escolhidos.length === 2) {
+                        if (result > 0) {
                             $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
                         } else {
                             $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
@@ -1145,14 +1201,6 @@
         input_value_bet.keyup(function (){
             calculate_award();
         });
-
-        function insere_valor(){
-            const btn_gerar_milhar = $('#btn-gerar-centena');
-            const input_milhar = $('#input-centena');
-
-            input_milhar.val((randomNumber(0, 9)+''+randomNumber(0, 9)+''+randomNumber(0, 9)));
-            calculate_award();
-        }
 
         function select_animals_1(){
             const animal_container_1 = $('#animal-container-1');
