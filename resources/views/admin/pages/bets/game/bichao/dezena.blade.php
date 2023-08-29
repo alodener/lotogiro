@@ -125,8 +125,7 @@
                 </div>
                 <div class="col-md-6 col-6">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="input-dezena"
-                            aria-describedby="basic-addon1">
+                        <textarea class="form-control" id="input-dezena" rows="2" aria-describedby="basic-addon1" style="resize: none;"></textarea>
                     </div>
                 </div>
                 <div class="col-md-5 col-12">
