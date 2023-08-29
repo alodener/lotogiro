@@ -33,7 +33,7 @@
                         <ul class="nav nav-treeview">
 
                             @if(\App\Helper\Configs::getPlanoDeCarreira() == "Ativado")
-                                @can('read_extract')
+                                @can('read_gain')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.ranking.index')}}"
                                         class="nav-link @if(request()->is('admin/ranking')) active @endif">
@@ -45,7 +45,7 @@
                                 @endcan
                                     
                                
-                                @can('read_extract')
+                                @can('read_gain')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.points.index')}}"
                                         class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
@@ -275,7 +275,7 @@
                                 @endcan
                             </ul>
                         </li>
-                @endcanany
+                
 
                 @canany(['read_user', 'read_role', 'read_permission'])
                     <li class="nav-item has-treeview @if(request()->is('admin/reports/*')) menu-open @endif">

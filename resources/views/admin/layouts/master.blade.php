@@ -262,6 +262,9 @@
                     return alert(data.message);
                 }
 
+                $('#has-cart-alert').addClass('hide');
+                $('#selecionar-estado-bichao').val('none');
+                $('#total-carrinho-text').text("0,00");
                 let htmlTable = data.chart.map((item) => (item.status == true ? `
                     <tr>
                         <td>${item.id}</td>
