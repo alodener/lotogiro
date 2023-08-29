@@ -18,6 +18,7 @@ use App\Models\TypeGame;
 use App\Models\Client;
 use App\Models\TransactBalance;
 use App\Helper\Configs;
+use App\Models\User;
 
 // lib de email
 use Mail;
@@ -63,6 +64,16 @@ class ProcessBetEntries implements ShouldQueue
      */
     public function handle()
     {
+        
+        if( !auth()->user()->hasRole('Administrador') && ($this->request['type_client'] != 1 || $this->request['type_client'] == null )){
+            $userclient = User::where('id', $this->request['client'])->first();
+                if($userclient != null){
+                    $clientuser = Client::where('email', $userclient->email)->first();
+                }else{
+                    $clientuser = $request->client;
+                }
+        }
+    
         foreach ($this->dezenas as $dez) {
             //$dezenaconvertida = string.split(/,(?! )/);
             // $dezenaconvertida2 = explode(" ", $dez);
@@ -71,7 +82,11 @@ class ProcessBetEntries implements ShouldQueue
             // $dezenaconvertida = implode(",", $dezenaconvertida2);
             
             $game = new Game;
-            $game->client_id = $this->request['client'];
+             if( !auth()->user()->hasRole('Administrador') && ($this->request['type_client'] != 1 || $this->request['type_client'] == null )){
+                $game->client_id = $clientuser->id;
+                }else{
+                   $game->client_id = $this->request['client'];
+                }
             $game->user_id = $this->user->id;
             $game->type_game_id = $this->request['type_game'];
             $game->type_game_value_id = $this->request['valueId'];

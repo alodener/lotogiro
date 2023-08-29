@@ -30,7 +30,11 @@ class User extends Authenticatable
         'link',
         'type_client',
         'is_active',
-        'contact_made'
+        'contact_made',
+        'user_id_sender',
+        'user_id',
+        'nome_funcao',
+        'description',
     ];
 
     /**

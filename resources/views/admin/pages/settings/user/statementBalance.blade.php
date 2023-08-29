@@ -27,21 +27,21 @@
             {{-- TODO: Verificar permissões para acessar rota e recurso --}}
             <div class="table-responsive">
                 <div class="row">
-                <h4 class="my-4">Extrato de Saldo | {{ $user->name }} - Saldo Total: {{ \App\Helper\Money::toReal($user->balance) }} | Bônus: R${{\App\Helper\Money::toReal($user->bonus)}}</h4>
+                <h4 class="my-4">{{ trans('admin.pagesF.extratSaldo') }} | {{ $user->name }} - {{ trans('admin.pagesF.saldoTotal') }}: {{ \App\Helper\Money::toReal($user->balance) }} | {{ trans('admin.pagesF.bonus') }}: R${{\App\Helper\Money::toReal($user->bonus)}}</h4>
                 <table class="table table-striped table-hover table-bordered table-lg" id="statementBalance_table">
                     <div class="my-4 col-md-4 text-right">
-                    <a href= "{{route('admin.settings.users.statementBalanceFiltrado', $user->id)}}" class="btn btn-primary"> Filtrar por Recargas </a>
+                    <a href= "{{route('admin.settings.users.statementBalanceFiltrado', $user->id)}}" class="btn btn-primary"> {{ trans('admin.pagesF.filtrarR') }} </a>
                     </div>
                 </div>
                     <thead>
                     <tr>
-                        <th>Data</th>
-                        <th>Responsável</th>
-                        <th>Carteira</th>
-                        <th>Valor Anterior</th>
-                        <th>Valor</th>
-                        <th>Valor Atual</th>
-                        <th>Descrição</th>
+                        <th>{{ trans('admin.pagesF.date') }} </th>
+                        <th>{{ trans('admin.pagesF.responsavel') }}</th>
+                        <th>{{ trans('admin.pagesF.carteira') }}</th>
+                        <th>{{ trans('admin.pagesF.valueAnt') }}</th>
+                        <th>{{ trans('admin.pagesF.valor') }}</th>
+                        <th>{{ trans('admin.pagesF.valueAtual') }}</th>
+                        <th>{{ trans('admin.pagesF.descricao') }}</th>
                         
                     </tr>
                     </thead>
@@ -59,7 +59,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4">Nenhum dado para exibir.</td>
+                            <td colspan="4">{{ trans('admin.pagesF.nenhumdado') }}</td>
                         </tr>
                     @endforelse
                     </tbody>

@@ -38,7 +38,7 @@
                 <input id="endDate" name='dataFinal' class="form-control" type="date" />
             </div>
             
-            <button type="submit"  style="margin-top: 20px" class="btn btn-primary">Pesquisar</button>
+            <button type="submit"  style="margin-top: 20px" class="btn btn-primary">{{ trans('admin.pagesF.pesquisar') }}</button>
 
         </div>
     </form>
@@ -132,11 +132,15 @@ $(document).ready(function(){
 ],
         
         "language": {
-            "lengthMenu": "Mostrando _MENU_ registros por página",
-            "zeroRecords": "Nada encontrado",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "Nenhum registro disponível",
-            "infoFiltered": "(filtrado de _MAX_ registros no total)"
+            "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
+            "zeroRecords": "{{ trans('admin.pagesF.ndEncont') }}",
+            "info": "{{ trans('admin.pagesF.mostrandoPags') }}",
+            "infoEmpty": "{{ trans('admin.pagesF.nhmRegs') }}",
+            "infoFiltered": "{{ trans('admin.pagesF.filtrado') }}",
+            "search" : "{{ trans('admin.pagesF.search') }}",
+            "previous": "{{ trans('admin.pagesF.previous') }}",
+            "next": "{{ trans('admin.pagesF.next') }}"
+
         }
     });
 });

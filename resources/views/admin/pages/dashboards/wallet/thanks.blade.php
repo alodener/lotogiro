@@ -4,14 +4,13 @@
 
 @section('content')
     <div class=content>
-        <div class="wrapper-1">
+        <div class= "wrapper-1">
             <div class="wrapper-2">
-                <h1>Obrigado!</h1>
-                <p>Recebemos sua compra!</p>
-                <p>Aguardaremos a confirmação do pagamento com nosso intermediador, e em breve teremos novidades
-                    para você.</p>
+                <h1>{{ trans('admin.pagesF.obg') }}</h1>
+                <p>{{ trans('admin.pagesF.receb') }}</p>
+                <p>{{ trans('admin.pagesF.aguard') }}</p>
                 <button class="go-home">
-                    Ir para o início.
+                {{ trans('admin.pagesF.irInicio') }}
                 </button>
             </div>
         </div>

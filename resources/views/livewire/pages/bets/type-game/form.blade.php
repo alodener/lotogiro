@@ -1,92 +1,91 @@
 <div>
-    <div>
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label for="name">Nome</label>
-                <input wire:model="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                       name="name"
-                       maxlength="50" value="{{old('name', $typeGame->name ?? null)}}">
-                @error('name')
-                <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                @enderror
-            </div>
-            <div class="form-group col-md-3">
-                <label for="numbers">Quantidade de números</label>
-                <input wire:model="numbers" type="text" class="form-control @error('numbers') is-invalid @enderror"
-                       id="numbers"
-                       name="numbers"
-                       maxlength="100" value="{{old('numbers', $typeGame->numbers ?? null)}}">
-                @error('numbers')
-                <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                @enderror
-            </div>
-            <div class="form-group col-md-3">
-                <label for="columns">Números por coluna</label>
-                <input wire:model="columns" type="text" class="form-control @error('columns') is-invalid @enderror"
-                       id="columns"
-                       name="columns"
-                       maxlength="100" value="{{old('columns', $typeGame->columns ?? null)}}">
-                @error('columns')
-                <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                @enderror
-            </div>
-            <div class="form-group col-md-3">
-                <div wire:ignore>
-                    <label for="columns">Cor</label>
-                    <input wire:model="color" type="text" class="form-control @error('color') is-invalid @enderror"
-                           id="color"
-                           name="color"
-                           maxlength="100" value="{{old('color', $typeGame->color ?? null)}}" autocomplete="off">
-                    @error('color')
-                    <span class="invalid-feedback" role="alert">
+     <div>
+         <div class="form-row">
+             <div class="form-group col-md-3">
+                <label for="name">{{ trans('admin.lwTypeGame.name') }}</label>
+                 <input wire:model="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                        name="name"
+                        maxlength="50" value="{{old('name', $typeGame->name ?? null)}}">
+                 @error('name')
+                 <span class="invalid-feedback" role="alert">
+                             {{ $message }}
+                         </span>
+                 @enderror
+             </div>
+             <div class="form-group col-md-3">
+                <label for="numbers">{{ trans('admin.lwTypeGame.quantN') }} </label>
+                 <input wire:model="numbers" type="text" class="form-control @error('numbers') is-invalid @enderror"
+                        id="numbers"
+                        name="numbers"
+                        maxlength="100" value="{{old('numbers', $typeGame->numbers ?? null)}}">
+                 @error('numbers')
+                 <span class="invalid-feedback" role="alert">
+                             {{ $message }}
+                         </span>
+                 @enderror
+             </div>
+             <div class="form-group col-md-3">
+                <label for="columns">{{ trans('admin.lwTypeGame.numC') }} </label>
+                 <input wire:model="columns" type="text" class="form-control @error('columns') is-invalid @enderror"
+                        id="columns"
+                        name="columns"
+                        maxlength="100" value="{{old('columns', $typeGame->columns ?? null)}}">
+                 @error('columns')
+                 <span class="invalid-feedback" role="alert">
+                         </span>
+                 @enderror
+             </div>
+             <div class="form-group col-md-3">
+                 <div wire:ignore>
+                    <label for="columns">{{ trans('admin.lwTypeGame.color') }}</label>
+                     <input wire:model="color" type="text" class="form-control @error('color') is-invalid @enderror"
+                            id="color"
+                            name="color"
+                            maxlength="100" value="{{old('color', $typeGame->color ?? null)}}" autocomplete="off">
+                     @error('color')
+                     <span class="invalid-feedback" role="alert">
                             {{ $message }}
                         </span>
                     @enderror
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                <label for="description">Descrição</label>
-                <textarea wire:model="description" class="form-control @error('description') is-invalid @enderror" id="description" rows="3"  id="description"
-                          name="description" maxlength="200">{{old('description', $typeGame->description ?? null)}}</textarea>
-                @error('description')
-                <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
+                 </div>
+             </div>
+         </div>
+         <div class="form-row">
+             <div class="form-group col-md-12">
+               <label for="description">{{ trans('admin.lwTypeGame.desc') }}</label>
+                 <textarea wire:model="description" class="form-control @error('description') is-invalid @enderror" id="description" rows="3"  id="description"
+                           name="description" maxlength="200">{{old('description', $typeGame->description ?? null)}}</textarea>
+                 @error('description')
+                 <span class="invalid-feedback" role="alert">
+                             {{ $message }}
+                             </span>
                 @enderror
             </div>
-        </div>
-        @if(Route::currentRouteName() == 'admin.bets.type_games.edit')
-            <div class="row my-2">
-                <div class="col-md-12">
-                    <a href="{{route('admin.bets.type_games.values.create', ['type_game' => $typeGameId ?? null])}}">
-                        <button type="button" class="btn text-white btn-info mb-3">Adicionar Valor
-                        </button>
-                    </a>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover table-sm" id="type_game_values_table">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Dezenas</th>
-                            <th>Multiplicador</th>
-                            <th>Máximo em Reais</th>
-                            <th>Máximo Repetidos</th>
-                            <th>Criação</th>
-                            <th style="width: 80px">Ações</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+         </div>
+         @if(Route::currentRouteName() == 'admin.bets.type_games.edit')
+             <div class="row my-2">
+                 <div class="col-md-12">
+                     <a href="{{route('admin.bets.type_games.values.create', ['type_game' => $typeGameId ?? null])}}">
+                        <button type="button" class="btn text-white btn-info mb-3">{{ trans('admin.lwTypeGame.addVal') }}
+                         </button>
+                     </a>
+                 </div>
+                 <div class="table-responsive">
+                     <table class="table table-striped table-hover table-sm" id="type_game_values_table">
+                         <thead>
+                         <tr>
+                             <th>Id</th>
+                            <th>{{ trans('admin.lwTypeGame.doz') }}</th>
+                            <th>{{ trans('admin.lwTypeGame.mult') }}</th>
+                            <th>{{ trans('admin.lwTypeGame.maxReais') }}</th>
+                            <th>{{ trans('admin.lwTypeGame.maxRepet') }}</th>
+                            <th>{{ trans('admin.lwTypeGame.creat') }}</th>
+                           <th style="width: 80px">{{ trans('admin.lwTypeGame.action') }}</th>
+                         </tr>
+                         </thead>
+                         <tbody>
+                         </tbody>
+                     </table>
                 </div>
             </div>
         @endif
@@ -177,7 +176,14 @@
 
             var table = $('#type_game_values_table').DataTable({
                 language: {
-                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
+                    "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
+            "zeroRecords": "{{ trans('admin.pagesF.ndEncont') }}",
+            "info": "{{ trans('admin.pagesF.mostrandoPags') }}",
+            "infoEmpty": "{{ trans('admin.pagesF.nhmRegs') }}",
+            "infoFiltered": "{{ trans('admin.pagesF.filtrado') }}",
+            "search" : "{{ trans('admin.pagesF.search') }}",
+            "previous": "{{ trans('admin.pagesF.previous') }}",
+            "next": "{{ trans('admin.pagesF.next') }}"
                 },
                 processing: true,
                 serverSide: true,

@@ -21,7 +21,7 @@
             @enderror
             @can('create_user')
                 <a href="{{route('admin.settings.users.create')}}">
-                    <button class="btn btn-info my-2">Novo Usuário</button>
+                    <button class="btn btn-info my-2">{{ trans('admin.pagesF.newUser') }}</button>
 
                 </a>
             @endcan
@@ -30,12 +30,12 @@
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Nome</th>
+                        <th>{{ trans('admin.pagesF.name') }}</th>
                         <th>E-mail</th>
                         <th>ddd</th> 
-                        <th>Telefone</th> 
-                        <th>Criação</th>
-                        <th class="acoes">Ações</th>
+                        <th>{{ trans('admin.pagesF.telefone') }}</th> 
+                        <th>{{ trans('admin.pagesF.criacao') }}</th>
+                        <th class="acoes">{{ trans('admin.pagesF.acoes') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,20 +49,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Deseja excluir este usuário?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">{{ trans('admin.pagesF.desejaExcluir') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Está ação não pode ser revertida
+                {{ trans('admin.pagesF.acaoRevert') }}
                 </div>
                 <div class="modal-footer">
                     <form id="destroy" action="" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Excluir</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.pagesF.cancel') }}</button>
+                        <button type="submit" class="btn btn-danger">{{ trans('admin.pagesF.excluir') }}</button>
                     </form>
                 </div>
             </div>
@@ -84,7 +84,14 @@
         $(document).ready(function () {
             var table = $('#user_table').DataTable({
                 language: {
-                    url: '{{asset('admin/layouts/plugins/datatables-bs4/language/pt_Br.json')}}'
+                    "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
+            "zeroRecords": "{{ trans('admin.pagesF.ndEncont') }}",
+            "info": "{{ trans('admin.pagesF.mostrandoPags') }}",
+            "infoEmpty": "{{ trans('admin.pagesF.nhmRegs') }}",
+            "infoFiltered": "{{ trans('admin.pagesF.filtrado') }}",
+            "search" : "{{ trans('admin.pagesF.search') }}",
+            "previous": "{{ trans('admin.pagesF.previous') }}",
+            "next": "{{ trans('admin.pagesF.next') }}"
                 },
                 processing: true,
                 serverSide: true,

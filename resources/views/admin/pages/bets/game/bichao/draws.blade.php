@@ -6,7 +6,7 @@
     <div class="col bg-white p-3">
         <hr />
         <div class="row">
-            <h1>Vencedores</h1>
+            <h1>{{ trans('admin.bichao.vencendores') }}</h1>
         </div>
         <hr />
         <div class="row">
@@ -22,9 +22,9 @@
                     </div>
                     <div class="col-md-3 col-6 mb-2">
                         <select class="change-busca form-control" name="busca-intervalo" data-busca-param="intervalo">
-                            <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >30 dias</option>
-                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >60 dias</option>
-                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >90 dias</option>
+                        <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >{{ trans('admin.bichao.30days') }}</option>
+                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >{{ trans('admin.bichao.60days') }}</option>
+                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >{{ trans('admin.bichao.90days') }}</option>
                         </select>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-6">
-                            <button class="btn btn-info" id="bichao-buscar-resultados" type="submit">Gerar relatório</button>
+                            <button class="btn btn-info" id="bichao-buscar-resultados" type="submit">{{ trans('admin.bichao.gerarRelat') }}</button>
                         </div>
                     </div>
                 </form>
@@ -51,17 +51,17 @@
                     <thead>
                         <tr>
                             <th scope="col" style="max-width: 150px">ID</th>
-                            <th scope="col">Cliente</th>
-                            <th scope="col">Valor</th>
-                            <th scope="col">Resultado <br />(Valor a pagar)</th>
-                            <th scope="col">PIX</th>
-                            <th scope="col" style="max-width: 250px">Loteria</th>
-                            <th scope="col" style="max-width: 180px">Modalidade</th>
-                            <th scope="col" style="max-width: 120px">Aposta</th>
-                            <th scope="col" style="max-width: 140px">Prêmios</th>
-                            <th scope="col">Pago</th>
-                            <th scope="col" style="max-width: 180px">Criado em</th>
-                            <th scope="col" style="max-width: 50px">Ações</th>
+                            <th scope="col">{{ trans('admin.bichao.client') }}</th>
+                            <th scope="col">{{ trans('admin.bichao.value') }}</th>
+                            <th scope="col">{{ trans('admin.bichao.resultados') }} <br />({{ trans('admin.falta.valorPagar') }})</th>
+                             <th scope="col">PIX</th>
+                            <th scope="col" style="max-width: 250px">{{ trans('admin.bichao.loteria') }}</th>
+                            <th scope="col" style="max-width: 180px">{{ trans('admin.bichao.modalidade') }}</th>
+                            <th scope="col" style="max-width: 120px">{{ trans('admin.bichao.aposta') }}</th>
+                            <th scope="col" style="max-width: 140px">{{ trans('admin.bichao.premios') }}</th>
+                            <th scope="col">{{ trans('admin.bichao.pago') }} </th>
+                            <th scope="col" style="max-width: 180px">{{ trans('admin.bichao.criadoem') }}</th>
+                            <th scope="col" style="max-width: 50px">{{ trans('admin.bichao.acoes') }}</th>
                         </tr>
                     </thead>
                     <tbody>
