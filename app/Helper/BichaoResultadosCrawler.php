@@ -261,11 +261,20 @@ class BichaoResultadosCrawler {
         return $resultado;
     }
 
+    private static function get_content($URL){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_URL, $URL);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
+    }
+
     public static function getResults($state, $d, $m, $y) {
         ini_set('user_agent', 'My-Application/2.5');
         $get_federal = $state === 'PO';
         if ($get_federal) $state = 'RJ';
-        $html = @file_get_contents("https://www.resultadofacil.com.br/resultado-do-jogo-do-bicho/$state/do-dia/$y-$m-$d");
+        $html = @static::get_content("https://www.resultadofacil.com.br/resultado-do-jogo-do-bicho/$state/do-dia/$y-$m-$d");
         if (!$html) return [];
         $dom = new DOMDocument();
         @$dom->loadHTML($html);
