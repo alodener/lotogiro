@@ -446,15 +446,17 @@ class BichaoController extends Controller
         $games = explode(',', $data['item']['game']);
         if ($data['item']['modality'] === 'Milhar/Centena') {
             foreach ($games as $game) {
-                $data['item']['value'] = floatval($data['item']['value']) / 2;
-                
-                $data['item']['modality'] = 'Milhar';
-                $data['item']['game'] = $game;
-                $chart[] = $data['item'];
-    
-                $data['item']['modality'] = 'Centena';
-                $data['item']['game'] = substr($game, 1);
-                $chart[] = $data['item'];
+                $value = floatval($data['item']['value']) / 2;
+                $chart[] = [
+                    'value' => $value,
+                    'modality' => 'Milhar',
+                    'game' => $game,
+                ];
+                $chart[] = [
+                    'value' => $value,
+                    'modality' => 'Centena',
+                    'game' => substr($game, 1),
+                ];
             }
         } else {
             foreach ($games as $game) {
