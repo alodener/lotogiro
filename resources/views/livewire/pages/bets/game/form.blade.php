@@ -2,21 +2,21 @@
     <table class="table px-sorteio">
         <thead>
         <tr>
-            <th class="col1" scope="col">Tipo</th>
-            <th scope="col">Concurso</th>
-            <th scope="col">Data do Sorteio</th>
-            <th scope="col">Importar Jogo</th>
+            <th class="col1" scope="col">{{ trans('admin.falta.tipo') }}</th>
+            <th scope="col">{{ trans('admin.falta.concurso') }}</th>
+            <th scope="col">{{ trans('admin.falta.dataSort') }}</th>
+            <th scope="col">{{ trans('admin.falta.importJogo') }}</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <td>{{$typeGame->name}}</td>
             @if(empty($typeGame->competitions->last()))
-                <td colspan="2" class="text-danger">NÃO EXISTE CONCURSO CADASTRADO, NÃO É POSSIVEL CRIAR O JOGO</td>
+                <td colspan="2" class="text-danger">{{ trans('admin.falta.nExist') }}</td>
             @else
                 <td>{{$typeGame->competitions->last()->number}}</td>
                 <td>{{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}</td>
-                <td> <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"><button  class="btn btn-info" type="button">Carregar </button></a></td>
+                <td> <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"><button  class="btn btn-info" type="button">{{ trans('admin.falta.carregar') }} </button></a></td>
             @endif
         </tr>
         </tbody>
@@ -26,7 +26,7 @@
 
     <input type="text" value="{{ $FiltroUser['name'] }}" disabled class="form-control">
     <input type="hidden" name="client" value="{{ $FiltroUser['id'] }}" readonly>
-
+    <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
     @endif
 
 
@@ -43,7 +43,7 @@
         <div class="form-group col-md-12">
             <div wire:ignore>
                 <div class="card-header ganhos-card">
-                    <h4>Cliente</h4>
+                    <h4>{{ trans('admin.lwGame.client') }}</h4>
                 </div>
             </div>        
             <div class="row">
@@ -91,11 +91,11 @@
                         <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
                         <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
                         <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
-                        Digite o Valor da Aposta
+                        {{ trans('admin.falta.digitValor') }}
                         <input type="text" id="value" onchange="altera()" value="" name="value" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-                        Valor do Prêmio R$
+                        {{ trans('admin.falta.valorPremio') }} R$
                         <input type="text" id="premio" value="" name="premio" readonly>
-                        <button  class="btn btn-info" type="button" onclick="altera();">Calcular</button>
+                        <button  class="btn btn-info" type="button" onclick="altera();">{{ trans('admin.falta.calcular') }}</button>
                     @endforeach
                 @else
                 
@@ -107,16 +107,16 @@
     <div class="row">
         <div class="col-md-12">
             @if(isset($matriz))
-                <h4>Quantidade selecionada:({{count($selectedNumbers)}}/{{$numbers}})</h4>
+                <h4>{{ trans('admin.falta.quantSelec') }}:({{count($selectedNumbers)}}/{{$numbers}})</h4>
                     @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
-                      <button wire:click="selecionaTudo()" class="{{ env('AllColor') }}" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
+                      <button wire:click="selecionaTudo()" class="{{ env('AllColor') }}" type="button" onclick="limpacampos();">{{ trans('admin.falta.selecNums') }}</button>
                     @endif
 
                     <br>
                     
                     <div class="col-md-12 automatic-bet">
                         <p style="font-size: 10px;margin-bottom: auto;">
-                            Selecione a quantidade de números para gerar um jogo automático:
+                        {{ trans('admin.falta.selecQuant') }}:
                         </p>
                         {{-- puxar do banco de dados quantos numeros pode se jogar --}}
                         @foreach ($busca as $buscas)
@@ -244,4 +244,3 @@
     </script>
 
 @endpush
-

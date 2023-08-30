@@ -21,7 +21,7 @@ class HomeController extends Controller
         //$user->assignRole('Administrador');
         //$user= auth()->user()->hasAllRoles(Role::all());
 
-        $rankings = \DB::select(
+       /* $rankings = \DB::select(
             (\DB::raw("WITH RECURSIVE
                 unwound AS (
                 SELECT id, games
@@ -38,11 +38,11 @@ class HomeController extends Controller
                 WHERE games.id IN (SELECT regexp_replace(games, ',.*', '') games
                 FROM unwound
                 ORDER BY id) 
-                GROUP BY client_id
+                GROUP BY client_id,cli.name
                 ORDER BY 2 DESC;"
             )
         ));
-
+*/
         $User = Auth::user();
         $FiltroUser = client::where('email', $User['email'])->first();
         $this->FiltroUser = $FiltroUser;
@@ -50,21 +50,17 @@ class HomeController extends Controller
         $JogosFeitos = game::where('user_id', $User['id'])->count();
         $saldo =(double) auth()->user()->balance;
 
-        $balances = UsersHasPoints::getBalancesByUser(auth()->user());
-        $points = UsersHasPoints::where('user_id', auth()->user()->id)->orderByDesc('id')->get();
+        //$balances = UsersHasPoints::getBalancesByUser(auth()->user());
+        //$points = UsersHasPoints::where('user_id', auth()->user()->id)->orderByDesc('id')->get();
 
-        UsersHasQualifications::generateByUser(auth()->user());
+        //UsersHasQualifications::generateByUser(auth()->user());
 
-        $qualificationAtived = UsersHasQualifications::getActivedByUser(auth()->user());
+        $qualificationAtived = null;//UsersHasQualifications::getActivedByUser(auth()->user());
         $nextGoal = null;
         $goalCalculation = null;
-        if ($qualificationAtived) {
-            $nextGoal = Qualifications::getDiffNextGoal($qualificationAtived->getQualification(), $balances['personal_balance'], $balances['group_balance']);
-            $goalCalculation = Qualifications::getGoalCalculation($qualificationAtived->getQualification(), $balances['personal_balance'], $balances['group_balance']);
-        }
-
+        
         // mandando valores para dashboar
-        return view('admin.pages.home', compact('User', 'FiltroUser', 'JogosFeitos', 'saldo','points', 'balances', 'qualificationAtived', 'nextGoal','goalCalculation', 'rankings'));
+        return view('admin.pages.home', compact('User', 'FiltroUser', 'JogosFeitos', 'saldo', 'qualificationAtived', 'nextGoal','goalCalculation'));
     }
 
     public function riot(Request $request)

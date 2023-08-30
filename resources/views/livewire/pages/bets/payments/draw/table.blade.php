@@ -67,9 +67,9 @@
                 <option>100</option>
             </select>
         </div>
-        <div class="form-group offset-md-5 col-md-6 text-right">
+        <!--<div class="form-group offset-md-5 col-md-6 text-right">
             <button wire:click="pay" type="button" class="btn btn-danger">{{ trans('admin.draws.export-payments-button') }}</button>
-        </div>
+        </div>-->
     </div>
     <div class="card card-info">
         <div class="card-header indica-card">

@@ -32,12 +32,13 @@ class Convert extends Component
         }
 
         if($myOldBonus >= $this->valueConvert) {
+
             $this->user->balance += ($this->valueConvert + ($this->valueConvert * ($this->user->commission/100)));
             $this->user->bonus -= $this->valueConvert;
-
+            
             $this->user->save();
 
-            $this->storeTransact($this->user, $this->valueConvert, $myOldBalance, "Saldo recebido a partir de Bônus.");
+            $this->storeTransact($this->user, $this->valueConvert, $myOldBalance, $this->user->balance,  "Saldo recebido a partir de Bônus.");
 
             $this->flash('success', 'Conversão realizada com sucesso!', [
                 'position' => 'center',
@@ -49,7 +50,7 @@ class Convert extends Component
         }
     }
 
-    private function storeTransact(User $user, string $value, string $oldValue, string $type): void
+    private function storeTransact(User $user, string $value, string $oldValue, string $valueA,  string $type): void
     {
         TransactBalance::create([
             'user_id_sender' => $user->id,
