@@ -447,16 +447,16 @@ class BichaoController extends Controller
         if ($data['item']['modality'] === 'Milhar/Centena') {
             foreach ($games as $game) {
                 $value = floatval($data['item']['value']) / 2;
-                $chart[] = [
-                    'value' => $value,
-                    'modality' => 'Milhar',
-                    'game' => $game,
-                ];
-                $chart[] = [
-                    'value' => $value,
-                    'modality' => 'Centena',
-                    'game' => substr($game, 1),
-                ];
+
+                $chartDto = $data['item'];
+                $chartDto['value'] = $value;
+                $chartDto['modality'] ='Milhar';
+                $chartDto['game'] = $game;
+                $chart[] = $chartDto;
+
+                $chartDto['modality'] ='Centena';
+                $chartDto['game'] = substr($game, 1);
+                $chart[] = $chartDto;
             }
         } else {
             foreach ($games as $game) {
