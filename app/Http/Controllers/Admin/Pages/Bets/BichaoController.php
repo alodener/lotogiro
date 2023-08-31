@@ -878,6 +878,11 @@ class BichaoController extends Controller
         BichaoGamesVencedores::insert($gamesWinners);
     }
 
+    private static function get_results_db($horarios, $dia, $mes, $ano) {
+        $resultados = BichaoResultados::whereIn('horario_id', $horarios_id)->where('created_at', "$ano-$mes-$dia")->get();
+        return $resultados;
+    }
+
     public function get_results_json(Request $request) {
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
@@ -889,7 +894,66 @@ class BichaoController extends Controller
         $estado_uf = $data['estado'];
         $resultadosDto = [];
 
-        $resultados = BichaoResultadosCrawler::getResults($estado_uf, $dia, $mes, $ano);
+        $url = "https://api.pontodobicho.com/results?date=$dia%2F$mes%2F$ano&state=$estado_uf";
+        $resultados = json_decode(file_get_contents($url));
+
+        if (!$resultados) return json_encode([]);
+        usort($resultados, fn ($a, $b) => $a->time - $b->time);
+
+        foreach ($resultados as $resultado) {
+            if ($estado_uf === 'PO' && $resultado->lottery === 'INSTANTANEA') continue;
+            if ($estado_uf !== 'PO' && $resultado->lottery === 'FEDERAL') continue;
+            $timeRaw = explode('.', $resultado->time);
+            $hora = str_pad($timeRaw[0], 2, '0', STR_PAD_LEFT);
+            $minuto = isset($timeRaw[1]) ? str_pad($timeRaw[1], 2, '0', STR_PAD_RIGHT) : '00';
+
+            $resultadoDto = [
+                'date' => $resultado->date,
+                'lottery' => $resultado->lottery,
+                'time' => $hora.'h'.$minuto,
+                'placement' => []
+            ];
+
+            if (!isset($resultado->empty)) {
+                foreach ($resultado->placement as $key => $placement) {
+                    if ($key > 4) continue;
+                    $dezena = substr($placement, 2);
+                    $animal = BichaoAnimals::where('value_1', $dezena)->orWhere('value_2', $dezena)->orWhere('value_3', $dezena)->orWhere('value_4', $dezena)->first();
+                    if (!$animal) continue;
+    
+                    $resultadoDto['placement'][] = [
+                        'milhar' => $placement,
+                        'grupo' => str_pad($animal->id, 2, '0', STR_PAD_LEFT),
+                        'bicho' => $animal->name,
+                    ];
+                }
+            }
+
+            $resultadosDto[] = $resultadoDto;
+        }
+
+        echo json_encode($resultadosDto);
+    }
+
+    public function get_results_json_new(Request $request) {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+        $data = $request->all();
+        $dia = $data['data'][2];
+        $mes = $data['data'][1];
+        $ano = $data['data'][0];
+        $estado_uf = $data['estado'];
+        $resultadosDto = [];
+
+        $estado = BichaoEstados::where('uf', $estado_uf)->first();
+        $horarios = BichaoHorarios::where('estado_id', $estado->id)->get()->toArray();
+
+        // $horarios_id = array_map(fn ($horario) => $horario['id'], $horarios);
+
+        // $resultados = BichaoResultadosCrawler::getResults($estado_uf, $dia, $mes, $ano);
+        $resultados = static::get_results_db($horarios, $dia, $mes, $ano);
+        echo json_encode($resultados);exit;
 
         if (!$resultados) return json_encode([]);
         usort($resultados, fn ($a, $b) => $a->time - $b->time);
@@ -960,6 +1024,63 @@ class BichaoController extends Controller
     }
 
     public function get_resultados(Request $request) {
+        $estados = BichaoEstados::where('uf', '!=', 'FED')->get();
+        $searchData = explode('-', date('d-m-Y'));
+        $resultadosDto = [];
+
+        $horariosApi = self::request_api_results($estados, $searchData);
+        foreach ($horariosApi as $estado_id => $horarioApi) {
+            $result = json_decode($horarioApi);
+
+            if ($result) {
+                $horarios = BichaoHorarios::where('estado_id', $estado_id)->get();
+                
+                foreach ($result as $game) {
+                    if ($estado_id == 1 && $game->lottery == 'FEDERAL') {
+                        $estadoFed = BichaoEstados::where('uf', 'FED')->first();
+                        $horarios = BichaoHorarios::where('estado_id', $estadoFed->id)->get();
+                    }
+                    $timeRaw = explode('.', $game->time);
+                    $hora = str_pad($timeRaw[0], 2, '0', STR_PAD_LEFT);
+                    $minuto = isset($timeRaw[1]) ? str_pad($timeRaw[1], 2, '0', STR_PAD_RIGHT) : '00';
+                    $searchTime = "$hora:$minuto:00";
+                    
+                    $horario = array_values(array_filter($horarios->toArray(), fn ($item) => $item['horario'] == $searchTime));
+
+                    if (sizeof($horario) > 0 && $horario[0]['banca'] == $game->lottery) {
+                        $checkResultExist = BichaoResultados::where('horario_id', $horario[0]['id'])->where('created_at', date('Y-m-d'))->first();
+
+                        if (!$checkResultExist && (!isset($game->empty) || $game->empty != 1)) {
+                            $resultadosDto[] = [
+                                'horario_id' => $horario[0]['id'],
+                                'horario' => $horario[0]['horario'],
+                                'premio_1' => $game->placement[0],
+                                'premio_2' => $game->placement[1],
+                                'premio_3' => $game->placement[2],
+                                'premio_4' => $game->placement[3],
+                                'premio_5' => $game->placement[4],
+                                'created_at' => date('Y-m-d'),
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach ($resultadosDto as $index => $resultadoDto) {
+            unset($resultadoDto['horario']);
+            $resultadosDto[$index]['id'] = BichaoResultados::insertGetId($resultadoDto);
+        }
+
+        if (sizeof($resultadosDto) > 0) {
+            self::get_winners($resultadosDto);
+        }
+
+        echo 'ok';
+        exit;
+    }
+
+    public function get_resultados_new(Request $request) {
         $estados = BichaoEstados::get();
         $searchData = explode('-', date('d-m-Y'));
         $dia = $searchData[0];
