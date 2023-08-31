@@ -47,7 +47,7 @@
                                     <option selected value="none" disabled>{{ trans('admin.falta.selecEstado') }}</option>
                                     @foreach ($estados as $estado)
                                         @if ($estado->uf != 'FED' || ($estado->uf == 'FED' && (date('w') == 3 || date('w') == 6)))
-                                        <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
+                                            <option value="{{ $estado->id }}">{{ $estado->nome }}</option>
                                         @endif
                                     @endforeach
                                 </select>
