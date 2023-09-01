@@ -19,11 +19,11 @@
                 </script>
             @endpush
             @enderror
-            @can('create_client')
+            
                 <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame])}}">
                     <button class="btn btn-info my-2">{{ trans('admin.games.new-game-button') }}</button>
                 </a>
-            @endcan
+           
             <div class="table-responsive extractable-cel">
                 <div class="filter-wrapper">
                     <form class="form" id="filterForm">

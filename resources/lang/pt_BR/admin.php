@@ -921,7 +921,7 @@ return [
                 'dezenasUtiliz' => 'Dezenas Utilizadas',
                 'pontosCliente' => 'Pontos por Cliente',
                 'extrato' => 'Extrato',
-                'extratoRecarga' => 'Extrato Recarga Manual',
+                'extratoRecarga' => 'Extrato Financeiro',
                 'saldoClientes' => 'Saldo de Clientes',
                 'extratoVendas' => 'Extrato de Vendas',
                 'bilhete' => 'Bilhetes Bichão',
