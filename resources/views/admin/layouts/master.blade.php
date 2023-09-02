@@ -232,7 +232,7 @@
                     } else {
                         const date = new Date();
                         const day = date.getDay();
-                        if (day === 3 || day === 6) data.horarios = data.horarios.filter(({ banca, horario }) => banca !== 'PTN-RIO' && (banca === 'LOOK' && horario !== '18:20:00') && (banca === 'BA' && horario !== '19:00:00'));
+                        if (day === 3 || day === 6) data.horarios = data.horarios.filter(({ banca, horario }) => banca !== 'PTN-RIO' || (banca === 'LOOK' && horario !== '18:20:00') || (banca === 'BA' && horario !== '19:00:00'));
                         const horarios = data.horarios.map((horario, index) => (`
                             <div class="form-check mb-2">
                                 <input class="form-check-input" type="radio" name="bichao-horario-sorteio" id="bichao-horario-sorteio-${horario.id}" value="${horario.id}" ${index === 0 && 'checked'}>
