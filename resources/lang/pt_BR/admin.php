@@ -1013,6 +1013,7 @@ return [
                 'quinasaojoao' => '015 - Apostar na Quina de São João',
                 'apostmilharcent' => '016 - Como Apostar na Milhar/Centena',
                 'bichaos' => 'Bichão da Sorte',
+                'multjogos' => '008 - Como Fazer Múltiplos Jogos no Bichão',
             ],
 
             'language' => [
