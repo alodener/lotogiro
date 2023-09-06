@@ -188,6 +188,16 @@
                 </p>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">{{ trans('admin.bichao.teimosinha') }}</span>
+                    </div>
+                    <input id="input_teimosinha_bet" type="number" class="form-control" value="0">
+                </div>
+            </div>
+        </div>
         <hr />
         <div class="row">
             <div class="col mb-2">
@@ -285,6 +295,7 @@
             const value = $('#input_value_bet').val();
             const client_id = $('#livewire-client-id').val();
             const centena_input = $('#input-centena').val();
+            const teimosinha = $('#input_teimosinha_bet').val();
 
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
@@ -299,6 +310,7 @@
                 client_id,
                 modality: '{{$modalidade->nome}}',
                 game: centena_input,
+                teimosinha: parseInt(teimosinha),
             };
 
             addChartItem(item);
