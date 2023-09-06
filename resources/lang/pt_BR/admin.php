@@ -929,7 +929,7 @@ return [
                 'dezenasUtiliz' => 'Dezenas Utilizadas',
                 'pontosCliente' => 'Pontos por Cliente',
                 'extrato' => 'Extrato',
-                'extratoRecarga' => 'Extrato Recarga Manual',
+                'extratoRecarga' => 'Extrato Financeiro',
                 'saldoClientes' => 'Saldo de Clientes',
                 'extratoVendas' => 'Extrato de Vendas',
                 'bilhete' => 'Bilhetes Bichão',
@@ -1013,6 +1013,7 @@ return [
                 'quinasaojoao' => '015 - Apostar na Quina de São João',
                 'apostmilharcent' => '016 - Como Apostar na Milhar/Centena',
                 'bichaos' => 'Bichão da Sorte',
+                'multjogos' => '008 - Como Fazer Múltiplos Jogos no Bichão',
             ],
 
             'language' => [
