@@ -84,7 +84,7 @@ class Wallet
                         ]);
                     }
                     
-                    $user->balance += $newRechargeOrder->value ;
+                    $user->balance += $newRechargeOrder->value + $commission;
                     $user->save();
 
 
