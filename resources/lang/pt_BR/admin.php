@@ -506,6 +506,7 @@ return [
                 'premiacaoSemLimiteMilharCentena' => 'No momento, atingimos o limite de prêmios pra essa modalidade. Tente novamente mais tarde, ou no próximo sorteio. Você pode tentar jogar a milhar ou centena separadamente.',
                 'premiacao' => 'Premiação',
                 'addCarrinho' => 'Adicionar ao Carrinho',
+                'teimosinha' => 'Teimosinha:',
         
                 'gerarA' => 'Gerar Aposta',
                 'gerarD' => 'Gerar Dezena',
@@ -946,6 +947,7 @@ return [
 
             'falta' => [
                 'aposta' => 'Sua aposta',
+                'teimosinha' => 'Teimosinha:',
                 'processada' => 'foi processada',
                 'ola' => 'Olá',
                 'atualizar' => 'Atualizar Concurso',
@@ -962,6 +964,7 @@ return [
                 'modalidade' => 'Modalidade',
                 'bilhete' => 'Bilhete',
                 'fechar' => 'Fechar',
+                'repetirJogo' => 'Refazer Jogo',
                 'premio' => 'Prêmio',
                 'selecPremios' => 'Selecione os prêmios',
                 'valorPagar' => 'Valor a pagar',
