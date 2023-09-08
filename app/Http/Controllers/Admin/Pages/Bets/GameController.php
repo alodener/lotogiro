@@ -348,7 +348,7 @@ class GameController extends Controller
                 
                 
                  $game = new $this->game;
-                if($request->type_client != 1){
+                if($request->type_client != 1 && !auth()->user()->hasRole('Administrador')){
                 $userclient = User::where('id', $request->client)->first();
                     if($userclient != null){
                         $clientuser = Client::where('email', $userclient->email)->first();
