@@ -125,8 +125,7 @@
                 </div>
                 <div class="col-md-6 col-6">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="input-milhar"
-                            aria-describedby="basic-addon1">
+                        <textarea class="form-control" id="input-milhar" rows="2" aria-describedby="basic-addon1" style="resize: none;"></textarea>
                     </div>
                 </div>
                 <div class="col-md-5 col-12">
@@ -192,6 +191,16 @@
                     </svg>
                 </p>
 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">{{ trans('admin.bichao.teimosinha') }}</span>
+                    </div>
+                    <input id="input_teimosinha_bet" type="number" class="form-control" value="0">
+                </div>
             </div>
         </div>
         <hr />
@@ -302,6 +311,7 @@
             const value = $('#input_value_bet').val();
             const client_id = $('#livewire-client-id').val();
             const milhar_input = $('#input-milhar').val();
+            const teimosinha = $('#input_teimosinha_bet').val();
 
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
@@ -316,6 +326,7 @@
                 client_id,
                 modality: '{{$modalidade->nome}}',
                 game: milhar_input,
+                teimosinha: parseInt(teimosinha),
             };
 
             addChartItem(item);

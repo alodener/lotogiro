@@ -248,6 +248,7 @@ class BichaoResultadosCrawler {
 
         foreach ($dom->getElementsByTagName('tr') as $node) {
             $result = $node->childNodes->item(1)->textContent;
+            if ($state === 'BA') $result = $node->childNodes->item(3)->textContent;
             if (intval($result) === 0) continue;
             $resultado['placement'][] = $result;
         }
@@ -261,11 +262,31 @@ class BichaoResultadosCrawler {
         return $resultado;
     }
 
+    private static function get_content($url){
+        $ch = curl_init();
+        curl_setopt_array($ch, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Cookie: __goc_session__=tyjuxsczevmfesxsxiyogsdfhahtywli'
+            ),
+        ));
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
+    }
+
     public static function getResults($state, $d, $m, $y) {
-        ini_set('user_agent', 'My-Application/2.5');
         $get_federal = $state === 'PO';
         if ($get_federal) $state = 'RJ';
-        $html = @file_get_contents("https://www.resultadofacil.com.br/resultado-do-jogo-do-bicho/$state/do-dia/$y-$m-$d");
+        // $html = @static::get_content("http://resultados.x10.mx/resultado-do-jogo-do-bicho/$state.html");
+        $html = @static::get_content("https://www.resultadofacil.com.br/resultado-do-jogo-do-bicho/$state/do-dia/$y-$m-$d");
         if (!$html) return [];
         $dom = new DOMDocument();
         @$dom->loadHTML($html);
