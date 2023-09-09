@@ -5,6 +5,11 @@ namespace App\Http\Livewire\Utils\Clientautocomplete;
 use App\Models\Client;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+use App\Models\Role;
 
 class Table extends Component
 {
@@ -18,14 +23,46 @@ class Table extends Component
     public $value;
 
     public function updatedSearch($value)
-    {
-        $this->users = Client::where("name", "like", "%{$this->search}%")->get();
-        $this->showList = true;
+{
+    
+    $userlogado = Auth::user(); 
+    
+    if (auth()->user()->hasRole('Administrador')) {
+        
+        $this->users = Client::where(function($query) {
+            $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+        })
+        ->get();
+        
+
+    } else {
+        
+        $this->users = User::where('indicador', $userlogado->id)
+            ->where(function($query) {
+               $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+        })
+        ->get();
     }
+   
+    $this->showList = true;
+}
+
+    
 
     public function setId($user)
     {
+    
+    if(!auth()->user()->hasRole('Administrador')){
+        
+       $userclient = User::where('id', $user["id"])->first();
+       $clientUser = Client::where('email', $userclient->email)->first();
+       $this->userId = $clientUser->id;
+      
+     
+    }else{
         $this->userId = $user["id"];
+
+    }
         $this->search = $user["name"] . ' ' . $user["last_name"] . ' - ' . $user["email"];
         $this->showList = false;
     }

@@ -2,27 +2,40 @@
 
 @section('title', trans('admin.games.listing-page-title'))
 
+@include('admin.pages.bets.game.bichao.carrinho')
+
 @section('content')
     <div class="col bg-white p-3">
         <div class="row">
             <div class="col-md-8 col-12 d-flex justify-content-end container-menu-items">
-                <a href="{{ route('admin.bets.bichao.index')}}">
-                    <button class="btn btn-info my-2 ml-1">Apostar</button>
+            <a href="{{ route('admin.bets.bichao.index')}}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.apostar') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.resultados') }}">
-                    <button class="btn btn-info my-2 ml-1">Resultados</button>
+            <a href="{{ route('admin.bets.bichao.resultados') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.resultados') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
-                    <button class="btn btn-info my-2 ml-1">Minhas apostas</button>
+            <a href="{{ route('admin.bets.bichao.minhas.apostas') }}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.minhasaposts') }}</button>
                 </a>
-                <a href="{{ route('admin.bets.bichao.cotacao')}}">
-                    <button class="btn btn-info my-2 ml-1">Cotação</button>
+            <a href="{{ route('admin.bets.bichao.cotacao')}}">
+
+            <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.cotacao') }}</button>
                 </a>
+                <button data-toggle="modal" data-target="#jogos-carrinho" class="btn btn-success my-2 ml-1 position-relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    @if (sizeof($chart) > 0)
+                        <div id="has-cart-alert" class="position-absolute rounded" style="background-color: red; height: 10px; width: 10px; top: -3px; right: -3px;"></div>
+                    @endif
+                    {{ trans('admin.bichao.labelCarrinho') }}
+                </button>
             </div>
         </div>
         <hr />
         <div class="row">
-            <h1>Minhas Apostas</h1>
+        <h1>{{ trans('admin.bichao.minhasaposts') }}</h1>
         </div>
         <hr />
         <div class="row">
@@ -38,9 +51,9 @@
                     </div>
                     <div class="col-md-2 col-6">
                         <select class="change-busca form-control" name="busca-intervalo" data-busca-param="intervalo">
-                            <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >30 dias</option>
-                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >60 dias</option>
-                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >90 dias</option>
+                        <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >{{ trans('admin.bichao.30days') }}</option>
+                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >{{ trans('admin.bichao.60days') }}</option>
+                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >{{ trans('admin.bichao.90days') }}</option>
                         </select>
                     </div>
                 </div>
@@ -52,14 +65,14 @@
                     <thead>
                         <tr>
                             <th scope="col" style="max-width: 150px">ID</th>
-                            <th scope="col">Cliente</th>
-                            <th scope="col">Valor</th>
-                            <th scope="col" style="max-width: 250px">Loteria</th>
-                            <th scope="col" style="max-width: 180px">Modalidade</th>
-                            <th scope="col" style="max-width: 120px">Aposta</th>
-                            <th scope="col" style="max-width: 140px">Prêmios</th>
-                            <th scope="col" style="max-width: 180px">Criado em</th>
-                            <th scope="col" style="max-width: 50px">Ações</th>
+                            <th scope="col">{{ trans('admin.bichao.client') }}</th>
+                            <th scope="col">{{ trans('admin.bichao.value') }}</th>
+                            <th scope="col" style="max-width: 250px">{{ trans('admin.bichao.loteria') }}</th>
+                            <th scope="col" style="max-width: 180px">{{ trans('admin.bichao.modalidade') }}</th>
+                            <th scope="col" style="max-width: 120px">{{ trans('admin.bichao.aposta') }}</th>
+                            <th scope="col" style="max-width: 140px">{{ trans('admin.bichao.premios') }}</th>
+                            <th scope="col" style="max-width: 180px">{{ trans('admin.bichao.criadoem') }}</th>
+                            <th scope="col" style="max-width: 50px">{{ trans('admin.bichao.acoes') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,6 +114,11 @@
                                 </td>
                                 <td>{{ date('d/m/Y H:i', strtotime($aposta['created_at'])) }}</td>
                                 <td>
+                                    <a class="repeat-game" href="#" data-id="{{ $aposta['id'] }}">
+                                        <button type="button" class="btn btn-success text-light" title="Repetir aposta">
+                                            <i class="bi bi-arrow-repeat"></i>
+                                        </button>
+                                    </a>
                                     <a href="{{ route('admin.bets.bichao.receipt', ['id' => $aposta['id'], 'tipo' => 'txt']) }}">
                                         <button type="button" class="btn btn-primary text-light" title="Baixar bilhete TXT">
                                             <i class="bi bi-ticket"></i>
@@ -129,7 +147,39 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="teimosinha-repeticao" tabindex="-1" role="dialog" aria-labelledby="teimosinha-repeticaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="teimosinha-repeticaoLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon2">{{ trans('admin.bichao.teimosinha') }}</span>
+                                    </div>
+                                    <input id="input_teimosinha_bet" type="number" class="form-control" value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="incluir-jogos-repetir" class="btn btn-success">{{ trans('admin.falta.repetirJogo') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.falta.fechar') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
 
 @push('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css"
@@ -181,6 +231,19 @@
 
 @push('scripts')
 <script>
+    let game_id;
+
+    $('.repeat-game').click(function(ev) {
+        game_id = $(this).attr('data-id');
+        ev.preventDefault();
+        $('#teimosinha-repeticao').modal('show');
+    });
+
+    $('#incluir-jogos-repetir').click(function() {
+        const teimosinha = $('#input_teimosinha_bet').val();
+        addChartItem({ game_id, teimosinha: parseInt(teimosinha) });
+    });
+
     $('.change-busca').change(function() {
         const value = $(this).val();
         const param = $(this).attr('data-busca-param');

@@ -20,6 +20,7 @@ use App\Models\TypeGame;
 use App\Models\Bet;
 use App\Models\TypeGameValue;
 use Illuminate\Support\Facades\Auth;
+use App\Helper\GameHelper;
 
 use App\Models\User;
 use App\Models\UsersHasPoints;
@@ -144,6 +145,8 @@ class GameController extends Controller
 
     public function store(Request $request, Bet $validate_game, Game $game)
     {
+        
+     
         if ($request->controle == 1) {
             if (!auth()->user()->hasPermissionTo('create_game')) {
                 abort(403);
@@ -165,12 +168,32 @@ class GameController extends Controller
                         'error' => 'Apostas Encerradas!'
                     ]);
                 }
-
+                
+                
                 $chaveregistro = ChaveAleatoria::generateKey(8);
                 $user = Auth()->user()->id;
                 $bet = new Bet();
+
+                if(!auth()->user()->hasRole('Administrador') && ($request->type_client != 1 || $request->type_client == null) ){
+                                    
+                $userclient = User::where('id', $request->client)->first();
+
+                    if($userclient != null){
+                        $clientuser = Client::where('email', $userclient->email)->first();
+                    }else{
+                $clientuser = $request->client;
+                }
+                if($userclient != null){
+                    $bet->client_id = $clientuser->id;
+                }else{
+                    $bet->client_id = $request->client;
+                }
+                }else{
+
+                    $bet->client_id = $request->client;
+                }
+                
                 $bet->user_id = Auth()->user()->id;
-                $bet->client_id = $request->client;
                 $bet->status_xml = 1;
                 $bet->key_reg = $chaveregistro;
                 $bet->save();
@@ -321,9 +344,30 @@ class GameController extends Controller
                         'error' => 'Esse sorteio já foi finalizado!'
                     ]);
                 }
+                
+                
+                
+                 $game = new $this->game;
+                if($request->type_client != 1 && !auth()->user()->hasRole('Administrador')){
+                $userclient = User::where('id', $request->client)->first();
+                    if($userclient != null){
+                        $clientuser = Client::where('email', $userclient->email)->first();
+                    }else{
+                $clientuser = $request->client;
+                }
+                if($userclient != null){
+                $game->client_id = $clientuser->id;
+                }else{
+                    $game->client_id = $request->client;
+                }
+                }else{
 
-                $game = new $this->game;
-                $game->client_id = $request->client;
+                    $game->client_id = $request->client;
+                }
+
+
+
+                //salvar jogo
                 $game->user_id = auth()->id();
                 $game->type_game_id = $request->type_game;
                 $game->type_game_value_id = $request->valueId;
@@ -336,7 +380,19 @@ class GameController extends Controller
                 $game->commission_percentage = auth()->user()->commission;
                 
                 $game->save();
+
+
+                /*//verifica se é da dupla sena 
+                if ($request->type_game == 10){
+                    //encontrar o concurso com o final A na tabela
+                    $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
+                    // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $numbers);
+
+
+                }*/
                 
+               
                 $transact_balance = new TransactBalance;
                 $transact_balance->user_id_sender = auth()->id();
                 $transact_balance->user_id = auth()->id();
@@ -345,9 +401,6 @@ class GameController extends Controller
                 $transact_balance->value_a = auth()->user()->balance - $request->value;
                 $transact_balance->type = 'Compra - Jogo de id: ' . $game->id . ' do tipo: ' . $game->type_game_id;
                 $transact_balance->save();
-
-
-
 
                 $extract = [
                     'type' => 1,
@@ -366,6 +419,7 @@ class GameController extends Controller
                 $game->commision_value_pai = $commissionCalculationPai;
                 $game->save();
 
+                
                 $planodecarreira = Configs::getPlanoDeCarreira();
                 if($planodecarreira == "Ativado"){
                 UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);

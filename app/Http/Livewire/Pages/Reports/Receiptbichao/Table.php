@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class Table extends Component
 {
@@ -44,10 +45,13 @@ class Table extends Component
 
     public function updatedSearch($value)
     {
-        if ($this->auth->hasPermissionTo('read_all_sales')) {
-            $this->users = User::where("name", "like", "%{$this->search}%")->get();
-            $this->showList = true;
+        if ($this->auth->hasPermissionTo('read_all_gains')) {
+            $this->users = User::where(function($query) {
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+            })
+            ->get();
         }
+        $this->showList = true;
     }
 
     public function setId($user)
@@ -282,7 +286,7 @@ class Table extends Component
 
         $pdf = PDF::loadView('admin.layouts.pdf.salesbichao', $data)->output();
 
-        $fileName = 'Relatório de Vendas (bilhetes) - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
+        $fileName = 'Relat贸rio de Vendas (bilhetes) - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
 
         return response()->streamDownload(
             fn() => print($pdf),
@@ -297,3 +301,4 @@ class Table extends Component
         ]);
     }
 }
+

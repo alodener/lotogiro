@@ -80,7 +80,7 @@
     <div class="col-md-6 mb-3">
         <button type="submit"
                 class="btn btn-block btn-outline-success">@if(request()->is('admin/bets/competitions/create'))
-                {{ trans('admin.competitions.create-competitions-button') }}  @else  {{ trans('admin.competitions.edit-competitions-button') }} @endif </button>
+                {{ trans('admin.falta.cadastrar') }}  @else  {{ trans('admin.falta.atualizar') }} @endif </button>
     </div>
 </div>
 
