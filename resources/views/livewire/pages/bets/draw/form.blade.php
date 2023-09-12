@@ -75,7 +75,7 @@
                                         name="numbers"
                                         maxlength="60" value="{{old('numbers', $typeGame->name ?? null)}}">
                                  @error('numbers')
- <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                     {{ $message }}
                                 </span>
                                 @enderror
@@ -96,13 +96,13 @@
                          <div class="row mb-3">
                              <div class="col-md-12">
                                  <div class="alert alert-success">
-
+                                    <!-- id do jogo e nome do usuario -->
                                     <h3>{{ trans('admin.lwDraw.sortregis') }} </h3>
                                      <p>
-                                         Id: {{$draw->id}}<br/>                                    
+                                         Id: {{$draw->id}}<br/>                                   
                                         {{ trans('admin.lwDraw.concurs') }}  {{$draw->competition}}<br/>
                                         {{ trans('admin.lwDraw.number') }}   {{$draw->numbers}}<br/>
-                                        {{ trans('admin.lwDraw.gamesG') }}   {{!empty($draw->games) ? $draw->games : 'N達o houve'}}<br/>
+                                        {{ trans('admin.lwDraw.gamesG') }}   {{!empty($draw->games) ? $draw->games : 'Não houve'}}<br/>
                                      </p>
                                  </div>
                              </div>
@@ -113,7 +113,7 @@
                              <thead>
                              <tr>
 
-                                <th>{{ trans('admin.lwDraw.game') }}</th>
+                                <th>{{ trans('admin.lwDraw.game') }} </th>
                                  <th>Cpf</th>
                                 <th>{{ trans('admin.lwDraw.name') }}   </th>
                                 <th>{{ trans('admin.lwDraw.valueA') }} </th>
@@ -125,7 +125,9 @@
                                  <tbody>
                                  @if($games->count() > 0)
                                  @foreach($games as $game)
-
+                                            <td>{{\App\Helper\Money::toDatabase($game->id)}} </td>
+                                            <td>{{\App\Helper\Money::toDatabase($game->client->cpf)}} </td>
+                                            <td> {{\App\Helper\Money::toDatabase($game->client->name)}}  </td>
                                              <td>{{\App\Helper\Money::toReal($game->value)}}</td>
                                              <td>{{\App\Helper\Money::toReal($game->premio)}}</td>
                                              <td width="180">

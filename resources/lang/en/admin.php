@@ -963,7 +963,7 @@ to your account as soon as we are notified.',
             'dezenasUtiliz' => 'Used Numbers',
             'pontosCliente' => 'Points per Client',
             'extrato' => 'Statement',
-            'extratoRecarga' => 'Manual Recharge Statement',
+            'extratoRecarga' => 'Financial Statement',
             'saldoClientes' => 'Client Balances',
             'extratoVendas' => 'Sales Statement',
             'bilhete' => 'Bichão Tickets',
@@ -1068,6 +1068,7 @@ to your account as soon as we are notified.',
             'ternogrupo' => '007 - Group Suit',
             'quinasaojoao' => '015 - Bet on Quina de São João',
             'apostmilharcent' => '016 - How to Bet on Thousand/Hundred',
+            'multjogos' => '008 - How to Make Multiple Games on Bichão'
         ],
         
     

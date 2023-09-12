@@ -118,8 +118,7 @@
                 </div>
                 <div class="col-6">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="input-milhar"
-                            aria-describedby="basic-addon1">
+                        <textarea class="form-control" id="input-milhar" rows="2" aria-describedby="basic-addon1" style="resize: none;"></textarea>
                     </div>
                 </div>
                 <div class="col-md-5 col-12">
@@ -179,6 +178,16 @@
                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z" />
                     </svg>
                 </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">{{ trans('admin.bichao.teimosinha') }}</span>
+                    </div>
+                    <input id="input_teimosinha_bet" type="number" class="form-control" value="0">
+                </div>
             </div>
         </div>
         <hr />
@@ -281,6 +290,7 @@
             const option_award = validate_award();
             const value = $('#input_value_bet').val();
             const client_id = $('#livewire-client-id').val();
+            const teimosinha = $('#input_teimosinha_bet').val();
 
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
@@ -293,6 +303,7 @@
                 client_id,
                 modality: '{{$modalidade->nome}}',
                 game: $('#input-milhar').val().replaceAll(' ', ''),
+                teimosinha: parseInt(teimosinha),
             };
 
             addChartItem(item);
