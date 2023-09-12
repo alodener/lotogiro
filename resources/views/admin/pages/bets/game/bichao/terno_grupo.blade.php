@@ -918,7 +918,7 @@
                     </div>
                     <div class="col-md-6 col-6">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" id="input-group" aria-describedby="basic-addon1">
+                            <textarea class="form-control" id="input-group" rows="2" aria-describedby="basic-addon1" style="resize: none;"></textarea>
                         </div>
                     </div>
                     <div class="col-md-5 col-12">
@@ -988,6 +988,16 @@
                 </p>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">{{ trans('admin.bichao.teimosinha') }}</span>
+                    </div>
+                    <input id="input_teimosinha_bet" type="number" class="form-control" value="0">
+                </div>
+            </div>
+        </div>
         <hr />
         <div class="row">
             <div class="col mb-2">
@@ -1024,9 +1034,14 @@
             color: #fff !important;
         }
 
+        .wrap-animal, .animal-container-choose {
+            cursor: default !important;
+        }
+
         .wrap-animal:hover, .animal-container-choose:hover {
             background-color: transparent !important;
             color: #007bff !important;
+            cursor: default !important;
         }
 
         @media(max-width: 467px) {
@@ -1120,6 +1135,7 @@
             const value = $('#input_value_bet').val();
             const client_id = $('#livewire-client-id').val();
             const game = $('#input-group').val().replaceAll(' ', '');
+            const teimosinha = $('#input_teimosinha_bet').val();
 
             if (!award_type > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
@@ -1132,6 +1148,7 @@
                 client_id,
                 modality: '{{$modalidade->nome}}',
                 game,
+                teimosinha: parseInt(teimosinha),
             };
 
             addChartItem(item);

@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Extrato de Recargas Manuais')
+@section('title', 'Extrato Financeiro')
 
 @section('content')
     <div class="row bg-white p-3">
