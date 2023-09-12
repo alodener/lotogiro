@@ -19,6 +19,7 @@ use App\Models\Client;
 use App\Models\TransactBalance;
 use App\Helper\Configs;
 use App\Models\User;
+use App\Helper\GameHelper;
 
 // lib de email
 use Mail;
@@ -99,6 +100,16 @@ class ProcessBetEntries implements ShouldQueue
             $game->commission_percentage = $this->user->commission;
             $game->save();
 
+            //verifica se é da dupla sena 
+                if ($this->request['type_game'] == 10){
+
+                    //encontrar o concurso com o final A na tabela
+                    $competitionA = Competition::where('number', 'like', '%' . $this->competition->number . 'A')->first();
+                    // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $dez, 2);
+                    
+
+                }
             $transact_balance = new TransactBalance;
             $transact_balance->user_id_sender = auth()->id();
             $transact_balance->user_id = auth()->id();
