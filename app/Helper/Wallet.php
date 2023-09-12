@@ -55,23 +55,38 @@ class Wallet
                 $msgCommission = "";
                 if($user->commission > 0){
                     $commission = $newRechargeOrder->value * ($user->commission/100);
-                    $totalRecharge = $newRechargeOrder->value + $commission;
-                    $msgCommission = "Mais {$user->commission}% de comissão.";
+                    $totalRecharge = $newRechargeOrder->value;
+                    $msgCommission = "Mais {$user->commission}% de comiss茫o.";
                 }
+
 
                 if($typeStatus[$request->status] === 1){
                     TransactBalance::create([
-                        'user_id_sender' => 759,
+                        'user_id_sender' => 4,
                         'user_id' => $user->id,
                         'value' => $totalRecharge,
                         'old_value' => $user->balance,
                         'value_a' => $user->balance + $totalRecharge,
-                        'type' => "Recarga efetuada por meio da plataforma. {$msgCommission}"
+                        'type' => "Recarga efetuada por meio da plataforma"
                     ]);
 
+                   
+                    
+                    if($user->commission > 0){ 
+                        TransactBalance::create([
+                            'user_id_sender' => 4,
+                            'user_id' => $user->id,
+                            'value' => $commission,
+                            'old_value' => $user->balance,
+                            'value_a' => $user->balance + $totalRecharge + $commission,
+                            'type' => 'Bonus de recarga efetuada por meio da plataforma',
+                            'wallet' => 'bonus'
+                        ]);
+                    }
+                    
                     $user->balance += $newRechargeOrder->value + $commission;
                     $user->save();
-                }
+
 
                 $telegrambot = Configs::getTelegramUrlBot();                
                 $telegramchatid = Configs::getTelegramChatId();
@@ -85,4 +100,5 @@ class Wallet
         }
         return response()->json(['status' => 403]);
     }
+}
 }

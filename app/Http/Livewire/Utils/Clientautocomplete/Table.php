@@ -29,10 +29,11 @@ class Table extends Component
     
     if (auth()->user()->hasRole('Administrador')) {
         
-        $this->clients = Client::where(function($query) {
+        $this->users = Client::where(function($query) {
             $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
         })
         ->get();
+        
 
     } else {
         
@@ -50,7 +51,18 @@ class Table extends Component
 
     public function setId($user)
     {
+    
+    if(!auth()->user()->hasRole('Administrador')){
+        
+       $userclient = User::where('id', $user["id"])->first();
+       $clientUser = Client::where('email', $userclient->email)->first();
+       $this->userId = $clientUser->id;
+      
+     
+    }else{
         $this->userId = $user["id"];
+
+    }
         $this->search = $user["name"] . ' ' . $user["last_name"] . ' - ' . $user["email"];
         $this->showList = false;
     }
