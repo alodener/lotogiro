@@ -94,16 +94,31 @@ class CompetitionController extends Controller
 
         try {
             $competition = new Competition();
-            $competition->number = $request->number;
+            if ($request->type_game == 7) {
+            $competition->number = $request->number . 'A'; 
+            }
+            else {
+            $competition->number = $request->number ; 
+            }
             $competition->type_game_id = $request->type_game;
             $competition->sort_date = $request->sort_date;
             $competition->save();
+            
+            //se for dupla sena, duplicar o concurso com o mesmo numero, mas o final A
+            if ($request->type_game == 7) {
+            $competitionA = new Competition();
+            $competitionA->number = $request->number;
+            $competitionA->type_game_id = $request->type_game;
+            $competitionA->sort_date = $request->sort_date;
+            $competitionA->save();
+            }
+
 
             return redirect()->route('admin.bets.competitions.index')->withErrors([
                 'success' => 'Concurso cadastrado com sucesso'
             ]);
-        } catch (\Exception $exception) {
 
+        } catch (\Exception $exception) {
             return redirect()->route('admin.bets.competitions.create')->withErrors([
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao cadastrar o concurso, tente novamente'
             ]);

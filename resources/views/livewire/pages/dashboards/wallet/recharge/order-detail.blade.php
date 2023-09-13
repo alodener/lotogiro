@@ -1,13 +1,13 @@
 <div>
     <div class="alert alert-success" role="alert">
-        <h4 class="alert-heading">Detalhes Pedido #{{ $order->reference }}</h4>
+        <h4 class="alert-heading">{{ trans('admin.pagesF.detalhesP') }}  #{{ $order->reference }}</h4>
         <hr>
         <div class="row">
             <div class="col-sm-12" style="line-height: 3rem;">
-                <p class="mb-0"><b>Última atualização: {{ $order->data }}</b></p>
-                <p class="mb-0"><b>Usuário: {{ $order->usuario }}</b></p>
-                <p class="mb-0"><b>Recarga: </b> R$ {{ $order->value }}</p>
-                <p class="mb-0"><b>Status: </b>{{ $order->statusTxt }}</p>
+                <p class="mb-0"><b>{{ trans('admin.pagesF.ultimasAt') }} {{ $order->data }}</b></p>
+                <p class="mb-0"><b>{{ trans('admin.pagesF.usuario') }}  {{ $order->usuario }}</b></p>
+                <p class="mb-0"><b>{{ trans('admin.pagesF.recarga') }} </b> R$ {{ $order->value }}</p>
+                <p class="mb-0"><b>{{ trans('admin.pagesF.status') }}: </b>{{ $order->statusTxt }}</p>
             </div>
         </div>
     </div>
@@ -19,8 +19,8 @@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">{{ trans('admin.pagesF.date') }}</th>
+                    <th scope="col">{{ trans('admin.pagesF.status') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,7 @@
     @if($order->status != 1)
     <div class="row">
         <div class="col-sm-12">
-            <a class="btn btn-primary btn-block" href="{{ $order->link }}" target="_blank">Tentar Novamente</a>
+            <a class="btn btn-primary btn-block" href="{{ $order->link }}" target="_blank">{{ trans('admin.pagesF.tentNov') }}</a>
         </div>
     </div>
     @endif

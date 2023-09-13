@@ -6,8 +6,11 @@ use App\Models\TypeGame;
 use App\Models\TypeGameValue;
 use Livewire\Component;
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
+use App\Models\Role;
 class Form extends Component
 {
     public $showList = false;
@@ -51,20 +54,46 @@ class Form extends Component
          }
 
     }
-     public function setId($client)
+    public function setId($client)
     {
-            $this->clientId = $client["id"];
-            $this->search = $client["name"] . ' - ' . $client["cpf"]. ' - ' . $client["email"]. ' - ' . $client["ddd"].' - ' . $client["phone"];
-            $this->showList = false;
-        
+        $this->clientId = $client["id"];
+
+        $this->search = $client["name"] . ' ' . $client["last_name"] . ' - ' . $client["email"];
+
+        if (isset($client["ddd"])) {
+            $this->search .= ' - ' . $client["ddd"];
+        }
+
+        if (isset($client["phone"])) {
+            $this->search .= ' - ' . $client["phone"];
+        }
+
+        $this->showList = false;
     }
+
     public function updatedSearch($value)
     {
         
-            $this->clients = Client::where("name", "like", "%{$this->search}%")->get();
-            $this->showList = true;
-    }
+        $userlogado = Auth::user(); 
+        
+        if (auth()->user()->hasRole('Administrador')) {
+            
+            $this->clients = Client::where(function($query) {
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+            })
+            ->get();
 
+        } else {
+            
+            $this->clients = User::where('indicador', $userlogado->id)
+                ->where(function($query) {
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+            })
+            ->get();
+        }
+
+        $this->showList = true;
+    }
 
     public function selectNumber($number)
     {

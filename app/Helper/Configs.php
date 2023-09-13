@@ -45,4 +45,42 @@ class Configs
 
         return $system->value;
     }
+
+    public static function getBichao(){
+        $nameConfig = "Bichao";
+        $system = System::Where('nome_config', $nameConfig)->first() ;
+
+        if(empty($system)) return;
+       
+        if(empty($system->value)){
+            return "";
+        }   
+
+        return $system->value;
+    }
+    public static function getTelegramUrlBot(){
+        $nameConfig = "TelegramUrlBot";
+        $system = System::Where('nome_config', $nameConfig)->first() ;
+
+        if(empty($system)) return;
+       
+        if(empty($system->value)){
+            return "";
+        }
+
+        return $system->value;
+    }
+    public static function getTelegramChatId(){
+        $nameConfig = "TelegramChatId";
+        $system = System::Where('nome_config', $nameConfig)->first() ;
+
+        if(empty($system)) return;
+       
+        if(empty($system->value)){
+            return "";
+        }
+
+        return $system->value;
+    }
+
 }

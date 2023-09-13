@@ -59,13 +59,13 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary btn-block">Alterar senha</button>
+                            <button type="submit" class="btn btn-primary btn-block">{{ trans('admin.pagesF.altSenha') }}</button>
                         </div>
                     </div>
                 </form>
                 @if (Route::has('login'))
                     <p class="mt-3 mb-1">
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">{{ trans('admin.pagesF.login') }}</a>
                     </p>
                 @endif
             </div>
