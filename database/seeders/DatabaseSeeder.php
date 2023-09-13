@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RoleHasPermissionsTableSeeder::class,
             ModelHasRolesTableSeeder::class,
+            BichaoAnimaisTableSeeder::class,
+            BichaoEstadosTableSeeder::class,
+            BichaoHorariosTableSeeder::class,
+            BichaoModalidadesTableSeeder::class,
         ]);
     }
 }

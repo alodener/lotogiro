@@ -18,7 +18,7 @@
     <div class="col-md-7">
         <div class="card card-info pb-5">
             <div class="card-header">
-                <h3 class="card-title">Usuário</h3>
+                <h3 class="card-title">{{ trans('admin.pagesF.user') }}</h3>
             </div>
             <div class="card-body">
                 @if(Route::currentRouteName() == 'admin.settings.users.edit')
@@ -26,14 +26,14 @@
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="status" name="status"
                                @isset($user->status) @if($user->status == 1) checked @endif @endisset>
-                        <label class="custom-control-label" for="status">Ativo?</label>
+                        <label class="custom-control-label" for="status">{{ trans('admin.pagesF.ativo') }}</label>
                     </div>
                     @endcan
                 @endif
                 <div class="form-row">
                     <input type="text" value="1" hidden class="custom-control-input" id="type_client" name="type_client">
                     <div class="form-group col-md-4">
-                        <label for="name">Nome</label>
+                        <label for="name">{{ trans('admin.pagesF.name') }}</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                                name="name"
                                maxlength="50" value="{{old('name', $user->name ?? null)}}">
@@ -44,7 +44,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-8">
-                        <label for="last_name">Sobrenome</label>
+                        <label for="last_name">{{ trans('admin.pagesF.lastname') }}</label>
                         <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name"
                                name="last_name"
                                maxlength="100" value="{{old('last_name', $user->last_name ?? null)}}">
@@ -58,7 +58,7 @@
                 <div class="form-row">
                     @can('editar_conta')
                     <div class="form-group col-md-4">
-                        <label for="indicador">ID Indicador</label>
+                        <label for="indicador">{{ trans('admin.pagesF.id') }}</label>
                         <input type="number" class="form-control" id="indicador" name="indicador" value="{{old('indicador', $user->indicador ?? null)}}" maxlength="20">
                     </div>
                     @endcan
@@ -92,12 +92,12 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="password">Senha</label>
+                        <label for="password">{{ trans('admin.pagesF.senha') }}</label>
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
                                id="password" name="password"
                                maxlength="15">
                         @if(Route::currentRouteName() == 'admin.settings.users.edit')
-                            <small>*Em branco para não alterar</small>
+                            <small>{{ trans('admin.pagesF.embranco') }}</small>
                         @endif
                         @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -106,7 +106,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="confirm_password">Confirme a senha</label>
+                        <label for="confirm_password">{{ trans('admin.pagesF.confirmSenha') }}</label>
                         <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                                id="password_confirmation"
                                name="password_confirmation" maxlength="15">
@@ -130,7 +130,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="telefone" id="telefoneL">Telefone</label>
+                        <label for="telefone" id="telefoneL">{{ trans('admin.pagesF.telefone') }}</label>
                         <input type="text" class="form-control @error('telefone') is-invalid @enderror" id="telefone"
                                name="telefone" 
                                maxlength="15"
@@ -162,13 +162,13 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.settings.users.index')}}">
-            <button type="button" class="btn btn-block btn-outline-secondary">Voltar a tela principal</button>
+            <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.pagesF.voltPrinc') }}</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">
         <button type="submit"
-                class="btn btn-block btn-outline-success">@if(request()->is('admin/settings/users/create')) Cadastrar
-            Usuário  @else  Atualizar Usuário @endif </button>
+                class="btn btn-block btn-outline-success">@if(request()->is('admin/settings/users/create'))  {{ trans('admin.pagesF.cadastrar') }}
+                {{ trans('admin.pagesF.usuario') }}  @else  {{ trans('admin.pagesF.atUser') }} @endif </button>
     </div>
 </div>
 

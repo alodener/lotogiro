@@ -23,4 +23,9 @@ class Extract extends Model
     {
         return $this->belongsTo(TypeGame::class);
     }
+
+    public function modalidadeGame()
+    {
+        return $this->belongsTo(BichaoModalidades::class, 'type_game_id');
+    }
 }

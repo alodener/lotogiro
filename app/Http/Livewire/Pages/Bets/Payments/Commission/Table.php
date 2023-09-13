@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class Table extends Component
 {
@@ -28,7 +29,12 @@ class Table extends Component
 
     public function updatedSearch($value)
     {
-        $this->users = User::where("name", "like", "%{$this->search}%")->get();
+        if ($this->auth->hasPermissionTo('read_all_gains')) {
+            $this->users = User::where(function($query) {
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+            })
+            ->get();
+        }
         $this->showList = true;
     }
 
@@ -64,7 +70,7 @@ class Table extends Component
                     'type' => 2,
                     'value' => $result,
                     'type_game_id' => $game->type_game_id,
-                    'description' => 'Comissão - Jogo de id: ' . $game->id . ' Comissao de Nivel: ' . $game->commision_value_pai,
+                    'description' => 'Comiss達o - Jogo de id: ' . $game->id . ' Comissao de Nivel: ' . $game->commision_value_pai,
                     'user_id' => $game->user_id,
                     'client_id' => $game->client_id
                 ];
@@ -82,7 +88,7 @@ class Table extends Component
             }
             session()->flash('success', 'Pagamentos baixados com sucesso!');
         } else {
-            session()->flash('error', 'Não foram encontrados pagamentos para baixar!');
+            session()->flash('error', 'N達o foram encontrados pagamentos para baixar!');
         }
 
         return redirect()->route('admin.bets.payments.commissions.index');

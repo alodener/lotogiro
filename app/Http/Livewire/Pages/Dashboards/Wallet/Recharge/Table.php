@@ -16,6 +16,7 @@ use App\Helper\Configs;
 use App\Models\System;
 use Faker\Extension\Helper;
 
+
 class Table extends Component
 {
     use LivewireAlert;
@@ -93,6 +94,7 @@ class Table extends Component
                     </div>'",
         ]);
     }
+
     public function callDoBank()
     {
         $order = new RechargeOrder([

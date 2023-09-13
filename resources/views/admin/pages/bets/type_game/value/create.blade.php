@@ -1,7 +1,5 @@
 @extends('admin.layouts.master')
 
-@section('title', {{ trans('admin.game-types.register-title') }})
-
 @section('content')
 
     <div class="col-md-12">

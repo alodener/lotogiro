@@ -15,6 +15,7 @@ class Client extends Model
         'ddd',
         'phone',
         'pix',
+        'consultor_id',
     ];
 
     public $timestamps = true;
