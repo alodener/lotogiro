@@ -97,12 +97,14 @@ class SystemController extends Controller
         
         $data = $request->all();        
         
-
+        //Token
         if(isset($request->token))
         {
             $system->value = $data['token'];
         
         } 
+       
+        //Plano de carreira
         else if(isset ($request->exampleRadios))
         {
             
@@ -115,6 +117,28 @@ class SystemController extends Controller
             $system->value = $data['exampleRadios2'];
             
         }
+
+        //Bichão
+         if(isset ($request->exampleRadios3))
+        {
+            
+            $system->value = $data['exampleRadios'];
+            
+        }
+        else if(isset ($request->exampleRadios4))
+        {
+            
+            $system->value = $data['exampleRadios2'];
+            
+        }
+        //email/remetente
+
+        if(isset($request->mail) && isset($request->remetente))
+        {
+           $system->value = implode("|", [$data['mail'], $data['remetente']]);
+        }
+
+        //Logo
         else if(isset($request->image))
         {
             if ($request->file('image')->isValid())
@@ -125,8 +149,21 @@ class SystemController extends Controller
                 $system->value = $data['logo'];
                
              }
-         
+        }   
+        //telegramUrlBot
+        if(isset($request->telegrambot))
+        {
+            $system->value = $data['telegrambot'];
+        
         }
+        //TelegramChatid
+        if(isset($request->telegramchatid))
+        {
+            $system->value = $data['telegramchatid'];
+        
+        }  
+
+
         try{
             $system->save();
             return redirect()->route('admin.settings.systems.index')->withErrors([

@@ -163,14 +163,14 @@
                         {{ $extract['id'] }}
                     </td>
                     <td class="font border-bottom">
-                        @if($extract['type'] == 1)
+                        @if($extract['type'] == 1  || $extract['type'] == 10)
                             <span class="text-success">Crédito</span>
-                        @elseif($extract['type'] ==2)
+                        @elseif($extract['type'] ==2  || $extract['type'] == 11)
                             <span class="text-danger">Débito</span>
                         @endif
                     </td>
                     <td class="font border-bottom">
-                        {{ $extract['description'] }}
+                        {{ $extract['description'] }}{{ $extract['type'] == 10 ? ' (Bichão)' : '' }}
                     </td>
                     <td class="font border-bottom">
                         {{ !empty($extract['user']['name']) ? $extract['user']['name'] .' '. $extract['user']['last_name']: null }}
