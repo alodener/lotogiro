@@ -1,4 +1,4 @@
-<!--@can('read_user')
+
 @extends('admin.layouts.master')
 
 @section('title', trans('admin.customers.page-title'))
@@ -12,22 +12,25 @@
                         toastr["success"]("{{ $message }}")
                     </script>
                 @endpush
-            @enderror
-            @error('error')
-                @push('scripts')
-                    <script>
-                        toastr["error"]("{{ $message }}")
-                    </script>
-                @endpush
-            @enderror
-            @can('create_client')
+                @enderror
+                @error('error')
+                    @push('scripts')
+                        <script>
+                            toastr["error"]("{{ $message }}")
+                        </script>
+                    @endpush
+                @enderror
+                @if(auth()->user()->hasRole('Administrador'))
                 <div class="new-client">
-                    <a href="{{route('admin.bets.clients.create')}}">
+                    <a href="{{route('admin.settings.users.create')}}">
                         <button class="btn btn-info my-2">{{ trans('admin.customers.new-customer') }}</button>
-                    </a> 
+                     </a> 
                 </div>
-            @endcan
-            <div class="table-responsive extractable-cel">
+                @endif
+                    
+                </div>
+            
+                <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-sm" id="client_table">
                     <thead>
                     <tr>
@@ -35,7 +38,7 @@
                         <th>{{ trans('admin.customers.table-name-header') }}</th>
                         <th>{{ trans('admin.customers.table-email-header') }}</th>
                         <th>{{ trans('admin.customers.table-creation-header') }}</th>
-                        <th style="width: 80px">{{ trans('admin.customers.table-actions-header') }}</th>
+                        <th style="width: 100px">{{ trans('admin.customers.table-actions-header') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -68,12 +71,46 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modal_vincular_client" data-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Tem certeza que deseja vincular esse cliente a você?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Deseja Vincular esse cliente
+                </div>
+                <div class="modal-footer">
+                    <form id="vincularCliente" action="" method="POST">
+                        @method('POST')
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                        <button type="submit" class="btn btn-success">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
 
     <script type="text/javascript">
 
+        $(document).on('click', '#btn_vincular_client', function () {
+            var client = $(this).attr('client');
+            var url = '{{ route("admin.bets.clients.vincular",  ":client") }}';
+            url = url.replace(':client', client);
+            $("#vincularCliente").attr('action', url);
+            
+            
+        });
+
+            
         $(document).on('click', '#btn_delete_client', function () {
             var client = $(this).attr('client');
             var url = '{{ route("admin.bets.clients.destroy", ":client") }}';
@@ -108,5 +145,3 @@
     </script>
 
 @endpush
-@endcan
-    -->

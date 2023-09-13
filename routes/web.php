@@ -163,13 +163,16 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('remove/chart/{index}', [BichaoController::class, 'remove_chart'])->name('bichao.remove.chart');
                 Route::get('remove-all/chart', [BichaoController::class, 'remove_all_chart'])->name('bichao.remove_all.chart');
                 Route::post('horarios', [BichaoController::class, 'get_horarios'])->name('bichao.horarios');
+                Route::post('premio-maximo-json', [BichaoController::class, 'get_premio_maximo_json'])->name('bichao.premio_maximo');
                 Route::post('checkout', [BichaoController::class, 'checkout'])->name('bichao.checkout');
                 Route::post('get-results-json', [BichaoController::class, 'get_results_json'])->name('bichao.get_results_json');
                 Route::get('receipt/{id}/{tipo}', [BichaoController::class, 'getReceipt'])->name('receipt');
                 Route::post('save/settings', [BichaoController::class, 'save_settings'])->name('bichao.save.settings');
             });
 
-            Route::resource('clients', ClientController::class);
+            
+            Route::resource('clients', ClientController::class)->except([
+                'show']);
             Route::resource('competitions', CompetitionController::class);
             Route::resource('type_games', TypeGameController::class);
             Route::resource('type_games.values', TypeGameValueController::class);
@@ -180,6 +183,10 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');
+            Route::post('/clients/vincular/{id_client}', [ClientController::class, 'vincularCliente'])->name('clients.vincular');
+
+            Route::get('/clients/consultor', [ClientController::class, 'clientConsultor'])->name('consultor');
+
             Route::post('/games/mass-delete', [GameController::class, 'massDelete'])->name('games.massDelete');
             Route::resource('games', GameController::class)->except([
                 'index', 'create'

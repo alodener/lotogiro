@@ -33,7 +33,7 @@
                         <ul class="nav nav-treeview">
 
                             @if(\App\Helper\Configs::getPlanoDeCarreira() == "Ativado")
-                                @can('read_extract')
+                                @can('read_gain')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.ranking.index')}}"
                                         class="nav-link @if(request()->is('admin/ranking')) active @endif">
@@ -45,7 +45,7 @@
                                 @endcan
                                     
                                
-                                @can('read_extract')
+                                @can('read_gain')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.points.index')}}"
                                         class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
@@ -114,8 +114,8 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-
-                        <!--@can('read_client')
+                           @if(auth()->user()->hasRole('Administrador'))
+                            @can('read_client')
                                 <li class="nav-item">
                                     <a href="{{route('admin.bets.clients.index')}}"
                                        class="nav-link @if(request()->is('admin/bets/clients*')) active @endif">
@@ -123,8 +123,21 @@
                                         <p>{{ trans('admin.menu.cliente') }}</p>
                                     </a>
                                 </li>
-                            @endcan-->
-
+                            @endcan
+                            @endif
+                            @unless(auth()->user()->hasRole('Administrador'))
+                            @can('read_client')
+                                <li class="nav-item">
+                                    <a href="{{route('admin.bets.consultor')}}"
+                                       class="nav-link @if(request()->is('admin/bets/clients*')) active @endif">
+                                        <i class="fas fa-users nav-icon"></i>
+                                        <p>{{ trans('admin.menu.cliente') }}</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @endunless
+                        
+                        
                             @can('read_client')
                                 <li class="nav-item">
                                  <a href="{{route('admin.bets.validate-games.index')}}"
@@ -134,6 +147,8 @@
                                     </a>
                                 </li>
                             @endcan
+                        @endif
+
                             @can('read_competition')
                                 <li class="nav-item">
                                     <a href="{{route('admin.bets.competitions.index')}}"
@@ -180,7 +195,7 @@
                                                 class="nav-link @if (request()->is('admin/bets/bichao*')) active @endif"
                                             >
                                                 <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Bichão da Sorte</p>
+                                                <p>{{ trans('admin.tutoriais.bichaos') }}</p>
                                             </a>
                                         </li>
                                         @endif
@@ -260,7 +275,7 @@
                                 @endcan
                             </ul>
                         </li>
-                @endcanany
+                
 
                 @canany(['read_user', 'read_role', 'read_permission'])
                     <li class="nav-item has-treeview @if(request()->is('admin/reports/*')) menu-open @endif">
@@ -295,7 +310,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            <!--
+                            
                             @if(\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.manualRecharge')}}"
@@ -304,7 +319,7 @@
                                         <p>{{ trans('admin.menu.extratoRecarga') }} </p>
                                     </a>
                                 </li>
-                            @endif-->
+                            @endif
                             @if (\App\Helper\UserValidate::iAmAdmin())
                                 <li class="nav-item">
                                     <a href="{{ route('admin.dashboards.customer.balance') }}"
@@ -360,7 +375,7 @@
                             <a href="{{route('admin.dashboards.help.index')}}"
                                 class="nav-link @if(request()->is('/admin/dashboards/tutoriais')) active @endif">
                                 <i class="fas fa-book-open nav-icon"></i>
-                                <p>Tutoriais</p>
+                                <p> {{ trans('admin.menu.tutoriais') }} </p>
                             </a>
                         </li>
                     </li>
@@ -428,7 +443,7 @@
                                 <a href="{{ route('admin.settings.bichao.index') }}"
                                     class="nav-link @if (request()->is('admin/settings/bichao*')) active @endif">
                                     <i class="nav-icon fas fa-ticket-alt"></i>
-                                    <p>Bichão da sorte</p>
+                                    <p>{{ trans('admin.tutoriais.bichaos') }}</p>
                                 </a>
                             </li>
                             @endcan

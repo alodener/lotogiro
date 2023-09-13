@@ -22,7 +22,6 @@ yarn-error.log
 
 
 php_errors.log
-docker-compose.yml
 plano.sql
 
 /db

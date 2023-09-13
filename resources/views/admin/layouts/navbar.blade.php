@@ -86,7 +86,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
                 <p class="px-2 pt-1">
-                    Olá, {{auth()->user()->name}}
+                {{ trans('admin.falta.ola') }}, {{auth()->user()->name}}
                 </p>
                 @can('read_user')
                 <div class="dropdown-divider"></div>

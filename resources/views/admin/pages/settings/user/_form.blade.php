@@ -126,7 +126,7 @@
                         <label for="pix" id="pixL">Pix</label>
                         <input type="" class="form-control @error('pix') is-invalid @enderror"
                                id="pix"
-                               name="pix" maxlength="50">
+                               name="pix" maxlength="50" value="{{old('pixSaque', $user->pixSaque ?? null)}}">
                         @error('pix')
                         <span class="invalid-feedback" role="alert">
                            {{ $message }}
@@ -148,7 +148,7 @@
                         <label for="cpf" id="cpfL">Cpf</label>
                         <input type="" class="form-control @error('cpf') is-invalid @enderror"
                                id="cpf"
-                               name="cpf" maxlength="11">
+                               name="cpf" maxlength="11"  value="{{old('cpf', $user->cpf ?? null)}}">
                         @error('cpf')
                         <span class="invalid-feedback" role="alert">
                            {{ $message }}

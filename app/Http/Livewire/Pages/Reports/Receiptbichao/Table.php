@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Client;
+use Illuminate\Support\Facades\DB;
 
 class Table extends Component
 {
@@ -45,29 +45,12 @@ class Table extends Component
 
     public function updatedSearch($value)
     {
-        $this->search = $value;
-    
-        $clients = Client::select('id', 'name', 'last_name', 'email', 'ddd', 'phone')
-            ->where(function ($query) {
-                $query->where('name', 'like', "%{$this->search}%")
-                    ->orWhere('last_name', 'like', "%{$this->search}%")
-                    ->orWhere('email', 'like', "%{$this->search}%");
+        if ($this->auth->hasPermissionTo('read_all_gains')) {
+            $this->users = User::where(function($query) {
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
             })
-            ->orWhereRaw("CONCAT(name, ' ', last_name) like ?", ["%{$this->search}%"]);
-    
-        $users = User::select('id', 'name', 'last_name', 'email', \DB::raw('null as ddd'), \DB::raw('null as phone'))
-            ->where(function ($query) {
-                $query->where('name', 'like', "%{$this->search}%")
-                    ->orWhere('last_name', 'like', "%{$this->search}%")
-                    ->orWhere('email', 'like', "%{$this->search}%");
-            })
-            ->orWhereRaw("CONCAT(name, ' ', last_name) like ?", ["%{$this->search}%"]);
-    
-        $results = $clients->unionAll($users)->get();
-    
-        $uniqueResults = collect($results)->unique('email')->values();
-    
-        $this->users = $uniqueResults;
+            ->get();
+        }
         $this->showList = true;
     }
 
@@ -303,7 +286,7 @@ class Table extends Component
 
         $pdf = PDF::loadView('admin.layouts.pdf.salesbichao', $data)->output();
 
-        $fileName = 'Relatório de Vendas (bilhetes) - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
+        $fileName = 'Relat贸rio de Vendas (bilhetes) - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
 
         return response()->streamDownload(
             fn() => print($pdf),
@@ -318,3 +301,4 @@ class Table extends Component
         ]);
     }
 }
+

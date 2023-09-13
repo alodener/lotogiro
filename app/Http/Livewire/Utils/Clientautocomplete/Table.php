@@ -6,6 +6,10 @@ use App\Models\Client;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+use App\Models\Role;
 
 class Table extends Component
 {
@@ -19,37 +23,46 @@ class Table extends Component
     public $value;
 
     public function updatedSearch($value)
-    {
-        $this->search = $value;
+{
     
-        $clients = Client::select('id', 'name', 'last_name', 'email', 'ddd', 'phone')
-            ->where(function ($query) {
-                $query->where('name', 'like', "%{$this->search}%")
-                    ->orWhere('last_name', 'like', "%{$this->search}%")
-                    ->orWhere('email', 'like', "%{$this->search}%");
-            })
-            ->orWhereRaw("CONCAT(name, ' ', last_name) like ?", ["%{$this->search}%"]);
+    $userlogado = Auth::user(); 
     
-        $users = User::select('id', 'name', 'last_name', 'email', \DB::raw('null as ddd'), \DB::raw('null as phone'))
-            ->where(function ($query) {
-                $query->where('name', 'like', "%{$this->search}%")
-                    ->orWhere('last_name', 'like', "%{$this->search}%")
-                    ->orWhere('email', 'like', "%{$this->search}%");
-            })
-            ->orWhereRaw("CONCAT(name, ' ', last_name) like ?", ["%{$this->search}%"]);
-    
-        $results = $clients->unionAll($users)->get();
-    
-        $uniqueResults = collect($results)->unique('email')->values();
-    
-        $this->users = $uniqueResults;
-        $this->showList = true;
+    if (auth()->user()->hasRole('Administrador')) {
+        
+        $this->users = Client::where(function($query) {
+            $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+        })
+        ->get();
+        
+
+    } else {
+        
+        $this->users = User::where('indicador', $userlogado->id)
+            ->where(function($query) {
+               $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+        })
+        ->get();
     }
+   
+    $this->showList = true;
+}
+
     
 
     public function setId($user)
     {
+    
+    if(!auth()->user()->hasRole('Administrador')){
+        
+       $userclient = User::where('id', $user["id"])->first();
+       $clientUser = Client::where('email', $userclient->email)->first();
+       $this->userId = $clientUser->id;
+      
+     
+    }else{
         $this->userId = $user["id"];
+
+    }
         $this->search = $user["name"] . ' ' . $user["last_name"] . ' - ' . $user["email"];
         $this->showList = false;
     }

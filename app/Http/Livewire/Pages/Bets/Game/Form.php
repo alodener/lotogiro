@@ -8,7 +8,9 @@ use Livewire\Component;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
+use App\Models\Role;
 class Form extends Component
 {
     public $showList = false;
@@ -53,89 +55,45 @@ class Form extends Component
 
     }
     public function setId($client)
-{
-    $this->clientId = $client["id"];
+    {
+        $this->clientId = $client["id"];
 
-    $this->search = $client["name"] . ' ' . $client["last_name"] . ' - ' . $client["email"];
+        $this->search = $client["name"] . ' ' . $client["last_name"] . ' - ' . $client["email"];
 
-    if (isset($client["ddd"])) {
-        $this->search .= ' - ' . $client["ddd"];
-    }
-
-    if (isset($client["phone"])) {
-        $this->search .= ' - ' . $client["phone"];
-    }
-
-    $this->showList = false;
-}
-
-public function updatedSearch($value)
-{
-    $this->search = $value;
-
-    $clients = Client::where(function ($query) {
-        $query->where('name', 'like', "%{$this->search}%")
-            ->orWhere('last_name', 'like', "%{$this->search}%")
-            ->orWhere('email', 'like', "%{$this->search}%");
-    })->orWhereRaw("CONCAT(name, ' ', last_name) like ?", ["%{$this->search}%"])
-      ->get();
-
-    $users = User::where(function ($query) {
-        $query->where('name', 'like', "%{$this->search}%")
-            ->orWhere('last_name', 'like', "%{$this->search}%")
-            ->orWhere('email', 'like', "%{$this->search}%");
-    })->orWhereRaw("CONCAT(name, ' ', last_name) like ?", ["%{$this->search}%"])
-      ->get();
-
-    // Selecionar registros mais completos para cada cliente presente em ambas as tabelas
-    $combinedResults = collect([]);
-    foreach ($clients as $client) {
-        $user = $users->firstWhere('email', $client->email);
-        if ($user) {
-            // Comparar os registros e selecionar o mais completo
-            $mostComplete = $this->compareRecords($client, $user);
-            $combinedResults->push($mostComplete);
-        } else {
-            $combinedResults->push($client);
+        if (isset($client["ddd"])) {
+            $this->search .= ' - ' . $client["ddd"];
         }
+
+        if (isset($client["phone"])) {
+            $this->search .= ' - ' . $client["phone"];
+        }
+
+        $this->showList = false;
     }
 
-    // Adicionar os clientes apenas presentes na tabela users
-    $usersOnly = $users->whereNotIn('email', $clients->pluck('email'));
-    $combinedResults = $combinedResults->concat($usersOnly);
+    public function updatedSearch($value)
+    {
+        
+        $userlogado = Auth::user(); 
+        
+        if (auth()->user()->hasRole('Administrador')) {
+            
+            $this->clients = Client::where(function($query) {
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+            })
+            ->get();
 
-    $this->clients = $combinedResults;
-    $this->showList = true;
-}
+        } else {
+            
+            $this->clients = User::where('indicador', $userlogado->id)
+                ->where(function($query) {
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+            })
+            ->get();
+        }
 
-private function compareRecords($client, $user)
-{
-    // Comparar as informações dos registros e selecionar o mais completo
-    $clientScore = $this->calculateRecordScore($client);
-    $userScore = $this->calculateRecordScore($user);
-
-    return $clientScore >= $userScore ? $client : $user;
-}
-
-private function calculateRecordScore($record)
-{
-    $score = 0;
-
-    if ($record->name) {
-        $score += 1;
+        $this->showList = true;
     }
-    if ($record->last_name) {
-        $score += 1;
-    }
-    if ($record->email) {
-        $score += 1;
-    }
-    if ($record->ddd && $record->phone) {
-        $score += 1;
-    }
-
-    return $score;
-}
 
     public function selectNumber($number)
     {

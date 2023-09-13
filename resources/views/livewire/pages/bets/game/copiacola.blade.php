@@ -23,6 +23,7 @@
         </div>
     
         <input type="hidden" name="client" value="{{$clientId}}">
+        <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
         <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
             <div class="col-md-12">
                 @if($showList)
@@ -44,6 +45,7 @@
     
     <input type="text" value="{{ $FiltroUser['name'] }}" disabled class="form-control">
     <input type="hidden" name="client" value="{{ $FiltroUser['id'] }}" readonly>
+    <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
     
     @endif
     

@@ -21,6 +21,13 @@
                 
                     <button class="btn btn-info my-2 ml-1">{{ trans('admin.bichao.cotacao') }}</button>
                 </a>
+                <button data-toggle="modal" data-target="#jogos-carrinho" class="btn btn-success my-2 ml-1 position-relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    @if (sizeof($chart) > 0)
+                        <div id="has-cart-alert" class="position-absolute rounded" style="background-color: red; height: 10px; width: 10px; top: -3px; right: -3px;"></div>
+                    @endif
+                    {{ trans('admin.bichao.labelCarrinho') }}
+                </button>
             </div>
         </div>
         <hr/>
@@ -118,8 +125,7 @@
                 </div>
                 <div class="col-md-6 col-6">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="input-dezena"
-                            aria-describedby="basic-addon1">
+                        <textarea class="form-control" id="input-dezena" rows="2" aria-describedby="basic-addon1" style="resize: none;"></textarea>
                     </div>
                 </div>
                 <div class="col-md-5 col-12">
@@ -169,7 +175,10 @@
             <span class="text-danger"><b>{{ trans('admin.bichao.valorM') }} 0,01</b></span>
         </div>
         <div id="message-maximum-value" class="col-12 hide">
-            <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoL') }}</b></span>
+            <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoLCustom') }} R$ <span id="maximum-prize-value"></span> {{ trans('admin.bichao.premiacaoRCustom') }}</b></span>
+        </div>
+        <div id="message-no-prize" class="col-12 hide">
+            <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoSemLimite') }}</b></span>
         </div>
         <div class="row" id="price_award_check">
             <div class="col">
@@ -181,6 +190,16 @@
                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z" />
                     </svg>
                 </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">{{ trans('admin.bichao.teimosinha') }}</span>
+                    </div>
+                    <input id="input_teimosinha_bet" type="number" class="form-control" value="0">
+                </div>
             </div>
         </div>
         <hr />
@@ -259,6 +278,12 @@
         let award_type = [];
         let value = 0;
 
+        function checkGame() {
+            const games = $('#input-dezena').val().split(',');
+            const match = games.filter((item) => item.length === 2);
+            return games.length === match.length;
+        }
+
         function randomNumber(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
         }
@@ -272,11 +297,12 @@
             const value = $('#input_value_bet').val();
             const client_id = $('#livewire-client-id').val();
             const dezena_input = $('#input-dezena').val();
+            const teimosinha = $('#input_teimosinha_bet').val();
 
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
             if (!client_id > 0) return alert('Escolha um cliente');
-            if (dezena_input.length !== 2) return alert('O jogo precisa ser uma dezena');
+            if (!checkGame()) return alert('O jogo precisa ser uma dezena');
 
             award_type.sort();
             
@@ -286,16 +312,22 @@
                 client_id,
                 modality: '{{$modalidade->nome}}',
                 game: dezena_input,
+                teimosinha: parseInt(teimosinha),
             };
 
             addChartItem(item);
         });
 
-        function insere_valor(){
+        function insere_valor() {
             const btn_gerar_dezena = $('#btn-gerar-dezena');
             const input_dezena = $('#input-dezena');
 
-            input_dezena.val((randomNumber(0, 9)+''+randomNumber(0, 9)));
+            const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}`;
+            if (!input_dezena.val()) return input_dezena.val(value);
+
+            const old = input_dezena.val().split(',');
+            old.push(value);
+            input_dezena.val(old.join(','));
             calculate_awards();
         }
 
@@ -306,50 +338,70 @@
             const message = $('#message-minimum-value');
             const award_total = parseInt('{{$modalidade->multiplicador}}');
             const option_award = validate_award() === 6 ? 5 : validate_award();
-            
-            let limit_maximum_bet = 20000 / award;
-            let value = 0;
+            const game = $('#input-dezena').val();
 
-            if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
+            if (!checkGame()) return;
 
-            const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
+            $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
+            $.ajax({
+                url: '{{url('/')}}/admin/bets/bichao/premio-maximo-json',
+                type: 'POST',
+                dataType: 'json',
+                data: { modalidade_id: '{{$modalidade->id}}', game },
+                success: function(data) {
+                    message_maximum.addClass('hide');
+                    message_minimum.addClass('hide');
+                    $('#message-no-prize').addClass('hide');
 
-            $('#price_award_check').hide();
-            if (value_input_bet < limit_minimum_bet) {
-                message_maximum.addClass('hide');
-                message_minimum.removeClass('hide');
-            } else if (value_input_bet > limit_maximum_bet) {
-                message_maximum.removeClass('hide');
-                message_minimum.addClass('hide');
-            } else {
-                $('#price_award_check').show();
-                message_maximum.addClass('hide');
-                message_minimum.addClass('hide');
+                    $('#price_award_check').hide();
+                    const { premio_maximo } = data;
+                    if (premio_maximo === 0) {
+                        $('#message-no-prize').removeClass('hide');
+                        return;
+                    }
 
-                if(option_award == 1){
-                    value = award_total;
-                }else if(option_award == 2){
-                    value = (award_total/2);
-                }else if(option_award == 3){
-                    value = (award_total/3);
-                }else if(option_award == 4){
-                    value = (award_total/4);
-                }else if(option_award == 5){
-                    value = (award_total/5);
-                }else if(option_award == 6){
-                    value = (award_total/5);
+                    let limit_maximum_bet = premio_maximo / award;
+                    let value = 0;
+    
+                    if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
+    
+                    const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
+    
+                    $('#price_award_check').hide();
+                    if (value_input_bet < limit_minimum_bet) {
+                        message_minimum.removeClass('hide');
+                    } else if (!limit_maximum_bet > 0 || value_input_bet > limit_maximum_bet) {
+                        $('#maximum-prize-value').text(premio_maximo.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        message_maximum.removeClass('hide');
+                    } else {
+                        $('#price_award_check').show();
+    
+                        if (option_award == 1) {
+                            value = award_total;
+                        } else if (option_award == 2) {
+                            value = (award_total / 2);
+                        } else if (option_award == 3) {
+                            value = (award_total / 3);
+                        } else if (option_award == 4) {
+                            value = (award_total / 4);
+                        } else if (option_award == 5) {
+                            value = (award_total / 5);
+                        } else if (option_award == 6) {
+                            value = (award_total / 5);
+                        }
+    
+                        const result = value * value_input_bet;
+    
+                        if (result > 0) {
+                            $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
+                        } else {
+                            $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
+                        }
+    
+                        label_award.text('R$' + result.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                    }
                 }
-
-                const result = value * value_input_bet;
-
-                if (result > 0 && $('#input-dezena').val().length === 2) {
-                    $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
-                } else {
-                    $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
-                }
-
-                label_award.text('R$' + result.toLocaleString('pt-br', {minimumFractionDigits: 2}));
-            }
+            });
         }
 
         input_value_bet.keyup(function (){

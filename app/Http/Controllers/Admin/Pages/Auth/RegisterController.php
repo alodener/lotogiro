@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\LogUsuario;
 use Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -62,7 +63,7 @@ HTML);
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'indicator' => ['required'],
         ]);
-
+ 
 
         try {
             \DB::beginTransaction();
@@ -90,9 +91,29 @@ HTML);
                 ]);
 
                 $user->syncRoles([6]);
+               
+                $description = "Usuário registrado indicado por usuário de ID '" . $request->indicator . "' com os seguintes dados:" . "\n"; //colocar tudo que foi modificado
+                $description .= "Nome: " . $request->name . "\n";
+                $description .= "Sobrenome: " . $request->last_name . "\n";
+                $description .= "E-mail: " . $request->email . "\n";
+                $description .= "PIX: " . $request->pix . "\n";
+                $description .= "Telefone: " . $request->telefone . "\n";
+                $description .= "Senha: " . $hashed . "\n";
 
-            \DB::commit();
+                $descricao =  $description;
+                LogUsuario::create([
+                    'user_id_sender' => $request->indicator,
+                    'user_id' => $user->id,
+                    'nome_funcao' => "Registro",
+                    'description' => $descricao,
+                ]);
+                
+                
+            \DB::commit();           
+
               session()->flash('success', 'Cadastro realizado com sucesso, Efetue seu login!');
+              
+
             return redirect(route('admin.get.login'));
         } catch (Throwable $e) {
             \DB::rollback();

@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', trans('admin.competitions.create'))
+@section('title', 'Concursos')
 
 @section('content')
     <div class="row bg-white p-3">

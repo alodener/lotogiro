@@ -54,8 +54,8 @@
                 <input wire:model="search" type="text" id="author" class="form-control" placeholder="Pesquisar Usuário"
                        autocomplete="off">
                 <div class="input-group-append">
-                    <span wire:click="clearUser" class="input-group-text" title="Limpar"><i
-                            class="fas fa-user-times"></i></span>
+                    <span wire:click="clearUser" class="input-group-text" title="Limpar">
+                        <i class="fas fa-user-times"></i></span>
                 </div>
             </div>
         </div>
@@ -92,9 +92,9 @@
                 <option>100</option>
             </select>
         </div>
-        <div class="form-group offset-md-5 col-md-6 text-right">
+       <!-- <div class="form-group offset-md-5 col-md-6 text-right">
             <button wire:click="pay" type="button" class="btn btn-danger">{{ trans('admin.pagesF.baixarPag') }}</button>
-        </div>
+        </div>-->
     </div>
     <div class="card card-info">
         <div class="card-header indica-card">
