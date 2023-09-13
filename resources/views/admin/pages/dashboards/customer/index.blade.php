@@ -10,12 +10,12 @@
     <div class="col bg-white p-3 overflow-auto">
         <div class="row">
             <div class="col">
-                <h2>Saldo de Clientes</h2>
+                <h2>{{ trans('admin.pagesF.saldoCliente') }}</h2>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <p>Controle o acesso dos clientes por aqui!</p>
+                <p>{{ trans('admin.pagesF.controle') }}</p>
             </div>
             <div class="col-md-6 col-12">
                 <div class="row busca-container">
@@ -29,9 +29,9 @@
                     </div>
                     <div class="col-2">
                         <select class="change-busca form-control" name="busca-intervalo" data-busca-param="intervalo">
-                            <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >30 dias</option>
-                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >60 dias</option>
-                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >90 dias</option>
+                            <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >30 {{ trans('admin.pagesF.dias') }}</option>
+                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >60 {{ trans('admin.pagesF.dias') }}</option>
+                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >90 {{ trans('admin.pagesF.dias') }}</option>
                         </select>
                     </div>
                     <div class="col-4">
@@ -39,14 +39,14 @@
                         <input type="hidden" id="busca-autocomplete-id">
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-success" id="busca-limpar">Limpar</button>
+                        <button type="button" class="btn btn-success" id="busca-limpar">{{ trans('admin.pagesF.limpar') }}</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="row">
                     <div class="col border-left border-top">
-                        <p>Para ter uma visão detalhada dos clientes premiados<br><a href="{{ route('admin.dashboards.customer.dashboard.winners') }}">Clique Aqui!</a></p>
+                        <p>{{ trans('admin.pagesF.visaoDet') }}<br><a href="{{ route('admin.dashboards.customer.dashboard.winners') }}">{{ trans('admin.pagesF.cliqueaqq') }}</a></p>
                     </div>
                 </div>
             </div>
@@ -57,26 +57,26 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">Nome</th>
+                            <th scope="col">{{ trans('admin.pagesF.name') }}</th>
                             <th scope="col"></th>
-                            <th scope="col">Sobrenome</th>
+                            <th scope="col">{{ trans('admin.pagesF.lastname') }}</th>
                             <th scope="col"></th>
-                            <th scope="col">Número</th>
+                            <th scope="col">{{ trans('admin.pagesF.numeros') }}</th>
                             <th scope="col"></th>
-                            <th scope="col">Email</th>
+                            <th scope="col">{{ trans('admin.pagesF.email') }}</th>
                             <th scope="col"></th>
-                            <th scope="col">Jogos Feitos <br />(Quantidade)</th>
-                            <th scope="col">Valor Apostado</th>
-                            <th scope="col">Premios Recebidos</th>
+                            <th scope="col">{{ trans('admin.pagesF.jogosfeitos') }} <br />{{ trans('admin.pagesF.quantidade') }}</th>
+                            <th scope="col">{{ trans('admin.pagesF.valorApost') }}</th>
+                            <th scope="col">{{ trans('admin.pagesF.premiosReceb') }}</th>
                             <th scope="col"></th>
-                            <th scope="col">Lucro/<br />Prejuízo</th>
-                            <th scope="col">Cliente de<br />Risco</th>
-                            <th scope="col" class="text-center">Comissão</th>
+                            <th scope="col">{{ trans('admin.pagesF.lucro') }}/<br />{{ trans('admin.pagesF.prejuizo') }}</th>
+                            <th scope="col">{{ trans('admin.pagesF.clientede') }}<br />{{ trans('admin.pagesF.risco') }}</th>
+                            <th scope="col" class="text-center">{{ trans('admin.pagesF.comissao') }}</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
-                            <th scope="col">Bloquear/<br>Desbloquear</th>
+                            <th scope="col">{{ trans('admin.pagesF.bloquear') }}/<br>{{ trans('admin.pagesF.desbloquear') }}</th>
                             <th scope="col"></th>
-                            <th scope="col">Contato Realizado</th>
+                            <th scope="col">{{ trans('admin.pagesF.contatoRealiz') }}</th>
                         </tr>
                     </thead>
                     <tbody>

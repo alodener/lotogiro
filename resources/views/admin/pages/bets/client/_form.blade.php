@@ -146,12 +146,12 @@
                 </div>
                 {{--                <div class="form-row">--}}
                 {{--                    <div class="form-group col-md-6">--}}
-                {{--                        <label for="password">Senha</label>--}}
+                {{--                        <label for="password">{{ trans('admin.pagesF.senha') }}</label>--}}
                 {{--                        <input type="password" class="form-control @error('password') is-invalid @enderror"--}}
                 {{--                               id="password" name="password"--}}
                 {{--                               maxlength="15">--}}
                 {{--                        @if(Route::currentRouteName() == 'admin.settings.users.edit')--}}
-                {{--                            <small>*Em branco para não alterar</small>--}}
+                {{--                            <small>{{ trans('admin.pagesF.embranco') }}</small>--}}
                 {{--                        @endif--}}
                 {{--                        @error('password')--}}
                 {{--                        <span class="invalid-feedback" role="alert">--}}
@@ -160,7 +160,7 @@
                 {{--                        @enderror--}}
                 {{--                    </div>--}}
                 {{--                    <div class="form-group col-md-6">--}}
-                {{--                        <label for="confirm_password">Confirme a senha</label>--}}
+                {{--                        <label for="confirm_password">{{ trans('admin.pagesF.confirmSenha') }}</label>--}}
                 {{--                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"--}}
                 {{--                               id="password_confirmation"--}}
                 {{--                               name="password_confirmation" maxlength="15">--}}
@@ -200,3 +200,4 @@
     </script>
 
 @endpush
+    
