@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lotogiro
+    restart: unless-stopped
+    working_dir: /var/www/html
+    command: bash -c "php artisan cache:clear  && php artisan serve --host 0.0.0.0 --port=9000"
+    ports:
+      - 9000:9000
+    volumes:
+      - ./:/var/www/html
+    network_mode: bridge

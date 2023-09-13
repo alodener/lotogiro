@@ -9,6 +9,9 @@ use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\RechargeOrder;
+use Illuminate\Support\Facades\DB;
+
 
 class ManualRecharge extends Component
 {
@@ -16,7 +19,11 @@ class ManualRecharge extends Component
 
     protected $paginationTheme = 'bootstrap';
     public $range = 0, $dateStart, $dateEnd, $perPage = 10, $value, $admins = [], $adminSelected = 0;
-
+    public function mount()
+    {
+        $this->dateStart = Carbon::now()->format('d/m/Y');
+        $this->dateEnd = Carbon::now()->format('d/m/Y');
+    }
     public function render()
     {
         $admins = [];
@@ -40,6 +47,7 @@ class ManualRecharge extends Component
 
         $transacts = TransactBalance::with('userSender', 'user')
             ->whereIn('user_id_sender', $adms)
+            ->whereNotIn('user_id', $adms)
             ->when($this->range > 0, function ($q) {
                 $now = Carbon::now();
                 if($this->range === '1'){
@@ -51,22 +59,126 @@ class ManualRecharge extends Component
                     return $q->whereBetween('created_at', [$this->dateEnd, $this->dateStart]);
                 }
                 if($this->range === '3'){
-                    return $q->whereDay('created_at', $now);
+                    $periodo = [$now->format('Y-m-d') . ' 00:00:00', $now->format('Y-m-d') . ' 23:59:59'];
+                    return $q->whereBetween('created_at', $periodo);
                 }
                 if($this->range === '4'){
-                    $dateStart = $this->dateStart;
-                    $endStart = $this->dateEnd;
-                    if(!Carbon::hasFormat($dateStart, 'Y-m-d')){
+                     //  $dateStart = $this->dateStart;
+                   // $endStart = $this->dateEnd;
+                 $periodo =   [Carbon::createFromFormat('d/m/Y', $this->dateStart)->format('Y-m-d') . ' 00:00:00',
+                Carbon::createFromFormat('d/m/Y', $this->dateEnd)->format('Y-m-d') . ' 23:59:59'];
+                   /* if(!Carbon::hasFormat($dateStart, 'Y-m-d')){
                         $dateStart = Carbon::createFromFormat('d/m/Y', $this->dateStart);
                     }
                     if(!Carbon::hasFormat($endStart, 'Y-m-d')){
                         $endStart = Carbon::createFromFormat('d/m/Y', $this->dateEnd);
-                    }
+                    }*/
 
-                    return $q->whereBetween('created_at', [$dateStart, $endStart]);
+                    return $q->whereBetween('created_at', $periodo);
                 }
             })
+
             ->orderByDesc('id');
+               
+            //total recarga via plataforma
+
+            $totalpix = TransactBalance::with('userSender', 'user')
+            ->whereIn('user_id_sender', $adms)
+            ->whereNotIn('user_id', $adms)
+            ->where('type', 'LIKE', "%recarga%")
+            ->where('wallet', '=', 'balance')
+            ->when($this->range > 0, function ($q) {
+                $now = Carbon::now();
+                if ($this->range === '1') {
+                    return $q->whereMonth('created_at', '=', $now->month);
+                }
+                if ($this->range === '2') {
+                    $dateEnd = Carbon::now()->subDays(7);
+                    return $q->whereBetween('created_at', [$dateEnd, $now]);
+                }
+                if ($this->range === '3') {
+                    $periodo = [$now->format('Y-m-d') . ' 00:00:00', $now->format('Y-m-d') . ' 23:59:59'];
+                    return $q->whereBetween('created_at', $periodo);
+                }
+                if ($this->range === '4' && $this->dateStart && $this->dateEnd) {
+                    return $q->whereBetween('created_at', [
+                        Carbon::createFromFormat('d/m/Y', $this->dateStart),
+                        Carbon::createFromFormat('d/m/Y', $this->dateEnd),
+                    ]);
+                }
+
+            })
+            ->sum('value');
+
+            $totalpix = number_format($totalpix, 2, ',','.');
+
+            
+            //calculo do bônus pix
+            $totalbonus = TransactBalance::with('userSender', 'user')
+            ->whereIn('user_id_sender', $adms)
+            ->whereNotIn('user_id', $adms)
+            ->where('wallet', 'bonus')
+            ->when($this->range > 0, function ($q) {
+                
+                $now = Carbon::now();
+                if ($this->range === '1') {
+                    return $q->whereMonth('created_at', '=', $now->month);
+                }
+                if ($this->range === '2') {
+                    $dateEnd = Carbon::now()->subDays(7);
+                    return $q->whereBetween('created_at', [$dateEnd, $now]);
+                }
+                if ($this->range === '3') {
+                    $periodo = [$now->format('Y-m-d') . ' 00:00:00', $now->format('Y-m-d') . ' 23:59:59'];
+                    return $q->whereBetween('created_at', $periodo);
+                }
+                if ($this->range === '4' && $this->dateStart && $this->dateEnd) {
+                    return $q->whereBetween('created_at', [
+                        Carbon::createFromFormat('d/m/Y', $this->dateStart),
+                        Carbon::createFromFormat('d/m/Y', $this->dateEnd),
+                    ]);
+                }
+            })
+            ->sum('value');
+            
+            $totalbonus = number_format($totalbonus, 2, ',','.');
+            
+            //Calculo da recarga manual           
+            $totalrecargamanual = TransactBalance::with('userSender', 'user')
+            ->whereIn('user_id_sender', $adms)
+            ->whereNotIn('user_id', $adms)
+            ->where('type', 'Add por Admin')
+            ->where('wallet', 'balance')
+            ->when($this->range > 0, function ($q) {
+            $now = Carbon::now();
+            if ($this->range === '1') {
+                return $q->whereMonth('created_at', '=', $now->month);
+            }
+            if ($this->range === '2') {
+                $dateEnd = Carbon::now()->subDays(7);
+                return $q->whereBetween('created_at', [$dateEnd, $now]);
+            }
+            if ($this->range === '3') {
+                $periodo = [$now->format('Y-m-d') . ' 00:00:00', $now->format('Y-m-d') . ' 23:59:59'];
+                return $q->whereBetween('created_at', $periodo);
+            }
+            if ($this->range === '4' && $this->dateStart && $this->dateEnd) {
+                return $q->whereBetween('created_at', [
+                    Carbon::createFromFormat('d/m/Y', $this->dateStart),
+                    Carbon::createFromFormat('d/m/Y', $this->dateEnd),
+                ]);
+            }
+        })
+        ->sum('value');
+
+        $totalrecargamanual = number_format($totalrecargamanual, 2, ',','.');
+     /*  $a = Money::toDatabase($totalrecargamanual);
+       $b = Money::toDatabase($totalbonus);
+       $c = Money::toDatabase($totalpix);
+        
+
+        $totalSoma = $a + $b + $c ;*/
+        
 
         $total = Money::toReal($transacts->sum('value'));
         $transacts = $transacts->paginate(10);
@@ -80,6 +192,6 @@ class ManualRecharge extends Component
             $item->responsavel = "{$item->userSender['name']} {$item->userSender['last_name']}";
         });
 
-        return view('livewire.pages.dashboards.extract.manual-recharge', ['transacts' => $transacts]);
+          return view('livewire.pages.dashboards.extract.manual-recharge', compact('transacts', 'totalpix','totalbonus','totalrecargamanual'));
     }
 }

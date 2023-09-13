@@ -9,7 +9,7 @@
                 <div class="p-3 bg-body shadow-sm rounded border border-1">
                     <div class="d-flex justify-content-between">
                         <div class="float-start">
-                            <h5 class="value">Total de apostas feitas</h5>
+                            <h5 class="value">{{ trans('admin.pagesF.totalAposts') }}</h5>
                             <p class="mb-0" style="font-size: 20px;"><b>{{ $total_bets }}</b></p>
                         </div>
                         <div class="float-end d-inline-block bg-light shadow-light rounded-3 p-2">
@@ -23,7 +23,7 @@
                 <div class="p-3 bg-body shadow-sm rounded border border-1">
                     <div class="d-flex justify-content-between">
                         <div class="float-start">
-                            <h5 class="value">Valor Apostado</h5>
+                            <h5 class="value">{{ trans('admin.pagesF.valorApost') }}</h5>
                             <p class="mb-0" style="font-size: 20px;">{{ 'R$ ' . number_format($total_apostado, 2, '.', ',') }}</p>
                         </div>
                         <div class="float-end d-inline-block bg-light shadow-light rounded-3 p-2">
@@ -36,7 +36,7 @@
                 <div class="p-2 bg-body shadow-sm rounded border border-1">
                     <div class="d-flex justify-content-between">
                         <div class="float-start">
-                            <h4 class="value">Prêmio Cliente</h4>
+                            <h4 class="value">{{ trans('admin.pagesF.premioClient') }}</h4>
                             <p class="text-dark" class="mb-0">{{ 'R$' . number_format($total_apostado - $lucro_prejuizo, 2, '.', ',')  }}</p>
                         </div>
                         <div class="float-end d-inline-block bg-light shadow-light rounded-3 p-2">
@@ -50,7 +50,7 @@
                 <div class="p-2 bg-body shadow-sm rounded border border-1">
                     <div class="d-flex justify-content-between">
                         <div class="float-start">
-                            <h4 class="value">Lucro/Prejuizo(Casa)</h4>
+                            <h4 class="value">{{ trans('admin.pagesF.lucropreju') }}</h4>
                             @if ($lucro_prejuizo > 0)
                                 <p class="text-success" class="mb-0">{{ 'R$' . number_format($lucro_prejuizo, 2, '.', ',')  }}</p>
                             @elseif ($lucro_prejuizo == 0)
@@ -69,24 +69,24 @@
         </div>
         <div class="row mt-5">
             <div class="col">
-                <h3>Visão Detalhada do Cliente {{$user->name}} {{$user->last_name}} #{{$user->id}}</h3>
+                <h3>{{ trans('admin.pagesF.visaoDet') }} {{$user->name}} {{$user->last_name}} #{{$user->id}}</h3>
                 <table id="table" class="table table-sm">
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th aria-controls="widget-options" scope="col">Concurso</th>
+                            <th aria-controls="widget-options" scope="col">{{ trans('admin.pagesF.concurso') }}</th>
                             <th scope="col"></th>
-                            <th scope="col">Tipo de Jogo</th>
+                            <th scope="col">{{ trans('admin.pagesF.tipoJogo') }}</th>
                             <th scope="col"></th>
-                            <th scope="col">Valor Apostado</th>
+                            <th scope="col">{{ trans('admin.pagesF.valorApost') }}</th>
                             <th scope="col"></th>
-                            <th scope="col">Prêmio</th>
+                            <th scope="col">{{ trans('admin.pagesF.premio') }}</th>
                             <th scope="col"></th>
                             @if ($user_type === 'user_id')
-                            <th scope="col">Cliente</th>
+                            <th scope="col">{{ trans('admin.pagesF.client') }}</th>
                             <th scope="col"></th>
                             @endif
-                            <th scope="col">Data</th>
+                            <th scope="col">{{ trans('admin.pagesF.date') }}</th>
                         </tr>
                     </thead>
                     <tbody>
