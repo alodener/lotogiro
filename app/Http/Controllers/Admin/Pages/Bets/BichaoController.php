@@ -286,7 +286,8 @@ class BichaoController extends Controller
 
         return response()->streamDownload(
             fn() => print($pdf),
-            $fileName
+            $fileName,
+            ['Content-Disposition' => 'attachment; filename='. $fileName. ';', 'Content-Type'  => 'application/octet-stream']
         );
     }
 
@@ -374,7 +375,8 @@ class BichaoController extends Controller
 
         return response()->streamDownload(
             fn() => print($pdf),
-            $fileName
+            $fileName,
+            ['Content-Disposition' => 'attachment; filename='. $fileName. ';', 'Content-Type'  => 'application/octet-stream']
         );
     }
 
