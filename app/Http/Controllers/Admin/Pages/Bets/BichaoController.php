@@ -207,6 +207,8 @@ class BichaoController extends Controller
         foreach ($cotacoes as $cotacao) {
             if ($cotacao['id'] == '7b') {
                 BichaoModalidades::where('id', 7)->update(['multiplicador_2' => $cotacao['value']]);
+            } elseif ($cotacao['id'] == '6b') {
+                BichaoModalidades::where('id', 6)->update(['multiplicador_2' => $cotacao['value']]);
             } else {
                 BichaoModalidades::where('id', $cotacao['id'])->update(['multiplicador' => $cotacao['value']]);
             }
@@ -223,9 +225,10 @@ class BichaoController extends Controller
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
+
+        $startAt = $request->has('startAt') ? $request->input('startAt') : date('Y-m-01');
+        $endAt = $request->has('endAt') ? $request->input('endAt') : date('Y-m-d');
         $perPage = $request->has('perPage') ? $request->input('perPage') : 10;
-        $intervalo = $request->has('intervalo') ? $request->input('intervalo') : 30;
-        $buscaIntervalo = now()->subDays($intervalo)->endOfDay();
 
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $estados = BichaoEstados::where('active', 1)->get();
@@ -237,18 +240,54 @@ class BichaoController extends Controller
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
             ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
             ->where('bichao_games.user_id', Auth()->user()->id)
-            ->whereDate('bichao_games.created_at','>=', $buscaIntervalo)
+            ->whereDate('bichao_games.created_at','>=', $startAt)
+            ->whereDate('bichao_games.created_at','<=', $endAt)
             ->orderBy('bichao_games.created_at', 'DESC')
             ->paginate($perPage);
 
         return view('admin.pages.bets.game.bichao.minhas_apostas', [
             'apostas' => $apostas,
             'perPage' => $perPage,
-            'intervalo' => $intervalo,
+            'startAt' => $startAt,
+            'endAt' => $endAt,
             'chart' => $chart,
             'estados' => $estados,
             'totalCarrinho' => $totalCarrinho
         ]);
+    }
+
+    public function bets_reports(Request $request) {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+
+        $startAt = $request->has('search_date_start') ? $request->input('search_date_start') : date('Y-m-01');
+        $endAt = $request->has('search_date_end') ? $request->input('search_date_end') : date('Y-m-d');
+
+        $apostas = BichaoGames::select('bichao_games.*', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'bm.multiplicador', 'bm.multiplicador_2', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.ddd as cliente_ddd', 'c.phone as cliente_phone')
+            ->join('clients as c', 'c.id', 'bichao_games.client_id')
+            ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
+            ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
+            ->where('bichao_games.user_id', Auth()->user()->id)
+            ->whereDate('bichao_games.created_at','>=', $startAt)
+            ->whereDate('bichao_games.created_at','<=', $endAt)
+            ->orderBy('bichao_games.created_at', 'DESC')
+            ->get();
+
+        $data = [
+            'startAt' => $startAt,
+            'endAt' => $endAt,
+            'apostas' => $apostas,
+        ];
+
+        $pdf = PDF::loadView('admin.layouts.pdf.betsBichao', $data)->output();
+
+        $fileName = 'Relatório de Apostas Bichão ' . Carbon::parse($startAt)->format('d-m-Y') . ' ate '. Carbon::parse($endAt)->format('d-m-Y') . '.pdf';
+
+        return response()->streamDownload(
+            fn() => print($pdf),
+            $fileName
+        );
     }
 
     public function comissions(Request $request) {
@@ -278,34 +317,40 @@ class BichaoController extends Controller
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
+        $startAt = $request->has('startAt') ? $request->input('startAt') : date('Y-m-01');
+        $endAt = $request->has('endAt') ? $request->input('endAt') : date('Y-m-d');
         $perPage = $request->has('perPage') ? $request->input('perPage') : 10;
-        $intervalo = $request->has('intervalo') ? $request->input('intervalo') : 30;
-        $buscaIntervalo = now()->subDays($intervalo)->endOfDay();
 
         $apostas = BichaoGames::select('bichao_games.*', 'bgv.valor_premio', 'bgv.id as id_premio', 'bgv.payment', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome', 'c.name as cliente_nome', 'c.last_name as cliente_sobrenome', 'c.pix')
             ->join('bichao_games_vencedores as bgv', 'bgv.game_id', 'bichao_games.id')
             ->join('clients as c', 'c.id', 'bichao_games.client_id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
             ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
-            ->whereDate('bichao_games.created_at','>=', $buscaIntervalo)
+            ->whereDate('bichao_games.created_at','>=', $startAt)
+            ->whereDate('bichao_games.created_at','<=', $endAt)
             ->orderBy('bichao_games.created_at', 'DESC')
             ->paginate($perPage);
 
         return view('admin.pages.bets.game.bichao.draws', [
             'apostas' => $apostas,
             'perPage' => $perPage,
-            'intervalo' => $intervalo,
+            'startAt' => $startAt,
+            'endAt' => $endAt,
         ]);
     }
 
     public function draws_reports(Request $request) {
         $data = $request->all();
 
+        $startAt = $request->has('search_date_start') ? $request->input('search_date_start') : date('Y-m-d');
+        $endAt = $request->has('search_date_end') ? $request->input('search_date_end') : date('Y-m-d');
+
         $games = BichaoGames::select('bichao_games.*', 'bgv.valor_premio', 'bgv.id as id_premio', 'bgv.payment', 'bh.horario', 'bh.banca', 'bm.nome as modalidade_nome')
             ->join('bichao_games_vencedores as bgv', 'bgv.game_id', 'bichao_games.id')
             ->join('bichao_modalidades as bm', 'bm.id', 'bichao_games.modalidade_id')
             ->join('bichao_horarios as bh', 'bh.id', 'bichao_games.horario_id')
-            ->whereDate('bichao_games.created_at', '=', $data['search_date'])
+            ->whereDate('bichao_games.created_at','>=', $startAt)
+            ->whereDate('bichao_games.created_at','<=', $endAt)
             ->with(['user', 'client'])
             ->get();
         
@@ -316,7 +361,8 @@ class BichaoController extends Controller
         $collection = $collection->sortByDesc('client.name')->groupBy('user.name');
 
         $data = [
-            'dateFilter' => $data['search_date'],
+            'startAt' => $startAt,
+            'endAt' => $endAt,
             'collection' => $collection,
             'subtotal' => 0,
             'total' => 0
@@ -324,7 +370,7 @@ class BichaoController extends Controller
 
         $pdf = PDF::loadView('admin.layouts.pdf.drawsBichao', $data)->output();
 
-        $fileName = 'Relatório Diário de Prêmios Bichão - ' . Carbon::parse($data['dateFilter'])->format('d-m-Y') . '.pdf';
+        $fileName = 'Relatório de Prêmios Bichão ' . Carbon::parse($startAt)->format('d-m-Y') . ' ate '. Carbon::parse($endAt)->format('d-m-Y') . '.pdf';
 
         return response()->streamDownload(
             fn() => print($pdf),

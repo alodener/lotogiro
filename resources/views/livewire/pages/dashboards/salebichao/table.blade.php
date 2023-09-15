@@ -148,7 +148,9 @@
                     <thead>
                     <tr>
                         <th>{{ trans('admin.gains.table-id-header') }}</th>
-                        <th>{{ trans('admin.gains.table-game-type-header') }}</th>
+                        <th>{{ trans('admin.bichao.loteria') }}</th>
+                        <th>{{ trans('admin.bichao.modalidade') }}</th>
+                        <th>{{ trans('admin.bichao.aposta') }}</th>
                         <th>{{ trans('admin.gains.table-cpf-header') }}</th>
                         <th>{{ trans('admin.gains.table-customer-header') }}</th>
                         <th>{{ trans('admin.gains.table-user-header') }}</th>
@@ -159,12 +161,25 @@
                     </thead>
                     <tbody>
                     @forelse($games as $game)
+                        <?php
+                            $games = [];
+
+                            if (strval($game->game_1) > 0) $games[] = $game->game_1;
+                            if (strval($game->game_2) > 0) $games[] = $game->game_2;
+                            if (strval($game->game_3) > 0) $games[] = $game->game_3;
+                        ?>
                         <tr>
                             <td>
                                 {{ $game->id }}
                             </td>
                             <td>
+                                {{ date('H\hi', strtotime($game->horario->horario)) }} - {{ $game->horario->banca }}
+                            </td>
+                            <td>
                                 {{ $game->modalidade->nome }}
+                            </td>
+                            <td>
+                                {{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}
                             </td>
                             <td>
                                 {{ \App\Helper\Mask::addMaskCpf($game->client->cpf) }}
@@ -196,7 +211,7 @@
                 </table>
             </div>
             <div>
-                {{ $games->links() }}
+                {{ is_object($games) ? $games->links() : '' }}
             </div>
         </div>
     </div>
