@@ -8,6 +8,8 @@ NÚMERO DO BILHETE: {{$game->id}}°
 
 EMITIDO EM: {{\Carbon\Carbon::parse($game->created_at)->format('d/m/Y H:i:s')}}
 
+VALIDO ATÉ: {{\Carbon\Carbon::parse($game->created_at)->addDays(4)->format('d/m/Y')}}
+
 BANCA: {{env("nome_sistema")}}
 
 LOCAL DE SORTEIO: {{$game->banca}}

@@ -49,14 +49,29 @@
                             <option value="100" {{ $perPage == '100' ? 'selected' : '' }} >100</option>
                         </select>
                     </div>
-                    <div class="col-md-2 col-6">
-                        <select class="change-busca form-control" name="busca-intervalo" data-busca-param="intervalo">
-                        <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >{{ trans('admin.bichao.30days') }}</option>
-                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >{{ trans('admin.bichao.60days') }}</option>
-                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >{{ trans('admin.bichao.90days') }}</option>
-                        </select>
+                    <div class="col-md-3 col-6">
+                        <div class="form-group w-100">
+                            <input type="date" class="change-busca form-control" value="{{$startAt}}" max="{{date('Y-m-d')}}" data-busca-param="startAt">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="form-group w-100">
+                            <input type="date" class="change-busca form-control" value="{{$endAt}}" min="{{$startAt}}" max="{{date('Y-m-d')}}" data-busca-param="endAt">
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <form target="_blank" action="{{ route('admin.bets.bichao.bets.reports') }}" method="POST">
+                    @csrf
+                    <div class="row busca-container justify-content-end">
+                        <div class="col-md-4 col-4">
+                            <input type="hidden" name="search_date_start" value="{{$startAt}}">
+                            <input type="hidden" name="search_date_end" value="{{$endAt}}">
+                            <button class="btn btn-info" id="bichao-buscar-resultados" type="submit">{{ trans('admin.bichao.gerarRelat') }}</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row mt-4">
