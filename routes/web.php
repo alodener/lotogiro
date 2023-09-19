@@ -158,6 +158,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('resultados', [BichaoController::class, 'results'])->name('resultados');
                 Route::get('draws', [BichaoController::class, 'draws'])->name('draws');
                 Route::post('draws/reports', [BichaoController::class, 'draws_reports'])->name('draws.reports');
+                Route::post('bets/reports', [BichaoController::class, 'bets_reports'])->name('bets.reports');
                 Route::post('add/chart', [BichaoController::class, 'add_in_chart'])->name('bichao.add.chart');
                 Route::post('marcar-premio-pago', [BichaoController::class, 'pay_prize'])->name('bichao.payprize');
                 Route::get('remove/chart/{index}', [BichaoController::class, 'remove_chart'])->name('bichao.remove.chart');

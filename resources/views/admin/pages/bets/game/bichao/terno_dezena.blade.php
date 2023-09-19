@@ -142,6 +142,7 @@
         </div>
         <div class="row">
             <div class="col button-group">
+                <a><button id="btn-award-first-to-third" onclick="button_first_to_third_award()" class="btn btn-outline-primary btn-award"><b>1º ao 3º</b></button></a>
                 <a><button id="btn-award-first-to-fifth" onclick="button_first_to_fifth_award()" class="btn btn-outline-primary btn-award"><b>1º ao 5º</b></button></a>
             </div>
         </div>
@@ -266,6 +267,7 @@
     <script>
 
         const award = parseInt('{{$modalidade->multiplicador}}');
+        const award_2 = parseInt('{{$modalidade->multiplicador_2}}');
         const initial_value = 0;
         const button_first = $('#btn-award-first');
         const button_second = $('#btn-award-second');
@@ -273,6 +275,7 @@
         const input_value_bet = $('#input_value_bet');
         const message_minimum = $('#message-minimum-value');
         const message_maximum = $('#message-maximum-value');
+        let award_type = 0;
         let value = 0;
 
         function randomNumber(min, max) {
@@ -302,13 +305,13 @@
             const client_id = $('#livewire-client-id').val();
             const teimosinha = $('#input_teimosinha_bet').val();
 
-            if (!option_award > 0) return alert('Selecione um dos prêmios');
+            if (!award_type > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
             if (!client_id > 0) return alert('Escolha um cliente');
             if (!validateGame()) return alert('O jogo precisa ser um terno de dezena');
             
             const item = {
-                award_type: [1,2,3,4,5],
+                award_type: award_type == 1 ? [1,2,3] : [1,2,3,4,5],
                 value: value.replace(',', '.'),
                 client_id,
                 modality: '{{$modalidade->nome}}',
@@ -349,9 +352,7 @@
                     let limit_maximum_bet = premio_maximo / award;
                     let value = 0;
 
-                    const option_award = validate_award();
-    
-                    if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
+                    if (award_type == 2) limit_maximum_bet = premio_maximo / award_2;
     
                     const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
     
@@ -364,20 +365,10 @@
                     } else {
                         $('#price_award_check').show();
 
-                        const option_award = validate_award();
-    
-                        if (option_award == 1) {
+                        if(award_type == 1) {
                             value = award_total;
-                        } else if (option_award == 2) {
-                            value = (award_total / 2);
-                        } else if (option_award == 3) {
-                            value = (award_total / 3);
-                        } else if (option_award == 4) {
-                            value = (award_total / 4);
-                        } else if (option_award == 5) {
-                            value = (award_total / 5);
-                        } else if (option_award == 6) {
-                            value = (award_total / 5);
+                        }else if(award_type == 2){
+                            value = parseInt('{{$modalidade->multiplicador_2}}');
                         }
     
                         const result = value * value_input_bet;
@@ -411,86 +402,31 @@
             calculate_awards();
         }
 
-        function button_first_award(){
-            const button_first = $('#btn-award-first');
+        function button_first_to_third_award(){
 
-            if(!button_first.hasClass('active')){
-                button_first.addClass('active');
-            }else{
-                button_first.removeClass('active');
-            }
-            calculate_awards();
+        const button_first_to_third = $('#btn-award-first-to-third');
+        const button_first_to_fifth = $('#btn-award-first-to-fifth');
+
+        if(!button_first_to_third.hasClass('active')){
+            button_first_to_third.addClass('active');
+            button_first_to_fifth.removeClass('active');
+            award_type = 1;
         }
-
-        function button_second_award(){
-            const button_second = $('#btn-award-second');
-
-            if(!button_second.hasClass('active')){
-                button_second.addClass('active');
-            }else{
-                button_second.removeClass('active');
-            }
-            calculate_awards();
-        }
-
-        function button_third_award(){
-            const button_third = $('#btn-award-third');
-
-            if(!button_third.hasClass('active')){
-                button_third.addClass('active');
-            }else{
-                button_third.removeClass('active');
-            }
-            calculate_awards();
-        }
-
-        function button_fourth_award(){
-            const button_fourth = $('#btn-award-fourth');
-
-            if(!button_fourth.hasClass('active')){
-                button_fourth.addClass('active');
-            }else{
-                button_fourth.removeClass('active');
-            }
-            calculate_awards();
-        }
-
-        function button_fifth_award(){
-            const button_fifth = $('#btn-award-fifth');
-
-            if(!button_fifth.hasClass('active')){
-                button_fifth.addClass('active');
-            }else{
-                button_fifth.removeClass('active');
-            }
-            calculate_awards();
+        calculate_award();
         }
 
         function button_first_to_fifth_award(){
 
-            const button_first = $('#btn-award-first');
-            const button_second = $('#btn-award-second');
-            const button_fifth = $('#btn-award-fifth');
-            const button_third = $('#btn-award-third');
-            const button_fourth = $('#btn-award-fourth');
-            const button_first_to_fifth = $('#btn-award-first-to-fifth');
+        const button_first_to_third = $('#btn-award-first-to-third');
+        const button_first_to_fifth = $('#btn-award-first-to-fifth');
 
-            if(!button_first_to_fifth.hasClass('active')){
-                button_first.addClass('active');
-                button_second.addClass('active');
-                button_third.addClass('active');
-                button_fourth.addClass('active');
-                button_fifth.addClass('active');
-                button_first_to_fifth.addClass('active');
-            }else{
-                button_first.removeClass('active');
-                button_second.removeClass('active');
-                button_third.removeClass('active');
-                button_fourth.removeClass('active');
-                button_fifth.removeClass('active');
-                button_first_to_fifth.removeClass('active');
-            }
-            calculate_awards();
+        if(!button_first_to_fifth.hasClass('active')){
+            button_first_to_fifth.addClass('active');
+            button_first_to_third.removeClass('active');
+            
+            award_type = 2;
+        }
+        calculate_award();
         }
 
         function validate_award(){

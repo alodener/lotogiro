@@ -127,7 +127,7 @@
 <div class="">
     <div class="border-bottom-dashed">
         <p class="text-danger text-center font text-size-2 text-bold">
-            RELATÓRIO DE PRÊMIOS DIÁRIOS <br/>
+            RELATÓRIO DE PRÊMIOS <br/>
             BICHÃO DA SORTE
         </p>
     </div>
@@ -137,7 +137,7 @@
             <span class="font">{{\Carbon\Carbon::now()->format('d/m/y h:i:s')}}</span>
             <br/>
             <span class="font text-bold">PERÍODO:</span>
-            <span class="font">{{\Carbon\Carbon::parse($dateFilter)->format('d/m/Y')}}</span>
+            <span class="font">{{\Carbon\Carbon::parse($startAt)->format('d/m/Y')}} até {{\Carbon\Carbon::parse($endAt)->format('d/m/Y')}}</span>
             <br/>
             <span class="font text-bold">BANCA:</span>
             <span class="font">{{env("nome_sistema")}}</span>
