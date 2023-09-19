@@ -23,7 +23,6 @@
         </div>
     
         <input type="hidden" name="client" value="{{$clientId}}">
-        <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
         <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
             <div class="col-md-12">
                 @if($showList)
@@ -45,13 +44,13 @@
     
     <input type="text" value="{{ $FiltroUser['name'] }}" disabled class="form-control">
     <input type="hidden" name="client" value="{{ $FiltroUser['id'] }}" readonly>
-    <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
     
     @endif
     
     {{-- parte de calculo de valores --}}
     <div class="form-group col-md-12">
             @if(isset($values) && $values->count() > 0)
+        
             <label for="client">{{ trans('admin.games.value') }}: </label>
                 @foreach($values as $value)
                     <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
@@ -67,9 +66,9 @@
                     var valorTotal = contadorJogos * numberValor;
                     document.getElementById('ValorTotal').value = valorTotal.toFixed(2);">
                     
-                    {{ trans('admin.games.prize-value-label') }} R$
-                    <input type="text" id="premio" value="" name="premio" readonly>
-                    <button  class="btn btn-success" type="button">{{ trans('admin.games.calculate') }}</button>
+                    
+                    <input type="hidden" id="premio" value="" name="premio" readonly>
+                   <!-- <button  class="btn btn-success" type="button">{{ trans('admin.games.calculate') }}</button>-->
                 @endforeach
     
                 <br>
@@ -105,8 +104,11 @@
 
 <button type="button"  class="btn btn-secondary" wire:click="dezenas" >{{ trans('admin.lwGame.comput') }}   </button>   
 <div class="modal-footer">
-<button type="submit" class="btn btn-info" id="submit_game">{{ trans('admin.lwGame.creat') }} </button>
-<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.lwGame.fech') }}</button>
+    @if($podeCriar)
+        <button type="submit" class="btn btn-info" id="submit_game">{{ trans('admin.lwGame.creat') }}</button>
+    @endif
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.lwGame.fech') }}</button>
+</div>
 
 </div>
 
