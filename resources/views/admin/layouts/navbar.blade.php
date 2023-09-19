@@ -5,7 +5,8 @@
         </li>
         <li class="nav-item pl-3">
         {{ trans('admin.pagesF.saldo') }} R${{\App\Helper\Money::toReal(auth()->user()->balance)}} |
-        {{ trans('admin.pagesF.bonus') }}  R${{\App\Helper\Money::toReal(auth()->user()->bonus)}}
+        {{ trans('admin.pagesF.bonus') }}  R${{\App\Helper\Money::toReal(auth()->user()->bonus)}} |
+        {{ trans('admin.pagesF.saqueDisponivel') }}  R${{\App\Helper\Money::toReal(auth()->user()->available_withdraw)}}
         </li>
         <li class="nav-item pl-3">
                         <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light

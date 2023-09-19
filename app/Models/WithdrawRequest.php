@@ -14,6 +14,7 @@ class WithdrawRequest extends Model
         'user_id',
         'value',
         'status',
+        'type',
     ];
 
     public function user()
