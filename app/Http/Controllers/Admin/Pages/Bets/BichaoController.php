@@ -710,10 +710,10 @@ class BichaoController extends Controller
 
             $premioMaximo = $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador / sizeof($premios);
             
-            if ($checkout[$index]['modalidade_id'] == 6 || $checkout[$index]['modalidade_id'] == 8 || $checkout[$index]['modalidade_id'] == 9) {
+            if ($checkout[$index]['modalidade_id'] == 8 || $checkout[$index]['modalidade_id'] == 9) {
                 $premioMaximo = $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador;
             }
-            if ($checkout[$index]['modalidade_id'] == 7) {
+            if ($checkout[$index]['modalidade_id'] == 6 || $checkout[$index]['modalidade_id'] == 7) {
                 $premioMaximo = sizeof($premios) == 3 ? $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador : $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador_2;
             }
 
@@ -800,10 +800,10 @@ class BichaoController extends Controller
 
         $premioMaximo = $game->valor * $game->multiplicador / sizeof($premios);
         
-        if ($game->modalidade_id == 6 || $game->modalidade_id == 8 || $game->modalidade_id == 9) {
+        if ($game->modalidade_id == 8 || $game->modalidade_id == 9) {
             $premioMaximo = $game->valor * $game->multiplicador;
         }
-        if ($game->modalidade_id == 7) {
+        if ($game->modalidade_id == 6 || $game->modalidade_id == 7) {
             $premioMaximo = sizeof($premios) == 3 ? $game->valor * $game->multiplicador : $game->valor * $game->multiplicador_2;
         }
         
@@ -940,7 +940,9 @@ class BichaoController extends Controller
 
             // Terno de Dezena
             if ($game['modalidade_id'] == 6) {
-                $valor_premio = $game['valor'] * $game['multiplicador'];
+                $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
+
+                $valor_premio = $game['valor'] * $multiplicador;
                 $winner = 0;
                 $gameResults = [$game['game_1'], $game['game_2'], $game['game_3']];
                 if (in_array(substr($resultado['premio_1'], 2), $gameResults)) $winner = $winner + 1;
