@@ -12,7 +12,6 @@
                     <div class="col-sm-8">
                         <h4>{{ trans('admin.pagesF.saldo') }}: R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
                         <h4>{{ trans('admin.pagesF.bonus') }}: R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h4>
-                        <h4>{{ trans('admin.pagesF.saqueDisponivel') }}: R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h4>
 
                     </div>
                     <div class="col-sm-4 right">
