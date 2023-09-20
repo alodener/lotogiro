@@ -37,7 +37,7 @@
                                 <div class="card-header ganhos-card">
                                 <h6><b>{{ trans('admin.pagesF.valorRet') }}</b></h6>
                                 </div>
-                                <small class="text-muted">{{ trans('admin.pagesF.valorMin') }} R$ {{ $valorMinimo }}
+                                <small class="text-muted">{{ trans('admin.pagesF.valorMin') }} R$ 1,00
 
                                     <small class="text-muted"><p>{{ trans('admin.pagesF.valorInse') }}</p></small>
                                 </small>
