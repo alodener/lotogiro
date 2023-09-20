@@ -19,6 +19,8 @@ use App\Models\TypeGameValue;
 use App\Models\Client;
 use App\Models\TransactBalance;
 use App\Helper\Configs;
+use App\Models\User;
+use App\Helper\GameHelper;
 
 // lib de email
 use Mail;
@@ -64,10 +66,22 @@ class ProcessBetEntries implements ShouldQueue
      */
     public function handle()
     {
-
+        
+        if( !auth()->user()->hasRole('Administrador') && ($this->request['type_client'] != 1 || $this->request['type_client'] == null )){
+            $userclient = User::where('id', $this->request['client'])->first();
+                if($userclient != null){
+                    $clientuser = Client::where('email', $userclient->email)->first();
+                }else{
+                    $clientuser = $request->client;
+                }
+        }
+    
         foreach ($this->dezenas as $dez) {
+            //$dezenaconvertida = string.split(/,(?! )/);
+            // $dezenaconvertida2 = explode(" ", $dez);
+            // sort($dezenaconvertida2, SORT_NUMERIC);
 
-            
+            // $dezenaconvertida = implode(",", $dezenaconvertida2);
             $teste = explode("\n", $dez);
             
             $str = implode("\n", $teste);
@@ -93,7 +107,11 @@ class ProcessBetEntries implements ShouldQueue
             }
             
             $game = new Game;
-            $game->client_id = $this->request['client'];
+             if( !auth()->user()->hasRole('Administrador') && ($this->request['type_client'] != 1 || $this->request['type_client'] == null )){
+                $game->client_id = $clientuser->id;
+                }else{
+                   $game->client_id = $this->request['client'];
+                }
             $game->user_id = $this->user->id;
             $game->type_game_id = $this->request['type_game'];
             $game->type_game_value_id =  $typeGameValue[0]->id;
@@ -106,6 +124,16 @@ class ProcessBetEntries implements ShouldQueue
             $game->commission_percentage = $this->user->commission;
             $game->save();
 
+            //verifica se é da dupla sena 
+                if ($this->request['type_game'] == 10){
+
+                    //encontrar o concurso com o final A na tabela
+                    $competitionA = Competition::where('number', 'like', '%' . $this->competition->number . 'A')->first();
+                    // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $dez, 2);
+                    
+
+                }
             $transact_balance = new TransactBalance;
             $transact_balance->user_id_sender = auth()->id();
             $transact_balance->user_id = auth()->id();
@@ -194,3 +222,4 @@ class ProcessBetEntries implements ShouldQueue
         $this->user->notify(new GameProcessedNotification($this->user, $this->bet));
     }
 }
+ 
