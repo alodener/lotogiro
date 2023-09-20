@@ -163,13 +163,6 @@ class SystemController extends Controller
         
         }  
 
-        if(isset($request->valorMinimo)) {
-            $system->value = $data['valorMinimo'];
-        }
-
-        if(isset($request->horarioMaximo)) {
-            $system->value = $data['horarioMaximo'];
-        }
 
         try{
             $system->save();
