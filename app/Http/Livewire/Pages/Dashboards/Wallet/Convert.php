@@ -7,6 +7,7 @@ use App\Models\TransactBalance;
 use App\Models\User;
 use App\Models\WithdrawRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -74,6 +75,26 @@ class Convert extends Component
 
         if($myOldBonus < $this->valueConvertBonus){
             $this->alert('error', 'Valor precisa ser menor ou igual ao seu Bônus!', [
+                'position' => 'center',
+                'timer' => '2000',
+                'toast' => false,
+                'timerProgressBar' => true,
+                'allowOutsideClick' => false
+            ]);
+
+            return;
+        }
+
+        $withdraw_request = WithdrawRequest::select(DB::raw('SUM(value) AS convert_requested'))
+                                            ->where('user_id', auth()->user()->id)
+                                            ->where('status', 0)
+                                            ->where('type', 'bonus_to_available_withdraw')
+                                            ->first();
+
+        $available_to_request = $myOldBonus - $withdraw_request->convert_requested;
+
+        if($this->valueConvertBonus > $available_to_request) {
+            $this->alert('error', 'Valor precisa ser menor ou igual ao seu Bônus disponível! Bônus disponível: R$'. $available_to_request , [
                 'position' => 'center',
                 'timer' => '2000',
                 'toast' => false,
