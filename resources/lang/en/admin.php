@@ -52,6 +52,7 @@ return [
     'paid' => 'Paid',
     'user' => 'User',
     'search-user' => 'Search user',
+    'search-client' => 'Search client',
     'generate-report' => 'Generate Report',
     'select' => 'Select',
     'back-to-main-page' => 'Back to main screen',

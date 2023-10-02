@@ -52,6 +52,7 @@ return [
     'paid' => 'Pagados',
     'user' => 'Usuario',
     'search-user' => 'Buscar usuario',
+    'search-client' => 'Buscar cliente',
     'generate-report' => 'Generar Informe',
     'select' => 'Seleccionar',
     'back-to-main-page' => 'Volver a la pantalla principal',
