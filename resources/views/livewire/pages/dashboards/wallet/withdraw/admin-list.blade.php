@@ -21,6 +21,7 @@
                     <tr>
                         <th>{{ trans('admin.pagesF.date') }}</th>
                         <th>{{ trans('admin.pagesF.responsavel') }}</th>
+                        <th>{{ trans('admin.pagesF.tipoSolicitacao') }}</th>
                         @if(\App\Helper\UserValidate::iAmAdmin())
                             <th>Pix</th>
                         @endif
@@ -34,6 +35,7 @@
                         <tr>
                             <td>{{ $withdraw->data }}</td>
                             <td>{{ $withdraw->responsavel }}</td>
+                            <td>{{ $withdraw->type == 'bonus_to_available_withdraw' ? 'Conversão Bônus para Saque Disponível' : 'Saque' }}</td>
                             @if(\App\Helper\UserValidate::iAmAdmin())
                                 <th>{{ $withdraw->pix }}</th>
                             @endif
