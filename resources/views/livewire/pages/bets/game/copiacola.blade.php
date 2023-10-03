@@ -67,9 +67,8 @@
                     var valorTotal = contadorJogos * numberValor;
                     document.getElementById('ValorTotal').value = valorTotal.toFixed(2);">
                     
-                    {{ trans('admin.games.prize-value-label') }} R$
-                    <input type="text" id="premio" value="" name="premio" readonly>
-                    <button  class="btn btn-success" type="button">{{ trans('admin.games.calculate') }}</button>
+                    <input type="hidden" id="premio" value="" name="premio" readonly>
+                   <!-- <button  class="btn btn-success" type="button">{{ trans('admin.games.calculate') }}</button>-->
                 @endforeach
     
                 <br>
@@ -105,9 +104,11 @@
 
 <button type="button"  class="btn btn-secondary" wire:click="dezenas" >{{ trans('admin.lwGame.comput') }}   </button>   
 <div class="modal-footer">
-<button type="submit" class="btn btn-info" id="submit_game">{{ trans('admin.lwGame.creat') }} </button>
-<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.lwGame.fech') }}</button>
-
+    @if($podeCriar)
+            <button type="submit" class="btn btn-info" id="submit_game">{{ trans('admin.lwGame.creat') }}</button>
+    @endif
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.lwGame.fech') }}</button>
+    </div>   
 </div>
 
 </div>    
