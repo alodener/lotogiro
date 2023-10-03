@@ -16,6 +16,8 @@ class Convert extends Component
     use LivewireAlert;
 
     public $valueConvert;
+    public $valueConvertBonus;
+    public $valueConvertWithdraw;
     public $user;
     public $valueConvertBonus;
     public $valueConvertWithdraw;
@@ -104,6 +106,7 @@ class Convert extends Component
 
             return;
         }
+
 
         if($myOldBonus >= $this->valueConvertBonus) {
             WithdrawRequest::create([
