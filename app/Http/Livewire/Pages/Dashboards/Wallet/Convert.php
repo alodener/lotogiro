@@ -19,8 +19,6 @@ class Convert extends Component
     public $valueConvertBonus;
     public $valueConvertWithdraw;
     public $user;
-    public $valueConvertBonus;
-    public $valueConvertWithdraw;
 
     public function transferBalance(): void
     {
