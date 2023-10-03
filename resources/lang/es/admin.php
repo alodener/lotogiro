@@ -965,7 +965,7 @@ a tu cuenta tan pronto como seamos notificados.',
     'dezenasUtiliz' => 'Decenas Utilizadas',
     'pontosCliente' => 'Puntos por Cliente',
     'extrato' => 'Extracto',
-    'extratoRecarga' => 'Extracto de Recarga Manual',
+    'extratoRecarga' => 'Extracto Financiero',
     'saldoClientes' => 'Saldo de Clientes',
     'extratoVendas' => 'Extracto de Ventas',
     'bilhete' => 'Boletos Bichão',
@@ -1070,7 +1070,8 @@ a tu cuenta tan pronto como seamos notificados.',
 'ternogrupo' => '007 - Terno de Grupo',
 'quinasaojoao' => '015 - Apostar en Quina de São João',
 'apostmilharcent' => '016 - Cómo Apostar en la Milhar/Centena',
-'bichaos' => 'Bichão da Sorte'
+'bichaos' => 'Bichão da Sorte',
+'multjogos' => '008 - Cómo Hacer Múltiples Juegos en Bichão',
     ],
     
     'language' => [

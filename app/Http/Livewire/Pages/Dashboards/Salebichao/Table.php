@@ -177,7 +177,6 @@ class Table extends Component
     {
          $value = 0;
         $row =  $query->where('user_id', $id)->count();
-        //Game::where('user_id', $id)->count();
         if($row>0){
        
             $this->i = $query->where('user_id', $id)->count();
@@ -203,12 +202,9 @@ class Table extends Component
             $this->i = $query->count();
             $value = 0;
             $result = $query->get();
-            //Game::where('checked', 1)->get();
-                foreach ($result as $item) {
-            $value += $item->valor;
-            
-            
-        }
+            foreach ($result as $item) {
+                $value += $item->valor;            
+            }
             
         $this->value = $value;
 
@@ -218,11 +214,9 @@ class Table extends Component
     {
          $value = 0;
         $row = $query->where('user_id', $id)->count();
-        //Game::where('user_id', $id)->count();
         if($row>0){
             $this->i = $query->where('user_id', $id)->count();
             $result = $query->where('user_id', $id)->get();
-            //Game::where('checked', 1)->where('user_id', $id)->get();
                 foreach ($result as $item) {
             $value += $item->valor;
             
@@ -265,12 +259,12 @@ class Table extends Component
         }
             
         
-        return $query; //$this->applySorting($query);
+        return $query;
     }
 
     public function getReport()
     {
-        $games = $this->runQueryBuilder()->with(['user', 'client'])->get();
+        $games = $this->runQueryBuilder()->with(['user', 'client', 'modalidade', 'horario'])->get();
         $collection = new Collection();
         foreach ($games as $game) {
             $collection = $collection->push($game->toArray());

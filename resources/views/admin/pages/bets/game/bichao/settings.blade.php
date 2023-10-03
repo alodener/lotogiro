@@ -27,7 +27,7 @@
             <div class="tab-pane fade show" id="nav-cotacoes" role="tabpanel" aria-labelledby="nav-settings-cotacoes">
                 <div class="row">
                     @foreach($cotacoes as $cotacao)
-                        @if ($cotacao->id == 7)
+                        @if ($cotacao->id == 6 || $cotacao->id == 7)
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="name">{{ $cotacao->nome }} 1 ao 3</label>

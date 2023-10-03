@@ -26,6 +26,9 @@
                                         <p><b>{{$chart['modality']}}:</b> {{$chart['game']}}</p>
                                         <p><b>{{ trans('admin.falta.premio') }}:</b> {{join('°, ', $chart['award_type'])}}°</p>
                                         <p><b>{{ trans('admin.falta.valor') }}:</b> R${{number_format($chart['value'], 2, ',', '.')}}</p>
+                                        @if (isset($chart['teimosinha']) && $chart['teimosinha'] >= 1)
+                                            <p><b>{{ trans('admin.falta.teimosinha') }}</b> {{$chart['teimosinha']}} {{$chart['teimosinha'] > 1 ? 'repetições' : 'repetição'}}</p>
+                                        @endif
                                     </div>
                                     <div class="chart-item-button"><a class="chart-remove-item" href="#" url="{{url('/')}}/admin/bets/bichao/remove/chart/{{$key}}">X</a></div>
                                 </div>

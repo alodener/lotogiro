@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-6 col-12">
                 <div class="row busca-container">
-                    <div class="col-md-3 col-6 mb-2">
+                    <div class="col-md-3 col-12 mb-2">
                         <select class="change-busca form-control" name="busca-per-page" data-busca-param="perPage">
                             <option value="10" {{ $perPage == '10' ? 'selected' : '' }} >10</option>
                             <option value="20" {{ $perPage == '20' ? 'selected' : '' }} >20</option>
@@ -20,12 +20,15 @@
                             <option value="100" {{ $perPage == '100' ? 'selected' : '' }} >100</option>
                         </select>
                     </div>
-                    <div class="col-md-3 col-6 mb-2">
-                        <select class="change-busca form-control" name="busca-intervalo" data-busca-param="intervalo">
-                        <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >{{ trans('admin.bichao.30days') }}</option>
-                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >{{ trans('admin.bichao.60days') }}</option>
-                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >{{ trans('admin.bichao.90days') }}</option>
-                        </select>
+                    <div class="col-md-3 col-6">
+                        <div class="form-group w-100">
+                            <input type="date" class="change-busca form-control" value="{{$startAt}}" max="{{date('Y-m-d')}}" data-busca-param="startAt">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="form-group w-100">
+                            <input type="date" class="change-busca form-control" value="{{$endAt}}" min="{{$startAt}}" max="{{date('Y-m-d')}}" data-busca-param="endAt">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -33,12 +36,9 @@
                 <form target="_blank" action="{{ route('admin.bets.bichao.draws.reports') }}" method="POST">
                     @csrf
                     <div class="row busca-container justify-content-end">
-                        <div class="col-md-4 col-6">
-                            <div class="form-group w-100">
-                                <input type="date" name="search_date" class="form-control" value="{{date('Y-m-d')}}" max="{{date('Y-m-d')}}" required>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-6">
+                        <div class="col-md-4 col-4">
+                            <input type="hidden" name="search_date_start" value="{{$startAt}}">
+                            <input type="hidden" name="search_date_end" value="{{$endAt}}">
                             <button class="btn btn-info" id="bichao-buscar-resultados" type="submit">{{ trans('admin.bichao.gerarRelat') }}</button>
                         </div>
                     </div>
@@ -65,6 +65,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if (sizeof($apostas) === 0)
+                            <tr><td colspan="12" style="text-align: center">Nenhum jogo encontrado</td></tr>
+                        @endif
                         @foreach ($apostas as $aposta)
                             <?php
                                 $games = [];

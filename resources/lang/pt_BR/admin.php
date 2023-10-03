@@ -507,6 +507,7 @@ return [
                 'premiacaoSemLimiteMilharCentena' => 'No momento, atingimos o limite de prêmios pra essa modalidade. Tente novamente mais tarde, ou no próximo sorteio. Você pode tentar jogar a milhar ou centena separadamente.',
                 'premiacao' => 'Premiação',
                 'addCarrinho' => 'Adicionar ao Carrinho',
+                'teimosinha' => 'Teimosinha:',
         
                 'gerarA' => 'Gerar Aposta',
                 'gerarD' => 'Gerar Dezena',
@@ -647,6 +648,7 @@ return [
                 'sairsessao' => 'Sair da Sessão',
                 'saldo' => 'Saldo:',
                 'bonus' => 'Bônus:',
+                'saqueDisponivel' => 'Saque Disponível',
                 'recarregar' => 'Recarregar',
                 'conta' => 'Conta',
                 'logout' => 'Logout',
@@ -698,6 +700,7 @@ return [
                 'voltar' => 'Voltar',
                 'date' => 'Data',
                 'responsavel' => 'Responsável',
+                'tipoSolicitacao' => 'Tipo Solicitação',
                 'carteira' => 'Carteira',
                 'valueAnt' => 'Valor Anterior',
                 'valor' => 'Valor',
@@ -891,6 +894,8 @@ return [
                 'solicitSaquee' => 'Solicitações de Saque',
                 'visuHist' => 'Visualizar Histórico',
                 'conversao' => 'Conversão de Bônus para Saldo',
+                'conversaoBonusParaSaque' => 'Conversão de Bônus para Saque Disponível',
+                'conversaoSaqueParaSaldo' => 'Conversão de Saque Disponível para Saldo',
                 'saldo' => 'Saldo',
                 'converter' => 'Converter',
                 'carteiraa' => 'Carteira',
@@ -901,6 +906,7 @@ return [
                 'valTrans' => 'Valor a transferir',
                 'valIgual' => 'Valor deve ser menor ou igual ao seu',
                 'BONUS' => 'BÔNUS',
+                'SAQUEDISPONIVEL' => 'SAQUE DISPONÍVEL',
                 'estados' => 'Estados',
                 'cotacoes' => 'Cotações'
             ],
@@ -930,7 +936,7 @@ return [
                 'dezenasUtiliz' => 'Dezenas Utilizadas',
                 'pontosCliente' => 'Pontos por Cliente',
                 'extrato' => 'Extrato',
-                'extratoRecarga' => 'Extrato Recarga Manual',
+                'extratoRecarga' => 'Extrato Financeiro',
                 'saldoClientes' => 'Saldo de Clientes',
                 'extratoVendas' => 'Extrato de Vendas',
                 'bilhete' => 'Bilhetes Bichão',
@@ -947,6 +953,7 @@ return [
 
             'falta' => [
                 'aposta' => 'Sua aposta',
+                'teimosinha' => 'Teimosinha:',
                 'processada' => 'foi processada',
                 'ola' => 'Olá',
                 'atualizar' => 'Atualizar Concurso',
@@ -963,6 +970,7 @@ return [
                 'modalidade' => 'Modalidade',
                 'bilhete' => 'Bilhete',
                 'fechar' => 'Fechar',
+                'repetirJogo' => 'Refazer Jogo',
                 'premio' => 'Prêmio',
                 'selecPremios' => 'Selecione os prêmios',
                 'valorPagar' => 'Valor a pagar',
@@ -1014,6 +1022,7 @@ return [
                 'quinasaojoao' => '015 - Apostar na Quina de São João',
                 'apostmilharcent' => '016 - Como Apostar na Milhar/Centena',
                 'bichaos' => 'Bichão da Sorte',
+                'multjogos' => '008 - Como Fazer Múltiplos Jogos no Bichão',
             ],
 
             'language' => [

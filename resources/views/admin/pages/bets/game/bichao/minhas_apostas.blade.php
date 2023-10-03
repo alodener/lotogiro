@@ -49,14 +49,29 @@
                             <option value="100" {{ $perPage == '100' ? 'selected' : '' }} >100</option>
                         </select>
                     </div>
-                    <div class="col-md-2 col-6">
-                        <select class="change-busca form-control" name="busca-intervalo" data-busca-param="intervalo">
-                        <option value="30" {{ $intervalo == '30' ? 'selected' : '' }} >{{ trans('admin.bichao.30days') }}</option>
-                            <option value="60" {{ $intervalo == '60' ? 'selected' : '' }} >{{ trans('admin.bichao.60days') }}</option>
-                            <option value="90" {{ $intervalo == '90' ? 'selected' : '' }} >{{ trans('admin.bichao.90days') }}</option>
-                        </select>
+                    <div class="col-md-3 col-6">
+                        <div class="form-group w-100">
+                            <input type="date" class="change-busca form-control" value="{{$startAt}}" max="{{date('Y-m-d')}}" data-busca-param="startAt">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="form-group w-100">
+                            <input type="date" class="change-busca form-control" value="{{$endAt}}" min="{{$startAt}}" max="{{date('Y-m-d')}}" data-busca-param="endAt">
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <form target="_blank" action="{{ route('admin.bets.bichao.bets.reports') }}" method="POST">
+                    @csrf
+                    <div class="row busca-container justify-content-end">
+                        <div class="col-md-4 col-4">
+                            <input type="hidden" name="search_date_start" value="{{$startAt}}">
+                            <input type="hidden" name="search_date_end" value="{{$endAt}}">
+                            <button class="btn btn-info" id="bichao-buscar-resultados" type="submit">{{ trans('admin.bichao.gerarRelat') }}</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row mt-4">
@@ -114,6 +129,11 @@
                                 </td>
                                 <td>{{ date('d/m/Y H:i', strtotime($aposta['created_at'])) }}</td>
                                 <td>
+                                    <a class="repeat-game" href="#" data-id="{{ $aposta['id'] }}">
+                                        <button type="button" class="btn btn-success text-light" title="Repetir aposta">
+                                            <i class="bi bi-arrow-repeat"></i>
+                                        </button>
+                                    </a>
                                     <a href="{{ route('admin.bets.bichao.receipt', ['id' => $aposta['id'], 'tipo' => 'txt']) }}">
                                         <button type="button" class="btn btn-primary text-light" title="Baixar bilhete TXT">
                                             <i class="bi bi-ticket"></i>
@@ -142,7 +162,39 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="teimosinha-repeticao" tabindex="-1" role="dialog" aria-labelledby="teimosinha-repeticaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="teimosinha-repeticaoLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon2">{{ trans('admin.bichao.teimosinha') }}</span>
+                                    </div>
+                                    <input id="input_teimosinha_bet" type="number" class="form-control" value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="incluir-jogos-repetir" class="btn btn-success">{{ trans('admin.falta.repetirJogo') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.falta.fechar') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
 
 @push('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css"
@@ -194,6 +246,19 @@
 
 @push('scripts')
 <script>
+    let game_id;
+
+    $('.repeat-game').click(function(ev) {
+        game_id = $(this).attr('data-id');
+        ev.preventDefault();
+        $('#teimosinha-repeticao').modal('show');
+    });
+
+    $('#incluir-jogos-repetir').click(function() {
+        const teimosinha = $('#input_teimosinha_bet').val();
+        addChartItem({ game_id, teimosinha: parseInt(teimosinha) });
+    });
+
     $('.change-busca').change(function() {
         const value = $(this).val();
         const param = $(this).attr('data-busca-param');

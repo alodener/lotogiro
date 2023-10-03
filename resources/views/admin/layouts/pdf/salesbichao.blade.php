@@ -158,34 +158,53 @@
 
             <table style="width: 100%">
                 <tr class="bg-secondary">
-                    <th class="text-left">ID</th>
-                    <th class="text-left">PIX CLIENTE</th>
-                    <th class="text-left">NOME CLIENTE</th>
-                    <th class="text-left">CRIAÇÃO</th>
-                    <th class="text-left">STATUS</th>
-                    <th class="text-left">VALOR</th>
+                    <th class="text-size-1 text-left">ID</th>
+                    <th class="text-size-1 text-left">PIX CLIENTE</th>
+                    <th class="text-size-1 text-left">NOME CLIENTE</th>
+                    <th class="text-size-1 text-left">CRIAÇÃO</th>
+                    <th class="text-size-1 text-left">LOTERIA</th>
+                    <th class="text-size-1 text-left">MODALIDADE</th>
+                    <th class="text-size-1 text-left">APOSTA</th>
+                    <th class="text-size-1 text-left">STATUS</th>
+                    <th class="text-size-1 text-left">VALOR</th>
                 </tr>
                 @php
                     $subtotal = 0;
                 @endphp
                 @foreach($users as $game)
+                        <?php
+                            $games = [];
+
+                            if (strval($game['game_1']) > 0) $games[] = $game['game_1'];
+                            if (strval($game['game_2']) > 0) $games[] = $game['game_2'];
+                            if (strval($game['game_3']) > 0) $games[] = $game['game_3'];
+                        ?>
                     <tr class="border-bottom">
-                        <td class="font border-bottom">
+                        <td class="font text-size-1 border-bottom">
                             {{ $game['id'] }}
                         </td>
-                        <td class="font border-bottom">
+                        <td class="font text-size-1 border-bottom">
                             {{ \App\Helper\Mask::addMaskCpf($game['client']['pix']) }}
                         </td>
-                        <td class="font border-bottom">
+                        <td class="font text-size-1 border-bottom">
                             {{ $game['client']['name'] }}
                         </td>
-                        <td class="font border-bottom">
+                        <td class="font text-size-1 border-bottom">
                             {{ \Carbon\Carbon::parse($game['created_at'])->format('d/m/Y') }}
                         </td>
-                        <td class="font border-bottom">
+                        <td class="font text-size-1 border-bottom">
+                            {{ date('H\hi', strtotime($game['horario']['horario'])) }} - {{ $game['horario']['banca'] }}
+                        </td>
+                        <td class="font text-size-1 border-bottom">
+                            {{ $game['modalidade']['nome'] }}
+                        </td>
+                        <td class="font text-size-1 border-bottom">
+                            {{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}
+                        </td>
+                        <td class="font text-size-1 border-bottom">
                             @if($game['comission_payment']) Pago @else Aberto @endif
                         </td>
-                        <td class="font border-bottom">
+                        <td class="font text-size-1 border-bottom">
                             R${{ $game['valor'] }}
                             @php
                                 $subtotal +=  $game['valor'];
