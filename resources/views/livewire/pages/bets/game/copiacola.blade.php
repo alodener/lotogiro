@@ -21,7 +21,13 @@
             </div>
         </div> 
         </div>
-    
+
+        <div class="card">
+            <div class="card-body md-12">
+              <b>  Para importar os jogos, é só colar cada jogo em uma linha. Você pode separar as dezenas com um dos caracteres: (-.,_ ) Exemplo: 
+                <br>1-2-3-4-5</br>  1.2.3.4.5 <br> 1 2 3 4 5 </b>
+            </div>  
+        </div>
         <input type="hidden" name="client" value="{{$clientId}}">
         <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
         <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
@@ -102,7 +108,10 @@
 <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
 <input hidden value="1" id="xml" name="xml">    
 
-<button type="button"  class="btn btn-secondary" wire:click="dezenas" >{{ trans('admin.lwGame.comput') }}   </button>   
+@if($exibirBotao)
+    <button type="button" class="btn btn-secondary" wire:click="dezenas">{{ trans('admin.lwGame.comput') }}</button>
+@endif
+  
 <div class="modal-footer">
     @if($podeCriar)
             <button type="submit" class="btn btn-info" id="submit_game">{{ trans('admin.lwGame.creat') }}</button>
