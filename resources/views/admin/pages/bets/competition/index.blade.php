@@ -10,6 +10,7 @@
                 <script>
                     toastr["success"]("{{ $message }}")
                 </script>
+
             @endpush
             @enderror
             @error('error')
@@ -94,6 +95,7 @@
             "previous": "{{ trans('admin.pagesF.previous') }}",
             "next": "{{ trans('admin.pagesF.next') }}"
                 },
+                order:[0, 'desc'],
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('admin.bets.competitions.index') }}",

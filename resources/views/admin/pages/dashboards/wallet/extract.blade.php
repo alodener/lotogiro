@@ -7,7 +7,7 @@
         <div class="col-md-12">
             @livewire('pages.dashboards.wallet.extract.table')
         </div>
-    </div>
+    < /div>
 @endsection
 
 @push('scripts')
