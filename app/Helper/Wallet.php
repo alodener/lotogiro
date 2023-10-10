@@ -7,11 +7,14 @@ use App\Models\User;
 use App\Models\TransactBalance;
 use App\Helper\Configs;
 use App\Helper\MensagemTelegram;
+use App\Notifications\RechargeProcessedNotification;
 
 class Wallet
 {
+    
     public function updateStatusPayment($request)
     {
+
         $ACTIVE_GATEWAY = env('ACTIVE_GATEWAY');
         
         if($ACTIVE_GATEWAY == "doBank"){
@@ -86,7 +89,12 @@ class Wallet
                     
                     $user->balance += $newRechargeOrder->value + $commission;
                     $user->save();
-
+                    $rechargeOrderNotification = RechargeOrder::where('reference', $reference)->where('status', 1)->first();
+                        if($rechargeOrderNotification != null){
+                        $user = User::where('id', $rechargeOrderNotification->user_id )->first();
+                        $user->notify(new RechargeProcessedNotification($user, $rechargeOrderNotification));
+                    }
+                           
 
                 $telegrambot = Configs::getTelegramUrlBot();                
                 $telegramchatid = Configs::getTelegramChatId();
