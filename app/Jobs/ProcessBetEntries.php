@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Jobs;
@@ -75,8 +76,6 @@ class ProcessBetEntries implements ShouldQueue
                     $clientuser = $request->client;
                 }
         }
-
-        $valor = $this->request['value'];
     
         foreach ($this->dezenas as $dez) {
             //$dezenaconvertida = string.split(/,(?! )/);
@@ -126,14 +125,13 @@ class ProcessBetEntries implements ShouldQueue
             $game->commission_percentage = $this->user->commission;
             $game->save();
 
-            
             //verifica se é da dupla sena 
                 if ($this->request['type_game'] == 10){
 
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $this->competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
-                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $dez, 2, $valor, $resultado);
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $dez, 2);
                     
 
                 }
