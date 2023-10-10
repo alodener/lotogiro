@@ -377,7 +377,7 @@ class GameController extends Controller
                 $game->save();
 
 
-                /*//verifica se é da dupla sena 
+                //verifica se é da dupla sena 
                 if ($request->type_game == 10){
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
@@ -385,7 +385,7 @@ class GameController extends Controller
                     $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $numbers, 1);
 
 
-                }*/
+                }
                 
                
                 $transact_balance = new TransactBalance;
