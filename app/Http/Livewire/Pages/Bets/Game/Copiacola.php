@@ -28,6 +28,8 @@ class Copiacola extends Component
     public $contadorJogos = 0;
     public $auth;
     public $podeCriar = false;
+    public $exibirBotao = true;
+
 
 
     public function mount($typeGame, $clients)
@@ -53,6 +55,7 @@ class Copiacola extends Component
         $typeGameValue;
         $result;
         $this->contadorJogos = 0;
+        $this->exibirBotao = false;
 
         $typeGame = TypeGame::find($this->typeGame->id);
         $maxNumbers = $typeGame->numbers;
