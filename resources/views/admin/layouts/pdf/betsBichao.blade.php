@@ -185,10 +185,10 @@
 
                             $premioMaximo = $aposta['valor'] * $aposta['multiplicador'] / sizeof($premios);
 
-                            if ($aposta['modalidade_id'] == 6 || $aposta['modalidade_id'] == 8 || $aposta['modalidade_id'] == 9) {
+                            if ($aposta['modalidade_id'] == 8 || $aposta['modalidade_id'] == 9) {
                                 $premioMaximo = $aposta['valor'] * $aposta['multiplicador'];
                             }
-                            if ($aposta['modalidade_id'] == 7) {
+                            if ($aposta['modalidade_id'] == 6 || $aposta['modalidade_id'] == 7) {
                                 $premioMaximo = sizeof($premios) == 3 ? $aposta['valor'] * $aposta['multiplicador'] : $aposta['valor'] * $aposta['multiplicador_2'];
                             }
                         ?>

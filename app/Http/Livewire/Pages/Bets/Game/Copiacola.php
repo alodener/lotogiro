@@ -45,6 +45,7 @@ class Copiacola extends Component
     {
         $this->reset('msg');
         $this->reset('values');
+        $this->dezena = preg_replace("/[,. _-]/", " ", $this->dezena);
         $this->dezena = explode("\n", $this->dezena);
         $tmp = array_filter($this->dezena);
         $str = implode("\n", $tmp);

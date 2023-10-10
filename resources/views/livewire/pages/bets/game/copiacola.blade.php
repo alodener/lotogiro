@@ -66,7 +66,6 @@
                     var valorTotal = contadorJogos * numberValor;
                     document.getElementById('ValorTotal').value = valorTotal.toFixed(2);">
                     
-                    
                     <input type="hidden" id="premio" value="" name="premio" readonly>
                    <!-- <button  class="btn btn-success" type="button">{{ trans('admin.games.calculate') }}</button>-->
                 @endforeach
@@ -109,7 +108,6 @@
     @endif
     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.lwGame.fech') }}</button>
 </div>
-
 </div>
 
 </div>    

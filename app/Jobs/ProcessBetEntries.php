@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Jobs;
@@ -222,4 +223,3 @@ class ProcessBetEntries implements ShouldQueue
         $this->user->notify(new GameProcessedNotification($this->user, $this->bet));
     }
 }
- 
