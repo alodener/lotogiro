@@ -145,12 +145,7 @@ class GameController extends Controller
 
     public function store(Request $request, Bet $validate_game, Game $game)
     {
-        $date = Carbon::now();
-        if ($date->hour >= 20 && $date->hour < 21) {
-            return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                'error' => 'Apostas Encerradas!'
-            ]);
-        } 
+        
      
         if ($request->controle == 1) {
             if (!auth()->user()->hasPermissionTo('create_game')) {
@@ -163,8 +158,18 @@ class GameController extends Controller
                 'value' => 'required',
             ]);
 
-            try {
 
+            $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
+            $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
+            try {
+                $date = Carbon::now();
+                if ($date->hour >= 20 && $date->hour < 21) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Apostas Encerradas!'
+                    ]);
+                }
+                
+                
                 $chaveregistro = ChaveAleatoria::generateKey(8);
                 $user = Auth()->user()->id;
                 $bet = new Bet();
@@ -377,7 +382,7 @@ class GameController extends Controller
                 $game->save();
 
 
-                //verifica se é da dupla sena 
+                /*//verifica se é da dupla sena 
                 if ($request->type_game == 10){
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
@@ -385,7 +390,7 @@ class GameController extends Controller
                     $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $numbers, 1);
 
 
-                }
+                }*/
                 
                
                 $transact_balance = new TransactBalance;

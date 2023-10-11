@@ -21,13 +21,7 @@
             </div>
         </div> 
         </div>
-
-        <div class="card">
-            <div class="card-body md-12">
-              <b>  Para importar os jogos, é só colar cada jogo em uma linha. Você pode separar as dezenas com um dos caracteres: (-.,_ ) Exemplo: 
-                <br>1-2-3-4-5</br>  1.2.3.4.5 <br> 1 2 3 4 5 </b>
-            </div>  
-        </div>
+    
         <input type="hidden" name="client" value="{{$clientId}}">
         <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
         <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
@@ -73,8 +67,9 @@
                     var valorTotal = contadorJogos * numberValor;
                     document.getElementById('ValorTotal').value = valorTotal.toFixed(2);">
                     
-                    <input type="hidden" id="premio" value="" name="premio" readonly>
-                   <!-- <button  class="btn btn-success" type="button">{{ trans('admin.games.calculate') }}</button>-->
+                    {{ trans('admin.games.prize-value-label') }} R$
+                    <input type="text" id="premio" value="" name="premio" readonly>
+                    <button  class="btn btn-success" type="button">{{ trans('admin.games.calculate') }}</button>
                 @endforeach
     
                 <br>
@@ -108,16 +103,11 @@
 <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
 <input hidden value="1" id="xml" name="xml">    
 
-@if($exibirBotao)
-    <button type="button" class="btn btn-secondary" wire:click="dezenas">{{ trans('admin.lwGame.comput') }}</button>
-@endif
-  
+<button type="button"  class="btn btn-secondary" wire:click="dezenas" >{{ trans('admin.lwGame.comput') }}   </button>   
 <div class="modal-footer">
-    @if($podeCriar)
-            <button type="submit" class="btn btn-info" id="submit_game">{{ trans('admin.lwGame.creat') }}</button>
-    @endif
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.lwGame.fech') }}</button>
-    </div>   
+<button type="submit" class="btn btn-info" id="submit_game">{{ trans('admin.lwGame.creat') }} </button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.lwGame.fech') }}</button>
+
 </div>
 
 </div>    

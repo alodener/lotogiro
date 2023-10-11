@@ -266,7 +266,6 @@
             "previous": "{{ trans('admin.pagesF.previous') }}",
             "next": "{{ trans('admin.pagesF.next') }}"
                 },
-                order:[1, 'desc'],
                 retrieve: true,
                 processing: true,
                 serverSide: true,
