@@ -16,7 +16,7 @@
                 @push('scripts')
                     <script>
                         toastr["error"]("{{ $message }}")
-                     </script>
+                    </script>
                 @endpush
             @enderror
             @can('create_user')
@@ -93,7 +93,6 @@
             "previous": "{{ trans('admin.pagesF.previous') }}",
             "next": "{{ trans('admin.pagesF.next') }}"
                 },
-                order:[0, 'desc'],
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('admin.settings.users.index') }}",
