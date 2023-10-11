@@ -33,6 +33,7 @@
             </div>
         </div>
     </div>
+    <!--
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">
@@ -101,7 +102,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 <!-- <h3 class="card-title">{{ trans('admin.pagesF.conversao') }}</h3>
             </div>
             <div class="card-body">
@@ -160,7 +161,7 @@
             transition: opacity 0.25s;
         }
         .btn-toggle:before {
-            content: "Não";
+            content: "N達o";
             left: -4rem;
         }
         .btn-toggle:after {
@@ -252,7 +253,7 @@
             transition: opacity 0.25s;
         }
         .btn-toggle.btn-lg:before {
-            content: "Não";
+            content: "N達o";
             left: -5rem;
         }
         .btn-toggle.btn-lg:after {
@@ -337,7 +338,7 @@
             transition: opacity 0.25s;
         }
         .btn-toggle.btn-sm:before {
-            content: "Não";
+            content: "N達o";
             left: -0.5rem;
         }
         .btn-toggle.btn-sm:after {
@@ -422,7 +423,7 @@
             transition: opacity 0.25s;
         }
         .btn-toggle.btn-xs:before {
-            content: "Não";
+            content: "N達o";
             left: 0;
         }
         .btn-toggle.btn-xs:after {
