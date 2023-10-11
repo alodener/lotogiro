@@ -27,7 +27,11 @@ class Copiacola extends Component
     public $controle;
     public $contadorJogos = 0;
     public $auth;
-    
+    public $podeCriar = false;
+    public $exibirBotao = true;
+
+
+
     public function mount($typeGame, $clients)
     {
         $this->dezena = [];
@@ -39,51 +43,60 @@ class Copiacola extends Component
 
     }
     
-    public function dezenas(){
+    public function dezenas()
+    {
         $this->reset('msg');
         $this->reset('values');
+        $this->dezena = preg_replace("/[,. _-]/", " ", $this->dezena);
         $this->dezena = explode("\n", $this->dezena);
         $tmp = array_filter($this->dezena);
         $str = implode("\n", $tmp);
         $this->dezena = explode("\n", $str);
         $typeGameValue;
         $result;
-        $contadorLinhas;
-        $contador = 0;
         $this->contadorJogos = 0;
-        foreach($this->dezena as $dezenaConvert){
+        $this->exibirBotao = false;
+
+        $typeGame = TypeGame::find($this->typeGame->id);
+        $maxNumbers = $typeGame->numbers;
+        
+        foreach ($this->dezena as $dezenaConvert) {
             $this->contadorJogos++;
             $string = preg_replace('/^\h*\v+/m', '', $dezenaConvert);
-            //$string = preg_replace('/\s+/', ' ', trim($dezenaConvert));
             $words = explode(" ", $string);
-            $result =  count($words);
-            if($contador == 0){
-                 $contadorLinhas = $result;
-            }
-            if($result != $contadorLinhas){
-                $this->msg = "Existem linhas de dezenas diferentes";
-                break 1;
-            }
-            $contador = 1;
-            // $contadorLinhas = $result;
+            $result = count($words);
             
-        }
-        if($this->msg == null){
-        $typeGameValue = TypeGameValue::where([
-            ['type_game_id', $this->typeGame->id],
-            ['numbers', $result],
-        ])->get();
 
-        if( !empty($typeGameValue)){
-            $this->values = $typeGameValue;
-            $this->qtdDezena = $result;
-            $this->controle = 1;
-        }else{
-            $this->msg= "Não existe valores para essa quantidade de Dezenas";
+            if ($this->msg == null) {
+                $typeGameValue = TypeGameValue::where([
+                    ['type_game_id', $this->typeGame->id],
+                    ['numbers', $result],
+                ])->get();
+
+                if (!empty($typeGameValue)) {
+                    $this->values = $typeGameValue;
+                    $this->qtdDezena = $result;
+                    $this->controle = 1;
+                } else {
+                    $this->msg = "Não existe valores para essa quantidade de Dezenas";
+                }
+                
+                $dezenas = explode(" ", $string);
+                $dezenasForaDoLimite = array_filter($dezenas, function ($dezena) use ($maxNumbers) {
+                return ($dezena < 1 || $dezena > $maxNumbers);
+                });
+
+                if (!empty($dezenasForaDoLimite)) {
+                    $this->msg = "Dezenas fora do intervalo permitido (1 a $maxNumbers): " . implode(", ", $dezenasForaDoLimite); 
+                }  else {
+                    $this->podeCriar = true;
+                }
+            }
         }
     }
+
  
-    }
+    
     public function setId($client)
     {
         $this->clientId = $client["id"];

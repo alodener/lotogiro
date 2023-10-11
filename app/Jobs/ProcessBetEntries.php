@@ -15,6 +15,7 @@ use App\Helper\Commision;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Models\Competition;
 use App\Models\TypeGame;
+use App\Models\TypeGameValue;
 use App\Models\Client;
 use App\Models\TransactBalance;
 use App\Helper\Configs;
@@ -74,6 +75,8 @@ class ProcessBetEntries implements ShouldQueue
                     $clientuser = $request->client;
                 }
         }
+
+        $valor = $this->request['value'];
     
         foreach ($this->dezenas as $dez) {
             //$dezenaconvertida = string.split(/,(?! )/);
@@ -81,6 +84,29 @@ class ProcessBetEntries implements ShouldQueue
             // sort($dezenaconvertida2, SORT_NUMERIC);
 
             // $dezenaconvertida = implode(",", $dezenaconvertida2);
+            $teste = explode("\n", $dez);
+            
+            $str = implode("\n", $teste);
+            $string = preg_replace('/^\h*\v+/m', '', $str);
+            $words = explode(",", $string);
+            $result = count($words);
+            $typeGameValue = TypeGameValue::where([
+                ['type_game_id', $this->request['type_game']],
+                ['numbers', $result],
+            ])->get();
+
+            $valor = $this->request['value'];
+            $multiplicador = $typeGameValue->isEmpty() ? 0 : $typeGameValue[0]->multiplicador;
+            $maxreais = $typeGameValue->isEmpty() ? 0 : $typeGameValue[0]->maxreais;
+            $contadorJogos = count($this->dezenas);
+           
+
+            if ($maxreais >= $valor) {
+                $resultado = $valor * $multiplicador;
+            } else {
+                $resultado = $maxreais * $multiplicador;
+                $valor = $maxreais;
+            }
             
             $game = new Game;
              if( !auth()->user()->hasRole('Administrador') && ($this->request['type_client'] != 1 || $this->request['type_client'] == null )){
@@ -90,9 +116,9 @@ class ProcessBetEntries implements ShouldQueue
                 }
             $game->user_id = $this->user->id;
             $game->type_game_id = $this->request['type_game'];
-            $game->type_game_value_id = $this->request['valueId'];
+            $game->type_game_value_id =  $typeGameValue[0]->id;
             $game->value = $this->request['value'];
-            $game->premio = $this->request['premio'];
+            $game->premio = $resultado;
             $game->numbers = $dez;
             $game->competition_id = $this->competition->id;
             $game->checked = 1;
@@ -100,13 +126,14 @@ class ProcessBetEntries implements ShouldQueue
             $game->commission_percentage = $this->user->commission;
             $game->save();
 
+            
             //verifica se é da dupla sena 
                 if ($this->request['type_game'] == 10){
 
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $this->competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
-                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $dez, 2);
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $dez, 2, $valor, $resultado);
                     
 
                 }

@@ -90,6 +90,7 @@
             "previous": "{{ trans('admin.pagesF.previous') }}",
             "next": "{{ trans('admin.pagesF.next') }}"
                 },
+                order:[0, 'desc'],
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('admin.settings.roles.index') }}",

@@ -16,22 +16,38 @@ use Carbon\Carbon;
 
 class GameHelper
 {
-    public static function duplicateGame($game , $competitionA, $request, $numbers, $OpcaoJogo) {
+    public static function duplicateGame($game , $competitionA, $request, $numbers, $OpcaoJogo, $valor, $resultado) {
         
         if($OpcaoJogo == 1){
             $requestAx = $request->all();
         }
 
-
+        
+        $typeGameValue = TypeGameValue::where([
+            ['type_game_id', $request['type_game']],
+            ['numbers', count(explode(",", $numbers))],
+        ])->first();
+    
+        $maxreais = $typeGameValue ? $typeGameValue->maxreais : 0;
+    
+        if ($maxreais >= $valor) {
+            $resultado = $valor * $typeGameValue->multiplicador;
+        } else {
+            $resultado = $maxreais * $typeGameValue->multiplicador;
+            $valor = $maxreais;
+        }
+        
     $copiaGame = new Game();
+    
     if($request['type_client'] != 1){
         $userclient = User::where('id', $request['client'])->first();
             if($userclient != null){
              $clientuser = Client::where('email', $userclient->email)->first();
             }else{
         $clientuser = $request['client'];
-            }
-        if($userclient != null){
+        }
+        $valor = $request['value'];
+        if($userclient == null){
         $copiaGame->client_id = $clientuser->id;
         }else{
         $copiaGame->client_id = $request['client'];
@@ -43,7 +59,7 @@ class GameHelper
     $copiaGame->type_game_id = $request['type_game'];
     $copiaGame->type_game_value_id = $request['valueId'];
     $copiaGame->value = $request['value'];
-    $copiaGame->premio = $request['premio'];
+    $copiaGame->premio = $resultado;
     $copiaGame->numbers = $numbers;
     $copiaGame->competition_id = $competitionA->id;
     if($game->bet_id != null){
