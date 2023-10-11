@@ -17,8 +17,6 @@ class Convert extends Component
 
     public $valueConvert;
     public $user;
-    public $valueConvertBonus;
-    public $valueConvertWithdraw;
 
     public function transferBalance(): void
     {
@@ -104,6 +102,7 @@ class Convert extends Component
 
             return;
         }
+
 
         if($myOldBonus >= $this->valueConvertBonus) {
             WithdrawRequest::create([
