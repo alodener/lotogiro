@@ -16,8 +16,6 @@ class Convert extends Component
     use LivewireAlert;
 
     public $valueConvert;
-    public $valueConvertBonus;
-    public $valueConvertWithdraw;
     public $user;
 
     public function transferBalance(): void

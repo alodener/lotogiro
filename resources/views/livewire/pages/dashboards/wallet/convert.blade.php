@@ -103,6 +103,7 @@
         </div>
     </div>
 </div>-->
+</div>
 <!-- <h3 class="card-title">{{ trans('admin.pagesF.conversao') }}</h3>
             </div>
             <div class="card-body">
@@ -503,12 +504,6 @@
     <script type="text/javascript">
         function formatInput(){
             VMasker(document.getElementById("valueConvert")).maskMoney();
-        }
-        function formatInputBonus(){
-            VMasker(document.getElementById("valueConvertBonus")).maskMoney();
-        }
-        function formatInputWithdraw(){
-            VMasker(document.getElementById("valueConvertWithdraw")).maskMoney();
         }
     </script>
 @endpush
