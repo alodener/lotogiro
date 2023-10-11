@@ -61,7 +61,7 @@ class Convert extends Component
         $myOldBonus = $this->user->bonus;
         $now = Carbon::now()->format('H');
 
-        if(intval($now) > 15) {
+        if(intval($now) > 23) {
             $this->alert('error', 'A conversão bônus para saque só poderá ser solicitado até 15:00 horas todos os dias', [
                 'position' => 'center',
                 'timer' => '2000',
