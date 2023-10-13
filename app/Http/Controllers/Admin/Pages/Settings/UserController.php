@@ -15,6 +15,9 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use App\Models\TypeGame;
+use App\Models\TypeGameValue;
+use App\Models\BichaoModalidades;
 
 
 class UserController extends Controller
@@ -257,11 +260,33 @@ class UserController extends Controller
                 $role->can = false;
             }
         }
+        $types = TypeGame::get();
+        $type_values = TypeGameValue::get()->toArray();
+        $bichao = BichaoModalidades::get();
+
+        $commissions = new \StdClass();
+        $commissions->commission_individual = static::createCommissionIndividual($user->commission_individual);
+        $commissions->commission_individual_lv_1 = static::createCommissionIndividual($user->commission_individual_lv_1);
+        $commissions->commission_individual_lv_2 = static::createCommissionIndividual($user->commission_individual_lv_2);
+        $commissions->commission_individual_bichao = static::createCommissionIndividual($user->commission_individual_bichao);
+        $commissions->commission_individual_bichao_lv_1 = static::createCommissionIndividual($user->commission_individual_bichao_lv_1);
+        $commissions->commission_individual_bichao_lv_2 = static::createCommissionIndividual($user->commission_individual_bichao_lv_2);
+
         if(auth()->user()->hasPermissionTo('edit_all')){
-            return view('admin.pages.settings.user.edit2', compact('user'));
+            return view('admin.pages.settings.user.edit2', compact('user', 'types', 'type_values', 'bichao', 'commissions'));
         }else{
-        return view('admin.pages.settings.user.edit', compact('user', 'roles'));
+        return view('admin.pages.settings.user.edit', compact('user', 'roles', 'types', 'type_values', 'bichao', 'commissions'));
         }
+    }
+
+    private static function createCommissionIndividual($data) {
+        $response = [];
+        if ($data = @json_decode($data)) {
+            foreach ($data as $value) {
+                $response[$value->type_id] = $value->commission;
+            }
+        }
+        return $response;
     }
 
     /**
@@ -285,28 +310,46 @@ class UserController extends Controller
             'password' => 'nullable|min:8|same:password_confirmation|max:15',
             'password_confirmation' => 'sometimes|required_with:password|max:15',
             'commission' => 'integer|between:0,100',
+            'commission_lv_1' => 'integer|between:0,100',
+            'commission_lv_2' => 'integer|between:0,100',
         ]);
+
+        $commission_individual = array_filter($request->commission_individual, fn ($val) => $val > 0);
+        $commission_individual = array_map(fn ($key, $val) => ['type_id' => $key, 'commission' => $val], array_keys($commission_individual), $commission_individual);
+
+        $commission_individual_lv_1 = array_filter($request->commission_individual_lv_1, fn ($val) => $val > 0);
+        $commission_individual_lv_1 = array_map(fn ($key, $val) => ['type_id' => $key, 'commission' => $val], array_keys($commission_individual_lv_1), $commission_individual_lv_1);
+
+        $commission_individual_lv_2 = array_filter($request->commission_individual_lv_2, fn ($val) => $val > 0);
+        $commission_individual_lv_2 = array_map(fn ($key, $val) => ['type_id' => $key, 'commission' => $val], array_keys($commission_individual_lv_2), $commission_individual_lv_2);
+
+        $commission_individual_bichao = array_filter($request->commission_individual_bichao, fn ($val) => $val > 0);
+        $commission_individual_bichao = array_map(fn ($key, $val) => ['type_id' => $key, 'commission' => $val], array_keys($commission_individual_bichao), $commission_individual_bichao);
+
+        $commission_individual_bichao_lv_1 = array_filter($request->commission_individual_bichao_lv_1, fn ($val) => $val > 0);
+        $commission_individual_bichao_lv_1 = array_map(fn ($key, $val) => ['type_id' => $key, 'commission' => $val], array_keys($commission_individual_bichao_lv_1), $commission_individual_bichao_lv_1);
+
+        $commission_individual_bichao_lv_2 = array_filter($request->commission_individual_bichao_lv_2, fn ($val) => $val > 0);
+        $commission_individual_bichao_lv_2 = array_map(fn ($key, $val) => ['type_id' => $key, 'commission' => $val], array_keys($commission_individual_bichao_lv_2), $commission_individual_bichao_lv_2);
     
         $indicador = $request->indicador;
         if($indicador == null || $indicador == 0){
             $indicador = 1;
         }
-       // verifica se o novo indicador é igual ao ID do usuário atual
+        // verifica se o novo indicador é igual ao ID do usuário atual
         if ($indicador == $user->id) {
-        return back()->withErrors(['error' => 'Você não pode indicar a si mesmo.']);
-}
+            return back()->withErrors(['error' => 'Você não pode indicar a si mesmo.']);
+        }
 
         // verifica se o novo indicador já foi indicado pelo usuário atual
         $indicadorVerificated = User::find($indicador);
         if ($indicadorVerificated && $indicadorVerificated->indicador == $user->id) {
-        return back()->withErrors(['error' => 'O usuário indicador já é indicado pelo usuário.']);
-}
+            return back()->withErrors(['error' => 'O usuário indicador já é indicado pelo usuário.']);
+        }
         // atualiza o campo indicador normalmente
         $user->indicador = $indicador;
         $user->save();
-
-
-        return redirect()->back()->with('success', 'O campo indicador foi atualizado com sucesso.');
+        // return redirect()->back()->with('success', 'O campo indicador foi atualizado com sucesso.');
         $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
         
         try
@@ -374,6 +417,14 @@ class UserController extends Controller
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
+            $user->commission_lv_1 = $request->commission_lv_1;
+            $user->commission_lv_2 = $request->commission_lv_2;
+            $user->commission_individual = json_encode($commission_individual);
+            $user->commission_individual_lv_1 = json_encode($commission_individual_lv_1);
+            $user->commission_individual_lv_2 = json_encode($commission_individual_lv_2);
+            $user->commission_individual_bichao = json_encode($commission_individual_bichao);
+            $user->commission_individual_bichao_lv_1 = json_encode($commission_individual_bichao_lv_1);
+            $user->commission_individual_bichao_lv_2 = json_encode($commission_individual_bichao_lv_2);
             if(!is_null($telefone)){
             $user->ddd = $ddd;
             $user->phone = $telefone;
