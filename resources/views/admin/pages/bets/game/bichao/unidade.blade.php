@@ -11,30 +11,34 @@
                 <div class="row">
                     <div class="col">
                         <h1>Bichão da Sorte</h1>
-                        <p><u>{{ trans('admin.bichao.comofunciona') }}</u></p>
+                        <p>{{ trans('admin.bichao.aposte') }} </p>
+                         <hr/>
+                        
+                        <p><u>{{ trans('admin.bichao.comofunciona') }} </u></p>
                          <p>
                            
-                        {{ trans('admin.bichao.primerpremio') }}
-                         </p>
-                         <p>
-                          
-                        {{ trans('admin.bichao.segunpremio') }}
+                        {{ trans('admin.bichao.primerpremio') }} 
                          </p>
                          <p>
                            
+                        {{ trans('admin.bichao.segunpremio') }} 
+                         </p>
+                         <p>
+                            
                         {{ trans('admin.bichao.fatormult2') }}
                          </p>
                          <p>
-                           
+                            
                         {{ trans('admin.bichao.fatormult3') }}
+                        
                          </p>
                           
                         {{ trans('admin.bichao.fatormult4') }}
                          </p>
-                          
+                           
                         {{ trans('admin.bichao.fatormult5') }}
                          </p>
-                       
+                      
                         <p>{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
                     </div>
                 </div>
@@ -76,36 +80,41 @@
                 <div class="col-md-1 col-6">
                     <p>{{ trans('admin.bichao.insiraj') }}</p>
                 </div>
-                <div class="col-6">
+                <div class="col-md-6 col-6">
                     <div class="input-group mb-3">
-                        <textarea class="form-control" id="input-milhar" rows="2" aria-describedby="basic-addon1" style="resize: none;"></textarea>
+                        <textarea class="form-control" id="input-dezena" rows="2" aria-describedby="basic-addon1" style="resize: none;"></textarea>
                     </div>
                 </div>
                 <div class="col-md-5 col-12">
-                    <button id="btn-gerar-milhar" onclick="insere_valor()" type="button" class="btn btn-secondary">{{ trans('admin.bichao.gerarDuque') }}</button>
+                    <button id="btn-gerar-dezena" onclick="insere_valor()" type="button" class="btn btn-secondary">{{ trans('admin.bichao.gerarA') }}</button>
                 </div>
             </div>
             <hr />
         </div>
         <div class="row">
             <div class="col">
-                <p>{{ trans('admin.bichao.selecPremios') }}</p>
+                <p>{{ trans('admin.bichao.selecP') }}</p>
             </div>
         </div>
         <div class="row">
             <div class="col button-group">
+                <a><button id="btn-award-first" onclick="button_first_award()" class="btn btn-outline-primary btn-award"><b>1º</b></button></a>
+                <a><button id="btn-award-second" onclick="button_second_award()" class="btn btn-outline-primary btn-award"><b>2º</b></button></a>
+                <a><button id="btn-award-third" onclick="button_third_award()" class="btn btn-outline-primary btn-award"><b>3º</b></button></a>
+                <a><button id="btn-award-fourth" onclick="button_fourth_award()" class="btn btn-outline-primary btn-award"><b>4º</b></button></a>
+                <a><button id="btn-award-fifth" onclick="button_fifth_award()" class="btn btn-outline-primary btn-award"><b>5º</b></button></a>
                 <a><button id="btn-award-first-to-fifth" onclick="button_first_to_fifth_award()" class="btn btn-outline-primary btn-award"><b>1º ao 5º</b></button></a>
             </div>
         </div>
         <div class="row mt-4">
             <div class="col">
-                <span id="message-award-value" class="text-danger d-none"><b>{{ trans('admin.bichao.favSelec') }}</b></span>
+                <span id="message-award-value" class="text-danger d-none"><b>{{ trans('admin.bichao.selec') }}</b></span>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col">
-                <p>{{ trans('admin.bichao.insValor') }}</p>
+                <p>{{ trans('admin.bichao.insiValor') }}</p>
             </div>
         </div>
         <div class="row">
@@ -223,7 +232,14 @@
         const input_value_bet = $('#input_value_bet');
         const message_minimum = $('#message-minimum-value');
         const message_maximum = $('#message-maximum-value');
+        let award_type = [];
         let value = 0;
+
+        function checkGame() {
+            const games = $('#input-dezena').val().split(',');
+            const match = games.filter((item) => item.length === 1);
+            return games.length === match.length;
+        }
 
         function randomNumber(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
@@ -233,51 +249,56 @@
             calculate_awards();
         });
 
-        function validateGame() {
-            const games = $('#input-milhar').val().replaceAll(' ', '').split(',');
-
-            for (const game of games) {
-                const game_input = game.split('-');
-                if (game_input.length != 2) return false;
-                const check_dezena = game_input.filter((i) => i.length != 2 || i.match(/^[0-9]+$/) == null);
-                if (check_dezena.length > 0) return false;
-            }
-
-            return true;
-        }
-
         $('#btn-add-to-chart').click(function() {
             const option_award = validate_award();
             const value = $('#input_value_bet').val();
             const client_id = $('#livewire-client-id').val();
+            const dezena_input = $('#input-dezena').val();
             const teimosinha = $('#input_teimosinha_bet').val();
 
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
             if (!client_id > 0) return alert('Escolha um cliente');
-            if (!validateGame()) return alert('O jogo precisa ser um duque de dezena');
+            if (!checkGame()) return alert('O jogo precisa ser uma dezena');
+
+            award_type.sort();
             
             const item = {
-                award_type: [1,2,3,4,5],
+                award_type,
                 value: value.replace(',', '.'),
                 client_id,
                 modality: '{{$modalidade->nome}}',
-                game: $('#input-milhar').val().replaceAll(' ', ''),
+                game: dezena_input,
                 teimosinha: parseInt(teimosinha),
             };
 
             addChartItem(item);
         });
 
+        function insere_valor() {
+            const btn_gerar_dezena = $('#btn-gerar-dezena');
+            const input_dezena = $('#input-dezena');
+
+            const value = `${randomNumber(0, 9)}`;
+            if (!input_dezena.val()) return input_dezena.val(value);
+
+            const old = input_dezena.val().split(',');
+            old.push(value);
+            input_dezena.val(old.join(','));
+            calculate_awards();
+        }
+
         function calculate_awards() {
             const input_value_bet = $('#input_value_bet');
             const label_award = $('#price_award');
             const limit_minimum_bet = 0.01;
             const message = $('#message-minimum-value');
-            const award_total=parseInt('{{$modalidade->multiplicador}}');
-            if (!validateGame()) return;
-            
-            const game = $('#input-milhar').val().replaceAll(' ', '');
+            const award_total = parseInt('{{$modalidade->multiplicador}}');
+            const option_award = validate_award() === 6 ? 5 : validate_award();
+            const game = $('#input-dezena').val();
+
+            if (!checkGame()) return;
+
             $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
             $.ajax({
                 url: '{{url('/')}}/admin/bets/bichao/premio-maximo-json',
@@ -298,8 +319,6 @@
 
                     let limit_maximum_bet = premio_maximo / award;
                     let value = 0;
-
-                    const option_award = validate_award();
     
                     if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
     
@@ -313,8 +332,6 @@
                         message_maximum.removeClass('hide');
                     } else {
                         $('#price_award_check').show();
-
-                        const option_award = validate_award();
     
                         if (option_award == 1) {
                             value = award_total;
@@ -332,7 +349,6 @@
     
                         const result = value * value_input_bet;
     
-                        if ($('#input-milhar').val() != '' && !validateGame()) return alert('O jogo precisa ser um duque de dezena');
                         if (result > 0) {
                             $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
                         } else {
@@ -349,27 +365,18 @@
             calculate_awards();
         });
 
-        function insere_valor() {
-            const field = $('#input-milhar');
-
-            const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}-${randomNumber(0, 9)}${randomNumber(0, 9)}`;
-            if (!field.val()) return field.val(value);
-
-            const old = field.val().split(',');
-            old.push(value);
-            field.val(old.join(','));
-            calculate_awards();
-        }
-
         function button_first_award(){
             const button_first = $('#btn-award-first');
 
             if(!button_first.hasClass('active')){
                 button_first.addClass('active');
+                award_type.push(1);
             }else{
                 button_first.removeClass('active');
+                award_type = award_type = award_type.filter((i) => i != 1);
             }
             calculate_awards();
+            toggleAll();
         }
 
         function button_second_award(){
@@ -377,10 +384,13 @@
 
             if(!button_second.hasClass('active')){
                 button_second.addClass('active');
+                award_type.push(2);
             }else{
                 button_second.removeClass('active');
+                award_type = award_type = award_type.filter((i) => i != 2);
             }
             calculate_awards();
+            toggleAll();
         }
 
         function button_third_award(){
@@ -388,10 +398,13 @@
 
             if(!button_third.hasClass('active')){
                 button_third.addClass('active');
+                award_type.push(3);
             }else{
                 button_third.removeClass('active');
+                award_type = award_type = award_type.filter((i) => i != 3);
             }
             calculate_awards();
+            toggleAll();
         }
 
         function button_fourth_award(){
@@ -399,10 +412,13 @@
 
             if(!button_fourth.hasClass('active')){
                 button_fourth.addClass('active');
+                award_type.push(4);
             }else{
                 button_fourth.removeClass('active');
+                award_type = award_type = award_type.filter((i) => i != 4);
             }
             calculate_awards();
+            toggleAll();
         }
 
         function button_fifth_award(){
@@ -410,10 +426,13 @@
 
             if(!button_fifth.hasClass('active')){
                 button_fifth.addClass('active');
+                award_type.push(5);
             }else{
                 button_fifth.removeClass('active');
+                award_type = award_type = award_type.filter((i) => i != 5);
             }
             calculate_awards();
+            toggleAll();
         }
 
         function button_first_to_fifth_award(){
@@ -432,6 +451,7 @@
                 button_fourth.addClass('active');
                 button_fifth.addClass('active');
                 button_first_to_fifth.addClass('active');
+                award_type = [1,2,3,4,5];
             }else{
                 button_first.removeClass('active');
                 button_second.removeClass('active');
@@ -439,6 +459,22 @@
                 button_fourth.removeClass('active');
                 button_fifth.removeClass('active');
                 button_first_to_fifth.removeClass('active');
+                award_type = [];
+            }
+            calculate_awards();
+        }
+
+        function toggleAll() {
+            if (
+                $('#btn-award-first').hasClass('active') &&
+                $('#btn-award-second').hasClass('active') &&
+                $('#btn-award-third').hasClass('active') &&
+                $('#btn-award-fourth').hasClass('active') &&
+                $('#btn-award-fifth').hasClass('active')
+            ) {
+                $('#btn-award-first-to-fifth').addClass('active');
+            } else {
+                $('#btn-award-first-to-fifth').removeClass('active');
             }
             calculate_awards();
         }
@@ -456,6 +492,9 @@
                     contador += 1;
                 }
             }
+
+
+
             return contador;
         }
 
@@ -522,6 +561,5 @@
                 btn_add_to_cart.removeClass('disabled');
             }
         }
-
     </script>
 @endpush

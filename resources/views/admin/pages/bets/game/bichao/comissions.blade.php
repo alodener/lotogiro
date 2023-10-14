@@ -56,6 +56,8 @@
                                 if (strval($aposta['game_1']) > 0) $games[] = $aposta['game_1'];
                                 if (strval($aposta['game_2']) > 0) $games[] = $aposta['game_2'];
                                 if (strval($aposta['game_3']) > 0) $games[] = $aposta['game_3'];
+                                if (strval($aposta['game_4']) > 0) $games[] = $aposta['game_4'];
+                                if (strval($aposta['game_5']) > 0) $games[] = $aposta['game_5'];
 
                                 if ($aposta['premio_1'] == 1) $premios[] = 1;
                                 if ($aposta['premio_2'] == 1) $premios[] = 2;
