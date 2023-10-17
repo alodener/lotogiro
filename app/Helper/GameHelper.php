@@ -37,25 +37,11 @@ class GameHelper
             $valor = $maxreais;
         }
         
+        
     $copiaGame = new Game();
     
-    if($request['type_client'] != 1){
-        $userclient = User::where('id', $request['client'])->first();
-            if($userclient != null){
-             $clientuser = Client::where('email', $userclient->email)->first();
-            }else{
-        $clientuser = $request['client'];
-        }
-        $valor = $request['value'];
-        if($userclient == null){
-        $copiaGame->client_id = $clientuser->id;
-        }else{
-        $copiaGame->client_id = $request['client'];
-        }
-        }else{
-        $copiaGame->client_id = $request['client'];
-        }
-    $copiaGame->user_id = Auth::id();
+    $copiaGame->client_id = $game->client_id;
+    $copiaGame->user_id = $game->user_id;
     $copiaGame->type_game_id = $request['type_game'];
     $copiaGame->type_game_value_id = $request['valueId'];
     $copiaGame->value = $request['value'];
@@ -68,7 +54,7 @@ class GameHelper
     $copiaGame->checked = 1;
     $copiaGame->commission_value = 0;
     $copiaGame->commision_value_pai = 0;
-    $copiaGame->commission_percentage = Auth::user()->commission;
+    $copiaGame->commission_percentage = 0;
 
     $copiaGame->save();
 
