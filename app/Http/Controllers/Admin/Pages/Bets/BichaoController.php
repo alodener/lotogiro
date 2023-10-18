@@ -622,7 +622,6 @@ class BichaoController extends Controller
                     'user_id' => Auth()->user()->id,
                     'horario_id' => $data['horario_id'],
                     'valor' => floatval($chart['value']),
-                    'comission_percentage' => auth()->user()->commission,
                     'comission_payment' => 0,
                     'game_1' => isset($games[0]) ? $games[0] : null,
                     'game_2' => isset($games[1]) ? $games[1] : null,
@@ -667,7 +666,6 @@ class BichaoController extends Controller
                                 'user_id' => Auth()->user()->id,
                                 'horario_id' => $data['horario_id'],
                                 'valor' => floatval($chart['value']),
-                                'comission_percentage' => auth()->user()->commission,
                                 'comission_payment' => 0,
                                 'game_1' => isset($games[0]) ? $games[0] : null,
                                 'game_2' => isset($games[1]) ? $games[1] : null,
@@ -759,10 +757,9 @@ class BichaoController extends Controller
 
             $ID_VALUE = auth()->user()->indicador;
             $storeExtact = ExtractController::store($extract);
-            $commissionCalculationPai = Commision::calculationPai($checkoutItem['comission_percentage'], $checkoutItem['valor'], $ID_VALUE);
-            $commissionCalculation = Commision::calculation($checkoutItem['comission_percentage'], $checkoutItem['valor']);
+            $commissions = Commision::calculationNew($checkoutItem['valor'], $checkoutItem['user_id'], 'bichao', $checkoutItem['modalidade_id']);
 
-            BichaoGames::where('id', $checkoutItem['id'])->update(['comission_value' => $commissionCalculation, 'comission_value_pai' => $commissionCalculationPai]);
+            BichaoGames::where('id', $checkoutItem['id'])->update(['commission_percentage' => $commissions['percentage'], 'comission_value' => $commissions['commission'], 'comission_value_pai' => $commissions['commission_pai'], 'comission_value_avo' => $commissions['commission_avo']]);
         }
 
         session(['@loteriasbr/chart' => []]);
