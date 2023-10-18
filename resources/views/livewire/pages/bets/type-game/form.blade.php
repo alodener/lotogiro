@@ -62,6 +62,26 @@
                 @enderror
             </div>
          </div>
+
+         <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="category">Selecione uma Categoria</label>
+                <select wire:model="category" class="custom-select" id="category" name="category">
+                <option value="loto_facil">Loto Fácil</option>
+                <option value="quina">Quina</option>
+                <option value="mega_sena">Mega Sena</option>
+                <option value="dia_de_sorte">Dia De Sorte</option>
+                <option value="dupla_sena">Dupla Sena</option>
+                <option value="loto_mania">Loto Mania</option>
+                <option value="time_mania">Time Mania</option>
+                <option value="dupla_sena_dobrada">Dupla Sena Dobrada</option>
+                <option value="lotinha_corujao">Lotinha Corujão</option>
+                <option value="mais_milionaria">Mais Milionaria</option>
+                <option value="loto_one">Loto ONE</option>
+                </select>
+            </div>
+        </div>
+
          @if(Route::currentRouteName() == 'admin.bets.type_games.edit')
              <div class="row my-2">
                  <div class="col-md-12">

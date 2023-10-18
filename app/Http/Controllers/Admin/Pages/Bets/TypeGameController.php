@@ -94,6 +94,7 @@ class TypeGameController extends Controller
             $typeGame->columns = $request->columns;
             $typeGame->color = !empty($request->color) ? $request->color : '#28a745';
             $typeGame->description = $request->description;
+            $typeGame->category = $request->category;
             $typeGame->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([
@@ -149,6 +150,7 @@ class TypeGameController extends Controller
             $typeGame->columns = $request->columns;
             $typeGame->color = $request->color;
             $typeGame->description = $request->description;
+            $typeGame->category = $request->category;
             $typeGame->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([
