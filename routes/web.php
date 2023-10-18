@@ -176,7 +176,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::post('save/settings', [BichaoController::class, 'save_settings'])->name('bichao.save.settings');
             });
 
-            Route::resource('clients', ClientController::class);
+            
+            Route::resource('clients', ClientController::class)->except([
+                'show']);
             Route::resource('competitions', CompetitionController::class);
             Route::resource('type_games', TypeGameController::class);
             Route::resource('type_games.values', TypeGameValueController::class);
@@ -187,6 +189,10 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');
+            Route::post('/clients/vincular/{id_client}', [ClientController::class, 'vincularCliente'])->name('clients.vincular');
+
+            Route::get('/clients/consultor', [ClientController::class, 'clientConsultor'])->name('consultor');
+
             Route::post('/games/mass-delete', [GameController::class, 'massDelete'])->name('games.massDelete');
             Route::resource('games', GameController::class)->except([
                 'index', 'create'

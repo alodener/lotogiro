@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Client;
+use Illuminate\Support\Facades\DB;
 
 class Table extends Component
 {
@@ -48,62 +48,22 @@ class Table extends Component
     public function updatedSearch($value)
     {
         if ($this->auth->hasPermissionTo('read_all_gains')) {
-            $searchTerms = explode(' ', $this->search);
-            $firstName = $searchTerms[0] ?? '';
-            $lastName = $searchTerms[1] ?? '';
-
-            $usersQuery = User::query();
-
-            if ($firstName) {
-                $usersQuery->where(function ($query) use ($firstName, $lastName) {
-                    $query->where('name', 'LIKE', "%{$firstName}%")
-                        ->orWhere('last_name', 'LIKE', "%{$firstName}%")
-                        ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$firstName}%"]);
-                });
-            }
-
-            if ($lastName) {
-                $usersQuery->where(function ($query) use ($lastName) {
-                    $query->where('last_name', 'LIKE', "%{$lastName}%")
-                        ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$lastName}%"]);
-                });
-            }
-
-            $userResults = $usersQuery->get()->toArray();
-
-            $results = array_merge($userResults);
-
-            $uniqueResults = collect($results)->unique(function ($result) {
-                return $result['name'] . $result['last_name'] . $result['email'];
-            })->values()->toArray();
-
-            $uniqueResults = array_map(function ($result) {
-                return array_map('htmlspecialchars', $result);
-            }, $uniqueResults);
-
-            $this->users = $uniqueResults;
-            $this->showList = true;
+            $this->users = User::where(function($query) {
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+            })
+            ->get();
         }
+        $this->showList = true;
     }
 
-    
-    public function setId($id)
+    public function setId($user)
     {
-        $user = null;
-        foreach ($this->users as $userData) {
-            if ($userData['id'] == $id) {
-                $user = $userData;
-                break;
-            }
-        }
-    
-        if ($user) {
-            $this->selectedUser = $user;
-            $this->search = $user['name'] . ' ' . $user['last_name'];
+        if ($this->auth->hasPermissionTo('read_all_gains')) {
+            $this->userId = $user["id"];
+            $this->search = $user["name"] . ' ' . $user["last_name"] . ' - ' . $user["email"];
             $this->showList = false;
         }
     }
-
 
     public function clearUser()
     {
@@ -177,7 +137,7 @@ class Table extends Component
 
         $pdf = PDF::loadView('admin.layouts.pdf.gains', $data)->output();
 
-        $fileName = 'Relatório de Ganhos - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
+        $fileName = 'Relat贸rio de Ganhos - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
 
         return response()->streamDownload(
             fn() => print($pdf),

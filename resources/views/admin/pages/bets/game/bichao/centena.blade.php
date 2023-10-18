@@ -54,7 +54,12 @@
                     </div>
                 </div>
                 <div class="form-group col-md-12">
-                    @livewire('utils.clientautocomplete.table')
+                    @if (auth()->user()->type_client != 1)
+                        @livewire('utils.clientautocomplete.table')
+                    @else
+                        <input type="text" value="{{auth()->user()->name}} {{auth()->user()->last_name}}" disabled="" class="form-control">
+                        <input type="hidden" id="livewire-client-id" value="1">
+                    @endif
                 </div>
 
             {{-- PARTE DE PESQUISA DE CLIENTE SE NÃO TIVER AUTENTICAÇÃO --}}

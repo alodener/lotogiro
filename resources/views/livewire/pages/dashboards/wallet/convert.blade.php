@@ -33,7 +33,76 @@
             </div>
         </div>
     </div>
-</div>
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">{{ trans('admin.pagesF.conversaoBonusParaSaque') }}</h3>
+            </div>
+            <div class="card-body">
+                <div x-data="{}">
+                    <div class="row mt-2">
+                        <div class="col-md-5 col-sm-12">
+                            <h4>{{ trans('admin.pagesF.bonus') }} R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h4>
+                            <h4>{{ trans('admin.pagesF.saqueDisponivel') }} R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h4>
+                        </div>
+                        <div class="col-md-7 col-sm-12">
+                            <h6> {{ trans('admin.pagesF.valTrans') }}</h6>
+                            <small>({{ trans('admin.pagesF.valIgual') }}<b> {{ trans('admin.pagesF.BONUS') }}</b>)</small>
+                            <div class="input-group">
+                                <input wire:model="valueConvertBonus" x-on:focus="formatInputBonus()" type="text"
+                                       class="search-query form-control" placeholder="Valor a converter"
+                                       id="valueConvertBonus" inputmode="numeric" value="0,00" />
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mt-5">
+                            <div class="input-group">
+                                <button wire:click="transferBonusToAvailableWithdraw" type="button" class="btn btn-dark
+                                btn-block">
+                                {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt" style="color: #fff938"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">{{ trans('admin.pagesF.conversaoSaqueParaSaldo') }}</h3>
+            </div>
+            <div class="card-body">
+                <div x-data="{}">
+                    <div class="row mt-2">
+                        <div class="col-md-5 col-sm-12">
+                            <h4>{{ trans('admin.pagesF.saqueDisponivel') }} R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h4>
+                            <h4>{{ trans('admin.pagesF.saldo') }} R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
+                        </div>
+                        <div class="col-md-7 col-sm-12">
+                            <h6> {{ trans('admin.pagesF.valTrans') }}</h6>
+                            <small>({{ trans('admin.pagesF.valIgual') }}<b> {{ trans('admin.pagesF.SAQUEDISPONIVEL') }}</b>)</small>
+                            <div class="input-group">
+                                <input wire:model="valueConvertWithdraw" x-on:focus="formatInputWithdraw()" type="text"
+                                       class="search-query form-control" placeholder="Valor a converter"
+                                       id="valueConvertWithdraw" inputmode="numeric" value="0,00" />
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mt-5">
+                            <div class="input-group">
+                                <button wire:click="transferAvailableWithdrawToBalance" type="button" class="btn btn-dark
+                                btn-block">
+                                {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt" style="color: #fff938"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
 <!-- <h3 class="card-title">{{ trans('admin.pagesF.conversao') }}</h3>
             </div>
             <div class="card-body">
@@ -434,6 +503,12 @@
     <script type="text/javascript">
         function formatInput(){
             VMasker(document.getElementById("valueConvert")).maskMoney();
+        }
+        function formatInputBonus(){
+            VMasker(document.getElementById("valueConvertBonus")).maskMoney();
+        }
+        function formatInputWithdraw(){
+            VMasker(document.getElementById("valueConvertWithdraw")).maskMoney();
         }
     </script>
 @endpush

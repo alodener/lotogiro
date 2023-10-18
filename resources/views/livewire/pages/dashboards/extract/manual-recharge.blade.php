@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                {{ trans('admin.extracts.manual-recharge') }}
+               Extrato Financeiro 
             </div>
         </div>
     </div>
@@ -101,25 +101,87 @@
                     @endforelse
                     </tbody>
                     <tfoot>
-                    <tr>
-                        <td colspan="5">
+                     <tr>
+                       <td colspan="5">
                             <div class="row">
                                 <div class="col-sm-12 col-md-9">
                                     {{ $transacts->links() }}
-                                </div>
-                                <div class="col-sm-12 col-md-3 text-right text-bold">
-                                    {{ trans('admin.total') }}: R$ {{ $transacts->valueTotal }}
                                 </div>
                             </div>
                         </td>
                     </tr>
                     </tfoot>
                 </table>
-            </div>
+                
+            
+                <div class="col-md-12 p-4">
+                    <div class="card w-100">
+                        <!--Recargas Através do pix e o bônus recebidos através do pix -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="small-box bg-warning">
+                                    <div class="inner">
+                                        <h3>R${{$totalpix}}</h3>
+                                        <p>Recargas via pix</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="bi bi-cash-coin"></i>
+                                    </div>
+                                    <span class="small-box-footer p-2"></span>
+                                </div>
+                            </div>
+                        
+                            <!--Total de bonus-->
+                            <div class="col-md-6">
+                                <div class="small-box @if($value < 0) bg-danger @else bg-success @endif">
+                                    <div class="inner">
+                                        <h3>R${{$totalbonus}}</h3>
+                                        <p>Total de bônus</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="bi bi-coin"></i>
+                                    </div>
+                                    <span class="small-box-footer p-2"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!--Total de recarga manual -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="small-box bg-primary">
+                                    <div class="inner">
+                                        <h3>R${{$totalrecargamanual}}</h3>
+                                        <p>Recarga Manual</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="bi bi-cash-coin"></i>
+                                    </div>
+                                    <span class="small-box-footer p-2"></span>
+                                </div>
+                            </div>
+
+                            <!--Total de todas as transações-->
+                            <div class="col-md-6">
+                                <div class="small-box bg-danger">
+                                    <div class="inner">
+                                        <h3>R${{$transacts->valueTotal}}</h3>
+                                        <p>Total</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="bi bi-coin"></i>
+                                    </div>
+                                    <span class="small-box-footer p-2"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+           </div> 
         </div>
     </div>
 </div>
-
 
 @push('scripts')
     <script src="{{asset('admin/layouts/plugins/daterangepicker/moment.min.js')}}"></script>
