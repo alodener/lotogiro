@@ -93,7 +93,7 @@
             @if($showList)
                 <ul class="list-group">
                     @foreach($users as $user)
-                        <li wire:click="setId({{ $user['id'] }})" class="list-group-item" style="cursor:pointer;">{{ $user['name'] . ' ' . $user['last_name'] . ' - ' . $user['email'] }}</li>
+                        <li wire:click="setId({{ $user }})" class="list-group-item" style="cursor:pointer;">{{ $user['name'] . ' ' . $user['last_name'] . ' - ' . $user['email'] }}</li>
                     @endforeach
                 </ul>
             @endif

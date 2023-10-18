@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Client;
+use Illuminate\Support\Facades\DB;
 
 class Table extends Component
 {
@@ -45,63 +45,23 @@ class Table extends Component
 
     public function updatedSearch($value)
     {
-        if ($this->auth->hasPermissionTo('read_all_gains')) {
-            $searchTerms = explode(' ', $this->search);
-            $firstName = $searchTerms[0] ?? '';
-            $lastName = $searchTerms[1] ?? '';
+        if ($this->auth->hasPermissionTo('read_all_sales')) {
+            $this->users = User::where(function($query) {
+                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+            })
+            ->get();
+        }
+        $this->showList = true;
+    }
 
-            $usersQuery = User::query();
-
-
-            if ($firstName) {
-                $usersQuery->where(function ($query) use ($firstName, $lastName) {
-                    $query->where('name', 'LIKE', "%{$firstName}%")
-                        ->orWhere('last_name', 'LIKE', "%{$firstName}%")
-                        ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$firstName}%"]);
-                });
-
-            }
-
-            if ($lastName) {
-                $usersQuery->where(function ($query) use ($lastName) {
-                    $query->where('last_name', 'LIKE', "%{$lastName}%")
-                        ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$lastName}%"]);
-                });
-            }
-
-            $userResults = $usersQuery->get()->toArray();
-
-            $results = array_merge($userResults);
-
-            $uniqueResults = collect($results)->unique(function ($result) {
-                return $result['name'] . $result['last_name'] . $result['email'];
-            })->values()->toArray();
-
-            $uniqueResults = array_map(function ($result) {
-                return array_map('htmlspecialchars', $result);
-            }, $uniqueResults);
-
-            $this->users = $uniqueResults;
-            $this->showList = true;
+    public function setId($user)
+    {
+        if ($this->auth->hasPermissionTo('read_all_sales')) {
+            $this->userId = $user["id"];
+            $this->search = $user["name"] . ' ' . $user["last_name"] . ' - ' . $user["email"];
+            $this->showList = false;
         }
     }
-
-    public function setId($id)
-{
-    $user = null;
-    foreach ($this->users as $userData) {
-        if ($userData['id'] == $id) {
-            $user = $userData;
-            break;
-        }
-    }
-
-    if ($user) {
-        $this->selectedUser = $user;
-        $this->search = $user['name'] . ' ' . $user['last_name'];
-        $this->showList = false;
-    }
-}
 
     public function clearUser()
     {
@@ -157,6 +117,7 @@ class Table extends Component
         dd($value);
     }
 
+   
     public function submit()
     {
         $dataValidated = $this->validate([
@@ -193,6 +154,7 @@ class Table extends Component
             'dateEnd' => $dateEnd,
         ];
     }
+
 
     public function filterUser($query)
     {
@@ -286,6 +248,8 @@ class Table extends Component
         return $query;
     }
 
+
+
     public function runQueryBuilder()
     {
         $query = Game::query();
@@ -295,7 +259,9 @@ class Table extends Component
         $filterRange = $this->filterRange();
         $query
             ->when($this->range, fn($query, $search) => $query->whereDate('created_at', '>=', $filterRange['dateStart'])
-                ->whereDate('created_at', '<=', $filterRange['dateEnd']));
+                ->whereDate('created_at', '<=', $filterRange['dateEnd'])
+                ->orderBy('created_at', 'desc'));
+            
         $query = $this->filterUser($query);
         $query = $this->filterStatus($query);
         
@@ -310,11 +276,12 @@ class Table extends Component
                $query = $this->sumValuesTodos($query);
            }
         }
-            
         
         return $query; //$this->applySorting($query);
     }
 
+
+    
     public function getReport()
     {
         $games = $this->runQueryBuilder()->with(['user', 'client', 'typeGameValue'])->get();
@@ -333,7 +300,7 @@ class Table extends Component
 
         $pdf = PDF::loadView('admin.layouts.pdf.sales', $data)->output();
 
-        $fileName = 'Relatório de Vendas - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
+        $fileName = 'Relat贸rio de Vendas - ' . Carbon::now()->format('d-m-Y h:i:s') . '.pdf';
 
         return response()->streamDownload(
             fn() => print($pdf),
