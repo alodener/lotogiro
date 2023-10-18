@@ -211,7 +211,7 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Milhar Invertida')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $game_limit = 4;
+        $game_limit = $modalidade->bet_limit;
 
         $totalCarrinho = static::getTotalCarrinho($chart);
         return view('admin.pages.bets.game.bichao.milhar_invertida', compact('modalidade','chart', 'totalCarrinho', 'estados', 'game_limit'));
@@ -225,7 +225,7 @@ class BichaoController extends Controller
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
         $modalidade = BichaoModalidades::where('nome', 'Centena Invertida')->first();
         $estados = BichaoEstados::where('active', 1)->get();
-        $game_limit = 3;
+        $game_limit = $modalidade->bet_limit;
 
         $totalCarrinho = static::getTotalCarrinho($chart);
         return view('admin.pages.bets.game.bichao.centena_invertida', compact('modalidade','chart', 'totalCarrinho', 'estados', 'game_limit'));
@@ -266,6 +266,7 @@ class BichaoController extends Controller
         $estados = $data['estados'];
         $cotacoes = $data['cotacoes'];
         $premio_maximo = $data['premio_maximo'];
+        $bet_limit = $data['bet_limit'];
 
         foreach ($estados as $estado) {
             BichaoEstados::where('id', $estado['id'])->update(['active' => $estado['active']]);
@@ -287,6 +288,10 @@ class BichaoController extends Controller
 
         foreach ($premio_maximo as $premio) {
             BichaoModalidades::where('id', $premio['id'])->update(['premio_maximo' => $premio['value']]);
+        }
+
+        foreach ($bet_limit as $invertida_limit) {
+            BichaoModalidades::where('id', $invertida_limit['id'])->update(['bet_limit' => $invertida_limit['value']]);
         }
 
         return json_encode(['status' => 'ok']);

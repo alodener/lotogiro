@@ -808,6 +808,7 @@ return [
                 'estados' => 'Estados',
                 'cotacoes' => 'Cotações',
                 'premio_maximo' => 'Prêmio Máximo',
+                'invertida_limite' => 'Limites Invertidas',
 
                 'esqSenha' => 'Esqueceu sua senha? Aqui você pode recuperar facilmente',
                 'solicitNv' => 'Solicitar nova senha',
