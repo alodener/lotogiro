@@ -494,6 +494,8 @@ return [
                 'terngrup' => 'Terno de Grupo',
                 'duqdez' => 'Duque de Dezena',
                 'duqgrup' => 'Duque de Grupo',
+                'milharinvertida' => 'Milhar invertida',
+                'centenainvertida' => 'Centena invertida',
                 'unidade' => 'Unidade',
                 'client' => 'Cliente',
                 'insiraj' => 'Insira seu jogo:',

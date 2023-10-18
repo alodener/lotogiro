@@ -203,6 +203,34 @@ class BichaoController extends Controller
         return view('admin.pages.bets.game.bichao.unidade', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
+    public function milhar_invertida()
+    {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+        $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
+        $modalidade = BichaoModalidades::where('nome', 'Milhar Invertida')->first();
+        $estados = BichaoEstados::where('active', 1)->get();
+        $game_limit = 4;
+
+        $totalCarrinho = static::getTotalCarrinho($chart);
+        return view('admin.pages.bets.game.bichao.milhar_invertida', compact('modalidade','chart', 'totalCarrinho', 'estados', 'game_limit'));
+    }
+
+    public function centena_invertida()
+    {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+        $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
+        $modalidade = BichaoModalidades::where('nome', 'Centena Invertida')->first();
+        $estados = BichaoEstados::where('active', 1)->get();
+        $game_limit = 3;
+
+        $totalCarrinho = static::getTotalCarrinho($chart);
+        return view('admin.pages.bets.game.bichao.centena_invertida', compact('modalidade','chart', 'totalCarrinho', 'estados', 'game_limit'));
+    }
+
     public function cotacao(Response $response)
     {
         if (!auth()->user()->hasPermissionTo('create_game')) {
@@ -644,6 +672,29 @@ class BichaoController extends Controller
         echo json_encode(['status' => 200]);
     }
 
+    private static function getFatorialInvertidoMilhar($game) {
+        $game = array_unique(str_split($game));
+        if (count($game) === 1) return 1;
+        if (count($game) === 2) return 4;
+        if (count($game) === 3) return 12;
+        if (count($game) === 4) return 24;
+        if (count($game) === 5) return 120;
+        if (count($game) === 6) return 360;
+        if (count($game) === 7) return 840;
+        return 1680;
+    }
+
+    private static function getFatorialInvertidoCentena($game) {
+        $game = array_unique(str_split($game));
+        if (count($game) === 1) return 1;
+        if (count($game) === 2) return 3;
+        if (count($game) === 3) return 6;
+        if (count($game) === 4) return 24;
+        if (count($game) === 5) return 60;
+        if (count($game) === 6) return 120;
+        return 210;
+    }
+
     public function checkout(Request $request) {
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
@@ -766,6 +817,14 @@ class BichaoController extends Controller
             }
             if ($checkout[$index]['modalidade_id'] == 6 || $checkout[$index]['modalidade_id'] == 7) {
                 $premioMaximo = sizeof($premios) == 3 ? $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador : $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador_2;
+            }
+            if ($checkout[$index]['modalidade_id'] == 13) {
+                $divider = static::getFatorialInvertidoMilhar($checkout[$index]['game_1']);
+                $premioMaximo = ($checkout[$index]['valor'] / $divider) * $checkout[$index]['modalidade']->multiplicador;
+            }
+            if ($checkout[$index]['modalidade_id'] == 14) {
+                $divider = static::getFatorialInvertidoCentena($checkout[$index]['game_1']);
+                $premioMaximo = ($checkout[$index]['valor'] / $divider) * $checkout[$index]['modalidade']->multiplicador;
             }
 
             $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
@@ -900,6 +959,16 @@ class BichaoController extends Controller
         echo json_encode(['horarios' => $horarios]);
     }
 
+    private static function checkInvertidaWinner($game, $resultado) {
+        $game = str_split($game);
+        $resultado = str_split($resultado);
+        foreach ($game as $game) {
+            $key = array_search($game, $resultado);
+            if ($key >= 0) unset($resultado[$key]);
+        }
+        return count($resultado) === 0;
+    }
+
     private static function get_winners($resultados) {
         $dataAtual = date('Y-m-d');
         $horaAtual = date('H:i:s');
@@ -943,7 +1012,7 @@ class BichaoController extends Controller
             $valor_premio = $game['valor'] * $game['multiplicador'] / $premios_quantia;
             $game_winner = false;
 
-            // Milhar, Centena e Dezena
+            // Milhar
             if ($game['modalidade_id'] == 1) {
                 $winner = false;
                 if ($game['premio_1'] == 1 && $resultado['premio_1'] === $game['game_1']) $winner = true;
@@ -952,6 +1021,23 @@ class BichaoController extends Controller
                 if ($game['premio_4'] == 1 && $resultado['premio_4'] === $game['game_1']) $winner = true;
                 if ($game['premio_5'] == 1 && $resultado['premio_5'] === $game['game_1']) $winner = true;
                 if ($winner) $game_winner = true;
+            }
+
+            // Milhar Invertida
+            if ($game['modalidade_id'] == 13) {
+                $divider = static::getFatorialInvertidoMilhar($game['game_1']);
+                $valor_premio = ($game['valor'] / $divider) * $game['multiplicador'] / $premios_quantia;
+
+                $winner = 0;
+                if ($game['premio_1'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_1'])) $winner += 1;
+                if ($game['premio_2'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_2'])) $winner += 1;
+                if ($game['premio_3'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_3'])) $winner += 1;
+                if ($game['premio_4'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_4'])) $winner += 1;
+                if ($game['premio_5'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_5'])) $winner += 1;
+                if ($winner > 0) {
+                    $game_winner = true;
+                    $valor_premio = number_format($valor_premio * $game_winner, 2, ".", "");
+                }
             }
 
             // Centena
@@ -963,6 +1049,23 @@ class BichaoController extends Controller
                 if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 1) === $game['game_1']) $winner = true;
                 if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 1) === $game['game_1']) $winner = true;
                 if ($winner) $game_winner = true;
+            }
+
+            // Centena Invertida
+            if ($game['modalidade_id'] == 14) {
+                $divider = static::getFatorialInvertidoCentena($game['game_1']);
+                $valor_premio = ($game['valor'] / $divider) * $game['multiplicador'] / $premios_quantia;
+
+                $winner = 0;
+                if ($game['premio_1'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_1'], 1))) $winner += 1;
+                if ($game['premio_2'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_2'], 1))) $winner += 1;
+                if ($game['premio_3'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_3'], 1))) $winner += 1;
+                if ($game['premio_4'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_4'], 1))) $winner += 1;
+                if ($game['premio_5'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_5'], 1))) $winner += 1;
+                if ($winner > 0) {
+                    $game_winner = true;
+                    $valor_premio = number_format($valor_premio * $game_winner, 2, ".", "");
+                }
             }
 
             // Dezena

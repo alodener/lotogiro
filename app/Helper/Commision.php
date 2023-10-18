@@ -56,6 +56,9 @@ class Commision
         $commission_pai = 0;
         $commission_avo = 0;
 
+        $user->bonus = $user->bonus + $commission;
+        $user->save();
+
         $userLv1 = User::find($user->indicador);
         if ($userLv1) {
             $commission_pai = (($value / 100) * static::getCommission($userLv1, $type_id, $game_type, 1));

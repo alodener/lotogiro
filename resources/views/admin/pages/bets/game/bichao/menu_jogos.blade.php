@@ -17,5 +17,7 @@
         <a type="button" class="btn btn-{{ Request::route()->getName() === 'admin.bets.bichao.terno.grupo' ? '' : 'outline-' }}primary mb-1" href="{{ route('admin.bets.bichao.terno.grupo') }}"><b>{{ trans('admin.bichao.terngrup') }}</b></a>
         <a type="button" class="btn btn-{{ Request::route()->getName() === 'admin.bets.bichao.duque.grupo' ? '' : 'outline-' }}primary mb-1" href="{{ route('admin.bets.bichao.duque.grupo') }}"><b>{{ trans('admin.bichao.duqgrup') }}</b></a>
         <a type="button" class="btn btn-{{ Request::route()->getName() === 'admin.bets.bichao.unidade' ? '' : 'outline-' }}primary mb-1" href="{{ route('admin.bets.bichao.unidade') }}"><b>{{ trans('admin.bichao.unidade') }}</b></a>
+        <a type="button" class="btn btn-{{ Request::route()->getName() === 'admin.bets.bichao.milhar.invertida' ? '' : 'outline-' }}primary mb-1" href="{{ route('admin.bets.bichao.milhar.invertida') }}"><b>{{ trans('admin.bichao.milharinvertida') }}</b></a>
+        <a type="button" class="btn btn-{{ Request::route()->getName() === 'admin.bets.bichao.centena.invertida' ? '' : 'outline-' }}primary mb-1" href="{{ route('admin.bets.bichao.centena.invertida') }}"><b>{{ trans('admin.bichao.centenainvertida') }}</b></a>
     </div>
 </div>

@@ -555,6 +555,8 @@ return [
         'terngrup' => 'Tern of Group',
         'duqdez' => 'Duque of Ten',
         'duqgrup' => 'Duque of Group',
+        'milharinvertida' => 'Inverted Thousand',
+        'centenainvertida' => 'Inverted Hundred',
         'unidade' => 'Unit',
         'client' => 'Client',
         'insiraj' => 'Insert your game:',

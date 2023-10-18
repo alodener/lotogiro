@@ -151,6 +151,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('group', [BichaoController::class, 'group'])->name('group');
                 Route::get('dezena', [BichaoController::class, 'dezena'])->name('dezena');
                 Route::get('milhar/centena', [BichaoController::class, 'milhar_centena'])->name('milhar.centena');
+                Route::get('milhar/invertida', [BichaoController::class, 'milhar_invertida'])->name('milhar.invertida');
+                Route::get('centena/invertida', [BichaoController::class, 'centena_invertida'])->name('centena.invertida');
                 Route::get('minhas/apostas', [BichaoController::class, 'my_bets'])->name('minhas.apostas');
                 Route::get('terno/dezena', [BichaoController::class, 'terno_dezena'])->name('terno.dezena');
                 Route::get('duque/dezena', [BichaoController::class, 'duque_dezena'])->name('duque.dezena');
