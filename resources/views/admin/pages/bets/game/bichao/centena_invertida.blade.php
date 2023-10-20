@@ -76,7 +76,7 @@
                     </div>
                     <div class="col-md-5 col-12">
                         <button id="btn-gerar-milhar" onclick="insere_valor()" type="button"
-                            class="btn btn-secondary">{{ trans('admin.bichao.gerarM') }}</button>
+                            class="btn btn-secondary">{{ trans('admin.bichao.gerarA') }}</button>
                     </div>
                 </div>
                 <hr />
@@ -232,6 +232,7 @@
         integrity="sha512-pF+DNRwavWMukUv/LyzDyDMn8U2uvqYQdJN0Zvilr6DDo/56xPDZdDoyPDYZRSL4aOKO/FGKXTpzDyQJ8je8Qw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
+            const field_size = parseInt('{{$game_limit}}');
             const award = parseInt('{{$modalidade->multiplicador}}');
             const initial_value = 0;
             const button_first = $('#btn-award-first');
@@ -245,7 +246,7 @@
 
             function checkGame() {
                 const games = $('#input-milhar').val().split(',');
-                const match = games.filter((item) => item.length === 4);
+                const match = games.filter((item) => item.length === field_size);
                 return games.length === match.length;
             }
 
@@ -263,7 +264,7 @@
                 if (!option_award > 0) return alert('Selecione um dos prêmios');
                 if (!value > 0) return alert('Insira um valor pra aposta');
                 if (!client_id > 0) return alert('Escolha um cliente');
-                if (!checkGame()) return alert('O jogo precisa ser um milhar');
+                if (!checkGame()) return alert('O jogo precisa ser uma centena');
 
                 award_type.sort();
                 
@@ -291,6 +292,7 @@
                 const award_total = parseInt('{{$modalidade->multiplicador}}');
                 const option_award = validate_award() === 6 ? 5 : validate_award();
                 const game = $('#input-milhar').val();
+                const divider = getFatorialInvertidoCentena(game);
 
                 if (!checkGame()) return;
 
@@ -318,11 +320,10 @@
                         if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
         
                         const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
-        
                         $('#price_award_check').hide();
                         if (value_input_bet < limit_minimum_bet) {
                             message_minimum.removeClass('hide');
-                        } else if (!limit_maximum_bet > 0 || value_input_bet > limit_maximum_bet) {
+                        } else if (!limit_maximum_bet > 0 || (value_input_bet / divider) > limit_maximum_bet) {
                             $('#maximum-prize-value').text(premio_maximo.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                             message_maximum.removeClass('hide');
                         } else {
@@ -342,8 +343,7 @@
                                 value = (award_total / 5);
                             }
         
-                            const result = value * value_input_bet;
-        
+                            const result = value * (value_input_bet / divider);
                             if (result > 0) {
                                 $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
                             } else {
@@ -363,8 +363,13 @@
             function insere_valor() {
                 const btn_gerar_milhar = $('#btn-gerar-milhar');
                 const input_milhar = $('#input-milhar');
+                let value = '';
 
-                const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}`;
+                for (i = 0; i < field_size; i++) {
+                    value = value + randomNumber(0, 9);
+                }
+
+                // const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}`;
                 if (!input_milhar.val()) return input_milhar.val(value);
 
                 const old = input_milhar.val().split(',');

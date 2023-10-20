@@ -640,7 +640,7 @@ class UserController extends Controller
 
             if((float) $newBonus > 0){
                
-                $this->storeTransact($user, ($user->commission/100) * $balanceRequest,$oldBonus,  $newBalance, 'bonus');
+                // $this->storeTransact($user, ($user->commission/100) * $balanceRequest,$oldBonus,  $newBalance, 'bonus');
             }
 
             if((float) $newBalance > 0){

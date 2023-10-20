@@ -110,19 +110,32 @@ class BichaoController extends Controller
 
         $totalCarrinho = static::getTotalCarrinho($chart);
         return view('admin.pages.bets.game.bichao.milhar_centena', compact('modalidade','chart','totalCarrinho', 'estados'));
-    }
+    }    
 
-    public function terno_dezena()
+    public function quina_grupo()
     {
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $modalidade = BichaoModalidades::where('nome', 'Terno de Dezena')->first();
+        $modalidade = BichaoModalidades::where('nome', 'Quina de Grupos')->first();
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = static::getTotalCarrinho($chart);
-        return view('admin.pages.bets.game.bichao.terno_dezena', compact('modalidade','chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.quina_grupo', compact('modalidade','chart', 'totalCarrinho', 'estados'));
+    }
+
+    public function quadra_grupo()
+    {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+        $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
+        $modalidade = BichaoModalidades::where('nome', 'Quadra de Grupos')->first();
+        $estados = BichaoEstados::where('active', 1)->get();
+
+        $totalCarrinho = static::getTotalCarrinho($chart);
+        return view('admin.pages.bets.game.bichao.quadra_grupo', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
     public function terno_grupo()
@@ -138,6 +151,32 @@ class BichaoController extends Controller
         return view('admin.pages.bets.game.bichao.terno_grupo', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
+    public function duque_grupo()
+    {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+        $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
+        $modalidade = BichaoModalidades::where('nome', 'Duque de Grupo')->first();
+        $estados = BichaoEstados::where('active', 1)->get();
+
+        $totalCarrinho = static::getTotalCarrinho($chart);
+        return view('admin.pages.bets.game.bichao.duque_grupo', compact('modalidade','chart', 'totalCarrinho', 'estados'));
+    }
+
+    public function terno_dezena()
+    {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+        $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
+        $modalidade = BichaoModalidades::where('nome', 'Terno de Dezena')->first();
+        $estados = BichaoEstados::where('active', 1)->get();
+
+        $totalCarrinho = static::getTotalCarrinho($chart);
+        return view('admin.pages.bets.game.bichao.terno_dezena', compact('modalidade','chart', 'totalCarrinho', 'estados'));
+    }
+
     public function duque_dezena()
     {
         if (!auth()->user()->hasPermissionTo('create_game')) {
@@ -151,17 +190,45 @@ class BichaoController extends Controller
         return view('admin.pages.bets.game.bichao.duque_dezena', compact('modalidade','chart', 'totalCarrinho', 'estados'));
     }
 
-    public function duque_grupo()
+    public function unidade()
     {
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
         $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
-        $modalidade = BichaoModalidades::where('nome', 'Duque de Grupo')->first();
+        $modalidade = BichaoModalidades::where('nome', 'Unidade')->first();
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = static::getTotalCarrinho($chart);
-        return view('admin.pages.bets.game.bichao.duque_grupo', compact('modalidade','chart', 'totalCarrinho', 'estados'));
+        return view('admin.pages.bets.game.bichao.unidade', compact('modalidade','chart', 'totalCarrinho', 'estados'));
+    }
+
+    public function milhar_invertida()
+    {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+        $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
+        $modalidade = BichaoModalidades::where('nome', 'Milhar Invertida')->first();
+        $estados = BichaoEstados::where('active', 1)->get();
+        $game_limit = $modalidade->bet_limit;
+
+        $totalCarrinho = static::getTotalCarrinho($chart);
+        return view('admin.pages.bets.game.bichao.milhar_invertida', compact('modalidade','chart', 'totalCarrinho', 'estados', 'game_limit'));
+    }
+
+    public function centena_invertida()
+    {
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+        $chart = is_array(session('@loteriasbr/chart')) ? session('@loteriasbr/chart') : [];
+        $modalidade = BichaoModalidades::where('nome', 'Centena Invertida')->first();
+        $estados = BichaoEstados::where('active', 1)->get();
+        $game_limit = $modalidade->bet_limit;
+
+        $totalCarrinho = static::getTotalCarrinho($chart);
+        return view('admin.pages.bets.game.bichao.centena_invertida', compact('modalidade','chart', 'totalCarrinho', 'estados', 'game_limit'));
     }
 
     public function cotacao(Response $response)
@@ -199,6 +266,7 @@ class BichaoController extends Controller
         $estados = $data['estados'];
         $cotacoes = $data['cotacoes'];
         $premio_maximo = $data['premio_maximo'];
+        $bet_limit = $data['bet_limit'];
 
         foreach ($estados as $estado) {
             BichaoEstados::where('id', $estado['id'])->update(['active' => $estado['active']]);
@@ -209,6 +277,10 @@ class BichaoController extends Controller
                 BichaoModalidades::where('id', 7)->update(['multiplicador_2' => $cotacao['value']]);
             } elseif ($cotacao['id'] == '6b') {
                 BichaoModalidades::where('id', 6)->update(['multiplicador_2' => $cotacao['value']]);
+            } elseif ($cotacao['id'] == '10b') {
+                BichaoModalidades::where('id', 10)->update(['multiplicador_2' => $cotacao['value']]);
+            } elseif ($cotacao['id'] == '11b') {
+                BichaoModalidades::where('id', 11)->update(['multiplicador_2' => $cotacao['value']]);
             } else {
                 BichaoModalidades::where('id', $cotacao['id'])->update(['multiplicador' => $cotacao['value']]);
             }
@@ -216,6 +288,10 @@ class BichaoController extends Controller
 
         foreach ($premio_maximo as $premio) {
             BichaoModalidades::where('id', $premio['id'])->update(['premio_maximo' => $premio['value']]);
+        }
+
+        foreach ($bet_limit as $invertida_limit) {
+            BichaoModalidades::where('id', $invertida_limit['id'])->update(['bet_limit' => $invertida_limit['value']]);
         }
 
         return json_encode(['status' => 'ok']);
@@ -439,6 +515,8 @@ class BichaoController extends Controller
             if (strval($game['game_1']) > 0) $apostas[] = $game['game_1'];
             if (strval($game['game_2']) > 0) $apostas[] = $game['game_2'];
             if (strval($game['game_3']) > 0) $apostas[] = $game['game_3'];
+            if (strval($game['game_4']) > 0) $apostas[] = $game['game_4'];
+            if (strval($game['game_5']) > 0) $apostas[] = $game['game_5'];
             sort($apostas);
 
             $game_value = explode('-', $game_value);
@@ -508,6 +586,8 @@ class BichaoController extends Controller
             if (strval($db_game->game_1) > 0) $apostas[] = $db_game->game_1;
             if (strval($db_game->game_2) > 0) $apostas[] = $db_game->game_2;
             if (strval($db_game->game_3) > 0) $apostas[] = $db_game->game_3;
+            if (strval($db_game->game_4) > 0) $apostas[] = $db_game->game_4;
+            if (strval($db_game->game_5) > 0) $apostas[] = $db_game->game_5;
 
             if ($db_game->premio_1 == 1) $premios[] = 1;
             if ($db_game->premio_2 == 1) $premios[] = 2;
@@ -597,6 +677,29 @@ class BichaoController extends Controller
         echo json_encode(['status' => 200]);
     }
 
+    private static function getFatorialInvertidoMilhar($game) {
+        $game = array_unique(str_split($game));
+        if (count($game) === 1) return 1;
+        if (count($game) === 2) return 4;
+        if (count($game) === 3) return 12;
+        if (count($game) === 4) return 24;
+        if (count($game) === 5) return 120;
+        if (count($game) === 6) return 360;
+        if (count($game) === 7) return 840;
+        return 1680;
+    }
+
+    private static function getFatorialInvertidoCentena($game) {
+        $game = array_unique(str_split($game));
+        if (count($game) === 1) return 1;
+        if (count($game) === 2) return 3;
+        if (count($game) === 3) return 6;
+        if (count($game) === 4) return 24;
+        if (count($game) === 5) return 60;
+        if (count($game) === 6) return 120;
+        return 210;
+    }
+
     public function checkout(Request $request) {
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
@@ -626,6 +729,8 @@ class BichaoController extends Controller
                     'game_1' => isset($games[0]) ? $games[0] : null,
                     'game_2' => isset($games[1]) ? $games[1] : null,
                     'game_3' => isset($games[2]) ? $games[2] : null,
+                    'game_4' => isset($games[3]) ? $games[3] : null,
+                    'game_5' => isset($games[4]) ? $games[4] : null,
                     'premio_1' => in_array(1, $chart['award_type']),
                     'premio_2' => in_array(2, $chart['award_type']),
                     'premio_3' => in_array(3, $chart['award_type']),
@@ -670,6 +775,8 @@ class BichaoController extends Controller
                                 'game_1' => isset($games[0]) ? $games[0] : null,
                                 'game_2' => isset($games[1]) ? $games[1] : null,
                                 'game_3' => isset($games[2]) ? $games[2] : null,
+                                'game_4' => isset($games[3]) ? $games[3] : null,
+                                'game_5' => isset($games[4]) ? $games[4] : null,
                                 'premio_1' => in_array(1, $chart['award_type']),
                                 'premio_2' => in_array(2, $chart['award_type']),
                                 'premio_3' => in_array(3, $chart['award_type']),
@@ -697,6 +804,8 @@ class BichaoController extends Controller
             if (strval($checkout[$index]['game_1']) > 0) $apostas[] = $checkout[$index]['game_1'];
             if (strval($checkout[$index]['game_2']) > 0) $apostas[] = $checkout[$index]['game_2'];
             if (strval($checkout[$index]['game_3']) > 0) $apostas[] = $checkout[$index]['game_3'];
+            if (strval($checkout[$index]['game_4']) > 0) $apostas[] = $checkout[$index]['game_4'];
+            if (strval($checkout[$index]['game_5']) > 0) $apostas[] = $checkout[$index]['game_5'];
 
             if ($checkout[$index]['premio_1'] == 1) $premios[] = 1;
             if ($checkout[$index]['premio_2'] == 1) $premios[] = 2;
@@ -714,6 +823,14 @@ class BichaoController extends Controller
             if ($checkout[$index]['modalidade_id'] == 6 || $checkout[$index]['modalidade_id'] == 7) {
                 $premioMaximo = sizeof($premios) == 3 ? $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador : $checkout[$index]['valor'] * $checkout[$index]['modalidade']->multiplicador_2;
             }
+            if ($checkout[$index]['modalidade_id'] == 13) {
+                $divider = static::getFatorialInvertidoMilhar($checkout[$index]['game_1']);
+                $premioMaximo = ($checkout[$index]['valor'] / $divider) * $checkout[$index]['modalidade']->multiplicador;
+            }
+            if ($checkout[$index]['modalidade_id'] == 14) {
+                $divider = static::getFatorialInvertidoCentena($checkout[$index]['game_1']);
+                $premioMaximo = ($checkout[$index]['valor'] / $divider) * $checkout[$index]['modalidade']->multiplicador;
+            }
 
             $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
             $premio_maximo_db = self::get_premio_maximo($checkout[$index]['modalidade_id'], $checkout[$index]['horario_id'], str_pad(join('-', $apostas), 2, 0, STR_PAD_LEFT), $checkout[$index]['created_at']);
@@ -729,6 +846,7 @@ class BichaoController extends Controller
 
             $checkout[$index]['id'] = BichaoGames::insertGetId($checkoutDto);
             $checkout[$index]['aposta'] = str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT);
+            $checkout[$index]['aposta'] = $checkout[$index]['modalidade_id'] !== 12 ? str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT) : $checkout[$index]['game_1'];
             $checkout[$index]['premio_maximo'] = $premioMaximo;
             $checkout[$index]['horario'] = BichaoHorarios::where('id', $checkout[$index]['horario_id'])->first();
             $checkout[$index]['client'] = Client::where('id', $checkout[$index]['client_id'])->first();
@@ -788,6 +906,8 @@ class BichaoController extends Controller
         if (strval($game->game_1) > 0) $apostas[] = $game->game_1;
         if (strval($game->game_2) > 0) $apostas[] = $game->game_2;
         if (strval($game->game_3) > 0) $apostas[] = $game->game_3;
+        if (strval($game->game_4) > 0) $apostas[] = $game->game_4;
+        if (strval($game->game_5) > 0) $apostas[] = $game->game_5;
 
         if ($game->premio_1 == 1) $premios[] = 1;
         if ($game->premio_2 == 1) $premios[] = 2;
@@ -844,6 +964,16 @@ class BichaoController extends Controller
         echo json_encode(['horarios' => $horarios]);
     }
 
+    private static function checkInvertidaWinner($game, $resultado) {
+        $game = str_split($game);
+        $resultado = str_split($resultado);
+        foreach ($game as $game) {
+            $key = array_search($game, $resultado);
+            if ($key >= 0) unset($resultado[$key]);
+        }
+        return count($resultado) === 0;
+    }
+
     private static function get_winners($resultados) {
         $dataAtual = date('Y-m-d');
         $horaAtual = date('H:i:s');
@@ -887,7 +1017,7 @@ class BichaoController extends Controller
             $valor_premio = $game['valor'] * $game['multiplicador'] / $premios_quantia;
             $game_winner = false;
 
-            // Milhar, Centena e Dezena
+            // Milhar
             if ($game['modalidade_id'] == 1) {
                 $winner = false;
                 if ($game['premio_1'] == 1 && $resultado['premio_1'] === $game['game_1']) $winner = true;
@@ -896,6 +1026,23 @@ class BichaoController extends Controller
                 if ($game['premio_4'] == 1 && $resultado['premio_4'] === $game['game_1']) $winner = true;
                 if ($game['premio_5'] == 1 && $resultado['premio_5'] === $game['game_1']) $winner = true;
                 if ($winner) $game_winner = true;
+            }
+
+            // Milhar Invertida
+            if ($game['modalidade_id'] == 13) {
+                $divider = static::getFatorialInvertidoMilhar($game['game_1']);
+                $valor_premio = ($game['valor'] / $divider) * $game['multiplicador'] / $premios_quantia;
+
+                $winner = 0;
+                if ($game['premio_1'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_1'])) $winner += 1;
+                if ($game['premio_2'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_2'])) $winner += 1;
+                if ($game['premio_3'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_3'])) $winner += 1;
+                if ($game['premio_4'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_4'])) $winner += 1;
+                if ($game['premio_5'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_5'])) $winner += 1;
+                if ($winner > 0) {
+                    $game_winner = true;
+                    $valor_premio = number_format($valor_premio * $game_winner, 2, ".", "");
+                }
             }
 
             // Centena
@@ -909,6 +1056,23 @@ class BichaoController extends Controller
                 if ($winner) $game_winner = true;
             }
 
+            // Centena Invertida
+            if ($game['modalidade_id'] == 14) {
+                $divider = static::getFatorialInvertidoCentena($game['game_1']);
+                $valor_premio = ($game['valor'] / $divider) * $game['multiplicador'] / $premios_quantia;
+
+                $winner = 0;
+                if ($game['premio_1'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_1'], 1))) $winner += 1;
+                if ($game['premio_2'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_2'], 1))) $winner += 1;
+                if ($game['premio_3'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_3'], 1))) $winner += 1;
+                if ($game['premio_4'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_4'], 1))) $winner += 1;
+                if ($game['premio_5'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_5'], 1))) $winner += 1;
+                if ($winner > 0) {
+                    $game_winner = true;
+                    $valor_premio = number_format($valor_premio * $game_winner, 2, ".", "");
+                }
+            }
+
             // Dezena
             if ($game['modalidade_id'] == 3) {
                 $winner = false;
@@ -917,6 +1081,17 @@ class BichaoController extends Controller
                 if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) === $game['game_1']) $winner = true;
                 if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) === $game['game_1']) $winner = true;
                 if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) === $game['game_1']) $winner = true;
+                if ($winner) $game_winner = true;
+            }
+
+            // Unidade
+            if ($game['modalidade_id'] == 12) {
+                $winner = false;
+                if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 3) === $game['game_1']) $winner = true;
+                if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 3) === $game['game_1']) $winner = true;
+                if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 3) === $game['game_1']) $winner = true;
+                if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 3) === $game['game_1']) $winner = true;
+                if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 3) === $game['game_1']) $winner = true;
                 if ($winner) $game_winner = true;
             }
 
@@ -948,6 +1123,50 @@ class BichaoController extends Controller
                 if (in_array(substr($resultado['premio_4'], 2), $gameResults)) $winner = $winner + 1;
                 if (in_array(substr($resultado['premio_5'], 2), $gameResults)) $winner = $winner + 1;
                 if ($winner >= 3) $game_winner = true;
+            }
+
+            // Quina de Grupo
+            if ($game['modalidade_id'] == 11) {
+                $animals = array_values(array_filter($animais, fn ($animal) => in_array($animal['id'], [$game['game_1'], $game['game_2'], $game['game_3'], $game['game_4'], $game['game_5']])));
+                if (sizeof($animals) == 0) continue;
+
+                $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
+                $valor_premio = $game['valor'] * $multiplicador;
+                
+                $winner = 0;
+                foreach ($animals as $animal) {
+                    $subWinner = false;
+                    if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $subWinner = true;
+                    if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $subWinner = true;
+                    if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $subWinner = true;
+                    if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $subWinner = true;
+                    if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $subWinner = true;
+                    if ($subWinner) $winner = $winner + 1;
+                }
+                
+                if ($winner === 5) $game_winner = true;
+            }
+
+            // Quadra de Grupo
+            if ($game['modalidade_id'] == 10) {
+                $animals = array_values(array_filter($animais, fn ($animal) => in_array($animal['id'], [$game['game_1'], $game['game_2'], $game['game_3'], $game['game_4']])));
+                if (sizeof($animals) == 0) continue;
+
+                $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
+                $valor_premio = $game['valor'] * $multiplicador;
+                
+                $winner = 0;
+                foreach ($animals as $animal) {
+                    $subWinner = false;
+                    if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $subWinner = true;
+                    if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $subWinner = true;
+                    if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $subWinner = true;
+                    if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $subWinner = true;
+                    if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $subWinner = true;
+                    if ($subWinner) $winner = $winner + 1;
+                }
+                
+                if ($winner === 4) $game_winner = true;
             }
 
             // Terno de Grupo
