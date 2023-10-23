@@ -103,7 +103,7 @@ class ValidateGamesController extends Controller
 
             if ($games->count() > 0) {
                 foreach ($games as $game) {
-                    $commissions = Commision::calculationNew($game->value, $game->user_id, '', $game->type_game_id);
+                    $commissions = Commision::calculationNew($game->value, $game->user_id, '', $game->type_game_value_id);
 
                     $game->status = true;
                     $game->checked = 1;

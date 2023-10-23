@@ -37,7 +37,7 @@ class Commision
         }
 
         if (is_array($commission_individual)) {
-            $check = array_filter($commission_individual, fn ($value) => $value->type_id === $type_id);
+            $check = array_filter($commission_individual, fn ($value) => $value->type_id == $type_id);
             if (sizeof($check) > 0) {
                 $percentage = $check[0]->commission;
             }
