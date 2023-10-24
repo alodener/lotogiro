@@ -246,7 +246,7 @@
 
             function checkGame() {
                 const games = $('#input-milhar').val().split(',');
-                const match = games.filter((item) => item.length === field_size);
+                const match = games.filter((item) => item.length >= 4 && item.length <= field_size);
                 return games.length === match.length;
             }
 
@@ -264,7 +264,7 @@
                 if (!option_award > 0) return alert('Selecione um dos prêmios');
                 if (!value > 0) return alert('Insira um valor pra aposta');
                 if (!client_id > 0) return alert('Escolha um cliente');
-                if (!checkGame()) return alert('O jogo precisa ser um milhar');
+                if (!checkGame()) return alert(`Os jogos precisam ter entre 3 e ${field_size} números`);
 
                 award_type.sort();
                 
