@@ -133,7 +133,7 @@ class ProcessBetEntries implements ShouldQueue
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $this->competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
-                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $dez, 2, $valor, $resultado);
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $typeGameValue, $dez, 2, $valor, $resultado);
                     
 
                 }

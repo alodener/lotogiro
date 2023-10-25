@@ -313,9 +313,11 @@ class GameController extends Controller
                 }
 
                 $numbers = explode(',', $request->numbers);
+                //aqui
+
                 sort($numbers, SORT_NUMERIC);
                 $numbers = implode(',', $numbers);
-
+                
                 $typeGameValue = TypeGameValue::find($request['valueId']);
 
                 if(!empty($typeGameValue->max_repeated_games)) {
@@ -382,9 +384,7 @@ class GameController extends Controller
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
-                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $numbers, 1, $request->value, $request->premio);
-
-
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $request->valueId, $numbers, 1, $request->value, $request->premio);    
                 }
                 
                
