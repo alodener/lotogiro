@@ -677,27 +677,80 @@ class BichaoController extends Controller
         echo json_encode(['status' => 200]);
     }
 
+    private static function permutations($pool, $r = null) {
+        $n = count($pool);
+    
+        if ($r == null) {
+            $r = $n;
+        }
+    
+        if ($r > $n) {
+            return;
+        }
+    
+        $indices = range(0, $n - 1);
+        $cycles = range($n, $n - $r + 1, -1); // count down
+    
+        yield array_slice($pool, 0, $r);
+    
+        if ($n <= 0) {
+            return;
+        }
+    
+        while (true) {
+            $exit_early = false;
+            for ($i = $r;$i--;$i >= 0) {
+                $cycles[$i]-= 1;
+                if ($cycles[$i] == 0) {
+                    // Push whatever is at index $i to the end, move everything back
+                    if ($i < count($indices)) {
+                        $removed = array_splice($indices, $i, 1);
+                        array_push($indices, $removed[0]);
+                    }
+                    $cycles[$i] = $n - $i;
+                } else {
+                    $j = $cycles[$i];
+                    // Swap indices $i & -$j.
+                    $i_val = $indices[$i];
+                    $neg_j_val = $indices[count($indices) - $j];
+                    $indices[$i] = $neg_j_val;
+                    $indices[count($indices) - $j] = $i_val;
+                    $result = [];
+                    $counter = 0;
+                    foreach ($indices as $indx) {
+                        array_push($result, $pool[$indx]);
+                        $counter++;
+                        if ($counter == $r) break;
+                    }
+                    yield $result;
+                    $exit_early = true;
+                    break;
+                }
+            }
+            if (!$exit_early) {
+                break; // Outer while loop
+            }
+        }
+    }
+
     private static function getFatorialInvertidoMilhar($game) {
-        $game = array_unique(str_split($game));
-        if (count($game) === 1) return 1;
-        if (count($game) === 2) return 4;
-        if (count($game) === 3) return 12;
-        if (count($game) === 4) return 24;
-        if (count($game) === 5) return 120;
-        if (count($game) === 6) return 360;
-        if (count($game) === 7) return 840;
-        return 1680;
+        $result = iterator_to_array(static::permutations(str_split($game), 4));
+        $response = [];
+        foreach ($result as $row) {
+            if (!in_array($row, $response)) array_push($response, $row);
+        }
+
+        return count($response);
     }
 
     private static function getFatorialInvertidoCentena($game) {
-        $game = array_unique(str_split($game));
-        if (count($game) === 1) return 1;
-        if (count($game) === 2) return 3;
-        if (count($game) === 3) return 6;
-        if (count($game) === 4) return 24;
-        if (count($game) === 5) return 60;
-        if (count($game) === 6) return 120;
-        return 210;
+        $result = iterator_to_array(static::permutations(str_split($game), 3));
+        $response = [];
+        foreach ($result as $row) {
+            if (!in_array($row, $response)) array_push($response, $row);
+        }
+
+        return count($response);
     }
 
     public function checkout(Request $request) {
@@ -1117,12 +1170,12 @@ class BichaoController extends Controller
                 $valor_premio = $game['valor'] * $multiplicador;
                 $winner = 0;
                 $gameResults = [$game['game_1'], $game['game_2'], $game['game_3']];
-                if (in_array(substr($resultado['premio_1'], 2), $gameResults)) $winner = $winner + 1;
-                if (in_array(substr($resultado['premio_2'], 2), $gameResults)) $winner = $winner + 1;
-                if (in_array(substr($resultado['premio_3'], 2), $gameResults)) $winner = $winner + 1;
-                if (in_array(substr($resultado['premio_4'], 2), $gameResults)) $winner = $winner + 1;
-                if (in_array(substr($resultado['premio_5'], 2), $gameResults)) $winner = $winner + 1;
-                if ($winner >= 3) $game_winner = true;
+                if (in_array(substr($resultado['premio_1'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_1'], 2), $games)]);
+                if (in_array(substr($resultado['premio_2'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_2'], 2), $games)]);
+                if (in_array(substr($resultado['premio_3'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_3'], 2), $games)]);
+                if (in_array(substr($resultado['premio_4'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_4'], 2), $games)]);
+                if (in_array(substr($resultado['premio_5'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_5'], 2), $games)]);
+                if (count($gameResults) === 0) $game_winner = true;
             }
 
             // Quina de Grupo
@@ -1196,12 +1249,12 @@ class BichaoController extends Controller
                 $valor_premio = $game['valor'] * $game['multiplicador'];
                 $winner = 0;
                 $gameResults = [$game['game_1'], $game['game_2']];
-                if (in_array(substr($resultado['premio_1'], 2), $gameResults)) $winner = $winner + 1;
-                if (in_array(substr($resultado['premio_2'], 2), $gameResults)) $winner = $winner + 1;
-                if (in_array(substr($resultado['premio_3'], 2), $gameResults)) $winner = $winner + 1;
-                if (in_array(substr($resultado['premio_4'], 2), $gameResults)) $winner = $winner + 1;
-                if (in_array(substr($resultado['premio_5'], 2), $gameResults)) $winner = $winner + 1;
-                if ($winner >= 2) $game_winner = true;
+                if (in_array(substr($resultado['premio_1'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_1'], 2), $games)]);
+                if (in_array(substr($resultado['premio_2'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_2'], 2), $games)]);
+                if (in_array(substr($resultado['premio_3'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_3'], 2), $games)]);
+                if (in_array(substr($resultado['premio_4'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_4'], 2), $games)]);
+                if (in_array(substr($resultado['premio_5'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_5'], 2), $games)]);
+                if (count($gameResults) === 0) $game_winner = true;
             }
 
             // Duque de Grupo
