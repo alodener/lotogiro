@@ -56,12 +56,19 @@ class Commision
         $commission_pai = 0;
         $commission_avo = 0;
 
-        $user->bonus = $user->bonus + $commission;
-        $user->save();
+        if ($user->type_client != 1) {
+            $user->bonus = $user->bonus + $commission;
+            $user->save();
+        }
 
         $userLv1 = User::find($user->indicador);
         if ($userLv1) {
             $commission_pai = (($value / 100) * static::getCommission($userLv1, $type_id, $game_type, 1));
+            
+            if ($user->type_client === 1) {
+                $commission_pai = (($value / 100) * static::getCommission($userLv1, $type_id, $game_type));
+            }
+            
             $userLv1->bonus = $userLv1->bonus + $commission_pai;
             $userLv1->save();
 
