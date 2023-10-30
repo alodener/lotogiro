@@ -277,10 +277,6 @@ class BichaoController extends Controller
                 BichaoModalidades::where('id', 7)->update(['multiplicador_2' => $cotacao['value']]);
             } elseif ($cotacao['id'] == '6b') {
                 BichaoModalidades::where('id', 6)->update(['multiplicador_2' => $cotacao['value']]);
-            } elseif ($cotacao['id'] == '10b') {
-                BichaoModalidades::where('id', 10)->update(['multiplicador_2' => $cotacao['value']]);
-            } elseif ($cotacao['id'] == '11b') {
-                BichaoModalidades::where('id', 11)->update(['multiplicador_2' => $cotacao['value']]);
             } else {
                 BichaoModalidades::where('id', $cotacao['id'])->update(['multiplicador' => $cotacao['value']]);
             }
