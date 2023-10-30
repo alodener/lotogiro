@@ -161,29 +161,6 @@
         }
     })
 
-    function getFatorialInvertidoMilhar(game) {
-        const validNumbers = new Set(game.split(''));
-        if (validNumbers.size === 1) return 1;
-        if (validNumbers.size === 2) return 4;
-        if (validNumbers.size === 3) return 12;
-        if (validNumbers.size === 4) return 24;
-        if (validNumbers.size === 5) return 120;
-        if (validNumbers.size === 6) return 360;
-        if (validNumbers.size === 7) return 840;
-        return 1680;
-    }
-
-    function getFatorialInvertidoCentena(game) {
-        const validNumbers = new Set(game.split(''));
-        if (validNumbers.size === 1) return 1;
-        if (validNumbers.size === 2) return 3;
-        if (validNumbers.size === 3) return 6;
-        if (validNumbers.size === 4) return 24;
-        if (validNumbers.size === 5) return 60;
-        if (validNumbers.size === 6) return 120;
-        return 210;
-    }
-
     function addChartItem(item) {
         $.ajax({
             url: '{{url('/')}}/admin/bets/bichao/add/chart',

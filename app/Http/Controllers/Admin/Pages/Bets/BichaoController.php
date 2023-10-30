@@ -475,7 +475,12 @@ class BichaoController extends Controller
             $modalidade = BichaoModalidades::where('id', $data['modalidade_id'])->first();
             $premio_maximo = $modalidade->premio_maximo;
 
-            echo json_encode(['premio_maximo' => $premio_maximo > 0 ? $premio_maximo : 0]);
+            $response = ['premio_maximo' => $premio_maximo > 0 ? $premio_maximo : 0];
+
+            if ($data['modalidade_id'] == 13) $response['divider'] = static::getFatorialInvertidoMilhar($data['game']);
+            if ($data['modalidade_id'] == 14) $response['divider'] = static::getFatorialInvertidoCentena($data['game']);
+
+            echo json_encode($response);
             exit;
         }
 
