@@ -277,10 +277,6 @@ class BichaoController extends Controller
                 BichaoModalidades::where('id', 7)->update(['multiplicador_2' => $cotacao['value']]);
             } elseif ($cotacao['id'] == '6b') {
                 BichaoModalidades::where('id', 6)->update(['multiplicador_2' => $cotacao['value']]);
-            } elseif ($cotacao['id'] == '10b') {
-                BichaoModalidades::where('id', 10)->update(['multiplicador_2' => $cotacao['value']]);
-            } elseif ($cotacao['id'] == '11b') {
-                BichaoModalidades::where('id', 11)->update(['multiplicador_2' => $cotacao['value']]);
             } else {
                 BichaoModalidades::where('id', $cotacao['id'])->update(['multiplicador' => $cotacao['value']]);
             }
@@ -475,7 +471,12 @@ class BichaoController extends Controller
             $modalidade = BichaoModalidades::where('id', $data['modalidade_id'])->first();
             $premio_maximo = $modalidade->premio_maximo;
 
-            echo json_encode(['premio_maximo' => $premio_maximo > 0 ? $premio_maximo : 0]);
+            $response = ['premio_maximo' => $premio_maximo > 0 ? $premio_maximo : 0];
+
+            if ($data['modalidade_id'] == 13) $response['divider'] = static::getFatorialInvertidoMilhar($data['game']);
+            if ($data['modalidade_id'] == 14) $response['divider'] = static::getFatorialInvertidoCentena($data['game']);
+
+            echo json_encode($response);
             exit;
         }
 

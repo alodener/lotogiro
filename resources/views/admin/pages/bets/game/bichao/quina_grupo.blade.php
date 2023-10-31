@@ -890,7 +890,6 @@
         </div>
         <div class="row">
             <div class="col button-group">
-                <a><button id="btn-award-first-to-third" onclick="button_first_to_third_award()" class="btn btn-outline-primary btn-award"><b>1º ao 3º</b></button></a>
                 <a><button id="btn-award-first-to-fifth" onclick="button_first_to_fifth_award()" class="btn btn-outline-primary btn-award"><b>1º ao 5º</b></button></a>
             </div>
         </div>
@@ -1045,7 +1044,6 @@
     <script>
 
         const award = parseInt('{{$modalidade->multiplicador}}');
-        const award_2 = parseInt('{{$modalidade->multiplicador_2}}');
         const initial_value = 0;
         const button_first = $('#btn-award-first');
         const button_second = $('#btn-award-second');
@@ -1098,7 +1096,7 @@
             if (!client_id > 0) return alert('Escolha um cliente');
             
             const item = {
-                award_type: award_type == 1 ? [1,2,3] : [1,2,3,4,5],
+                award_type: [1,2,3,4,5],
                 value: value.replace(',', '.'),
                 client_id,
                 modality: '{{$modalidade->nome}}',
@@ -1139,8 +1137,6 @@
 
                     let limit_maximum_bet = premio_maximo / award;
                     let value = 0;
-    
-                    if (award_type == 2) limit_maximum_bet = premio_maximo / award_2;
     
                     const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
     
