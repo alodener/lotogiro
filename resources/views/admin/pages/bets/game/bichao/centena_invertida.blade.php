@@ -298,7 +298,7 @@
                 const award_total = parseInt('{{$modalidade->multiplicador}}');
                 const option_award = validate_award() === 6 ? 5 : validate_award();
                 const game = $('#input-milhar').val();
-                const divider = getFatorialInvertidoCentena(game);
+                // const divider = getFatorialInvertidoCentena(game);
 
                 if (!checkGame()) return;
 
@@ -314,7 +314,7 @@
                         $('#message-no-prize').addClass('hide');
 
                         $('#price_award_check').hide();
-                        const { premio_maximo } = data;
+                        const { premio_maximo, divider } = data;
                         if (premio_maximo === 0) {
                             $('#message-no-prize').removeClass('hide');
                             return;
