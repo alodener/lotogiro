@@ -58,7 +58,7 @@
                     </thead>
                     <tbody>
                         @foreach ($cotacoes as $cotacao)
-                        @if ($cotacao->id == 6 || $cotacao->id == 7 || $cotacao->id == 10 || $cotacao->id == 11)
+                        @if ($cotacao->id == 6 || $cotacao->id == 7)
                             <tr>
                                 <th scope="row">
                                     <td>{{ $cotacao['nome'] }} 1 ao 3</td>
