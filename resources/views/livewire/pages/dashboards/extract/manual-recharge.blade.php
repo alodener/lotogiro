@@ -6,64 +6,76 @@
             </div>
         </div>
     </div>
-    <div class="row" style="margin-left: 10px;margin-right: 10px;">
-        <div class="col-md-4">
-            <div class="form-group">
-                <select wire:model="adminSelected" class="custom-select" id="user" name="user">
-                    <option value="0">{{ trans('admin.all-admins') }}</option>
-                    @foreach($admins as $admin)
-                        <option value="{{$admin['id']}}">{{ $admin['name'] }}</option>
-                    @endforeach
-                </select>
+        <div class="row" style="margin-left: 10px;margin-right: 10px;">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select wire:model="adminSelected" class="custom-select" id="user" name="user">
+                        <option value="0">{{ trans('admin.all-admins') }}</option>
+                        @foreach($admins as $admin)
+                            <option value="{{$admin['id']}}">{{ $admin['name'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <select wire:model="range" class="custom-select" id="range" name="range">
+                        <option value="0">{{ trans('admin.all') }}</option>
+                        <option value="1">{{ trans('admin.monthly') }}</option>
+                        <option value="2">{{ trans('admin.weekly') }}</option>
+                        <option value="3">{{ trans('admin.daily') }}</option>
+                        <option value="4">{{ trans('admin.custom') }}</option>
+                    </select>
+                </div>
         </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                <select wire:model="range" class="custom-select" id="range" name="range">
-                    <option value="0">{{ trans('admin.all') }}</option>
-                    <option value="1">{{ trans('admin.monthly') }}</option>
-                    <option value="2">{{ trans('admin.weekly') }}</option>
-                    <option value="3">{{ trans('admin.daily') }}</option>
-                    <option value="4">{{ trans('admin.custom') }}</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <form wire:submit.prevent="submit">
+    <div class="col-md-6">
+        <form wire:submit.prevent="search">
                 <div class="form-row">
-                    <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                        <input wire:model="dateStart" type="text"
-                               class="form-control @error('dateStart') is-invalid @enderror"
-                               id="date_start"
-                               name="dateStart"
-                               autocomplete="off"
-                               maxlength="50"
-                               placeholder="Data Inicial"
-                               onchange="this.dispatchEvent(new InputEvent('input'))">
+                <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                    <input wire:model.defer="dateStart" type="text"
+                            class="form-control @error('dateStart') is-invalid @enderror"
+                            id="date_start"
+                            name="dateStart"
+                            autocomplete="off"
+                            maxlength="50"
+                            placeholder="Data Inicial">
                         @error('dateStart')
+                            <span class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                </div>
+
+                <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                    <input wire:model.defer="dateEnd" type="text"
+                        class="form-control date @error('dateEnd') is-invalid @enderror"
+                        id="date_end"
+                        name="dateEnd"
+                        autocomplete="off"
+                        maxlength="50"
+                        placeholder="Data Final">
+
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </div>
+
+                    @error('dateEnd')
                         <span class="invalid-feedback" role="alert">
                             {{ $message }}
                         </span>
-                        @enderror
+                    @enderror
+                    <div wire:loading.attr="disabled" wire:target="submit">
+                                    <!-- Conteúdo que você quer esconder durante a busca -->
                     </div>
-                    <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                        <input wire:model="dateEnd" type="text"
-                               class="form-control date @error('dateEnd') is-invalid @enderror"
-                               id="date_end"
-                               name="dateEnd"
-                               autocomplete="off"
-                               maxlength="50"
-                               placeholder="Data Final"
-                               onchange="this.dispatchEvent(new InputEvent('input'))">
-                        @error('dateEnd')
-                        <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                        @enderror
+                    <div wire:loading>
+                        Buscando...
                     </div>
                 </div>
-            </form>
-        </div>
+        </form>  
+    </div>    
+</div>
+
+
     </div>
 
     <div class="row bg-white p-3">
