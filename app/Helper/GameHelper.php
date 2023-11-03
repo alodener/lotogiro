@@ -13,49 +13,38 @@ use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Helper\Commision;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+
+
 
 class GameHelper
 {
-    public static function duplicateGame($game , $competitionA, $request, $numbers, $OpcaoJogo, $valor, $resultado) {
+    public static function duplicateGame($game, $competitionA, $request, $typeGame, $numbers, $OpcaoJogo, $valor, $resultado){
         
-        if($OpcaoJogo == 1){
-            $requestAx = $request->all();
-        }
+        if($OpcaoJogo == 1 ||$OpcaoJogo == 2  ){
+            
+        
+    
 
-        
         $typeGameValue = TypeGameValue::where([
             ['type_game_id', $request['type_game']],
             ['numbers', count(explode(",", $numbers))],
         ])->first();
-    
+            
         $maxreais = $typeGameValue ? $typeGameValue->maxreais : 0;
     
         if ($maxreais >= $valor) {
-            $resultado = $valor * $typeGameValue->multiplicador;
+            $resultado = $valor * $typeGameValue->multiplicador ;
         } else {
             $resultado = $maxreais * $typeGameValue->multiplicador;
             $valor = $maxreais;
         }
         
+        
     $copiaGame = new Game();
     
-    if($request['type_client'] != 1){
-        $userclient = User::where('id', $request['client'])->first();
-            if($userclient != null){
-             $clientuser = Client::where('email', $userclient->email)->first();
-            }else{
-        $clientuser = $request['client'];
-        }
-        $valor = $request['value'];
-        if($userclient == null){
-        $copiaGame->client_id = $clientuser->id;
-        }else{
-        $copiaGame->client_id = $request['client'];
-        }
-        }else{
-        $copiaGame->client_id = $request['client'];
-        }
-    $copiaGame->user_id = Auth::id();
+    $copiaGame->client_id = $game->client_id;
+    $copiaGame->user_id = $game->user_id;
     $copiaGame->type_game_id = $request['type_game'];
     $copiaGame->type_game_value_id = $request['valueId'];
     $copiaGame->value = $request['value'];
@@ -68,9 +57,37 @@ class GameHelper
     $copiaGame->checked = 1;
     $copiaGame->commission_value = 0;
     $copiaGame->commision_value_pai = 0;
-    $copiaGame->commission_percentage = Auth::user()->commission;
+    $copiaGame->commission_percentage = 0;
 
     $copiaGame->save();
+
+} else {
+
+        sort($numbers, SORT_NUMERIC);
+        $balance = Balance::calculationByHash($valor, $game->user);
+    
+        $numbers = implode(',', $numbers);
+
+        $copiaGame = new Game();
+        $copiaGame->client_id = $game->client->id;
+        $copiaGame->user_id = $game->user_id;
+        $copiaGame->type_game_id = $game->type_game_id;
+        $copiaGame->type_game_value_id = $game->type_game_value_id;
+        $copiaGame->value = $game->value;
+        $copiaGame->premio = $game->premio;
+        $copiaGame->numbers = $game->numbers;
+        $copiaGame->competition_id = $competitionA->id;
+        if($game->bet_id != null){
+            $copiaGame->bet_id = $game->bet_id;
+        }
+        $copiaGame->checked = 1;
+        $copiaGame->commission_value = 0;
+        $copiaGame->commision_value_pai = 0;
+        $copiaGame->commission_percentage = 0;
+
+
+        $copiaGame->save();
+    }
 
 
     

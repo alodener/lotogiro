@@ -67,6 +67,7 @@
             </div>
         </div>
     </div>
+    <!--
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">
@@ -101,7 +102,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 <!-- <h3 class="card-title">{{ trans('admin.pagesF.conversao') }}</h3>
             </div>
             <div class="card-body">

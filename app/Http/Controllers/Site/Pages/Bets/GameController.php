@@ -16,6 +16,10 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PHPUnit\Exception;
+use App\Helper\GameHelper;
+use App\Models\Competition;
+use App\Models\Commission;
+
 
 class GameController extends Controller
 {
@@ -110,6 +114,8 @@ class GameController extends Controller
                 throw new \Exception('Essa dezena já atingiu o número máximo de apostas com esses números!');
             }
         }
+       
+        $selectedNumbersC = implode(',', $selectedNumbers);
 
         $game = new Game();
         $game->client_id = $bet->client->id;
@@ -118,12 +124,31 @@ class GameController extends Controller
         $game->type_game_value_id = $valueid;
         $game->value = $valor;
         $game->premio = $premio;
-        $game->numbers = implode(',', $selectedNumbers);
+        $game->numbers = $selectedNumbersC;
         $game->competition_id = $competition->id;
         $game->commission_percentage = $bet->user->commission;
         $game->bet_id = $bet->id;
         $game->status = false;
         $game->save();
+       
+
+      
+    
+        
+        if ($typeGame->id == 10) {
+            $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
+            
+            $OpcaoJogo = 3;
+            $numbers = $selectedNumbers;
+            GameHelper::duplicateGame($game, $competitionA, $bet, $typeGame, $numbers, $OpcaoJogo, $valor, $premio);
+            
+            $commissionCalculation = Commision::calculation($game->commission_percentage, $valor);
+            
+            $game->commission_value = $commissionCalculation;
+            $game->save();
+        
+
+        
 
 /*
         $extract = [
@@ -136,17 +161,19 @@ class GameController extends Controller
         ];
 
         $storeExtact = ExtractController::store($extract);*/
-
+       
+       
         $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
 
         $game->commission_value = $commissionCalculation;
         $game->save();
-
+    }
         $bet->botao_finalizar = 0;
         $bet->save();
 
         return $game;
 
+    
 
     }
 
