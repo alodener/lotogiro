@@ -473,11 +473,11 @@ class UserController extends Controller
             }
 
             // armazena os valores originais dos campos que serão rastreados
-            $userRoles = [];
+            $userRolesLOG = [];
             foreach ($user->roles as $role){
-                $userRoles[] = $role->id;
+                $userRolesLOG[] = $role->id;
             }
-            $user_string_roles = implode(",", $userRoles);
+            $user_string_roles = implode(",", $userRolesLOG);
 
 
             //valor antigo
