@@ -977,6 +977,14 @@ class BichaoController extends Controller
         if ($game->modalidade_id == 6 || $game->modalidade_id == 7) {
             $premioMaximo = sizeof($premios) == 3 ? $game->valor * $game->multiplicador : $game->valor * $game->multiplicador_2;
         }
+        if ($game->modalidade_id == 13) {
+            $divider = static::getFatorialInvertidoMilhar($game->game_1);
+            $premioMaximo = ($game->valor / $divider) * $game->multiplicador / sizeof($premios);
+        }
+        if ($game->modalidade_id == 14) {
+            $divider = static::getFatorialInvertidoCentena($game->game_1);
+            $premioMaximo = ($game->valor / $divider) * $game->multiplicador / sizeof($premios);
+        }
         
         global $data;
         $data = [
@@ -984,7 +992,7 @@ class BichaoController extends Controller
             'prize' => $game->vencedor_id > 0 ? 1 : 0,
             'aposta' => str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT),
             'premios' => join('°, ', $premios),
-            'premio_maximo' => $premioMaximo,
+            'premio_maximo' => number_format($premioMaximo, 2),
         ];
 
         if ($tipo == "pdf") {
@@ -1023,7 +1031,7 @@ class BichaoController extends Controller
         $resultado = str_split($resultado);
         foreach ($game as $game) {
             $key = array_search($game, $resultado);
-            if ($key >= 0) unset($resultado[$key]);
+            if ($key !== false) unset($resultado[$key]);
         }
         return count($resultado) === 0;
     }
