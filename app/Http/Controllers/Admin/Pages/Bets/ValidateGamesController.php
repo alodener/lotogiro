@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bet;
 use App\Models\Game;
 use App\Helper\Balance;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helper\Commision;
@@ -96,13 +97,39 @@ class ValidateGamesController extends Controller
             }
             $games = $validate_game->games;
 
-            $balance = Balance::calculationValidation($value);
-            if (!$balance) {
-                throw new \Exception('Saldo Insufuciente!');
-            }
-
+          
+         
             if ($games->count() > 0) {
                 foreach ($games as $game) {
+                   
+                    $competition = Competition::find($game->competition_id);
+                    $competA = substr($competition->number, -1);
+                   
+                    if ($competition->type_game_id == 10 && $competA == "A") {
+                        
+                        $balance = auth()->user()->balance;
+                
+                    } else {
+                       
+                        $balance = auth()->user()->balance;
+
+                        $result = $balance - $game->value;
+                
+                        if($result >= 0){
+                            $user = User::find(auth()->id());
+                            $user->balance = $result;
+                            $user->save();
+            
+                        }
+                                      
+
+                        if ($result < 0) {
+                            throw new \Exception('Saldo Insuficiente!');
+                        }
+                    }
+                   
+              
+            
                     $commissionCalculation = Commision::calculationPai($game->commission_percentage, $game->value, $ID_VALUE);
                     $game->status = true;
                     $game->checked = 1;
