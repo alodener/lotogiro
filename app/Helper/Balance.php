@@ -90,18 +90,5 @@ class Balance
         return $response;
 
     }
-  /*  public static function debitBalanceBasedOnGame($game)
-    {
-        $competition = Competition::find($game->competition_id);
-        $competA = substr($competition->number, -1);
-       
-        if ($competition->type_game_id == 10 && $competA == "A") {
-            $valorZerado = 0;
-            return static::calculationValidation($valorZerado);
-        } 
-        else {
-            $balance = static::calculationValidation($game->value);
-            return $balance;
-        }
-    }*/
+ 
 }
