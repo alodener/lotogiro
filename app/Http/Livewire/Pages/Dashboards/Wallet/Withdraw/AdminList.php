@@ -27,42 +27,16 @@ class AdminList extends Component
 
         $userRequest = User::findOrFail($withdrawRequest->user_id);
 
-        if($withdrawRequest->type == 'bonus_to_available_withdraw') {
-            $user = User::find($withdrawRequest->user_id);
-
-            $myOldWithdraw = $user->available_withdraw;
-
-            $user->available_withdraw += $withdrawRequest->value;
-            $user->bonus -= $withdrawRequest->value;
-            
-            $user->save();
-
-            $this->storeTransact($user, $withdrawRequest->value, $myOldWithdraw, $user->available_withdraw, "Saque Disponível recebido a partir de Bônus.", 'available_withdraw');
-        } else {
-            TransactBalance::create([
-                'user_id_sender' => auth()->id(),
-                'user_id' => $userRequest->id,
-                'value' => $withdrawRequest->value,
-                'old_value' => $userRequest->balance,
-                'type' => 'Solicitação de saque finalizada.'
-            ]);
-    
-            LockBalance::where('withdraw_request_id', $withdrawRequest->id)->first()->update([
-                'status' => 1
-            ]);
-        }
-    }
-
-    private function storeTransact(User $user, string $value, string $oldValue, string $valueA,  string $type, string $wallet = 'balance'): void
-    {
         TransactBalance::create([
-            'user_id_sender' => $user->id,
-            'user_id' => $user->id,
-            'value' => $value,
-            'old_value' => $oldValue,
-            'value_a' => $valueA,
-            'type' => $type,
-            'wallet' => $wallet
+            'user_id_sender' => auth()->id(),
+            'user_id' => $userRequest->id,
+            'value' => $withdrawRequest->value,
+            'old_value' => $userRequest->balance,
+            'type' => 'Solicitação de saque finalizada.'
+        ]);
+
+        LockBalance::where('withdraw_request_id', $withdrawRequest->id)->first()->update([
+            'status' => 1
         ]);
     }
 

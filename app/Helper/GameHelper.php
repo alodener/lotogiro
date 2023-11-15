@@ -19,9 +19,11 @@ use Illuminate\Http\Request;
 
 class GameHelper
 {
+
     public static function duplicateGame($game, $competitionA, $request, $typeGame, $numbers, $OpcaoJogo, $valor, $resultado){
         
         if($OpcaoJogo == 1 ||$OpcaoJogo == 2  ){
+
 
         $typeGameValue = TypeGameValue::where([
             ['type_game_id', $request['type_game']],
@@ -44,7 +46,7 @@ class GameHelper
     $copiaGame->type_game_id = $request['type_game'];
     $copiaGame->type_game_value_id = $request['valueId'];
     $copiaGame->value = $request['value'];
-    $copiaGame->premio = $resultado;
+    $copiaGame->premio = $request['premio'];
     $copiaGame->numbers = $numbers;
     $copiaGame->competition_id = $competitionA->id;
     if($game->bet_id != null){

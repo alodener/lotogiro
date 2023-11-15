@@ -504,11 +504,5 @@
         function formatInput(){
             VMasker(document.getElementById("valueConvert")).maskMoney();
         }
-        function formatInputBonus(){
-            VMasker(document.getElementById("valueConvertBonus")).maskMoney();
-        }
-        function formatInputWithdraw(){
-            VMasker(document.getElementById("valueConvertWithdraw")).maskMoney();
-        }
     </script>
 @endpush

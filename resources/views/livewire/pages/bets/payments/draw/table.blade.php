@@ -2,121 +2,52 @@
     <div class="col-md-12 p-4 faixa-jogos">
         <h3 class="text-center text-bold">{{ trans('admin.draws.table-title') }}</h3>
     </div>
-
-    <div class="row ganhos">
-        <div class="card-header ganhos-card">
-            {{ trans('admin.filters') }}
-        </div>
-    </div>
-    
-    <div class="form-row">
-    <div class="col-md-3 p-4">
-        <div class="form-group">
-            <label for="range">{{ trans('admin.period') }}</label>
-            <select wire:model="range" class="custom-select" id="range" name="range">
-                <option value="1">{{ trans('admin.monthly') }}</option>
-                <option value="2">{{ trans('admin.weekly') }}</option>
-                <option value="3">{{ trans('admin.daily') }}</option>
-                <option value="4">{{ trans('admin.custom') }}</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-4 p-4">
-        <div class="form-group @if($range != 4) d-none @endif">
-            <label for="date_start">{{ trans('admin.initial-date') }}</label>
-            <input wire:model="dateStart" type="text"
-                class="form-control @error('dateStart') is-invalid @enderror"
-                id="date_start"
-                name="dateStart"
-                autocomplete="off"
-                maxlength="50"
-                placeholder="{{ trans('admin.initial-date') }}"
-                onchange="this.dispatchEvent(new InputEvent('input'))">
-            @error('dateStart')
-            <span class="invalid-feedback" role="alert">
-                {{ $message }}
-            </span>
-            @enderror
-        </div>
-    </div>
-    <div class="col-md-4 p-4">
-        <div class="form-group @if($range != 4) d-none @endif">
-            <label for="date_end">{{ trans('admin.end-date') }}</label>
-            <input wire:model="dateEnd" type="text"
-                class="form-control date @error('dateEnd') is-invalid @enderror"
-                id="date_end"
-                name="dateEnd"
-                autocomplete="off"
-                maxlength="50"
-                placeholder="{{ trans('admin.end-date') }}"
-                onchange="this.dispatchEvent(new InputEvent('input'))">
-            @error('dateEnd')
-            <span class="invalid-feedback" role="alert">
-                {{ $message }}
-            </span>
-            @enderror
-        </div>
-    </div>
-</div>
-
-
-           
-   <!-- usuario --> 
-   @if($auth->hasPermissionTo('read_all_sales'))
-    <div class="dropdown-divider"></div>
-    <div class="row ganhos">
+    <div class="row">
         <div class="col-md-12">
-            <div class="input-group mb-3">
-                <input wire:model="searchUser" type="text" id="author" class="form-control" placeholder="{{ trans('admin.search-user') }}" autocomplete="off">
-                <div class="input-group-append">
-                    <span wire:click="clearUser" class="input-group-text" title="Limpar"><i class="fas fa-user-times"></i></span>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="col-md-1 commisao-icon text-center">
+                        <i class="fas fa-calendar nav-icon"></i>
+                    </div>
+                    <div class="col-md-11 commisao-input">
+                        <input wire:model="dateStart" type="text"
+                               class="form-control @error('dateStart') is-invalid @enderror"
+                               id="date_start"
+                               name="dateStart"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="Data Inicial"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
+                        @error('dateStart')
+                        <span class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="col-md-1 commisao-icon text-center">
+                        <i class="fas fa-calendar nav-icon"></i>
+                    </div>
+                    <div class="col-md-11 commisao-input">
+                        <input wire:model="dateEnd" type="text"
+                               class="form-control date @error('dateEnd') is-invalid @enderror"
+                               id="date_end"
+                               name="dateEnd"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="Data Final"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
+                        @error('dateEnd')
+                        <span class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    @endif
-   
-    <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
-        <div class="col-md-12">
-            @if($showList)
-                <ul class="list-group">
-                @foreach($users as $user)
-                <li wire:click="setId({{ $user }})" class="list-group-item" style="cursor:pointer;">{{ $user->name . ' ' . $user->last_name . ' - ' . $user->email }}</li>
-                @endforeach
-                </ul>
-            @endif
-        </div>
-    </div>
-
-        <!-- cliente -->
-    @if($auth->hasPermissionTo('read_all_sales'))
-    <div class="dropdown-divider"></div>
-    <div class="row ganhos">
-        <div class="col-md-12">
-            <div class="input-group mb-3">
-                <input wire:model="searchClient" type="text" id="author" class="form-control" placeholder="{{ trans('admin.search-client') }}" autocomplete="off">
-                <div class="input-group-append">
-                    <span wire:click="clearClient" class="input-group-text" title="Limpar"><i class="fas fa-user-times"></i></span>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
-    
-    <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
-        <div class="col-md-12">
-            @if($showList2)
-                <ul class="list-group">
-                @foreach($clients as $client)
-                <li wire:click="setIdClient({{ $client }})" class="list-group-item" style="cursor:pointer;">{{ $client->name . ' ' . $client->last_name . ' - ' . $client->email }}</li>
-                @endforeach
-                </ul>
-            @endif
-        </div>
-    </div>
-
-
-                                
     <div class="row">
         <div wire:loading wire:target="pay" class="col-md-12 text-center">
             <div class="alert alert-warning" role="alert">
@@ -136,6 +67,9 @@
                 <option>100</option>
             </select>
         </div>
+        <!--<div class="form-group offset-md-5 col-md-6 text-right">
+            <button wire:click="pay" type="button" class="btn btn-danger">{{ trans('admin.draws.export-payments-button') }}</button>
+        </div>-->
     </div>
     <div class="card card-info">
         <div class="card-header indica-card">
@@ -170,7 +104,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                        
                     @forelse($games as $game)
                         <tr>
                             <td>
@@ -223,15 +156,8 @@
 
     <script src="{{asset('admin/layouts/plugins/daterangepicker/moment.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
-    <script src="{{asset('admin/layouts/plugins/select2/js/select2.min.js')}}"></script>
 
     <script>
-
-$(document).ready(function () {
-            $('#user').select2({
-                theme: "bootstrap"
-            });
-        });
         var i18n = {
             previousMonth: 'Mês anterior',
             nextMonth: 'Próximo mês',
@@ -253,4 +179,3 @@ $(document).ready(function () {
     </script>
 
 @endpush
-
