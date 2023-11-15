@@ -22,9 +22,6 @@ class GameHelper
     public static function duplicateGame($game, $competitionA, $request, $typeGame, $numbers, $OpcaoJogo, $valor, $resultado){
         
         if($OpcaoJogo == 1 ||$OpcaoJogo == 2  ){
-            
-        
-    
 
         $typeGameValue = TypeGameValue::where([
             ['type_game_id', $request['type_game']],
@@ -41,8 +38,7 @@ class GameHelper
         }
         
         
-    $copiaGame = new Game();
-    
+    $copiaGame = new Game();    
     $copiaGame->client_id = $game->client_id;
     $copiaGame->user_id = $game->user_id;
     $copiaGame->type_game_id = $request['type_game'];
@@ -64,7 +60,6 @@ class GameHelper
 } else {
 
         sort($numbers, SORT_NUMERIC);
-        $balance = Balance::calculationByHash($valor, $game->user);
     
         $numbers = implode(',', $numbers);
 
@@ -80,13 +75,12 @@ class GameHelper
         if($game->bet_id != null){
             $copiaGame->bet_id = $game->bet_id;
         }
-        $copiaGame->checked = 1;
         $copiaGame->commission_value = 0;
         $copiaGame->commision_value_pai = 0;
         $copiaGame->commission_percentage = 0;
 
-
         $copiaGame->save();
+
     }
 
 

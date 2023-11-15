@@ -5,6 +5,7 @@ namespace App\Helper;
 use App\Models\TypeGameValue;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\Competition;
 
 class Balance
 {
@@ -89,4 +90,5 @@ class Balance
         return $response;
 
     }
+ 
 }
