@@ -329,7 +329,7 @@ return [
     ],
 
     'game-types' => [
-        'game-type' => 'Tipo de Jogo',
+        'game-type' => 'Novo Tipo de Jogo',
         'multiplicator' => 'Multiplicador',
         'max-bet' => 'Máximo em Reais',
         'max-repeated' => 'Limite de Jogos Repetidos',
@@ -342,7 +342,7 @@ return [
         'game-type-update-button' => 'Atualizar Tipo de Jogo',
         'new-game-type' =>  'Novo Tipo de Jogo',
         'edit-game-type' => 'Editar Tipo de Jogo',
-        'list-game-type' => 'Tipos de Jogo',
+        'list-game-type' => 'Novo Tipo de Jogo',
         'table-id' => 'Id',
         'table-name' => 'Nome',
         'table-created-at' => 'Criação',
@@ -890,7 +890,9 @@ return [
                 'voltar' => 'Voltar',
                 'solicitSaquee' => 'Solicitações de Saque',
                 'visuHist' => 'Visualizar Histórico',
-                'conversao' => 'Conversão de Bônus para Saldo',
+                'conversao' => 'Converter Bônus para Jogar',
+                'conversaoBonusParaSaque' => 'Conversão de Bônus para Saque PIX',
+                'conversaoSaqueParaSaldo' => 'Conversão de Saque Disponível para Saldo',
                 'saldo' => 'Saldo',
                 'converter' => 'Converter',
                 'carteiraa' => 'Carteira',

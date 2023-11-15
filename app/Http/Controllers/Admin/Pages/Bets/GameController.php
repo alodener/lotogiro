@@ -318,9 +318,11 @@ class GameController extends Controller
                 }
 
                 $numbers = explode(',', $request->numbers);
+                //aqui
+
                 sort($numbers, SORT_NUMERIC);
                 $numbers = implode(',', $numbers);
-
+                
                 $typeGameValue = TypeGameValue::find($request['valueId']);
 
                 if(!empty($typeGameValue->max_repeated_games)) {
@@ -382,15 +384,15 @@ class GameController extends Controller
                 $game->save();
 
 
-                /*//verifica se é da dupla sena 
+                //verifica se é da dupla sena 
                 if ($request->type_game == 10){
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
-                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $numbers, 1);
 
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $request->valueId, $numbers, 1, $request->value, $request->premio);    
 
-                }*/
+                }
                 
                
                 $transact_balance = new TransactBalance;
@@ -585,18 +587,20 @@ class GameController extends Controller
               
             }
 
+    
             if($game->delete()){
 
                 $idUsuario = $game->user_id;
                 $user = User::find($idUsuario);
                 $CommissionPai = false;
-                //Devolvendo o valor do saldo.
+                $Competition = Competition::find($game->competition_id);
+
+                // Verifica se o jogo é do tipo "competitionA" 
+                if (substr($Competition->number, -1) !== 'A') {  //pega uma string e retorna começando no ultimo caractere (-1) verificando se o ultimo caractere é diferente de A 
+                // Devolvendo o valor do saldo para jogos que não são do tipo "concurso com final A"
                 Balance::calculationEstorno($idUsuario, $game->value);
-                
-                if(!is_null($game->commision_value_pai )){
-                    $CommissionPai = true;
-                }
                 Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commision_value_pai, $CommissionPai);
+
                 //Criando o Registro no Extrato da Carteira do Estorno.
                 $transact_balance = new TransactBalance;
                 $transact_balance->user_id_sender = $user->id;
@@ -607,7 +611,8 @@ class GameController extends Controller
                 $transact_balance->type = 'Estorno - Jogo de id: ' . $game->id . ' do tipo: ' . $game->type_game_id;
                 $transact_balance->save();
             }
-            
+                }
+    
 
             return redirect()->route('admin.bets.games.index', ['type_game' => $typeGame])->withErrors([
                 'success' => 'Jogo deletado com sucesso'
@@ -653,7 +658,9 @@ class GameController extends Controller
                     $idUsuario = $game->user_id;
                     $user = User::find($idUsuario);
                     $CommissionPai = false;
+                    $Competition = Competition::find($game->competition_id);
     
+                    if(substr($Competition->number, -1) !== 'A') {  //pega uma string e retorna começando no ultimo caractere (-1) verificando se o ultimo caractere é diferente de A
                     //Devolvendo o valor do saldo.
                     Balance::calculationEstorno($idUsuario, $game->value);
                     if(!is_null($game->commision_value_pai )){
@@ -671,6 +678,7 @@ class GameController extends Controller
                     $transact_balance->value_a = $user->balance + $game->value;
                     $transact_balance->type = 'Estorno - Jogo de id: ' . $game->id . ' do tipo: ' . $game->type_game_id;
                     $transact_balance->save();
+                }
                   }
 
                 }
