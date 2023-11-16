@@ -11,3 +11,9 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql mbstring exif pcntl bcmath gd sockets && docker-php-ext-enable pdo_mysql
+
+COPY . /var/www/html
+
+WORKDIR /var/www/html
+
+CMD ["php", "artisan", "serve", "--host", "0.0.0.0", "--port=9000"]

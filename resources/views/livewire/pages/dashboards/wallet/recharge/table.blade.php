@@ -51,6 +51,12 @@
                                                      class="btn btn-info btn-md btn-block"> {{ trans('admin.lwIndicated.cont') }} {{$valueAdd}}</button>
                                              @endif
                                         </div>
+                                        <div class="input-group-append mr-2 bt-recharge">
+                                             <button wire:click.prevent="callZoopPix" type="submit"
+                                                    @if($valueAdd <= 0.99) disabled @endif
+
+                                                class="btn btn-info btn-md btn-block">Pix automático</button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
