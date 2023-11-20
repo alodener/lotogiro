@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libs\Zoop;
+namespace app\Libs\Zoop;
 
 /**
  * Class Transactions
