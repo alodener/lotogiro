@@ -1,13 +1,49 @@
+version: "3"
+
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - user=${USER}
+        - uid=${UID}
+    container_name: lotogiro-app
+    command:
+      - /bin/bash
+      - -c
+      - |
+        composer install
+        php artisan serve --host=0.0.0.0 --port=9000
     container_name: lotogiro
     restart: unless-stopped
     ports:
       - 9000:9000
     volumes:
-      - ./app:/var/www/html/app
-      - ./resources:/var/www/html/resources
-      - ./routes:/var/www/html/routes
-      - ./bootstrap:/var/www/html/bootstrap
-    network_mode: bridge
+      - ./:/var/www/html
+    networks:
+      - lotogiro
+
+  mysql:
+    image: mysql
+    container_name: lotogiro-db
+    environment:
+      - MYSQL_DATABASE=loteriasbr_prod
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+    volumes:
+      - $HOME/.databases/lotogiro:/var/lib/mysql
+    networks:
+      - lotogiro
+
+  adminer:
+    image: adminer
+    container_name: lotogiro-adminer
+    ports:
+      - 8080:8080
+    networks:
+      - lotogiro
+
+networks:
+  lotogiro:
+    driver: bridge
