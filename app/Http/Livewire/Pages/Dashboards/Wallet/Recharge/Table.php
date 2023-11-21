@@ -66,6 +66,102 @@ class Table extends Component
         ]);
     }
 
+    public function callMPPix()
+    {
+        $tokenMP = Configs::getTokenMercadoPago();
+
+        $order = new RechargeOrder([
+            'user_id' => auth()->id(),
+            'value' => Money::toDatabase($this->valueAdd),
+            'status' => 0
+        ]);
+        $order->save();
+
+        $payment = [
+            'transaction_amount' => floatval($order->value),
+            'description' => "Recarga " . ENV("nome_sistema"),
+            'payment_method_id' => 'pix',
+            'payer' => ['email' => auth()->user()->email],
+            'external_reference' => $order->reference,
+            'notification_url' => env("APP_URL") . "/api/mp/webhook/process/transaction"
+        ];
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.mercadopago.com/v1/payments',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($payment),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                "X-Idempotency-Key: {$order->reference}",
+                "Authorization: Bearer $tokenMP"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $response = json_decode($response);
+
+        if (!isset($response->point_of_interaction)) {
+            echo json_encode([$response, $payment]);exit;
+        }
+
+        $copyPast = $response->point_of_interaction->transaction_data->qr_code;
+        $base64 = $response->point_of_interaction->transaction_data->qr_code_base64;
+
+        $this->alert('info', 'Pronto!!', [
+            'position' => 'center',
+            'timer' => null,
+            'toast' => false,
+            'html' => "Seu código Copia e Cola está pronto, gostaria de pagar agora?<br><br>
+                    <div class='input-group mb-3'>
+                        <input type='text' value='{$copyPast}' readonly class='form-control' placeholder='qrCodeMP' aria-label='qrCodeMP' aria-describedby='button-addon2' id='input_output'>
+                        <button class='btn btn-outline-secondary'  onclick='copyText()'  type='button' id='copyPix'>Copiar</button>
+                    </div>
+                    <div class='input-group mb-3'>
+                        <img src='data:image/gif;base64,$base64' style='max-width:250px;margin:auto'>
+                    </div>'",
+        ]);
+    }
+
+    public function callZoopPix()
+    {
+        $order = new RechargeOrder([
+            'user_id' => auth()->id(),
+            'value' => Money::toDatabase($this->valueAdd),
+            'status' => 0,
+            'gateway' => 'zoop'
+        ]);
+        $order->save();
+
+        $zoopGateway = new ZoopGateway;
+
+        $authorize = $zoopGateway->createCharge($order);
+        $response = $authorize->getResponse();
+
+        echo json_encode($response);exit;
+
+        $order->update(['link' => $response['payment_method']['qr_code']['emv'], 'reference' => $response['id']]);
+
+        $this->alert('info', 'Pronto!!', [
+            'position' => 'center',
+            'timer' => null,
+            'toast' => false,
+            'html' => "Seu código Copia e Cola está pronto, gostaria de pagar agora?<br><br>
+                    <div class='input-group mb-3'>
+                        <input type='text' value='{$order->link}' readonly class='form-control' placeholder='qrCodeZoop' aria-label='qrCodeZoop' aria-describedby='button-addon2' id='input_output'>
+                        <button class='btn btn-outline-secondary'  onclick='copyText()'  type='button' id='copyPix'>Copiar</button>
+                    </div>'",
+        ]);
+    }
+
     public function callZoop()
     {
         $order = new RechargeOrder([
