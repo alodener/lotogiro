@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bet;
 use App\Models\Game;
 use App\Helper\Balance;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helper\Commision;
@@ -21,6 +22,7 @@ use App\Models\UsersHasPoints;
 use App\Models\TransactBalance;
 use Illuminate\Support\Facades\Auth;
 use App\Helper\Configs;
+
 
 use PDF;
 
@@ -95,14 +97,36 @@ class ValidateGamesController extends Controller
                 throw new \Exception('Banca Fechada!');
             }
             $games = $validate_game->games;
+            
+          $valorCalculado = 0;
+          $contador = 0;
+          if($games->count() > 0){
+            foreach( $games as $game){
+                
+                $competition = Competition::find($game->competition_id);
+                $competA = substr($competition->number, -1);
+                
+                if ($competition->type_game_id == 10 && $competA == "A") {
+                    if($valorCalculado > 0) {
+                        $valorCalculado = $valorCalculado;
+                    }
+                    $balance = auth()->user()->balance;
+            
+                } else {
+                    $valorCalculado = $valorCalculado + $game->value;
 
-            $balance = Balance::calculationValidation($value);
-            if (!$balance) {
-                throw new \Exception('Saldo Insufuciente!');
-            }
-
+                }
+                $contador++;
+                
+          }
+        }
+          $true = Balance::calculationValidation($valorCalculado);
+          if (!$true) {
+            throw new \Exception('Saldo Insuficiente!');
+        }
             if ($games->count() > 0) {
                 foreach ($games as $game) {
+                              
                     $commissionCalculation = Commision::calculationPai($game->commission_percentage, $game->value, $ID_VALUE);
                     $game->status = true;
                     $game->checked = 1;
@@ -131,9 +155,11 @@ class ValidateGamesController extends Controller
                     if( $planodecarreira == "Ativado"){
                     UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);
                     }
+                    $contador++;
                 }
 
                
+                
                 $validate_game->status = true;
                 $validate_game->save();
             }
