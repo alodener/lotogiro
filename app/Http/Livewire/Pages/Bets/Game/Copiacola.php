@@ -49,6 +49,10 @@ class Copiacola extends Component
         $this->reset('values');
         $this->dezena = preg_replace("/[,. _-]/", " ", $this->dezena);
         $this->dezena = explode("\n", $this->dezena);
+        foreach ($this->dezena as &$linha) {
+            $linha = rtrim($linha);
+
+        }
         $tmp = array_filter($this->dezena);
         $str = implode("\n", $tmp);
         $this->dezena = explode("\n", $str);
@@ -60,7 +64,8 @@ class Copiacola extends Component
         $typeGame = TypeGame::find($this->typeGame->id);
         $maxNumbers = $typeGame->numbers;
         
-        foreach ($this->dezena as $dezenaConvert) {
+        foreach ($this->dezena as $linhaIndex => $dezenaConvert) {
+            $linhaIndex++;
             $this->contadorJogos++;
             $string = preg_replace('/^\h*\v+/m', '', $dezenaConvert);
             $words = explode(" ", $string);
@@ -80,7 +85,8 @@ class Copiacola extends Component
                 } else {
                     $this->msg = "Não existe valores para essa quantidade de Dezenas";
                 }
-                
+        
+
                 $dezenas = explode(" ", $string);
                 $dezenasForaDoLimite = array_filter($dezenas, function ($dezena) use ($maxNumbers) {
                 return ($dezena < 1 || $dezena > $maxNumbers);
@@ -90,6 +96,14 @@ class Copiacola extends Component
                     $this->msg = "Dezenas fora do intervalo permitido (1 a $maxNumbers): " . implode(", ", $dezenasForaDoLimite); 
                 }  else {
                     $this->podeCriar = true;
+                }
+
+                $allowedDezenas = $typeGame->typeGameValues()->pluck('numbers')->toArray();
+                
+                if (!in_array($result, $allowedDezenas)) {
+                    $totalDezenasNaLinha = count($words);
+                    $this->msg = "A quantidade de dezenas na linha $linhaIndex não é permitida para este tipo de jogo. Total de dezenas na linha: $totalDezenasNaLinha.";
+                    $this->controle = 0;
                 }
             }
         }
@@ -138,8 +152,6 @@ class Copiacola extends Component
             $this->updatedSearch('Admin');
         }
     }
-
-
 
     public function render()
     {

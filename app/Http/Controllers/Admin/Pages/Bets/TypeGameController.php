@@ -94,6 +94,7 @@ class TypeGameController extends Controller
             $typeGame->columns = $request->columns;
             $typeGame->color = !empty($request->color) ? $request->color : '#28a745';
             $typeGame->description = $request->description;
+            $typeGame->category = $request->category;
             $typeGame->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([
@@ -149,6 +150,7 @@ class TypeGameController extends Controller
             $typeGame->columns = $request->columns;
             $typeGame->color = $request->color;
             $typeGame->description = $request->description;
+            $typeGame->category = $request->category;
             $typeGame->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([
@@ -174,7 +176,29 @@ class TypeGameController extends Controller
         }
 
         try {
-            $typeGame->delete();
+
+            // recuperando todas as competições associadas a este tipo de jogo
+            $competitions = $typeGame->competitions;
+
+            // exclui os registros associados em 'games' p cada competição
+            foreach ($competitions as $competition) {
+                $games = $competition->games;
+                foreach ($games as $game) {
+                    // remove outros registros dependentes relacionados ao jogo, se existirem
+                    $game->delete();
+                }
+            }
+
+            // para cada competição exclui os registros associados em 'draws' 
+            foreach ($competitions as $competition) {
+            $competition->draws()->delete();
+            }
+
+            // excluindo os registros associados em 'competitions' 
+            $typeGame->competitions()->delete();
+
+            //excluindo o registro do 'type_game'
+            $typeGame->delete(); 
 
             return redirect()->route('admin.bets.type_games.index')->withErrors([
                 'success' => 'Tipo de Jogo deletado com sucesso'
