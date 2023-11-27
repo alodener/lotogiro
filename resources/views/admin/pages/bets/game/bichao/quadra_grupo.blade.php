@@ -5,14 +5,14 @@
 @section('content')
     <div class="col bg-white p-3">
         @include('admin.pages.bets.game.bichao.top_menu')
-        <hr />
+        <hr/>
         <div class="row">
             <div class="col-md-8 col-12 justify-content-center">
                 <div class="row">
                     <div class="col">
                         <h1>Bichão da Sorte</h1>
                         <p>{{ trans('admin.bichao.aposte') }}</p>
-                         <hr />
+                         <hr/>
 
                         <p><u>{{ trans('admin.bichao.comofunciona') }}</u></p>
                          <p>
@@ -80,10 +80,11 @@
                 <p>{{ trans('admin.bichao.escGrup') }}</p>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col animal-wrapper">
-                    <div ion-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label class="btn btn-outline-primary animal-container-choose">   
+                    <div id="animal-container" button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
+                        <label onclick="select_animals_1()" class="btn btn-outline-primary animal-container-choose">   
                         <div class="animal-container">
                                 <div class="row">
                                     <div class="col-2">
@@ -114,7 +115,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_2()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -145,7 +146,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_3()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -176,7 +177,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_4()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                 <div class="col-2 ">
@@ -208,7 +209,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_5()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                             <div class="row">
                                     <div class="col-2 ">
@@ -239,7 +240,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_6()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                             <div class="row">
                                     <div class="col-2 ">
@@ -271,7 +272,7 @@
 
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_7()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -302,7 +303,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_8()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -333,7 +334,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label class="btn btn-outline-primary animal-container-choose">
+                        <label onclick="select_animals_9()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -364,7 +365,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_10()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -396,7 +397,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_11()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -427,7 +428,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_12()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -458,7 +459,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_13()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -489,7 +490,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_14()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -520,7 +521,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_15()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -551,7 +552,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_16()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -582,7 +583,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_17()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -613,7 +614,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_18()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -644,7 +645,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_19()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -675,7 +676,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_20()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -706,7 +707,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_21()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -737,7 +738,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_22()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -768,7 +769,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_23()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -799,7 +800,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_24()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -830,7 +831,7 @@
                     </div>
 
                     <div button-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
-                        <label  class="btn btn-outline-primary animal-container-choose">
+                        <label  onclick="select_animals_25()" class="btn btn-outline-primary animal-container-choose">
                             <div class="animal container">
                                 <div class="row">
                                     <div class="col-2 ">
@@ -889,15 +890,10 @@
         </div>
         <div class="row">
             <div class="col button-group">
-                <a><button id="btn-award-first" onclick="button_first_award()" class="btn btn-outline-primary btn-award"><b>1º</b></button></a>
-                <a><button id="btn-award-second" onclick="button_second_award()" class="btn btn-outline-primary btn-award"><b>2º</b></button></a>
-                <a><button id="btn-award-third" onclick="button_third_award()" class="btn btn-outline-primary btn-award"><b>3º</b></button></a>
-                <a><button id="btn-award-fourth" onclick="button_fourth_award()" class="btn btn-outline-primary btn-award"><b>4º</b></button></a>
-                <a><button id="btn-award-fifth" onclick="button_fifth_award()" class="btn btn-outline-primary btn-award"><b>5º</b></button></a>
                 <a><button id="btn-award-first-to-fifth" onclick="button_first_to_fifth_award()" class="btn btn-outline-primary btn-award"><b>1º ao 5º</b></button></a>
             </div>
         </div>
-        <div class="row mt-md-4 col-12">
+        <div class="row mt-4">
             <div class="col">
                 <span id="message-award-value" class="text-danger d-none"><b>{{ trans('admin.bichao.favSelec') }}</b></span>
             </div>
@@ -905,7 +901,7 @@
         <hr>
         <div class="row">
             <div class="col">
-                <p>{{ trans('admin.bichao.insValor') }} </p>
+                <p>{{ trans('admin.bichao.insValor') }}</p>
             </div>
         </div>
         <div class="row">
@@ -1049,28 +1045,37 @@
 
         const award = parseInt('{{$modalidade->multiplicador}}');
         const initial_value = 0;
-        const input_value = $('#input_value');
         const button_first = $('#btn-award-first');
         const button_second = $('#btn-award-second');
         const label_award = $('#price_award');
         const input_value_bet = $('#input_value_bet');
         const message_minimum = $('#message-minimum-value');
         const message_maximum = $('#message-maximum-value');
-        const animal_container = $('.wrap-animal');
-        let animal_escolhido = 0;
-        let award_type = [];
-        let value;
+        let award_type = 0;
+        let animais_escolhidos = [];
+        let value = 0;
 
         function checkGame() {
-            const games = $('#input-group').val().split(',');
-            const match = games.filter((item) => item >= 0 && item <= 25);
-            return games.length === match.length;
+            const games = $('#input-group').val().replaceAll(' ', '').split(',');
+
+            for (const game of games) {
+                const game_input = game.split('-');
+                if (game_input.length != 4) return false;
+                const match = game_input.filter((item) => item >= 0 && item <= 25);
+                if (game_input.length !== match.length) return false;
+            }
+
+            return true;
+        }
+
+        function randomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
         }
 
         function insere_valor() {
             const field = $('#input-group');
 
-            const value = `${randomNumber(1, 25)}`.padStart(2, '0');
+            const value = `${String(randomNumber(1, 25)).padStart(2, '0')}-${String(randomNumber(1, 25)).padStart(2, '0')}-${String(randomNumber(1, 25)).padStart(2, '0')}-${String(randomNumber(1, 25)).padStart(2, '0')}`;
             if (!field.val()) return field.val(value);
 
             const old = field.val().split(',');
@@ -1078,23 +1083,20 @@
             field.val(old.join(','));
             calculate_award();
         }
-        
+
         $('#btn-add-to-chart').click(function() {
-            const option_award = validate_award();
             const value = $('#input_value_bet').val();
             const client_id = $('#livewire-client-id').val();
-            const game = $('#input-group').val().split(',').map((val) => String(val).padStart(2, '0')).join(',');
+            const game = $('#input-group').val().replaceAll(' ', '');
             const teimosinha = $('#input_teimosinha_bet').val();
 
-            if (!option_award > 0) return alert('Selecione um dos prêmios');
+            if (!award_type > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
-            if (!checkGame()) return alert('Escolha um dos grupos');
+            if (!checkGame()) return alert('Escolha quatro grupos');
             if (!client_id > 0) return alert('Escolha um cliente');
-
-            award_type.sort();
             
             const item = {
-                award_type,
+                award_type: [1,2,3,4,5],
                 value: value.replace(',', '.'),
                 client_id,
                 modality: '{{$modalidade->nome}}',
@@ -1105,21 +1107,15 @@
             addChartItem(item);
         });
 
-
-        function randomNumber(min, max) {
-            return Math.floor(Math.random() * (max - min) + min);
-        }
-
         function calculate_award() {
             const input_value_bet = $('#input_value_bet');
             const label_award = $('#price_award');
             const limit_minimum_bet = 0.01;
             const message = $('#message-minimum-value');
-            const award_total = parseInt('{{$modalidade->multiplicador}}');
-            const option_award = validate_award() === 6 ? 5 : validate_award();
-            const game = $('#input-group').val().split(',').map((val) => String(val).padStart(2, '0')).join(',');
+            const award_total= parseInt('{{$modalidade->multiplicador}}');
+            const game = $('#input-group').val().replaceAll(' ', '');
 
-            if (!checkGame()) return alert('Escolha um dos grupos');
+            if (!checkGame()) return;
 
             $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
             $.ajax({
@@ -1142,8 +1138,6 @@
                     let limit_maximum_bet = premio_maximo / award;
                     let value = 0;
     
-                    if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
-    
                     const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
     
                     $('#price_award_check').hide();
@@ -1155,22 +1149,14 @@
                     } else {
                         $('#price_award_check').show();
     
-                        if (option_award == 1) {
+                        if(award_type == 1) {
                             value = award_total;
-                        } else if (option_award == 2) {
-                            value = (award_total / 2);
-                        } else if (option_award == 3) {
-                            value = (award_total / 3);
-                        } else if (option_award == 4) {
-                            value = (award_total / 4);
-                        } else if (option_award == 5) {
-                            value = (award_total / 5);
-                        } else if (option_award == 6) {
-                            value = (award_total / 5);
+                        }else if(award_type == 2){
+                            value = parseInt('{{$modalidade->multiplicador_2}}');
                         }
-    
+
                         const result = value * value_input_bet;
-    
+                        
                         if (result > 0) {
                             $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
                         } else {
@@ -1183,481 +1169,48 @@
             });
         }
 
-        function toggleAll() {
-            if (
-                $('#btn-award-first').hasClass('active') &&
-                $('#btn-award-second').hasClass('active') &&
-                $('#btn-award-third').hasClass('active') &&
-                $('#btn-award-fourth').hasClass('active') &&
-                $('#btn-award-fifth').hasClass('active')
-            ) {
-                $('#btn-award-first-to-fifth').addClass('active');
-            } else {
-                $('#btn-award-first-to-fifth').removeClass('active');
-            }
-            calculate_award();
-        }
-
-        input_value_bet.keyup(function () {
+        input_value_bet.keyup(function (){
             calculate_award();
         });
 
-        function clear_animals() {
-            animal_escolhido = 0;
-            $('.animal-container-choose').removeClass('active');
-        }
+        function button_first_to_third_award(){
 
-        function select_animals_1(){
-            const animal_container_1 = $('#animal-container-1');
+            const button_first_to_third = $('#btn-award-first-to-third');
+            const button_first_to_fifth = $('#btn-award-first-to-fifth');
 
-            clear_animals();
-            if(!animal_container_1.hasClass('active')){
-                animal_escolhido = 1;
-                animal_container_1.addClass('active');
-            }else{
-                animal_container_1.removeClass('active');
+            if(!button_first_to_third.hasClass('active')){
+                button_first_to_third.addClass('active');
+                button_first_to_fifth.removeClass('active');
+                award_type = 1;
             }
             calculate_award();
-        }
-
-        function select_animals_2(){
-            const animal_container_2 = $('#animal-container-2');
-
-            clear_animals();
-            if(!animal_container_2.hasClass('active')){
-                animal_escolhido = 2;
-                animal_container_2.addClass('active');
-            }else{
-                animal_container_2.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_3(){
-            const animal_container_3 = $('#animal-container-3');
-
-            clear_animals();
-            if(!animal_container_3.hasClass('active')){
-                animal_escolhido = 3;
-                animal_container_3.addClass('active');
-            }else{
-                animal_container_3.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_4(){
-            const animal_container_4 = $('#animal-container-4');
-
-            clear_animals();
-            if(!animal_container_4.hasClass('active')){
-                animal_escolhido = 4;
-                animal_container_4.addClass('active');
-            }else{
-                animal_container_4.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_5(){
-            const animal_container_5 = $('#animal-container-5');
-
-            clear_animals();
-            if(!animal_container_5.hasClass('active')){
-                animal_escolhido = 5;
-                animal_container_5.addClass('active');
-            }else{
-                animal_container_5.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_6(){
-            const animal_container_6 = $('#animal-container-6');
-
-            clear_animals();
-            if(!animal_container_6.hasClass('active')){
-                animal_escolhido = 6;
-                animal_container_6.addClass('active');
-            }else{
-                animal_container_6.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_7(){
-            const animal_container_7 = $('#animal-container-7');
-
-            clear_animals();
-            if(!animal_container_7.hasClass('active')){
-                animal_escolhido = 7;
-                animal_container_7.addClass('active');
-            }else{
-                animal_container_7.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_8(){
-            const animal_container_8 = $('#animal-container-8');
-
-            clear_animals();
-            if(!animal_container_8.hasClass('active')){
-                animal_escolhido = 8;
-                animal_container_8.addClass('active');
-            }else{
-                animal_container_8.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_9(){
-            const animal_container_9 = $('#animal-container-9');
-
-            clear_animals();
-            if(!animal_container_9.hasClass('active')){
-                animal_escolhido = 9;
-                animal_container_9.addClass('active');
-            }else{
-                animal_container_9.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_10(){
-            const animal_container_10 = $('#animal-container-10');
-
-            clear_animals();
-            if(!animal_container_10.hasClass('active')){
-                animal_escolhido = 10;
-                animal_container_10.addClass('active');
-            }else{
-                animal_container_10.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_11(){
-            const animal_container_11 = $('#animal-container-11');
-
-            clear_animals();
-            if(!animal_container_11.hasClass('active')){
-                animal_escolhido = 11;
-                animal_container_11.addClass('active');
-            }else{
-                animal_container_11.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_12(){
-            const animal_container_12 = $('#animal-container-12');
-
-            clear_animals();
-            if(!animal_container_12.hasClass('active')){
-                animal_escolhido = 12;
-                animal_container_12.addClass('active');
-            }else{
-                animal_container_12.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_13(){
-            const animal_container_13 = $('#animal-container-13');
-
-            clear_animals();
-            if(!animal_container_13.hasClass('active')){
-                animal_escolhido = 13;
-                animal_container_13.addClass('active');
-            }else{
-                animal_container_13.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_14(){
-            const animal_container_14 = $('#animal-container-14');
-
-            clear_animals();
-            if(!animal_container_14.hasClass('active')){
-                animal_escolhido = 14;
-                animal_container_14.addClass('active');
-            }else{
-                animal_container_14.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_15(){
-            const animal_container_15 = $('#animal-container-15');
-
-            clear_animals();
-            if(!animal_container_15.hasClass('active')){
-                animal_escolhido = 15;
-                animal_container_15.addClass('active');
-            }else{
-                animal_container_15.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_16(){
-            const animal_container_16 = $('#animal-container-16');
-
-            clear_animals();
-            if(!animal_container_16.hasClass('active')){
-                animal_escolhido = 16;
-                animal_container_16.addClass('active');
-            }else{
-                animal_container_16.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_17(){
-            const animal_container_17 = $('#animal-container-17');
-
-            clear_animals();
-            if(!animal_container_17.hasClass('active')){
-                animal_escolhido = 17;
-                animal_container_17.addClass('active');
-            }else{
-                animal_container_17.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_18(){
-            const animal_container_18 = $('#animal-container-18');
-
-            clear_animals();
-            if(!animal_container_18.hasClass('active')){
-                animal_escolhido = 18;
-                animal_container_18.addClass('active');
-            }else{
-                animal_container_18.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_19(){
-            const animal_container_19 = $('#animal-container-19');
-
-            clear_animals();
-            if(!animal_container_19.hasClass('active')){
-                animal_escolhido = 19;
-                animal_container_19.addClass('active');
-            }else{
-                animal_container_19.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_20(){
-            const animal_container_20 = $('#animal-container-20');
-
-            clear_animals();
-            if(!animal_container_20.hasClass('active')){
-                animal_escolhido = 20;
-                animal_container_20.addClass('active');
-            }else{
-                animal_container_20.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_21(){
-            const animal_container_21 = $('#animal-container-21');
-
-            clear_animals();
-            if(!animal_container_21.hasClass('active')){
-                animal_escolhido = 21;
-                animal_container_21.addClass('active');
-            }else{
-                animal_container_21.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_22(){
-            const animal_container_22 = $('#animal-container-22');
-
-            clear_animals();
-            if(!animal_container_22.hasClass('active')){
-                animal_escolhido = 22;
-                animal_container_22.addClass('active');
-            }else{
-                animal_container_22.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_23(){
-            const animal_container_23 = $('#animal-container-23');
-
-            clear_animals();
-            if(!animal_container_23.hasClass('active')){
-                animal_escolhido = 23;
-                animal_container_23.addClass('active');
-            }else{
-                animal_container_23.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_24(){
-            const animal_container_24 = $('#animal-container-24');
-
-            clear_animals();
-            if(!animal_container_24.hasClass('active')){
-                animal_escolhido = 24;
-                animal_container_24.addClass('active');
-            }else{
-                animal_container_24.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function select_animals_25(){
-            const animal_container_25 = $('#animal-container-25');
-
-            clear_animals();
-            if(!animal_container_25.hasClass('active')){
-                animal_escolhido = 25;
-                animal_container_25.addClass('active');
-            }else{
-                animal_container_25.removeClass('active');
-            }
-            calculate_award();
-        }
-
-        function button_first_award(){
-            const button_first = $('#btn-award-first');
-
-            if(!button_first.hasClass('active')){
-                button_first.addClass('active');
-                award_type.push(1);
-            }else{
-                button_first.removeClass('active');
-                award_type = award_type = award_type.filter((i) => i != 1);
-            }
-            calculate_award();
-            toggleAll();
-
-        }
-
-        function button_second_award(){
-            const button_second = $('#btn-award-second');
-
-            if(!button_second.hasClass('active')){
-                button_second.addClass('active');
-                award_type.push(2);
-            }else{
-                button_second.removeClass('active');
-                award_type = award_type = award_type.filter((i) => i != 2);
-            }
-            calculate_award();
-            toggleAll();
-
-        }
-
-        function button_third_award(){
-            const button_third = $('#btn-award-third');
-
-            if(!button_third.hasClass('active')){
-                button_third.addClass('active');
-                award_type.push(3);
-            }else{
-                button_third.removeClass('active');
-                award_type = award_type = award_type.filter((i) => i != 3);
-            }
-            calculate_award();
-            toggleAll();
-
-        }
-
-        function button_fourth_award(){
-            const button_fourth = $('#btn-award-fourth');
-
-            if(!button_fourth.hasClass('active')){
-                button_fourth.addClass('active');
-                award_type.push(4);
-            }else{
-                button_fourth.removeClass('active');
-                award_type = award_type = award_type.filter((i) => i != 4);
-            }
-            calculate_award();
-            toggleAll();
-
-        }
-
-        function button_fifth_award(){
-            const button_fifth = $('#btn-award-fifth');
-
-            if(!button_fifth.hasClass('active')){
-                button_fifth.addClass('active');
-                award_type.push(5);
-            }else{
-                button_fifth.removeClass('active');
-                award_type = award_type = award_type.filter((i) => i != 5);
-            }
-            calculate_award();
-            toggleAll();
         }
 
         function button_first_to_fifth_award(){
 
-            const button_first = $('#btn-award-first');
-            const button_second = $('#btn-award-second');
-            const button_fifth = $('#btn-award-fifth');
-            const button_third = $('#btn-award-third');
-            const button_fourth = $('#btn-award-fourth');
+            const button_first_to_third = $('#btn-award-first-to-third');
             const button_first_to_fifth = $('#btn-award-first-to-fifth');
 
             if(!button_first_to_fifth.hasClass('active')){
-                button_first.addClass('active');
-                button_second.addClass('active');
-                button_third.addClass('active');
-                button_fourth.addClass('active');
-                button_fifth.addClass('active');
                 button_first_to_fifth.addClass('active');
-                award_type = [1,2,3,4,5];
-            }else{
-                button_first.removeClass('active');
-                button_second.removeClass('active');
-                button_third.removeClass('active');
-                button_fourth.removeClass('active');
-                button_fifth.removeClass('active');
-                button_first_to_fifth.removeClass('active');
-                award_type = [];
+                button_first_to_third.removeClass('active');
+                
+                award_type = 2;
             }
             calculate_award();
-        }
-
-        function validate_award(){
-            const array_buttons = $('.btn-award');
-            const label_award = $('#price_award');
-
-            const message = $('#message-award-value');
-            let contador = 0;
-
-            for(i=0;i<array_buttons.length;i++){
-                const btn_id = $(`#${array_buttons[i]['id']}`);
-                if(btn_id.hasClass('active')){
-                    contador += 1;
-                }
-            }
-
-            return contador;
         }
 
         function check_award(){
             const message = $('#message-award-value');
             const label_award = $('#price_award');
             const btn_add_to_cart = $('#btn-add-to-chart');
+            const third_award = 1300;
+            const fifth_award = 150;
 
-            if(validate_award() == 0){
+            const btn_first_to_third = $('#btn-award-first-to-third');
+            const btn_first_to_fifth = $('#btn-award-first-to-fifth');
+
+            if(!btn_first_to_third.hasClass('active') && !btn_first_to_fifth.hasClass('active')){
                 message.removeClass('d-none');
                 message.addClass('d-block');
                 const initial_value = 0;
@@ -1665,55 +1218,379 @@
                 label_award.text(('R$'+initial_value+',00').toLocaleString('pt-BR',{
                     minimumFractionDigits: 2
                 }));
-            }else if(validate_award() == 1){
+
+            }else if(btn_first_to_third.hasClass('active') && !btn_first_to_fifth.hasClass('active')){
                 message.removeClass('d-block');
                 message.addClass('d-none');
-
-                label_award.text('R$'+award.toLocaleString('pt-BR',{
-                    minimumFractionDigits: 2,
+                label_award.text(('R$'+third_award+',00').toLocaleString('pt-BR',{
+                    minimumFractionDigits: 2
                 }));
-                btn_add_to_cart.removeClass('disabled');
-            }else if(validate_award() == 2){
+
+            }else if(!btn_first_to_third.hasClass('active') && btn_first_to_fifth.hasClass('active')){
                 message.removeClass('d-block');
                 message.addClass('d-none');
-
-                label_award.text('R$'+(award/2).toLocaleString('pt-BR',{
-                    minimumFractionDigits: 2,
+                label_award.text(('R$'+fifth_award+',00').toLocaleString('pt-BR',{
+                    minimumFractionDigits: 2
                 }));
-                btn_add_to_cart.removeClass('disabled');
-            }else if(validate_award() == 3){
-                message.removeClass('d-block');
-                message.addClass('d-none');
+            }else{
+                message.removeClass('d-none');
+                message.addClass('d-block');
+                const initial_value = 0;
 
-                label_award.text('R$'+(award/3).toLocaleString('pt-BR',{
-                    minimumFractionDigits: 2,
+                label_award.text(('R$'+initial_value+',00').toLocaleString('pt-BR',{
+                    minimumFractionDigits: 2
                 }));
-                btn_add_to_cart.removeClass('disabled');
-            }else if(validate_award() == 4){
-                message.removeClass('d-block');
-                message.addClass('d-none');
-
-                label_award.text('R$'+(award/4).toLocaleString('pt-BR',{
-                    minimumFractionDigits: 2,
-                }));
-                btn_add_to_cart.removeClass('disabled');
-            }else if(validate_award() == 5){
-                message.removeClass('d-block');
-                message.addClass('d-none');
-
-                label_award.text('R$'+(award/5).toLocaleString('pt-BR',{
-                    minimumFractionDigits: 2,
-                }));
-                btn_add_to_cart.removeClass('disabled');
-            }else if(validate_award() == 6){
-                message.removeClass('d-block');
-                message.addClass('d-none');
-
-                label_award.text('R$'+(award/5).toLocaleString('pt-BR',{
-                    minimumFractionDigits: 2,
-                }));
-                btn_add_to_cart.removeClass('disabled');
             }
+        }
+
+        function select_animals_1(){
+            const animal_container_1 = $('#animal-container-1');
+
+            if(!animal_container_1.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_1.addClass('active');
+                animais_escolhidos.push(1);
+            }else{
+                animal_container_1.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 1);
+            }
+            calculate_award();
+        }
+
+        function select_animals_2(){
+            const animal_container_2 = $('#animal-container-2');
+
+            if(!animal_container_2.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_2.addClass('active');
+                animais_escolhidos.push(2);
+            }else{
+                animal_container_2.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 2);
+            }
+            calculate_award();
+        }
+
+        function select_animals_3(){
+            const animal_container_3 = $('#animal-container-3');
+
+            if(!animal_container_3.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_3.addClass('active');
+                animais_escolhidos.push(3);
+            }else{
+                animal_container_3.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 3);
+            }
+            calculate_award();
+        }
+
+        function select_animals_4(){
+            const animal_container_4 = $('#animal-container-4');
+
+            if(!animal_container_4.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_4.addClass('active');
+                animais_escolhidos.push(4);
+            }else{
+                animal_container_4.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 4);
+            }
+            calculate_award();
+        }
+
+        function select_animals_5(){
+            const animal_container_5 = $('#animal-container-5');
+
+            if(!animal_container_5.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_5.addClass('active');
+                animais_escolhidos.push(5);
+            }else{
+                animal_container_5.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 5);
+            }
+            calculate_award();
+        }
+
+        function select_animals_6(){
+            const animal_container_6 = $('#animal-container-6');
+
+            if(!animal_container_6.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_6.addClass('active');
+                animais_escolhidos.push(6);
+            }else{
+                animal_container_6.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 6);
+            }
+            calculate_award();
+        }
+
+        function select_animals_7(){
+            const animal_container_7 = $('#animal-container-7');
+
+            if(!animal_container_7.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_7.addClass('active');
+                animais_escolhidos.push(7);
+            }else{
+                animal_container_7.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 7);
+            }
+            calculate_award();
+        }
+
+        function select_animals_8(){
+            const animal_container_8 = $('#animal-container-8');
+
+            if(!animal_container_8.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_8.addClass('active');
+                animais_escolhidos.push(8);
+            }else{
+                animal_container_8.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 8);
+            }
+            calculate_award();
+        }
+
+        function select_animals_9(){
+            const animal_container_9 = $('#animal-container-9');
+
+            if(!animal_container_9.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_9.addClass('active');
+                animais_escolhidos.push(9);
+            }else{
+                animal_container_9.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 9);
+            }
+            calculate_award();
+        }
+
+        function select_animals_10(){
+            const animal_container_10 = $('#animal-container-10');
+
+            if(!animal_container_10.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_10.addClass('active');
+                animais_escolhidos.push(10);
+            }else{
+                animal_container_10.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 10);
+            }
+            calculate_award();
+        }
+
+        function select_animals_11(){
+            const animal_container_11 = $('#animal-container-11');
+
+            if(!animal_container_11.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_11.addClass('active');
+                animais_escolhidos.push(11);
+            }else{
+                animal_container_11.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 11);
+            }
+            calculate_award();
+        }
+
+        function select_animals_12(){
+            const animal_container_12 = $('#animal-container-12');
+
+            if(!animal_container_12.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_12.addClass('active');
+                animais_escolhidos.push(12);
+            }else{
+                animal_container_12.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 12);
+            }
+            calculate_award();
+        }
+
+        function select_animals_13(){
+            const animal_container_13 = $('#animal-container-13');
+
+            if(!animal_container_13.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_13.addClass('active');
+                animais_escolhidos.push(13);
+            }else{
+                animal_container_13.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 13);
+            }
+            calculate_award();
+        }
+
+        function select_animals_14(){
+            const animal_container_14 = $('#animal-container-14');
+
+            if(!animal_container_14.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_14.addClass('active');
+                animais_escolhidos.push(14);
+            }else{
+                animal_container_14.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 14);
+            }
+            calculate_award();
+        }
+
+        function select_animals_15(){
+            const animal_container_15 = $('#animal-container-15');
+
+            if(!animal_container_15.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_15.addClass('active');
+                animais_escolhidos.push(15);
+            }else{
+                animal_container_15.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 15);
+            }
+            calculate_award();
+        }
+
+        function select_animals_16(){
+            const animal_container_16 = $('#animal-container-16');
+
+            if(!animal_container_16.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_16.addClass('active');
+                animais_escolhidos.push(16);
+            }else{
+                animal_container_16.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 16);
+            }
+            calculate_award();
+        }
+
+        function select_animals_17(){
+            const animal_container_17 = $('#animal-container-17');
+
+            if(!animal_container_17.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_17.addClass('active');
+                animais_escolhidos.push(17);
+            }else{
+                animal_container_17.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 17);
+            }
+            calculate_award();
+        }
+
+        function select_animals_18(){
+            const animal_container_18 = $('#animal-container-18');
+
+            if(!animal_container_18.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_18.addClass('active');
+                animais_escolhidos.push(18);
+            }else{
+                animal_container_18.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 18);
+            }
+            calculate_award();
+        }
+
+        function select_animals_19(){
+            const animal_container_19 = $('#animal-container-19');
+
+            if(!animal_container_19.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_19.addClass('active');
+                animais_escolhidos.push(19);
+            }else{
+                animal_container_19.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 19);
+            }
+            calculate_award();
+        }
+
+        function select_animals_20(){
+            const animal_container_20 = $('#animal-container-20');
+
+            if(!animal_container_20.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_20.addClass('active');
+                animais_escolhidos.push(20);
+            }else{
+                animal_container_20.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 20);
+            }
+            calculate_award();
+        }
+
+        function select_animals_21(){
+            const animal_container_21 = $('#animal-container-21');
+
+            if(!animal_container_21.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_21.addClass('active');
+                animais_escolhidos.push(21);
+            }else{
+                animal_container_21.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 21);
+            }
+            calculate_award();
+        }
+
+        function select_animals_22(){
+            const animal_container_22 = $('#animal-container-22');
+
+            if(!animal_container_22.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_22.addClass('active');
+                animais_escolhidos.push(22);
+            }else{
+                animal_container_22.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 22);
+            }
+            calculate_award();
+        }
+
+        function select_animals_23(){
+            const animal_container_23 = $('#animal-container-23');
+
+            if(!animal_container_23.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_23.addClass('active');
+                animais_escolhidos.push(23);
+            }else{
+                animal_container_23.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 23);
+            }
+            calculate_award();
+        }
+
+        function select_animals_24(){
+            const animal_container_24 = $('#animal-container-24');
+
+            if(!animal_container_24.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_24.addClass('active');
+                animais_escolhidos.push(24);
+            }else{
+                animal_container_24.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 24);
+            }
+            calculate_award();
+        }
+
+        function select_animals_25(){
+            const animal_container_25 = $('#animal-container-25');
+
+            if(!animal_container_25.hasClass('active')){
+                if (animais_escolhidos.length == 3) return alert('Escolha apenas três grupos');
+                animal_container_25.addClass('active');
+                animais_escolhidos.push(25);
+            }else{
+                animal_container_25.removeClass('active');
+                animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 25);
+            }
+            calculate_award();
         }
     </script>
 @endpush

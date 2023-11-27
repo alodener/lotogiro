@@ -13,6 +13,7 @@
                 <a class="nav-item nav-link active" id="nav-settings-estados" data-toggle="tab" href="#nav-estados" role="tab" aria-controls="nav-estados" aria-selected="true">{{ trans('admin.pagesF.estados') }}</a>
                 <a class="nav-item nav-link" id="nav-settings-cotacoes" data-toggle="tab" href="#nav-cotacoes" role="tab" aria-controls="nav-cotacoes" aria-selected="true">{{ trans('admin.pagesF.cotacoes') }}</a>
                 <a class="nav-item nav-link" id="nav-settings-premio_maximo" data-toggle="tab" href="#nav-premio_maximo" role="tab" aria-controls="nav-premio_maximo" aria-selected="true">{{ trans('admin.pagesF.premio_maximo') }}</a>
+                <a class="nav-item nav-link" id="nav-settings-invertida_limite" data-toggle="tab" href="#nav-invertida_limite" role="tab" aria-controls="nav-invertida_limite" aria-selected="true">{{ trans('admin.pagesF.invertida_limite') }}</a>
             </div>
         </nav>
         <div class="tab-content p-4" id="nav-tabContent">
@@ -95,6 +96,27 @@
                     @endforeach
                 </div>
             </div>
+            <div class="tab-pane fade show" id="nav-invertida_limite" role="tabpanel" aria-labelledby="nav-settings-invertida_limite">
+                <div class="row">
+                    @foreach($cotacoes as $cotacao)
+                        <?php if (!str_contains($cotacao->nome, 'Invertida')): continue;endif ?>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="name">{{ $cotacao->nome }}</label>
+                                <input
+                                    type="text" 
+                                    class="form-control settings-bichao-invertida_limite"
+                                    data-id="{{ $cotacao->id }}"
+                                    id="campo-premio-{{ $cotacao->id }}" 
+                                    name="campo-premio-{{ $cotacao->id }}" 
+                                    placeholder="{{ $cotacao->nome }}"
+                                    value="{{ $cotacao->bet_limit ?? null }}"
+                                >
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -137,6 +159,7 @@
         const estados = [];
         const cotacoes = [];
         const premio_maximo = [];
+        const bet_limit = [];
         
         $('input[name=settings-bichao-estado]').each(function() {
             estados.push({ id: $(this).val(), active: $(this).is(':checked') ? 1 : 0 });
@@ -150,11 +173,15 @@
             premio_maximo.push({ id: $(this).attr('data-id'), value: $(this).val() });
         });
 
+        $('.settings-bichao-invertida_limite').each(function() {
+            bet_limit.push({ id: $(this).attr('data-id'), value: $(this).val() });
+        });
+
         $.ajax({
             url: '{{url('/')}}/admin/bets/bichao/save/settings',
             type: 'POST',
             dataType: 'json',
-            data: { estados, cotacoes, premio_maximo },
+            data: { estados, cotacoes, premio_maximo, bet_limit },
             success: function(data) {
                 alert('Configurações salvas com sucesso!');
             }

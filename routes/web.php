@@ -145,15 +145,20 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
             Route::prefix('/bichao')->name('bichao.')->group(function (){
                 Route::get('/', [BichaoController::class, 'index'])->name('index');
+                Route::get('unidade', [BichaoController::class, 'unidade'])->name('unidade');
                 Route::get('centena', [BichaoController::class, 'centena'])->name('centena');
                 Route::get('cotacao', [BichaoController::class, 'cotacao'])->name('cotacao');
                 Route::get('group', [BichaoController::class, 'group'])->name('group');
                 Route::get('dezena', [BichaoController::class, 'dezena'])->name('dezena');
                 Route::get('milhar/centena', [BichaoController::class, 'milhar_centena'])->name('milhar.centena');
+                Route::get('milhar/invertida', [BichaoController::class, 'milhar_invertida'])->name('milhar.invertida');
+                Route::get('centena/invertida', [BichaoController::class, 'centena_invertida'])->name('centena.invertida');
                 Route::get('minhas/apostas', [BichaoController::class, 'my_bets'])->name('minhas.apostas');
                 Route::get('terno/dezena', [BichaoController::class, 'terno_dezena'])->name('terno.dezena');
-                Route::get('terno/grupo', [BichaoController::class, 'terno_grupo'])->name('terno.grupo');
                 Route::get('duque/dezena', [BichaoController::class, 'duque_dezena'])->name('duque.dezena');
+                Route::get('quina/grupo', [BichaoController::class, 'quina_grupo'])->name('quina.grupo');
+                Route::get('quadra/grupo', [BichaoController::class, 'quadra_grupo'])->name('quadra.grupo');
+                Route::get('terno/grupo', [BichaoController::class, 'terno_grupo'])->name('terno.grupo');
                 Route::get('duque/grupo', [BichaoController::class, 'duque_grupo'])->name('duque.grupo');
                 Route::get('resultados', [BichaoController::class, 'results'])->name('resultados');
                 Route::get('draws', [BichaoController::class, 'draws'])->name('draws');

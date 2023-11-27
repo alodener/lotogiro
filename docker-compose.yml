@@ -11,3 +11,4 @@ services:
       - ./routes:/var/www/html/routes
       - ./bootstrap:/var/www/html/bootstrap
     network_mode: bridge
+

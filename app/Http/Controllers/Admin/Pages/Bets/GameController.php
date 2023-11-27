@@ -374,7 +374,6 @@ class GameController extends Controller
                 $game->numbers = $numbers;
                 $game->competition_id = $competition->id;
                 $game->checked = 1;
-                $game->commission_percentage = auth()->user()->commission;
                 
                 $game->save();
 
@@ -409,11 +408,12 @@ class GameController extends Controller
                 ];
                 $ID_VALUE = auth()->user()->indicador;
                 $storeExtact = ExtractController::store($extract);
-                $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $request->value, $ID_VALUE);
-                $commissionCalculation = Commision::calculation($game->commission_percentage, $request->value);
+                $commissions = Commision::calculationNew($request->value, $game->user_id, '', $game->type_game_value_id);
 
-                $game->commission_value = $commissionCalculation;
-                $game->commision_value_pai = $commissionCalculationPai;
+                $game->commission_percentage = $commissions['percentage'];
+                $game->commission_value = $commissions['commission'];
+                $game->commision_value_pai = $commissions['commission_pai'];
+                $game->commision_value_avo = $commissions['commission_avo'];
                 $game->save();
 
                 

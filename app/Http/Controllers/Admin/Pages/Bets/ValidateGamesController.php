@@ -126,11 +126,12 @@ class ValidateGamesController extends Controller
         }
             if ($games->count() > 0) {
                 foreach ($games as $game) {
-                              
-                    $commissionCalculation = Commision::calculationPai($game->commission_percentage, $game->value, $ID_VALUE);
+
+                    $commissions = Commision::calculationNew($game->value, $game->user_id, '', $game->type_game_value_id);
                     $game->status = true;
                     $game->checked = 1;
-                    $game->commision_value_pai = $commissionCalculation;
+                    $game->commision_value_pai = $commissions['commission_pai'];
+                    $game->commision_value_avo = $commissions['commission_avo'];
                     $game->save();
                     $extract = [
                         'type' => 1,
