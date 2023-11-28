@@ -1179,12 +1179,17 @@ class BichaoController extends Controller
                 $valor_premio = $game['valor'] * $multiplicador;
                 $winner = 0;
                 $gameResults = [$game['game_1'], $game['game_2'], $game['game_3']];
-                if (in_array(substr($resultado['premio_1'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_1'], 2), $games)]);
-                if (in_array(substr($resultado['premio_2'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_2'], 2), $games)]);
-                if (in_array(substr($resultado['premio_3'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_3'], 2), $games)]);
-                if (in_array(substr($resultado['premio_4'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_4'], 2), $games)]);
-                if (in_array(substr($resultado['premio_5'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_5'], 2), $games)]);
-                if (count($gameResults) === 0) $game_winner = true;
+                foreach ($gameResults as $gameResult) {
+                    $subWinner = false;
+                    if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) === $gameResult) $subWinner = true;
+                    if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) === $gameResult) $subWinner = true;
+                    if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) === $gameResult) $subWinner = true;
+                    if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) === $gameResult) $subWinner = true;
+                    if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) === $gameResult) $subWinner = true;
+                    if ($subWinner) $winner = $winner + 1;
+                }
+
+                if ($winner === 3) $game_winner = true;
             }
 
             // Quina de Grupo
@@ -1258,12 +1263,17 @@ class BichaoController extends Controller
                 $valor_premio = $game['valor'] * $game['multiplicador'];
                 $winner = 0;
                 $gameResults = [$game['game_1'], $game['game_2']];
-                if (in_array(substr($resultado['premio_1'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_1'], 2), $games)]);
-                if (in_array(substr($resultado['premio_2'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_2'], 2), $games)]);
-                if (in_array(substr($resultado['premio_3'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_3'], 2), $games)]);
-                if (in_array(substr($resultado['premio_4'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_4'], 2), $games)]);
-                if (in_array(substr($resultado['premio_5'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_5'], 2), $games)]);
-                if (count($gameResults) === 0) $game_winner = true;
+                foreach ($gameResults as $gameResult) {
+                    $subWinner = false;
+                    if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) === $gameResult) $subWinner = true;
+                    if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) === $gameResult) $subWinner = true;
+                    if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) === $gameResult) $subWinner = true;
+                    if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) === $gameResult) $subWinner = true;
+                    if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) === $gameResult) $subWinner = true;
+                    if ($subWinner) $winner = $winner + 1;
+                }
+
+                if ($winner === 2) $game_winner = true;
             }
 
             // Duque de Grupo
@@ -1465,6 +1475,12 @@ class BichaoController extends Controller
                         $checkResultExist = BichaoResultados::where('horario_id', $horario[0]['id'])->where('created_at', date('Y-m-d'))->first();
 
                         if (!$checkResultExist && (!isset($game->empty) || $game->empty != 1)) {
+                            $game->placement[0] = "1008";
+                            $game->placement[1] = "1004";
+                            $game->placement[2] = "3053";
+                            $game->placement[3] = "4061";
+                            $game->placement[4] = "5099";
+
                             $resultadosDto[] = [
                                 'horario_id' => $horario[0]['id'],
                                 'horario' => $horario[0]['horario'],
