@@ -1149,11 +1149,7 @@
                     } else {
                         $('#price_award_check').show();
     
-                        if(award_type == 1) {
-                            value = award_total;
-                        }else if(award_type == 2){
-                            value = parseInt('{{$modalidade->multiplicador_2}}');
-                        }
+                        value = award_total;
 
                         const result = value * value_input_bet;
                         

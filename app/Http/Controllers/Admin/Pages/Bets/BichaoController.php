@@ -971,7 +971,7 @@ class BichaoController extends Controller
 
         $premioMaximo = $game->valor * $game->multiplicador / sizeof($premios);
         
-        if ($game->modalidade_id == 8 || $game->modalidade_id == 9) {
+        if ($game->modalidade_id == 8 || $game->modalidade_id == 9 || $game->modalidade_id == 10 || $game->modalidade_id == 11) {
             $premioMaximo = $game->valor * $game->multiplicador;
         }
         if ($game->modalidade_id == 6 || $game->modalidade_id == 7) {
@@ -992,7 +992,7 @@ class BichaoController extends Controller
             'prize' => $game->vencedor_id > 0 ? 1 : 0,
             'aposta' => str_pad(join(' - ', $apostas), 2, 0, STR_PAD_LEFT),
             'premios' => join('°, ', $premios),
-            'premio_maximo' => number_format($premioMaximo, 2),
+            'premio_maximo' => number_format($premioMaximo, 2, '.', ''),
         ];
 
         if ($tipo == "pdf") {
