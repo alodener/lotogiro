@@ -38,7 +38,7 @@ class Convert extends Component
 
         if($myOldBonus >= $this->valueConvert) {
 
-            $this->user->balance += ($this->valueConvert + ($this->valueConvert * ($this->user->commission/100)));
+            $this->user->balance += $this->valueConvert;
             $this->user->bonus -= $this->valueConvert;
             
             $this->user->save();
