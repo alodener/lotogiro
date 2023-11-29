@@ -73,7 +73,7 @@ class Wallet
 
                    
                     
-                    if($user->commission > 0){ 
+                   /* if($user->commission > 0){ 
                         TransactBalance::create([
                             'user_id_sender' => 4,
                             'user_id' => $user->id,
@@ -83,9 +83,9 @@ class Wallet
                             'type' => 'Bonus de recarga efetuada por meio da plataforma',
                             'wallet' => 'bonus'
                         ]);
-                    }
+                    }*/
                     
-                    $user->balance += $newRechargeOrder->value + $commission;
+                    $user->balance += $newRechargeOrder->value;
                     $user->save();
 
                     $rechargeOrderNotification = RechargeOrder::where('reference', $reference)->where('status', 1)->first();

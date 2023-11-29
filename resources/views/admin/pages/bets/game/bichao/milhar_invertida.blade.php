@@ -76,7 +76,7 @@
                     </div>
                     <div class="col-md-5 col-12">
                         <button id="btn-gerar-milhar" onclick="insere_valor()" type="button"
-                            class="btn btn-secondary">{{ trans('admin.bichao.gerarM') }}</button>
+                            class="btn btn-secondary">{{ trans('admin.bichao.gerarA') }}</button>
                     </div>
                 </div>
                 <hr />
@@ -149,6 +149,7 @@
                             <path
                                 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z" />
                         </svg>
+                        <a href="#" id="calculate-award-btn">calcular</a>
                     </p>
                 </div>
             </div>
@@ -232,6 +233,7 @@
         integrity="sha512-pF+DNRwavWMukUv/LyzDyDMn8U2uvqYQdJN0Zvilr6DDo/56xPDZdDoyPDYZRSL4aOKO/FGKXTpzDyQJ8je8Qw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
+            const field_size = parseInt('{{$game_limit}}');
             const award = parseInt('{{$modalidade->multiplicador}}');
             const initial_value = 0;
             const button_first = $('#btn-award-first');
@@ -245,13 +247,18 @@
 
             function checkGame() {
                 const games = $('#input-milhar').val().split(',');
-                const match = games.filter((item) => item.length === 4);
+                const match = games.filter((item) => item.length >= 4 && item.length <= field_size);
                 return games.length === match.length;
             }
 
             $('#input-milhar').change(function() {
-                calculate_awards();
+                // calculate_awards();
             });
+
+            $('#calculate-award-btn').click(function(ev) {
+                ev.preventDefault();
+                calculate_awards();
+            })
 
             $('#btn-add-to-chart').click(async function() {
                 const option_award = validate_award();
@@ -263,7 +270,7 @@
                 if (!option_award > 0) return alert('Selecione um dos prêmios');
                 if (!value > 0) return alert('Insira um valor pra aposta');
                 if (!client_id > 0) return alert('Escolha um cliente');
-                if (!checkGame()) return alert('O jogo precisa ser um milhar');
+                if (!checkGame()) return alert(`Os jogos precisam ter entre 3 e ${field_size} números`);
 
                 award_type.sort();
                 
@@ -291,6 +298,7 @@
                 const award_total = parseInt('{{$modalidade->multiplicador}}');
                 const option_award = validate_award() === 6 ? 5 : validate_award();
                 const game = $('#input-milhar').val();
+                // const divider = getFatorialInvertidoMilhar(game);
 
                 if (!checkGame()) return;
 
@@ -306,7 +314,7 @@
                         $('#message-no-prize').addClass('hide');
 
                         $('#price_award_check').hide();
-                        const { premio_maximo } = data;
+                        const { premio_maximo, divider } = data;
                         if (premio_maximo === 0) {
                             $('#message-no-prize').removeClass('hide');
                             return;
@@ -318,11 +326,10 @@
                         if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
         
                         const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
-        
                         $('#price_award_check').hide();
                         if (value_input_bet < limit_minimum_bet) {
                             message_minimum.removeClass('hide');
-                        } else if (!limit_maximum_bet > 0 || value_input_bet > limit_maximum_bet) {
+                        } else if (!limit_maximum_bet > 0 || (value_input_bet / divider) > limit_maximum_bet) {
                             $('#maximum-prize-value').text(premio_maximo.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                             message_maximum.removeClass('hide');
                         } else {
@@ -341,9 +348,8 @@
                             } else if (option_award == 6) {
                                 value = (award_total / 5);
                             }
-        
-                            const result = value * value_input_bet;
-        
+                            const result = value * (value_input_bet / divider);
+
                             if (result > 0) {
                                 $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
                             } else {
@@ -357,20 +363,25 @@
             }
 
             input_value_bet.keyup(function() {
-                calculate_awards();
+                // calculate_awards();
             });
 
             function insere_valor() {
                 const btn_gerar_milhar = $('#btn-gerar-milhar');
                 const input_milhar = $('#input-milhar');
+                let value = '';
 
-                const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}`;
+                for (i = 0; i < field_size; i++) {
+                    value = value + randomNumber(0, 9);
+                }
+
+                // const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}`;
                 if (!input_milhar.val()) return input_milhar.val(value);
 
                 const old = input_milhar.val().split(',');
                 old.push(value);
                 input_milhar.val(old.join(','));
-                calculate_awards();
+                // calculate_awards();
             }
 
             function button_first_award() {
@@ -383,7 +394,7 @@
                     button_first.removeClass('active');
                     award_type = award_type = award_type.filter((i) => i != 1);
                 }
-                calculate_awards();
+                // calculate_awards();
                 toggleAll();
             }
 
@@ -397,7 +408,7 @@
                     button_second.removeClass('active');
                     award_type = award_type = award_type.filter((i) => i != 2);
                 }
-                calculate_awards();
+                // calculate_awards();
                 toggleAll();
             }
 
@@ -411,7 +422,7 @@
                     button_third.removeClass('active');
                     award_type = award_type = award_type.filter((i) => i != 3);
                 }
-                calculate_awards();
+                // calculate_awards();
                 toggleAll();
             }
 
@@ -425,7 +436,7 @@
                     button_fourth.removeClass('active');
                     award_type = award_type = award_type.filter((i) => i != 4);
                 }
-                calculate_awards();
+                // calculate_awards();
                 toggleAll();
             }
 
@@ -439,7 +450,7 @@
                     button_fifth.removeClass('active');
                     award_type = award_type = award_type.filter((i) => i != 5);
                 }
-                calculate_awards();
+                // calculate_awards();
                 toggleAll();
             }
 
@@ -469,7 +480,7 @@
                     button_first_to_fifth.removeClass('active');
                     award_type = [];
                 }
-                calculate_awards()
+                // calculate_awards()
             }
 
             function toggleAll() {
@@ -484,7 +495,7 @@
                 } else {
                     $('#btn-award-first-to-fifth').removeClass('active');
                 }
-                calculate_awards();
+                // calculate_awards();
             }
 
             function validate_award() {

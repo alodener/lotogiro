@@ -167,6 +167,8 @@
                             if (strval($game->game_1) > 0) $games[] = $game->game_1;
                             if (strval($game->game_2) > 0) $games[] = $game->game_2;
                             if (strval($game->game_3) > 0) $games[] = $game->game_3;
+                            if (strval($game->game_4) > 0) $games[] = $game->game_4;
+                            if (strval($game->game_5) > 0) $games[] = $game->game_5;
                         ?>
                         <tr>
                             <td>
