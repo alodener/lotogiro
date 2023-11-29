@@ -101,6 +101,7 @@ class Table extends Component
         $query
             ->when($this->dateStart, fn($query, $search) => $query->whereDate('created_at', '>=', $filterRange['dateStart'])
                 ->whereDate('created_at', '<=', $filterRange['dateEnd']));
+                ->orderBy('created_at', 'desc'));
         $query = $this->filterStatus($query);
         $query = $this->filterUser($query);
         $query = $this->sumValues($query);
