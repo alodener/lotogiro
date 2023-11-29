@@ -100,7 +100,7 @@ class Table extends Component
         $filterRange = $this->filterRange();
         $query
             ->when($this->dateStart, fn($query, $search) => $query->whereDate('created_at', '>=', $filterRange['dateStart'])
-                ->whereDate('created_at', '<=', $filterRange['dateEnd']));
+                ->whereDate('created_at', '<=', $filterRange['dateEnd'])
                 ->orderBy('created_at', 'desc'));
         $query = $this->filterStatus($query);
         $query = $this->filterUser($query);
