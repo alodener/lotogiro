@@ -256,6 +256,8 @@ class Table extends Component
         $query
             ->when($this->range, fn($query, $search) => $query->whereDate('created_at', '>=', $filterRange['dateStart'])
                 ->whereDate('created_at', '<=', $filterRange['dateEnd']));
+                ->orderBy('created_at', 'desc'));
+        
         $query = $this->filterUser($query);
         $query = $this->filterStatus($query);
         
