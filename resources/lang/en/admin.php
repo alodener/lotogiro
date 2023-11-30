@@ -330,7 +330,7 @@ return [
     ],
 
     'game-types' => [
-        'game-type' => 'Game type',
+        'game-type' => 'New Game Type',
         'multiplicator' => 'Multiplier',
         'max-bet' => 'Maximum in Reais',
         'max-repeated' => 'Repeated Games Limit',
@@ -343,7 +343,7 @@ return [
         'game-type-update-button' => 'Update Game Type',
         'new-game-type' =>  'New Game Type',
         'edit-game-type' => 'Edit Game Type',
-        'list-game-type' => 'Game Types',
+        'list-game-type' => 'New Game Type',
         'table-id' => 'Id',
         'table-name' => 'Name',
         'table-created-at' => 'Creation',

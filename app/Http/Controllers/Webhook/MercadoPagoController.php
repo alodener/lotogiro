@@ -21,7 +21,7 @@ class MercadoPagoController extends Controller
 
         if (isset($request['data'])) {
             $payment = Payment::find_by_id($request['data']['id']);
-    
+
             if ($payment->status == 'approved') {
                 $data = new \stdClass;
                 $data->status = 'approved';

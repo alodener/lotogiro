@@ -24,6 +24,16 @@ class ManualRecharge extends Component
         $this->dateStart = Carbon::now()->format('d/m/Y');
         $this->dateEnd = Carbon::now()->format('d/m/Y');
     }
+    public function search()
+    {
+        if (is_null($this->dateStart) && is_null($this->dateEnd)) {
+            $this->addError('dateFieldsFilled', 'Data missing');
+            return;
+        }
+        $this->resetErrorBag('dateFieldsFilled');
+    }
+
+
     public function render()
     {
         $admins = [];
@@ -67,13 +77,6 @@ class ManualRecharge extends Component
                    // $endStart = $this->dateEnd;
                  $periodo =   [Carbon::createFromFormat('d/m/Y', $this->dateStart)->format('Y-m-d') . ' 00:00:00',
                 Carbon::createFromFormat('d/m/Y', $this->dateEnd)->format('Y-m-d') . ' 23:59:59'];
-                   /* if(!Carbon::hasFormat($dateStart, 'Y-m-d')){
-                        $dateStart = Carbon::createFromFormat('d/m/Y', $this->dateStart);
-                    }
-                    if(!Carbon::hasFormat($endStart, 'Y-m-d')){
-                        $endStart = Carbon::createFromFormat('d/m/Y', $this->dateEnd);
-                    }*/
-
                     return $q->whereBetween('created_at', $periodo);
                 }
             })

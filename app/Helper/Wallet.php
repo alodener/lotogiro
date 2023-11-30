@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\TransactBalance;
 use App\Helper\Configs;
 use App\Helper\MensagemTelegram;
+use App\Notifications\RechargeProcessedNotification;
 
 class Wallet
 {
@@ -72,7 +73,7 @@ class Wallet
 
                    
                     
-                    if($user->commission > 0){ 
+                   /* if($user->commission > 0){ 
                         TransactBalance::create([
                             'user_id_sender' => 4,
                             'user_id' => $user->id,
@@ -82,10 +83,16 @@ class Wallet
                             'type' => 'Bonus de recarga efetuada por meio da plataforma',
                             'wallet' => 'bonus'
                         ]);
-                    }
+                    }*/
                     
-                    $user->balance += $newRechargeOrder->value + $commission;
+                    $user->balance += $newRechargeOrder->value;
                     $user->save();
+
+                    $rechargeOrderNotification = RechargeOrder::where('reference', $reference)->where('status', 1)->first();
+                    if($rechargeOrderNotification != null){
+                    $user = User::where('id', $rechargeOrderNotification->user_id )->first();
+                    $user->notify(new RechargeProcessedNotification($user, $rechargeOrderNotification));
+                }
 
 
                 $telegrambot = Configs::getTelegramUrlBot();                

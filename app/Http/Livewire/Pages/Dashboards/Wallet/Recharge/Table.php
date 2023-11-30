@@ -127,7 +127,9 @@ class Table extends Component
                     </div>
                     <div class='input-group mb-3'>
                         <img src='data:image/gif;base64,$base64' style='max-width:250px;margin:auto'>
-                    </div>'",
+                    </div>'
+                    <div><button class='btn btn-info btn-md' onclick='redirectPix()'>Concluído</button></div>",
+
         ]);
     }
 

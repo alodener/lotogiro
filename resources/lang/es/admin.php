@@ -330,7 +330,7 @@ return [
     ],
 
     'game-types' => [
-        'game-type' => 'Tipo de Juego',
+        'game-type' => 'Nuevo Tipo de Juego',
         'multiplicator' => 'Multiplicador',
         'max-bet' => 'Máximo en Reales',
         'max-repeated' => 'Límite de juegos repetidos',
@@ -343,7 +343,7 @@ return [
         'game-type-update-button' => 'Actualizar tipo de juego',
         'new-game-type' =>  'Nuevo tipo de juego',
         'edit-game-type' => 'Editar tipo de juego',
-        'list-game-type' => 'Tipo de Juego',
+        'list-game-type' => 'Nuevo Tipo de Juego',
         'table-id' => 'Id',
         'table-name' => 'Nombre',
         'table-created-at' => 'Creación',

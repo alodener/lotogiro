@@ -36,7 +36,7 @@
 
                                         <div class="input-group-append bt-recharge">
                                              @if(config('services.activeGateway') == 'MP')
-                                                 <button wire:click.prevent="callMP" type="submit"
+                                                 <button wire:click.prevent="callMPPix" type="submit"
                                                          @if($valueAdd <= 0.99) disabled @endif
 
                                                         class="btn btn-info btn-md btn-block">{{ trans('admin.lwIndicated.cont') }} {{$valueAdd}}</button>
@@ -50,12 +50,6 @@
                                                      @if($valueAdd <= 9.99) disabled @endif
                                                      class="btn btn-info btn-md btn-block"> {{ trans('admin.lwIndicated.cont') }} {{$valueAdd}}</button>
                                              @endif
-                                        </div>
-                                        <div class="input-group-append mr-2 bt-recharge">
-                                             <button wire:click.prevent="callZoopPix" type="submit"
-                                                    @if($valueAdd <= 0.99) disabled @endif
-
-                                                class="btn btn-info btn-md btn-block">Pix automático</button>
                                         </div>
                                     </div>
                                 </div>
@@ -86,9 +80,13 @@
             VMasker(document.getElementById("valueAdd")).maskMoney();
         }
 
-        function redirect(){
+                function redirect(link){
            
+            window.open(link, "_blank");
             window.location.href = 'recharge-order';
         }
+        function redirectPix(){
+           window.location.href = 'recharge-order';
+       }
     </script>
 @endpush

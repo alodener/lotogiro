@@ -477,12 +477,12 @@ class UserController extends Controller
             if($request->has('balance') && !is_null($request->balance) && $request->balance > 0){
                 if($user->balance != $request->balance ){
                 $oldBalance = $user->balance;
-                $oldBonus = $user->bonus;
+               // $oldBonus = $user->bonus;
                 $balanceRequest = (float) Money::toDatabase($request->balance);
-                $newBalanceRequest = $balanceRequest + (($user->commission/100) * $balanceRequest);
+                $newBalanceRequest = $balanceRequest ;
                 $newBalance = $user->balance +  $newBalanceRequest;
-                $newBonus = $user->bonus + ($user->commission/100) * $balanceRequest;
-                //$newBalance = $user->balance +  $balanceRequest;
+               // $newBonus = $user->bonus + ($user->commission/100) * $balanceRequest;
+                $newBalance = $user->balance +  $balanceRequest;
                 }
             }
         
@@ -523,11 +523,11 @@ class UserController extends Controller
             }
 
             // armazena os valores originais dos campos que serão rastreados
-            $userRoles = [];
+            $userRolesLOG = [];
             foreach ($user->roles as $role){
-                $userRoles[] = $role->id;
+                $userRolesLOG[] = $role->id;
             }
-            $user_string_roles = implode(",", $userRoles);
+            $user_string_roles = implode(",", $userRolesLOG);
 
 
             //valor antigo
