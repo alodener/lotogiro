@@ -10,26 +10,28 @@ use MercadoPago\Item;
 use MercadoPago\Preference;
 use MercadoPago\SDK;
 use App\Helper\ZoopGateway;
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use App\Helper\Configs;
 use App\Models\System;
-use Faker\Extension\Helper;
-
+use App\Services\GatewayPayment\GatewayPaymentService;
+use chillerlan\QRCode\QRCode;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class Table extends Component
 {
     use LivewireAlert;
 
     public $valueAdd;
+    public $enableButton = false;
 
     public function callMP()
     {
         $tokenMP = Configs::getTokenMercadoPago();
 
         SDK::setAccessToken($tokenMP); // Either Production or SandBox AccessToken
-        
-        $preference = new Preference(); 
+
+        $preference = new Preference();
         $item = new Item();
 
         $item->title = "Recarga " . ENV("nome_sistema");
@@ -213,7 +215,7 @@ class Table extends Component
         $order->update(['link' => $pix->copiaecola, 'reference' =>$pix->txid]);
         $baseURL = env('APP_URL');
         $url = $baseURL . "/admin/dashboards/wallet/recharge-order";
-        
+
         $this->alert('info', 'Pronto!!', [
             'position' => 'center',
             'timer' => null,
@@ -228,6 +230,68 @@ class Table extends Component
         ]);
     }
 
+    public function rechargeWithPix()
+    {
+        if (is_null($this->valueAdd)) {
+            return;
+        }
+
+        if ($this->valueAdd <= 0.99) {
+            return;
+        }
+
+        $current = System::config('Gateway de Pagamento')->first();
+
+        $recharge = auth()
+            ->user()
+            ->recharges()
+            ->create([
+                'value' => Money::toDatabase($this->valueAdd),
+                'status' => 0,
+                'gateway' => $current->value
+            ]);
+
+
+        $order = [
+            'description' => "Recarga no valor de {$this->valueAdd} | " . ENV("nome_sistema"),
+            'payer' => [
+                'email' => auth()->user()->email
+            ],
+            'transaction_amount' => intval($this->valueAdd)
+        ];
+
+        $response =  (new GatewayPaymentService($recharge->reference))
+            ->gateway()
+            ->transaction()
+            ->create($order);
+
+        try {
+            $recharge->update(['link' => $response]);
+            $qrCode = (new QRCode())->render($response);
+
+            $this->alert('info', 'Pronto!!', [
+                'position' => 'center',
+                'timer' => null,
+                'toast' => false,
+                'html' => "
+                    Seu código Copia e Cola está pronto, gostaria de pagar agora?<br><br>
+                    <div class='input-group mb-3'>
+                        <input type='text' value='{$response}' readonly class='form-control' placeholder='qrCodeMP' aria-label='qrCodeMP' aria-describedby='button-addon2' id='input_output'>
+                        <button class='btn btn-outline-secondary' onclick='copyText()' type='button' id='copyPix'>Copiar</button>
+                    </div>
+                    <div class='input-group mb-3'>
+                        <img src='{$qrCode}' style='max-width:250px;margin:auto'>
+                    </div>'
+                    <div>
+                        <button class='btn btn-info btn-md' onclick='redirectPix()'>Concluído</button>
+                    </div>
+                "
+            ]);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            $this->alert('error', $e->getMessage(), ['position' => 'center', 'toast' => true]);
+        }
+    }
 
     public function render()
     {

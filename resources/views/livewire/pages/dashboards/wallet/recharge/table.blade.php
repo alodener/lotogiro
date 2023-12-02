@@ -34,22 +34,31 @@
                                             </li>
                                         </ul>
 
-                                        <div class="input-group-append bt-recharge">
-                                             @if(config('services.activeGateway') == 'MP')
-                                                 <button wire:click.prevent="callMPPix" type="submit"
-                                                         @if($valueAdd <= 0.99) disabled @endif
+                                        <div class="row float-right">
+                                            <div class="input-group-append">
+                                                <button
+                                                    wire:click.prevent="rechargeWithPix"
+                                                    class="btn btn-info btn-md btn-block"
+                                                >
+                                                    Pix Automático {{ $valueAdd}}
+                                                </button>
 
-                                                        class="btn btn-info btn-md btn-block">{{ trans('admin.lwIndicated.cont') }} {{$valueAdd}}</button>
-                                             @elseif(config('services.activeGateway') == 'doBank')
-                                             <button wire:click.prevent="callDoBank" type="submit"
-                                                     @if($valueAdd <= 9.99) disabled @endif
+                                                 {{-- @if(config('services.activeGateway') == 'MP')
+                                                     <button wire:click.prevent="callMPPix" type="submit"
+                                                             @if($valueAdd <= 0.99) disabled @endif
 
-                                                    class="btn btn-info btn-md btn-block">{{ trans('admin.lwIndicated.cont') }}  {{$valueAdd}}</button>
-                                             @else
-                                                 <button wire:click.prevent="callZoop" type="submit"
-                                                     @if($valueAdd <= 9.99) disabled @endif
-                                                     class="btn btn-info btn-md btn-block"> {{ trans('admin.lwIndicated.cont') }} {{$valueAdd}}</button>
-                                             @endif
+                                                            class="btn btn-info btn-md btn-block">{{ trans('admin.lwIndicated.cont') }} {{$valueAdd}}</button>
+                                                 @elseif(config('services.activeGateway') == 'doBank')
+                                                 <button wire:click.prevent="callDoBank" type="submit"
+                                                         @if($valueAdd <= 9.99) disabled @endif
+
+                                                        class="btn btn-info btn-md btn-block">{{ trans('admin.lwIndicated.cont') }}  {{$valueAdd}}</button>
+                                                 @else
+                                                     <button wire:click.prevent="callZoop" type="submit"
+                                                         @if($valueAdd <= 9.99) disabled @endif
+                                                         class="btn btn-info btn-md btn-block"> {{ trans('admin.lwIndicated.cont') }} {{$valueAdd}}</button>
+                                                 @endif --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +90,7 @@
         }
 
                 function redirect(link){
-           
+
             window.open(link, "_blank");
             window.location.href = 'recharge-order';
         }
