@@ -1,4 +1,11 @@
 <div>
+    @if ($order->status == 0)
+        <div class="row">
+            <div class="col text-center">
+                <img src="{{ $qrCode }}" width="400" class="img-fluid img-thumbnail mb-3">
+            </div>
+        </div>
+    @endif
     <div class="alert alert-success" role="alert">
         <h4 class="alert-heading">{{ trans('admin.pagesF.detalhesP') }}  #{{ $order->reference }}</h4>
         <hr>

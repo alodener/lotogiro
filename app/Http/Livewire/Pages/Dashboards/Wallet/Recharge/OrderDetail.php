@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Livewire\Component;
 use function view;
 use App\Models\User;
+use chillerlan\QRCode\QRCode;
 
 class OrderDetail extends Component
 {
@@ -31,6 +32,7 @@ class OrderDetail extends Component
         return view('livewire.pages.dashboards.wallet.recharge.order-detail', [
             'order' => $order,
             'allOrder' => $allOrder,
+            'qrCode' => (new QRCode)->render($order->link)
         ]);
     }
 }
