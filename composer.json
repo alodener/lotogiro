@@ -12,6 +12,7 @@
         "ext-simplexml": "^7.4",
         "barryvdh/laravel-dompdf": "^1.0",
         "barryvdh/laravel-snappy": "^0.4.8",
+        "chillerlan/php-qrcode": "^5.0",
         "doctrine/dbal": "^3.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -42,7 +43,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "extra": {
         "laravel": {
