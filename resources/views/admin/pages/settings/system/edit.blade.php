@@ -28,9 +28,9 @@
 
     <form action="{{route('admin.settings.systems.update', ['system' => $system->id])}}" method="POST" enctype="multipart/form-data">
         @method('PUT')
-                @csrf    
+                @csrf
                 <div class="card-body">
-     
+
                     <div class="form-row" >
                         <div class="col-md-6">
                             <label for="file">{{ trans('admin.pagesF.nomeConfig') }}:</label>
@@ -38,18 +38,18 @@
 
                             <label for="file">{{$system->nome_config}}</label>
                                 <br>
- 
+
                             @if ($system->nome_config == "Logo do Sistema")
                                 <img src="{{ url("storage/{$system->value}")}}"
                                  class="brand-image  elevation-3"
                                 style="opacity: .8">
-                            @endif    
+                            @endif
 
                         </div>
                         @if ($system->nome_config == "Accesstoken MercadoPago")
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label> 
+                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label>
                                     <input type="text" name="token" class="form-control ">
                                     @error('text')
                                     <span class="invalid-feedback" role="alert">
@@ -57,9 +57,38 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>     
-                            @endif           
-                            
+                            </div>
+                        @endif
+
+                        @if ($system->nome_config == "Accesstoken OpenPix")
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label>
+                                    <input type="text" name="token" class="form-control">
+                                    @error('text')
+                                        <span class="invalid-feedback" role="alert">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($system->nome_config == "Gateway de Pagamento")
+                            <div class="col-md-6">
+                                <label for="">Gateway de Pagamento Padrão</label>
+                                <div class="form-group">
+                                    <select name="token" class="form-control">
+                                        @foreach ($available_gateways as $available)
+                                            <option value="{{ $available['id'] }}">
+                                                {{ $available['label'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+
                             @if ($system->nome_config == "Plano de Carreira")
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -79,10 +108,10 @@
                                                         <b>   {{ trans('admin.pagesF.desativar') }} </b>
                                                     </label>
                                             </div>
-                                            @endif 
+                                            @endif
 
                                     @if ($system->value == "Ativado" )
-                                    
+
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Ativado" checked>
                                         <label class="form-check-label" for="exampleRadios1">
@@ -98,13 +127,13 @@
                                    @endif
                                     </div>
                                 </div>
-                            </div>     
-                            @endif    
+                            </div>
+                            @endif
 
                             @if ($system->nome_config == "E-mail/Remetente")
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="alias">E-mail</label> 
+                                    <label for="alias">E-mail</label>
                                     <input type="text" name="mail" class="form-control ">
                                     <br>
                                     <label for="alias">{{ trans('admin.pagesF.remetente') }}</label>
@@ -115,8 +144,8 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>     
-                            @endif       
+                            </div>
+                            @endif
 
                             @if ($system->nome_config == "Bichao")
                             <div class="col-md-6">
@@ -137,10 +166,10 @@
                                                         <b>   {{ trans('admin.pagesF.desativar') }} </b>
                                                     </label>
                                             </div>
-                                            @endif 
+                                            @endif
 
                                     @if ($system->value == "Ativado" )
-                                    
+
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Ativado" checked>
                                         <label class="form-check-label" for="exampleRadios1">
@@ -156,20 +185,20 @@
                                    @endif
                                     </div>
                                 </div>
-                            </div>     
-                            @endif 
-                                                           
-              
+                            </div>
+                            @endif
+
+
                         @if ($system->nome_config == "Logo do Sistema")
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="alias">{{ trans('admin.pagesF.anexArq') }}</label> 
+                                <label for="alias">{{ trans('admin.pagesF.anexArq') }}</label>
                                 <input type="file"  name="image" class="form-control ">
                                 @error('file')
                                     <span class="invalid-feedback" role="alert">
                                         {{ $message }}
                                     </span>
-                                @enderror   
+                                @enderror
                             </div>
                         </div>
                         @endif
@@ -177,7 +206,7 @@
                         @if ($system->nome_config == "TelegramUrlBot")
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label> 
+                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label>
                                     <input type="text" name="telegrambot" class="form-control ">
                                     @error('text')
                                     <span class="invalid-feedback" role="alert">
@@ -185,13 +214,13 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>     
-                            @endif    
-                            
+                            </div>
+                            @endif
+
                             @if ($system->nome_config == "TelegramChatId")
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label> 
+                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label>
                                     <input type="text" name="telegramchatid" class="form-control ">
                                     @error('text')
                                     <span class="invalid-feedback" role="alert">
@@ -199,13 +228,13 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>     
-                            @endif           
+                            </div>
+                            @endif
 
                             @if ($system->nome_config == "Valor Minimo")
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label> 
+                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label>
                                     <input type="text" name="valorMinimo" class="form-control ">
                                     @error('text')
                                     <span class="invalid-feedback" role="alert">
@@ -213,13 +242,13 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>     
-                            @endif           
+                            </div>
+                            @endif
 
                             @if ($system->nome_config == "Horario Maximo")
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label> 
+                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label>
                                     <input type="text" name="horarioMaximo" class="form-control ">
                                     @error('text')
                                     <span class="invalid-feedback" role="alert">
@@ -227,14 +256,14 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>     
-                            @endif           
-                            
-                        
+                            </div>
+                            @endif
+
+
                          </div>
-                </div>    
+                </div>
         </div>
-    
+
     </div>
 </div>
     <div class="row">
@@ -243,13 +272,13 @@
                                 <button type="button" class="btn btn-block btn-info">{{ trans('admin.pagesF.voltTela') }}</button>
                             </a>
                         </div>
-                        <div class="col-md-6 mb-3">       
-                            <button type="submit" class="btn btn-block btn-success">  
+                        <div class="col-md-6 mb-3">
+                            <button type="submit" class="btn btn-block btn-success">
                             {{ trans('admin.pagesF.salvConfig') }} </button>
-                            
+
                         </div>
                     </div>
-                   
-                </form>   
+
+                </form>
 
 @endsection

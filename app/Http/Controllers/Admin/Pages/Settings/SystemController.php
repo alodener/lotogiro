@@ -4,15 +4,8 @@ namespace App\Http\Controllers\Admin\Pages\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\System;
-use Carbon\Carbon;
-use FontLib\Table\Type\post;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
-use App\Helper\Pagination;
-use App\Models\UsersHasPoints;
-
-
-
+use App\Services\GatewayPayment\GatewayPaymentService;
 
 class SystemController extends Controller
 {
@@ -33,11 +26,11 @@ class SystemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {     
+    {
 
         $system = System::all() ;
-        
-       
+
+
         return view ('admin.pages.settings.system.sistema', ['system' => $system]);
     }
 
@@ -58,7 +51,7 @@ class SystemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, System $system)
-    {   
+    {
         //
     }
 
@@ -81,8 +74,12 @@ class SystemController extends Controller
      */
     public function edit(System $system)
     {
-        
-        return view('admin.pages.settings.system.edit',['system' => $system]);
+        $available_gateways = (new GatewayPaymentService())->gateways();
+
+        return view('admin.pages.settings.system.edit', [
+            'system' => $system,
+            'available_gateways' => $available_gateways
+        ]);
     }
 
     /**
@@ -94,42 +91,42 @@ class SystemController extends Controller
      */
     public function update(Request $request, System $system)
     {
-        
-        $data = $request->all();        
-        
+
+        $data = $request->all();
+
         //Token
         if(isset($request->token))
         {
             $system->value = $data['token'];
-        
-        } 
-       
+
+        }
+
         //Plano de carreira
         else if(isset ($request->exampleRadios))
         {
-            
+
             $system->value = $data['exampleRadios'];
-            
+
         }
         else if(isset ($request->exampleRadios2))
         {
-            
+
             $system->value = $data['exampleRadios2'];
-            
+
         }
 
         //Bichão
          if(isset ($request->exampleRadios3))
         {
-            
+
             $system->value = $data['exampleRadios'];
-            
+
         }
         else if(isset ($request->exampleRadios4))
         {
-            
+
             $system->value = $data['exampleRadios2'];
-            
+
         }
         //email/remetente
 
@@ -145,23 +142,23 @@ class SystemController extends Controller
             {
                 $image = $request->image->store('logo');
                 $data['logo'] = $image;
-             
+
                 $system->value = $data['logo'];
-               
+
              }
-        }   
+        }
         //telegramUrlBot
         if(isset($request->telegrambot))
         {
             $system->value = $data['telegrambot'];
-        
+
         }
         //TelegramChatid
         if(isset($request->telegramchatid))
         {
             $system->value = $data['telegramchatid'];
-        
-        }  
+
+        }
 
         if(isset($request->valorMinimo)) {
             $system->value = $data['valorMinimo'];
@@ -182,7 +179,7 @@ class SystemController extends Controller
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao cadastrar a imagem, tente novamente'
             ]);
    }
-    
+
     }
 
     /**
