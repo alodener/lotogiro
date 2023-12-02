@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +19,11 @@ class RechargeOrder extends Model
         'status',
         'gateway'
     ];
+
+    public function scopeReference(Builder $query, $reference) : void
+    {
+        $query->where('reference', $reference);
+    }
 
     public function user()
     {

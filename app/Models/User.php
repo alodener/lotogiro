@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helper\Pagination;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -84,6 +85,11 @@ class User extends Authenticatable
     public function referrer()
     {
         return $this->belongsTo(User::class, 'indicador', 'id');
+    }
+
+    public function recharges() : HasMany
+    {
+        return $this->hasMany(RechargeOrder::class);
     }
 
     public function getUserQualification()
