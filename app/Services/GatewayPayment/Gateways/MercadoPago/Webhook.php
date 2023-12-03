@@ -2,12 +2,11 @@
 
 namespace App\Services\GatewayPayment\Gateways\MercadoPago;
 
+use App\Helper\Wallet;
 use App\Services\GatewayPayment\Contracts\StatusTransactionInterface;
 use App\Services\GatewayPayment\Contracts\WebhookInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use OpenPix\PhpSdk\ApiErrorException;
-use OpenPix\PhpSdk\Client;
+use stdClass;
 
 class Webhook implements WebhookInterface
 {
@@ -18,7 +17,7 @@ class Webhook implements WebhookInterface
         $this->client = $client;
     }
 
-    public function create(array $config, StatusTransactionInterface $event = 'payment.updated', bool $active = true)
+    public function create(array $config, StatusTransactionInterface $event = null, bool $active = true)
     {
         // code
     }
@@ -35,13 +34,33 @@ class Webhook implements WebhookInterface
 
     public function get(Request $request)
     {
-        return (new MercadoPagoService($request->data['id']))
+        if ($request->action != 'payment.updated') {
+            return;
+        }
+
+        $transaction = (new MercadoPagoService($request->data['id']))
             ->transaction()
             ->get();
+
+        switch ($transaction['status']) {
+            case 'approved':
+                $this->transactionReceived($transaction['external_reference']);
+                break;
+        }
     }
 
     public function setting(string $command)
     {
         // code
+    }
+
+    protected function transactionReceived($reference) : void
+    {
+        $data = new stdClass;
+        $data->status = 'approved';
+        $data->external_reference = $reference;
+
+        $walletHelper = new Wallet;
+        $walletHelper->updateStatusPayment($data);
     }
 }

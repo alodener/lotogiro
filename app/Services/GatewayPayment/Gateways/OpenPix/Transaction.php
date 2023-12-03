@@ -3,6 +3,7 @@
 namespace App\Services\GatewayPayment\Gateways\OpenPix;
 
 use App\Services\GatewayPayment\Contracts\TransactionInterface;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use OpenPix\PhpSdk\ApiErrorException;
 use OpenPix\PhpSdk\Client;
@@ -20,14 +21,20 @@ class Transaction implements TransactionInterface
 
     public function create(array $payment)
     {
+        $payment['value'] = $payment['transaction_amount'] * 100;
+        $data = array_merge($payment, ['correlationID' => $this->correlationID]);
+
         try {
             return $this->client
                 ->charges()
-                ->create(array_merge($payment, ['correlationID' => $this->correlationID]));
+                ->create($data)['brCode'];
 
         } catch (ApiErrorException $e) {
             Log::error($e);
-            return $e->getMessage();
+            return new Exception($e->getMessage(), $e->getCode());
+        } catch (Exception $e) {
+            Log::error($e);
+            return new Exception($e->getMessage(), $e->getCode());
         }
     }
 

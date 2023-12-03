@@ -2,18 +2,18 @@
 
 namespace App\Services\GatewayPayment\Gateways\OpenPix;
 
+use App\Helper\Wallet;
 use App\Services\GatewayPayment\Contracts\StatusTransactionInterface;
 use App\Services\GatewayPayment\Contracts\WebhookInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use OpenPix\PhpSdk\ApiErrorException;
 use OpenPix\PhpSdk\Client;
+use stdClass;
 
 class Webhook implements WebhookInterface
 {
     protected Client $client;
-
-
 
     public function __construct(Client $client)
     {
@@ -65,9 +65,6 @@ class Webhook implements WebhookInterface
 
     public function get(Request $request)
     {
-        $request->event;
-        $request->charge['correlationID'];
-
         $isWebhookValid = $this->client
             ->webhooks()
             ->isWebhookValid($request->getContent(), $request->header('x-webhook-signature'));
@@ -78,7 +75,7 @@ class Webhook implements WebhookInterface
 
         switch ($request->event) {
             case StatusTransaction::TRANSACTION_RECEIVED:
-                Log::info("Pagamento com ID: {$request->charge['correlationID']} foi efetuado com sucesso");
+                $this->transactionReceived($request->charge['correlationID']);
                 break;
         }
     }
@@ -86,5 +83,15 @@ class Webhook implements WebhookInterface
     public function setting(string $command)
     {
         // code
+    }
+
+    protected function transactionReceived($reference) : void
+    {
+        $data = new stdClass;
+        $data->status = 'approved';
+        $data->external_reference = $reference;
+
+        $walletHelper = new Wallet;
+        $walletHelper->updateStatusPayment($data);
     }
 }
