@@ -2,6 +2,7 @@
 
 namespace App\Services\GatewayPayment\Gateways\OpenPix;
 
+use App\Models\System;
 use OpenPix\PhpSdk\Client;
 use Illuminate\Support\Str;
 use App\Services\GatewayPayment\Contracts\CustomerInterface;
@@ -16,7 +17,8 @@ class OpenPixGatewayService implements GatewayServiceInterface
 
     public function __construct($correlationID = null)
     {
-        $this->client = Client::create(config('payment.openpix.credential.app_id'));
+        $this->client = Client::create(System::config('Accesstoken OpenPix')->first()->value);
+
 
         is_null($correlationID)
             ? $this->setCorrelationID()

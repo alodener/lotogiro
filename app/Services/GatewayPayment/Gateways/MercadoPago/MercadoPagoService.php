@@ -2,6 +2,7 @@
 
 namespace App\Services\GatewayPayment\Gateways\MercadoPago;
 
+use App\Models\System;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use App\Services\GatewayPayment\Contracts\WebhookInterface;
@@ -18,7 +19,7 @@ class MercadoPagoService implements GatewayServiceInterface
     public function __construct(string $correlationID = null)
     {
         $this->client = Http::acceptJson()
-            ->withToken(config('payment.mercadopago.credential.token'))
+            ->withToken(System::config('Accesstoken MercadoPago')->first()->value)
             ->baseUrl($this->baseurl);
 
         is_null($correlationID)
