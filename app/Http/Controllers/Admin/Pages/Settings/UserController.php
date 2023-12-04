@@ -21,8 +21,10 @@ use App\Models\BichaoModalidades;
 use App\Models\LogUsuario;
 
 
+
 class UserController extends Controller
 {
+
     protected $user;
 
     public function __construct(User $user)
@@ -35,25 +37,30 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+   
+
+     public function index(Request $request)
     {
-        if(!auth()->user()->hasPermissionTo('read_user')){
+        if (!auth()->user()->hasPermissionTo('read_user')) {
             abort(403);
         }
 
         if ($request->ajax()) {
-            $user = $this->user->get()->where('id', '<>', auth()->user()->id);
-            return DataTables::of($user)
+            $users = $this->user->where('id', '<>', auth()->user()->id);
+
+            return DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('action', function ($user) {
                     $data = '';
-                    if(auth()->user()->hasPermissionTo('update_user')){
+                    if (auth()->user()->hasPermissionTo('update_user')) {
                         $data .= '<a href="' . route('admin.settings.users.edit', ['user' => $user->id]) . '">
-                        <button class="btn btn-sm btn-warning" title="Editar"><i class="far fa-edit"></i></button>
-                    </a>';
+                            <button class="btn btn-sm btn-warning" title="Editar"><i class="far fa-edit"></i></button>
+                        </a>';
                     }
-                    if(auth()->user()->hasPermissionTo('delete_user')) {
-                        $data .= '<button class="btn btn-sm btn-danger" id="btn_delete_user" user="' . $user->id . '" title="Deletar" data-toggle="modal" data-target="#modal_delete_user"> <i class="far fa-trash-alt"></i></button>';
+                    if (auth()->user()->hasPermissionTo('delete_user')) {
+                        $data .= '<button class="btn btn-sm btn-danger" id="btn_delete_user" user="' . $user->id . '" title="Deletar" data-toggle="modal" data-target="#modal_delete_user">
+                            <i class="far fa-trash-alt"></i>
+                        </button>';
                     }
                     return $data;
                 })
@@ -733,6 +740,9 @@ class UserController extends Controller
 
     public function Balance($userId)
     {
+        
+        $user = User::find($userId);
+
         $historybalance = TransactBalance::with('user', 'userSender')
             ->where('user_id', $userId)
             ->orderBy('created_at', 'desc')

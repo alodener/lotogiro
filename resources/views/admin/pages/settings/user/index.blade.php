@@ -72,6 +72,7 @@
 
 @push('scripts')
 
+    
     <script type="text/javascript">
 
         $(document).on('click', '#btn_delete_user', function () {
@@ -83,29 +84,28 @@
 
         $(document).ready(function () {
             var table = $('#user_table').DataTable({
-                language: {
-                    "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
+            serverSide: true,
+            language: {
+            "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
             "zeroRecords": "{{ trans('admin.pagesF.ndEncont') }}",
             "info": "{{ trans('admin.pagesF.mostrandoPags') }}",
             "infoEmpty": "{{ trans('admin.pagesF.nhmRegs') }}",
             "infoFiltered": "{{ trans('admin.pagesF.filtrado') }}",
             "search" : "{{ trans('admin.pagesF.search') }}",
             "previous": "{{ trans('admin.pagesF.previous') }}",
-            "next": "{{ trans('admin.pagesF.next') }}"
-                },
-                //order:[0, 'desc'],
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('admin.settings.users.index') }}",
-                columns: [
-                    {data: 'id', name: 'id'},
-                    {data: 'name', name: 'name'},
-                    {data: 'email', name: 'email'},
-                    {data: 'ddd', name: 'ddd'},
-                    {data: 'phone', name: 'phone'},
-                    {data: 'created_at', name: 'created_at'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false}
-                ]
+            "next": "{{ trans('admin.pagesF.next') }}" 
+            },
+            processing: true,
+            ajax: "{{ route('admin.settings.users.index') }}",
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'email', name: 'email'},
+                {data: 'ddd', name: 'ddd'},
+                {data: 'phone', name: 'phone'},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
+            ]
             });
         });
         
