@@ -145,7 +145,7 @@
         <div class="col-md-12 extractable-cel">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="game_table">
-                    <thead>
+                    <thead> 
                     <tr>
                         <th>{{ trans('admin.gains.table-id-header') }}</th>
                         <th>{{ trans('admin.bichao.loteria') }}</th>
@@ -155,6 +155,7 @@
                         <th>{{ trans('admin.gains.table-customer-header') }}</th>
                         <th>{{ trans('admin.gains.table-user-header') }}</th>
                         <th>{{ trans('admin.gains.table-status-header') }}</th>
+                        <th>{{ trans('admin.bichao.premios') }}</th>
                         <th>{{ trans('admin.gains.table-value-header') }}</th>
                         <th>{{ trans('admin.gains.table-creation-header') }}</th>
                     </tr>
@@ -163,10 +164,18 @@
                     @forelse($games as $game)
                         <?php
                             $games = [];
+                            $premios = [];
 
                             if (strval($game->game_1) > 0) $games[] = $game->game_1;
                             if (strval($game->game_2) > 0) $games[] = $game->game_2;
                             if (strval($game->game_3) > 0) $games[] = $game->game_3;
+
+                            if ($game['premio_1'] == 1) $premios[] = 1;
+                            if ($game['premio_2'] == 1) $premios[] = 2;
+                            if ($game['premio_3'] == 1) $premios[] = 3;
+                            if ($game['premio_4'] == 1) $premios[] = 4;
+                            if ($game['premio_5'] == 1) $premios[] = 5;
+                            
                         ?>
                         <tr>
                             <td>
@@ -192,6 +201,9 @@
                             </td>
                             <td>
                                @if($game->comission_payment) Pago @else Aberto @endif
+                            </td>
+                            <td>
+                                {{ join('°, ', $premios) }}°
                             </td>
                             <td>
                                 {{ 'R$' . \App\Helper\Money::toReal($game->valor) }}
