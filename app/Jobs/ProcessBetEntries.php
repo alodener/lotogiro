@@ -123,7 +123,6 @@ class ProcessBetEntries implements ShouldQueue
             $game->competition_id = $this->competition->id;
             $game->checked = 1;
             $game->bet_id = $this->bet->id;
-            $game->commission_percentage = $this->user->commission;
             $game->save();
 
             
@@ -133,7 +132,7 @@ class ProcessBetEntries implements ShouldQueue
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $this->competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
-                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $dez, 2, $valor, $resultado);
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $typeGameValue, $dez, 2, $valor, $resultado);
                     
 
                 }
@@ -156,14 +155,17 @@ class ProcessBetEntries implements ShouldQueue
             ];
             $ID_VALUE = $this->user->indicador;
             $storeExtact = ExtractController::store($extract);
-            $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $game->value, $ID_VALUE, $this->user);
-            $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
+            $commissions = Commision::calculationNew($game->value, $game->user_id, '', $game->type_game_value_id);
+
             $planodecarreira = Configs::getPlanoDeCarreira();
             if( $planodecarreira == "Ativado"){
             UsersHasPoints::generatePoints($this->user, $game->value, 'Venda - Jogo de id: ' . $game->id);
             }
-            $game->commission_value = $commissionCalculation;
-            $game->commision_value_pai = $commissionCalculationPai;
+
+            $game->commission_percentage = $commissions['percentage'];
+            $game->commission_value = $commissions['commission'];
+            $game->commision_value_pai = $commissions['commission_pai'];
+            $game->commision_value_avo = $commissions['commission_avo'];
             $game->save();
         }
         $this->bet->status_xml = 2;

@@ -1,0 +1,1 @@
+ALTER TABLE bichao_modalidades ADD bet_limit int DEFAULT 0 AFTER premio_maximo;

@@ -313,9 +313,11 @@ class GameController extends Controller
                 }
 
                 $numbers = explode(',', $request->numbers);
+                //aqui
+
                 sort($numbers, SORT_NUMERIC);
                 $numbers = implode(',', $numbers);
-
+                
                 $typeGameValue = TypeGameValue::find($request['valueId']);
 
                 if(!empty($typeGameValue->max_repeated_games)) {
@@ -372,7 +374,6 @@ class GameController extends Controller
                 $game->numbers = $numbers;
                 $game->competition_id = $competition->id;
                 $game->checked = 1;
-                $game->commission_percentage = auth()->user()->commission;
                 
                 $game->save();
 
@@ -382,7 +383,8 @@ class GameController extends Controller
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
-                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $numbers, 1, $request->value, $request->premio);
+
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $request->valueId, $numbers, 1, $request->value, $request->premio);    
 
                 }
                 
@@ -406,11 +408,12 @@ class GameController extends Controller
                 ];
                 $ID_VALUE = auth()->user()->indicador;
                 $storeExtact = ExtractController::store($extract);
-                $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $request->value, $ID_VALUE);
-                $commissionCalculation = Commision::calculation($game->commission_percentage, $request->value);
+                $commissions = Commision::calculationNew($request->value, $game->user_id, '', $game->type_game_value_id);
 
-                $game->commission_value = $commissionCalculation;
-                $game->commision_value_pai = $commissionCalculationPai;
+                $game->commission_percentage = $commissions['percentage'];
+                $game->commission_value = $commissions['commission'];
+                $game->commision_value_pai = $commissions['commission_pai'];
+                $game->commision_value_avo = $commissions['commission_avo'];
                 $game->save();
 
                 

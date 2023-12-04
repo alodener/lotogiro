@@ -5,7 +5,7 @@
 @section('content')
     <div class="col bg-white p-3">
         @include('admin.pages.bets.game.bichao.top_menu')
-        <hr />
+        <hr/>
         <div class="row">
             <div class="col-md-8 col-12 justify-content-center">
                 <div class="row">
@@ -13,14 +13,14 @@
                         <h1>Bichão da Sorte</h1>
                         <p>{{ trans('admin.bichao.aposte') }} </p>
                          <hr/>
-                       
+                        
                         <p><u>{{ trans('admin.bichao.comofunciona') }} </u></p>
                          <p>
                            
                         {{ trans('admin.bichao.primerpremio') }} 
                          </p>
                          <p>
-                            
+                           
                         {{ trans('admin.bichao.segunpremio') }} 
                          </p>
                          <p>
@@ -30,15 +30,16 @@
                          <p>
                             
                         {{ trans('admin.bichao.fatormult3') }}
+                        
                          </p>
-                            
+                          
                         {{ trans('admin.bichao.fatormult4') }}
                          </p>
                            
                         {{ trans('admin.bichao.fatormult5') }}
                          </p>
-                        
-                        <p>{{ trans('admin.bichao.details') }} <b> {{ trans('admin.bichao.cotacaoo') }} </b></p>
+                      
+                        <p>{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
                     </div>
                 </div>
             </div>
@@ -50,7 +51,7 @@
             <div class="form-group col-md-12">
                 <div wire:ignore>
                     <div class="card-header ganhos-card">
-                        <h4>{{ trans('admin.bichao.client') }} </h4>
+                        <h4>{{ trans('admin.bichao.client') }}</h4>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
@@ -73,7 +74,7 @@
                 </div>
             <input type="hidden" class="form-control" id="type_game" name="type_game" value="" readonly>
         </div>
-        <div class="col-12" id="centena-group">
+        <div class="col-12" id="milhar-group">
             <hr />
             <div class="row align-items-center">
                 <div class="col-md-1 col-6">
@@ -81,11 +82,11 @@
                 </div>
                 <div class="col-md-6 col-6">
                     <div class="input-group mb-3">
-                        <textarea class="form-control" id="input-centena" rows="2" aria-describedby="basic-addon1" style="resize: none;"></textarea>
+                        <textarea class="form-control" id="input-dezena" rows="2" aria-describedby="basic-addon1" style="resize: none;"></textarea>
                     </div>
                 </div>
                 <div class="col-md-5 col-12">
-                    <button id="btn-gerar-centena" onclick="insere_valor()" type="button" class="btn btn-secondary">Gerar Centena</button>
+                    <button id="btn-gerar-dezena" onclick="insere_valor()" type="button" class="btn btn-secondary">{{ trans('admin.bichao.gerarA') }}</button>
                 </div>
             </div>
             <hr />
@@ -223,10 +224,8 @@
         integrity="sha512-pF+DNRwavWMukUv/LyzDyDMn8U2uvqYQdJN0Zvilr6DDo/56xPDZdDoyPDYZRSL4aOKO/FGKXTpzDyQJ8je8Qw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-
         const award = parseInt('{{$modalidade->multiplicador}}');
         const initial_value = 0;
-        const input_value = $('#input_value');
         const button_first = $('#btn-award-first');
         const button_second = $('#btn-award-second');
         const label_award = $('#price_award');
@@ -237,8 +236,8 @@
         let value = 0;
 
         function checkGame() {
-            const games = $('#input-centena').val().split(',');
-            const match = games.filter((item) => item.length === 3);
+            const games = $('#input-dezena').val().split(',');
+            const match = games.filter((item) => item.length === 1);
             return games.length === match.length;
         }
 
@@ -254,13 +253,13 @@
             const option_award = validate_award();
             const value = $('#input_value_bet').val();
             const client_id = $('#livewire-client-id').val();
-            const centena_input = $('#input-centena').val();
+            const dezena_input = $('#input-dezena').val();
             const teimosinha = $('#input_teimosinha_bet').val();
 
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
             if (!client_id > 0) return alert('Escolha um cliente');
-            if (!checkGame()) return alert('O jogo precisa ser uma centena');
+            if (!checkGame()) return alert('O jogo precisa ser uma dezena');
 
             award_type.sort();
             
@@ -269,21 +268,34 @@
                 value: value.replace(',', '.'),
                 client_id,
                 modality: '{{$modalidade->nome}}',
-                game: centena_input,
+                game: dezena_input,
                 teimosinha: parseInt(teimosinha),
             };
 
             addChartItem(item);
         });
 
+        function insere_valor() {
+            const btn_gerar_dezena = $('#btn-gerar-dezena');
+            const input_dezena = $('#input-dezena');
+
+            const value = `${randomNumber(0, 9)}`;
+            if (!input_dezena.val()) return input_dezena.val(value);
+
+            const old = input_dezena.val().split(',');
+            old.push(value);
+            input_dezena.val(old.join(','));
+            calculate_awards();
+        }
+
         function calculate_awards() {
             const input_value_bet = $('#input_value_bet');
             const label_award = $('#price_award');
             const limit_minimum_bet = 0.01;
             const message = $('#message-minimum-value');
-            const award_total= parseInt('{{$modalidade->multiplicador}}');
+            const award_total = parseInt('{{$modalidade->multiplicador}}');
             const option_award = validate_award() === 6 ? 5 : validate_award();
-            const game = $('#input-centena').val();
+            const game = $('#input-dezena').val();
 
             if (!checkGame()) return;
 
@@ -352,19 +364,6 @@
         input_value_bet.keyup(function (){
             calculate_awards();
         });
-
-        function insere_valor() {
-            const btn_gerar_centena = $('#btn-gerar-centena');
-            const input_centena = $('#input-centena');
-
-            const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}`;
-            if (!input_centena.val()) return input_centena.val(value);
-
-            const old = input_centena.val().split(',');
-            old.push(value);
-            input_centena.val(old.join(','));
-            calculate_awards();
-        }
 
         function button_first_award(){
             const button_first = $('#btn-award-first');
@@ -493,6 +492,9 @@
                     contador += 1;
                 }
             }
+
+
+
             return contador;
         }
 

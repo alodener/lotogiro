@@ -76,6 +76,8 @@
                                 if (strval($aposta['game_1']) > 0) $games[] = $aposta['game_1'];
                                 if (strval($aposta['game_2']) > 0) $games[] = $aposta['game_2'];
                                 if (strval($aposta['game_3']) > 0) $games[] = $aposta['game_3'];
+                                if (strval($aposta['game_4']) > 0) $games[] = $aposta['game_4'];
+                                if (strval($aposta['game_5']) > 0) $games[] = $aposta['game_5'];
 
                                 if ($aposta['premio_1'] == 1) $premios[] = 1;
                                 if ($aposta['premio_2'] == 1) $premios[] = 2;
@@ -91,7 +93,7 @@
                                 <td>{{ $aposta['pix'] }}</td>
                                 <td>{{ date('H\hi', strtotime($aposta['horario'])) }} - {{ $aposta['banca'] }}</td>
                                 <td>{{ $aposta['modalidade_nome'] }}</td>
-                                <td>{{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}</td>
+                                <td>{{ $aposta['modalidade_id'] !== 12 ? str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) : $aposta['game_1'] }}</td>
                                 <td>{{ join('°, ', $premios) }}°</td>
                                 <td>{{ $aposta['payment'] == 1 ? 'Pago' : 'Aberto' }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($aposta['created_at'])) }}</td>

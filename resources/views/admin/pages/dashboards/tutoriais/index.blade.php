@@ -165,6 +165,14 @@
     </div>
   </div>
 
+  <div class="col-sm-6 col-md-4">
+  <div class="card" onclick="openModal25()">
+    <div class="card-content">
+      <h3 class="card-title">017 - Múltiplos Jogos com carácter especial</h3>
+</div>
+    </div>
+  </div>
+
   </div>
       </div>
     </div>
@@ -780,6 +788,28 @@
   </div>
 </div>
 
+<!-- modal 25-->
+
+<div class="modal fade" id="video-modal-25" tabindex="-25" aria-labelledby="video-modal-25-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-25-label">017 - Múltiplos Jogos com carácter especial</h5>
+        <div class="close-button">
+    <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+      <div class="d-flex align-items-center justify-content-center">
+  <video controls width = "500">
+    <source src="{{asset('admin/videos/caracter-especial.mp4')}}" type="video/mp4">
+  </video>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -862,6 +892,9 @@
     }
     function openModal24() {
     $('#video-modal-24').modal('show');
+    }
+    function openModal25() {
+    $('#video-modal-25').modal('show');
     }
 
   </script>
