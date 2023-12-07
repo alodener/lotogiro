@@ -6,6 +6,6 @@ Documentação
 
 
 
-[PaymenteGatewayService](documentaion/payment-gateway-service.md)
+[PaymenteGatewayService](documentation/payment-gateway-service.md)
 
 
