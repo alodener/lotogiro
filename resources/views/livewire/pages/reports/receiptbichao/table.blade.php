@@ -141,6 +141,7 @@
         <div class="form-group offset-md-8 col-md-3">
             <button wire:click="getReport" type="button" class="btn btn-info btn-block">{{ trans('admin.generate-report') }}</button>
         </div>
+        
     </div>
     <div class="row">
         <div class="col-md-12 extractable-cel">
@@ -154,6 +155,7 @@
                         <th>{{ trans('admin.gains.table-customer-header') }}</th>
                         <th>{{ trans('admin.gains.table-user-header') }}</th>
                         <th>{{ trans('admin.gains.table-status-header') }}</th>
+                        <th>{{ trans('admin.gains.posicao') }}</th>
                         <th>{{ trans('admin.gains.table-value-header') }}</th>
                         <th>{{ trans('admin.gains.table-creation-header') }}</th>
                         <th>Estorno/<br />Cancelamento</th>
@@ -161,6 +163,16 @@
                     </thead>
                     <tbody>
                     @forelse($games as $game)
+                    <?php
+                            $premios = [];
+                            
+                            if ($game['premio_1'] == 1) $premios[] = 1;
+                            if ($game['premio_2'] == 1) $premios[] = 2;
+                            if ($game['premio_3'] == 1) $premios[] = 3;
+                            if ($game['premio_4'] == 1) $premios[] = 4;
+                            if ($game['premio_5'] == 1) $premios[] = 5;
+                            
+                        ?>
                         <tr>
                             <td>
                                 {{ $game->id }}
@@ -179,6 +191,9 @@
                             </td>
                             <td>
                                @if($game->comission_payment) Pago @else Aberto @endif
+                            </td>
+                            <td>
+                                {{ join('°, ', $premios) }}°
                             </td>
                             <td>
                                 {{ 'R$' . \App\Helper\Money::toReal($game->valor) }}
