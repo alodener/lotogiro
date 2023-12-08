@@ -79,6 +79,9 @@
                 <option value="mais_milionaria">Mais Milionaria</option>
                 <option value="loto_one">Loto ONE</option>
                 <option value="loto_quatorze">Loto 14</option>
+                <option value="kino_loto">Kino Loto</option>
+                <option value="rekino_loto">Rekino Loto</option>
+                <option value="chanchito_Loto">Chanchito Loto</option>
                 </select>
             </div>
         </div>
