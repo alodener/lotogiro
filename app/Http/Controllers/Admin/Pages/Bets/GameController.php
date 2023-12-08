@@ -594,7 +594,7 @@ class GameController extends Controller
                 if (substr($Competition->number, -1) !== 'A') {  //pega uma string e retorna começando no ultimo caractere (-1) verificando se o ultimo caractere é diferente de A 
                 // Devolvendo o valor do saldo para jogos que não são do tipo "concurso com final A"
                 Balance::calculationEstorno($idUsuario, $game->value);
-                Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commision_value_pai, $CommissionPai);
+
                 Commision::calculationNewEstorno($game->value, $game->user_id, $game->game_type, $game->type_id);
 
                 //Criando o Registro no Extrato da Carteira do Estorno.
@@ -663,7 +663,7 @@ class GameController extends Controller
                         $CommissionPai = true;
                     }
                     //Devolvendo o valor do Bônus.
-                    Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commission_value_pai, $CommissionPai);
+                    
                     Commision::calculationNewEstorno($game->value, $game->user_id, $game->game_type, $game->type_id);
                     
                     //Criando o Registro no Extrato da Carteira do Estorno.
