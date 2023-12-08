@@ -595,6 +595,7 @@ class GameController extends Controller
                 // Devolvendo o valor do saldo para jogos que não são do tipo "concurso com final A"
                 Balance::calculationEstorno($idUsuario, $game->value);
                 Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commision_value_pai, $CommissionPai);
+                Commision::calculationNewEstorno($game->value, $game->user_id, $game->game_type, $game->type_id);
 
                 //Criando o Registro no Extrato da Carteira do Estorno.
                 $transact_balance = new TransactBalance;
@@ -663,7 +664,8 @@ class GameController extends Controller
                     }
                     //Devolvendo o valor do Bônus.
                     Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commission_value_pai, $CommissionPai);
-    
+                    Commision::calculationNewEstorno($game->value, $game->user_id, $game->game_type, $game->type_id);
+                    
                     //Criando o Registro no Extrato da Carteira do Estorno.
                     $transact_balance = new TransactBalance;
                     $transact_balance->user_id_sender = $user->id;
