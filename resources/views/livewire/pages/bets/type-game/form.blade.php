@@ -78,6 +78,7 @@
                 <option value="lotinha_corujao">Lotinha Corujão</option>
                 <option value="mais_milionaria">Mais Milionaria</option>
                 <option value="loto_one">Loto ONE</option>
+                <option value="loto_quatorze">Loto 14</option>
                 </select>
             </div>
         </div>
