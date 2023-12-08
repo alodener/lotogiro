@@ -155,7 +155,7 @@
                         <th>{{ trans('admin.gains.table-customer-header') }}</th>
                         <th>{{ trans('admin.gains.table-user-header') }}</th>
                         <th>{{ trans('admin.gains.table-status-header') }}</th>
-                        <th>{{ trans('admin.bichao.premios') }}</th>
+                        <th>{{ trans('admin.gains.posicao') }}</th>
                         <th>{{ trans('admin.gains.table-value-header') }}</th>
                         <th>{{ trans('admin.gains.table-creation-header') }}</th>
                     </tr>
@@ -169,9 +169,6 @@
                             if (strval($game->game_1) > 0) $games[] = $game->game_1;
                             if (strval($game->game_2) > 0) $games[] = $game->game_2;
                             if (strval($game->game_3) > 0) $games[] = $game->game_3;
-                            if (strval($game->game_4) > 0) $games[] = $game->game_4;
-                            if (strval($game->game_5) > 0) $games[] = $game->game_5;
-
 
                             if ($game['premio_1'] == 1) $premios[] = 1;
                             if ($game['premio_2'] == 1) $premios[] = 2;

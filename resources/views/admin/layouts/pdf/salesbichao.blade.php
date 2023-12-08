@@ -165,8 +165,8 @@
                     <th class="text-size-1 text-left">LOTERIA</th>
                     <th class="text-size-1 text-left">MODALIDADE</th>
                     <th class="text-size-1 text-left">APOSTA</th>
-                    <th class="text-size-1 text-left">PRÊMIO</th>
-                    <th class="text-size-1 text-left">STATUS</th>
+                    <th class="text-size-1 text-left">POSIÇÃO</th>
+                    <!-- <th class="text-size-1 text-left">STATUS</th> -->
                     <th class="text-size-1 text-left">VALOR</th>
 
                 </tr>
@@ -213,9 +213,9 @@
                         <td class="font text-size-1 border-bottom">
                             {{ join('°, ', $premios) }}°
                         </td>
-                        <td class="font text-size-1 border-bottom">
+                        <!--<td class="font text-size-1 border-bottom">
                             @if($game['comission_payment']) Pago @else Aberto @endif
-                        </td>
+                        </td> -->
                         <td class="font text-size-1 border-bottom">
                             R${{ $game['valor'] }}
                             @php

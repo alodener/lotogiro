@@ -194,6 +194,7 @@ return [
         'table-value-header' => 'Valor',
         'table-comission-header' => 'Comisión',
         'table-creation-header' => 'Creación',
+        'posicao' => 'Posición'
     ],
 
     'sales' => [
