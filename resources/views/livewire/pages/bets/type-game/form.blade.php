@@ -82,6 +82,7 @@
                 <option value="kino_loto">Kino Loto</option>
                 <option value="rekino_loto">Rekino Loto</option>
                 <option value="chanchito_Loto">Chanchito Loto</option>
+                <option value="easy_power_loto">Easy Power Loto</option>
                 </select>
             </div>
         </div>
