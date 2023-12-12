@@ -25,8 +25,9 @@ class Table extends Component
     {
         $valorMinimo = System::where('nome_config', 'Valor Minimo')->first()->value;
         $horarioMaximo = System::where('nome_config', 'Horario Maximo')->first()->value;
-
-        if($this->valueTransfer < intval($valorMinimo) || is_null($this->valueTransfer)){
+        $value = Money::toDatabase($this->valueTransfer);
+       
+        if(intval($value) < intval($valorMinimo) || is_null($this->valueTransfer)){
             $this->alert('warning', 'Valor precisa ser de pelo menos R$'.$valorMinimo, [
                 'position' => 'center',
                 'timer' => '2000',
@@ -62,10 +63,11 @@ class Table extends Component
                 'timerProgressBar' => true,
                 'allowOutsideClick' => false
             ]);
+            return;
         }
 
-       if($this->valueTransfer >= intval($valorMinimo) && $value <= $this->user['available_withdraw']){
-
+       if(intval($value) >= intval($valorMinimo) && intval($value) <= $this->user['available_withdraw']){
+        
            $withdrawRequest = WithdrawRequest::create([
                'user_id' => $this->userId,
                'value' => Money::toDatabase($this->valueTransfer)
@@ -101,6 +103,7 @@ class Table extends Component
         if((empty($this->pixSaque) || is_null($this->pixSaque)) && !is_null($this->user['client'])){
             $this->pixSaque = $this->user['client']['pix'];
         }
+
     }
 
     public function render()
@@ -108,5 +111,6 @@ class Table extends Component
         $valorMinimo = System::where('nome_config', 'Valor Minimo')->first()->value;
 
         return view('livewire.pages.dashboards.wallet.withdraw.table', ['valorMinimo' => $valorMinimo]);
+
     }
 }
