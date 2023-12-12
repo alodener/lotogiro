@@ -84,6 +84,7 @@
                 <option value="chanchito_Loto">Chanchito Loto</option>
                 <option value="easy_power_loto">Easy Power Loto</option>
                 <option value="chao_jefe_loto">Chao Jefe Loto</option>
+                <option value="chispaloto_segundo">Chispaloto Segundo</option>
                 </select>
             </div>
         </div>
