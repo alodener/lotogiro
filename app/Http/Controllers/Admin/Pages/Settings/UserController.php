@@ -115,8 +115,12 @@ class UserController extends Controller
         }
         
         $roles = Role::orderBy('name')->get();
+        $types = TypeGame::get();
+        $type_values = TypeGameValue::get()->toArray();
+        $bichao = BichaoModalidades::get();
 
-        return view('admin.pages.settings.user.create', compact('roles'));
+        $type_values = TypeGameValue::get()->toArray();
+        return view('admin.pages.settings.user.create', compact('roles','types','type_values','bichao'));
     }
 
 
