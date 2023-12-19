@@ -33,26 +33,27 @@
                         <ul class="nav nav-treeview">
 
                             @if(\App\Helper\Configs::getPlanoDeCarreira() == "Ativado")
-                                @can('read_gain')
-                                <li class="nav-item">
-                                    <a href="{{route('admin.dashboards.ranking.index')}}"
-                                        class="nav-link @if(request()->is('admin/ranking')) active @endif">
-                                        <i class="fas fa-star nav-icon"></i>
-                                        <p>{{ trans('admin.menu.ranking') }}</p>
-                                    </a>
-                                </li>
-                                
-                                @endcan
+                                @if(auth()->user()->hasRole('Administrador'))
+                                    @can('read_gain')
+                                    <li class="nav-item">
+                                        <a href="{{route('admin.dashboards.ranking.index')}}"
+                                            class="nav-link @if(request()->is('admin/ranking')) active @endif">
+                                            <i class="fas fa-star nav-icon"></i>
+                                            <p>{{ trans('admin.menu.ranking') }}</p>
+                                        </a>
+                                    </li>
                                     
+                                    @endcan
+                                @endif    
                                
                                 @can('read_gain')
-                                <li class="nav-item">
-                                    <a href="{{route('admin.dashboards.extracts.points.index')}}"
-                                        class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
-                                        <i class="fas fa-star nav-icon"></i>
-                                        <p>{{ trans('admin.menu.pontos') }}</p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="{{route('admin.dashboards.extracts.points.index')}}"
+                                            class="nav-link @if(request()->is('admin/dashboards/extracts/points')) active @endif">
+                                            <i class="fas fa-star nav-icon"></i>
+                                            <p>{{ trans('admin.menu.pontos') }}</p>
+                                        </a>
+                                    </li>
                                 @endcan
                             @endif    
                             @if(\App\Helper\UserValidate::iAmAdmin())
