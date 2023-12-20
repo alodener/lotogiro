@@ -540,8 +540,31 @@ class GameController extends Controller
         $line = [];
         $index = 0;
         $i = 0;
+        $numInicial = 1;
 
-        foreach (range(1, $typeGame->numbers) as $number) {
+        //if - se for lotomania, variavel ficar com 0  
+        if ($typeGame->category == "loto_mania") {
+            $numInicial = 0;
+        }
+
+        $upperLimit = ($typeGame->category == 'loto_mania') ? $typeGame->numbers - 1 : $typeGame->numbers; //se for lotomania o limite fica number-1 (99) / se nao for, fica so number
+
+        foreach (range($numInicial, $upperLimit) as $number) {
+            if ($i < $typeGame->columns) {
+                $i++;
+            } else {
+                $index++;
+                $i = 1;
+            }
+            $matriz[$index][] = $number;
+        }
+    
+        $this->matriz = $matriz;
+
+        return view('admin.pages.bets.game.edit', compact('game', 'matriz', 'selectedNumbers', 'typeGame', 'typeGameValue', 'client'));
+    }
+
+        /*foreach (range(1, $typeGame->numbers) as $number) {
             if ($i < $typeGame->columns) {
                 $i++;
             } else {
@@ -553,13 +576,10 @@ class GameController extends Controller
         $this->matriz = $matriz;
 
         return view('admin.pages.bets.game.edit', compact('game', 'matriz', 'selectedNumbers', 'typeGame', 'typeGameValue', 'client'));
-    }
+    } */
 
     public function destroy(Game $game)
     {
-
-   
-
         if (!auth()->user()->hasPermissionTo('delete_game')) {
             abort(403);
         }

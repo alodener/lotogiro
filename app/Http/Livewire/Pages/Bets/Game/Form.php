@@ -28,6 +28,7 @@ class Form extends Component
 
     public function mount($typeGame, $clients)
     {
+
         $this->selectedNumbers = [];
         if (!empty($typeGame)) {
             $this->typeGame = $typeGame;
@@ -115,14 +116,21 @@ class Form extends Component
         $numerosAletatorios = array();
         $loopVezes = $quantidadeAletorizar;
         $rangeMax = $this->typeGame->numbers;
+        $numInicial = 1;
 
+        if($this->typeGame->category == 'loto_mania'){
+            $rangeMax = $this->typeGame->numbers - 1;
+            $numInicial = 0;
+             
+        }
+        
         for($i = 0; $i != $loopVezes ; $i++){
 
-            $addNumeroAleatorio =  rand(1, $rangeMax);
+            $addNumeroAleatorio =  rand($numInicial, $rangeMax);
             
             // condição pra checar se o número já existe na lista
             while (in_array($addNumeroAleatorio, $numerosAletatorios)){
-                $addNumeroAleatorio =  rand(1, $rangeMax);
+                $addNumeroAleatorio =  rand($numInicial, $rangeMax);
             }
 
             array_push($numerosAletatorios, $addNumeroAleatorio);
@@ -131,6 +139,7 @@ class Form extends Component
         // $selectedNumbers = array();
         // $numerosAletatorios = json_decode($numerosAletatorios);
         $selectedNumbers = $numerosAletatorios;
+        dd($numerosAletatorios);
         $this->selectedNumbers = $numerosAletatorios;
         $this->verifyValue();
     }
@@ -156,17 +165,25 @@ class Form extends Component
         $line = [];
         $index = 0;
         $i = 0;
+        $numInicial = 1;
 
-        foreach (range(1, $numbers) as $number) {
+        //if - se for lotomania, variavel ficar com 0  
+        if ($this->typeGame->category == "loto_mania") {
+            $numInicial = 0;
+        }
+
+        $upperLimit = ($this->typeGame->category == 'loto_mania') ? $numbers - 1 : $numbers; //se for lotomania o limite fica number-1 (99) / se nao for, fica so number
+
+        foreach (range($numInicial, $upperLimit) as $number) {
             if ($i < $columns) {
                 $i++;
             } else {
                 $index++;
                 $i = 1;
             }
-            $matriz[$index][] = array_push($line, $number);
+            $matriz[$index][] = $number;
         }
-
+    
         $this->matriz = $matriz;
     }
 
