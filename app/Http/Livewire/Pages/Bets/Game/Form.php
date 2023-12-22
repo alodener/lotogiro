@@ -139,7 +139,7 @@ class Form extends Component
         // $selectedNumbers = array();
         // $numerosAletatorios = json_decode($numerosAletatorios);
         $selectedNumbers = $numerosAletatorios;
-        dd($numerosAletatorios);
+        
         $this->selectedNumbers = $numerosAletatorios;
         $this->verifyValue();
     }
