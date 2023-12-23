@@ -93,19 +93,29 @@ class CompetitionController extends Controller
         $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
 
         try {
-            $competition = new Competition();
-            if ($request->type_game == 7) {
-            $competition->number = $request->number . 'A'; 
+            $typeGameCategory = TypeGame::where('id', $request->type_game)->value('category');
+            // Compara se o valor da coluna 'category' é 'dupla_sena'
+            if ($typeGameCategory == 'dupla_sena'){
+                
+                $competitionA = new Competition();
+                $competitionA->number = $request->number . 'A';
+                $competitionA->type_game_id = $request->type_game;
+                $competitionA->sort_date = $request->sort_date;
+                $competitionA->save();
+            } elseif ($typeGameCategory == 'mega_kino') {
+                
+                $letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                foreach ($letras as $letra) {
+                    $competitionLetter = new Competition();
+                    $competitionLetter->number = $request->number . $letra;
+                    $competitionLetter->type_game_id = $request->type_game;
+                    $competitionLetter->sort_date = $request->sort_date;
+                    $competitionLetter->save();
+                }
+                
             }
-            else {
-            $competition->number = $request->number ; 
-            }
-            $competition->type_game_id = $request->type_game;
-            $competition->sort_date = $request->sort_date;
-            $competition->save();
-            
-            //se for dupla sena, duplicar o concurso com o mesmo numero, mas o final A
-            if ($request->type_game == 7) {
+
+            if ($request->type_game == 10 || $request->type_game == 32) {
             $competitionA = new Competition();
             $competitionA->number = $request->number;
             $competitionA->type_game_id = $request->type_game;
