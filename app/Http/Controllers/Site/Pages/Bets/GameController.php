@@ -74,7 +74,7 @@ class GameController extends Controller
         sort($selectedNumbers, SORT_NUMERIC);
         $balance = Balance::calculationByHash($valor, $bet->user);
 
-    //    if (!$balance) {
+        //    if (!$balance) {
       //      throw new \Exception('Saldo Insufuciente!');
        // }
 
@@ -133,9 +133,10 @@ class GameController extends Controller
        
 
       
-    
+        $typeGameCategory = TypeGame::where('id',$typeGame->id)->value('category');       
+          
         
-        if ($typeGame->id == 10) {
+        if ($typeGameCategory == 'dupla_sena') {
             $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
             
             $OpcaoJogo = 3;
@@ -146,28 +147,34 @@ class GameController extends Controller
             
             $game->commission_value = $commissionCalculation;
             $game->save();
+
+            $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
+
+            $game->commission_value = $commissionCalculation;
+            $game->save();
+        }
         
+        if ($typeGameCategory == 'mega_kino') {
+            $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+            $OpcaoJogo = 3;
 
-        
+            foreach ($letters as $letter) {
+                $competitionLetter = Competition::where('number', $competition->number . $letter)->first();
+                    
+                if($competitionLetter){
+                $numbers = $selectedNumbers;
+                GameHelper::duplicateGame($game, $competitionLetter, $bet, $typeGame, $numbers, $OpcaoJogo, $valor, $premio);
+                    
+                $commissionCalculation = Commision::calculation($game->commission_percentage, $valor);
+                $game->commission_value = $commissionCalculation;
+                $game->save();
+            
 
-/*
-        $extract = [
-            'type' => 1,
-            'value' => $game->typeGameValue->value,
-            'type_game_id' => $game->type_game_id,
-            'description' => 'Venda - Jogo de id: ' . $game->id,
-            'user_id' => $game->user_id,
-            'client_id' => $game->client_id
-        ];
+                $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
+                }
+            }
+        }
 
-        $storeExtact = ExtractController::store($extract);*/
-       
-       
-        $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
-
-        $game->commission_value = $commissionCalculation;
-        $game->save();
-    }
         $bet->botao_finalizar = 0;
         $bet->save();
 

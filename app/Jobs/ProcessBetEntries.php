@@ -124,17 +124,27 @@ class ProcessBetEntries implements ShouldQueue
             $game->checked = 1;
             $game->bet_id = $this->bet->id;
             $game->save();
-
             
+            $typeGame = TypeGame::where('id', $this->request['type_game'])->value('category');
+
             //verifica se é da dupla sena 
-                if ($this->request['type_game'] == 10){
+                if ( $typeGame == 'dupla_sena'){
 
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $this->competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
                     $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $typeGameValue, $dez, 2, $valor, $resultado);
                     
-
+                }
+                if ( $typeGame == 'mega_kino'){
+                        $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                        foreach ($letters as $letter) { 
+                        $competitionLetter = Competition::where('number', $this->competition->number . $letter)->first();
+                        
+                        if ($competitionLetter) {
+                            GameHelper::duplicateGame($game, $competitionLetter, $this->request, $typeGameValue, $dez, 2, $valor, $resultado);
+                        }
+                    }
                 }
             $transact_balance = new TransactBalance;
             $transact_balance->user_id_sender = auth()->id();

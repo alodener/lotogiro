@@ -313,7 +313,7 @@ class GameController extends Controller
                 }
 
                 $numbers = explode(',', $request->numbers);
-                //aqui
+            
 
                 sort($numbers, SORT_NUMERIC);
                 $numbers = implode(',', $numbers);
@@ -377,9 +377,9 @@ class GameController extends Controller
                 
                 $game->save();
 
-
-                //verifica se é da dupla sena 
-                if ($request->type_game == 10){
+                $typeGameCategory = TypeGame::where('id', $request->type_game)->value('category');
+               
+                if ($typeGameCategory == 'dupla_sena'){
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
@@ -388,6 +388,21 @@ class GameController extends Controller
 
                 }
                 
+                if ($typeGameCategory == 'mega_kino') {
+                    $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                    
+                    foreach ($letters as $letter) {
+                        $searchNumber = $competition->number . $letter;
+                     
+                
+                        $competitionLetter = Competition::where('number', $searchNumber)->first();
+                
+                        if ($competitionLetter) {
+                           
+                            GameHelper::duplicateGame($game, $competitionLetter, $request, $request->valueId, $numbers, 1, $request->value, $request->premio);
+                        }
+                    }
+                }
                
                 $transact_balance = new TransactBalance;
                 $transact_balance->user_id_sender = auth()->id();
@@ -540,8 +555,31 @@ class GameController extends Controller
         $line = [];
         $index = 0;
         $i = 0;
+        $numInicial = 1;
 
-        foreach (range(1, $typeGame->numbers) as $number) {
+        //if - se for lotomania, variavel ficar com 0  
+        if ($typeGame->category == "loto_mania") {
+            $numInicial = 0;
+        }
+
+        $upperLimit = ($typeGame->category == 'loto_mania') ? $typeGame->numbers - 1 : $typeGame->numbers; //se for lotomania o limite fica number-1 (99) / se nao for, fica so number
+
+        foreach (range($numInicial, $upperLimit) as $number) {
+            if ($i < $typeGame->columns) {
+                $i++;
+            } else {
+                $index++;
+                $i = 1;
+            }
+            $matriz[$index][] = $number;
+        }
+    
+        $this->matriz = $matriz;
+
+        return view('admin.pages.bets.game.edit', compact('game', 'matriz', 'selectedNumbers', 'typeGame', 'typeGameValue', 'client'));
+    }
+
+        /*foreach (range(1, $typeGame->numbers) as $number) {
             if ($i < $typeGame->columns) {
                 $i++;
             } else {
@@ -553,13 +591,10 @@ class GameController extends Controller
         $this->matriz = $matriz;
 
         return view('admin.pages.bets.game.edit', compact('game', 'matriz', 'selectedNumbers', 'typeGame', 'typeGameValue', 'client'));
-    }
+    } */
 
     public function destroy(Game $game)
     {
-
-   
-
         if (!auth()->user()->hasPermissionTo('delete_game')) {
             abort(403);
         }
@@ -594,8 +629,9 @@ class GameController extends Controller
                 if (substr($Competition->number, -1) !== 'A') {  //pega uma string e retorna começando no ultimo caractere (-1) verificando se o ultimo caractere é diferente de A 
                 // Devolvendo o valor do saldo para jogos que não são do tipo "concurso com final A"
                 Balance::calculationEstorno($idUsuario, $game->value);
-                Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commision_value_pai, $CommissionPai);
 
+                Commision::calculationNewEstorno($game->value, $game->user_id, $game->game_type, $game->type_id);
+                
                 //Criando o Registro no Extrato da Carteira do Estorno.
                 $transact_balance = new TransactBalance;
                 $transact_balance->user_id_sender = $user->id;
@@ -662,7 +698,9 @@ class GameController extends Controller
                         $CommissionPai = true;
                     }
                     //Devolvendo o valor do Bônus.
-                    Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commission_value_pai, $CommissionPai);
+
+                   
+                    Commision::calculationNewEstorno($game->value, $game->user_id, $game->game_type, $game->type_id);
     
                     //Criando o Registro no Extrato da Carteira do Estorno.
                     $transact_balance = new TransactBalance;

@@ -43,7 +43,7 @@ class GameHelper
     $copiaGame->user_id = $game->user_id;
     $copiaGame->type_game_id = $request['type_game'];
     $copiaGame->type_game_value_id = $request['valueId'];
-    $copiaGame->value = $request['value'];
+    $copiaGame->value = $request['value'] == 0;
     $copiaGame->premio = $resultado;
     $copiaGame->numbers = $numbers;
     $copiaGame->competition_id = $competitionA->id;
@@ -68,7 +68,7 @@ class GameHelper
         $copiaGame->user_id = $game->user_id;
         $copiaGame->type_game_id = $game->type_game_id;
         $copiaGame->type_game_value_id = $game->type_game_value_id;
-        $copiaGame->value = $game->value;
+        $copiaGame->value = $game->value == 0;
         $copiaGame->premio = $game->premio;
         $copiaGame->numbers = $game->numbers;
         $copiaGame->competition_id = $competitionA->id;

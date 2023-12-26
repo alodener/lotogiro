@@ -85,6 +85,9 @@
                 <option value="easy_power_loto">Easy Power Loto</option>
                 <option value="chao_jefe_loto">Chao Jefe Loto</option>
                 <option value="chispaloto_segundo">Chispaloto Segundo</option>
+                <option value="mega_kino">Mega Kino</option> 
+                <option value="mega_lotto">Mega Lotto</option>
+
                 </select>
             </div>
         </div>
