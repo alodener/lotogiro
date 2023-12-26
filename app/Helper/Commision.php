@@ -126,26 +126,40 @@ class Commision
     return $valorPai;
     }
 
-    public static function calculationEstorno($idUsuario, $value, $commmission_pai, $CommissionPai)
+    public static function calculationNewEstorno($value, $user_id, $game_type, $type_id)
     {
+        $user = User::find($user_id);
+        if (!$user) return 0;
 
+        $percentage = static::getCommission($user, $type_id, $game_type);
+        $commission = (($value / 100) * $percentage);
+        $commission_pai = 0;
+        $commission_avo = 0;
 
-        $user = User::find($idUsuario);
-        $result = $user->bonus - $value;
-        $user->bonus = $result;
-        $user->save();
-
-        
-
-        if($user->indicador > 0 && $CommissionPai == true){
-            $userPai = User::find($user->indicador);
-            $result = $userPai->bonus - $commmission_pai;
-            $userPai->bonus = $result;
-            $userPai->save();
+        if ($user->type_client != 1) {
+            $user->bonus = $user->bonus - $commission;
+            $user->save();
         }
 
-        return $user->bonus;
+        $userLv1 = User::find($user->indicador);
+        if ($userLv1) {
+            $commission_pai = (($value / 100) * static::getCommission($userLv1, $type_id, $game_type, 1));
+            
+            if ($user->type_client === 1) {
+                $commission_pai = (($value / 100) * static::getCommission($userLv1, $type_id, $game_type));
+            }
+            
+            $userLv1->bonus = $userLv1->bonus - $commission_pai;
+            $userLv1->save();
+
+            $userLv2 = User::find($userLv1->indicador);
+            if ($userLv2) {
+                $commission_avo = (($value / 100) * static::getCommission($userLv2, $type_id, $game_type, 2));
+                $userLv2->bonus = $userLv2->bonus - $commission_avo;
+                $userLv2->save();
+            }
+        }
+
+        return ['percentage' => $percentage, 'commission' => $commission, 'commission_pai' => $commission_pai, 'commission_avo' => $commission_avo];
     }
-
-
 }

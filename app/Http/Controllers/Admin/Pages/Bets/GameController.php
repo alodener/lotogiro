@@ -555,8 +555,31 @@ class GameController extends Controller
         $line = [];
         $index = 0;
         $i = 0;
+        $numInicial = 1;
 
-        foreach (range(1, $typeGame->numbers) as $number) {
+        //if - se for lotomania, variavel ficar com 0  
+        if ($typeGame->category == "loto_mania") {
+            $numInicial = 0;
+        }
+
+        $upperLimit = ($typeGame->category == 'loto_mania') ? $typeGame->numbers - 1 : $typeGame->numbers; //se for lotomania o limite fica number-1 (99) / se nao for, fica so number
+
+        foreach (range($numInicial, $upperLimit) as $number) {
+            if ($i < $typeGame->columns) {
+                $i++;
+            } else {
+                $index++;
+                $i = 1;
+            }
+            $matriz[$index][] = $number;
+        }
+    
+        $this->matriz = $matriz;
+
+        return view('admin.pages.bets.game.edit', compact('game', 'matriz', 'selectedNumbers', 'typeGame', 'typeGameValue', 'client'));
+    }
+
+        /*foreach (range(1, $typeGame->numbers) as $number) {
             if ($i < $typeGame->columns) {
                 $i++;
             } else {
@@ -568,13 +591,10 @@ class GameController extends Controller
         $this->matriz = $matriz;
 
         return view('admin.pages.bets.game.edit', compact('game', 'matriz', 'selectedNumbers', 'typeGame', 'typeGameValue', 'client'));
-    }
+    } */
 
     public function destroy(Game $game)
     {
-
-   
-
         if (!auth()->user()->hasPermissionTo('delete_game')) {
             abort(403);
         }
@@ -609,6 +629,7 @@ class GameController extends Controller
                 if (substr($Competition->number, -1) !== 'A') {  //pega uma string e retorna começando no ultimo caractere (-1) verificando se o ultimo caractere é diferente de A 
                 // Devolvendo o valor do saldo para jogos que não são do tipo "concurso com final A"
                 Balance::calculationEstorno($idUsuario, $game->value);
+
                 Commision::calculationNewEstorno($game->value, $game->user_id, $game->game_type, $game->type_id);
                 
                 //Criando o Registro no Extrato da Carteira do Estorno.
@@ -677,6 +698,7 @@ class GameController extends Controller
                         $CommissionPai = true;
                     }
                     //Devolvendo o valor do Bônus.
+
                    
                     Commision::calculationNewEstorno($game->value, $game->user_id, $game->game_type, $game->type_id);
     
