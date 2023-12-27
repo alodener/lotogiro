@@ -100,13 +100,22 @@ class ValidateGamesController extends Controller
             
           $valorCalculado = 0;
           $contador = 0;
+          $typeGameCategory = TypeGame::where('id', $request->type_game)->value('category');
           if($games->count() > 0){
             foreach( $games as $game){
                 
                 $competition = Competition::find($game->competition_id);
                 $competA = substr($competition->number, -1);
-                
-                if ($competition->type_game_id == 10 && $competA == "A") {
+                $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    
+                if ( $typeGameCategory == 'dupla_sena' && $competA == "A") {
+                    if($valorCalculado > 0) {
+                        $valorCalculado = $valorCalculado;
+                    }
+                    $balance = auth()->user()->balance;
+                    
+                }elseif ( $typeGameCategory == 'mega_kino' && in_array($competA, $letters) ) {
+                        
                     if($valorCalculado > 0) {
                         $valorCalculado = $valorCalculado;
                     }

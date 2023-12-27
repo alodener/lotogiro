@@ -21,8 +21,13 @@ class Table extends Component
 
     public function requestWithdraw(): void
     {
-        if($this->valueTransfer <= .99 || is_null($this->valueTransfer)){
-            $this->alert('warning', 'Valor precisa ser de pelo menos R$ 1,00!', [
+
+        $valorMinimo = System::where('nome_config', 'Valor Minimo')->first()->value;
+        $horarioMaximo = System::where('nome_config', 'Horario Maximo')->first()->value;
+        $value = Money::toDatabase($this->valueTransfer);
+       
+        if(intval($value) < intval($valorMinimo) || is_null($this->valueTransfer)){
+            $this->alert('warning', 'Valor precisa ser de pelo menos R$'.$valorMinimo, [
                 'position' => 'center',
                 'timer' => '2000',
                 'toast' => false,
@@ -40,9 +45,12 @@ class Table extends Component
                 'timerProgressBar' => true,
                 'allowOutsideClick' => false
             ]);
+            return;
         }
 
-       if($this->valueTransfer > .99 && $value <= $this->user['bonus']){
+
+       if(intval($value) >= intval($valorMinimo) && intval($value) <= $this->user['available_withdraw']){
+        
 
            $withdrawRequest = WithdrawRequest::create([
                'user_id' => $this->userId,
@@ -79,10 +87,16 @@ class Table extends Component
         if((empty($this->pixSaque) || is_null($this->pixSaque)) && !is_null($this->user['client'])){
             $this->pixSaque = $this->user['client']['pix'];
         }
+
     }
 
     public function render()
     {
-        return view('livewire.pages.dashboards.wallet.withdraw.table');
+
+        $valorMinimo = System::where('nome_config', 'Valor Minimo')->first()->value;
+
+        return view('livewire.pages.dashboards.wallet.withdraw.table', ['valorMinimo' => $valorMinimo]);
+
+
     }
 }

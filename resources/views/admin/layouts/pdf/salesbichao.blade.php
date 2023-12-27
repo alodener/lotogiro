@@ -165,8 +165,10 @@
                     <th class="text-size-1 text-left">LOTERIA</th>
                     <th class="text-size-1 text-left">MODALIDADE</th>
                     <th class="text-size-1 text-left">APOSTA</th>
-                    <th class="text-size-1 text-left">STATUS</th>
+                    <th class="text-size-1 text-left">POSIÇÃO</th>
+                    <!-- <th class="text-size-1 text-left">STATUS</th> -->
                     <th class="text-size-1 text-left">VALOR</th>
+
                 </tr>
                 @php
                     $subtotal = 0;
@@ -174,10 +176,17 @@
                 @foreach($users as $game)
                         <?php
                             $games = [];
+                            $premios = [];
 
                             if (strval($game['game_1']) > 0) $games[] = $game['game_1'];
                             if (strval($game['game_2']) > 0) $games[] = $game['game_2'];
                             if (strval($game['game_3']) > 0) $games[] = $game['game_3'];
+
+                            if ($game['premio_1'] == 1) $premios[] = 1;
+                            if ($game['premio_2'] == 1) $premios[] = 2;
+                            if ($game['premio_3'] == 1) $premios[] = 3;
+                            if ($game['premio_4'] == 1) $premios[] = 4;
+                            if ($game['premio_5'] == 1) $premios[] = 5;
                         ?>
                     <tr class="border-bottom">
                         <td class="font text-size-1 border-bottom">
@@ -202,8 +211,11 @@
                             {{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}
                         </td>
                         <td class="font text-size-1 border-bottom">
-                            @if($game['comission_payment']) Pago @else Aberto @endif
+                            {{ join('°, ', $premios) }}°
                         </td>
+                        <!--<td class="font text-size-1 border-bottom">
+                            @if($game['comission_payment']) Pago @else Aberto @endif
+                        </td> -->
                         <td class="font text-size-1 border-bottom">
                             R${{ $game['valor'] }}
                             @php

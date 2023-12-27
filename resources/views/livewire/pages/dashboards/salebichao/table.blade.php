@@ -142,10 +142,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 extractable-cel">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-sm" id="game_table">
-                    <thead>
+    <div class="col-md-12 extractable-cel">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-sm" id="game_table">
+                <thead> 
                     <tr>
                         <th>{{ trans('admin.gains.table-id-header') }}</th>
                         <th>{{ trans('admin.bichao.loteria') }}</th>
@@ -155,52 +155,39 @@
                         <th>{{ trans('admin.gains.table-customer-header') }}</th>
                         <th>{{ trans('admin.gains.table-user-header') }}</th>
                         <th>{{ trans('admin.gains.table-status-header') }}</th>
+                        <th>{{ trans('admin.gains.posicao') }}</th>
                         <th>{{ trans('admin.gains.table-value-header') }}</th>
                         <th>{{ trans('admin.gains.table-creation-header') }}</th>
                     </tr>
-                    </thead>
-                    <tbody>
+                </thead>
+                <tbody>
                     @forelse($games as $game)
                         <?php
-                            $games = [];
+                            $gameNumbers = [];
+                            $prizes = [];
 
-                            if (strval($game->game_1) > 0) $games[] = $game->game_1;
-                            if (strval($game->game_2) > 0) $games[] = $game->game_2;
-                            if (strval($game->game_3) > 0) $games[] = $game->game_3;
-                            if (strval($game->game_4) > 0) $games[] = $game->game_4;
-                            if (strval($game->game_5) > 0) $games[] = $game->game_5;
+                            if (strval($game->game_1) > 0) $gameNumbers[] = $game->game_1;
+                            if (strval($game->game_2) > 0) $gameNumbers[] = $game->game_2;
+                            if (strval($game->game_3) > 0) $gameNumbers[] = $game->game_3;
+
+                            if ($game['premio_1'] == 1) $prizes[] = 1;
+                            if ($game['premio_2'] == 1) $prizes[] = 2;
+                            if ($game['premio_3'] == 1) $prizes[] = 3;
+                            if ($game['premio_4'] == 1) $prizes[] = 4;
+                            if ($game['premio_5'] == 1) $prizes[] = 5;
                         ?>
                         <tr>
-                            <td>
-                                {{ $game->id }}
-                            </td>
-                            <td>
-                                {{ date('H\hi', strtotime($game->horario->horario)) }} - {{ $game->horario->banca }}
-                            </td>
-                            <td>
-                                {{ $game->modalidade->nome }}
-                            </td>
-                            <td>
-                                {{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}
-                            </td>
-                            <td>
-                                {{ \App\Helper\Mask::addMaskCpf($game->client->cpf) }}
-                            </td>
-                            <td>
-                                {{ $game->client->name . ' ' . $game->client->last_name }}
-                            </td>
-                            <td>
-                                {{ $game->user->name . ' ' . $game->user->last_name }}
-                            </td>
-                            <td>
-                               @if($game->comission_payment) Pago @else Aberto @endif
-                            </td>
-                            <td>
-                                {{ 'R$' . \App\Helper\Money::toReal($game->valor) }}
-                            </td>
-                            <td>
-                                {{ \Carbon\Carbon::parse($game->created_at)->format('d/m/Y') }}
-                            </td>
+                            <td>{{ $game->id }}</td>
+                            <td>{{ date('H\hi', strtotime($game->horario->horario)) }} - {{ $game->horario->banca }}</td>
+                            <td>{{ $game->modalidade->nome }}</td>
+                            <td>{{ str_pad(join(' - ', $gameNumbers), 2, 0, STR_PAD_LEFT) }}</td>
+                            <td>{{ \App\Helper\Mask::addMaskCpf($game->client->cpf) }}</td>
+                            <td>{{ $game->client->name . ' ' . $game->client->last_name }}</td>
+                            <td>{{ $game->user->name . ' ' . $game->user->last_name }}</td>
+                            <td>@if($game->comission_payment) Pago @else Aberto @endif</td>
+                            <td>{{ join('°, ', $prizes) }}°</td>
+                            <td>{{ 'R$' . \App\Helper\Money::toReal($game->valor) }}</td>
+                            <td>{{ \Carbon\Carbon::parse($game->created_at)->format('d/m/Y') }}</td>
                         </tr>
                     @empty
                         <tr>
@@ -209,13 +196,18 @@
                             </td>
                         </tr>
                     @endforelse
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                {{ is_object($games) ? $games->links() : '' }}
-            </div>
+                </tbody>
+            </table>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {{ $games->links() }}
+    </div>
+</div>
+
     </div>
 </div>
 
@@ -273,6 +265,7 @@
                 font-size: 9px;
                 text-align: center;
             }
+        }
 
     </style>
 @endpush

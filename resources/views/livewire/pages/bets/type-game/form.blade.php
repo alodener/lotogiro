@@ -78,6 +78,16 @@
                 <option value="lotinha_corujao">Lotinha Corujão</option>
                 <option value="mais_milionaria">Mais Milionaria</option>
                 <option value="loto_one">Loto ONE</option>
+                <option value="loto_quatorze">Loto 14</option>
+                <option value="kino_loto">Kino Loto</option>
+                <option value="rekino_loto">Rekino Loto</option>
+                <option value="chanchito_Loto">Chanchito Loto</option>
+                <option value="easy_power_loto">Easy Power Loto</option>
+                <option value="chao_jefe_loto">Chao Jefe Loto</option>
+                <option value="chispaloto_segundo">Chispaloto Segundo</option>
+                <option value="mega_kino">Mega Kino</option> 
+                <option value="mega_lotto">Mega Lotto</option>
+
                 </select>
             </div>
         </div>

@@ -88,10 +88,16 @@ class Copiacola extends Component
                 $dezenasForaDoLimite = array_filter($dezenas, function ($dezena) use ($maxNumbers) {
                 return ($dezena < 1 || $dezena > $maxNumbers);
                 });
-
-                if (!empty($dezenasForaDoLimite)) {
+                
+                if (!empty($dezenasForaDoLimite) && $this->typeGame->id != 11) {
                     $this->msg = "Dezenas fora do intervalo permitido (1 a $maxNumbers): " . implode(", ", $dezenasForaDoLimite); 
-                }  else {
+                    
+                }  else if(!empty($dezenasForaDoLimite)&& $this->typeGame->id == 11 && min($dezenasForaDoLimite) != 0){ // se for loto mania fica de 0 a 99
+                    
+                            
+                    $this->msg = "Dezenas fora do intervalo permitido (0 a $maxNumbers): " . implode(", ", $dezenasForaDoLimite); 
+                }
+                else{
                     $this->podeCriar = true;
                 }
 

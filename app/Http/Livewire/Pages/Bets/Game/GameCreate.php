@@ -18,15 +18,21 @@ class GameCreate extends Component
         $line = [];
         $index = 0;
         $i = 0;
+        $numInicial = 1;
 
-        foreach (range(1, $numbers) as $number) {
+        //if - se for lotomania, variavel ficar com 0  
+        if ($this->typeGames->category == 'loto_mania') {
+            $numInicial = 0;
+        }
+
+        foreach (range($numInicial, $numbers - 1) as $number) {
             if ($i < $columns) {
                 $i++;
             } else {
                 $index++;
                 $i = 1;
             }
-            $matriz[$index][] = array_push($line, $number);
+            $matriz[$index][] = $number;
         }
 
         $this->matriz = $matriz;
