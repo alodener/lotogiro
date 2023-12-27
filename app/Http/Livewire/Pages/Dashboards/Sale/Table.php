@@ -117,7 +117,6 @@ class Table extends Component
         dd($value);
     }
 
-   
     public function submit()
     {
         $dataValidated = $this->validate([
@@ -154,7 +153,6 @@ class Table extends Component
             'dateEnd' => $dateEnd,
         ];
     }
-
 
     public function filterUser($query)
     {
@@ -248,8 +246,6 @@ class Table extends Component
         return $query;
     }
 
-
-
     public function runQueryBuilder()
     {
         $query = Game::query();
@@ -261,7 +257,7 @@ class Table extends Component
             ->when($this->range, fn($query, $search) => $query->whereDate('created_at', '>=', $filterRange['dateStart'])
                 ->whereDate('created_at', '<=', $filterRange['dateEnd'])
                 ->orderBy('created_at', 'desc'));
-            
+        
         $query = $this->filterUser($query);
         $query = $this->filterStatus($query);
         
@@ -276,12 +272,11 @@ class Table extends Component
                $query = $this->sumValuesTodos($query);
            }
         }
+            
         
         return $query; //$this->applySorting($query);
     }
 
-
-    
     public function getReport()
     {
         $games = $this->runQueryBuilder()->with(['user', 'client', 'typeGameValue'])->get();

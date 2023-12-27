@@ -16,7 +16,7 @@
                 @push('scripts')
                     <script>
                         toastr["error"]("{{ $message }}")
-                     </script>
+                    </script>
                 @endpush
             @enderror
             @can('create_user')
@@ -93,6 +93,7 @@
             "infoFiltered": "{{ trans('admin.pagesF.filtrado') }}",
             "search" : "{{ trans('admin.pagesF.search') }}",
             "previous": "{{ trans('admin.pagesF.previous') }}",
+
             "next": "{{ trans('admin.pagesF.next') }}" 
             },
             processing: true,
