@@ -113,6 +113,12 @@ class CompetitionController extends Controller
                     $competitionLetter->save();
                 }
                 
+            } else {
+                $competition = new Competition();
+                $competition->number = $request->number;
+                $competition->type_game_id = $request->type_game;
+                $competition->sort_date = $request->sort_date;
+                $competition->save();
             }
 
             if ($typeGameCategory == 'dupla_sena' || $typeGameCategory == 'mega_kino') {
