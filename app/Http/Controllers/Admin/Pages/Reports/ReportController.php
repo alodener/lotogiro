@@ -151,7 +151,7 @@ class ReportController extends Controller
             if(!is_null($game->commision_value_pai )){
                 $CommissionPai = true;
             }
-            Commision::calculationEstorno($idUsuario, $game->commission_value,  $game->commision_value_pai, $CommissionPai);
+            Commision::calculationNewEstorno($idUsuario, $game->commission_value,  $game->commision_value_pai, $CommissionPai);
             //Criando o Registro no Extrato da Carteira do Estorno.
             $transact_balance = new TransactBalance;
             $transact_balance->user_id_sender = $user->id;
