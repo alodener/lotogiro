@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class TypeGame extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        
+        'start_time',
+        'end_time',
+       
+    ];
     public function games()
     {
         return $this->hasMany(Game::class);
