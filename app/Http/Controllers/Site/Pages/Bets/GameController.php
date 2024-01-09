@@ -62,18 +62,21 @@ class GameController extends Controller
 
     public function store(Bet $bet, $typeGame, $selectedNumbers, $valor, $premio,$valueid)
     {
-
+         
         if ($bet->status == false) {
-          throw new \Exception('Aposta Já finalizada');
-        }
-            $date = Carbon::now();
-            if ( $date->hour >=20 && $date->hour < 21) {
-            throw new \Exception('Apostas encerradas');
-
+            throw new \Exception('Aposta Já finalizada');
+          }
+       
+        $typeGame = TypeGame::find($typeGame->id);    
+        $now = Carbon::now();    
+        $startTime = Carbon::parse($typeGame->start_time);
+        $endTime = Carbon::parse($typeGame->end_time);
+        
+        if ($now->gte($startTime) && $now->lte($endTime)) {
+            throw new \Exception('Apostas encerradas. Horário dentro do intervalo permitido para este tipo de jogo.');
         }
         sort($selectedNumbers, SORT_NUMERIC);
         $balance = Balance::calculationByHash($valor, $bet->user);
-
         //    if (!$balance) {
       //      throw new \Exception('Saldo Insufuciente!');
        // }

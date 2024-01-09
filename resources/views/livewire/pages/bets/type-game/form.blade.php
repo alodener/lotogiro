@@ -49,9 +49,9 @@
                     @enderror
                  </div>
              </div>
-         </div>
-         <div class="form-row">
-             <div class="form-group col-md-12">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
                <label for="description">{{ trans('admin.lwTypeGame.desc') }}</label>
                  <textarea wire:model="description" class="form-control @error('description') is-invalid @enderror" id="description" rows="3"  id="description"
                            name="description" maxlength="200">{{old('description', $typeGame->description ?? null)}}</textarea>
@@ -61,7 +61,42 @@
                              </span>
                 @enderror
             </div>
-         </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="startTime">{{ __('admin.lwTypeGame.startTime') }}</label>
+                <div class="input-group">
+                    <input wire:model="startTime" type="text" class="form-control @error('startTime') is-invalid @enderror" id="startTime" name="startTime" maxlength="200" value="{{ old('startTime', $typeGame->startTime ?? null) }}"placeholder="00:00">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                    </div>
+                </div>
+                @error('startTime')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="endTime">{{ __('admin.lwTypeGame.endTime') }}</label>
+                <div class="input-group">
+                    <input wire:model="endTime" type="text" class="form-control @error('endTime') is-invalid @enderror" id="endTime" name="endTime" maxlength="200" value="{{ old('endTime', $typeGame->endTime ?? null) }}"placeholder="00:00">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                    </div>
+                </div>
+                @error('endTime')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+        </div>
+    </div>
+</div>
+
+        
 
          <div class="form-row">
             <div class="form-group col-md-3">
