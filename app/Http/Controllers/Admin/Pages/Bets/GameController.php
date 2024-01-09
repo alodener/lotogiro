@@ -147,8 +147,6 @@ class GameController extends Controller
     {
         $typeGame = TypeGame::find($request->type_game);
 
-        $typeGame = TypeGame::find($request->type_game);
-
         if ($typeGame) {
             $startTime = Carbon::parse($typeGame->start_time);
             $endTime = Carbon::parse($typeGame->end_time);
