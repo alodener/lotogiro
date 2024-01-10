@@ -37,7 +37,7 @@
                 {{ $message }}
             </span>
             @enderror
-        </div>
+        </div> 
     </div>
     <div class="col-md-4 p-4">
         <div class="form-group @if($range != 4) d-none @endif">
@@ -198,7 +198,7 @@
                                 {{ 'R$' . \App\Helper\Money::toReal($game->premio) }}
                             </td>
                             <td>
-                                {{ \Carbon\Carbon::parse($game->created_at)->format('d/m/Y') }}
+                                {{ \Carbon\Carbon::parse($game->competition->sort_date)->format('d/m/Y') }}
                             </td>
                         </tr>
                     @empty
