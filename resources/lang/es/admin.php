@@ -670,6 +670,8 @@ return [
                 'desc' => 'Descripción',
                 'addVal' => 'Agregar Valor',
                 'doz' => 'Docenas',
+                'startTime'=> 'Hora de inicio del bloqueo',
+                'endTime'=> 'Hora de finalización del bloqueo',
                 'mult' => 'Multiplicador',
                 'maxReais' => 'Máximo en Reais',
                'maxRepet' => 'Máximo Repetidos',

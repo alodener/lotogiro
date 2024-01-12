@@ -95,7 +95,8 @@
             "previous": "{{ trans('admin.pagesF.previous') }}",
 
             "next": "{{ trans('admin.pagesF.next') }}" 
-            },
+            }, 
+            order:[0, 'desc'],
             processing: true,
             ajax: "{{ route('admin.settings.users.index') }}",
             columns: [

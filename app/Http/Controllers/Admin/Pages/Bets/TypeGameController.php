@@ -85,6 +85,8 @@ class TypeGameController extends Controller
             'numbers' => 'required|numeric|digits_between:1,10',
             'columns' => 'required|numeric|digits_between:1,10',
             'description' => 'nullable|max:200',
+            'startTime' => 'nullable',
+            'endTime' => 'nullable',
         ]);
 
         try {
@@ -95,6 +97,9 @@ class TypeGameController extends Controller
             $typeGame->color = !empty($request->color) ? $request->color : '#28a745';
             $typeGame->description = $request->description;
             $typeGame->category = $request->category;
+            $typeGame->start_time = $request->startTime; 
+            $typeGame->end_time = $request->endTime;   
+
             $typeGame->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([
@@ -142,6 +147,8 @@ class TypeGameController extends Controller
             'columns' => 'required|digits_between:1,10|numeric',
             'color' => 'required',
             'description' => 'nullable|max:200',
+            'startTime' => 'nullable',
+            'endTime' => 'nullable',
         ]);
 
         try {
@@ -151,6 +158,9 @@ class TypeGameController extends Controller
             $typeGame->color = $request->color;
             $typeGame->description = $request->description;
             $typeGame->category = $request->category;
+            $typeGame->start_time = $request->startTime; 
+            $typeGame->end_time = $request->endTime;    
+
             $typeGame->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([

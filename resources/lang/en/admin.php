@@ -450,6 +450,8 @@ return [
         'desc' => 'Description',
         'addVal' => 'Add Value',
         'doz' => 'Dozens',
+        'startTime'=> 'Lock Start Time',
+        'endTime'=> 'Lock End Time',
         'mult' => 'Multiplier',
         'maxReais' => 'Maximum in Reais',
         'maxRepet' => 'Maximum Repeated',

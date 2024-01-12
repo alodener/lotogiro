@@ -635,6 +635,8 @@ return [
                 'desc' => 'Descrição',
                 'addVal' => 'Adicionar Valor',
                 'doz' => 'Dezenas',
+                'startTime'=> 'Horário Inicial da Trava',
+                'endTime'=> 'Horário Final da Trava',
                 'mult' => 'Multiplicador',
                 'maxReais' => 'Máximo em Reais',
                 'maxRepet' => 'Máximo Repetidos',
