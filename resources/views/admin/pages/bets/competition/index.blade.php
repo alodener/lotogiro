@@ -10,7 +10,6 @@
                 <script>
                     toastr["success"]("{{ $message }}")
                 </script>
-
             @endpush
             @enderror
             @error('error')

@@ -27,11 +27,7 @@ class Copiacola extends Component
     public $controle;
     public $contadorJogos = 0;
     public $auth;
-    public $podeCriar = false;
-    public $exibirBotao = true;
-
-
-
+    
     public function mount($typeGame, $clients)
     {
         $this->dezena = [];
@@ -43,11 +39,9 @@ class Copiacola extends Component
 
     }
     
-    public function dezenas()
-    {
+    public function dezenas(){
         $this->reset('msg');
         $this->reset('values');
-        $this->dezena = preg_replace("/[,. _-]/", " ", $this->dezena);
         $this->dezena = explode("\n", $this->dezena);
         foreach ($this->dezena as &$linha) {
             $linha = rtrim($linha);
@@ -58,6 +52,8 @@ class Copiacola extends Component
         $this->dezena = explode("\n", $str);
         $typeGameValue;
         $result;
+        $contadorLinhas;
+        $contador = 0;
         $this->contadorJogos = 0;
         $this->exibirBotao = false;
 
@@ -68,6 +64,7 @@ class Copiacola extends Component
             $linhaIndex++;
             $this->contadorJogos++;
             $string = preg_replace('/^\h*\v+/m', '', $dezenaConvert);
+            //$string = preg_replace('/\s+/', ' ', trim($dezenaConvert));
             $words = explode(" ", $string);
             $result = count($words);
             
@@ -112,11 +109,30 @@ class Copiacola extends Component
                     $this->controle = 0;
                 }
             }
+            if($result != $contadorLinhas){
+                $this->msg = "Existem linhas de dezenas diferentes";
+                break 1;
+            }
+            $contador = 1;
+            // $contadorLinhas = $result;
+            
+        }
+        if($this->msg == null){
+        $typeGameValue = TypeGameValue::where([
+            ['type_game_id', $this->typeGame->id],
+            ['numbers', $result],
+        ])->get();
+
+        if( !empty($typeGameValue)){
+            $this->values = $typeGameValue;
+            $this->qtdDezena = $result;
+            $this->controle = 1;
+        }else{
+            $this->msg= "Não existe valores para essa quantidade de Dezenas";
         }
     }
-
  
-    
+    }
     public function setId($client)
     {
         $this->clientId = $client["id"];

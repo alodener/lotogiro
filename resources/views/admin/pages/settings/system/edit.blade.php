@@ -201,34 +201,6 @@
                                 </div>
                             </div>     
                             @endif           
-
-                            @if ($system->nome_config == "Valor Minimo")
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label> 
-                                    <input type="text" name="valorMinimo" class="form-control ">
-                                    @error('text')
-                                    <span class="invalid-feedback" role="alert">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>     
-                            @endif           
-
-                            @if ($system->nome_config == "Horario Maximo")
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="alias">{{ trans('admin.pagesF.valor') }}</label> 
-                                    <input type="text" name="horarioMaximo" class="form-control ">
-                                    @error('text')
-                                    <span class="invalid-feedback" role="alert">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>     
-                            @endif           
                             
                         
                          </div>

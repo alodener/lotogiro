@@ -5,9 +5,6 @@ namespace App\Http\Livewire\Pages\Dashboards\Wallet;
 use App\Helper\Money;
 use App\Models\TransactBalance;
 use App\Models\User;
-use App\Models\WithdrawRequest;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -16,8 +13,6 @@ class Convert extends Component
     use LivewireAlert;
 
     public $valueConvert;
-    public $valueConvertBonus;
-    public $valueConvertWithdraw;
     public $user;
 
     public function transferBalance(): void
@@ -54,6 +49,7 @@ class Convert extends Component
             ], route('admin.dashboards.wallet.index'));
         }
     }
+
 
     public function transferBonusToAvailableWithdraw(): void
     {
