@@ -32,12 +32,13 @@
             </select>
             &nbsp;
             &nbsp;
-            &nbsp;
+            &nbsp; 
             <button type="submit" class="col-md-2 form-control btn btn-primary">{{ trans('admin.falta.buscar') }}</button>
 </div>
         </form>
 
-        
+</div>
+</div>
 </div>
     </div>
 @endsection
