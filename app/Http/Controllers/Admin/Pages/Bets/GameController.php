@@ -299,12 +299,6 @@ class GameController extends Controller
             $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
 
             try {
-                $date = Carbon::now();
-                if ($date->hour >= 20 && $date->hour < 21) {
-                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                        'error' => 'Apostas Encerradas!'
-                    ]);
-                }
 
                 $balance = Balance::calculation($request->value);
 
