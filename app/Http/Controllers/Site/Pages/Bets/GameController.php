@@ -33,15 +33,7 @@ class GameController extends Controller
     {
 
         try {
-            $date = Carbon::now();
-
-            if ( $date->hour >=20 && $date->hour < 21) {
-            $bet = null;
-            $typeGames = TypeGame::get();
-            session()->flash('error', 'Apostas Encerradas!');
-            return view('site.bets.games.bets.index', compact('user', 'bet', 'typeGames'));
-
-        }
+            
             $bet = new Bet();
             $bet->user_id = $user->id;
             $bet->save();
