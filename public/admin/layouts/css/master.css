@@ -3441,12 +3441,12 @@ input[type=button].btn-block {
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
   font-size: 1rem;
-  color: #212529;
+  color: white;
   text-align: left;
   list-style: none;
-  background-color: #ffffff;
+  background-color: #212425;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid #212425;
   border-radius: 0.25rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
 }
@@ -3616,7 +3616,7 @@ input[type=button].btn-block {
   padding: 0.25rem 1rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
+  color: #fff;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
@@ -3625,7 +3625,7 @@ input[type=button].btn-block {
 
 .dropdown-item:hover,
 .dropdown-item:focus {
-  color: #16181b;
+  color: #16181b !important;
   text-decoration: none;
   background-color: #f8f9fa;
 }
@@ -4621,6 +4621,7 @@ a.nav-link p{
   list-style: none;
   justify-content: center;
   align-items:center;
+  margin-right: 30px;
 }
 
 .navbar-nav .nav-link {
@@ -5816,6 +5817,10 @@ a.badge-dark.focus {
 
 .media-body {
   flex: 1;
+}
+
+.media-body h6{
+  color: white;
 }
 
 .list-group {
@@ -40001,8 +40006,8 @@ a.text-muted:hover {
   list-style: none;
 }
 
-.timeline-panel h6 {
-  color: #333;
+.timeline-panel , {
+  color: #fff;
 }
 
 .timeline-panel small {
@@ -40214,7 +40219,7 @@ a > svg{
   padding: 10px;
 }
 
-@media (max-width: 660px) {
+@media (max-width: 600px) {
   .btn-despositar, .btn-config, .btn-money{
     padding: 5px;
     font-size: 10px;
@@ -40224,10 +40229,14 @@ a > svg{
     display: none;
   }
   .layout-fixed .main-sidebar {
-    top: 59px;
+    top: 56px;
   }
   .brand-link {
     padding: 0px;
+  }
+
+  .navbar-nav{
+    margin-right: 0px;
   }
 }
 

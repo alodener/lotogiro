@@ -52,6 +52,9 @@
                             <h1>{{auth()->user()->name}} {{auth()->user()->last_name}}</h1>
                             <p>{{auth()->user()->email}}</p>
                         </div>
+                        <div class="ml-5">
+                            <a href="{{route('admin.dashboards.wallet.index')}}"><i style="font-size:25px; color:#C2C7D0" class="nav-icon fas fa-wallet"></i></a>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center card-money text-money">
@@ -119,7 +122,7 @@
 
                 <!-- Linguagem -->
                 <div class="dropdown-divider"></div>
-                <a class="nav-link" data-toggle="dropdown" style="cursor:pointer;">
+                <a class="dropdown-item" data-toggle="dropdown" style="cursor:pointer;">
                     <i class="fas fa-globe-americas mr-2"></i>
                     Tradução: {{ App\Helper\Lang::getCurrentUserLangLabel() }}
                 </a>
@@ -128,7 +131,7 @@
                     @if(is_array($availableLangs) && $availableLangs > 0)
                     @foreach($availableLangs as $key => $label)
                     <li style="padding: 5px 10px;">
-                        <a href="{{ route('admin.changeLocale', $key) }}" style="color: #555; display: block">{{ $label
+                        <a href="{{ route('admin.changeLocale', $key) }}" style="color: #fff; display: block" class="dropdown-item">{{ $label
                             }}</a>
                     </li>
                     @endforeach

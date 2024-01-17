@@ -85,7 +85,7 @@
     @include('admin.layouts.sidebar')
 
     <div class="content-wrapper">
-        <div class="container-fluid pt-3">
+        <div class="container-fluid pt-3" style="padding-top:70px !important">
             
             @yield('content')
         </div>
