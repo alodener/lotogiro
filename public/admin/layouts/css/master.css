@@ -4577,12 +4577,15 @@ a.nav-link p{
 }
 
 .navbar {
-  position: relative;
+  position: fixed;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 0.5rem;
+  margin-left: 0px !important;
+  background-color: #323637;
 }
 
 .navbar .container,
@@ -21241,7 +21244,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   body:not(.sidebar-mini-md) .main-footer,
   body:not(.sidebar-mini-md) .main-header {
     transition: margin-left 0.3s ease-in-out;
-    margin-left: 288px;
+    margin-left: 300px;
   }
 }
 
@@ -21373,7 +21376,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   height: 100vh;
   left: 0;
   position: fixed;
-  top: 0;
+  top: 56px;
   width: 300px;
 }
 
@@ -40110,4 +40113,17 @@ a.text-muted:hover {
 
 .nav-group-item{
 border-bottom: 1px solid hsla(0,0%,100%,.1);  padding: 10px;
+}
+
+.btn-side{
+  border: none;
+  background-color: #353839;
+  width: 100%;
+  height: 50px;
+  padding: 0px 18px;
+  font-weight: 700;
+}
+
+a > svg{
+  margin-left: -4px;
 }

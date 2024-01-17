@@ -13,12 +13,22 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-flat nav-child-indent" data-widget="treeview"
                 role="menu" data-accordion="false">
-                <center>
                     <li>
-                        <a href="/" class="nav-link"><button type="button" class="btn btn-success">{{
-                                trans('admin.menu.façajogo') }}</button></a>
+                        <a href="/" class="nav-link"> 
+                        <button type="button" class="btn btn-success btn-side d-flex justify-content-around align-items-center">Patrocinador Oficial <p>💥</p></button>
+                        
+                        
+                        </a>
                     </li>
-                </center>
+
+                    <li>
+                        <a href="/" class="nav-link"><button type="button" class="btn btn-success btn-side">btn2</button></a>
+                    </li>
+                    
+                    <!-- <li>
+                        <a href="/" class="nav-link"><button type="button" class="btn btn-success btn-side">{{
+                                trans('admin.menu.façajogo') }}</button></a>
+                    </li> -->
 
                 @canany(['read_client', 'read_competition', 'read_type_game', 'read_game'])
                 @can('read_game')

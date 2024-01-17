@@ -20,7 +20,7 @@
 <div class="wrapper">
     @include('site.layouts.navbar')
 
-    <div class="content-wrapper bg-white">
+    <div class="content-wrapper">
         @yield('content')
     </div>
 
