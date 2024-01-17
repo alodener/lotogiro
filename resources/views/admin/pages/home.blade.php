@@ -319,7 +319,7 @@
     });
 
     var swiperlist = new Swiper('.swiper-list', {
-        slidesPerView: 3,
+        slidesPerView: 6,
         navigation: {
             nextEl: '.swiper-list-next',
             prevEl: '.swiper-list-prev',

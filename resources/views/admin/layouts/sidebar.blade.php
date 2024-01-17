@@ -385,6 +385,15 @@
                         </a>
                     </li>
                     @endcan
+                    @can('read_user')
+                    <li class="nav-item">
+                        <a href="{{route('admin.settings.layout.index')}}"
+                            class="nav-link @if(request()->is('admin/settings/layout*')) active @endif">
+                            <i class="fas fa-user nav-icon"></i>
+                            <p>Layout</p>
+                        </a>
+                    </li>
+                    @endcan
                     @can('read_role')
                     <li class="nav-item">
                         <a href="{{route('admin.settings.roles.index')}}"

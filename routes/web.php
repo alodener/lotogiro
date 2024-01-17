@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\Pages\Dashboards\RankingController;
 use App\Http\Controllers\Admin\Pages\Settings\QualificationController;
 use App\Http\Controllers\Admin\Pages\Reports\ReportController;
 use App\Http\Controllers\Admin\Pages\Settings\SystemController;
+use App\Http\Controllers\Admin\Pages\Settings\LayoutController;
 use App\Http\Controllers\Admin\Pages\Settings\LogosController;
 use App\Http\Controllers\Admin\Pages\Bets\BichaoController;
 use App\Http\Controllers\Admin\Pages\Dashboards\TutoriaisController;
@@ -223,6 +224,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('clients/list/select', [ClientController::class, 'listSelect'])->name('clients.list.select');
 
             Route::resource('systems', SystemController::class);
+            Route::resource('layout', LayoutController::class);
+
             Route::resource('logos', LogosController::class);
             
 
