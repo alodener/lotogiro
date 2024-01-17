@@ -3,10 +3,7 @@
 @section('title', trans('admin.dashboard.page-title'))
 
 @section('content')
-<div class="row bg-white p-3">
-    <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">{{ trans('admin.dashboard.page-title') }}</h3>
-    </div>
+<div class="row bg-cc p-5">
 
     {{-- caso o cliente seja cambista --}}
     @if($User['type_client'] == 1)
@@ -22,7 +19,8 @@
         </div>
         <div class="card text-white bg-danger mb-6" style="">
             <div class="card-body text-bold">
-                <h5 class="card-title">{{ trans('admin.dashboard.balance-title') }}</h5> <i class="nav-icon fas fa-chart-line" style="float: right; font-size: 50px"></i>
+                <h5 class="card-title">{{ trans('admin.dashboard.balance-title') }}</h5> <i
+                    class="nav-icon fas fa-chart-line" style="float: right; font-size: 50px"></i>
                 <p class="card-text">R${{ $saldo }}</p>
             </div>
         </div>
@@ -30,10 +28,111 @@
 </div>
 @endif
 
+<!-- CARD GRANDE -->
+<div class="container">
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100"
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/cac8dcb2-66d1-448a-6e28-d6e6399e2f00/w=1745"
+                    alt="First slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100"
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/cac8dcb2-66d1-448a-6e28-d6e6399e2f00/w=1745"
+                    alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100"
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/cac8dcb2-66d1-448a-6e28-d6e6399e2f00/w=1745"
+                    alt="Third slide">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+</div>
+<!-- Slider main container -->
+<div class="container mt-5">
+    <div class="d-flex swipe-controles align-items-center">
+        <h1 style="color:white">Recomendados</h1>
+        <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"></path></svg>
+        <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg>
+    </div>
+
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/0f483fff-b5e0-4bc1-1ecf-1dd2c3a19400/w=2745"
+                    alt=""></div>
+            <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/0f483fff-b5e0-4bc1-1ecf-1dd2c3a19400/w=2745"
+                    alt=""></div>
+            <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/0f483fff-b5e0-4bc1-1ecf-1dd2c3a19400/w=2745"
+                    alt=""></div>
+                    <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/0f483fff-b5e0-4bc1-1ecf-1dd2c3a19400/w=2745"
+                    alt=""></div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="d-flex swipe-controles align-items-center">
+        <h1 style="color:white">Recomendados</h1>
+        <svg width="10" class="ml-3 mr-3 swiper-list-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"></path></svg>
+        <svg width="10" class="swiper-list-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg>
+    </div>
+
+    <div class="swiper-list swiper-full">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
+                    alt=""></div>
+            <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
+                    alt=""></div>
+            <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
+                    alt=""></div>
+                    <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
+                    alt=""></div>
+                    <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
+                    alt=""></div>
+                    <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
+                    alt=""></div>
+                    <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
+                    alt=""></div>
+                    <div class="swiper-slide"><img
+                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
+                    alt=""></div>
+        </div>
+    </div>
+</div>
+
 <div class="col-md-12 p-4">
     <div class="card w-100">
         <div class="card-header indica-card">
-        {{ trans('admin.pagesF.indicacoes') }}
+            {{ trans('admin.pagesF.indicacoes') }}
         </div>
         <div class="container">
             <div class="row">
@@ -41,42 +140,50 @@
                 <div class="card-body col-lg-12 col-sm-12">
                     <div class="col-lg-12 my-2 ">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="link_copy" value="{{route('games.bet', ['user' => auth()->id()])}}">
+                            <input type="text" class="form-control" id="link_copy"
+                                value="{{route('games.bet', ['user' => auth()->id()])}}">
                         </div>
                     </div>
                 </div>
                 @endif
                 <!-- button indique e ganhe -->
                 @if($User['type_client'] == 1)
-                <div class="card-body   col-lg-4 col-sm-6 mx-auto" >
-                    <div class="col-lg-12 card text-white   my-2 alert bg-light indica-corpo text-center" role="alert" >
-                        <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link " value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador}}" />
+                <div class="card-body   col-lg-4 col-sm-6 mx-auto">
+                    <div class="col-lg-12 card text-white   my-2 alert bg-light indica-corpo text-center" role="alert">
+                        <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link "
+                            value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador}}" />
                         <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
-                        <button type="button" id="btn_copy_link2" class="btn btn-success btn-block" onclick="CopyMe(getUrl())"> {{ trans('admin.dashboard.referral-button-text-client') }} </button>                        
+                        <button type="button" id="btn_copy_link2" class="btn btn-success btn-block"
+                            onclick="CopyMe(getUrl())"> {{ trans('admin.dashboard.referral-button-text-client') }}
+                        </button>
                     </div>
-              </div> 
-               @elseif($User['type_client'] != 1)
+                </div>
+                @elseif($User['type_client'] != 1)
                 <div class="card-body   col-lg-4 col-sm-6">
-                    <div class="col-lg-12 card text-white   my-2 alert bg-light indica-corpo" role="alert" >
-                        <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link " value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}" />
+                    <div class="col-lg-12 card text-white   my-2 alert bg-light indica-corpo" role="alert">
+                        <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link "
+                            value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}" />
                         <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
-                        <button type="button" id="btn_copy_link2" class="btn btn-success btn-block" onclick="CopyMe(getUrl())"><i class="bi bi-coin"></i> {{ trans('admin.dashboard.referral-button-text') }} </button>                        
+                        <button type="button" id="btn_copy_link2" class="btn btn-success btn-block"
+                            onclick="CopyMe(getUrl())"><i class="bi bi-coin"></i> {{
+                            trans('admin.dashboard.referral-button-text') }} </button>
                     </div>
-                </div> 
+                </div>
                 @endif
 
                 <!-- button copiar link  -->
                 @if($User['type_client'] == 1)
                 <div class="card-body col-lg-4 col-sm-5">
-                </div>  
-            @elseif($User['type_client'] != 1)
-            <div class="card-body col-lg-4 col-sm-5">
-    <div class="col-lg-12 card text-white my-2 alert bg-light indica-corpo" style="float:left;">
-        <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
-        <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{ trans('admin.copy-link-button') }}</button>
-    </div>
-</div> 
-@endif
+                </div>
+                @elseif($User['type_client'] != 1)
+                <div class="card-body col-lg-4 col-sm-5">
+                    <div class="col-lg-12 card text-white my-2 alert bg-light indica-corpo" style="float:left;">
+                        <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
+                        <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{
+                            trans('admin.copy-link-button') }}</button>
+                    </div>
+                </div>
+                @endif
 
                 <!-- button seus indicados 
                 <div class="card-body col-lg-4 col-sm-6">
@@ -99,16 +206,17 @@
                         </a>
                     </div>
                 </div> -->
-                
+
                 <!-- button seus indicados -->
-                     <div class="card-body col-lg-4 col-sm-6">
-                    <div class="col-lg-12 card text-white my-2 indica-corpo bg-light-2" style="color: #fff;" role="alert">
-                    <p class="mensagem">{{ trans('admin.dashboard.referrals-message') }}</p>
+                <div class="card-body col-lg-4 col-sm-6">
+                    <div class="col-lg-12 card text-white my-2 indica-corpo bg-light-2" style="color: #fff;"
+                        role="alert">
+                        <p class="mensagem">{{ trans('admin.dashboard.referrals-message') }}</p>
                         <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-info">
-                            {{ trans('admin.dashboard.referrals-button') }} 
+                            {{ trans('admin.dashboard.referrals-button') }}
                         </a>
-                    </div> 
-                </div> 
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -123,16 +231,17 @@
         @foreach(\App\Models\TypeGame::get() as $typeGame)
         <div class="col-md-6 my-2">
             <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
-                <button class="btn btn-block text-white" style="background-color: {{$typeGame->color}};">{{$typeGame->name}}</button>
+                <button class="btn btn-block text-white"
+                    style="background-color: {{$typeGame->color}};">{{$typeGame->name}}</button>
             </a>
         </div>
         @endforeach
         @if(\App\Helper\Configs::getBichao() == "Ativado")
-            <div class="col-md-6 my-2">
-                <a href="{{route('admin.bets.bichao.index')}}">
-                    <button class="btn btn-block text-white" style="background-color: #284CA7;">Bichão da sorte</button>
-                </a>
-            </div>
+        <div class="col-md-6 my-2">
+            <a href="{{route('admin.bets.bichao.index')}}">
+                <button class="btn btn-block text-white" style="background-color: #284CA7;">Bichão da sorte</button>
+            </a>
+        </div>
         @endif
     </div>
     @else
@@ -199,11 +308,30 @@
 @endpush
 
 @push('scripts')
+
+<script>
+    var swiper = new Swiper('.swiper', {
+        slidesPerView: 3,
+        navigation: {
+            nextEl: '.swiper-next',
+            prevEl: '.swiper-prev',
+        },
+    });
+
+    var swiperlist = new Swiper('.swiper-list', {
+        slidesPerView: 3,
+        navigation: {
+            nextEl: '.swiper-list-next',
+            prevEl: '.swiper-list-prev',
+        },
+    });
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     const copiedUrlText = "{{ trans('admin.dashboard.copied-url') }}";
 
-    $('#btn_copy_link').click(function() {
+    $('#btn_copy_link').clic k(function () {
         var link = document.getElementById("link_copy");
         link.select();
         document.execCommand('copy');
@@ -233,17 +361,15 @@
         return document.getElementById("linkDeIndicacao").value;
     };
 
-    (function() {
+    (function () {
         function copy(element) {
-            return function() {
+            ret urn function () {
                 document.execCommand('copy', false, element.select());
             };
         };
 
         var linkIndicate = document.querySelector('.link_copy_link');
         var copyUrlIndicate = copy(linkIndicate);
-        linkIndicate.addEventListener('click', copyUrlIndicate, false);
-
-    }());
+        linkIndicate.addEventListener('click', copyUrlIndicate, false);));
 </script>
 @endpush

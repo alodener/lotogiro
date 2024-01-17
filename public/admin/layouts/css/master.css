@@ -21450,10 +21450,45 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 }
 
 .main-header {
-  border-bottom: 1px solid #dee2e6;
   z-index: 1034;
+  box-shadow: -3px -8px 20px 20px #00000040;
 }
 
+.swipe-controles h1{
+font-size: 25px;
+padding: 0px;
+margin: 0px;
+font-weight: 600;
+}
+
+
+.swp:hover, .swp:hover{
+  color: #a3d712;
+}
+
+.swiper-full{
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+  display: block;
+}
+
+.swiper-slide{
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+    padding-right: 10px !important;
+
+}
+
+.swiper-slide img{
+  width: 100%;
+  border-radius: 10px;
+}
 .main-header .nav-link {
   height: 2.5rem;
   position: relative;
@@ -40243,4 +40278,8 @@ a > svg{
 .fa-bars{
   font-size: 20px !important;
   color: white;
+}
+
+.bg-cc{
+  background-color: #212425;
 }
