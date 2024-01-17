@@ -14,6 +14,12 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
+ @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+p,h1,span,h2,h3,h4,h5,button,a{
+  font-family: 'Montserrat', sans-serif !important;
+}
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -41,9 +47,11 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-family-sans-serif: 'Montserrat', sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+
+
 
 *,
 *::before,
@@ -52,7 +60,7 @@
 }
 
 html {
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -73,7 +81,7 @@ section {
 
 body {
   margin: 0;
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -201,7 +209,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1em;
 }
 
@@ -4462,8 +4470,27 @@ input[type=button].btn-block {
 }
 
 .nav-link {
-  display: block;
+  align-items: center;
+  display: flex;
   padding: 0.5rem 1rem;
+}
+
+a.nav-link{
+  width: 285px;
+}
+
+a.nav-link p{
+  margin-left:0px !important;
+  font-weight: 600;
+}
+
+.nav-icon{
+  margin: 0px 8px 0px -8px !important;
+}
+.title-link {
+  text-transform: uppercase;
+  font-weight: 600;
+  padding-left: 10px !important;
 }
 
 .nav-link:hover,
@@ -21214,7 +21241,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   body:not(.sidebar-mini-md) .main-footer,
   body:not(.sidebar-mini-md) .main-header {
     transition: margin-left 0.3s ease-in-out;
-    margin-left: 250px;
+    margin-left: 288px;
   }
 }
 
@@ -21347,6 +21374,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   left: 0;
   position: fixed;
   top: 0;
+  width: 300px;
 }
 
 .layout-fixed .control-sidebar {
@@ -21898,7 +21926,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 }
 
 [class*=sidebar-dark-] {
-  background-color: #343a40;
+  background-color: #212425;
 }
 
 [class*=sidebar-dark-] .user-panel a:hover {
@@ -21933,7 +21961,6 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 [class*=sidebar-dark-] .nav-sidebar > .nav-item.menu-open > .nav-link,
 [class*=sidebar-dark-] .nav-sidebar > .nav-item:hover > .nav-link,
 [class*=sidebar-dark-] .nav-sidebar > .nav-item > .nav-link:focus {
-  background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
 }
 
@@ -22021,7 +22048,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 
 .sidebar-dark-info .nav-sidebar > .nav-item > .nav-link.active,
 .sidebar-light-info .nav-sidebar > .nav-item > .nav-link.active {
-  background-color: #32689a;
+  background-color: none !important;
   color: #ffffff;
 }
 
@@ -22318,9 +22345,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   margin-left: 0.85rem;
 }
 
-.nav-flat.nav-child-indent .nav-treeview .nav-treeview {
-  border-left: 0.2rem solid;
-}
+
 
 .nav-flat.nav-child-indent .nav-treeview .nav-treeview .nav-icon {
   margin-left: 1.15rem;
@@ -22418,15 +22443,9 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   margin-left: -0.2rem;
 }
 
-.nav-flat.nav-sidebar > .nav-item .nav-treeview,
-.nav-flat.nav-sidebar > .nav-item > .nav-treeview {
-  background: rgba(255, 255, 255, 0.05);
-}
 
-.nav-flat.nav-sidebar > .nav-item .nav-treeview .nav-item > .nav-link,
-.nav-flat.nav-sidebar > .nav-item > .nav-treeview .nav-item > .nav-link {
-  border-left: 0.2rem solid;
-}
+
+
 
 @media (max-width: 700px) {
   .nav-flat.nav-sidebar > .nav-item .nav-treeview .nav-item > .nav-link,
@@ -40088,3 +40107,7 @@ a.text-muted:hover {
     border-radius: 100%;
 }
   
+
+.nav-group-item{
+border-bottom: 1px solid hsla(0,0%,100%,.1);  padding: 10px;
+}
