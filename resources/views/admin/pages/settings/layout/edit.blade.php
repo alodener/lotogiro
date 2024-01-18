@@ -146,7 +146,7 @@
             var corSelecionada = this.value;
 
             // Atualiza a cor da área de exibição
-            document.getElementById('areaCor').style.backgroundColor = corSelecionada;
+            document.getElementById('areaCor1').style.backgroundColor = corSelecionada;
         });
         document.getElementById('cor_btn2').addEventListener('input', function() {
             // Obtém o valor da cor selecionada

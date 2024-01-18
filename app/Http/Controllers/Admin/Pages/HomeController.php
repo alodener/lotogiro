@@ -50,6 +50,8 @@ class HomeController extends Controller
         $JogosFeitos = game::where('user_id', $User['id'])->count();
         $saldo =(double) auth()->user()->balance;
 
+
+
         //$balances = UsersHasPoints::getBalancesByUser(auth()->user());
         //$points = UsersHasPoints::where('user_id', auth()->user()->id)->orderByDesc('id')->get();
 

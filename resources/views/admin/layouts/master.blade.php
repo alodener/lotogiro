@@ -82,7 +82,7 @@
 <div class="wrapper">
 
     @include('admin.layouts.navbar')
-    @include('admin.layouts.sidebar')
+    @include('admin.layouts.sidebar', ['layout_button' => App\Models\Layout_Button::all()])
 
     <div class="content-wrapper">
         <div class="container-fluid pt-3" style="padding-top:70px !important">
@@ -136,6 +136,7 @@
                 }
             })
         }, 10000);
+        
 
         $('.notification_dropdown .nav-link').on('click', function() {
             $.ajax({
