@@ -2144,12 +2144,12 @@ pre code {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
-  background-color: #ffffff;
+  color: white;
+  background-color: #212425;
   background-clip: padding-box;
   border: none;
-  border-radius: 0px;
-  border-bottom: 1px solid #ced4da;
+  border-radius: 5px;
+  border-bottom: 1px solid #212425;
   box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -2158,6 +2158,12 @@ pre code {
   .form-control {
     transition: none;
   }
+}
+
+#areaCor1, #areaCor2 {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #212425;
 }
 
 .form-control::-ms-expand {
@@ -2171,9 +2177,9 @@ pre code {
 }
 
 .form-control:focus {
-  color: #495057;
-  background-color: #ffffff;
-  border-color: #80bdff;
+  color: white;
+  background-color: #303536;
+  border-color: #a3d712;
   outline: 0;
   box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
 }
@@ -5024,10 +5030,18 @@ a.nav-link p{
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #ffffff;
+  background-color: #323637;
   background-clip: border-box;
-  border: 0 solid rgba(0, 0, 0, 0.125);
+  border: 11 solid #323637;
   border-radius: 0.25rem;
+  color: white;
+}
+
+.card-button-edit{
+  background-color: #414546;
+  padding: 20px;
+  border-radius: 10px;
+  justify-content: center;
 }
 
 .card > hr {
@@ -21313,7 +21327,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 }
 
 .content-wrapper {
-  background: #f4f6f9;
+  background: #212425;
 }
 
 .content-wrapper > .content {

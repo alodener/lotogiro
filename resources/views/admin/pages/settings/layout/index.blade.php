@@ -24,17 +24,15 @@
                     <thead>
                     <tr>
                         <th>{{ trans('admin.pagesF.config') }}</th>
-                        <th>{{ trans('admin.pagesF.valor') }}</th>
                         <th class="acoes">{{ trans('admin.pagesF.acoes') }}</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($system as $system)
+                        @foreach ($layout as $layout)
                         <tr>
-                            <td> {{$system->nome_config}} </td>
-                            <td> {{$system->value}} </td>
+                            <td> {{$layout->nome_config}} </td>
                             
-                            <td> <a href="{{route('admin.settings.systems.edit', ['system' => $system->id ])}}">
+                            <td> <a href="{{route('admin.settings.layout.edit', ['layout' => $layout->id ])}}">
                                         <button class="btn btn-sm btn-warning" title="Editar"><i class="far fa-edit"></i></button>
                                 </a>   
                             </td>

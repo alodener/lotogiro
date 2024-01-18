@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin\Pages\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\System;
+use App\Models\Layout;
+use App\Models\Layout_Button;
 use Carbon\Carbon;
 use FontLib\Table\Type\post;
 use Illuminate\Http\Request;
@@ -17,189 +18,131 @@ use App\Models\UsersHasPoints;
 class LayoutController extends Controller
 {
 
-    protected $system;
+    protected $layout;
 
 
-    public function __construct(System $system)
+    public function __construct(Layout $layout)
     {
-        $this->system = $system;
+        $this->layout = $layout;
     }
 
 
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {     
 
-        $system = System::all() ;
+        $layout = Layout::all() ;
         
        
-        return view ('admin.pages.settings.system.layout', ['system' => $system]);
+        return view ('admin.pages.settings.layout.index', ['layout' => $layout]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+
+
+    public function edit(Layout $layout)
     {
-       //
+        $layout_button = Layout_Button::all() ;
+        return view('admin.pages.settings.layout.edit',['layout' => $layout,'layout_button' => $layout_button]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, System $system)
-    {   
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\System  $system
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(System $system)
+    public function update(Request $request, Layout_Button $layout_button)
     {
         
-        return view('admin.pages.settings.system.edit',['system' => $system]);
-    }
+        $data = $request->all();   
+       
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, System $system)
-    {
-        
-        $data = $request->all();        
-        
-        //Token
-        if(isset($request->token))
+
+        // Campos PUT Button 1
+
+        if(isset($request->visivel_btn1))
         {
-            $system->value = $data['token'];
-        
+            $layout_button->visivel = $data['visivel_btn1'];
         } 
-       
-        //Plano de carreira
-        else if(isset ($request->exampleRadios))
-        {
-            
-            $system->value = $data['exampleRadios'];
-            
-        }
-        else if(isset ($request->exampleRadios2))
-        {
-            
-            $system->value = $data['exampleRadios2'];
-            
-        }
 
-        //Bichão
-         if(isset ($request->exampleRadios3))
+        if(isset($request->first_text_btn1))
         {
-            
-            $system->value = $data['exampleRadios'];
-            
-        }
-        else if(isset ($request->exampleRadios4))
-        {
-            
-            $system->value = $data['exampleRadios2'];
-            
-        }
-        //email/remetente
+            $layout_button->first_text = $data['first_text_btn1'];
+        } 
 
-        if(isset($request->mail) && isset($request->remetente))
+        if(isset($request->second_text_btn1))
         {
-           $system->value = implode("|", [$data['mail'], $data['remetente']]);
-        }
+            $layout_button->second_text = $data['second_text_btn1'];
+        } 
 
-        //Logo
-        else if(isset($request->image))
+        if(isset($request->cor_btn1))
         {
-            if ($request->file('image')->isValid())
-            {
-                $image = $request->image->store('logo');
-                $data['logo'] = $image;
-             
-                $system->value = $data['logo'];
-               
-             }
-        }   
-        //telegramUrlBot
-        if(isset($request->telegrambot))
-        {
-            $system->value = $data['telegrambot'];
-        
-        }
-        //TelegramChatid
-        if(isset($request->telegramchatid))
-        {
-            $system->value = $data['telegramchatid'];
-        
-        }  
+            $layout_button->cor = $data['cor_btn1'];
+        } 
 
-        if(isset($request->valorMinimo)) {
-            $system->value = $data['valorMinimo'];
-        }
+        if(isset($request->link_btn1))
+        {
+            $layout_button->link = $data['link_btn1'];
+        } 
 
-        if(isset($request->horarioMaximo)) {
-            $system->value = $data['horarioMaximo'];
-        }
+        $layout_button->where('id', 1)->update([
+            'visivel' => $layout_button->visivel,
+            'first_text' => $layout_button->first_text,
+            'second_text' => $layout_button->second_text,
+            'cor' => $layout_button->cor,
+            'link' => $layout_button->link,
+        ]); 
+
+        if(isset($request->visivel_btn2))
+        {
+            $layout_button->visivel = $data['visivel_btn2'];
+        } 
+
+        if(isset($request->first_text_btn2))
+        {
+            $layout_button->first_text = $data['first_text_btn2'];
+        } 
+
+        if(isset($request->second_text_btn2))
+        {
+            $layout_button->second_text = $data['second_text_btn2'];
+        } 
+
+        if(isset($request->cor_btn2))
+        {
+            $layout_button->cor = $data['cor_btn2'];
+        } 
+
+        if(isset($request->link_btn2))
+        {
+            $layout_button->link = $data['link_btn2'];
+        } 
+
+        $layout_button->where('id', 2)->update([
+            'visivel' => $layout_button->visivel,
+            'first_text' => $layout_button->first_text,
+            'second_text' => $layout_button->second_text,
+            'cor' => $layout_button->cor,
+            'link' => $layout_button->link,
+        ]); 
 
         try{
-            $system->save();
-            return redirect()->route('admin.settings.systems.index')->withErrors([
+           
+
+        
+            
+            return redirect()->route('admin.settings.layout.index')->withErrors([
                 'success' => 'Configuração alterada com sucesso!'
             ]);
         } catch (\Exception $exception) {
 
-            return redirect()->route('admin.settings.systems.index')->withErrors([
+            return redirect()->route('admin.settings.layout.index')->withErrors([
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao cadastrar a imagem, tente novamente'
             ]);
    }
-    
-    }
+        
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+        
+   
+   }
 
-    public function desativar(Request $request, $id)
-    {
-     $UserHasPoints = System::findOrFail($id);
-     $UserHasPoints->desativarFuncao();
-    return redirect()->back()->with('success', 'Função desativada com sucesso!');
-    }
+   
+ 
 }
