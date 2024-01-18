@@ -2,7 +2,7 @@
     <div class="col-md-12 p-4 faixa-jogos">
         <h3 class="text-center text-bold">  {{ trans('admin.pagesF.carteira') }} </h3>
     </div>
-    <div class="row bg-white p-3">
+    <div class="row  p-3">
         <div class="col-md-12">
             <div class="card-header indica-card">
             {{ trans('admin.pagesF.extratSaldo') }} | {{ auth()->user()->name }} - {{ trans('admin.pagesF.saldoTotal') }}: R${{ \App\Helper\Money::toReal

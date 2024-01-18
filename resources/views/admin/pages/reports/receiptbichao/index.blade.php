@@ -17,7 +17,7 @@
         </script>
     @endpush
     @enderror
-    <div class="row bg-white p-3">
+    <div class="row 
         <div class="col-md-12">
             @livewire('pages.reports.receiptbichao.table', ['users' => $users])
         </div>

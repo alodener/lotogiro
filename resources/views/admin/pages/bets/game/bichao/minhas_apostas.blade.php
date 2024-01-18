@@ -5,7 +5,7 @@
 @include('admin.pages.bets.game.bichao.carrinho')
 
 @section('content')
-    <div class="col bg-white p-3">
+    <div class="col  p-3">
         <div class="row">
             <div class="col-md-8 col-12 d-flex justify-content-end container-menu-items">
             <a href="{{ route('admin.bets.bichao.index')}}">

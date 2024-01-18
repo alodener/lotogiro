@@ -78,7 +78,7 @@
 
     </div>
 
-    <div class="row bg-white p-3">
+    <div class="row  p-3">
         <div class="col-md-12 extractable-cel">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered table-lg">

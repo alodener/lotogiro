@@ -3,7 +3,7 @@
 @section('title', trans('admin.games.listing-page-title'))
 
 @section('content')
-    <div class="col bg-white p-3">
+    <div class="col  p-3">
         <div class="row">
             <div class="col">
                 <div class="p-3 bg-body shadow-sm rounded border border-1">

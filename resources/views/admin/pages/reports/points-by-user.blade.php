@@ -3,7 +3,7 @@
 @section('title', 'Relatório - Pontos por Usuário')
 
 @section('content')
-    <div class="row bg-white p-3">
+    <div class="row  p-3">
         <div class="col-md-12">
             @error('success')
                 @push('scripts')

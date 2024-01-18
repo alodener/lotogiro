@@ -21,7 +21,7 @@
         </script>
         @endpush
         @enderror
-        <div class="card card-danger">
+        <div class="card card-danger mt-5">
             <div class="card-header">
                 <h3 class="card-title"> {{ trans('admin.pagesF.editConfig') }} </h3>
             </div>
@@ -36,7 +36,6 @@
                         <div class="container d-flex flex-md-row flex-column">
                         @php $count = 1; @endphp    
                         @foreach ($layout_button as $layout)
-                        {{$layout->id}}
                         <div class="col-md-6 d-flex align-items-center card-button-edit mr-md-4 mb-4 mb-md-0">
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
@@ -81,7 +80,7 @@
 
                                         </div>
                                     </div>
-                                    <label for="alias">Link</label>
+                                    <label class="mt-3" for="alias">Link</label>
                                     <input type="text" name="link_btn{{$count}}" class="form-control "  value="{{$layout->link}}">
 
                                     @error('text')
@@ -123,14 +122,14 @@
 
     </div>
 </div>
-<div class="row">
-    <div class="col-md-6 mb-3">
+<div class="d-flex justify-content-center flex-column flex-md-row">
+    <div class="col-md-3 mb-3">
         <a href="{{route('admin.settings.layout.index')}}">
-            <button type="button" class="btn btn-block btn-info">{{ trans('admin.pagesF.voltTela') }}</button>
+            <button type="button" class="btn btn-block btn-info btn-edit">{{ trans('admin.pagesF.voltTela') }}</button>
         </a>
     </div>
-    <div class="col-md-6 mb-3">
-        <button type="submit" class="btn btn-block btn-success">
+    <div class="col-md-3 mb-3">
+        <button type="submit" class="btn btn-block btn-success btn-edit ">
             {{ trans('admin.pagesF.salvConfig') }} </button>
 
     </div>

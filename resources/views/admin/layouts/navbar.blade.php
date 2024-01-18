@@ -23,7 +23,7 @@
         <!--BTN Depositar -->
         <li class="nav-item pl-3">
             <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button"
-                class="btn btn-block btn-success btn-despositar">Depositar
+                class="btn btn-despositar">Depositar
             </a>
         </li>
 

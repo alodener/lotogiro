@@ -17,7 +17,7 @@
         </script>
     @endpush
     @enderror
-    <div class="row bg-white p-3">
+    <div class="row  p-3">
         <div class="col-md-12">
             @livewire('pages.bets.payments.commission.table')
         </div>

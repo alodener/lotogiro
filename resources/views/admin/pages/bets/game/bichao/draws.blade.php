@@ -3,7 +3,7 @@
 @section('title', trans('admin.games.listing-page-title'))
 
 @section('content')
-    <div class="col bg-white p-3">
+    <div class="col  p-3">
         <hr />
         <div class="row">
             <h1>{{ trans('admin.bichao.vencendores') }}</h1>
