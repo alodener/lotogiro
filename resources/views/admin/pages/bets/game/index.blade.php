@@ -3,7 +3,7 @@
 @section('title', trans('admin.games.listing-page-title'))
 
 @section('content')
-<div class="row  p-3">
+<div class="row p-5" style="padding: 30px;">
     <div class="col-md-12">
         @error('success')
         @push('scripts')
@@ -32,7 +32,7 @@
 
                             <label for="client_id">{{ trans('admin.games.customer-input-label') }}</label>
                             <!-- cliente -->
-                            {{-- <select name="client_id" id="client_id" class="form-control">
+                            {{-- <select name="client_id" id="client_id" class="form-control ">
                                 @if($clients->count() > 0)
                                 <option value="">Todos</option>
 
@@ -152,27 +152,7 @@
         margin: 0;
     }
 
-    .selectize-input, .input-active, .focus {
-        /*responsivo e se adapta ao layout vertical em dispositivos móveis */
-        width: 100%;
-        background-color: #212425;
-        border: none !important;
-        padding: 8px 8px;
-        display: inline-block;
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-        z-index: 1;
-        box-sizing: border-box;
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .1);
-        border-radius: 3px
-    }
 
-    .selectize-input:focus {
-        /*responsivo e se adapta ao layout vertical em dispositivos móveis */
-        background-color: #212425 !important;
-
-    }
 
     /* ajustar o layout em dispositivos menores */
     @media(max-width: 467px) {

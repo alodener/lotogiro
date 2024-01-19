@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="col-md-12">
+    <div class="col-md-12 p-5">
         <section class="content">
             <form action="{{route('admin.bets.type_games.store')}}" method="POST">
                 @csrf

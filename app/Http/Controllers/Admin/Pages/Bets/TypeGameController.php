@@ -98,7 +98,8 @@ class TypeGameController extends Controller
             $typeGame->description = $request->description;
             $typeGame->category = $request->category;
             $typeGame->start_time = $request->startTime; 
-            $typeGame->end_time = $request->endTime;   
+            $typeGame->end_time = $request->endTime;
+            $typeGame->icon = $request->icon;   
 
             $typeGame->save();
 
@@ -160,6 +161,7 @@ class TypeGameController extends Controller
             $typeGame->category = $request->category;
             $typeGame->start_time = $request->startTime; 
             $typeGame->end_time = $request->endTime;    
+            $typeGame->icon = $request->icon;   
 
             $typeGame->save();
 

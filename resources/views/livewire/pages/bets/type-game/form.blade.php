@@ -1,5 +1,5 @@
-<div>
-     <div>
+<div >
+     <div >
          <div class="form-row">
              <div class="form-group col-md-3">
                 <label for="name">{{ trans('admin.lwTypeGame.name') }}</label>
@@ -125,7 +125,20 @@
 
                 </select>
             </div>
+            <div class="form-group col-md-3">
+                <label for="icon">Selecione um Icone</label>
+                <select wire:model="icon" class="custom-select" id="icon" name="icon">
+                <option value="lotofacil.png">Loto Fácil</option>
+                <option value="quina.png">Quina</option>
+                <option value="megasena.png">Mega Sena</option>
+                <option value="diadesorte.png">Dia De Sorte</option>
+                <option value="duplasena.png">Dupla Sena</option>
+                <option value="lotomania.png">Loto Mania</option>
+                <option value="timemania.png">Time Mania</option>
+                </select>
+            </div>
         </div>
+        
 
          @if(Route::currentRouteName() == 'admin.bets.type_games.edit')
              <div class="row my-2">

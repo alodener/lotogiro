@@ -3,7 +3,7 @@
 @section('title', 'Alteração de Layout')
 
 @section('content')
-<div class="row p-3 ">
+<div class="row p-3" >
     <div class="container col-md-12">
         @error('success')
         @push('scripts')

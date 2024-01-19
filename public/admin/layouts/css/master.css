@@ -1815,8 +1815,12 @@ pre code {
   
   color: white;
   padding: 0.75rem;
-  vertical-align: top;
+  vertical-align: middle;
   border-top: 1px solid #212425;
+}
+
+[class^="fa-"] {
+max-width: 10px;
 }
 
 tr,td,th{
@@ -2149,13 +2153,18 @@ tr,td,th{
   }
 }
 
+.modal-header,.modal-body, .modal-footer{
+  color: white;
+  background-color: #212425 ;
+}
+
 .table-responsive {
   display: block;
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   background-color: #303536;
-  padding: 10px;
+  padding: 35px;
   border-radius: 10px;
 }
 
@@ -2911,6 +2920,15 @@ fieldset:disabled a.btn {
 
 
 .btn-danger {
+  padding: 10px;
+
+  font-weight: 700;
+  color: #a3d712;
+  background: #424647;
+  border: #424647;
+}
+
+.btn-secondary {
   padding: 10px;
 
   font-weight: 700;
@@ -5332,12 +5350,40 @@ a.nav-link p{
   margin-bottom: 20px;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(1) brightness(100%) sepia(0%) saturate(0%) hue-rotate(0deg);
+}
+
+.selectize-control.single  .selectize-input{
+  background-color: #212425 !important;
+}
+.selectize-input.input-active{
+  background-color: red !important;
+}
+  
+
+
+.selectize-dropdown, .selectize-input, .selectize-input input{
+  color: white !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 14px !important;
+  border: none !important;
+
+}
+
 .page-link:hover {
   z-index: 2;
   color: #424647;
   text-decoration: none;
   background-color: #a3d712;
   border-color: #a3d712;
+}
+
+.custom-select{
+  background-color: #212425;
+  border: #212425;
+  color: white;
 }
 
 .page-link:focus {
