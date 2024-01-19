@@ -2237,8 +2237,17 @@ tr,td,th{
 
 .form-control:disabled,
 .form-control[readonly] {
-  background-color: #e9ecef;
+  background-color: #212425;
   opacity: 1;
+}
+
+.btn-beat-number{
+  padding: 10px !important;
+  width: 100%!important;
+  font-weight: 700!important;
+  color: #424647!important;
+  background: #a3d712!important;
+  border: #a3d712!important;
 }
 
 input[type=date].form-control,
@@ -2754,6 +2763,30 @@ fieldset:disabled a.btn {
   border-color: #a3d712;
 }
 
+.automatic-bet button {
+  padding: 10px;
+  font-weight: 700;
+  color: #a3d712;
+  background: #424647;
+  border: #424647;
+  border-radius: 5px;
+  text-decoration: none;
+  outline-style: none;
+}
+
+.automatic-bet button:hover {
+  color: #424647;
+  background-color: #a3d712;;
+  border-color: #a3d712;
+}
+
+.automatic-bet button:focus {
+  color: #424647;
+  background-color: #a3d712;;
+  border-color: #a3d712;
+}
+
+
 
 
 .btn-primary.disabled,
@@ -2910,6 +2943,10 @@ fieldset:disabled a.btn {
   color: #a3d712;
   background: #424647;
   border: #424647;
+}
+
+.btn-full{
+  width: 100%;
 }
 
 .btn-warning:hover {
@@ -5895,7 +5932,7 @@ a.badge-dark.focus {
   position: relative;
   display: block;
   padding: 0.75rem 1.25rem;
-  background-color: #ffffff;
+  background-color: #212425;
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
 

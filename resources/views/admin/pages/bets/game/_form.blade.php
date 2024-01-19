@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 p-3">
         @error('success')
         @push('scripts')
             <script>
@@ -18,7 +18,7 @@
     <div class="col-md-12">
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">a{{ trans('admin.game') }}</h3>
+                <h3 class="card-title">Cadastrando novo {{ trans('admin.game') }}</h3>
             </div>
             <div class="card-body">
                 @livewire('pages.bets.game.form', ['typeGame' => $typeGame ?? null , 'clients' => $clients ?? null, 'game' => $game ?? null])
