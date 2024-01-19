@@ -2949,6 +2949,43 @@ fieldset:disabled a.btn {
   width: 100%;
 }
 
+textarea{
+  padding: 10px;
+  background-color:#212425;
+  border: #212425;
+  border-radius: 5px;
+  color: white;
+  outline-style: none;
+}
+
+.card-alert{
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #303536 !important;
+}
+
+.computar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  border-radius: 5px;
+  margin-top: -15px;
+  border: 1px solid #303536;
+  border-top: none;
+}
+
+.computar > .btn{
+  width: 100%;
+}
+
+.card-alert-pai{
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #424647;
+}
+
 .btn-warning:hover {
   color: #424647;
   background-color: #a3d712;;
