@@ -278,17 +278,17 @@
                         <td>${item.modalidade.nome}</td>
                         <td>
                             <a href="{{url('/')}}/admin/bets/bichao/receipt/${item.id}/txt">
-                                <button type="button" class="btn btn-primary text-light" title="Baixar bilhete TXT">
+                                <button type="button" class="btn btn-primary" title="Baixar bilhete TXT">
                                     <i class="bi bi-ticket"></i>
                                 </button>
                             </a>
                             <a href="{{url('/')}}/admin/bets/bichao/receipt/${item.id}/pdf">
-                                <button type="button" class="btn btn-danger text-light" title="Baixar bilhete PDF">
+                                <button type="button" class="btn btn-primary" title="Baixar bilhete PDF">
                                     <i class="bi bi-ticket"></i>
                                 </button>
                             </a>
                             <a href="https://api.whatsapp.com/send?phone=55${item.client.ddd+item.client.phone}&text=Jogo de ${item.modalidade.nome} cadastrado com sucesso! Id da Aposta: ${item.id}, Cliente: ${item.client.name} ${item.client.last_name}, Aposta: ${item.aposta}, Valor R$ ${item.valor.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}, Prêmio Máximo R$ ${item.premio_maximo.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}, Data: ${item.emitido_em}" target="_blank">
-                                <button type="button" class="btn btn-success text-light" title="Enviar por whatsapp">
+                                <button type="button" class="btn btn-primary" title="Enviar por whatsapp">
                                     <i class="bi bi-whatsapp"></i>
                                 </button>
                             </a>

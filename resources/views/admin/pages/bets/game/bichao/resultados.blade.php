@@ -6,15 +6,15 @@
     <div class="col  p-3">
         @include('admin.pages.bets.game.bichao.top_menu')
         <hr />
-        <div class="row">
-            <div class="col-12">
-            <h1>{{ trans('admin.bichao.resultados') }}</h1>
-                <p>{{ trans('admin.bichao.acompanheResults') }}</p>
-            </div>
-        </div>
+        <div class="d-flex justify-content-center flex-column align-items-center">
+        <div class="card-header container-fluid align-items-center">
+            <h4>{{ trans('admin.bichao.resultados') }}</h4>
+            <p>{{ trans('admin.bichao.acompanheResults') }}</p>
+     
         <hr />
-        <div class="row">
-            <div class="col-md-6 col-12">
+</div>
+        <div class="d-flex container justify-content-center align-items-center card-master">
+            <div class="">
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group w-100">
@@ -39,17 +39,18 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-12">
-                        <button class="btn btn-success" id="bichao-buscar-resultados" type="button">{{ trans('admin.bichao.buscResults') }}</button>
+                        <button class="btn btn-primary" id="bichao-buscar-resultados" type="button">{{ trans('admin.bichao.buscResults') }}</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mt-5" id="bichao-resultado-busca">
+      
+    </div>
+      <div class="d-flex mt-5 card-master justify-content-center align-items-center flex-wrap container" id="bichao-resultado-busca">
             <div class="col-12">
                 <p>{{ trans('admin.bichao.procurando') }}</p>
             </div>
         </div>
-    </div>
 @endsection
 
 @push('styles')
@@ -58,6 +59,13 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
+                               .card-master {
+
+
+background-color: #323637;
+padding: 10px;
+border-radius: 5px;
+}
         #filterForm {
             margin-top: 30px;
             margin-bottom: 30px;
@@ -70,7 +78,7 @@
         }
 
         .table-header {
-            background-color: #32689a;
+            background-color: #212425;
         }
 
         .table-body {
@@ -155,7 +163,7 @@
                         }
 
                         return (`
-                            <div class="col-md-3 col-12">
+                            <div class="mr-md-5">
                                 <table class="table table-striped table-bordered table-dark">
                                     <thead>
                                         <tr class="table-header">

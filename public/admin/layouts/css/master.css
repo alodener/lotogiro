@@ -3113,24 +3113,22 @@ textarea{
 }
 
 .btn-outline-primary {
-  color: #007bff;
-  border-color: #007bff;
+  padding: 10px;
+  color: #a3d712;
+  border-color: #a3d712;
 }
 
 .btn-outline-primary:hover {
-  color: #ffffff;
-  background-color: #007bff;
-  border-color: #007bff;
+  color: #424647;
+  background-color: #a3d712;
+  border-color: #a3d712;
 }
 
-.btn-outline-primary:focus,
-.btn-outline-primary.focus {
-  box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.5);
-}
+  
 
 .btn-outline-primary.disabled,
 .btn-outline-primary:disabled {
-  color: #007bff;
+  color: #a3d712;
   background-color: transparent;
 }
 
