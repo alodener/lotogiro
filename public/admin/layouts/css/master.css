@@ -26821,7 +26821,13 @@ textarea.form-control.is-warning {
 .card-maroon:not(.card-outline) > .card-header {
   background-color: #d81b60;
 }
+.card-master {
 
+
+  background-color: #323637;
+  padding: 10px;
+  border-radius: 5px;
+  }
 .card-maroon:not(.card-outline) > .card-header,
 .card-maroon:not(.card-outline) > .card-header a {
   color: #ffffff;

@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row  p-3">
-        <div class="col-md-12">
+        <div class="col-md-12 card-master">
             @livewire('pages.dashboards.extract.add-winning-ticket')
         </div>
     </div>

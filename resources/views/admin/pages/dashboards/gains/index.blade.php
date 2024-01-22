@@ -17,7 +17,7 @@
         </script>
     @endpush
     @enderror
-    <div class="row 
+    <div class="row p-3"> 
         <div class="col-md-12">
             @livewire('pages.dashboards.gain.table', ['users' => $users])
         </div>

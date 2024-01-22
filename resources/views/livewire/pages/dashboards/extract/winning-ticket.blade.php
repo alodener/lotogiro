@@ -7,7 +7,7 @@
             <div class="card-header indica-card">
                 <span class="float-left">{{ trans('admin.pagesF.bilhetesP') }}</span>
                 <span class="float-right">
-                    <a href="{{route('admin.dashboards.extracts.add-winning-ticket')}}" class="btn btn-light">{{ trans('admin.pagesF.cadastrarB') }}</a>
+                    <a href="{{route('admin.dashboards.extracts.add-winning-ticket')}}" class="btn btn-primary">{{ trans('admin.pagesF.cadastrarB') }}</a>
                 </span>
             </div>
         </div>
