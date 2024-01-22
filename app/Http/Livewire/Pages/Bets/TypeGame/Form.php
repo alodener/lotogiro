@@ -6,15 +6,13 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $typeGameId, $name, $numbers, $columns, $color, $description, $matriz, $category, $startTime, $endTime; 
+    public $typeGameId, $name, $numbers, $columns, $color, $description, $matriz, $category; 
 
     protected $rules = [
         'name' => 'required',
         'numbers' => 'required|numeric|digits_between:1,10',
         'columns' => 'required|numeric|digits_between:1,10',
         'description' => 'nullable|max:150',
-        'startTime' =>  'nullable',
-        'endTime' => 'nullable',
     ];
 
     public function mount($typeGame)
@@ -27,9 +25,6 @@ class Form extends Component
             $this->color = $typeGame->color;
             $this->description = $typeGame->description;
             $this->category = $typeGame->category;
-            $this->startTime = $typeGame->start_time;
-            $this->endTime = $typeGame->end_time;
-
             $this->matriz();
         }
     }
