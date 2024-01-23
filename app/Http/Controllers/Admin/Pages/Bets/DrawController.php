@@ -58,7 +58,7 @@ class DrawController extends Controller
                     return $draw->competition->number;
                 })
                 ->editColumn('created_at', function ($draw) {
-                    return Carbon::parse($draw->created_at)->format('d/m/Y');
+                    return Carbon::parse($draw->competition->sort_date)->format('d/m/Y'); 
                 })
                 ->rawColumns(['action'])
                 ->make(true);
