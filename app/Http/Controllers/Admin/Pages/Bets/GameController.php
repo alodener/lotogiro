@@ -299,7 +299,7 @@ class GameController extends Controller
             $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
 
             try {
-                
+
                 $balance = Balance::calculation($request->value);
 
                 if (!$balance) {
