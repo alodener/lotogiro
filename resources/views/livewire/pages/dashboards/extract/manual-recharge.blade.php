@@ -16,7 +16,7 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
+            </div> 
             <div class="col-md-2">
                 <div class="form-group">
                     <select wire:model="range" class="custom-select" id="range" name="range">
@@ -29,41 +29,44 @@
                 </div>
         </div>
     <div class="col-md-6">
-        <form wire:submit.prevent="search">
+    <form wire:submit.prevent="submit">
                 <div class="form-row">
-                <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                    <input wire:model.defer="dateStart" type="text"
-                            class="form-control @error('dateStart') is-invalid @enderror"
-                            id="date_start"
-                            name="dateStart"
-                            autocomplete="off"
-                            maxlength="50"
-                            placeholder="Data Inicial">
+                    <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                        <input wire:model="dateStart" type="text"
+                               class="form-control @error('dateStart') is-invalid @enderror"
+                               id="date_start"
+                               name="dateStart"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="Data Inicial"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateStart')
-                            <span class="invalid-feedback" role="alert">
-                                {{ $message }}
-                            </span>
-                        @enderror
-                </div>
-
-                <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                    <input wire:model.defer="dateEnd" type="text"
-                        class="form-control date @error('dateEnd') is-invalid @enderror"
-                        id="date_end"
-                        name="dateEnd"
-                        autocomplete="off"
-                        maxlength="50"
-                        placeholder="Data Final">
-
-                        <div class="mt-2">
-                            <button type="submit" class="btn btn-primary">Buscar</button>
-                        </div>
-
-                    @error('dateEnd')
                         <span class="invalid-feedback" role="alert">
                             {{ $message }}
                         </span>
-                    @enderror
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                        <input wire:model="dateEnd" type="text"
+                               class="form-control date @error('dateEnd') is-invalid @enderror"
+                               id="date_end"
+                               name="dateEnd"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="Data Final"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
+                        @error('dateEnd')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+
+                        <!-- <div class="mt-2">
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </div> -->
+
+                    
+                       
                     <div wire:loading.attr="disabled" wire:target="submit">
                                     <!-- Conteúdo que você quer esconder durante a busca -->
                     </div>

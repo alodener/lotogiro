@@ -62,38 +62,6 @@
                 @enderror
             </div>
         </div>
-        
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label for="startTime">{{ __('admin.lwTypeGame.startTime') }}</label>
-                <div class="input-group">
-                    <input wire:model="startTime" type="text" class="form-control @error('startTime') is-invalid @enderror" id="startTime" name="startTime" maxlength="200" value="{{ old('startTime', $typeGame->startTime ?? null) }}"placeholder="00:00">
-                    <div class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                    </div>
-                </div>
-                @error('startTime')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-
-            <div class="form-group col-md-3">
-                <label for="endTime">{{ __('admin.lwTypeGame.endTime') }}</label>
-                <div class="input-group">
-                    <input wire:model="endTime" type="text" class="form-control @error('endTime') is-invalid @enderror" id="endTime" name="endTime" maxlength="200" value="{{ old('endTime', $typeGame->endTime ?? null) }}"placeholder="00:00">
-                    <div class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                    </div>
-                </div>
-                @error('endTime')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-        </div>
-    </div>
 </div>
 
         

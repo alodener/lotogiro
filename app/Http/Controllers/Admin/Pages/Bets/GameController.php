@@ -147,22 +147,22 @@ class GameController extends Controller
     {
 
         $typeGame = TypeGame::find($request->type_game);
-
-        if ($typeGame) {
-            $startTime = Carbon::parse($typeGame->start_time);
-            $endTime = Carbon::parse($typeGame->end_time);
-            $now = Carbon::now();
         
-            if ($now->lt($startTime) || $now->gt($endTime)) {
+        if ($typeGame) {
             
-            } else {
-                return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                    'error' => 'Apostas fora do horário permitido para este tipo de jogo!'
-                ]);
-            }
-        } 
+            $competition = Competition::where('type_game_id', $typeGame->id)->latest()->first();
+            if ($competition) {
+                
+                $sortDate = Carbon::parse($competition->sort_date);
+                $now = Carbon::now();
 
-     
+                if ($now->gt($sortDate)) {
+                    return back()->withErrors(['error' => 'Apostas fechadas para esta competição!']);
+                }
+            }
+
+        }
+
         if ($request->controle == 1) {
             if (!auth()->user()->hasPermissionTo('create_game')) {
                 abort(403);
@@ -311,12 +311,6 @@ class GameController extends Controller
             $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
 
             try {
-                $date = Carbon::now();
-                if ($date->hour >= 20 && $date->hour < 21) {
-                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                        'error' => 'Apostas Encerradas!'
-                    ]);
-                }
 
                 $balance = Balance::calculation($request->value);
 
