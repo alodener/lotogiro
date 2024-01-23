@@ -145,6 +145,7 @@ class GameController extends Controller
 
     public function store(Request $request, Bet $validate_game, Game $game)
     {
+
         $typeGame = TypeGame::find($request->type_game);
         
         if ($typeGame) {
@@ -159,6 +160,7 @@ class GameController extends Controller
                     return back()->withErrors(['error' => 'Apostas fechadas para esta competição!']);
                 }
             }
+
         }
 
         if ($request->controle == 1) {
@@ -172,8 +174,18 @@ class GameController extends Controller
                 'value' => 'required',
             ]);
 
-            try {
 
+            $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
+            $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
+            try {
+                $date = Carbon::now();
+                if ($date->hour >= 20 && $date->hour < 21) {
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                        'error' => 'Apostas Encerradas!'
+                    ]);
+                }
+                
+                
                 $chaveregistro = ChaveAleatoria::generateKey(8);
                 $user = Auth()->user()->id;
                 $bet = new Bet();

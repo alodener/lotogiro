@@ -58,7 +58,7 @@ class Form extends Component
             $game->numbers = explode(',', $game->numbers);
 
             foreach ($numbersDraw as $number) {
-                $inArray = in_array($number, $game->numbers);
+                $inArray = !in_array($number, $game->numbers);
                 if ($inArray)
                     $countNumbersGame++;
             }

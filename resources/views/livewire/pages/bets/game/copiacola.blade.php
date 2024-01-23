@@ -21,7 +21,6 @@
                 </div>
             </div> 
             </div>
-
             <div class="card">
                 <div class="card-body md-12">
                 <b>  Para importar os jogos, é só colar cada jogo em uma linha. Você pode separar as dezenas com um dos caracteres: (-.,_ ) Exemplo: 
@@ -63,6 +62,7 @@
                     <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
                     <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
                     <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
+
                         {{ trans('admin.games.bet-value-label') }}
                             <input type="text" id="value" onchange="altera();" value="" name="value" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1'); 
                         
