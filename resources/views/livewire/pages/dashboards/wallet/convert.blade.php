@@ -1,30 +1,42 @@
 <div>
-    <div class="col-md-12">
-        <div class="card card-info">
+  
+<div class="col-md-12 p-4  card-header">
+        <h3 class="text-center text-bold">CONVERTER SALDOS</h3>
+    </div>
+    <div class="">
+        <div class="">
             <div class="card-header">
                 <h3 class="card-title">{{ trans('admin.pagesF.conversao') }}</h3>
             </div>
-            <div class="card-body">
+            <div class="card-master col-md-6 container">
                 <div x-data="{}">
-                    <div class="row mt-2">
-                        <div class="col-md-5 col-sm-12">
-                            <h4>{{ trans('admin.pagesF.saldo') }} R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
-                            <h4>{{ trans('admin.pagesF.bonus') }} R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h4>
+                    <div class="d-flex  flex-column mt-2">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="card-master card-master-bottom text-center">
+                                <p>{{ trans('admin.pagesF.saldo') }}</p>
+                                <h1>R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h1>
+                            </div>
+                            <div class="card-master card-master-bottom  mr-md-5 ml-md-5 text-center">
+                                <p>{{ trans('admin.pagesF.bonus') }}</p>
+                                <h1>R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h1>
+                            </div>
                         </div>
-                        <div class="col-md-7 col-sm-12">
+                        <div class="col-md-6 mt-3 mx-auto text-center col-sm-12">
                             <h6> {{ trans('admin.pagesF.valTrans') }}</h6>
-                            <small>({{ trans('admin.pagesF.valIgual') }}<b> {{ trans('admin.pagesF.BONUS') }}</b>)</small>
-                            <div class="input-group">
+                            <small>({{ trans('admin.pagesF.valIgual') }}<b> {{ trans('admin.pagesF.BONUS')
+                                    }}</b>)</small>
+                            <div class="input-group mt-4">
                                 <input wire:model="valueConvert" x-on:focus="formatInput()" type="text"
-                                       class="search-query form-control" placeholder="Valor a converter"
-                                       id="valueConvert" inputmode="numeric" value="0,00" />
+                                    class="search-query form-control" placeholder="Valor a converter" id="valueConvert"
+                                    inputmode="numeric" value="0,00" />
                             </div>
                         </div>
                         <div class="col-sm-12 mt-5">
                             <div class="input-group">
                                 <button wire:click="transferBalance" type="button" class="btn btn-dark
                                 btn-block">
-                                {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt" style="color: #fff938"></span>
+                                    {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt"
+                                        style="color: #fff938"></span>
                                 </button>
                             </div>
                         </div>
@@ -33,32 +45,40 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="card card-info">
+    <div class="mt-4">
+        <div class="">
             <div class="card-header">
-                <h3 class="card-title">{{ trans('admin.pagesF.conversaoBonusParaSaque') }}</h3>
+            <h3 class="card-title">{{ trans('admin.pagesF.conversaoBonusParaSaque') }}</h3>
             </div>
-            <div class="card-body">
+            <div class="card-master col-md-6 container">
                 <div x-data="{}">
-                    <div class="row mt-2">
-                        <div class="col-md-5 col-sm-12">
-                            <h4>{{ trans('admin.pagesF.bonus') }} R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h4>
-                            <h4>{{ trans('admin.pagesF.saqueDisponivel') }} R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h4>
+                    <div class="d-flex  flex-column mt-2">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="card-master card-master-bottom text-center">
+                                <p>{{ trans('admin.pagesF.bonus') }} </p>
+                                <h1>R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h1>
+                            </div>
+                            <div class="card-master card-master-bottom  mr-md-5 ml-md-5 text-center">
+                                <p>{{ trans('admin.pagesF.saqueDisponivel') }}</p>
+                                <h1>R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h1>
+                            </div>
                         </div>
-                        <div class="col-md-7 col-sm-12">
+                        <div class="col-md-6 mt-3 mx-auto text-center col-sm-12">
                             <h6> {{ trans('admin.pagesF.valTrans') }}</h6>
-                            <small>({{ trans('admin.pagesF.valIgual') }}<b> {{ trans('admin.pagesF.BONUS') }}</b>)</small>
-                            <div class="input-group">
-                                <input wire:model="valueConvertBonus" x-on:focus="formatInputBonus()" type="text"
-                                       class="search-query form-control" placeholder="Valor a converter"
-                                       id="valueConvertBonus" inputmode="numeric" value="0,00" />
+                            <small>({{ trans('admin.pagesF.valIgual') }}<b> {{ trans('admin.pagesF.BONUS')
+                                    }}</b>)</small>
+                            <div class="input-group mt-4">
+                                <input wire:model="valueConvert" x-on:focus="formatInput()" type="text"
+                                    class="search-query form-control" placeholder="Valor a converter" id="valueConvert"
+                                    inputmode="numeric" value="0,00" />
                             </div>
                         </div>
                         <div class="col-sm-12 mt-5">
                             <div class="input-group">
-                                <button wire:click="transferBonusToAvailableWithdraw" type="button" class="btn btn-dark
+                                <button wire:click="transferBalance" type="button" class="btn btn-dark
                                 btn-block">
-                                {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt" style="color: #fff938"></span>
+                                    {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt"
+                                        style="color: #fff938"></span>
                                 </button>
                             </div>
                         </div>
@@ -67,33 +87,41 @@
             </div>
         </div>
     </div>
-    
-    <div class="col-md-12">
-        <div class="card card-info">
+
+    <div class="mt-4">
+        <div class="">
             <div class="card-header">
-                <h3 class="card-title">{{ trans('admin.pagesF.conversaoSaqueParaSaldo') }}</h3>
+            <h3 class="card-title">{{ trans('admin.pagesF.conversaoSaqueParaSaldo') }}</h3>
             </div>
-            <div class="card-body">
+            <div class="card-master col-md-6 container">
                 <div x-data="{}">
-                    <div class="row mt-2">
-                        <div class="col-md-5 col-sm-12">
-                            <h4>{{ trans('admin.pagesF.saqueDisponivel') }} R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h4>
-                            <h4>{{ trans('admin.pagesF.saldo') }} R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
+                    <div class="d-flex  flex-column mt-2">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="card-master card-master-bottom text-center">
+                                <p>{{ trans('admin.pagesF.saqueDisponivel') }}</p>
+                                <h1>R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h1>
+                            </div>
+                            <div class="card-master card-master-bottom  mr-md-5 ml-md-5 text-center">
+                                <p>{{ trans('admin.pagesF.saldo') }}</p>
+                                <h1>R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h1>
+                            </div>
                         </div>
-                        <div class="col-md-7 col-sm-12">
+                        <div class="col-md-6 mt-3 mx-auto text-center col-sm-12">
                             <h6> {{ trans('admin.pagesF.valTrans') }}</h6>
-                            <small>({{ trans('admin.pagesF.valIgual') }}<b> {{ trans('admin.pagesF.SAQUEDISPONIVEL') }}</b>)</small>
-                            <div class="input-group">
+                            <small>({{ trans('admin.pagesF.valIgual') }}<b> {{ trans('admin.pagesF.SAQUEDISPONIVEL')
+                                    }}</b>)</small>
+                            <div class="input-group mt-4">
                                 <input wire:model="valueConvertWithdraw" x-on:focus="formatInputWithdraw()" type="text"
-                                       class="search-query form-control" placeholder="Valor a converter"
-                                       id="valueConvertWithdraw" inputmode="numeric" value="0,00" />
+                                    class="search-query form-control" placeholder="Valor a converter"
+                                    id="valueConvertWithdraw" inputmode="numeric" value="0,00" />
                             </div>
                         </div>
                         <div class="col-sm-12 mt-5">
                             <div class="input-group">
                                 <button wire:click="transferAvailableWithdrawToBalance" type="button" class="btn btn-dark
                                 btn-block">
-                                {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt" style="color: #fff938"></span>
+                                    {{ trans('admin.pagesF.converter') }} <span class="fas fa-exchange-alt"
+                                        style="color: #fff938"></span>
                                 </button>
                             </div>
                         </div>
@@ -126,389 +154,506 @@
                              <div class="input-group">
                                 <button wire:click="transferBalance" type="button" class="btn btn-dark
                                 btn-block">
-                                {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt" style="color: #fff938"></span> --> 
+                                {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt" style="color: #fff938"></span> -->
 
 @push('styles')
-    <style>
-        .btn-toggle {
-            margin: 0 4rem;
-            padding: 0;
-            position: relative;
-            border: none;
-            height: 1.5rem;
-            width: 3rem;
-            border-radius: 1.5rem;
-            color: #6b7381;
-            background: #bdc1c8;
-        }
-        .btn-toggle:focus,
-        .btn-toggle.focus,
-        .btn-toggle:focus.active,
-        .btn-toggle.focus.active {
-            outline: none;
-        }
-        .btn-toggle:before,
-        .btn-toggle:after {
-            line-height: 1.5rem;
-            width: 4rem;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: absolute;
-            bottom: 0;
-            transition: opacity 0.25s;
-        }
-        .btn-toggle:before {
-            content: "Não";
-            left: -4rem;
-        }
-        .btn-toggle:after {
-            content: "Sim";
-            right: -4rem;
-            opacity: 0.5;
-        }
-        .btn-toggle > .handle {
-            position: absolute;
-            top: 0.1875rem;
-            left: 0.1875rem;
-            width: 1.125rem;
-            height: 1.125rem;
-            border-radius: 1.125rem;
-            background: #fff;
-            transition: left 0.25s;
-        }
-        .btn-toggle.active {
-            transition: background-color 0.25s;
-        }
-        .btn-toggle.active > .handle {
-            left: 1.6875rem;
-            transition: left 0.25s;
-        }
-        .btn-toggle.active:before {
-            opacity: 0.5;
-        }
-        .btn-toggle.active:after {
-            opacity: 1;
-        }
-        .btn-toggle.btn-sm:before,
-        .btn-toggle.btn-sm:after {
-            line-height: -0.5rem;
-            color: #fff;
-            letter-spacing: 0.75px;
-            left: 0.4125rem;
-            width: 2.325rem;
-        }
-        .btn-toggle.btn-sm:before {
-            text-align: right;
-        }
-        .btn-toggle.btn-sm:after {
-            text-align: left;
-            opacity: 0;
-        }
-        .btn-toggle.btn-sm.active:before {
-            opacity: 0;
-        }
-        .btn-toggle.btn-sm.active:after {
-            opacity: 1;
-        }
-        .btn-toggle.btn-xs:before,
-        .btn-toggle.btn-xs:after {
-            display: none;
-        }
-        .btn-toggle:before,
-        .btn-toggle:after {
-            color: #6b7381;
-        }
-        .btn-toggle.active {
-            background-color: #29b5a8;
-        }
-        .btn-toggle.btn-lg {
-            margin: 0 5rem;
-            padding: 0;
-            position: relative;
-            border: none;
-            height: 2.5rem;
-            width: 5rem;
-            border-radius: 2.5rem;
-        }
-        .btn-toggle.btn-lg:focus,
-        .btn-toggle.btn-lg.focus,
-        .btn-toggle.btn-lg:focus.active,
-        .btn-toggle.btn-lg.focus.active {
-            outline: none;
-        }
-        .btn-toggle.btn-lg:before,
-        .btn-toggle.btn-lg:after {
-            line-height: 2.5rem;
-            width: 5rem;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: absolute;
-            bottom: 0;
-            transition: opacity 0.25s;
-        }
-        .btn-toggle.btn-lg:before {
-            content: "Não";
-            left: -5rem;
-        }
-        .btn-toggle.btn-lg:after {
-            content: "Sim";
-            right: -5rem;
-            opacity: 0.5;
-        }
-        .btn-toggle.btn-lg > .handle {
-            position: absolute;
-            top: 0.3125rem;
-            left: 0.3125rem;
-            width: 1.875rem;
-            height: 1.875rem;
-            border-radius: 1.875rem;
-            background: #fff;
-            transition: left 0.25s;
-        }
-        .btn-toggle.btn-lg.active {
-            transition: background-color 0.25s;
-        }
-        .btn-toggle.btn-lg.active > .handle {
-            left: 2.8125rem;
-            transition: left 0.25s;
-        }
-        .btn-toggle.btn-lg.active:before {
-            opacity: 0.5;
-        }
-        .btn-toggle.btn-lg.active:after {
-            opacity: 1;
-        }
-        .btn-toggle.btn-lg.btn-sm:before,
-        .btn-toggle.btn-lg.btn-sm:after {
-            line-height: 0.5rem;
-            color: #fff;
-            letter-spacing: 0.75px;
-            left: 0.6875rem;
-            width: 3.875rem;
-        }
-        .btn-toggle.btn-lg.btn-sm:before {
-            text-align: right;
-        }
-        .btn-toggle.btn-lg.btn-sm:after {
-            text-align: left;
-            opacity: 0;
-        }
-        .btn-toggle.btn-lg.btn-sm.active:before {
-            opacity: 0;
-        }
-        .btn-toggle.btn-lg.btn-sm.active:after {
-            opacity: 1;
-        }
-        .btn-toggle.btn-lg.btn-xs:before,
-        .btn-toggle.btn-lg.btn-xs:after {
-            display: none;
-        }
-        .btn-toggle.btn-sm {
-            margin: 0 0.5rem;
-            padding: 0;
-            position: relative;
-            border: none;
-            height: 1.5rem;
-            width: 3rem;
-            border-radius: 1.5rem;
-        }
-        .btn-toggle.btn-sm:focus,
-        .btn-toggle.btn-sm.focus,
-        .btn-toggle.btn-sm:focus.active,
-        .btn-toggle.btn-sm.focus.active {
-            outline: none;
-        }
-        .btn-toggle.btn-sm:before,
-        .btn-toggle.btn-sm:after {
-            line-height: 1.5rem;
-            width: 0.5rem;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.55rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: absolute;
-            bottom: 0;
-            transition: opacity 0.25s;
-        }
-        .btn-toggle.btn-sm:before {
-            content: "Não";
-            left: -0.5rem;
-        }
-        .btn-toggle.btn-sm:after {
-            content: "Sim";
-            right: -0.5rem;
-            opacity: 0.5;
-        }
-        .btn-toggle.btn-sm > .handle {
-            position: absolute;
-            top: 0.1875rem;
-            left: 0.1875rem;
-            width: 1.125rem;
-            height: 1.125rem;
-            border-radius: 1.125rem;
-            background: #fff;
-            transition: left 0.25s;
-        }
-        .btn-toggle.btn-sm.active {
-            transition: background-color 0.25s;
-        }
-        .btn-toggle.btn-sm.active > .handle {
-            left: 1.6875rem;
-            transition: left 0.25s;
-        }
-        .btn-toggle.btn-sm.active:before {
-            opacity: 0.5;
-        }
-        .btn-toggle.btn-sm.active:after {
-            opacity: 1;
-        }
-        .btn-toggle.btn-sm.btn-sm:before,
-        .btn-toggle.btn-sm.btn-sm:after {
-            line-height: -0.5rem;
-            color: #fff;
-            letter-spacing: 0.75px;
-            left: 0.4125rem;
-            width: 2.325rem;
-        }
-        .btn-toggle.btn-sm.btn-sm:before {
-            text-align: right;
-        }
-        .btn-toggle.btn-sm.btn-sm:after {
-            text-align: left;
-            opacity: 0;
-        }
-        .btn-toggle.btn-sm.btn-sm.active:before {
-            opacity: 0;
-        }
-        .btn-toggle.btn-sm.btn-sm.active:after {
-            opacity: 1;
-        }
-        .btn-toggle.btn-sm.btn-xs:before,
-        .btn-toggle.btn-sm.btn-xs:after {
-            display: none;
-        }
-        .btn-toggle.btn-xs {
-            margin: 0 0;
-            padding: 0;
-            position: relative;
-            border: none;
-            height: 1rem;
-            width: 2rem;
-            border-radius: 1rem;
-        }
-        .btn-toggle.btn-xs:focus,
-        .btn-toggle.btn-xs.focus,
-        .btn-toggle.btn-xs:focus.active,
-        .btn-toggle.btn-xs.focus.active {
-            outline: none;
-        }
-        .btn-toggle.btn-xs:before,
-        .btn-toggle.btn-xs:after {
-            line-height: 1rem;
-            width: 0;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: absolute;
-            bottom: 0;
-            transition: opacity 0.25s;
-        }
-        .btn-toggle.btn-xs:before {
-            content: "Não";
-            left: 0;
-        }
-        .btn-toggle.btn-xs:after {
-            content: "Sim";
-            right: 0;
-            opacity: 0.5;
-        }
-        .btn-toggle.btn-xs > .handle {
-            position: absolute;
-            top: 0.125rem;
-            left: 0.125rem;
-            width: 0.75rem;
-            height: 0.75rem;
-            border-radius: 0.75rem;
-            background: #fff;
-            transition: left 0.25s;
-        }
-        .btn-toggle.btn-xs.active {
-            transition: background-color 0.25s;
-        }
-        .btn-toggle.btn-xs.active > .handle {
-            left: 1.125rem;
-            transition: left 0.25s;
-        }
-        .btn-toggle.btn-xs.active:before {
-            opacity: 0.5;
-        }
-        .btn-toggle.btn-xs.active:after {
-            opacity: 1;
-        }
-        .btn-toggle.btn-xs.btn-sm:before,
-        .btn-toggle.btn-xs.btn-sm:after {
-            line-height: -1rem;
-            color: #fff;
-            letter-spacing: 0.75px;
-            left: 0.275rem;
-            width: 1.55rem;
-        }
-        .btn-toggle.btn-xs.btn-sm:before {
-            text-align: right;
-        }
-        .btn-toggle.btn-xs.btn-sm:after {
-            text-align: left;
-            opacity: 0;
-        }
-        .btn-toggle.btn-xs.btn-sm.active:before {
-            opacity: 0;
-        }
-        .btn-toggle.btn-xs.btn-sm.active:after {
-            opacity: 1;
-        }
-        .btn-toggle.btn-xs.btn-xs:before,
-        .btn-toggle.btn-xs.btn-xs:after {
-            display: none;
-        }
-        .btn-toggle.btn-secondary {
-            color: #6b7381;
-            background: #bdc1c8;
-        }
-        .btn-toggle.btn-secondary:before,
-        .btn-toggle.btn-secondary:after {
-            color: #6b7381;
-        }
-        .btn-toggle.btn-secondary.active {
-            background-color: #ff8300;
-        }
-    </style>
+<style>
+    .card-master-bottom {
+        border-bottom: 1px solid #A3D712;
+        min-width: 300px;
+        padding: 30px;
+    }
+
+    .btn-green {
+        padding: 10px;
+
+        font-weight: 700;
+        color: #424647;
+        background: #a3d712;
+        border: #a3d712;
+        box-shadow: 0 0 10px 2px rgba(163, 215, 18, .5);
+
+    }
+
+    .btn-primary {
+        min-width: 200px;
+    }
+
+    .btn-green:hover {}
+
+    .card-master-bottom p {
+        color: #a3d712;
+        font-weight: bold;
+    }
+
+    @media (max-width: 992px) {
+        .card-master-bottom {
+            padding: 10px !important;
+            min-width: 200px;
+
+
+        }
+
+        .card-master-bottom h1 {
+            font-size: 25px;
+
+        }
+
+        .card-master-bottom p {
+            color: #a3d712;
+            font-weight: bold;
+        }
+
+
+    }
+
+    .btn-toggle {
+        margin: 0 4rem;
+        padding: 0;
+        position: relative;
+        border: none;
+        height: 1.5rem;
+        width: 3rem;
+        border-radius: 1.5rem;
+        color: #6b7381;
+        background: #bdc1c8;
+    }
+
+    .btn-toggle:focus,
+    .btn-toggle.focus,
+    .btn-toggle:focus.active,
+    .btn-toggle.focus.active {
+        outline: none;
+    }
+
+    .btn-toggle:before,
+    .btn-toggle:after {
+        line-height: 1.5rem;
+        width: 4rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: absolute;
+        bottom: 0;
+        transition: opacity 0.25s;
+    }
+
+    .btn-toggle:before {
+        content: "Não";
+        left: -4rem;
+    }
+
+    .btn-toggle:after {
+        content: "Sim";
+        right: -4rem;
+        opacity: 0.5;
+    }
+
+    .btn-toggle>.handle {
+        position: absolute;
+        top: 0.1875rem;
+        left: 0.1875rem;
+        width: 1.125rem;
+        height: 1.125rem;
+        border-radius: 1.125rem;
+        background: #fff;
+        transition: left 0.25s;
+    }
+
+    .btn-toggle.active {
+        transition: background-color 0.25s;
+    }
+
+    .btn-toggle.active>.handle {
+        left: 1.6875rem;
+        transition: left 0.25s;
+    }
+
+    .btn-toggle.active:before {
+        opacity: 0.5;
+    }
+
+    .btn-toggle.active:after {
+        opacity: 1;
+    }
+
+    .btn-toggle.btn-sm:before,
+    .btn-toggle.btn-sm:after {
+        line-height: -0.5rem;
+        color: #fff;
+        letter-spacing: 0.75px;
+        left: 0.4125rem;
+        width: 2.325rem;
+    }
+
+    .btn-toggle.btn-sm:before {
+        text-align: right;
+    }
+
+    .btn-toggle.btn-sm:after {
+        text-align: left;
+        opacity: 0;
+    }
+
+    .btn-toggle.btn-sm.active:before {
+        opacity: 0;
+    }
+
+    .btn-toggle.btn-sm.active:after {
+        opacity: 1;
+    }
+
+    .btn-toggle.btn-xs:before,
+    .btn-toggle.btn-xs:after {
+        display: none;
+    }
+
+    .btn-toggle:before,
+    .btn-toggle:after {
+        color: #6b7381;
+    }
+
+    .btn-toggle.active {
+        background-color: #29b5a8;
+    }
+
+    .btn-toggle.btn-lg {
+        margin: 0 5rem;
+        padding: 0;
+        position: relative;
+        border: none;
+        height: 2.5rem;
+        width: 5rem;
+        border-radius: 2.5rem;
+    }
+
+    .btn-toggle.btn-lg:focus,
+    .btn-toggle.btn-lg.focus,
+    .btn-toggle.btn-lg:focus.active,
+    .btn-toggle.btn-lg.focus.active {
+        outline: none;
+    }
+
+    .btn-toggle.btn-lg:before,
+    .btn-toggle.btn-lg:after {
+        line-height: 2.5rem;
+        width: 5rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: absolute;
+        bottom: 0;
+        transition: opacity 0.25s;
+    }
+
+    .btn-toggle.btn-lg:before {
+        content: "Não";
+        left: -5rem;
+    }
+
+    .btn-toggle.btn-lg:after {
+        content: "Sim";
+        right: -5rem;
+        opacity: 0.5;
+    }
+
+    .btn-toggle.btn-lg>.handle {
+        position: absolute;
+        top: 0.3125rem;
+        left: 0.3125rem;
+        width: 1.875rem;
+        height: 1.875rem;
+        border-radius: 1.875rem;
+        background: #fff;
+        transition: left 0.25s;
+    }
+
+    .btn-toggle.btn-lg.active {
+        transition: background-color 0.25s;
+    }
+
+    .btn-toggle.btn-lg.active>.handle {
+        left: 2.8125rem;
+        transition: left 0.25s;
+    }
+
+    .btn-toggle.btn-lg.active:before {
+        opacity: 0.5;
+    }
+
+    .btn-toggle.btn-lg.active:after {
+        opacity: 1;
+    }
+
+    .btn-toggle.btn-lg.btn-sm:before,
+    .btn-toggle.btn-lg.btn-sm:after {
+        line-height: 0.5rem;
+        color: #fff;
+        letter-spacing: 0.75px;
+        left: 0.6875rem;
+        width: 3.875rem;
+    }
+
+    .btn-toggle.btn-lg.btn-sm:before {
+        text-align: right;
+    }
+
+    .btn-toggle.btn-lg.btn-sm:after {
+        text-align: left;
+        opacity: 0;
+    }
+
+    .btn-toggle.btn-lg.btn-sm.active:before {
+        opacity: 0;
+    }
+
+    .btn-toggle.btn-lg.btn-sm.active:after {
+        opacity: 1;
+    }
+
+    .btn-toggle.btn-lg.btn-xs:before,
+    .btn-toggle.btn-lg.btn-xs:after {
+        display: none;
+    }
+
+    .btn-toggle.btn-sm {
+        margin: 0 0.5rem;
+        padding: 0;
+        position: relative;
+        border: none;
+        height: 1.5rem;
+        width: 3rem;
+        border-radius: 1.5rem;
+    }
+
+    .btn-toggle.btn-sm:focus,
+    .btn-toggle.btn-sm.focus,
+    .btn-toggle.btn-sm:focus.active,
+    .btn-toggle.btn-sm.focus.active {
+        outline: none;
+    }
+
+    .btn-toggle.btn-sm:before,
+    .btn-toggle.btn-sm:after {
+        line-height: 1.5rem;
+        width: 0.5rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.55rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: absolute;
+        bottom: 0;
+        transition: opacity 0.25s;
+    }
+
+    .btn-toggle.btn-sm:before {
+        content: "Não";
+        left: -0.5rem;
+    }
+
+    .btn-toggle.btn-sm:after {
+        content: "Sim";
+        right: -0.5rem;
+        opacity: 0.5;
+    }
+
+    .btn-toggle.btn-sm>.handle {
+        position: absolute;
+        top: 0.1875rem;
+        left: 0.1875rem;
+        width: 1.125rem;
+        height: 1.125rem;
+        border-radius: 1.125rem;
+        background: #fff;
+        transition: left 0.25s;
+    }
+
+    .btn-toggle.btn-sm.active {
+        transition: background-color 0.25s;
+    }
+
+    .btn-toggle.btn-sm.active>.handle {
+        left: 1.6875rem;
+        transition: left 0.25s;
+    }
+
+    .btn-toggle.btn-sm.active:before {
+        opacity: 0.5;
+    }
+
+    .btn-toggle.btn-sm.active:after {
+        opacity: 1;
+    }
+
+    .btn-toggle.btn-sm.btn-sm:before,
+    .btn-toggle.btn-sm.btn-sm:after {
+        line-height: -0.5rem;
+        color: #fff;
+        letter-spacing: 0.75px;
+        left: 0.4125rem;
+        width: 2.325rem;
+    }
+
+    .btn-toggle.btn-sm.btn-sm:before {
+        text-align: right;
+    }
+
+    .btn-toggle.btn-sm.btn-sm:after {
+        text-align: left;
+        opacity: 0;
+    }
+
+    .btn-toggle.btn-sm.btn-sm.active:before {
+        opacity: 0;
+    }
+
+    .btn-toggle.btn-sm.btn-sm.active:after {
+        opacity: 1;
+    }
+
+    .btn-toggle.btn-sm.btn-xs:before,
+    .btn-toggle.btn-sm.btn-xs:after {
+        display: none;
+    }
+
+    .btn-toggle.btn-xs {
+        margin: 0 0;
+        padding: 0;
+        position: relative;
+        border: none;
+        height: 1rem;
+        width: 2rem;
+        border-radius: 1rem;
+    }
+
+    .btn-toggle.btn-xs:focus,
+    .btn-toggle.btn-xs.focus,
+    .btn-toggle.btn-xs:focus.active,
+    .btn-toggle.btn-xs.focus.active {
+        outline: none;
+    }
+
+    .btn-toggle.btn-xs:before,
+    .btn-toggle.btn-xs:after {
+        line-height: 1rem;
+        width: 0;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: absolute;
+        bottom: 0;
+        transition: opacity 0.25s;
+    }
+
+    .btn-toggle.btn-xs:before {
+        content: "Não";
+        left: 0;
+    }
+
+    .btn-toggle.btn-xs:after {
+        content: "Sim";
+        right: 0;
+        opacity: 0.5;
+    }
+
+    .btn-toggle.btn-xs>.handle {
+        position: absolute;
+        top: 0.125rem;
+        left: 0.125rem;
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: 0.75rem;
+        background: #fff;
+        transition: left 0.25s;
+    }
+
+    .btn-toggle.btn-xs.active {
+        transition: background-color 0.25s;
+    }
+
+    .btn-toggle.btn-xs.active>.handle {
+        left: 1.125rem;
+        transition: left 0.25s;
+    }
+
+    .btn-toggle.btn-xs.active:before {
+        opacity: 0.5;
+    }
+
+    .btn-toggle.btn-xs.active:after {
+        opacity: 1;
+    }
+
+    .btn-toggle.btn-xs.btn-sm:before,
+    .btn-toggle.btn-xs.btn-sm:after {
+        line-height: -1rem;
+        color: #fff;
+        letter-spacing: 0.75px;
+        left: 0.275rem;
+        width: 1.55rem;
+    }
+
+    .btn-toggle.btn-xs.btn-sm:before {
+        text-align: right;
+    }
+
+    .btn-toggle.btn-xs.btn-sm:after {
+        text-align: left;
+        opacity: 0;
+    }
+
+    .btn-toggle.btn-xs.btn-sm.active:before {
+        opacity: 0;
+    }
+
+    .btn-toggle.btn-xs.btn-sm.active:after {
+        opacity: 1;
+    }
+
+    .btn-toggle.btn-xs.btn-xs:before,
+    .btn-toggle.btn-xs.btn-xs:after {
+        display: none;
+    }
+
+    .btn-toggle.btn-secondary {
+        color: #6b7381;
+        background: #bdc1c8;
+    }
+
+    .btn-toggle.btn-secondary:before,
+    .btn-toggle.btn-secondary:after {
+        color: #6b7381;
+    }
+
+    .btn-toggle.btn-secondary.active {
+        background-color: #ff8300;
+    }
+</style>
 @endpush
 
 @push('scripts')
 
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <x-livewire-alert::scripts />
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<x-livewire-alert::scripts />
 
-    <script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.1.1/build/vanilla-masker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.1.1/build/vanilla-masker.min.js"></script>
 
-    <script type="text/javascript">
-        function formatInput(){
-            VMasker(document.getElementById("valueConvert")).maskMoney();
-        }
-        function formatInputBonus(){
-            VMasker(document.getElementById("valueConvertBonus")).maskMoney();
-        }
-        function formatInputWithdraw(){
-            VMasker(document.getElementById("valueConvertWithdraw")).maskMoney();
-        }
-    </script>
+<script type="text/javascript">
+    function formatInput() {
+        VMasker(document.getElementById("valueConvert")).maskMoney();
+    }
+    function formatInputBonus() {
+        VMasker(document.getElementById("valueConvertBonus")).maskMoney();
+    }
+    function formatInputWithdraw() {
+        VMasker(document.getElementById("valueConvertWithdraw")).maskMoney();
+    }
+</script>
 @endpush

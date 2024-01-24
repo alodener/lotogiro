@@ -8,24 +8,9 @@
 
     <!-- Card Dinheiros saldo, bonus, disponivel -->
 
-    <div class="d-flex justify-content-center flex-md-row flex-column mt-5">
-        <div class="d-flex justify-content-between mb-3">
-            <div class="card-master card-master-bottom text-center">
-                <p>{{ trans('admin.pagesF.saldo') }}</p>
-                <h1>R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h1>
-            </div>
-            <div class="card-master card-master-bottom  mr-md-5 ml-md-5 text-center">
-                <p>{{ trans('admin.pagesF.bonus') }}</p>
-                <h1>R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h1>
-            </div>
-        </div>
+    @include('admin.pages.dashboards.wallet.saldo')
 
-        <div class="card-master card-master-bottom text-center mb-3">
-            <p>{{ trans('admin.pagesF.saqueDisponivel') }}</p>
-            <h1>R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h1>
-        </div>
-    </div>
-
+   
         <!-- Botoes verdes primarios -->
 
 
@@ -117,6 +102,11 @@
       
      
     }
+
+    .card-master-bottom p {
+            color: #a3d712;
+            font-weight: bold;
+        }
 
     @media (max-width: 992px) {
         .card-master-bottom {
