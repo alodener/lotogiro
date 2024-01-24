@@ -60,9 +60,9 @@
                             @can('read_gain')
                             <li class="nav-item">
                                 <a href="{{ route('admin.bets.bichao.index') }}"
-                                    class="nav-link @if(request()->is('admin/bets/bichao/*')) active @endif">
-                                    <i class="fas fa-star nav-icon"></i>
-                                    <p>Apostar</p>
+                                    class="nav-link @if(request()->is('admin/bets/bichao')) active @endif">
+                                    <i class="nav-icon fas fa-ticket-alt"></i>
+                                                                        <p>Apostar</p>
                                 </a>
                             </li>
                             @endcan
@@ -70,16 +70,16 @@
                             <li class="nav-item">
                                 <a href="{{ route('admin.bets.bichao.resultados') }}"
                                     class="nav-link @if(request()->is('admin/bets/bichao/resultados')) active @endif">
-                                    <i class="fas fa-star nav-icon"></i>
-                                    <p>Resultados</p>
+                                    <i class="fas fa-trophy nav-icon"></i>
+                            <p>Resultados</p>
                                 </a>
                             </li>
                             @endcan
                             @can('read_gain')
                             <li class="nav-item">
                                 <a href="{{ route('admin.bets.bichao.cotacao') }}"
-                                    class="nav-link @if(request()->is('admin/bets/bichao                                                                                                                                            /cotacao')) active @endif">
-                                    <i class="fas fa-star nav-icon"></i>
+                                class="nav-link @if(request()->is('admin/bets/bichao/cotacao')) active @endif">
+<i class="fa fa-money nav-icon" aria-hidden="true"></i>
                                     <p>Cotação</p>
                                 </a>
                             </li>
