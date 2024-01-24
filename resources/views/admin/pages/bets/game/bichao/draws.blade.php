@@ -4,12 +4,12 @@
 
 @section('content')
     <div class="col  p-3">
+    
+        <div class="card-header align-items-center">
+                    <h4>{{ trans('admin.bichao.vencendores') }}</h4>
+                </div>
         <hr />
-        <div class="row">
-            <h1>{{ trans('admin.bichao.vencendores') }}</h1>
-        </div>
-        <hr />
-        <div class="row">
+        <div class="row card-master">
             <div class="col-md-6 col-12">
                 <div class="row busca-container">
                     <div class="col-md-3 col-12 mb-2">
@@ -45,7 +45,7 @@
                 </form>
             </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-4 card-master">
             <div class="col overflow-auto">
                 <table class="table table-sm">
                     <thead>
@@ -99,18 +99,18 @@
                                 <td>{{ date('d/m/Y H:i', strtotime($aposta['created_at'])) }}</td>
                                 <td>
                                     <a href="{{ route('admin.bets.bichao.receipt', ['id' => $aposta['id'], 'tipo' => 'txt']) }}">
-                                        <button type="button" class="btn btn-primary text-light" title="Baixar bilhete TXT">
+                                        <button type="button" class="btn btn-primary " title="Baixar bilhete TXT">
                                             <i class="bi bi-ticket"></i>
                                         </button>
                                     </a>
                                     <a href="{{ route('admin.bets.bichao.receipt', ['id' => $aposta['id'], 'tipo' => 'pdf']) }}">
-                                        <button type="button" class="btn btn-danger text-light" title="Baixar bilhete PDF">
+                                        <button type="button" class="btn btn-danger mt-2 mb-2 mt-md-0 mb-md-0 " title="Baixar bilhete PDF">
                                             <i class="bi bi-ticket"></i>
                                         </button>
                                     </a>
                                     @if ($aposta['payment'] == 0)
                                     <a href="#" id="marcar-premio-pago" data-id="{{ $aposta['id_premio'] }}">
-                                        <button type="button" class="btn btn-success text-light" title="Marcar como prêmio pago">
+                                        <button type="button" class="btn btn-primary " title="Marcar como prêmio pago">
                                             <i class="bi bi-wallet"></i>
                                         </button>
                                     </a>

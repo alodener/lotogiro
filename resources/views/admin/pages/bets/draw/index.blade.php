@@ -3,7 +3,7 @@
 @section('title', trans('admin.draws.draw-title-list'))
 
 @section('content')
-    <div class="row  p-3">
+    <div class=" container mx-auto p-3">
         <div class="col-md-12">
             @error('success')
                 @push('scripts')
@@ -20,13 +20,19 @@
                 @endpush
             @enderror
             @can('create_draw')
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
                 <a href="{{route('admin.bets.draws.create')}}">
                     <button class="btn btn-info my-2">{{ trans('admin.draws.new-draw') }}</button>
                 </a>
+                </div>
+                <div> <a href="{{ route('admin.bets.report-draws-index')  }}" >
+                    <button class="btn btn-primary">{{ trans('admin.falta.visuRelatorio') }}</button>
+                </a></div>
+            </div>
+              
 
-                <a href="{{ route('admin.bets.report-draws-index')  }}" >
-                    <button class="btn btn-success">{{ trans('admin.falta.visuRelatorio') }}</button>
-                </a>
+               
 
 
             @endcan

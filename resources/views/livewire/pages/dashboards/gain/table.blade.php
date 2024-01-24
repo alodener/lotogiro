@@ -250,10 +250,7 @@
     </div>
 </div>
 
-@push('styles')
-<link href="{{asset('admin/layouts/plugins/select2/css/select2.min.css')}}" rel="stylesheet" />
-<link href="{{asset('admin/layouts/plugins/select2-bootstrap4-theme/select2-bootstrap4.css')}}" rel="stylesheet" />
-@endpush
+
 
 @push('scripts')
 
