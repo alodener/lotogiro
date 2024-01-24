@@ -1,59 +1,78 @@
 <div>
-    <div class="col-md-12 p-4 faixa-jogos">
+
+<!-- Card carteira -->
+    <div class="col-md-12 p-4 card-header">
         <h3 class="text-center text-bold">{{ trans('admin.pagesF.carteira') }}</h3>
     </div>
-    <div class="col-md-12">
-        <div class="card card-info">
-            <div class="card-header indica-card">
-                <h3 class="card-title">{{ trans('admin.pagesF.carteiraa') }}</h3>
+
+
+    <!-- Card Dinheiros saldo, bonus, disponivel -->
+
+    <div class="d-flex justify-content-center flex-md-row flex-column mt-5">
+        <div class="d-flex justify-content-between mb-3">
+            <div class="card-master card-master-bottom text-center">
+                <p>{{ trans('admin.pagesF.saldo') }}</p>
+                <h1>R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h1>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-8">
-                        <h4>{{ trans('admin.pagesF.saldo') }}: R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
-                        <h4>{{ trans('admin.pagesF.bonus') }}: R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h4>
-                        <h4>{{ trans('admin.pagesF.saqueDisponivel') }}: R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h4>
+            <div class="card-master card-master-bottom  mr-md-5 ml-md-5 text-center">
+                <p>{{ trans('admin.pagesF.bonus') }}</p>
+                <h1>R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h1>
+            </div>
+        </div>
 
-                    </div>
-                    <div class="col-sm-4 right">
-                        <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light
-                        text-bold">
-                            <i class="fas fa-piggy-bank"></i>
-                            {{ trans('admin.pagesF.recarregar') }}
-                        </a>
-                        <a href="{{ route('admin.dashboards.wallet.withdraw') }}" type="button" class="btn btn-block btn-success text-light
-                        text-bold">
-                            <i class="fas fa-money-bill-alt"></i>
-                            {{ trans('admin.pagesF.retirar') }}
-                        </a>
+        <div class="card-master card-master-bottom text-center mb-3">
+            <p>{{ trans('admin.pagesF.saqueDisponivel') }}</p>
+            <h1>R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h1>
+        </div>
+    </div>
 
-                        <a href="{{ route('admin.dashboards.wallet.convert') }}" type="button" class="btn btn-block btn-success
-                        text-light
-                        text-bold">
-                            <i class="fas fa-exchange-alt"></i>
-                            {{ trans('admin.pagesF.converter') }}
-                        </a>
-                        
-                    </div>
-                </div>
+        <!-- Botoes verdes primarios -->
 
-               <div class="row mt-5">
-                   <div class="col-sm-4 bt-esp">
-                        <a href="{{ route('admin.dashboards.wallet.extract') }}" type="button" class="btn btn-block btn-dark text-light
+
+    <div class="d-flex mt-3 justify-content-center align-items-center">
+        <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-green 
+                        text-bold">
+            <i class="fas fa-piggy-bank"></i>
+            {{ trans('admin.pagesF.recarregar') }}
+        </a>
+        <a href="{{ route('admin.dashboards.wallet.withdraw') }}" type="button" class="btn mr-md-5 ml-md-5 mr-2 ml-2  btn-green
+                        text-bold">
+            <i class="fas fa-money-bill-alt"></i>
+            {{ trans('admin.pagesF.retirar') }}
+        </a>
+        <a href="{{ route('admin.dashboards.wallet.convert') }}" type="button" class="btn  btn-green
+                        text-bold">
+                <i class="fas fa-exchange-alt"></i>
+                {{ trans('admin.pagesF.converter') }}
+            </a>
+    </div>
+
+            <!-- Botoes secundarios -->
+
+    <div class="d-flex container justify-content-center col-md-12 mt-5">
+        <div class="d-flex flex-column card-master">
+
+            <div class="d-flex justify-content-center flex-md-row flex-column align-items-center ">
+                <div class=" ">
+                    <a href="{{ route('admin.dashboards.wallet.extract') }}" type="button" class="btn btn-primary  
                             text-bold">{{ trans('admin.pagesF.extratoo') }}</a>
-                    </div>
-                    <div class="col-sm-4 bt-esp">
-                        <a href="{{ route('admin.dashboards.wallet.withdraw-list') }}" type="button" class="btn
-                        btn-block btn-outline-secondary text-black
-                            text-bold">{{ trans('admin.pagesF.solicitSaquee') }}</a>
-                    </div>
-                    <div class="col-sm-4 bt-esp">
-                       <a href="{{ route('admin.dashboards.wallet.recharge-order') }}" type="button" class="btn
-                        btn-block btn-outline-secondary text-black
-                            text-bold">{{ trans('admin.pagesF.pedRecarga') }}</a>
-                    </div>
                 </div>
-                 <!-- <div class="row mt-5">
+                <div class="mt-2 mb-2 mt-md-0 mb-md-0">
+                    <a href="{{ route('admin.dashboards.wallet.withdraw-list') }}" type="button" class="btn
+                        btn-primary mr-md-5 ml-md-5 
+                            text-bold">{{ trans('admin.pagesF.solicitSaquee') }}</a>
+                </div>
+                <div class=" ">
+                    <a href="{{ route('admin.dashboards.wallet.recharge-order') }}" type="button" class="btn
+                        btn-primary 
+                            text-bold">{{ trans('admin.pagesF.pedRecarga') }}</a>
+                </div>
+
+                <div>
+               
+                </div>
+            </div>
+            <!-- <div class="row mt-5">
                    <div class="col-sm-4 bt-esp">
                         <a href="{{ route('admin.dashboards.wallet.transfer') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">Transferir</a>
@@ -66,14 +85,62 @@
                         <a href="{{ route('admin.dashboards.wallet.withdraw') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">Retirar</a>
                     </div>-->
-                </div>
-            </div>
         </div>
     </div>
+   
+</div>
 </div>
 
+<style>
+    .card-master-bottom {
+        border-bottom: 1px solid #A3D712;
+        min-width: 300px;
+        padding: 30px;
+    }
+
+    .btn-green {
+        padding: 10px;
+
+        font-weight: 700;
+        color: #424647;
+        background: #a3d712;
+        border: #a3d712;
+        box-shadow: 0 0 10px 2px rgba(163,215,18,.5);
+
+    }
+
+    .btn-primary{
+        min-width:200px;
+    }
+
+    .btn-green:hover {
+      
+     
+    }
+
+    @media (max-width: 992px) {
+        .card-master-bottom {
+            padding: 10px !important;
+            min-width: 200px;
+
+
+        }
+
+        .card-master-bottom h1 {
+            font-size: 25px;
+
+        }
+
+        .card-master-bottom p {
+            color: #a3d712;
+            font-weight: bold;
+        }
+
+
+    }
+</style>
 
 @push('scripts')
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <x-livewire-alert::scripts />
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<x-livewire-alert::scripts />
 @endpush
