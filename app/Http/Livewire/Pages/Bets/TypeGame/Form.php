@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $typeGameId, $name, $numbers, $columns, $color, $description, $matriz, $category, $startTime, $endTime, $icon; 
+    public $typeGameId, $name, $numbers, $columns, $color, $description, $matriz, $category, $startTime, $endTime, $icon, $recomendado; 
 
     protected $rules = [
         'name' => 'required',
@@ -30,6 +30,7 @@ class Form extends Component
             $this->category = $typeGame->category;
             $this->startTime = $typeGame->start_time;
             $this->endTime = $typeGame->end_time;
+            $this->recomendado = $typeGame->recomendado;
 
             $this->matriz();
         }

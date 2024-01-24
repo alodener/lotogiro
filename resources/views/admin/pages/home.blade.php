@@ -30,29 +30,24 @@
 
 <!-- CARD GRANDE -->
 <div class="container">
-
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            @foreach($layout_carousel_grande as $key => $item)
+            @if($item['visivel'] == 1)
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}"
+                class="{{ $key == 0 ? 'active' : '' }}"></li>
+            @endif
+            @endforeach
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100"
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/cac8dcb2-66d1-448a-6e28-d6e6399e2f00/w=1745"
-                    alt="First slide">
+            @foreach($layout_carousel_grande as $key => $item)
+            @if($item['visivel'] == 1)
+            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                <img class="d-block w-100" src="{{ url("storage/{$item['url']}") }}" alt="{{ $item['nome'] }}"
+                    style="object-fit: cover;">
             </div>
-            <div class="carousel-item">
-                <img class="d-block w-100"
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/cac8dcb2-66d1-448a-6e28-d6e6399e2f00/w=1745"
-                    alt="Second slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100"
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/cac8dcb2-66d1-448a-6e28-d6e6399e2f00/w=1745"
-                    alt="Third slide">
-            </div>
+            @endif
+            @endforeach
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -65,69 +60,81 @@
     </div>
 
 
+
+
 </div>
 <!-- Slider main container -->
 <div class="container mt-5">
     <div class="d-flex swipe-controles align-items-center">
         <h1 style="color:white">Recomendados</h1>
-        <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"></path></svg>
-        <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg>
+        <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+            <path fill="currentColor"
+                d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
+            </path>
+        </svg>
+        <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+            <path fill="currentColor"
+                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
+            </path>
+        </svg>
     </div>
 
+    @if(\App\Models\TypeGame::where('recomendado', 1)->count() > 0)
     <div class="swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/0f483fff-b5e0-4bc1-1ecf-1dd2c3a19400/w=2745"
-                    alt=""></div>
-            <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/0f483fff-b5e0-4bc1-1ecf-1dd2c3a19400/w=2745"
-                    alt=""></div>
-            <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/0f483fff-b5e0-4bc1-1ecf-1dd2c3a19400/w=2745"
-                    alt=""></div>
-                    <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/0f483fff-b5e0-4bc1-1ecf-1dd2c3a19400/w=2745"
-                    alt=""></div>
+            @foreach(\App\Models\TypeGame::where('recomendado', 1)->get() as $typeGame)
+                <div class="swiper-slide">
+                <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
+
+                    <img src="{{ url("storage/{$typeGame->banner_pc}")}}" alt="{{ $typeGame->name }}" class="d-none d-md-block">
+                    <img src="{{ url("storage/{$typeGame->banner_mobile}")}}" alt="{{ $typeGame->name }}" class="d-md-none">
+                    <a>
+                </div>
+            @endforeach
         </div>
     </div>
+@endif
 </div>
-
+@if(\App\Models\TypeGame::count() > 0)
 <div class="container mt-5">
     <div class="d-flex swipe-controles align-items-center">
-        <h1 style="color:white">Recomendados</h1>
-        <svg width="10" class="ml-3 mr-3 swiper-list-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"></path></svg>
-        <svg width="10" class="swiper-list-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg>
+        <h1 style="color:white">Todos os Jogos</h1>
+        <svg width="10" class="ml-3 mr-3 swiper-list-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+            <path fill="currentColor"
+                d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
+            </path>
+        </svg>
+        <svg width="10" class="swiper-list-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+            <path fill="currentColor"
+                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
+            </path>
+        </svg>
     </div>
 
     <div class="swiper-list swiper-full">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
-                    alt=""></div>
-            <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
-                    alt=""></div>
-            <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
-                    alt=""></div>
-                    <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
-                    alt=""></div>
-                    <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
-                    alt=""></div>
-                    <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
-                    alt=""></div>
-                    <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
-                    alt=""></div>
-                    <div class="swiper-slide"><img
-                    src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/c939520b-ae64-41a7-3137-9639713dfd00/ipad"
-                    alt=""></div>
+            @foreach(\App\Models\TypeGame::get() as $typeGame)
+            <div class="swiper-slide">
+                <a href="{{ route('admin.bets.games.create', ['type_game' => $typeGame->id]) }}"
+                    class="hover-container">
+                    <img src="{{ url("storage/{$typeGame->banner_mobile}")}}" alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>{{ $typeGame->name }}</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            @endforeach
+
+
         </div>
     </div>
 </div>
+@endif
 
 <div class="col-md-12 p-4">
     <div class="card w-100">
@@ -225,31 +232,7 @@
 
 
 
-<div class="col-md-15">
-    @if(\App\Models\TypeGame::count() > 0)
-    <div class="row">
-        @foreach(\App\Models\TypeGame::get() as $typeGame)
-        <div class="col-md-6 my-2">
-            <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
-                <button class="btn btn-block text-white"
-                    style="background-color: {{$typeGame->color}};">{{$typeGame->name}}</button>
-            </a>
-        </div>
-        @endforeach
-        @if(\App\Helper\Configs::getBichao() == "Ativado")
-        <div class="col-md-6 my-2">
-            <a href="{{route('admin.bets.bichao.index')}}">
-                <button class="btn btn-block text-white" style="background-color: #284CA7;">Bichão da sorte</button>
-            </a>
-        </div>
-        @endif
-    </div>
-    @else
-    <div class="col-md-12 p-3 text-center">
-        {{ trans('admin.dashboard.games-not-found') }}
-    </div>
-    @endif
-</div>
+
 
 @endsection
 
@@ -288,6 +271,50 @@
         margin-top: 10px;
     }
 
+    .hover-container {
+        position: relative;
+    }
+
+    .hover-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.7);
+        /* Fundo preto com opacidade */
+        padding: 20px;
+        border-radius: 10px;
+        /* Removendo bordas */
+        color: #fff;
+        /* Cor do texto no hover */
+        box-sizing: border-box;
+        /* Certificando-se de que o padding não aumente o tamanho total */
+    }
+
+    .hover-container:hover .hover-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .hover-content p {
+
+        font-weight: 700;
+
+    }
+
+    .hover-button {
+        padding: 10px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+
     @media screen and (max-width: 600px) {
         .faixa-jogos {
             background: url(https://superlotogiro.com/images/super-lotogiro01.jpg) auto;
@@ -319,12 +346,17 @@
     });
 
     var swiperlist = new Swiper('.swiper-list', {
-        slidesPerView: 6,
-        navigation: {
-            nextEl: '.swiper-list-next',
-            prevEl: '.swiper-list-prev',
-        },
-    });
+    slidesPerView: 3,
+    navigation: {
+        nextEl: '.swiper-list-next',
+        prevEl: '.swiper-list-prev',
+    },
+    breakpoints: {
+        768: {
+            slidesPerView: 6, // Altere para o número desejado em telas mobile
+        }
+    }
+});
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
