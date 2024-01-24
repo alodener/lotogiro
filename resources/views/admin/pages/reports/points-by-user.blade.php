@@ -75,8 +75,18 @@
                 ],
                 dom: 'Bfrtip',
                 buttons: [
-                    'pdf', 'csv', 'excel'
-                ]
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-primary'
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn btn-primary'
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn btn-primary'
+                }]
             });
         });
     </script>

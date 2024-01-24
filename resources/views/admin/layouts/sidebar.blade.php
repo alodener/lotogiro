@@ -331,7 +331,7 @@
 
                     @canany(['read_user', 'read_role', 'read_permission'])
                     <li class="nav-item nav-group-item has-treeview @if(request()->is('admin/reports/*')) menu-open @endif">
-                        <a href="#" class="nav-link @if(request()->is('admin/reports/*')) active @endif">
+                        <a href="#" class="nav-link ">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p class="title-link">
                                 {{ trans('admin.menu.relatorios') }}
@@ -342,13 +342,13 @@
                             @can('read_user')
                             <li class="nav-item">
                                 <a href="{{route('admin.reports.used.dozens')}}"
-                                    class="nav-link @if(request()->is('admin/settings/used-dozens*')) active @endif">
+                                    class="nav-link @if(request()->is('admin/reports/used-dozens*')) active @endif">
                                     <i class="fas fa-star nav-icon"></i>
                                     <p>{{ trans('admin.menu.dezenasUtiliz') }}</p>
                                 </a>
 
                                 <a href="{{route('admin.reports.points-by-user')}}"
-                                    class="nav-link @if(request()->is('admin/settings/points-by-user*')) active @endif">
+                                    class="nav-link @if(request()->is('admin/reports/points-by-user*')) active @endif">
                                     <i class="fas fa-users nav-icon"></i>
                                     <p>{{ trans('admin.menu.pontosCliente') }}</p>
                                 </a>
