@@ -40463,3 +40463,21 @@ a > svg{
 .bg-cc{
   background-color: #212425;
 }
+
+
+.card-indica{
+ 
+  background:#323637; padding: 20px; border-radius:10px;text-align:center;
+  border-bottom: 1px solid #A3D712;
+}
+
+.card-indica h5{
+  font-weight:700;
+  margin:0px;
+  color:#A3D712;
+}
+
+.icon-copy{
+ font-size: 30px;
+  color:#A3D712;
+}

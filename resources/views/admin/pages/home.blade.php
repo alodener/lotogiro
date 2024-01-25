@@ -81,29 +81,36 @@
 
     <!-- Nav icons -->
 
-   <!-- Conteúdo da sua view existente -->
-<div class="swiperroll p-2">
-    <div class="swiper-wrapper">
-        <!-- {{$TypeGamesRoll}} -->
-        @foreach($TypeGamesRoll as $typeGame)
-            <div class="swiper-slide d-flex flex-column category-info" data-type-game-id="{{ $typeGame->category }}"style="">
-                    <div class="icon-container">
-                        <img class="img-bold" src="/storage/{{str_replace('.png', '-bold.png', $typeGame->icon)}}" alt="">
-                    </div>
+    <!-- Conteúdo da sua view existente -->
+    <div class="swiperroll p-2">
+        <div class="swiper-wrapper">
+            <!-- {{$TypeGamesRoll}} -->
+            @foreach($TypeGamesRoll as $typeGame)
+            <div class="swiper-slide d-flex flex-column category-info" data-type-game-id="{{ $typeGame->category }}"
+                style="">
+                <div class="icon-container">
+                    <img class="img-bold" src="/storage/{{str_replace('.png', '-bold.png', $typeGame->icon)}}" alt="">
+                </div>
                 <div>
                     <p class="txtnav">{{ ucwords(str_replace('_', ' ', $typeGame->category)) }}</p>
                 </div>
             </div>
-        @endforeach
+            @endforeach
+        </div>
+    </div>
+
+    <div class="container-fluid d-flex align-items-center justify-content-center card-indica">
+    <span style="font-size:20px;" class="mr-3">💥</span>
+        <h5 class="mr-3"> Indique e ganhe em cada amigo que convidar</h5>
+        <sl-copy-button class="icon-copy" value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador}}" onclick="copiarLink()"></sl-copy-button>
+
+
+    </div>
+
+    <!-- Div para renderizar as categorias -->
+    <div id="categories-container">
     </div>
 </div>
-
-<!-- Div para renderizar as categorias -->
-<div id="categories-container">
-
-</div>
-</div>
-
 <!-- Recomendados -->
 <div class="container mt-5">
     <div class="d-flex swipe-controles align-items-center mb-2">
@@ -125,17 +132,19 @@
     <div class="swiper">
         <div class="swiper-wrapper">
             @foreach(\App\Models\TypeGame::where('recomendado', 1)->get() as $typeGame)
-                <div class="swiper-slide">
+            <div class="swiper-slide">
                 <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
 
-                    <img src="{{ url("storage/{$typeGame->banner_pc}")}}" alt="{{ $typeGame->name }}" class="d-none d-md-block">
-                    <img src="{{ url("storage/{$typeGame->banner_mobile}")}}" alt="{{ $typeGame->name }}" class="d-md-none">
+                    <img src="{{ url("storage/{$typeGame->banner_pc}")}}" alt="{{ $typeGame->name }}" class="d-none
+                    d-md-block">
+                    <img src="{{ url("storage/{$typeGame->banner_mobile}")}}" alt="{{ $typeGame->name }}"
+                    class="d-md-none">
                     <a>
-                </div>
+            </div>
             @endforeach
         </div>
     </div>
-@endif
+    @endif
 </div>
 
 <!-- Todos os jogos -->
@@ -203,9 +212,9 @@
     <div class="swiper-bichao">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <a href="/admin/bets/bichao"
-                    class="hover-container">
-                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad" alt="{{ $typeGame->name }}">
+                <a href="/admin/bets/bichao" class="hover-container">
+                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Milhar</p>
                         <button class="btn btn-primary">Jogar Agora</button>
@@ -213,9 +222,9 @@
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="/admin/bets/bichao/centena"
-                    class="hover-container">
-                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad" alt="{{ $typeGame->name }}">
+                <a href="/admin/bets/bichao/centena" class="hover-container">
+                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Centena</p>
                         <button class="btn btn-primary">Jogar Agora</button>
@@ -223,9 +232,9 @@
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="/admin/bets/bichao/dezena"
-                    class="hover-container">
-                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad" alt="{{ $typeGame->name }}">
+                <a href="/admin/bets/bichao/dezena" class="hover-container">
+                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Dezena</p>
                         <button class="btn btn-primary">Jogar Agora</button>
@@ -233,9 +242,9 @@
                 </a>
             </div>
             <div class="swiper-slide">
-                <a href="/admin/bets/bichao/group"
-                    class="hover-container">
-                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad" alt="{{ $typeGame->name }}">
+                <a href="/admin/bets/bichao/group" class="hover-container">
+                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Grupo</p>
                         <button class="btn btn-primary">Jogar Agora</button>
@@ -248,76 +257,6 @@
 </div>
 @endif
 
-<div class="col-md-12 p-4">
-    <div class="card w-100">
-        <div class="card-header indica-card">
-            {{ trans('admin.pagesF.indicacoes') }}
-        </div>
-        <div class="container">
-            <div class="row">
-                @if($User['type_client'] != 1)
-                <div class="card-body col-lg-12 col-sm-12">
-                    <div class="col-lg-12 my-2 ">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="link_copy"
-                                value="{{route('games.bet', ['user' => auth()->id()])}}">
-                        </div>
-                    </div>
-                </div>
-                @endif
-                <!-- button indique e ganhe -->
-                @if($User['type_client'] == 1)
-                <div class="card-body   col-lg-4 col-sm-6 mx-auto">
-                    <div class="col-lg-12 card text-white   my-2 alert bg-light indica-corpo text-center" role="alert">
-                        <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link "
-                            value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador}}" />
-                        <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
-                        <button type="button" id="btn_copy_link2" class="btn btn-success btn-block"
-                            onclick="CopyMe(getUrl())"> {{ trans('admin.dashboard.referral-button-text-client') }}
-                        </button>
-                    </div>
-                </div>
-                @elseif($User['type_client'] != 1)
-                <div class="card-body   col-lg-4 col-sm-6">
-                    <div class="col-lg-12 card text-white   my-2 alert bg-light indica-corpo" role="alert">
-                        <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link "
-                            value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}" />
-                        <p class="mensagem">{{ trans('admin.dashboard.referral-message') }}</p>
-                        <button type="button" id="btn_copy_link2" class="btn btn-success btn-block"
-                            onclick="CopyMe(getUrl())"><i class="bi bi-coin"></i> {{
-                            trans('admin.dashboard.referral-button-text') }} </button>
-                    </div>
-                </div>
-                @endif
-
-                <!-- button copiar link  -->
-                @if($User['type_client'] == 1)
-                <div class="card-body col-lg-4 col-sm-5">
-                </div>
-                @elseif($User['type_client'] != 1)
-                <div class="card-body col-lg-4 col-sm-5">
-                    <div class="col-lg-12 card text-white my-2 alert bg-light indica-corpo" style="float:left;">
-                        <p class="mensagem">{{ trans('admin.dashboard.copy-link-message') }}</p>
-                        <button type="button" id="btn_copy_link" class="btn btn-info btn-block">{{
-                            trans('admin.copy-link-button') }}</button>
-                    </div>
-                </div>
-                @endif
-
-                <!-- button seus indicados -->
-                <div class="card-body col-lg-4 col-sm-6">
-                    <div class="col-lg-12 card text-white my-2 indica-corpo bg-light-2" style="color: #fff;"
-                        role="alert">
-                        <p class="mensagem">{{ trans('admin.dashboard.referrals-message') }}</p>
-                        <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-info">
-                            {{ trans('admin.dashboard.referrals-button') }}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 </div>
 
 
@@ -328,26 +267,30 @@
 
 @push('styles')
 <style>
-    .img-bold{
-        
+    .img-bold {
+
         width: 100%;
-        max-width:50px;
-         position: relative;
-          z-index: 1;
-          transition: .2s;
+        max-width: 50px;
+        position: relative;
+        z-index: 1;
+        transition: .2s;
     }
-    .img-bold:hover{
-        max-width:60px;
+
+    .img-bold:hover {
+        max-width: 60px;
 
     }
 
-    .txtnav{
-        font-weight:bold;text-align:center ;font-size:14px;
+    .txtnav {
+        font-weight: bold;
+        text-align: center;
+        font-size: 14px;
     }
+
     .icon-container {
         position: relative;
         display: inline-block;
-        padding:20px;
+        padding: 20px;
     }
 
     .icon-container:after {
@@ -365,28 +308,32 @@
     }
 
     .icon-container:hover:after {
-        background-color: #bcff00; 
+        background-color: #bcff00;
     }
 
     @media screen and (max-width: 992px) {
-        .img-bold{
-        
-            max-width:35px;
-    } 
-    .txtnav{
-        font-size:12px;
-    }
-    .icon-container:after {
-      
-        width: 60px;
-        height: 60px;
-     
-    }
-    .img-bold:hover{
-        max-width:40px;
+        .img-bold {
 
+            max-width: 35px;
+        }
+
+        .txtnav {
+            font-size: 12px;
+        }
+
+        .icon-container:after {
+
+            width: 60px;
+            height: 60px;
+
+        }
+
+        .img-bold:hover {
+            max-width: 40px;
+
+        }
     }
-    }
+
     *:focus {
         outline: none;
     }
@@ -480,150 +427,110 @@
 @endpush
 
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-    var swiper = new Swiper('.swiper', {
-        slidesPerView: 3,
-        navigation: {
-            nextEl: '.swiper-next',
-            prevEl: '.swiper-prev',
-        },
-    });
 
 
-    function formatTypeGameId(typeGameId) {
-    // Divide a string em palavras
-    var words = typeGameId.split('_');
-
-    // Capitaliza a primeira letra de cada palavra
-    for (var i = 0; i < words.length; i++) {
-        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-    }
-
-    // Junta as palavras novamente com espaço em branco
-    return words.join(' ');
-}
     $(document).ready(function () {
-    $('.category-info').click(function () {
-    var typeGameId = $(this).data('type-game-id');
-    var categoriesContainer = $('#categories-container');
+        $('.category-info').click(function () {
+            var typeGameId = $(this).data('type-game-id');
+            var categoriesContainer = $('#categories-container');
 
-    // Verifica se o container está visível
-    if (categoriesContainer.is(':visible') && categoriesContainer.data('type-game-id') === typeGameId) {
-        // Se estiver visível e clicando no mesmo typeGameId, oculta o container
-        categoriesContainer.hide();
-    } else {
-        // Faz uma requisição AJAX para obter as categorias
-        $.ajax({
-            url: '/admin/categoria/' + typeGameId,
-            type: 'GET',
-            success: function (data) {
-                $('#categories-container').html(data);
-                var formattedTypeGameId = formatTypeGameId(typeGameId);
-                $('#nome_pesq').text(formattedTypeGameId);
+            // Verifica se o container está visível
+            if (categoriesContainer.is(':visible') && categoriesContainer.data('type-game-id') === typeGameId) {
+                // Se estiver visível e clicando no mesmo typeGameId, oculta o container
+                categoriesContainer.hide();
+            } else {
+                // Faz uma requisição AJAX para obter as categorias
+                $.ajax({
+                    url: '/admin/categoria/' + typeGameId,
+                    type: 'GET',
+                    success: function (data) {
+                        $('#categories-container').html(data);
+                        var formattedTypeGameId = formatTypeGameId(typeGameId);
+                        $('#nome_pesq').text(formattedTypeGameId);
 
-                // Atualiza os atributos de data para o novo typeGameId
-                categoriesContainer.data('type-game-id', typeGameId);
-            },
-            error: function (error) {
-                console.log('Erro na requisição AJAX:', error);
+                        // Atualiza os atributos de data para o novo typeGameId
+                        categoriesContainer.data('type-game-id', typeGameId);
+                    },
+                    error: function (error) {
+                        console.log('Erro na requisição AJAX:', error);
+                    }
+                });
+
+                // Mostra o container
+                categoriesContainer.show();
             }
         });
 
-        // Mostra o container
-        categoriesContainer.show();
-    }
-});
+        var swiperroll = new Swiper('.swiperroll', {
+            slidesPerView: 5,
 
-    var swiperroll = new Swiper('.swiperroll', {
-    slidesPerView: 5,
-   
-    breakpoints: {
-        768: {
-            slidesPerView: 6, 
+            breakpoints: {
+                768: {
+                    slidesPerView: 6,
+                }
+            }
+        });
+
+
+        var swiperlist = new Swiper('.swiper-list', {
+            slidesPerView: 4,
+            navigation: {
+                nextEl: '.swiper-list-next',
+                prevEl: '.swiper-list-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 6,
+                }
+            }
+        });
+
+        var swiperbichao = new Swiper('.swiper-bichao', {
+            slidesPerView: 3,
+            navigation: {
+                nextEl: '.swiper-bichao-next',
+                prevEl: '.swiper-bichao-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 6,
+                }
+            }
+        });
+
+        var swiper = new Swiper('.swiper', {
+            slidesPerView: 3,
+            navigation: {
+                nextEl: '.swiper-next',
+                prevEl: '.swiper-prev',
+            },
+        });
+
+        function formatTypeGameId(typeGameId) {
+            // Divide a string em palavras
+            var words = typeGameId.split('_');
+
+            // Capitaliza a primeira letra de cada palavra
+            for (var i = 0; i < words.length; i++) {
+                words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+            }
+
+            // Junta as palavras novamente com espaço em branco
+            return words.join(' ');
         }
-    }
-});
-    
-
-    var swiperlist = new Swiper('.swiper-list', {
-    slidesPerView: 4,
-    navigation: {
-        nextEl: '.swiper-list-next',
-        prevEl: '.swiper-list-prev',
-    },
-    breakpoints: {
-        768: {
-            slidesPerView: 6, 
-        }
-    }
-});
-
-var swiperbichao = new Swiper('.swiper-bichao', {
-    slidesPerView: 3,
-    navigation: {
-        nextEl: '.swiper-bichao-next',
-        prevEl: '.swiper-bichao-prev',
-    },
-    breakpoints: {
-        768: {
-            slidesPerView: 6, 
-        }
-    }
-});
 
 
-});
+    });
 
 
-   
+
 
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
-    const copiedUrlText = "{{ trans('admin.dashboard.copied-url') }}";
 
-    $('#btn_copy_link').clic k(function () {
-        var link = document.getElementById("link_copy");
-        link.select();
-        document.execCommand('copy');
-        Swal.fire(
-            copiedUrlText,
-            '',
-            'success'
-        );
-    });
-
-    function CopyMe(TextToCopy) {
-        var TempText = document.createElement("input");
-        TempText.value = TextToCopy;
-        document.body.appendChild(TempText);
-        TempText.select();
-
-        document.execCommand("copy");
-        document.body.removeChild(TempText);
-        Swal.fire(
-            copiedUrlText,
-            '',
-            'success'
-        );
-    };
-
-    function getUrl() {
-        return document.getElementById("linkDeIndicacao").value;
-    };
-
-    (function () {
-        function copy(element) {
-            ret urn function () {
-                document.execCommand('copy', false, element.select());
-            };
-        };
-
-        var linkIndicate = document.querySelector('.link_copy_link');
-        var copyUrlIndicate = copy(linkIndicate);
-        linkIndicate.addEventListener('click', copyUrlIndicate, false);));
 </script>
 @endpush
