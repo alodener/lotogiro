@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\Pages\Settings\LayoutController;
 use App\Http\Controllers\Admin\Pages\Settings\LogosController;
 use App\Http\Controllers\Admin\Pages\Bets\BichaoController;
 use App\Http\Controllers\Admin\Pages\Dashboards\TutoriaisController;
+use App\Http\Controllers\CategoriaController;
 
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
@@ -67,6 +68,7 @@ Route::middleware('guest:web')->group(function () {
         Route::post('/{user}/store', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'betStore'])->name('bet.store');
         Route::post('/{user}/{bet?}/update', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'betUpdate'])->name('bet.update');
         Route::get('/{user}/{bet}/{typeGame}/game-create', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'gameCreate'])->name('bet.game.create');
+
     });
 });
 
@@ -77,7 +79,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     });
     Route::middleware(['auth:admin', 'check.openModal'])->group(function () {
         Route::get('change-locale/{locale}', [HomeController::class, 'changeLocale'])->name('changeLocale');
-
+        Route::get('categoria/{typeGame}', [CategoriaController::class, 'getCategories']);
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::prefix('dashboards')->name('dashboards.')->group(function () {

@@ -6920,6 +6920,7 @@ a.disabled.mailbox-attachment-close {
   position: relative;
   width: 100%;
   overflow: hidden;
+  border-radius:5px;
 }
 
 .carousel-inner::after {
@@ -21591,6 +21592,40 @@ font-weight: 600;
   z-index: 1;
   display: block;
 }
+
+
+.swiperroll{
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+  display: block;
+}
+.swiper-bichao{
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+  display: block;
+}
+
+.swiper-pesquisa{
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+  display: block;
+}
+
 
 .swiper-slide{
   display: flex !important;

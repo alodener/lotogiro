@@ -14,6 +14,7 @@ use App\Models\UsersHasPoints;
 use App\Models\UsersHasQualifications;
 use App\Models\Layout_carousel_grande;
 
+use App\Models\TypeGame;
 
 class HomeController extends Controller
 {
@@ -53,6 +54,13 @@ class HomeController extends Controller
         $saldo =(double) auth()->user()->balance;
 
         $layout_carousel_grande = Layout_carousel_grande::all();
+        $allCategories = TypeGame::all();
+
+        $TypeGamesRoll = TypeGame::all()
+    ->groupBy('category')
+    ->map(function ($group) {
+        return $group->first();
+    });
 
 
         //$balances = UsersHasPoints::getBalancesByUser(auth()->user());
@@ -65,7 +73,7 @@ class HomeController extends Controller
         $goalCalculation = null;
         
         // mandando valores para dashboar
-        return view('admin.pages.home', compact('User', 'FiltroUser', 'JogosFeitos', 'saldo', 'qualificationAtived', 'nextGoal','goalCalculation','layout_carousel_grande'));
+        return view('admin.pages.home', compact('User', 'FiltroUser', 'JogosFeitos', 'saldo', 'qualificationAtived', 'nextGoal','goalCalculation','layout_carousel_grande','TypeGamesRoll','allCategories'));
     }
 
     public function riot(Request $request)
