@@ -8,7 +8,7 @@
         <div>
             <a href="/" class="brand-link">
                 <img src="{{ App\Helper\Configs::getConfigLogo() }}"
-                    style="max-width: 50px;" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    style="max-width: 50px;" alt="Logo" class="brand-image img-circle " style="opacity: .8">
                 <span class="brand-text font-weight-light text-logo" style="font-size: 15px">{{
                     env("nome_sistema")}}</span>
             </a>

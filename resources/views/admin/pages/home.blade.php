@@ -86,8 +86,7 @@
         <div class="swiper-wrapper">
             <!-- {{$TypeGamesRoll}} -->
             @foreach($TypeGamesRoll as $typeGame)
-            <div class="swiper-slide d-flex flex-column category-info" data-type-game-id="{{ $typeGame->category }}"
-                style="">
+            <div class="swiper-slide d-flex flex-column category-info" data-type-game-id="{{ $typeGame->category }}">
                 <div class="icon-container">
                     <img class="img-bold" src="/storage/{{str_replace('.png', '-bold.png', $typeGame->icon)}}" alt="">
                 </div>
@@ -332,6 +331,17 @@
             max-width: 40px;
 
         }
+
+
+.card-indica h5{
+ font-size:15px;
+}
+
+.icon-copy{
+font-size: 25px;
+ color:#A3D712;
+}
+        
     }
 
     *:focus {

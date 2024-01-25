@@ -20091,7 +20091,7 @@ body,
 }
 
 .wrapper .content-wrapper {
-  min-height: calc(100vh - calc(3.5rem + 1px) - calc(3.5rem + 1px));
+  min-height: 100vh !important;
 }
 
 .layout-boxed .wrapper {
@@ -21516,10 +21516,9 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 }
 
 .main-footer {
-  background: #ffffff;
-  border-top: 1px solid #dee2e6;
+  background: #323637;
   color: #869099;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .text-sm .main-footer,
@@ -40330,9 +40329,6 @@ border-bottom: 1px solid hsla(0,0%,100%,.1);  padding: 10px;
   max-width: 40px;
 }
 
-a > svg{
-  margin-left: -4px;
-}
 
 .btn-despositar{
   padding: 10px;
