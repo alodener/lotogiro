@@ -75,7 +75,7 @@
                         </div>
                         <div class="col-sm-12 mt-5">
                             <div class="input-group">
-                                <button wire:click="transferBalance" type="button" class="btn btn-dark
+                                <button wire:click="transferBonusToAvailableWithdraw" type="button" class="btn btn-dark
                                 btn-block">
                                     {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt"
                                         style="color: #fff938"></span>
