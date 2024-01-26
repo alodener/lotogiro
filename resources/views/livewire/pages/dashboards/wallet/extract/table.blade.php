@@ -1,16 +1,14 @@
 <div>
-    <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">  {{ trans('admin.pagesF.carteira') }} </h3>
+<div class="col-md-12 p-4 card-header">
+        <h3 class="text-center text-bold">EXTRATO</h3>
     </div>
-    <div class="row bg-white p-3">
+    <div class="row  p-3">
         <div class="col-md-12">
-            <div class="card-header indica-card">
-            {{ trans('admin.pagesF.extratSaldo') }} | {{ auth()->user()->name }} - {{ trans('admin.pagesF.saldoTotal') }}: R${{ \App\Helper\Money::toReal
-                (auth()->user()->balance) }} | Bônus: R${{\App\Helper\Money::toReal(auth()->user()->bonus)}}
-            </div>
+        @include('admin.pages.dashboards.wallet.saldo')
+
             <div class="table-responsive extractable-cel" >
                 
-                <table x-data="{data: @entangle('trasacts')}" class="table table-striped table-hover table-bordered table-lg" id="statementBalance_table">
+                <table x-data="{data: @entangle('trasacts')}" class="table table-striped table-hover table-sm dataTable no-footer" id="statementBalance_table">
                     <thead>
                     <tr>
                         <th>{{ trans('admin.pagesF.date') }}</th>
@@ -39,11 +37,11 @@
                         <td colspan="9">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <a href="{{ $paginate['prev'] }}" class="btn btn-info btn-block
+                                    <a href="{{ $paginate['prev'] }}" class="btn btn-second btn-block
                                         @if(is_null($paginate['prev'])) disabled @endif">{{ trans('admin.pagesF.anterior') }}</a>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a href="{{ $paginate['next'] }}" class="btn btn-info btn-block
+                                    <a href="{{ $paginate['next'] }}" class="btn btn-second btn-block
                                         @if(is_null($paginate['next'])) disabled @endif">{{ trans('admin.pagesF.proxima') }}</a>
                                 </div>
                             </div>

@@ -12,7 +12,7 @@ class TypeGame extends Model
         
         'start_time',
         'end_time',
-       
+       'icon',
     ];
     public function games()
     {
