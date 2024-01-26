@@ -1,6 +1,7 @@
 <div>
     <div class="card-header ">
-        {{ trans('admin.pagesF.comissoess') }}
+       Vencedores
+
     </div>
 
 

@@ -3,7 +3,7 @@
 @section('title', 'Permissões')
 
 @section('content')
-    <div class="row 
+    <div class="row p-3"> 
         <div class="col-md-12">
             @error('success')
             @push('scripts')

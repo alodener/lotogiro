@@ -24,7 +24,7 @@
         @enderror
         <div class="card mt-5">
             <div class="card-header">
-                <h3 class="card-title"> Editando Carousel Grande</h3>
+                <h3 class="card-title"> Editando {{$layout->nome_config}}</h3>
             </div>
 
             <form action="{{route('admin.settings.layout.update', ['layout' => $layout->id])}}" method="POST"
@@ -106,140 +106,139 @@
 
 
                     </div>
-                        @if ($layout->nome_config == "Carousel Grande")
+                    @if ($layout->nome_config == "Carousel Grande")
 
-                        <div class="container  d-flex flex-md-row flex-column">
+                    <div class="container  d-flex flex-md-row flex-column">
 
-                            <div
-                                class="col-md-6 mx-auto d-flex flex-column align-items-center card-button-edit ">
-                                <h4 class="mb-4">Insira um novo Background</h4>
+                        <div class="col-md-6 mx-auto d-flex flex-column align-items-center card-button-edit ">
+                            <h4 class="mb-4">Insira um novo Background</h4>
 
-                                <div class="form-group">
+                            <div class="form-group">
 
-                                    <div class="d-flex justify-content-between">
-                                        <div class="d-flex flex-column">
-                                            <label for="alias">Visibilidade</label>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex flex-column">
+                                        <label for="alias">Visibilidade</label>
 
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="visivel_btn"
+                                                id="exampleRadios1_" value="1" checked>
+                                            <label class="form-check-label" for="exampleRadios1_">
+                                                <b> {{ trans('admin.pagesF.ativar') }} </b>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="visivel_btn"
+                                                id="exampleRadios2_" value="0">
+                                            <label class="form-check-label" for="exampleRadios2_">
+                                                <b> {{ trans('admin.pagesF.desativar') }} </b>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-around">
+                                        <div class="mr-3">
+                                            <label for="alias">Nome</label>
+                                            <input type="text" name="nome" class="form-control"
+                                                value="{{$layout->first_text}}">
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="col-md-12 mt-3">
+                                    <div class="form-group">
+                                        <label for="alias">{{ trans('admin.pagesF.anexArq') }}</label>
+                                        <input type="file" name="image" class="form-control ">
+                                        @error('file')
+                                        <span class="invalid-feedback" role="alert">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <input type="hidden" name="nome_config" class="" value="{{$layout->nome_config}}">
+
+                                @error('text')
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $message }}
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="table-responsive">
+
+                        <table class="table table-striped table-hover table-sm" id="game_table">
+                            <thead>
+                                <tr>
+                                    <th>{{ trans('admin.gains.table-id-header') }}</th>
+                                    <th>Preview</th>
+                                    <th>Nome</th>
+                                    <th>Visivel</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $count = 1; @endphp
+
+                                @foreach ($layout_carousel_grande as $carousel_grande)
+
+                                <tr>
+                                    <th>{{$carousel_grande->id}}</th>
+                                    <th><img width="90px" src="{{ url(" storage/{$carousel_grande->url}")}}" alt="">
+                                    </th>
+                                    <th>{{$carousel_grande->nome}}</th>
+
+                                    <th>
+                                        <div class="d-flex flex-column ">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="visivel_btn"
-                                                    id="exampleRadios1_" value="1" checked>
+                                                <input class="form-check-input" type="radio"
+                                                    name="img_visivel_{{$carousel_grande->id}}" id="exampleRadios1_"
+                                                    value="1" @if($carousel_grande->visivel == 1)
+                                                checked
+                                                @endif>
                                                 <label class="form-check-label" for="exampleRadios1_">
                                                     <b> {{ trans('admin.pagesF.ativar') }} </b>
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="visivel_btn"
-                                                    id="exampleRadios2_" value="0">
+                                                <input class="form-check-input" type="radio"
+                                                    name="img_visivel_{{$carousel_grande->id}}" id="exampleRadios2_"
+                                                    value="0" @if($carousel_grande->visivel == 0)
+                                                checked
+                                                @endif>
                                                 <label class="form-check-label" for="exampleRadios2_">
                                                     <b> {{ trans('admin.pagesF.desativar') }} </b>
                                                 </label>
                                             </div>
                                         </div>
+                                    </th>
 
-                                        <div class="d-flex justify-content-around">
-                                            <div class="mr-3">
-                                                <label for="alias">Nome</label>
-                                                <input type="text" name="nome" class="form-control"
-                                                    value="{{$layout->first_text}}">
-                                            </div>
-
-                                        </div>
+                                    <th>
 
 
 
-                                    </div>
+                                        <button type="button" class="btn btn-sm btn-danger delete-btn"
+                                            data-id="{{$carousel_grande->id}}">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
 
-                                    <div class="col-md-12 mt-3">
-                                        <div class="form-group">
-                                            <label for="alias">{{ trans('admin.pagesF.anexArq') }}</label>
-                                            <input type="file" name="image" class="form-control ">
-                                            @error('file')
-                                            <span class="invalid-feedback" role="alert">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                    </th>
+                                </tr>
+                                @php $count++; @endphp
+                                @endforeach
 
-                                    <input type="hidden" name="nome_config" class="" value="{{$layout->nome_config}}">
-
-                                    @error('text')
-                                    <span class="invalid-feedback" role="alert">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-
-
-                        </div>
-                        <div class="table-responsive">
-
-                            <table class="table table-striped table-hover table-sm" id="game_table">
-                                <thead>
-                                    <tr>
-                                        <th>{{ trans('admin.gains.table-id-header') }}</th>
-                                        <th>Preview</th>
-                                        <th>Nome</th>
-                                        <th>Visivel</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php $count = 1; @endphp
-
-                                    @foreach ($layout_carousel_grande as $carousel_grande)
-
-                                    <tr>
-                                        <th>{{$carousel_grande->id}}</th>
-                                        <th><img width="90px" src="{{ url("storage/{$carousel_grande->url}")}}" alt="">
-                                        </th>
-                                        <th>{{$carousel_grande->nome}}</th>
-
-                                        <th>
-                                            <div class="d-flex flex-column ">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio"
-                                                        name="img_visivel_{{$carousel_grande->id}}" id="exampleRadios1_"
-                                                        value="1" @if($carousel_grande->visivel == 1)
-                                                    checked
-                                                    @endif>
-                                                    <label class="form-check-label" for="exampleRadios1_">
-                                                        <b> {{ trans('admin.pagesF.ativar') }} </b>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio"
-                                                        name="img_visivel_{{$carousel_grande->id}}" id="exampleRadios2_"
-                                                        value="0" @if($carousel_grande->visivel == 0)
-                                                    checked
-                                                    @endif>
-                                                    <label class="form-check-label" for="exampleRadios2_">
-                                                        <b> {{ trans('admin.pagesF.desativar') }} </b>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </th>
-
-                                        <th>
-
-
-
-                                            <button type="button" class="btn btn-sm btn-danger delete-btn"
-                                                data-id="{{$carousel_grande->id}}">
-                                                <i class="far fa-trash-alt"></i>
-                                            </button>
-
-                                        </th>
-                                    </tr>
-                                    @php $count++; @endphp
-                                    @endforeach
-
-                                </tbody>
-                            </table>
-                        </div>
-                        @endif
+                            </tbody>
+                        </table>
+                    </div>
+                    @endif
 
 
 
@@ -266,47 +265,49 @@
 
             </form>
 
+        </div>
+    </div>
+</div>
+<script>
 
-            <script>
+    $('.delete-btn').on('click', function () {
+        var layoutId = $(this).data('id'); // Obtém o ID do layout a ser excluído
 
-                $('.delete-btn').on('click', function () {
-                    var layoutId = $(this).data('id'); // Obtém o ID do layout a ser excluído
+        console.log(layoutId);
 
-                    console.log(layoutId);
-
-                    $.ajax({
-                        type: 'DELETE',
-                        url: "{{route('admin.settings.layout.destroy', ['layout' => $layout->id])}}",
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            id: layoutId
-                        },
-                        success: function () {
-                            // Executa ações de sucesso, se necessário
-                            console.log('Exclusão bem-sucedida');
-                            location.reload();
-                        },
-                        error: function (xhr, status, error) {
-                            // Trata erros, se necessário
-                            console.error('Erro durante a exclusão:', error);
-                        }
-                    });
+        $.ajax({
+            type: 'DELETE',
+            url: "{{route('admin.settings.layout.destroy', ['layout' => $layout->id])}}",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: layoutId
+            },
+            success: function () {
+                // Executa ações de sucesso, se necessário
+                console.log('Exclusão bem-sucedida');
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                // Trata erros, se necessário
+                console.error('Erro durante a exclusão:', error);
+            }
+        });
 
 
-                    // Adiciona um ouvinte de evento para detectar mudase   document.getElementById('cor_btn1').addEventListener('input', function () {
-                    // Obtém o valor da cor selecionada
-                    var corSelecionada = this.value;
+        // Adiciona um ouvinte de evento para detectar mudase   document.getElementById('cor_btn1').addEventListener('input', function () {
+        // Obtém o valor da cor selecionada
+        var corSelecionada = this.value;
 
-                    // Atualiza a cor da área de exibição
-                    document.getElementById('areaCor1').style.backgroundColor = corSelecionada;
-                });
-                document.getElementById('cor_btn2').addEventListener('input', function () {
-                    // Obtém o valor da cor selecionada
-                    var corSelecionada = this.value;
+        // Atualiza a cor da área de exibição
+        document.getElementById('areaCor1').style.backgroundColor = corSelecionada;
+    });
+    document.getElementById('cor_btn2').addEventListener('input', function () {
+        // Obtém o valor da cor selecionada
+        var corSelecionada = this.value;
 
-                    // Atualiza a cor da área de exibição
-                    document.getElementById('areaCor2').style.backgroundColor = corSelecionada;
-                });
-            </script>
+        // Atualiza a cor da área de exibição
+        document.getElementById('areaCor2').style.backgroundColor = corSelecionada;
+    });
+</script>
 
-            @endsection
+@endsection

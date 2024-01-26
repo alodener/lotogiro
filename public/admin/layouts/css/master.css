@@ -21569,6 +21569,14 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   box-shadow: -3px -8px 20px 20px #00000040;
 }
 
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #ffffff;
+  background-color: #212425;
+}
+
+
+
 .swipe-controles h1{
 font-size: 25px;
 padding: 0px;
