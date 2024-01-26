@@ -1,23 +1,17 @@
 <div>
-    <div class="col-md-12 p-4 faixa-jogos">
-        <h3 class="text-center text-bold">{{ trans('admin.pagesF.carteira') }}</h3>
+<div class="col-md-12 p-4 card-header">
+        <h3 class="text-center text-bold">SOLICITAÇÕES DE SAQUE</h3>
     </div>
-    <div class="row bg-white p-3">
+    <div class="row  p-3">
+    <div class="col-md-12">
+            <div class="d-flex justify-content-end mb-3">
+            <a href="{{route('admin.dashboards.wallet.withdraw-list')}}" class="btn btn-warning"> {{ trans('admin.pagesF.voltar') }} </a> 
+        </div>
         <div class="col-md-12">
 
-            <div class="card-header indica-card">
-                <div class= "row">
-                    <div class="col-md-11">
-                    {{ trans('admin.pagesF.solicitSaque') }}
-                    </div>
-                <div class="text-right">
-                    <a href="{{route('admin.dashboards.wallet.withdraw-list')}}" class="btn btn-warning"> {{ trans('admin.pagesF.voltar') }} </a> 
-                </div>
-                </div>
-            </div>
-        
+          
             <div class="table-responsive extractable-cel">
-                <table class="table table-striped table-hover table-bordered table-lg">
+                <table class="table table-striped table-hover table-sm dataTable no-footer">
                     <thead>
                     <tr>
                         <th>{{ trans('admin.pagesF.date') }}</th>
