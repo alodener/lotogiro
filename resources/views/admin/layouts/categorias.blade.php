@@ -31,7 +31,7 @@
             <div class="swiper-slide">
                 <a href="{{ route('admin.bets.games.create', ['type_game' => $typeGame->id]) }}"
                     class="hover-container pesq">
-                    <img src="{{ url("storage/{$typeGame->banner_mobile}")}}" alt="{{ $typeGame->name }}">
+                    <img src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") : asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}" alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>{{ $typeGame->name }}</p>
                         <button class="btn btn-primary">Jogar Agora</button>
