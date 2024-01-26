@@ -30,7 +30,7 @@
             @foreach($typeGames as $typeGame)
             <div class="swiper-slide">
                 <a href="{{ route('admin.bets.games.create', ['type_game' => $typeGame->id]) }}"
-                    class="hover-container">
+                    class="hover-container pesq">
                     <img src="{{ url("storage/{$typeGame->banner_mobile}")}}" alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>{{ $typeGame->name }}</p>
@@ -60,4 +60,15 @@
             }
         }
     });
+
+
+    @if(!auth()->check())
+            // Adicione a classe 'nao-abrir-modal' aos elementos que não devem abrir o modal
+            $('.pesq').on('click', function(event) {
+                // Se não estiver autenticado, abre o modal
+                event.preventDefault();
+                $('#exampleModalCenter').modal('show');
+            });
+        @endif
+    
 </script>

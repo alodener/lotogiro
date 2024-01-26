@@ -7,26 +7,26 @@
         </div>
         <div>
             <a href="/" class="brand-link">
-                <img src="{{ App\Helper\Configs::getConfigLogo() }}"
-                    style="max-width: 50px;" alt="Logo" class="brand-image img-circle " style="opacity: .8">
+                <img src="{{ App\Helper\Configs::getConfigLogo() }}" style="max-width: 50px;" alt="Logo"
+                    class="brand-image img-circle " style="opacity: .8">
                 <span class="brand-text font-weight-light text-logo" style="font-size: 15px">{{
                     env("nome_sistema")}}</span>
             </a>
         </div>
-        
+
     </div>
 
     <ul class="navbar-nav ml-auto">
 
 
 
+        @if(auth()->user())
+
         <!--BTN Depositar -->
         <li class="nav-item pl-3">
-            <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button"
-                class="btn btn-despositar">Depositar
+            <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-despositar">Depositar
             </a>
         </li>
-
         <!-- BTN SALDO -->
         <li class="nav-item dropdown mr-3 ml-3">
             <a href="#" data-toggle="dropdown" type="button" class="btn btn-money">
@@ -53,7 +53,8 @@
                             <p>{{auth()->user()->email}}</p>
                         </div>
                         <div class="ml-5">
-                            <a href="{{route('admin.dashboards.wallet.index')}}"><i style="font-size:25px; color:#C2C7D0" class="nav-icon fas fa-wallet"></i></a>
+                            <a href="{{route('admin.dashboards.wallet.index')}}"><i
+                                    style="font-size:25px; color:#C2C7D0" class="nav-icon fas fa-wallet"></i></a>
                         </div>
                     </div>
                 </div>
@@ -131,7 +132,8 @@
                     @if(is_array($availableLangs) && $availableLangs > 0)
                     @foreach($availableLangs as $key => $label)
                     <li style="padding: 5px 10px;">
-                        <a href="{{ route('admin.changeLocale', $key) }}" style="color: #fff; display: block" class="dropdown-item">{{ $label
+                        <a href="{{ route('admin.changeLocale', $key) }}" style="color: #fff; display: block"
+                            class="dropdown-item">{{ $label
                             }}</a>
                     </li>
                     @endforeach
@@ -202,6 +204,17 @@
                 <i class="fas fa-regular fa-question"></i>
             </a>
         </li> -->
+        @else
+<!--BTN Depositar -->
+<li class="nav-item  pl-3">
+            <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-despositar">Entrar
+            </a>
+        </li>
+        <li class="nav-item pl-3">
+            <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-despositar">Cadastre-se
+            </a>
+        </li>
+        @endif
 
     </ul>
 

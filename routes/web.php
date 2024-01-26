@@ -60,7 +60,8 @@ Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 Route::get('/updateStatusPaymentCron/2de1ce3ddcb20dda6e6ea9fba8031de4/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPaymentCron');
 
-Route::get('/', [LoginController::class, 'showLoginForm'])->middleware('guest:admin');
+Route::get('/', [HomeController::class, 'index'])->middleware('guest:admin');
+Route::get('admin/categoria/{typeGame}', [CategoriaController::class, 'getCategories']);
 
 Route::middleware('guest:web')->group(function () {
     Route::prefix('games')->name('games.')->group(function () {
@@ -74,12 +75,11 @@ Route::middleware('guest:web')->group(function () {
 
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
-        Route::get('/login', [LoginController::class, 'showLoginForm'])->name('get.login');
+        //Route::get('/login', [LoginController::class, 'showLoginForm'])->name('get.login');
         Route::post('/login', [LoginController::class, 'login'])->name('post.login')->middleware('is.active');;
     });
     Route::middleware(['auth:admin', 'check.openModal'])->group(function () {
         Route::get('change-locale/{locale}', [HomeController::class, 'changeLocale'])->name('changeLocale');
-        Route::get('categoria/{typeGame}', [CategoriaController::class, 'getCategories']);
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::prefix('dashboards')->name('dashboards.')->group(function () {

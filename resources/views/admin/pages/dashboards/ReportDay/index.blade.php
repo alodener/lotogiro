@@ -73,7 +73,7 @@ $totalJogos = $totalJogos + $Soma->jogoFeitos;
 
 {{-- tabela de rede --}}
 <div class="container card-master mt-3">
-    <table id="relatorio" class="table table-striped" style="width: 100%">
+    <table id="relatorio" class="table table-striped " style="width: 100%">
         <thead>
             <tr>
                 <th>{{ trans('admin.network-sales.table-id-header') }}</th>
@@ -92,6 +92,8 @@ $totalJogos = $totalJogos + $Soma->jogoFeitos;
         @endforeach
     </table>
 </div>
+
+<div class="p-3"></div>
 
 @endsection
 

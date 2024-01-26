@@ -4,29 +4,20 @@
 
 @section('content')
 <div class="row bg-cc p-2 p-md-5">
+    
 
-    {{-- caso o cliente seja cambista --}}
-    @if($User['type_client'] == 1)
-    <div class="card-deck" style="width: 100%; margin-bottom: 30px; margin-left: auto;
-                margin-right: auto">
+<!-- Modal LOGIN -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="border-radius:10px;">
+    
+      @include('admin.pages.auth.login')
 
-        <div class="card text-white bg-success mb-6">
-            <div class="card-body">
-                <h5 class="card-title text-bold">{{ trans('admin.dashboard.games-done-title') }}</h5>
-                <i class="nav-icon fas fa-chart-line" style="float: right; font-size: 50px"></i>
-                <p class="card-text">{{ $JogosFeitos }}</p>
-            </div>
-        </div>
-        <div class="card text-white bg-danger mb-6" style="">
-            <div class="card-body text-bold">
-                <h5 class="card-title">{{ trans('admin.dashboard.balance-title') }}</h5> <i
-                    class="nav-icon fas fa-chart-line" style="float: right; font-size: 50px"></i>
-                <p class="card-text">R${{ $saldo }}</p>
-            </div>
-        </div>
+      
     </div>
+  </div>
 </div>
-@endif
+    
 
 <!-- CARD GRANDE -->
 <div class="container">
@@ -49,19 +40,15 @@
             @endif
             @endforeach
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <a class="carousel-control-prev nott" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon " aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <a class="carousel-control-next nott" href="#carouselExampleIndicators" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
     </div>
-
-
-
-
 </div>
 <div class="container mt-2">
     <div class="d-flex swipe-controles align-items-center">
@@ -79,8 +66,9 @@
         </svg>
     </div>
 
-    <!-- Nav icons -->
 
+    <!-- Nav icons -->
+   
     <!-- Conteúdo da sua view existente -->
     <div class="swiperroll p-2">
         <div class="swiper-wrapper">
@@ -98,13 +86,14 @@
         </div>
     </div>
 
+
+    @if(auth()->user())
     <div class="container-fluid d-flex align-items-center justify-content-center card-indica">
-    <span style="font-size:20px;" class="mr-3">💥</span>
-        <h5 class="mr-3"> Indique e ganhe em cada amigo que convidar</h5>
-        <sl-copy-button class="icon-copy" value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador}}" onclick="copiarLink()"></sl-copy-button>
-
-
+        <span style="font-size:20px;" class="mr-3">💥</span>
+        <h5 class="mr-3">Indique e ganhe em cada amigo que convidar</h5>
+        <sl-copy-button class="icon-copy" value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}" onclick="copiarLink()"></sl-copy-button>
     </div>
+    @endif
 
     <!-- Div para renderizar as categorias -->
     <div id="categories-container">
@@ -266,6 +255,33 @@
 
 @push('styles')
 <style>
+      
+
+
+.login100-form-btn{
+    border-radius:20px;
+    padding: 10px;
+    border:none;
+    width:100%;
+    background:#9FD214;
+    color: #212425;
+    font-weight:700;
+}
+
+.login100-form-btn:hover{
+    background:#212425;
+    color: #9FD214;
+    font-weight:700;
+    border: 1px solid #9FD214;
+} 
+    </style>
+<style>
+
+    
+    .modal-content{
+        background-color:#212425;
+    }
+
     .img-bold {
 
         width: 100%;
@@ -530,6 +546,23 @@ font-size: 25px;
             // Junta as palavras novamente com espaço em branco
             return words.join(' ');
         }
+
+
+        @if(session('error') || session('erro') || $errors->has('email') || $errors->has('password'))
+            $('#exampleModalCenter').modal('show');
+        @endif
+
+
+        @if(!auth()->check())
+            // Adicione a classe 'nao-abrir-modal' aos elementos que não devem abrir o modal
+            $('a:not(.login, .nott), button:not(.btn-side,.login,.nott)').on('click', function(event) {
+                // Se não estiver autenticado, abre o modal
+                event.preventDefault();
+                $('#exampleModalCenter').modal('show');
+            });
+        @endif
+    
+
 
 
     });

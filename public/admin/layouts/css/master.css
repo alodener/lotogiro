@@ -39800,9 +39800,10 @@ a.text-muted:hover {
   }
 }
 
+
 .login-card-body,
 .register-card-body {
-  background: #ffffff;
+  background: #323637;
   border-top: 0;
   color: #666;
   padding: 20px;

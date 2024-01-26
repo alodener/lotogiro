@@ -15,7 +15,7 @@
     </div>
 
     <div class="iconss container">
-        <p>Singa-nos</p>
+        <p>Siga-nos</p>
         <div class="d-flex">
             <a href="" aria-label="Ver nossa página no facebook" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">

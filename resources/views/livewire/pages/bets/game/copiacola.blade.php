@@ -19,18 +19,18 @@
                 <br>1-2-3-4-5 // 1.2.3.4.5 // 1 2 3 4 5 //
         </div>
         <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group mb-3">
-                            <input wire:model="search" type="text" id="author" class="form-control"
-                                placeholder="{{ trans('admin.search-customer') }}" autocomplete="off" required>
+            <div class="col-md-12">
+                <div class="input-group mb-3">
+                    <input wire:model="search" type="text" id="author" class="form-control"
+                        placeholder="{{ trans('admin.search-customer') }}" autocomplete="off" required>
 
-                            <div class="input-group-append">
-                                <span wire:click="clearUser" class="input-group-text"
-                                    title="{{ trans('admin.clear') }}"><i class="fas fa-user-times"></i></span>
-                            </div>
-                        </div>
+                    <div class="input-group-append">
+                        <span wire:click="clearUser" class="input-group-text" title="{{ trans('admin.clear') }}"><i
+                                class="fas fa-user-times"></i></span>
                     </div>
                 </div>
+            </div>
+        </div>
         <input type="hidden" name="client" value="{{$clientId}}">
         <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
         <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
@@ -128,92 +128,93 @@
                 @if($podeCriar && empty($msg))
                 <button type="submit" class="btn btn-info" id="submit_game">{{ trans('admin.lwGame.creat') }}</button>
                 @endif
-               
+
             </div>
         </div>
-
-        @push('scripts')
-
-
-        <style>
-            .bts>.btn {
-                max-width: 120px;
-                width: 100%;
-                color: #A3D712;
-                background: #212425 !important;
-            }
-
-            .bts>.btn:hover {
-                background: #A3D712 !important;
-                color: #212425;
-            }
-        </style>
-
-        {{-- evento dispara quando retira o foco do campo texto --}}
-        <script>
-            //para realizar o calculo do multiplicador
-            function altera() {
-                var multiplicador = document.getElementById("multiplicador").value;
-                var valor = document.getElementById("value").value;
-                var Campovalor = document.getElementById("value");
-                var campoDoCalculo = document.getElementById("premio");
-                var maxreais = document.getElementById("maxreais").value;
-                var resultado;
-
-                var numberValor = parseFloat(valor);
-                var numberReais = parseFloat(maxreais);
-
-                if (numberReais >= numberValor) {
-                    resultado = valor * multiplicador;
-                    campoDoCalculo.value = resultado.toFixed(2);
-                }
-                else {
-                    resultado = maxreais * multiplicador;
-                    campoDoCalculo.value = resultado;
-                    Campovalor.value = maxreais;
-                }
-
-                var controlervar = document.getElementById("controle").value;
-                var textdezena = document.getElementById("dezena");
-
-                if (controlervar == 1) {
-                    textdezena.readOnly = true;
-                }
-
-                var valor = document.getElementById('value').value;
-                var contadorJogos = document.getElementById('contadorJogos').value;
-                var contadorJogos = parseFloat(contadorJogos);
-                var numberValor = parseFloat(valor);
-                var valorTotal = contadorJogos * numberValor;
-                document.getElementById('ValorTotal').value = valorTotal.toFixed(2);
-
-                // var contadorJogos = document.getElementById("contadorJogos").value;
-                // var contadorJogos =  parseFloat(contadorJogos);
-                // var valorTotal = contadorJogos *numberValor;
-
-                // if (valorTotal > maxreais)
-                // {
-                //     var contadorJogos = document.getElementById("contadorJogos").value;
-                //     var contadorJogos =  parseFloat(contadorJogos);
-                //     var valorTotal = contadorJogos *numberValor;
-                //     document.getElementById("ValorTotal").value = valorTotal;
-                // }
-                // else
-                // {
-                //     document.getElementById("ValorTotal").value = valorTotal;
-                // }
-
-            }
+    </div>
+</div>
+@push('scripts')
 
 
-            function bloqueia() {
+<style>
+    .bts>.btn {
+        max-width: 120px;
+        width: 100%;
+        color: #A3D712;
+        background: #212425 !important;
+    }
 
-                var controlervar = document.getElementById("controle").value;
-                var textdezena = document.getElementById("dezena");
+    .bts>.btn:hover {
+        background: #A3D712 !important;
+        color: #212425;
+    }
+</style>
 
-                if (controlervar == 1) {
-                    textdezena.readOnly = true;
-                }
-            }
-        </script>
-        @endpush
+{{-- evento dispara quando retira o foco do campo texto --}}
+<script>
+    //para realizar o calculo do multiplicador
+    function altera() {
+        var multiplicador = document.getElementById("multiplicador").value;
+        var valor = document.getElementById("value").value;
+        var Campovalor = document.getElementById("value");
+        var campoDoCalculo = document.getElementById("premio");
+        var maxreais = document.getElementById("maxreais").value;
+        var resultado;
+
+        var numberValor = parseFloat(valor);
+        var numberReais = parseFloat(maxreais);
+
+        if (numberReais >= numberValor) {
+            resultado = valor * multiplicador;
+            campoDoCalculo.value = resultado.toFixed(2);
+        }
+        else {
+            resultado = maxreais * multiplicador;
+            campoDoCalculo.value = resultado;
+            Campovalor.value = maxreais;
+        }
+
+        var controlervar = document.getElementById("controle").value;
+        var textdezena = document.getElementById("dezena");
+
+        if (controlervar == 1) {
+            textdezena.readOnly = true;
+        }
+
+        var valor = document.getElementById('value').value;
+        var contadorJogos = document.getElementById('contadorJogos').value;
+        var contadorJogos = parseFloat(contadorJogos);
+        var numberValor = parseFloat(valor);
+        var valorTotal = contadorJogos * numberValor;
+        document.getElementById('ValorTotal').value = valorTotal.toFixed(2);
+
+        // var contadorJogos = document.getElementById("contadorJogos").value;
+        // var contadorJogos =  parseFloat(contadorJogos);
+        // var valorTotal = contadorJogos *numberValor;
+
+        // if (valorTotal > maxreais)
+        // {
+        //     var contadorJogos = document.getElementById("contadorJogos").value;
+        //     var contadorJogos =  parseFloat(contadorJogos);
+        //     var valorTotal = contadorJogos *numberValor;
+        //     document.getElementById("ValorTotal").value = valorTotal;
+        // }
+        // else
+        // {
+        //     document.getElementById("ValorTotal").value = valorTotal;
+        // }
+
+    }
+
+
+    function bloqueia() {
+
+        var controlervar = document.getElementById("controle").value;
+        var textdezena = document.getElementById("dezena");
+
+        if (controlervar == 1) {
+            textdezena.readOnly = true;
+        }
+    }
+</script>
+@endpush
