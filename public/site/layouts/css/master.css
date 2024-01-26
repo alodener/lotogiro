@@ -268,6 +268,7 @@ textarea {
   line-height: inherit;
 }
 
+
 button,
 input {
   overflow: visible;
@@ -2128,6 +2129,7 @@ pre code {
   border: 0;
 }
 
+
 .form-control {
   display: block;
   width: 100%;
@@ -3023,14 +3025,14 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-primary {
-  color: #007bff;
-  border-color: #007bff;
+  color: #a3d712;
+  border-color: #a3d712;
 }
 
 .btn-outline-primary:hover {
-  color: #ffffff;
-  background-color: #007bff;
-  border-color: #007bff;
+  color: #424647;
+  background-color: #a3d712;
+  border-color: #a3d712;
 }
 
 .btn-outline-primary:focus,
@@ -5053,6 +5055,7 @@ input[type=button].btn-block {
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 0 solid rgba(0, 0, 0, 0.125);
+  align-items: center;
 }
 
 .card-header:first-child {

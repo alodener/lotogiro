@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="col-md-12">
+    <div class="col-md-12 p-3">
         <section class="content">
             <form action="{{route('admin.settings.permissions.store')}}" method="POST">
                 @csrf

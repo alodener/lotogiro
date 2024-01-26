@@ -13,7 +13,8 @@ use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class Table extends Component
-{
+{   
+
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
@@ -34,7 +35,7 @@ class Table extends Component
     public $sorts = [];
     public $filters = [
         "search" => null
-    ];
+    ]; 
 
     public function mount()
     {

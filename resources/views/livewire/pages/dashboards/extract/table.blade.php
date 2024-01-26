@@ -1,87 +1,107 @@
 <div>
     <div class="row">
         <div class="col-md-12">
+            
             <div class="card-header indica-card">
-                {{ trans('admin.period') }}
+            {{ trans('admin.period') }}
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <select wire:model="range" class="custom-select" id="range" name="range">
-                    <option></option>
-                    <option value="1">{{ trans('admin.monthly') }}</option>
-                    <option value="2">{{ trans('admin.weekly') }}</option>
-                    <option value="3">{{ trans('admin.daily') }}</option>
-                    <option value="4">{{ trans('admin.custom') }}</option>
-                </select>
-            </div>
+    <div class="container ganhos card-master">
+        <div class="card-header indica-card">
+            {{ trans('admin.filters') }}
         </div>
-        <div class="col-md-8">
-            <form wire:submit.prevent="submit">
-                <div class="form-row">
-                    <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                        <input wire:model="dateStart" type="text"
-                               class="form-control @error('dateStart') is-invalid @enderror"
-                               id="date_start"
-                               name="dateStart"
-                               autocomplete="off"
-                               maxlength="50"
-                               placeholder="Data Inicial"
-                               onchange="this.dispatchEvent(new InputEvent('input'))">
-                        @error('dateStart')
-                        <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                        <input wire:model="dateEnd" type="text"
-                               class="form-control date @error('dateEnd') is-invalid @enderror"
-                               id="date_end"
-                               name="dateEnd"
-                               autocomplete="off"
-                               maxlength="50"
-                               placeholder="Data Final"
-                               onchange="this.dispatchEvent(new InputEvent('input'))">
-                        @error('dateEnd')
-                        <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                        @enderror
+        <div>
+            <div class="d-flex container justify-content-center align-items-center flex-column">
+                <div class="d-flex">
+                   
+                    <div class="form-group">
+                        <label for="range">{{ trans('admin.period') }}</label>
+                        <select wire:model="range" class="custom-select" id="range" name="range">
+                            <option value="1">{{ trans('admin.monthly') }}</option>
+                            <option value="2">{{ trans('admin.weekly') }}</option>
+                            <option value="3">{{ trans('admin.daily') }}</option>
+                            <option value="4">{{ trans('admin.custom') }}</option>
+                        </select>
                     </div>
                 </div>
-            </form>
+                <div class="">
+                    <form wire:submit.prevent="submit">
+                        <div class="form-row">
+                            <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                                <input wire:model="dateStart" type="text"
+                                    class="form-control @error('dateStart') is-invalid @enderror"
+                               id="date_start"
+                                    name="dateStart"
+                               autocomplete="off"
+                               maxlength="50"
+                                    placeholder="Data Inicial"
+                                    onchange="this.dispatchEvent(new InputEvent('input'))">
+                                @error('dateStart')
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $message }}
+                                </span>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                                <input wire:model="dateEnd" type="text"
+                                    class="form-control date @error('dateEnd') is-invalid @enderror"
+                               id="date_end"
+                                    name="dateEnd"
+                               autocomplete="off"
+                               maxlength="50"
+                                    placeholder="Data Final"
+                                    onchange="this.dispatchEvent(new InputEvent('input'))">
+                                @error('dateEnd')
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $message }}
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
+   
+    <div class="container mt-1 d-flex card-master">
         <div class="col-md-6">
-            <div class="small-box bg-warning">
+            <div class="small-box">
                 <div class="inner">
-                    <h3>{{$extracts->count()}}</h3>
+                <h3>{{$extracts->count()}}</h3>
                     <p>{{ trans('admin.transactions-quantity') }}</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-balance-scale-left"></i>
+                <i class="fas fa-shopping-cart" style="color:#FFC107;"></i>
                 </div>
                 <span class="small-box-footer p-2"></span>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="small-box @if($value < 0) bg-danger @else bg-success @endif">
+            <div class="small-box">
                 <div class="inner">
-                    <h3>R${{\App\Helper\Money::toReal($value)}}</h3>
+
+
+                <h3>R${{\App\Helper\Money::toReal($value)}}</h3>
                     <p>{{ trans('admin.balance') }}</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-dollar-sign"></i>
+                <i class="fas fa-dollar-sign" style="color:#208E39;"></i>
                 </div>
                 <span class="small-box-footer p-2"></span>
             </div>
         </div>
+
     </div>
-    <div class="row">
+
+
+   
+    <div class="row mt-5">
+        <div class="col-md-12 extractable-cel">
+            
+            <div class="table-responsive">
+            <div class="row">
         <div class="form-group col-md-1">
             <select wire:model="perPage" class="custom-select" id="per_page">
                 <option>10</option>
@@ -94,10 +114,7 @@
             <button wire:click="getReport" type="button" class="btn btn-info btn-block">{{ trans('admin.generate-report') }}</button>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12 extractable-cel">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-sm" id="game_table">
+    <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
                     <tr>
                         <th>{{ trans('admin.extracts.table-id-header') }}</th>

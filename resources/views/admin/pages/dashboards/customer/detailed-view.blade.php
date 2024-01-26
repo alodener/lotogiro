@@ -3,7 +3,7 @@
 @section('title', trans('admin.games.listing-page-title'))
 
 @section('content')
-    <div class="col bg-white p-3">
+    <div class="col  p-3">
         <h1>{{ trans('admin.pagesF.visaoPremiado') }}</h1>
         <hr/>
         <form method="POST" action="{{ route('admin.dashboards.customer.filter.winner')}}">

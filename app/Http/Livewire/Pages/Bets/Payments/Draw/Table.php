@@ -17,6 +17,10 @@ class Table extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
+
+
     public $dateStart, $dateEnd, $auth, $perPage, $value, $searchUser, $searchClient, $client_id, $user_id, $startDate, $endDate, $users, $clients;
     public $showList = false;
     public $showList2 = false;
