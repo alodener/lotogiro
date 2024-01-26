@@ -20,7 +20,7 @@
                 </svg>
             </div>
             <div>
-            <p id="nome_pesq">aaaaa</p>
+                <p id="nome_pesq">aaaaa</p>
             </div>
         </div>
     </div>
@@ -62,13 +62,18 @@
     });
 
 
-    @if(!auth()->check())
-            // Adicione a classe 'nao-abrir-modal' aos elementos que não devem abrir o modal
-            $('.pesq').on('click', function(event) {
-                // Se não estiver autenticado, abre o modal
-                event.preventDefault();
-                $('#exampleModalCenter').modal('show');
-            });
-        @endif
-    
+
+
+    // Obtém a URL atual da página
+    var currentUrl = window.location.href;
+    // Verifica se a URL contém "/admin/home"
+    if (!currentUrl.includes('/admin/home')) {
+        $('.pesq').on('click', function (event) {
+            console.log('category');
+            // Se não estiver autenticado, abre o modal
+            event.preventDefault();
+            $('#exampleModalCenter').modal('show');
+        });
+    } 
+
 </script>

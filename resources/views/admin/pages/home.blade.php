@@ -4,246 +4,299 @@
 
 @section('content')
 <div class="row bg-cc p-2 p-md-5">
-    
 
-<!-- Modal LOGIN -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" style="border-radius:10px;">
-    
-      @include('admin.pages.auth.login')
 
-      
-    </div>
-  </div>
-</div>
-    
+    <!-- Modal LOGIN -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius:10px;">
 
-<!-- CARD GRANDE -->
-<div class="container">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            @foreach($layout_carousel_grande as $key => $item)
-            @if($item['visivel'] == 1)
-            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}"
-                class="{{ $key == 0 ? 'active' : '' }}"></li>
-            @endif
-            @endforeach
-        </ol>
-        <div class="carousel-inner">
-            @foreach($layout_carousel_grande as $key => $item)
-            @if($item['visivel'] == 1)
-            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                <img class="d-block w-100" src="{{ url("storage/{$item['url']}") }}" alt="{{ $item['nome'] }}"
-                    style="object-fit: cover;">
+                @include('admin.pages.auth.login')
+
+
             </div>
-            @endif
-            @endforeach
-        </div>
-        <a class="carousel-control-prev nott" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon " aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next nott" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-</div>
-<div class="container mt-2">
-    <div class="d-flex swipe-controles align-items-center">
-        <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-            <path fill="currentColor"
-                d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
-            </path>
-        </svg>
-        <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-            <path fill="currentColor"
-                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
-            </path>
-        </svg>
-    </div>
-
-
-    <!-- Nav icons -->
-   
-    <!-- Conteúdo da sua view existente -->
-    <div class="swiperroll p-2">
-        <div class="swiper-wrapper">
-            <!-- {{$TypeGamesRoll}} -->
-            @foreach($TypeGamesRoll as $typeGame)
-            <div class="swiper-slide d-flex flex-column category-info" data-type-game-id="{{ $typeGame->category }}">
-                <div class="icon-container">
-                    <img class="img-bold" src="/storage/{{str_replace('.png', '-bold.png', $typeGame->icon)}}" alt="">
-                </div>
-                <div>
-                    <p class="txtnav">{{ ucwords(str_replace('_', ' ', $typeGame->category)) }}</p>
-                </div>
-            </div>
-            @endforeach
         </div>
     </div>
 
 
-    @if(auth()->user())
-    <div class="container-fluid d-flex align-items-center justify-content-center card-indica">
-        <span style="font-size:20px;" class="mr-3">💥</span>
-        <h5 class="mr-3">Indique e ganhe em cada amigo que convidar</h5>
-        <sl-copy-button class="icon-copy" value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}" onclick="copiarLink()"></sl-copy-button>
+    <!-- CARD GRANDE -->
+    <div class="container">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @foreach($layout_carousel_grande as $key => $item)
+                @if($item['visivel'] == 1)
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}"
+                    class="{{ $key == 0 ? 'active' : '' }}"></li>
+                @endif
+                @endforeach
+            </ol>
+            <div class="carousel-inner">
+                @foreach($layout_carousel_grande as $key => $item)
+                @if($item['visivel'] == 1)
+                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") : asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}" alt="{{ $item['nome'] }}">
+                        style="object-fit: cover;">
+                </div>
+                @endif
+                @endforeach
+            </div>
+            <a class="carousel-control-prev nott" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon " aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next nott" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <div class="container mt-2">
+        <div class="d-flex swipe-controles align-items-center">
+            <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path fill="currentColor"
+                    d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
+                </path>
+            </svg>
+            <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path fill="currentColor"
+                    d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
+                </path>
+            </svg>
+        </div>
+
+
+        <!-- Nav icons -->
+
+        <!-- Conteúdo da sua view existente -->
+        <div class="swiperroll p-2">
+            <div class="swiper-wrapper">
+                <!-- {{$TypeGamesRoll}} -->
+                @foreach($TypeGamesRoll as $typeGame)
+                <div class="swiper-slide d-flex flex-column category-info"
+                    data-type-game-id="{{ $typeGame->category }}">
+                    <div class="icon-container">
+                    <img class="img-bold" src="{{ $typeGame->icon ? asset('/storage/' . str_replace('.png', '-bold.png', $typeGame->icon)) : asset('/storage/megasena-bold.png') }}" alt="">
+
+                    </div>
+                    <div>
+                        <p class="txtnav">{{ ucwords(str_replace('_', ' ', $typeGame->category)) }}</p>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
+
+        @if(auth()->user())
+        <!-- Se for usuario aparece -->
+        @if($User['type_client'] == 1)
+        <div class="container-fluid d-flex align-items-center justify-content-center card-indica">
+            <span style="font-size:20px;" class="mr-3">💥</span>
+            <h5 class="mr-3">Indique e ganhe em cada amigo que convidar</h5>
+            <span style="font-size:20px;" class="mr-3">💥</span>
+
+            <sl-copy-button class="icon-copy"
+                value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
+        </div>
+        @endif
+        <div class="container-fluid d-flex align-items-center justify-content-center card-indica mt-2 "
+            href="#collapseExample" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="collapseExample" style="border-bottom:1px solid red;">
+            <span style="font-size:20px;" class="mr-3">💥</span>
+            <h5 class="mr-3">Indique e ganhe em cada amigo que convidar</h5>
+            <span style="font-size:20px;" class="mr-3">💥</span>
+
+            <i class="fa fa-angle-down" style="color:#A3D712;" aria-hidden="true"></i>
+
+        </div>
+        <p>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Indicação</th>
+                            <th scope="col">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cadastro</td>
+                            <td> <sl-copy-button class="icon-copy"
+                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
+                            </td>
+                        </tr>
+                        @if($User['type_client'] != 1)
+
+                        <tr>
+                            <td>Jogo Avulso</td>
+                            <td> <sl-copy-button class="icon-copy"
+                                    value="{{ env('APP_URL') }}/games/{{ auth()->user()->id }}"></sl-copy-button>
+                            </td>
+                        </tr>
+                        @endif
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        @endif
+
+        <!-- Div para renderizar as categorias -->
+        <div id="categories-container">
+        </div>
+    </div>
+    <!-- Recomendados -->
+    <div class="container mt-5">
+        <div class="d-flex swipe-controles align-items-center mb-2">
+            <h1 style="color:white">Recomendados</h1>
+            <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path fill="currentColor"
+                    d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
+                </path>
+            </svg>
+            <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path fill="currentColor"
+                    d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
+                </path>
+            </svg>
+        </div>
+        @if(\App\Models\TypeGame::where('recomendado', 1)->count() > 0)
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                @foreach(\App\Models\TypeGame::where('recomendado', 1)->get() as $typeGame)
+                <div class="swiper-slide">
+                    <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
+                    <img src="{{ $typeGame->banner_pc ? asset("storage/{$typeGame->banner_pc}") : asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg') }}" alt="{{ $typeGame->name }}" class="d-none d-md-block">
+                    <img src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") : asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}" alt="{{ $typeGame->name }}" class="d-md-none">
+
+                        <a>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
+    </div>
+
+    <!-- Todos os jogos -->
+
+    @if(\App\Models\TypeGame::count() > 0)
+    <div class="container mt-5">
+        <div class="d-flex swipe-controles align-items-center mb-2">
+            <h1 style="color:white">Todos os Jogos</h1>
+            <svg width="10" class="ml-3 mr-3 swiper-list-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path fill="currentColor"
+                    d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
+                </path>
+            </svg>
+            <svg width="10" class="swiper-list-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path fill="currentColor"
+                    d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
+                </path>
+            </svg>
+        </div>
+
+        <div class="swiper-list swiper-full">
+            <div class="swiper-wrapper">
+                @foreach(\App\Models\TypeGame::get() as $typeGame)
+                <div class="swiper-slide">
+                    <a href="{{ route('admin.bets.games.create', ['type_game' => $typeGame->id]) }}"
+                        class="hover-container">
+<img src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") : asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}" alt="{{ $typeGame->name }}">
+                        <div class="hover-content">
+                            <p>{{ $typeGame->name }}</p>
+                            <button class="btn btn-primary">Jogar Agora</button>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
+
+
+            </div>
+        </div>
     </div>
     @endif
 
-    <!-- Div para renderizar as categorias -->
-    <div id="categories-container">
-    </div>
-</div>
-<!-- Recomendados -->
-<div class="container mt-5">
-    <div class="d-flex swipe-controles align-items-center mb-2">
-        <h1 style="color:white">Recomendados</h1>
-        <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-            <path fill="currentColor"
-                d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
-            </path>
-        </svg>
-        <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-            <path fill="currentColor"
-                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
-            </path>
-        </svg>
-    </div>
-    @if(\App\Models\TypeGame::where('recomendado', 1)->count() > 0)
-    <div class="swiper">
-        <div class="swiper-wrapper">
-            @foreach(\App\Models\TypeGame::where('recomendado', 1)->get() as $typeGame)
-            <div class="swiper-slide">
-                <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
 
-                    <img src="{{ url("storage/{$typeGame->banner_pc}")}}" alt="{{ $typeGame->name }}" class="d-none
-                    d-md-block">
-                    <img src="{{ url("storage/{$typeGame->banner_mobile}")}}" alt="{{ $typeGame->name }}"
-                    class="d-md-none">
-                    <a>
+    <!-- Bichao da sorte -->
+
+    @if(\App\Models\TypeGame::count() > 0)
+    <div class="container mt-5">
+        <div class="d-flex swipe-controles align-items-center mb-2">
+            <h1 style="color:white">Bichão da Sorte</h1>
+            <svg width="10" class="ml-3 mr-3 swiper-bichao-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path fill="currentColor"
+                    d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
+                </path>
+            </svg>
+            <svg width="10" class="swiper-bichao-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path fill="currentColor"
+                    d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
+                </path>
+            </svg>
+        </div>
+
+        <div class="swiper-bichao">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="/admin/bets/bichao" class="hover-container">
+                        <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                            alt="{{ $typeGame->name }}">
+                        <div class="hover-content">
+                            <p>Milhar</p>
+                            <button class="btn btn-primary">Jogar Agora</button>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="/admin/bets/bichao/centena" class="hover-container">
+                        <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                            alt="{{ $typeGame->name }}">
+                        <div class="hover-content">
+                            <p>Centena</p>
+                            <button class="btn btn-primary">Jogar Agora</button>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="/admin/bets/bichao/dezena" class="hover-container">
+                        <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                            alt="{{ $typeGame->name }}">
+                        <div class="hover-content">
+                            <p>Dezena</p>
+                            <button class="btn btn-primary">Jogar Agora</button>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="/admin/bets/bichao/group" class="hover-container">
+                        <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                            alt="{{ $typeGame->name }}">
+                        <div class="hover-content">
+                            <p>Grupo</p>
+                            <button class="btn btn-primary">Jogar Agora</button>
+                        </div>
+                    </a>
+                </div>
+
             </div>
-            @endforeach
         </div>
     </div>
     @endif
-</div>
-
-<!-- Todos os jogos -->
-
-@if(\App\Models\TypeGame::count() > 0)
-<div class="container mt-5">
-    <div class="d-flex swipe-controles align-items-center mb-2">
-        <h1 style="color:white">Todos os Jogos</h1>
-        <svg width="10" class="ml-3 mr-3 swiper-list-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-            <path fill="currentColor"
-                d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
-            </path>
-        </svg>
-        <svg width="10" class="swiper-list-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-            <path fill="currentColor"
-                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
-            </path>
-        </svg>
-    </div>
-
-    <div class="swiper-list swiper-full">
-        <div class="swiper-wrapper">
-            @foreach(\App\Models\TypeGame::get() as $typeGame)
-            <div class="swiper-slide">
-                <a href="{{ route('admin.bets.games.create', ['type_game' => $typeGame->id]) }}"
-                    class="hover-container">
-                    <img src="{{ url("storage/{$typeGame->banner_mobile}")}}" alt="{{ $typeGame->name }}">
-                    <div class="hover-content">
-                        <p>{{ $typeGame->name }}</p>
-                        <button class="btn btn-primary">Jogar Agora</button>
-                    </div>
-                </a>
-            </div>
-            @endforeach
-
-
-        </div>
-    </div>
-</div>
-@endif
-
-
-<!-- Bichao da sorte -->
-
-@if(\App\Models\TypeGame::count() > 0)
-<div class="container mt-5">
-    <div class="d-flex swipe-controles align-items-center mb-2">
-        <h1 style="color:white">Bichão da Sorte</h1>
-        <svg width="10" class="ml-3 mr-3 swiper-bichao-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-            <path fill="currentColor"
-                d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
-            </path>
-        </svg>
-        <svg width="10" class="swiper-bichao-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-            <path fill="currentColor"
-                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
-            </path>
-        </svg>
-    </div>
-
-    <div class="swiper-bichao">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <a href="/admin/bets/bichao" class="hover-container">
-                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
-                        alt="{{ $typeGame->name }}">
-                    <div class="hover-content">
-                        <p>Milhar</p>
-                        <button class="btn btn-primary">Jogar Agora</button>
-                    </div>
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="/admin/bets/bichao/centena" class="hover-container">
-                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
-                        alt="{{ $typeGame->name }}">
-                    <div class="hover-content">
-                        <p>Centena</p>
-                        <button class="btn btn-primary">Jogar Agora</button>
-                    </div>
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="/admin/bets/bichao/dezena" class="hover-container">
-                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
-                        alt="{{ $typeGame->name }}">
-                    <div class="hover-content">
-                        <p>Dezena</p>
-                        <button class="btn btn-primary">Jogar Agora</button>
-                    </div>
-                </a>
-            </div>
-            <div class="swiper-slide">
-                <a href="/admin/bets/bichao/group" class="hover-container">
-                    <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
-                        alt="{{ $typeGame->name }}">
-                    <div class="hover-content">
-                        <p>Grupo</p>
-                        <button class="btn btn-primary">Jogar Agora</button>
-                    </div>
-                </a>
-            </div>
-
-        </div>
-    </div>
-</div>
-@endif
 
 </div>
 
@@ -255,31 +308,26 @@
 
 @push('styles')
 <style>
-      
+    .login100-form-btn {
+        border-radius: 20px;
+        padding: 10px;
+        border: none;
+        width: 100%;
+        background: #9FD214;
+        color: #212425;
+        font-weight: 700;
+    }
 
-
-.login100-form-btn{
-    border-radius:20px;
-    padding: 10px;
-    border:none;
-    width:100%;
-    background:#9FD214;
-    color: #212425;
-    font-weight:700;
-}
-
-.login100-form-btn:hover{
-    background:#212425;
-    color: #9FD214;
-    font-weight:700;
-    border: 1px solid #9FD214;
-} 
-    </style>
+    .login100-form-btn:hover {
+        background: #212425;
+        color: #9FD214;
+        font-weight: 700;
+        border: 1px solid #9FD214;
+    }
+</style>
 <style>
-
-    
-    .modal-content{
-        background-color:#212425;
+    .modal-content {
+        background-color: #212425;
     }
 
     .img-bold {
@@ -349,15 +397,15 @@
         }
 
 
-.card-indica h5{
- font-size:15px;
-}
+        .card-indica h5 {
+            font-size: 15px;
+        }
 
-.icon-copy{
-font-size: 25px;
- color:#A3D712;
-}
-        
+        .icon-copy {
+            font-size: 25px;
+            color: #A3D712;
+        }
+
     }
 
     *:focus {
@@ -548,20 +596,21 @@ font-size: 25px;
         }
 
 
-        @if(session('error') || session('erro') || $errors->has('email') || $errors->has('password'))
+        @if (session('error') || session('erro') || $errors -> has('email') || $errors -> has('password'))
             $('#exampleModalCenter').modal('show');
         @endif
 
 
-        @if(!auth()->check())
-            // Adicione a classe 'nao-abrir-modal' aos elementos que não devem abrir o modal
-            $('a:not(.login, .nott), button:not(.btn-side,.login,.nott)').on('click', function(event) {
+        @if (!auth() -> check())
+            $('a:not(.login, .nott), button:not(.btn-side,.login,.nott)').on('click', function (event) {
                 // Se não estiver autenticado, abre o modal
                 event.preventDefault();
                 $('#exampleModalCenter').modal('show');
             });
         @endif
-    
+
+
+
 
 
 
