@@ -3,8 +3,8 @@
 @section('title', 'Extrato de Vendas')
 
 @section('content')
-    <div class="row p-3"> 
-        <div class="col-md-12 card-master">
+    <div class="row bg-white p-3">
+        <div class="col-md-12">
             @livewire('pages.dashboards.extract.winning-ticket')
         </div>
     </div>

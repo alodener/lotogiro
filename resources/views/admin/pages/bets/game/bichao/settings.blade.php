@@ -3,7 +3,7 @@
 @section('title', trans('admin.games.listing-page-title'))
 
 @section('content')
-<div class="card card-danger mt-4">
+<div class="card card-danger">
     <div class="card-header">
     <h3 class="card-title">{{ trans('admin.bichao.confBichao') }}</h3>
     </div>

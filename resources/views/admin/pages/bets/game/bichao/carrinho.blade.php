@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="p-2" style="background-color:#212425;">
+                <div class="p-2" style="background-color:#E9ECEF;">
                     <div class="row align-items-center mt-4">
                         <div class="col">
                             <h4 class="text-center">{{ trans('admin.falta.listaJogos') }}</h4>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="form-group text-center card-master">
+                            <div class="form-group text-center">
                                 <label for="selecionar-estado-bichao">{{ trans('admin.falta.selecEstado') }}</label>
                                 <select class="form-control" id="selecionar-estado-bichao">
                                     <option selected value="none" disabled>{{ trans('admin.falta.selecEstado') }}</option>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="row">
                         <div class="col text-center align-items-end mb-4">
-                            <button class="btn btn-primary" id="cadastrar-jogos" type="button">{{ trans('admin.falta.cadastJogos') }}</button>
+                            <button class="btn btn-success" id="cadastrar-jogos" type="button">{{ trans('admin.falta.cadastJogos') }}</button>
                         </div>
                     </div>
                     <div class="row">
@@ -126,13 +126,6 @@
 
 @push('styles')
     <style>
-         .card-master {
-
-
-background-color: #323637;
-padding: 10px;
-border-radius: 5px;
-}
         #chart-text {
             display: flex;
             flex-direction: column;
@@ -142,7 +135,7 @@ border-radius: 5px;
         .chart-item {
             display: flex;
             overflow: hidden;
-            background-color: #323637;
+            background-color: #ffffff;
             border-radius: 5px;
         }
 

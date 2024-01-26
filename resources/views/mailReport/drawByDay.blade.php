@@ -7,7 +7,7 @@
 
     <div style="width: 100%;">
     @php $gameName = '' @endphp
-        <div style="width: 100%; background-color: #212425; padding: 10px; border:none; ">
+        <div style="width: 100%; background-color: #2b97ff">
             <h2 style="color: #FFF; font-size: 2rem; text-align: center">🤑 {{env('nome_sistema')}}  🤑</h2>
             <h2 style="color: #FFF; text-align: center;"> SORTEIOS DO DIA: {{ \Carbon\Carbon::parse($drawsByDay->dataHoje)->format('d/m/Y')
             }}</h2>

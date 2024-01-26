@@ -3,18 +3,14 @@
 @section('title', trans('admin.games.listing-page-title'))
 
 @section('content')
-    <div class="col  p-3">
+    <div class="col bg-white p-3">
         <hr />
-
-        <div class="card-header align-items-center">
-                    <h4>{{ trans('admin.bichao.comissions') }}</h4>
-                </div>
+        <div class="row">
+            <h1>{{ trans('admin.bichao.comissions') }}</h1>
+        </div>
         <hr />
-        <div class="row card-master">
+        <div class="row">
             <div class="col-md-6 col-12">
-            <div class="card-header align-items-center">
-                    <h4>Filtro</h4>
-                </div>
                 <div class="row busca-container">
                     <div class="col-md-2 col-6">
                         <select class="change-busca form-control" name="busca-per-page" data-busca-param="perPage">
@@ -34,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-4 card-master">
+        <div class="row mt-4">
             <div class="col overflow-auto">
                 <table class="table table-sm">
                     <thead>

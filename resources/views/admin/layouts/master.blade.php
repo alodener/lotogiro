@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{asset('admin/layouts/plugins/overlayScrollbars/css/OverlayScrollbars.css')}}">
     <link rel="stylesheet" href="{{asset('admin/layouts/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -20,9 +20,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quattrocento&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
     <link rel="shortcut icon" href="{{ App\Helper\Configs::getConfigLogo() }}">
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.13.1/cdn/shoelace.js"></script>
 
 
     @livewireStyles
@@ -83,10 +82,10 @@
 <div class="wrapper">
 
     @include('admin.layouts.navbar')
-    @include('admin.layouts.sidebar', ['layout_button' => App\Models\Layout_Button::all()])
+    @include('admin.layouts.sidebar')
 
     <div class="content-wrapper">
-        <div class="container-fluid pt-3" style="padding-top:70px !important">
+        <div class="container-fluid pt-3">
             
             @yield('content')
         </div>
@@ -102,7 +101,6 @@
 <script src="{{asset('admin/layouts/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin/layouts/js/master.js')}}"></script>
 <script src="{{asset('admin/layouts/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -137,7 +135,6 @@
                 }
             })
         }, 10000);
-        
 
         $('.notification_dropdown .nav-link').on('click', function() {
             $.ajax({
@@ -279,17 +276,17 @@
                         <td>${item.modalidade.nome}</td>
                         <td>
                             <a href="{{url('/')}}/admin/bets/bichao/receipt/${item.id}/txt">
-                                <button type="button" class="btn btn-primary" title="Baixar bilhete TXT">
+                                <button type="button" class="btn btn-primary text-light" title="Baixar bilhete TXT">
                                     <i class="bi bi-ticket"></i>
                                 </button>
                             </a>
                             <a href="{{url('/')}}/admin/bets/bichao/receipt/${item.id}/pdf">
-                                <button type="button" class="btn btn-primary" title="Baixar bilhete PDF">
+                                <button type="button" class="btn btn-danger text-light" title="Baixar bilhete PDF">
                                     <i class="bi bi-ticket"></i>
                                 </button>
                             </a>
                             <a href="https://api.whatsapp.com/send?phone=55${item.client.ddd+item.client.phone}&text=Jogo de ${item.modalidade.nome} cadastrado com sucesso! Id da Aposta: ${item.id}, Cliente: ${item.client.name} ${item.client.last_name}, Aposta: ${item.aposta}, Valor R$ ${item.valor.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}, Prêmio Máximo R$ ${item.premio_maximo.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}, Data: ${item.emitido_em}" target="_blank">
-                                <button type="button" class="btn btn-primary" title="Enviar por whatsapp">
+                                <button type="button" class="btn btn-success text-light" title="Enviar por whatsapp">
                                     <i class="bi bi-whatsapp"></i>
                                 </button>
                             </a>

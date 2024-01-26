@@ -4,7 +4,7 @@
 
 @section('content')
     <?php use App\Models\Animals; ?>
-    <div class="col  p-3">
+    <div class="col bg-white p-3">
         <div class="row">
             <div class="col-8 d-flex justify-content-end">
             <a href="{{ route('admin.bets.bichao.index') }}">

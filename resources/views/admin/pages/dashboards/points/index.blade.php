@@ -19,7 +19,7 @@
 @enderror
 
 @section('content')
-<div class="row  p-3">
+<div class="row bg-white p-3">
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
