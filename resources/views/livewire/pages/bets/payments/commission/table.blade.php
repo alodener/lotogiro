@@ -1,8 +1,8 @@
 <div>
-    <div class="col-md-12  card-header">
-        {{ trans('admin.pagesF.comissoess') }}
+    <div class="col-md-12 p-4 faixa-jogos">
+        <h3 class="text-center text-bold">{{ trans('admin.pagesF.comissoess') }}</h3>
     </div>
-    <div class="row container card-master mx-auto">
+    <div class="row">
         <div class="col-md-12">
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -11,13 +11,17 @@
                     </div>
                     <div class="col-md-11 commisao-input">
                         <input wire:model="dateStart" type="text"
-                            class="form-control @error('dateStart') is-invalid @enderror" id="date_start"
-                            name="dateStart" autocomplete="off" maxlength="50" placeholder="Data Inicial"
-                            onchange="this.dispatchEvent(new InputEvent('input'))">
+                               class="form-control @error('dateStart') is-invalid @enderror"
+                               id="date_start"
+                               name="dateStart"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="Data Inicial"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateStart')
                         <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>
@@ -27,70 +31,49 @@
                     </div>
                     <div class="col-md-11 commisao-input">
                         <input wire:model="dateEnd" type="text"
-                            class="form-control date @error('dateEnd') is-invalid @enderror" id="date_end"
-                            name="dateEnd" autocomplete="off" maxlength="50" placeholder="Data Final"
-                            onchange="this.dispatchEvent(new InputEvent('input'))">
+                               class="form-control date @error('dateEnd') is-invalid @enderror"
+                               id="date_end"
+                               name="dateEnd"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="Data Final"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
                         @error('dateEnd')
                         <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="mt-2 card-master container">
+    <div class="row">
         <div class="col-md-12">
             <div class="input-group mb-3">
                 <input wire:model="search" type="text" id="author" class="form-control" placeholder="Pesquisar Usuário"
-                    autocomplete="off">
+                       autocomplete="off">
                 <div class="input-group-append">
                     <span wire:click="clearUser" class="input-group-text" title="Limpar">
                         <i class="fas fa-user-times"></i></span>
                 </div>
             </div>
         </div>
-        <div class=" mb-3" style="max-height: 100px; overflow-y: auto">
-            <div class="col-md-12">
-                @if($showList)
+    </div>
+    <div class="row mb-3" style="max-height: 100px; overflow-y: auto">
+        <div class="col-md-12">
+            @if($showList)
                 <ul class="list-group">
                     @foreach($users as $user)
-                    <li wire:click="setId({{ $user }})" class="list-group-item" style="cursor:pointer;">{{ $user->name .
-                        ' ' . $user->last_name . ' - ' . $user->email}}</li>
+                        <li wire:click="setId({{ $user }})"
+                            class="list-group-item"
+                            style="cursor:pointer;">{{ $user->name . ' ' . $user->last_name . ' - ' . $user->email}}</li>
                     @endforeach
                 </ul>
-                @endif
-            </div>
+            @endif
         </div>
     </div>
-
-    
-    <div class="card card-info container mt-3">
-        <div class="card-header indica-card">
-            <h3 class="card-title">{{ trans('admin.pagesF.infosPag') }}</h3>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-3">
-                    <b>{{ trans('admin.pagesF.qtd') }}:</b> {{$games->count()}}
-                </div>
-                <div class="col-md-3">
-                    <b>{{ trans('admin.pagesF.vendas') }}:</b> R${{\App\Helper\Money::toReal($value)}}
-                </div>
-                <div class="col-md-3">
-                    <b>{{ trans('admin.pagesF.bonus') }}:</b> R${{\App\Helper\Money::toReal($valueBonus)}}
-                </div>
-                <div class="col-md-3">
-                    <b>Total:</b> R${{\App\Helper\Money::toReal($value + $valueBonus)}}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row container">
-        <div class="col-md-12 extractable-cel">
-            <div class="table-responsive">
-            <div class="row">
+    <div class="row">
         <div wire:loading wire:target="pay" class="col-md-12 text-center">
             <div class="alert alert-warning" role="alert">
                 <button class="btn" type="button" disabled>
@@ -109,26 +92,50 @@
                 <option>100</option>
             </select>
         </div>
-        <!-- <div class="form-group offset-md-5 col-md-6 text-right">
+       <!-- <div class="form-group offset-md-5 col-md-6 text-right">
             <button wire:click="pay" type="button" class="btn btn-danger">{{ trans('admin.pagesF.baixarPag') }}</button>
         </div>-->
     </div>
+    <div class="card card-info">
+        <div class="card-header indica-card">
+            <h3 class="card-title">{{ trans('admin.pagesF.infosPag') }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                    <div class="col-md-3">   
+                        <b>{{ trans('admin.pagesF.qtd') }}:</b> {{$games->count()}}
+                    </div>
+                    <div class="col-md-3">
+                        <b>{{ trans('admin.pagesF.vendas') }}:</b> R${{\App\Helper\Money::toReal($value)}} 
+                    </div>
+                    <div class="col-md-3">
+                        <b>{{ trans('admin.pagesF.bonus') }}:</b> R${{\App\Helper\Money::toReal($valueBonus)}} 
+                    </div>
+                    <div class="col-md-3">
+                        <b>Total:</b> R${{\App\Helper\Money::toReal($value + $valueBonus)}}
+                    </div>
+            </div>
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-md-12 extractable-cel">
+            <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>{{ trans('admin.pagesF.tipoJogo') }}</th>
-                            <th>Cpf {{ trans('admin.pagesF.client') }}</th>
-                            <th>{{ trans('admin.pagesF.valor') }}</th>
-                            <th>{{ trans('admin.pagesF.usuario') }}</th>
-                            <th>{{ trans('admin.pagesF.client') }}</th>
-                            <th>%</th>
-                            <th>{{ trans('admin.pagesF.comissao') }}</th>
-                            <th>{{ trans('admin.pagesF.criacao') }}</th>
-                        </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>{{ trans('admin.pagesF.tipoJogo') }}</th>
+                        <th>Cpf {{ trans('admin.pagesF.client') }}</th>
+                        <th>{{ trans('admin.pagesF.valor') }}</th>
+                        <th>{{ trans('admin.pagesF.usuario') }}</th>
+                        <th>{{ trans('admin.pagesF.client') }}</th>
+                        <th>%</th>
+                        <th>{{ trans('admin.pagesF.comissao') }}</th>
+                        <th>{{ trans('admin.pagesF.criacao') }}</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @forelse($games as $game)
+                    @forelse($games as $game)
                         <tr>
                             <td>
                                 {{ $game->id }}
@@ -158,13 +165,13 @@
                                 {{ \Carbon\Carbon::parse($game->created_at)->format('d/m/Y') }}
                             </td>
                         </tr>
-                        @empty
+                    @empty
                         <tr>
                             <td class="text-center" colspan="9">
-                                {{ trans('admin.pagesF.nhmRegs') }}
+                            {{ trans('admin.pagesF.nhmRegs') }}
                             </td>
                         </tr>
-                        @endforelse
+                    @endforelse
                     </tbody>
                 </table>
             </div>
@@ -178,28 +185,28 @@
 
 @push('scripts')
 
-<script src="{{asset('admin/layouts/plugins/daterangepicker/moment.min.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <script src="{{asset('admin/layouts/plugins/daterangepicker/moment.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 
-<script>
-    var i18n = {
-        previousMonth: 'Mês anterior',
-        nextMonth: 'Próximo mês',
-        months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-        weekdays: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
-        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
-    };
+    <script>
+        var i18n = {
+            previousMonth: 'Mês anterior',
+            nextMonth: 'Próximo mês',
+            months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            weekdays: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+            weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
+        };
 
-    var dateStart = new Pikaday({
-        field: document.getElementById('date_start'),
-        format: 'DD/MM/YYYY',
-        i18n: i18n,
-    });
-    var dateEnd = new Pikaday({
-        field: document.getElementById('date_end'),
-        format: 'DD/MM/YYYY',
-        i18n: i18n,
-    });
-</script>
+        var dateStart = new Pikaday({
+            field: document.getElementById('date_start'),
+            format: 'DD/MM/YYYY',
+            i18n: i18n,
+        });
+        var dateEnd = new Pikaday({
+            field: document.getElementById('date_end'),
+            format: 'DD/MM/YYYY',
+            i18n: i18n,
+        });
+    </script>
 
 @endpush

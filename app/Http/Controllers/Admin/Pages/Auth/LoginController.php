@@ -25,9 +25,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-       // return view('admin.pages.auth.login');
-       return redirect('/');
-
+        return view('admin.pages.auth.login');
     }
 
     /**

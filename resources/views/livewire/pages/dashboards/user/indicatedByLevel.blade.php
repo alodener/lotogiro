@@ -1,5 +1,5 @@
 <div class="col-sm-12">
-     <div class="row  p-3">
+     <div class="row bg-white p-3">
          <div class="col-sm-12">
             <h4 class="my-4">{{ trans('admin.lwIndicated.userInd') }}  </h4>
          </div>

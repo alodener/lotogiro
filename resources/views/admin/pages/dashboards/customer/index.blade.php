@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    <div class="col  p-3 overflow-auto">
+    <div class="col bg-white p-3 overflow-auto">
         <div class="row">
             <div class="col">
                 <h2>{{ trans('admin.pagesF.saldoCliente') }}</h2>

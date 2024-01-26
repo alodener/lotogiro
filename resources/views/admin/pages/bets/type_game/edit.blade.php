@@ -4,9 +4,9 @@
 
 @section('content')
 
-    <div class="col-md-12 p-5">
+    <div class="col-md-12">
         <section class="content">
-            <form action="{{route('admin.bets.type_games.update', ['type_game' => $typeGame->id])}}" method="POST"  enctype="multipart/form-data">
+            <form action="{{route('admin.bets.type_games.update', ['type_game' => $typeGame->id])}}" method="POST">
                 @csrf
                 @method('PUT')
                 @include('admin.pages.bets.type_game._form')

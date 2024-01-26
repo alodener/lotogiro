@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="row p-3">
+    <div class="row">
         <div class="col-md-12">
             @error('success')
             @push('scripts')
@@ -123,7 +123,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 mb-3 mx-auto">
+        <div class="col-md-6 mb-3">
             <a href="{{route('admin.bets.draws.index')}}">
                 <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.back-to-main-page') }}</button>
             </a>

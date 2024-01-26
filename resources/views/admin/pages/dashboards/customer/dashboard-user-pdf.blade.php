@@ -1,4 +1,4 @@
-<div class="col 
+<div class="col bg-white p-3">
     <div id="table" class="row mt-5">
         <div class="col">
             <h2>{{ trans('admin.pagesF.visaoDet') }}</h2>

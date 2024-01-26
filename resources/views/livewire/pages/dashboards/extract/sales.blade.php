@@ -3,10 +3,16 @@
         <div class="spinner"></div>
     </div>
     <div class="row">
-    <div class="col-md-12">
-            <div class="card-header indica-card d-flex align-items-center">
+        <div class="col-md-12">
+            <div class="card-header indica-card">
                 {{ trans('admin.sales-extract.page-header') }}
-                <select wire:model="range" class="custom-select ml-4" id="range" name="range">
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
+        <div class="col-md-2">
+            <div class="form-group">
+                <select wire:model="range" class="custom-select" id="range" name="range">
                     <option value="0">{{ trans('admin.daily') }}</option>
                     <option value="1">{{ trans('admin.yesterday') }}</option>
                     <option value="2">{{ trans('admin.weekly') }}</option>
@@ -14,11 +20,7 @@
                     <option value="4">{{ trans('admin.custom') }}</option>
                 </select>
             </div>
-               
         </div>
-    </div>
-    <div class="row" style="margin-left: 10px;margin-right: 10px;">
-       
         <div class="col-md-6">
             <form wire:submit.prevent="submit">
                 <div class="form-row">
@@ -57,10 +59,10 @@
         </div>
     </div>
 
-    <div class="row  p-3">
+    <div class="row bg-white p-3">
         @forelse($dados as $dado)
         <div class="col-sm-12 col-md-4">
-            <div class="alert" style="background-color: #323637; color:#FFF;">
+            <div class="alert" style="background-color: {{ $dado['gameColor'] }}; color:#FFF;">
                 <strong>{{ $dado['gameName'] }}</strong>
                 <strong style="float: right;">{{ $dado['fullGain'] }}</strong>
                 <hr class="message-inner-separator">
@@ -73,7 +75,7 @@
                 </p>
                 <div class="col">
                     <div class="collapse multi-collapse" id="dados{{$dado['game']}}">
-                        <div class="card card-body" style="color: white; background:#212425;">
+                        <div class="card card-body" style="color: #000">
                             <p><strong>{{ trans('admin.tickets-sold') }}:</strong> {{ $dado['total'] }}</p>
                             <p><strong>{{ trans('admin.total-received') }}:</strong> {{ $dado['payed'] }}</p>
                             <p><strong>{{ trans('admin.winner-tickets') }}:</strong> {{ $dado['drawed'] }}</p>
@@ -90,8 +92,8 @@
                         <div class="col">
                             <div class="collapse multi-collapse" id="detalhes{{$dado['game']}}">
                                 @foreach($dado['unities'] as $unities)
-                                <div class="card card-body" style="color: white; background:#212425;">
-                                    <div class="btn btn-despositar mb-2">
+                                <div class="card card-body" style="color: #000">
+                                    <div class="btn bg-blue light mb-2">
                                         <strong>{{ trans('admin.dozens') }}:</strong> {{ $unities['dezenas'] }}
                                     </div>
                                     <div>

@@ -7,7 +7,7 @@
             <div class="card-header indica-card">
                 <span class="float-left">{{ trans('admin.pagesF.bilhetesP') }}</span>
                 <span class="float-right">
-                    <a href="{{route('admin.dashboards.extracts.add-winning-ticket')}}" class="btn btn-primary">{{ trans('admin.pagesF.cadastrarB') }}</a>
+                    <a href="{{route('admin.dashboards.extracts.add-winning-ticket')}}" class="btn btn-light">{{ trans('admin.pagesF.cadastrarB') }}</a>
                 </span>
             </div>
         </div>
@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <div class="row  p-3">
+    <div class="row bg-white p-3">
         @forelse($dados as $dado)
             <div class="col-sm-12 col-md-6">
                 <div class="alert">

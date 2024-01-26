@@ -75,10 +75,7 @@ class TypeGameController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-
-
-
+    {
         if (!auth()->user()->hasPermissionTo('create_type_game')) {
             abort(403);
         }
@@ -87,14 +84,9 @@ class TypeGameController extends Controller
             'name' => 'required',
             'numbers' => 'required|numeric|digits_between:1,10',
             'columns' => 'required|numeric|digits_between:1,10',
-            'banner_mobile' => 'nullable|max:200',
-            'banner_pc' => 'nullable|max:200',
-            'recomendado' => 'nullable|max:200',
             'description' => 'nullable|max:200',
             
         ]);
-        
-
 
         try {
             $typeGame = $this->typeGame;
@@ -104,26 +96,6 @@ class TypeGameController extends Controller
             $typeGame->color = !empty($request->color) ? $request->color : '#28a745';
             $typeGame->description = $request->description;
             $typeGame->category = $request->category;
-            $typeGame->icon = $request->icon;  
-            $typeGame->recomendado = $request->recomendado;
-         
-            if (isset($request->banner_mobile)) {
-                if ($request->file('banner_mobile')->isValid()) {
-                    $image = $request->banner_mobile->store('banner_mobile');
-                    $data['logo'] = $image;
-                    $typeGame->banner_mobile = $data['logo'];
-
-                }
-            }
-
-            if (isset($request->banner_pc)) {
-                if ($request->file('banner_pc')->isValid()) {
-                    $image = $request->banner_pc->store('banner_pc');
-                    $data['logo'] = $image;
-                    $typeGame->banner_pc = $data['logo'];
-
-                }
-            }
             $typeGame->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([
@@ -165,14 +137,11 @@ class TypeGameController extends Controller
             abort(403);
         }
 
-
         $validatedData = $request->validate([
-            'name' => 'required',
-            'numbers' => 'required|numeric|digits_between:1,10',
-            'columns' => 'required|numeric|digits_between:1,10',
-            'banner_mobile' => 'nullable|max:200',
-            'banner_pc' => 'nullable|max:200',
-            'recomendado' => 'nullable|max:200',
+            'name' => 'required|max:100',
+            'numbers' => 'required|digits_between:1,10|numeric',
+            'columns' => 'required|digits_between:1,10|numeric',
+            'color' => 'required',
             'description' => 'nullable|max:200',
         ]);
 
@@ -183,26 +152,6 @@ class TypeGameController extends Controller
             $typeGame->color = $request->color;
             $typeGame->description = $request->description;
             $typeGame->category = $request->category;
-            $typeGame->icon = $request->icon;
-            $typeGame->recomendado = $request->recomendado;
-   
-            if (isset($request->banner_mobile)) {
-                if ($request->file('banner_mobile')->isValid()) {
-                    $image = $request->banner_mobile->store('banner_mobile');
-                    $data['logo'] = $image;
-                    $typeGame->banner_mobile = $data['logo'];
-
-                }
-            }
-
-            if (isset($request->banner_pc)) {
-                if ($request->file('banner_pc')->isValid()) {
-                    $image = $request->banner_pc->store('banner_pc');
-                    $data['logo'] = $image;
-                    $typeGame->banner_pc = $data['logo'];
-
-                }
-            }
             $typeGame->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([

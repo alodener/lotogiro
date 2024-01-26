@@ -1,146 +1,149 @@
 <div>
-<div class="row">
+    <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
-                {{ trans('admin.sales.page-header') }}
+                {{ trans('admin.sales.page-header') }} Bichão
             </div>
         </div>
     </div>
-    <div class="container ganhos card-master">
-        <div class="card-header indica-card">
+    <div class="row ganhos">
+        <div class="card-header ganhos-card">
             {{ trans('admin.filters') }}
         </div>
-        <div>
-            <div class="d-flex container justify-content-center align-items-center flex-column">
-                <div class="d-flex">
-                    <div class="form-group mr-5">
-                        <label for="status">{{ trans('admin.status') }}</label>
-                        <select wire:model="status" class="custom-select" id="status" name="status">
-                            <option value="">{{ trans('admin.all2') }}</option>
-                            <option value="1">{{ trans('admin.open') }}</option>
-                            <option value="2">{{ trans('admin.paid') }}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="range">{{ trans('admin.period') }}</label>
-                        <select wire:model="range" class="custom-select" id="range" name="range">
-                            <option value="1">{{ trans('admin.monthly') }}</option>
-                            <option value="2">{{ trans('admin.weekly') }}</option>
-                            <option value="3">{{ trans('admin.daily') }}</option>
-                            <option value="4">{{ trans('admin.custom') }}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="">
-                    <form wire:submit.prevent="submit">
-                        <div class="form-row">
-                            <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                                <input wire:model="dateStart" type="text"
-                                    class="form-control @error('dateStart') is-invalid @enderror" id="date_start"
-                                    name="dateStart" autocomplete="off" maxlength="50"
-                                    placeholder="{{ trans('admin.initial-date') }}"
-                                    onchange="this.dispatchEvent(new InputEvent('input'))">
-                                @error('dateStart')
-                                <span class="invalid-feedback" role="alert">
-                                    {{ $message }}
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                                <input wire:model="dateEnd" type="text"
-                                    class="form-control date @error('dateEnd') is-invalid @enderror" id="date_end"
-                                    name="dateEnd" autocomplete="off" maxlength="50"
-                                    placeholder="{{ trans('admin.end-date') }}"
-                                    onchange="this.dispatchEvent(new InputEvent('input'))">
-                                @error('dateEnd')
-                                <span class="invalid-feedback" role="alert">
-                                    {{ $message }}
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                    </form>
-                </div>
+    </div>
+    <div class="row ganhos">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="status">{{ trans('admin.status') }}</label>
+                <select wire:model="status" class="custom-select" id="status" name="status">
+                    <option value="">{{ trans('admin.all2') }}</option>
+                    <option value="1">{{ trans('admin.open') }}</option>
+                    <option value="2">{{ trans('admin.paid') }}</option>
+                </select>
             </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="range">{{ trans('admin.period') }}</label>
+                <select wire:model="range" class="custom-select" id="range" name="range">
+                    <option value="1">{{ trans('admin.monthly') }}</option>
+                    <option value="2">{{ trans('admin.weekly') }}</option>
+                    <option value="3">{{ trans('admin.daily') }}</option>
+                    <option value="4">{{ trans('admin.custom') }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 align-self-end">
+            <form wire:submit.prevent="submit">
+                <div class="form-row">
+                    <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                        <input wire:model="dateStart" type="text"
+                               class="form-control @error('dateStart') is-invalid @enderror"
+                               id="date_start"
+                               name="dateStart"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="{{ trans('admin.initial-date') }}"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
+                        @error('dateStart')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                        <input wire:model="dateEnd" type="text"
+                               class="form-control date @error('dateEnd') is-invalid @enderror"
+                               id="date_end"
+                               name="dateEnd"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="{{ trans('admin.end-date') }}"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
+                        @error('dateEnd')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     @if($auth->hasPermissionTo('read_all_sales'))
-    <div class="container card-master mt-3">
-        <div class="card-header ">
-            {{ trans('admin.user') }}
+    <div class="row ganhos">
+            <div class="card-header ganhos-card">
+                {{ trans('admin.user') }}
+            </div>
         </div>
-
+    <div class="dropdown-divider"></div>
+    <div class="row ganhos">
         <div class="col-md-12">
             <div class="input-group mb-3">
-                <input wire:model="search" type="text" id="author" class="form-control"
-                    placeholder="{{ trans('admin.search-user') }}" autocomplete="off">
+                <input wire:model="search" type="text" id="author" class="form-control" placeholder="{{ trans('admin.search-user') }}" autocomplete="off">
                 <div class="input-group-append">
-                    <span wire:click="clearUser" class="input-group-text" title="Limpar"><i
-                            class="fas fa-user-times"></i></span>
+                    <span wire:click="clearUser" class="input-group-text" title="Limpar"><i class="fas fa-user-times"></i></span>
                 </div>
             </div>
         </div>
-        @endif
-        <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
-            <div class="col-md-12">
-                @if($showList)
+    </div>
+    @endif
+    <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
+        <div class="col-md-12">
+            @if($showList)
                 <ul class="list-group">
                     @foreach($users as $user)
-                    <li wire:click="setId({{ $user }})" class="list-group-item" style="cursor:pointer;">{{ $user['name']
-                        . '
-                        ' . $user['last_name'] . ' - ' . $user['email'] }}</li>
+                        <li wire:click="setId({{ $user }})" class="list-group-item" style="cursor:pointer;">{{ $user['name'] . ' ' . $user['last_name'] . ' - ' . $user['email'] }}</li>
                     @endforeach
-                    @endif
-            </div>
+                </ul>
+            @endif
         </div>
     </div>
-    <div class="container mt-1 d-flex card-master">
+    <div class="row">
         <div class="col-md-6">
-            <div class="small-box">
+            <div class="small-box bg-warning">
                 <div class="inner">
                     <h3>{{$i ?? null }}</h3>
 
                     <p>{{ trans('admin.gains.sales-quantity') }}</p>
                 </div>
                 <div class="icon">
-                <i class="fas fa-shopping-cart" style="color:#FFC107;"></i>
+                    <i class="fas fa-shopping-cart"></i>
                 </div>
                 <span class="small-box-footer p-2"></span>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="small-box">
+            <div class="small-box bg-success">
                 <div class="inner">
 
-
+                    
                     <h3>R${{\App\Helper\Money::toReal($value)}}</h3>
                     <p>{{ trans('admin.gains.direct-sales') }}</p>
                 </div>
                 <div class="icon">
-                <i class="fas fa-dollar-sign" style="color:#208E39;"></i>
+                    <i class="fas fa-dollar-sign"></i>
                 </div>
                 <span class="small-box-footer p-2"></span>
             </div>
         </div>
-
     </div>
-    <div class="card-master mt-3 container">
-        <div class="col-md-12 extractable-cel">
-            <div class="col-md-12 d-flex justify-content-between">
-                <div class="form-group col-md-1">
-                    <select wire:model="perPage" class="custom-select" id="per_page">
-                        <option>10</option>
-                        <option>25</option>
-                        <option>50</option>
-                        <option>100</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <button wire:click="getReport" type="button" class="btn btn-info btn-block">{{
-                        trans('admin.generate-report') }}</button>
-                </div>
-            </div>
-            <div class="table-responsive">
+    <div class="row">
+        <div class="form-group col-md-1">
+            <select wire:model="perPage" class="custom-select" id="per_page">
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
+        </div>
+        <div class="form-group offset-md-8 col-md-3">
+            <button wire:click="getReport" type="button" class="btn btn-info btn-block">{{ trans('admin.generate-report') }}</button>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-md-12 extractable-cel">
+        <div class="table-responsive">
             <table class="table table-striped table-hover table-sm" id="game_table">
                 <thead> 
                     <tr>
@@ -219,12 +222,6 @@
     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <script src="{{asset('admin/layouts/plugins/select2/js/select2.min.js')}}"></script>
 
-
-    <style>
-    .small-box {
-        background: #212425;
-    }
-</style>
 
     <script>
 

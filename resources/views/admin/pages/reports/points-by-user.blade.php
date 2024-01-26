@@ -3,7 +3,7 @@
 @section('title', 'Relatório - Pontos por Usuário')
 
 @section('content')
-    <div class="row  p-3">
+    <div class="row bg-white p-3">
         <div class="col-md-12">
             @error('success')
                 @push('scripts')
@@ -75,18 +75,8 @@
                 ],
                 dom: 'Bfrtip',
                 buttons: [
-                {
-                    extend: 'pdf',
-                    className: 'btn btn-primary'
-                },
-                {
-                    extend: 'csv',
-                    className: 'btn btn-primary'
-                },
-                {
-                    extend: 'excel',
-                    className: 'btn btn-primary'
-                }]
+                    'pdf', 'csv', 'excel'
+                ]
             });
         });
     </script>
