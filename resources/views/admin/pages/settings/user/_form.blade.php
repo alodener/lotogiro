@@ -17,12 +17,12 @@
     </div>
     <div class="col-12 pb-3">
         <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-settings-gerais" data-toggle="tab" href="#nav-gerais" role="tab" aria-controls="nav-gerais" aria-selected="true">Informações Gerais</a>
+            <div class="nav nav-tabs card-master d-flex justify-content-start" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active mr-2 mb-2" id="nav-settings-gerais" data-toggle="tab" href="#nav-gerais" role="tab" aria-controls="nav-gerais" aria-selected="true">Informações Gerais</a>
                 @foreach ($types as $type)
-                    <a class="nav-item nav-link" id="nav-settings-{{$type->id}}" data-toggle="tab" href="#nav-{{$type->id}}" role="tab" aria-controls="nav-{{$type->id}}" aria-selected="true">{{$type->name}}</a>
+                    <a class="nav-item nav-link mr-2 mb-2" id="nav-settings-{{$type->id}}" data-toggle="tab" href="#nav-{{$type->id}}" role="tab" aria-controls="nav-{{$type->id}}" aria-selected="true">{{$type->name}}</a>
                 @endforeach
-                <a class="nav-item nav-link" id="nav-settings-bichao" data-toggle="tab" href="#nav-bichao" role="tab" aria-controls="nav-bichao" aria-selected="true">Bichão</a>
+                <a class="nav-item nav-link mr-2 mb-2" id="nav-settings-bichao" data-toggle="tab" href="#nav-bichao" role="tab" aria-controls="nav-bichao" aria-selected="true">Bichão</a>
             </div>
         </nav>
     </div>
@@ -76,7 +76,7 @@
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="indicador" name="indicador" value="{{old('indicador', $user->indicador ?? null)}}" maxlength="20">
                                     <div class="input-group-append">
-                                      <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" type="button">{{ trans('admin.pagesF.detalhes') }}</button>
+                                      <button class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" type="button">{{ trans('admin.pagesF.detalhes') }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -424,6 +424,13 @@
   </div>
 
   @endif
+
+  <style>
+    .btn-outline-primary {
+    padding: 0px 10px;
+  
+}
+  </style>
 
 @push('scripts')
     <script src="{{asset('admin/layouts/plugins/inputmask/jquery.inputmask.min.js')}}"></script>

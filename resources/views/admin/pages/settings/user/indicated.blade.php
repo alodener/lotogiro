@@ -3,7 +3,7 @@
 @section('title', 'Usuários Indicados por você')
 
 @section('content')
-    <div class="row bg-white p-3">
+    <div class="row 
         @livewire('pages.dashboards.user.indicated')
     </div>
 @endsection

@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <div class="row bg-white p-3">
+    <div class="row  p-3">
         @php
             $idGame = 0;
         @endphp
