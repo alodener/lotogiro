@@ -21,7 +21,7 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
+            </div> 
             <div class="col-md-2">
                 <div class="form-group">
                     <select wire:model="range" class="custom-select" id="range" name="range">
@@ -34,6 +34,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="col-md-6">
             <form wire:submit.prevent="search">

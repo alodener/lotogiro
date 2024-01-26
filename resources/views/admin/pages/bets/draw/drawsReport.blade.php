@@ -13,7 +13,6 @@
                 </div>
             </div>
         </div>
-
         <div class="card ">
             <div class="card-body ">
                 @php
@@ -43,8 +42,6 @@
                                 trans('admin.falta.buscar') }}</button>
                     </div>
                 </form>
-
-
             </div>
         </div>
         @endsection

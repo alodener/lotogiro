@@ -91,8 +91,7 @@ class TypeGameController extends Controller
             'banner_pc' => 'nullable|max:200',
             'recomendado' => 'nullable|max:200',
             'description' => 'nullable|max:200',
-            'startTime' => 'nullable',
-            'endTime' => 'nullable',
+            
         ]);
         
 
@@ -105,8 +104,6 @@ class TypeGameController extends Controller
             $typeGame->color = !empty($request->color) ? $request->color : '#28a745';
             $typeGame->description = $request->description;
             $typeGame->category = $request->category;
-            $typeGame->start_time = $request->startTime; 
-            $typeGame->end_time = $request->endTime;
             $typeGame->icon = $request->icon;  
             $typeGame->recomendado = $request->recomendado;
          
@@ -177,8 +174,6 @@ class TypeGameController extends Controller
             'banner_pc' => 'nullable|max:200',
             'recomendado' => 'nullable|max:200',
             'description' => 'nullable|max:200',
-            'startTime' => 'nullable',
-            'endTime' => 'nullable',
         ]);
 
         try {
@@ -188,8 +183,6 @@ class TypeGameController extends Controller
             $typeGame->color = $request->color;
             $typeGame->description = $request->description;
             $typeGame->category = $request->category;
-            $typeGame->start_time = $request->startTime; 
-            $typeGame->end_time = $request->endTime;    
             $typeGame->icon = $request->icon;
             $typeGame->recomendado = $request->recomendado;
    
@@ -238,15 +231,17 @@ class TypeGameController extends Controller
 
             // recuperando todas as competições associadas a este tipo de jogo
             $competitions = $typeGame->competitions;
+            $games = $typeGame->games;
 
             // exclui os registros associados em 'games' p cada competição
-            foreach ($competitions as $competition) {
-                $games = $competition->games;
+
                 foreach ($games as $game) {
                     // remove outros registros dependentes relacionados ao jogo, se existirem
                     $game->delete();
+                    
                 }
-            }
+ 
+
 
             // para cada competição exclui os registros associados em 'draws' 
             foreach ($competitions as $competition) {
@@ -255,9 +250,12 @@ class TypeGameController extends Controller
 
             // excluindo os registros associados em 'competitions' 
             $typeGame->competitions()->delete();
+            
 
             //excluindo o registro do 'type_game'
             $typeGame->delete(); 
+           
+
 
             return redirect()->route('admin.bets.type_games.index')->withErrors([
                 'success' => 'Tipo de Jogo deletado com sucesso'

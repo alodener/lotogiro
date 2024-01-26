@@ -146,21 +146,21 @@ class GameController extends Controller
     public function store(Request $request, Bet $validate_game, Game $game)
     {
         $typeGame = TypeGame::find($request->type_game);
-
-        if ($typeGame) {
-            $startTime = Carbon::parse($typeGame->start_time);
-            $endTime = Carbon::parse($typeGame->end_time);
-            $now = Carbon::now();
         
-            if ($now->lt($startTime) || $now->gt($endTime)) {
+        if ($typeGame) {
             
-            } else {
-                return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                    'error' => 'Apostas fora do horário permitido para este tipo de jogo!'
-                ]);
+            $competition = Competition::where('type_game_id', $typeGame->id)->latest()->first();
+            if ($competition) {
+                
+                $sortDate = Carbon::parse($competition->sort_date);
+                $now = Carbon::now();
+
+                if ($now->gt($sortDate)) {
+                    return back()->withErrors(['error' => 'Apostas fechadas para esta competição!']);
+                }
             }
-        } 
-     
+        }
+
         if ($request->controle == 1) {
             if (!auth()->user()->hasPermissionTo('create_game')) {
                 abort(403);
