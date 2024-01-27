@@ -38,24 +38,28 @@
     </table>
     <form wire:submit.prevent="submit" class="text-left">
         <div class="row mb-2">
-            <div class="col-md-12">
+            <div class="d-flex container justify-content-start align-items-center flex-column ">
                     @if(isset($values) && $values->count() > 0)
                         @foreach($values as $value)
                     <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
                     <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
                     <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
-                    Digite o Valor da Aposta
-                    <input wire:model="vv" type="text" id="vv" wire:change="$set('premio', '0')" value="{{old('vv', $vv ?? null)}}" name="vv" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-                    Valor do Prêmio R$
-                    <input wire:model="premio" type="text" id="premio" value="{{old('premio', $premio ?? null)}}"name="premio" required disabled>
-                    <button  class="btn btn-info" wire:click="calcular()" type="button">Calcular</button>
+                    <div class="d-flex flex-column text-center">                    Digite o Valor da Aposta
+                    <input class="form-control" wire:model="vv" type="text" id="vv" wire:change="$set('premio', '0')" value="{{old('vv', $vv ?? null)}}" name="vv" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                  </div>
+                  <div class="d-flex flex-column text-center">                    Valor do Prêmio R$
+                    <input class="form-control" wire:model="premio" type="text" id="premio" value="{{old('premio', $premio ?? null)}}"name="premio" required disabled>
+                    </div>
+                    <button  class="btn btn-info mt-2" wire:click="calcular()" type="button">Calcular</button>
                         @endforeach
                     @endif
             </div>
-        </div>
+        </div>  
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 container d-flex flex-column justify-content-center align-items-center mx-auto">
                 @if(isset($matriz))
+                <br>
+                    
                     <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
 
                     @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
@@ -63,12 +67,13 @@
                     @endif
                     
                     <br>
-                    <br>
+                    
                     {{-- puxar do banco de dados quantos numeros pode se jogar --}}
+                    <div class="d-flex p-3">
                     @foreach ($busca as $buscas)
-                        <button wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-dark" type="button">{{ $buscas['numbers'] }}</button>
+                        <button wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-despositar m-1" type="button">{{ $buscas['numbers'] }}</button>
                     @endforeach   
-
+                    </div>
                     <div class="table-responsive">
                         <table class="table text-center">
                             <tbody>

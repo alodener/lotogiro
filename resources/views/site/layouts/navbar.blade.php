@@ -3,14 +3,24 @@
         <a href="#" class="navbar-brand">
 
             <img src="{{ App\Helper\Configs::getConfigLogo() }}" alt="Logo" class="brand-image  rounded-circle"
-                 style="height: 50px"> - {{ env("nome_sistema") }}
-
+                style="height: 50px">
         </a>
-{{--        <button class="navbar-toggler order-1" type="button" data-toggle="collapse"--}}
-{{--                data-target="#navbarCollapse"--}}
-{{--                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">--}}
-{{--            <span class="navbar-toggler-icon"></span>--}}
-{{--        </button>--}}
+        <div class="d-flex align-items-center">
 
+            @if(!empty($bet->client->name))
+            {{$bet->client->name}} {{$bet->client->last_name}}
+
+            @if($bet->botao_finalizar != 3)
+
+            <button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#exampleModalCenter">
+                Finalizar Aposta</button>
+            @endif
+            @endif
+
+
+
+
+        </div>
     </div>
+
 </nav>
