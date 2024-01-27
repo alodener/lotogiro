@@ -65,6 +65,9 @@
                     </div>
                     @else
                     @if(isset($bet) && empty($bet->client_id))
+
+                  
+
                     <div class="row container mx-auto">
                         <div class="col-md-12 card-master container" style="padding:20px;">
                             @livewire('site.pages.bets.games.bet.client', ['bet' => $bet, 'typeGames'
@@ -111,6 +114,8 @@
                                 </a>
                             </div>
                         </div>
+                        <input type="text"  value="{{$bet->id}}" id="bet-id" hidden>
+                    <input type="text"  value="{{$user->id}}" id="user-id" hidden>
                         <div class="container mt-2">
                             <div class="d-flex swipe-controles align-items-center">
                                 <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268"
@@ -210,8 +215,7 @@
                                 <div class="swiper-wrapper">
                                     <!-- {{$TypeGamesRoll}} -->
                                     @foreach($TypeGamesRoll as $typeGame)
-                                    <div class="swiper-slide d-flex flex-column category-info"
-                                        data-type-game-id="{{ $typeGame->category }}">
+                                    <div class="swiper-slide d-flex flex-column category-info" data-type-game-id="{{ $typeGame->category }}">
                                         <div class="icon-container">
                                             <img class="img-bold"
                                                 src="{{ $typeGame->icon ? asset('/storage/' . str_replace('.png', '-bold.png', $typeGame->icon)) : asset('/storage/megasena-bold.png') }}"
@@ -402,23 +406,16 @@
 
 <script>
 
-
-    $(document).ready(function () {
-        $('.category-info').click(function () {
+$('.category-info').click(function () {
             var typeGameId = $(this).data('type-game-id');
             var categoriesContainer = $('#categories-container');
-            user = {{ $user->id }};
-            bet = {{ $bet->id }};
 
-
+            var userId = $('#user-id').val();;
+            var betId = $('#bet-id').val();;
+            
             // Verifica se o container está visível
-            if (categoriesContainer.is(':visible') && categoriesContainer.data('type-game-id') === typeGameId) {
-                // Se estiver visível e clicando no mesmo typeGameId, oculta o container
-                categoriesContainer.hide();
-            } else {
-                // Faz uma requisição AJAX para obter as categorias
-                $.ajax({
-                    url: '/admin/categoriaavulso/' + typeGameId + '?bet=' + bet + '&user=' + user,
+            $.ajax({
+                    url: '/admin/categoriaavulso/' + typeGameId + '?bet=' + userId + '&user=' +  betId,
                     type: 'GET',
                     success: function (data) {
                         $('#categories-container').html(data);
@@ -432,12 +429,10 @@
                         console.log('Erro na requisição AJAX:', error);
                     }
                 });
-
-                // Mostra o container
-                categoriesContainer.show();
-            }
         });
 
+    $(document).ready(function () {
+       
         var swiperroll = new Swiper('.swiperroll', {
             slidesPerView: 5,
 

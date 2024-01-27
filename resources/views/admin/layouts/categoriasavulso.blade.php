@@ -36,7 +36,7 @@
             $userId = $_GET['user'];
             @endphp
             <div class="swiper-slide">
-                <a href="{{route('games.bet.game.create', ['user' => $userId, 'bet' => $betId, 'typeGame' => $typeGame->id])}}"
+                <a href="{{route('games.bet.game.create', ['user' => $betId, 'bet' => $userId, 'typeGame' => $typeGame->id])}}"
                     class="hover-container ">
 
                     <img src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") :
