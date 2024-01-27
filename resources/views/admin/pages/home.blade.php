@@ -512,6 +512,10 @@
         .indica-corpo {
             padding: 0px;
         }
+        
+        .layout-fixed .main-sidebar{
+            top: 56px;
+        }
     }
 
     @media screen and (max-width: 1400px) {

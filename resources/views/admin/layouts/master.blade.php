@@ -39,22 +39,28 @@
 
     @stack('styles')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed @impersonating($guard = null) impersonating  @endImpersonating" style="font-family: Montserrat, sans-serif;">
-
 @impersonating($guard = null)
     <div class="leave-current-user-wrapper">
-        <span><strong>{{ trans('admin.pagesF.conectadocomo') }} </strong> {{ auth()->user()->name }}</span>
+        <span><strong><a href=""></a>{{ trans('admin.pagesF.conectadocomo') }} </strong> {{ auth()->user()->name }}</span>
         <a href="{{ route('admin.settings.users.logout-as') }}" class="text-white">X {{ trans('admin.pagesF.sairsessao') }}</a>
     </div>
 
     <style>
+            @media screen and (max-width: 600px) {
+        .layout-fixed .main-sidebar {
+    top: 600px !important;
+}
+        
+
+       
+    }
         body.impersonating{
-            padding-top: 50px;
+            padding-top:44px;
         }
         .leave-current-user-wrapper {
             display: flex;
             justify-content: space-between;
-            position: absolute;
+            position: fixed;
             top: 0;
             width: 100%;
             background: #000;
@@ -63,8 +69,17 @@
             text-align: center;
             color: #fff
         }
+       
+
+        .layout-fixed .main-sidebar{
+            top: 116px !important;
+        }
+
     </style>
 @endImpersonating
+<body class="hold-transition sidebar-mini layout-fixed @impersonating($guard = null) impersonating  @endImpersonating" style="font-family: Montserrat, sans-serif;">
+
+
 
 @if (session('success'))
     @push('scripts')
