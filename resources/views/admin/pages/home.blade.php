@@ -36,7 +36,6 @@
                 @if($item['visivel'] == 1)
                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                 <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") : asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}" alt="{{ $item['nome'] }}">
-                        style="object-fit: cover;">
                 </div>
                 @endif
                 @endforeach
@@ -326,6 +325,8 @@
     }
 </style>
 <style>
+
+    
     .modal-content {
         background-color: #212425;
     }
@@ -404,6 +405,21 @@
         .icon-copy {
             font-size: 25px;
             color: #A3D712;
+        }
+        
+
+        .hover-content{
+            padding:10px !important;
+        }
+
+        .hover-content p{
+            font-size: 10px;
+
+        }
+        .hover-content button{  
+            font-size: 10px;
+            padding: 5px;
+            
         }
 
     }
@@ -495,6 +511,22 @@
 
         .indica-corpo {
             padding: 0px;
+        }
+    }
+
+    @media screen and (max-width: 1400px) {
+        .hover-content{
+            padding:10px !important;
+        }
+
+        .hover-content p{
+            font-size: 12px;
+
+        }
+        .hover-content button{  
+            font-size: 10px;
+            padding: 5px;
+            
         }
     }
 </style>

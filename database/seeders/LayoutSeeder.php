@@ -21,5 +21,10 @@ class LayoutSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('layout')->insert([
+            'nome_config' => 'Icons Sidebar',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }
