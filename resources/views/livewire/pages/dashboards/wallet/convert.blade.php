@@ -8,10 +8,10 @@
             <div class="card-header">
                 <h3 class="card-title">{{ trans('admin.pagesF.conversao') }}</h3>
             </div>
-            <div class="card-master col-md-6 container">
+            <div class="card-master container">
                 <div x-data="{}">
                     <div class="d-flex  flex-column mt-2">
-                        <div class="d-flex justify-content-between mb-3">
+                        <div class="d-flex flex-md-row flex-column justify-content-center mb-3">
                             <div class="card-master card-master-bottom text-center">
                                 <p>{{ trans('admin.pagesF.saldo') }}</p>
                                 <h1>R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h1>
@@ -50,10 +50,10 @@
             <div class="card-header">
             <h3 class="card-title">{{ trans('admin.pagesF.conversaoBonusParaSaque') }}</h3>
             </div>
-            <div class="card-master col-md-6 container">
+            <div class="card-master container">
                 <div x-data="{}">
                     <div class="d-flex  flex-column mt-2">
-                        <div class="d-flex justify-content-between mb-3">
+                    <div class="d-flex flex-md-row flex-column justify-content-center mb-3">
                             <div class="card-master card-master-bottom text-center">
                                 <p>{{ trans('admin.pagesF.bonus') }} </p>
                                 <h1>R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h1>
@@ -93,10 +93,10 @@
             <div class="card-header">
             <h3 class="card-title">{{ trans('admin.pagesF.conversaoSaqueParaSaldo') }}</h3>
             </div>
-            <div class="card-master col-md-6 container">
+            <div class="card-master container">
                 <div x-data="{}">
                     <div class="d-flex  flex-column mt-2">
-                        <div class="d-flex justify-content-between mb-3">
+                    <div class="d-flex flex-md-row flex-column justify-content-center mb-3">
                             <div class="card-master card-master-bottom text-center">
                                 <p>{{ trans('admin.pagesF.saqueDisponivel') }}</p>
                                 <h1>R${{ \App\Helper\Money::toReal(auth()->user()->available_withdraw) }}</h1>
@@ -204,6 +204,18 @@
             font-weight: bold;
         }
 
+
+    }
+
+    @media (max-width: 1200px) {
+        .card-master-bottom h1{
+            font-size:25px !important;
+        }
+
+        .card-master-bottom{
+            min-width:250px !important;
+
+        }
 
     }
 

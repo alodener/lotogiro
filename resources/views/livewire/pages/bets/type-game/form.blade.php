@@ -156,6 +156,11 @@
                 <option value="duplasena.png">Dupla Sena</option>
                 <option value="lotomania.png">Loto Mania</option>
                 <option value="timemania.png">Time Mania</option>
+                @foreach(\App\Models\Layout_icons_sidebar::get() as $icons_sidebar)
+                <option value="{{$icons_sidebar->url}}">{{$icons_sidebar->nome}}</option>
+
+                @endforeach
+
             </select>
         </div>
         <div class="form-group col-md-3">

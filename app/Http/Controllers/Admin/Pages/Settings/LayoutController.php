@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Layout;
 use App\Models\Layout_Button;
 use App\Models\Layout_carousel_grande;
+use App\Models\Layout_icons_sidebar;
+
 use Carbon\Carbon;
 use FontLib\Table\Type\post;
 use Illuminate\Http\Request;
@@ -40,20 +42,29 @@ class LayoutController extends Controller
 
     public function destroy(Request $request, Layout $layout)
     {
+
         $data = $request->all();
         $id = $data['id'];
-        $layout_button = Layout_Button::all();
-        $layout_carousel_grande = Layout_carousel_grande::all();
-        // Busca o modelo pelo ID
-        $layoutCarouselGrande = Layout_carousel_grande::find($id);
+        $config = $data['config'];
 
-        // Verifica se o modelo foi encontrado
-        if ($layoutCarouselGrande) {
-            // Exclui o modelo
-            $layoutCarouselGrande->delete();
+        if($config == 'Icons Sidebar'){
+            $busca = Layout_icons_sidebar::find($id);
+                if ($busca) {
+                    $busca->delete();
 
-
+                }
         }
+
+        if($config == 'Carousel Grande'){
+            $busca = Layout_carousel_grande::find($id);
+                if ($busca) {
+                    $busca->delete();
+
+                }
+        }
+
+
+      
     }
 
 
@@ -61,14 +72,15 @@ class LayoutController extends Controller
     {
         $layout_button = Layout_Button::all();
         $layout_carousel_grande = Layout_carousel_grande::all();
+        $layout_icons_sidebar = Layout_icons_sidebar::all();
 
-        return view('admin.pages.settings.layout.edit', ['layout' => $layout, 'layout_button' => $layout_button, 'layout_carousel_grande' => $layout_carousel_grande]);
+        return view('admin.pages.settings.layout.edit', ['layout' => $layout, 'layout_button' => $layout_button, 'layout_carousel_grande' => $layout_carousel_grande, 'layout_icons_sidebar' =>  $layout_icons_sidebar]);
     }
 
 
 
 
-    public function update(Request $request, Layout_Button $layout_button, Layout_carousel_grande $layout_carousel_grande)
+    public function update(Request $request, Layout_Button $layout_button, Layout_carousel_grande $layout_carousel_grande, Layout_icons_sidebar $layout_icons_sidebar)
     {
 
 
@@ -76,8 +88,35 @@ class LayoutController extends Controller
         $data = $request->all();
 
 
+        if($data['nome_config'] == 'Icons Sidebar'){
+
+
+            if (isset($request->image_icon_sidebar)) {
+                if ($request->file('image_icon_sidebar')->isValid()) {
+                    $image = $request->image_icon_sidebar->store('image_icon_sidebar');
+                    $data['logo'] = $image;
+                    $layout_icons_sidebar->url = $data['logo'];
+                    $layout_icons_sidebar->nome = $request->nome;
+                    $layout_icons_sidebar->save();
+    
+                }
+            }
+        }
+
         if($data['nome_config'] == "Carousel Grande"){
 
+            if (isset($request->image)) {
+                if ($request->file('image')->isValid()) {
+                    $image = $request->image->store('carousel_grande');
+                    $data['logo'] = $image;
+                    $layout_carousel_grande->url = $data['logo'];
+                    $layout_carousel_grande->nome = $request->nome;
+                    $layout_carousel_grande->visivel = $request->visivel_btn;
+                    $layout_carousel_grande->config = $request->nome_config;
+                    $layout_carousel_grande->save();
+    
+                }
+            }   
         $valores = [];
         $datas = [];
 
@@ -163,21 +202,11 @@ class LayoutController extends Controller
 
         // Save card grande
 
-        if (isset($request->image)) {
-            if ($request->file('image')->isValid()) {
-                $image = $request->image->store('carousel_grande');
-                $data['logo'] = $image;
-                $layout_carousel_grande->url = $data['logo'];
-                $layout_carousel_grande->nome = $request->nome;
-                $layout_carousel_grande->visivel = $request->visivel_btn;
-                $layout_carousel_grande->config = $request->nome_config;
-                $layout_carousel_grande->save();
-
-            }
-        }
+        
 
         $layout_button = Layout_Button::all();
         $layout_carousel_grande = Layout_carousel_grande::all();
+        $layout_icons_sidebar = Layout_icons_sidebar::all();
 
         try {
 

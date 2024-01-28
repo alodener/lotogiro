@@ -20,8 +20,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quattrocento&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <link rel="shortcut icon" href="{{ App\Helper\Configs::getConfigLogo() }}">
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+/>    <link rel="shortcut icon" href="{{ App\Helper\Configs::getConfigLogo() }}">
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.13.1/cdn/shoelace.js"></script>
 
 
@@ -39,22 +41,28 @@
 
     @stack('styles')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed @impersonating($guard = null) impersonating  @endImpersonating" style="font-family: Montserrat, sans-serif;">
-
 @impersonating($guard = null)
     <div class="leave-current-user-wrapper">
-        <span><strong>{{ trans('admin.pagesF.conectadocomo') }} </strong> {{ auth()->user()->name }}</span>
+        <span><strong><a href=""></a>{{ trans('admin.pagesF.conectadocomo') }} </strong> {{ auth()->user()->name }}</span>
         <a href="{{ route('admin.settings.users.logout-as') }}" class="text-white">X {{ trans('admin.pagesF.sairsessao') }}</a>
     </div>
 
     <style>
+            @media screen and (max-width: 600px) {
+        .layout-fixed .main-sidebar {
+    top: 600px !important;
+}
+        
+
+       
+    }
         body.impersonating{
-            padding-top: 50px;
+            padding-top:44px;
         }
         .leave-current-user-wrapper {
             display: flex;
             justify-content: space-between;
-            position: absolute;
+            position: fixed;
             top: 0;
             width: 100%;
             background: #000;
@@ -63,8 +71,17 @@
             text-align: center;
             color: #fff
         }
+       
+
+        .layout-fixed .main-sidebar{
+            top: 116px !important;
+        }
+
     </style>
 @endImpersonating
+<body class="hold-transition sidebar-mini layout-fixed @impersonating($guard = null) impersonating  @endImpersonating" style="font-family: Montserrat, sans-serif;">
+
+
 
 @if (session('success'))
     @push('scripts')
@@ -340,5 +357,6 @@
 @stack('scripts')
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
 </html>

@@ -15,7 +15,7 @@
                         <div x-data="{}" id="custom-search-input">
                             <form>
                                 <div class="d-flex justify-content-center">
-                                    <div class="col-sm-12 col-md-6">
+                                    <div class="col-sm-12 col-md-6 d-flex justify-content-center align-items-center flex-column ">
                                         <ul class="list-group mb-3">
                                             <li class="list-group-item">
                                                 <div class="d-flex flex-column">
@@ -36,7 +36,7 @@
                                             </li>
                                         </ul>
 
-                                        <div class="input-group-append bt-recharge">
+                                        <div class="input-group-append bt-recharge mx-auto">
                                              @if(config('services.activeGateway') == 'MP')
                                                  <button wire:click.prevent="callMPPix" type="submit"
                                                          @if($valueAdd <= 0.99) disabled @endif

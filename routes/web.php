@@ -62,6 +62,7 @@ Route::get('/updateStatusPaymentCron/2de1ce3ddcb20dda6e6ea9fba8031de4/', [Wallet
 
 Route::get('/', [HomeController::class, 'index'])->middleware('guest:admin');
 Route::get('admin/categoria/{typeGame}', [CategoriaController::class, 'getCategories']);
+Route::get('admin/categoriaavulso/{typeGame}', [CategoriaController::class, 'getCategoriesavulso']);
 
 Route::middleware('guest:web')->group(function () {
     Route::prefix('games')->name('games.')->group(function () {
