@@ -40313,11 +40313,20 @@ a.text-muted:hover {
 }
 
 .notifications-count{
-  right: 16px;
+  right: 46px;
   position: absolute;
   top: 14px;
 
 }
+@media (max-width: 600px) {
+
+  .notifications-count{
+    right: 18px;
+
+  
+  }
+}
+
   
 
 .nav-group-item{
