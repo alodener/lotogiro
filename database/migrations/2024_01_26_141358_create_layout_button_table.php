@@ -12,6 +12,7 @@ class CreateLayoutButtonTable extends Migration
             $table->id();
             $table->string('first_text', 2000);
             $table->string('second_text', 2000);
+            $table->string('second_text', 2000);
             $table->string('link', 2000);
             $table->integer('visivel')->nullable();
             $table->timestamps();
