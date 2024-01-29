@@ -40447,11 +40447,21 @@ border-bottom: 1px solid hsla(0,0%,100%,.1);  padding: 10px;
   border: none;
   padding: 10px;
 }
+.wallet-nav{
+  font-size: 25px !important;
+}
 
 @media (max-width: 600px) {
   .btn-despositar, .btn-config, .btn-money{
-    padding: 5px;
+    padding: 9px;
     font-size: 10px;
+  }
+  .icon-size-sm{
+    padding: 7px !important;
+  }
+
+  .wallet-nav{
+    font-size: 15px !important;
   }
 
   .text-logo{
