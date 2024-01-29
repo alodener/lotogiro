@@ -201,7 +201,8 @@
     </div>
     <!-- Recomendados -->
     <div class="container mt-5">
-        <div class="d-flex swipe-controles align-items-center mb-2">
+        <div class="d-flex swipe-controles justify-content-between align-items-center mb-2">
+            <div class="d-flex">
             <h1 style="color:white">Recomendados</h1>
             <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -215,6 +216,10 @@
                     d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
                 </path>
             </svg>
+            </div>
+            <div>
+                <button class="btn btn-moregame">Ver todos</button>
+            </div>
         </div>
         @if(\App\Models\TypeGame::where('recomendado', 1)->count() > 0)
         <div class="swiper">
@@ -231,13 +236,15 @@
             </div>
         </div>
         @endif
+        
     </div>
 
     <!-- Todos os jogos -->
 
     @if(\App\Models\TypeGame::count() > 0)
     <div class="container mt-5">
-        <div class="d-flex swipe-controles align-items-center mb-2">
+        <div class="d-flex swipe-controles align-items-center justify-content-between mb-2 container">
+            <div class="d-flex">
             <h1 style="color:white">Todos os Jogos</h1>
             <svg width="10" class="ml-3 mr-3 swiper-list-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -251,6 +258,10 @@
                     d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
                 </path>
             </svg>
+            </div>
+            <div>
+            <a href="/admin/findcategoria/loto_facil"><button class="btn btn-moregame">Ver todos</button></a> 
+            </div>
         </div>
 
         <div class="swiper-list swiper-full">
@@ -279,7 +290,8 @@
 
     @if(\App\Models\TypeGame::count() > 0)
     <div class="container mt-5">
-        <div class="d-flex swipe-controles align-items-center mb-2">
+        <div class="d-flex swipe-controles justify-content-between container align-items-center mb-2">
+            <div class="d-flex">
             <h1 style="color:white">Bichão da Sorte</h1>
             <svg width="10" class="ml-3 mr-3 swiper-bichao-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -293,6 +305,10 @@
                     d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
                 </path>
             </svg>
+            </div>
+            <div>
+               <a href="/admin/bets/bichao"><button class="btn btn-moregame">Ver todos</button></a> 
+            </div>
         </div>
 
         <div class="swiper-bichao">

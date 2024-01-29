@@ -54,6 +54,43 @@ class HomeController extends Controller
     }
 
 
+    public function FindCategoria($typeGameId)
+    {
+        $category = $typeGameId;
+        $findcategory = TypeGame::where('category', $category)->get();
+
+        $User = Auth::user();
+        if ($User) {
+            $FiltroUser = client::where('email', $User['email'])->first();
+            $this->FiltroUser = $FiltroUser;
+            $JogosFeitos = game::where('user_id', $User['id'])->count();
+            $saldo = (double) auth()->user()->balance;
+        }
+
+        $layout_carousel_grande = Layout_carousel_grande::all();
+        $allCategories = TypeGame::all();
+
+        $TypeGamesRoll = TypeGame::all()
+            ->groupBy('category')
+            ->map(function ($group) {
+                return $group->first();
+            });
+
+
+        $qualificationAtived = null; //UsersHasQualifications::getActivedByUser(auth()->user());
+        $nextGoal = null;
+        $goalCalculation = null;
+
+        if ($User) {
+            return view('admin.pages.findcategoria', compact('User', 'FiltroUser', 'JogosFeitos', 'saldo', 'qualificationAtived', 'nextGoal', 'goalCalculation', 'layout_carousel_grande', 'TypeGamesRoll', 'allCategories','findcategory'));
+        } else {
+            return view('admin.pages.findcategoria', compact('qualificationAtived', 'nextGoal', 'goalCalculation', 'layout_carousel_grande', 'TypeGamesRoll', 'allCategories','findcategory'));
+
+        }
+    }
+
+
+
 
 
 
