@@ -110,7 +110,9 @@ class LayoutController extends Controller
                     $image = $request->image->store('carousel_grande');
                     $data['logo'] = $image;
                     $layout_carousel_grande->url = $data['logo'];
+                    $layout_carousel_grande->url = $data['logo'];
                     $layout_carousel_grande->nome = $request->nome;
+                    $layout_carousel_grande->link = $request->link;
                     $layout_carousel_grande->visivel = $request->visivel_btn;
                     $layout_carousel_grande->config = $request->nome_config;
                     $layout_carousel_grande->save();

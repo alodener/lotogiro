@@ -23,14 +23,18 @@
         @if(auth()->user())
 
         <!--BTN Depositar -->
-        <li class="nav-item pl-3">
+
+
+        <li class="nav-item ">
             <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-despositar">Depositar
             </a>
         </li>
+
         <!-- BTN SALDO -->
-        <li class="nav-item dropdown mr-3 ml-3">
+        <li class="nav-item dropdown mr-2 ml-2 ml-md-3 mr-md-3">
             <a href="#" data-toggle="dropdown" type="button" class="btn btn-money">
-                R${{\App\Helper\Money::toReal(auth()->user()->available_withdraw)}}
+                R${{\App\Helper\Money::toReal(auth()->user()->balance + auth()->user()->bonus +
+                auth()->user()->available_withdraw)}}
             </a>
             <!--Drop Saldo -->
             <ul class="dropdown-menu dropdown-menu-md dropdown-menu-right drop-saldo">
@@ -76,17 +80,22 @@
                         </div>
                         <div>
                             <h1>Saldo Total</h1>
-                            <p>R$ {{ \App\Helper\Money::toReal(auth()->user()->balance + auth()->user()->bonus) }}</p>
+                            <p>R$ {{ \App\Helper\Money::toReal(auth()->user()->balance + auth()->user()->bonus +
+                                auth()->user()->available_withdraw) }}</p>
                         </div>
                     </div>
                 </div>
             </ul>
         </li>
-
+        <li>
+        <a href="{{route('admin.dashboards.wallet.index')}}"> <button class="btn btn-secondary mr-md-3 mr-2 d-flex justify-content-center align-items-center ">
+                <i style="color:#a3d712" class=" fas fa-wallet wallet-nav"></i>
+            </button>
+        </a></li>
         <!-- Config -->
         <li>
             <button aria-haspopup="menu" data-toggle="dropdown" aria-expanded="false" type="button"
-                class="btn dropdown-toggle btn-secondary d-flex justify-content-center align-items-center btn-config">
+                class="btn dropdown-toggle btn-secondary d-flex justify-content-center align-items-center btn-config icon-size-sm">
                 <div>
                     <svg data-v-7515e7cb="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                         style="width:20px;">
@@ -113,16 +122,12 @@
                 <a class="dropdown-item" href="{{route('admin.settings.users.edit', ['user' => auth()->user()->id])}}">
                     <i class="fas fa-user mr-2"></i> {{ trans('admin.pagesF.conta') }}
                 </a>
-                @endcan
-                @can('edit_all')
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{route('admin.settings.users.edit', ['user' => auth()->user()->id])}}">
-                    <i class="fas fa-user mr-2"></i> {{ trans('admin.pagesF.conta') }}
-                </a>
+
                 @endcan
 
+
                 <!-- Linguagem -->
-                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" data-toggle="dropdown" style="cursor:pointer;">
                     <i class="fas fa-globe-americas mr-2"></i>
                     Tradução: {{ App\Helper\Lang::getCurrentUserLangLabel() }}
@@ -151,9 +156,9 @@
         <!-- Notificação -->
         @php $unreadNotifications = auth()->user()->unreadNotifications; @endphp
         @if(!empty(auth()->user()->notifications) && count(auth()->user()->notifications) > 0)
-        <li class="ml-3">
+        <li class="ml-2 ml-md-3">
             <button aria-haspopup="menu" data-toggle="dropdown" aria-expanded="false" type="button"
-                class="btn dropdown-toggle btn-secondary d-flex justify-content-center align-items-center btn-config">
+                class="btn dropdown-toggle btn-secondary d-flex justify-content-center align-items-center btn-config icon-size-sm ">
                 <div>
                     <svg style="fill: #a3d712;background: black;border-radius: 110px;color: #a3d712; padding:3px;"
                         width="22" height="22" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
@@ -205,13 +210,14 @@
             </a>
         </li> -->
         @else
-<!--BTN Depositar -->
-<li class="nav-item  pl-3">
+        <!--BTN Depositar -->
+        <li class="nav-item  pl-3">
             <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-despositar">Entrar
             </a>
         </li>
         <li class="nav-item pl-3">
-            <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-despositar">Cadastre-se
+            <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button"
+                class="btn btn-despositar">Cadastre-se
             </a>
         </li>
         @endif

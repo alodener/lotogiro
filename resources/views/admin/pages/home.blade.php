@@ -22,6 +22,7 @@
 
     <!-- CARD GRANDE -->
     <div class="container">
+        
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 @foreach($layout_carousel_grande as $key => $item)
@@ -34,8 +35,10 @@
             <div class="carousel-inner">
                 @foreach($layout_carousel_grande as $key => $item)
                 @if($item['visivel'] == 1)
-                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") : asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}" alt="{{ $item['nome'] }}">
+                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                    <a href="{{$item['link']}}" target="_blank">
+                    <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") : asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}" alt="{{ $item['nome'] }}">
+                    </a>
                 </div>
                 @endif
                 @endforeach
@@ -92,13 +95,50 @@
         @if(auth()->user())
         <!-- Se for usuario aparece -->
         @if($User['type_client'] == 1)
-        <div class="container-fluid d-flex align-items-center justify-content-center card-indica">
+        <div class="container-fluid d-flex align-items-center justify-content-center card-indica mt-2 "
+            href="#collapseExample2" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="collapseExample" style="border-bottom:1px solid #A3D712;">
             <span style="font-size:20px;" class="mr-3">💥</span>
             <h5 class="mr-3">Indique e ganhe em cada amigo que convidar</h5>
             <span style="font-size:20px;" class="mr-3">💥</span>
 
-            <sl-copy-button class="icon-copy"
-                value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
+            <i class="fa fa-angle-down" style="color:#A3D712;" aria-hidden="true"></i>
+
+        </div>
+        <p>
+        </p>
+        <div class="collapse" id="collapseExample2">
+            <div class="card card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Indicação</th>
+                            <th scope="col">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cadastro</td>
+                            <td> <sl-copy-button class="icon-copy"
+                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
+                            </td>
+                        </tr>
+                        @if($User['type_client'] != 1)
+
+                    
+                        <tr>
+                            <td>Minhas Indicações</td>
+                            <td><a href="{{ env('APP_URL') }}/admin/settings/indicated"><i style="font-size:20px; color:#A3D712;" class="fa fa-arrow-right" aria-hidden="true"></i></a> 
+
+                            </td>
+                        </tr>
+                        @endif
+
+
+
+                    </tbody>
+                </table>
+            </div>
         </div>
         @endif
         <div class="container-fluid d-flex align-items-center justify-content-center card-indica mt-2 "
@@ -135,6 +175,12 @@
                             <td>Jogo Avulso</td>
                             <td> <sl-copy-button class="icon-copy"
                                     value="{{ env('APP_URL') }}/games/{{ auth()->user()->id }}"></sl-copy-button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Minhas Indicações</td>
+                            <td><a href="{{ env('APP_URL') }}/admin/settings/indicated"><i style="font-size:20px; color:#A3D712;" class="fa fa-arrow-right" aria-hidden="true"></i></a> 
+
                             </td>
                         </tr>
                         @endif
