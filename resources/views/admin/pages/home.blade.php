@@ -29,7 +29,6 @@
 
 
 $('.modal-register').hide();
-$('.modal-login').hide();
 
 
 
@@ -376,6 +375,8 @@ function toggleModal(modalType) {
         </div>
     </div>
     @endif
+
+</div>
 
 </div>
 
