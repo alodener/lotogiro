@@ -236,7 +236,7 @@ function toggleModal(modalType) {
             </svg>
             </div>
             <div>
-                <button class="btn btn-moregame">Ver todos</button>
+                <!-- <button class="btn btn-moregame">Ver todos</button> -->
             </div>
         </div>
         @if(\App\Models\TypeGame::where('recomendado', 1)->count() > 0)
