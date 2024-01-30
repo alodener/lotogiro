@@ -350,7 +350,7 @@
 
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Milhar</p>
@@ -360,7 +360,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/centena" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Centena</p>
@@ -370,7 +370,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/dezena" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Dezena</p>
@@ -380,7 +380,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/group" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Grupo</p>
@@ -390,7 +390,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/milhar/centena" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Milhar/Centena</p>
@@ -400,7 +400,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/terno/dezena" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Terno/Dezena</p>
@@ -410,7 +410,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/duque/dezena" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Duque/Dezena</p>
@@ -420,7 +420,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/quina/grupo" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Quina/Grupo</p>
@@ -430,7 +430,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/quadra/grupo" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Quadra/Grupo</p>
@@ -440,7 +440,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/terno/grupo" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Terno/Grupo</p>
@@ -450,7 +450,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/duque/grupo" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Duque/Grupo</p>
@@ -460,7 +460,7 @@
             </div>
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/unidade" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Unidade</p>
@@ -474,7 +474,7 @@
                 <div class="d-flex">
                 <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/milhar/invertida" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Milhar/Inverida</p>
@@ -483,7 +483,7 @@
                 </a>
             </div> <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/centena/invertida" class="hover-container">
-                    <img class="img-todos-jogos"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
                         alt="{{ $typeGame->name }}">
                     <div class="hover-content">
                         <p>Centena/Invertida</p>
