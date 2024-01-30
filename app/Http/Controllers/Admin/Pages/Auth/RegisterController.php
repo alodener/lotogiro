@@ -112,10 +112,10 @@ HTML);
                 
                 Auth::guard('admin')->login($user);
 
-              session()->flash('success', 'Cadastro realizado com sucesso, Efetue seu login!');
               
 
-            return redirect('/');
+            return redirect('/admin/dashboards/wallet/recharge');
+
         } catch (Throwable $e) {
             return $e;
         }

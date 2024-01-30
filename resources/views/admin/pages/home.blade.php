@@ -12,7 +12,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content modal-login" style="border-radius:10px;">
 
-                @include('admin.pages.auth.login')
+@include('admin.pages.auth.login')
 
 
             </div>
@@ -22,13 +22,16 @@
 
 
             </div>
+        
         </div>
     </div>
-
     <script>
 
-        
+
 $('.modal-register').hide();
+$('.modal-login').hide();
+
+
 
 function toggleModal(modalType) {
 
