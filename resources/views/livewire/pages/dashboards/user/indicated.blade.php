@@ -8,7 +8,7 @@
     <div class="d-flex flex-wrap  justify-content-center align-items-center ">
         @forelse($indicateds as $indicated)
         <div class="col-sm-3 card-master mr-1 mb-1">
-            <div class="card flex-column" style="cursor: pointer; {{ $indicated->hasRole([2, 4, 5]) ? 'background-color: #28a745;' : '' }}" wire:click="redirectToRoute({{ $indicated->id }})">
+        <div class="card flex-column" style="cursor: pointer; {{ $indicated->getRoleNames()->contains('Consultor Jr') ? 'background-color: #98C715 !important;' : '' }}" wire:click="redirectToRoute({{ $indicated->id }})">
             <div class="p-3">
                     <svg data-v-7515e7cb="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:80px;">
 
