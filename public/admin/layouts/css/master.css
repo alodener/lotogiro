@@ -2747,6 +2747,20 @@ fieldset:disabled a.btn {
 }
 
 
+.btn-moregame {
+  padding: 5px;
+font-size: 10px;
+  font-weight: 700;
+  color: #a3d712;
+  background: #424647;
+  border: #424647;
+}
+
+.btn-moregame:hover {
+  color: #424647;
+  background-color: #a3d712;;
+  border-color: #a3d712;
+}
 
 .btn-primary {
   padding: 10px;
@@ -40325,6 +40339,13 @@ a.text-muted:hover {
 
   
   }
+
+  .btn-moregame {
+    padding: 5px !important;
+
+  }
+  
+
 }
 
   
@@ -40447,11 +40468,21 @@ border-bottom: 1px solid hsla(0,0%,100%,.1);  padding: 10px;
   border: none;
   padding: 10px;
 }
+.wallet-nav{
+  font-size: 25px !important;
+}
 
 @media (max-width: 600px) {
   .btn-despositar, .btn-config, .btn-money{
-    padding: 5px;
+    padding: 9px;
     font-size: 10px;
+  }
+  .icon-size-sm{
+    padding: 7px !important;
+  }
+
+  .wallet-nav{
+    font-size: 15px !important;
   }
 
   .text-logo{

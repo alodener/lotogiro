@@ -23,6 +23,16 @@ class Table extends Component
 
     public $valueAdd;
 
+    public function mount()
+    {
+        $this->valueAdd = 0; // Defina o valor inicial conforme necessário
+    }
+
+    public function increment($amount)
+    {
+        $this->valueAdd += $amount;
+    }
+
     public function callMP()
     {
         $tokenMP = Configs::getTokenMercadoPago();
@@ -65,7 +75,7 @@ class Table extends Component
                             onclick=redirect('{$preference->init_point}')>Sim</a>",
         ]);
     }
-
+   
     public function callMPPix()
     {
         $tokenMP = Configs::getTokenMercadoPago();

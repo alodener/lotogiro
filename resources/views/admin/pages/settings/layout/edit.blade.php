@@ -135,6 +135,8 @@
                                         </div>
                                     </div>
 
+                                    <div class="d-flex flex-column">
+
                                     <div class="d-flex justify-content-around">
                                         <div class="mr-3">
                                             <label for="alias">Nome</label>
@@ -143,6 +145,15 @@
                                         </div>
 
                                     </div>
+                                    <div class="d-flex justify-content-around">
+                                        <div class="mr-3">
+                                            <label for="alias">Link</label>
+                                            <input type="text" name="link" class="form-control"
+                                                value="{{$layout->first_text}}">
+                                        </div>
+
+                                    </div>
+</div>
 
 
 
@@ -181,6 +192,7 @@
                                     <th>{{ trans('admin.gains.table-id-header') }}</th>
                                     <th>Preview</th>
                                     <th>Nome</th>
+                                    <th>Link</th>
                                     <th>Visivel</th>
                                     <th>Ações</th>
                                 </tr>
@@ -195,6 +207,7 @@
                                     <th><img width="90px" src="{{ url("storage/{$carousel_grande->url}")}}" alt="">
                                     </th>
                                     <th>{{$carousel_grande->nome}}</th>
+                                    <th>{{$carousel_grande->link}}</th>
 
                                     <th>
                                         <div class="d-flex flex-column ">

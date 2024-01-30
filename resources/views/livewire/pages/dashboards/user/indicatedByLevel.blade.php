@@ -1,9 +1,10 @@
 <div class="col-sm-12">
-     <div class="row  p-3">
-         <div class="col-sm-12">
-            <h4 class="my-4">{{ trans('admin.lwIndicated.userInd') }}  </h4>
-         </div>
-     </div>
+<div class="">
+        <div class="card-header">
+            <h4 class="my-4">{{ trans('admin.lwIndicated.userInd') }} </h4>
+        </div>
+    </div>
+
  
      <div class="row">
          @forelse($indicateds as $indicated)

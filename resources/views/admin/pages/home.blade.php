@@ -10,18 +10,47 @@
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="border-radius:10px;">
+            <div class="modal-content modal-login" style="border-radius:10px;">
 
-                @include('admin.pages.auth.login')
+@include('admin.pages.auth.login')
 
 
             </div>
+            <div class="modal-content modal-register" style="border-radius:10px;">
+
+                @include('admin.pages.auth.register')
+
+
+            </div>
+        
         </div>
     </div>
+    <script>
 
+
+$('.modal-register').hide();
+$('.modal-login').hide();
+
+
+
+function toggleModal(modalType) {
+
+    if (!modalType) {
+        // Se nenhum parâmetro for fornecido, faz o toggle automaticamente
+        $('.modal-login, .modal-register').toggle();
+    } else if (modalType === 'login') {
+        $('.modal-login').show();
+        $('.modal-register').hide();
+    } else if (modalType === 'register') {
+        $('.modal-login').hide();
+        $('.modal-register').show();
+    }
+}
+    </script>
 
     <!-- CARD GRANDE -->
     <div class="container">
+        
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 @foreach($layout_carousel_grande as $key => $item)
@@ -34,8 +63,10 @@
             <div class="carousel-inner">
                 @foreach($layout_carousel_grande as $key => $item)
                 @if($item['visivel'] == 1)
-                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") : asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}" alt="{{ $item['nome'] }}">
+                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                    <a href="{{$item['link']}}" target="_blank">
+                    <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") : asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}" alt="{{ $item['nome'] }}">
+                    </a>
                 </div>
                 @endif
                 @endforeach
@@ -51,20 +82,7 @@
         </div>
     </div>
     <div class="container mt-2">
-        <div class="d-flex swipe-controles align-items-center">
-            <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path fill="currentColor"
-                    d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
-                </path>
-            </svg>
-            <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path fill="currentColor"
-                    d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
-                </path>
-            </svg>
-        </div>
+       
 
 
         <!-- Nav icons -->
@@ -92,15 +110,54 @@
         @if(auth()->user())
         <!-- Se for usuario aparece -->
         @if($User['type_client'] == 1)
-        <div class="container-fluid d-flex align-items-center justify-content-center card-indica">
+        <div class="container-fluid d-flex align-items-center justify-content-center card-indica mt-2 "
+            href="#collapseExample2" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="collapseExample" style="border-bottom:1px solid #A3D712;">
             <span style="font-size:20px;" class="mr-3">💥</span>
             <h5 class="mr-3">Indique e ganhe em cada amigo que convidar</h5>
             <span style="font-size:20px;" class="mr-3">💥</span>
 
-            <sl-copy-button class="icon-copy"
-                value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
+            <i class="fa fa-angle-down" style="color:#A3D712;" aria-hidden="true"></i>
+
+        </div>
+        <p>
+        </p>
+        <div class="collapse" id="collapseExample2">
+            <div class="card card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Indicação</th>
+                            <th scope="col">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cadastro</td>
+                            <td> <sl-copy-button class="icon-copy"
+                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
+                            </td>
+                        </tr>
+                        @if($User['type_client'] != 1)
+
+                    
+                        <tr>
+                            <td>Minhas Indicações</td>
+                            <td><a href="{{ env('APP_URL') }}/admin/settings/indicated"><i style="font-size:20px; color:#A3D712;" class="fa fa-arrow-right" aria-hidden="true"></i></a> 
+
+                            </td>
+                        </tr>
+                        @endif
+
+
+
+                    </tbody>
+                </table>
+            </div>
         </div>
         @endif
+        @if($User['type_client'] != 1)
+
         <div class="container-fluid d-flex align-items-center justify-content-center card-indica mt-2 "
             href="#collapseExample" data-toggle="collapse" role="button" aria-expanded="false"
             aria-controls="collapseExample" style="border-bottom:1px solid red;">
@@ -137,6 +194,12 @@
                                     value="{{ env('APP_URL') }}/games/{{ auth()->user()->id }}"></sl-copy-button>
                             </td>
                         </tr>
+                        <tr>
+                            <td>Minhas Indicações</td>
+                            <td><a href="{{ env('APP_URL') }}/admin/settings/indicated"><i style="font-size:20px; color:#A3D712;" class="fa fa-arrow-right" aria-hidden="true"></i></a> 
+
+                            </td>
+                        </tr>
                         @endif
 
 
@@ -153,9 +216,11 @@
         <div id="categories-container">
         </div>
     </div>
+    @endif
     <!-- Recomendados -->
     <div class="container mt-5">
-        <div class="d-flex swipe-controles align-items-center mb-2">
+        <div class="d-flex swipe-controles justify-content-between align-items-center mb-2">
+            <div class="d-flex">
             <h1 style="color:white">Recomendados</h1>
             <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -169,6 +234,10 @@
                     d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
                 </path>
             </svg>
+            </div>
+            <div>
+                <!-- <button class="btn btn-moregame">Ver todos</button> -->
+            </div>
         </div>
         @if(\App\Models\TypeGame::where('recomendado', 1)->count() > 0)
         <div class="swiper">
@@ -185,13 +254,15 @@
             </div>
         </div>
         @endif
+        
     </div>
 
     <!-- Todos os jogos -->
 
     @if(\App\Models\TypeGame::count() > 0)
     <div class="container mt-5">
-        <div class="d-flex swipe-controles align-items-center mb-2">
+        <div class="d-flex swipe-controles align-items-center justify-content-between mb-2 container">
+            <div class="d-flex">
             <h1 style="color:white">Todos os Jogos</h1>
             <svg width="10" class="ml-3 mr-3 swiper-list-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -205,6 +276,10 @@
                     d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
                 </path>
             </svg>
+            </div>
+            <div>
+            <a href="/admin/findcategoria/loto_facil"><button class="btn btn-moregame">Ver todos</button></a> 
+            </div>
         </div>
 
         <div class="swiper-list swiper-full">
@@ -233,7 +308,8 @@
 
     @if(\App\Models\TypeGame::count() > 0)
     <div class="container mt-5">
-        <div class="d-flex swipe-controles align-items-center mb-2">
+        <div class="d-flex swipe-controles justify-content-between container align-items-center mb-2">
+            <div class="d-flex">
             <h1 style="color:white">Bichão da Sorte</h1>
             <svg width="10" class="ml-3 mr-3 swiper-bichao-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -247,6 +323,10 @@
                     d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
                 </path>
             </svg>
+            </div>
+            <div>
+               <a href="/admin/bets/bichao"><button class="btn btn-moregame">Ver todos</button></a> 
+            </div>
         </div>
 
         <div class="swiper-bichao">

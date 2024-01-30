@@ -15,7 +15,8 @@
                         <div x-data="{}" id="custom-search-input">
                             <form>
                                 <div class="d-flex justify-content-center">
-                                    <div class="col-sm-12 col-md-6 d-flex justify-content-center align-items-center flex-column ">
+                                    
+                                    <div class="col-sm-12 col-md-12 d-flex justify-content-center align-items-center flex-column ">
                                         <ul class="list-group mb-3">
                                             <li class="list-group-item">
                                                 <div class="d-flex flex-column">
@@ -29,14 +30,37 @@
 
                                                     <div class="col-sm-12 col-md-12 input-group card-master">
                                                         <input wire:model="valueAdd" x-on:focus="formatInput()"
-                                                               type="text" name="valueAdd" id="valueAdd"
+                                                               type="text" name="valueAdd" id="valueAdd" value="0"
                                                                class="search-query form-control w-100" placeholder="Valor" />
                                                     </div>
+
                                                 </div>
                                             </li>
                                         </ul>
+                                        <div class="d-flex flex-wrap ">
+                                        <button wire:click="increment(10)" class="btn btn-despositar btn-small mb-1" >+ R$ 10,00</button>
+                                        <button wire:click="increment(20)" class="btn btn-despositar btn-small mb-1 mr-2 ml-2"  >+ R$:20,00</button>
 
-                                        <div class="input-group-append bt-recharge mx-auto">
+                                        <button wire:click="increment(50)" class="btn btn-despositar btn-small mb-1" >+ R$:50,00</button>
+                                        <button wire:click="increment(100)" class="btn btn-despositar btn-small mb-1 ml-2">+ R$:100,00</button>
+
+                                        <style>
+                                            .btn-small{
+                                                padding: 7px;
+                                                font-size: 13px;
+                                                transition: 0.2s;
+
+                                            }
+
+                                            .btn-small:hover{
+                                                transition: 0.2s;
+                                                padding: 11px;
+                                                background: #bbf411;
+                                            }
+                                            </style>
+                                        </div>
+
+                                        <div class="input-group-append bt-recharge mx-auto mt-5">
                                              @if(config('services.activeGateway') == 'MP')
                                                  <button wire:click.prevent="callMPPix" type="submit"
                                                          @if($valueAdd <= 0.99) disabled @endif
@@ -98,6 +122,14 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.1.1/build/vanilla-masker.min.js"></script>
 
     <script type="text/javascript">
+
+var botoes = document.querySelectorAll('.btn-small');
+botoes.forEach(function(botao) {
+    botao.addEventListener('click', function(event) {
+        event.preventDefault();
+    });
+});
+
         function formatInput(){
             VMasker(document.getElementById("valueAdd")).maskMoney();
         }
@@ -110,5 +142,29 @@
         function redirectPix(){
            window.location.href = 'recharge-order';
        }
+
+       function extrairValorNumerico(valorFormatado) {
+        // Remove todos os caracteres que não são dígitos ou ponto
+        var valorNumerico = parseFloat(valorFormatado.replace(/[^0-9.]/g, ''));
+
+        // Se não for um número válido, retorna 0
+        return isNaN(valorNumerico) ? 0 : valorNumerico;
+    }
+
+    function somarComValor(valorASomar) {
+        // Pega o valor formatado do input
+        var valorFormatado = document.getElementById('valueAdd').value;
+
+        // Extrai o valor numérico a partir do valor formatado
+        var valorNumerico = extrairValorNumerico(valorFormatado);
+
+        // Soma os valores
+        var resultado = valorNumerico + valorASomar;
+
+        // Formata o resultado e substitui o valor no input
+        document.getElementById('valueAdd').value = VMasker.toMoney(resultado);
+        callMPPix();
+        
+    }   
     </script>
 @endpush

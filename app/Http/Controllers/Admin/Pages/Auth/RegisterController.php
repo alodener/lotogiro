@@ -54,22 +54,24 @@ HTML);
     }
 
     protected function create(Request $request)
-    {
+    {   
+
+           
         $this->validate(request(), [
             'name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
             'indicator' => ['required'],
         ]);
  
 
         try {
-            \DB::beginTransaction();
+            
                 $phone = Str::of($request->phone)->replaceMatches('/[^A-Za-z0-9]++/', '');
                 $hashed = Hash::make($request->password);
-
+            
                 $user = User::create([
                     'name' => $request->name,
                     'last_name' => $request->last_name,
@@ -90,7 +92,6 @@ HTML);
                     'phone' => Str::of($phone)->substr(2),
                 ]);
 
-                $user->syncRoles([6]);
                
                 $description = "Usuário registrado indicado por usuário de ID '" . $request->indicator . "' com os seguintes dados:" . "\n"; //colocar tudo que foi modificado
                 $description .= "Nome: " . $request->name . "\n";
@@ -109,14 +110,14 @@ HTML);
                 ]);
                 
                 
-            \DB::commit();           
+                Auth::guard('admin')->login($user);
 
-              session()->flash('success', 'Cadastro realizado com sucesso, Efetue seu login!');
               
 
-            return redirect(route('admin.get.login'));
+            return redirect('/admin/dashboards/wallet/recharge');
+
         } catch (Throwable $e) {
-            \DB::rollback();
+            return $e;
         }
     }
 }
