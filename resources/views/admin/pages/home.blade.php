@@ -378,6 +378,8 @@ function toggleModal(modalType) {
 
 </div>
 
+</div>
+
 
 
 
