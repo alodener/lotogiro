@@ -75,8 +75,7 @@
             <div class="d-flex p-2">
                 <a href="{{ route('admin.bets.games.create', ['type_game' => $typeGame->id]) }}"
                     class="hover-container">
-                    <img style="border-radius:10px;" src="{{ $typeGame->banner_mobile ? asset("
-                        storage/{$typeGame->banner_mobile}") :
+                    <img style="border-radius:10px;" src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") :
                     asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}"
                     alt="{{ $typeGame->name }} " >
                     <div class="hover-content">

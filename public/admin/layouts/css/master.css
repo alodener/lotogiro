@@ -40332,6 +40332,67 @@ a.text-muted:hover {
   top: 14px;
 
 }
+
+.img-todos-jogos{
+  max-width: 180px !important;
+  
+}
+
+
+.box-imgs{
+  width: 180px;
+}
+
+@media (max-width: 1300px) {
+
+  .img-todos-jogos{
+    max-width: 140px !important;
+    
+  }
+  .box-imgs{
+    width: 120px;
+  }
+
+}
+@media (max-width: 992px) {
+
+  .img-todos-jogos{
+    max-width: 140px !important;
+    
+  }
+
+
+  .box-imgs{
+    width: 115px;
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .img-todos-jogos{
+    max-width: 150px !important;
+    
+  }
+
+
+  .box-imgs{
+    width: 130px;
+  }
+
+}
+
+  
+
+
+
+@media (max-width: 500px) {
+
+  .img-todos-jogos{
+    max-width: 98px !important;
+  }}
+
 @media (max-width: 600px) {
 
   .notifications-count{
@@ -40339,6 +40400,14 @@ a.text-muted:hover {
 
   
   }
+
+  .img-todos-jogos{
+    max-width: 120px;
+  }
+  
+.box-imgs{
+  width: 110px;
+}
 
   .btn-moregame {
     padding: 5px !important;

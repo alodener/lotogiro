@@ -12,7 +12,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content modal-login" style="border-radius:10px;">
 
-@include('admin.pages.auth.login')
+                @include('admin.pages.auth.login')
 
 
             </div>
@@ -22,34 +22,34 @@
 
 
             </div>
-        
+
         </div>
     </div>
     <script>
 
 
-$('.modal-register').hide();
-
-
-
-function toggleModal(modalType) {
-
-    if (!modalType) {
-        // Se nenhum parâmetro for fornecido, faz o toggle automaticamente
-        $('.modal-login, .modal-register').toggle();
-    } else if (modalType === 'login') {
-        $('.modal-login').show();
         $('.modal-register').hide();
-    } else if (modalType === 'register') {
-        $('.modal-login').hide();
-        $('.modal-register').show();
-    }
-}
+
+
+
+        function toggleModal(modalType) {
+
+            if (!modalType) {
+                // Se nenhum parâmetro for fornecido, faz o toggle automaticamente
+                $('.modal-login, .modal-register').toggle();
+            } else if (modalType === 'login') {
+                $('.modal-login').show();
+                $('.modal-register').hide();
+            } else if (modalType === 'register') {
+                $('.modal-login').hide();
+                $('.modal-register').show();
+            }
+        }
     </script>
 
     <!-- CARD GRANDE -->
     <div class="container">
-        
+
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 @foreach($layout_carousel_grande as $key => $item)
@@ -62,9 +62,11 @@ function toggleModal(modalType) {
             <div class="carousel-inner">
                 @foreach($layout_carousel_grande as $key => $item)
                 @if($item['visivel'] == 1)
-                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                     <a href="{{$item['link']}}" target="_blank">
-                    <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") : asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}" alt="{{ $item['nome'] }}">
+                        <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") :
+                            asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}"
+                            alt="{{ $item['nome'] }}">
                     </a>
                 </div>
                 @endif
@@ -81,7 +83,7 @@ function toggleModal(modalType) {
         </div>
     </div>
     <div class="container mt-2">
-       
+
 
 
         <!-- Nav icons -->
@@ -94,7 +96,9 @@ function toggleModal(modalType) {
                 <div class="swiper-slide d-flex flex-column category-info"
                     data-type-game-id="{{ $typeGame->category }}">
                     <div class="icon-container">
-                    <img class="img-bold" src="{{ $typeGame->icon ? asset('/storage/' . str_replace('.png', '-bold.png', $typeGame->icon)) : asset('/storage/megasena-bold.png') }}" alt="">
+                        <img class="img-bold"
+                            src="{{ $typeGame->icon ? asset('/storage/' . str_replace('.png', '-bold.png', $typeGame->icon)) : asset('/storage/megasena-bold.png') }}"
+                            alt="">
 
                     </div>
                     <div>
@@ -139,10 +143,12 @@ function toggleModal(modalType) {
                         </tr>
                         @if($User['type_client'] != 1)
 
-                    
+
                         <tr>
                             <td>Minhas Indicações</td>
-                            <td><a href="{{ env('APP_URL') }}/admin/settings/indicated"><i style="font-size:20px; color:#A3D712;" class="fa fa-arrow-right" aria-hidden="true"></i></a> 
+                            <td><a href="{{ env('APP_URL') }}/admin/settings/indicated"><i
+                                        style="font-size:20px; color:#A3D712;" class="fa fa-arrow-right"
+                                        aria-hidden="true"></i></a>
 
                             </td>
                         </tr>
@@ -195,7 +201,9 @@ function toggleModal(modalType) {
                         </tr>
                         <tr>
                             <td>Minhas Indicações</td>
-                            <td><a href="{{ env('APP_URL') }}/admin/settings/indicated"><i style="font-size:20px; color:#A3D712;" class="fa fa-arrow-right" aria-hidden="true"></i></a> 
+                            <td><a href="{{ env('APP_URL') }}/admin/settings/indicated"><i
+                                        style="font-size:20px; color:#A3D712;" class="fa fa-arrow-right"
+                                        aria-hidden="true"></i></a>
 
                             </td>
                         </tr>
@@ -220,19 +228,19 @@ function toggleModal(modalType) {
     <div class="container mt-5">
         <div class="d-flex swipe-controles justify-content-between align-items-center mb-2">
             <div class="d-flex">
-            <h1 style="color:white">Recomendados</h1>
-            <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path fill="currentColor"
-                    d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
-                </path>
-            </svg>
-            <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path fill="currentColor"
-                    d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
-                </path>
-            </svg>
+                <h1 style="color:white">Recomendados</h1>
+                <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                    <path fill="currentColor"
+                        d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
+                    </path>
+                </svg>
+                <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                    <path fill="currentColor"
+                        d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
+                    </path>
+                </svg>
             </div>
             <div>
                 <!-- <button class="btn btn-moregame">Ver todos</button> -->
@@ -242,10 +250,14 @@ function toggleModal(modalType) {
         <div class="swiper">
             <div class="swiper-wrapper">
                 @foreach(\App\Models\TypeGame::where('recomendado', 1)->get() as $typeGame)
-                <div class="swiper-slide">
+                <div class="swiper-slide" >
                     <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
-                    <img src="{{ $typeGame->banner_pc ? asset("storage/{$typeGame->banner_pc}") : asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg') }}" alt="{{ $typeGame->name }}" class="d-none d-md-block">
-                    <img src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") : asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}" alt="{{ $typeGame->name }}" class="d-md-none">
+                        <img style="border-radius: 10px; width: 100%; height: 100%; object-fit: cover;" src="{{ $typeGame->banner_pc ? asset("storage/{$typeGame->banner_pc}") :
+                        asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg') }}"
+                        alt="{{ $typeGame->name }}" class="d-none d-md-block">
+                        <img style="border-radius: 10px; width: 100%; height: 100%; object-fit: cover;"  src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") :
+                        asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}"
+                        alt="{{ $typeGame->name }}" class="d-md-none" >
 
                         <a>
                 </div>
@@ -253,51 +265,74 @@ function toggleModal(modalType) {
             </div>
         </div>
         @endif
-        
+
     </div>
 
     <!-- Todos os jogos -->
 
     @if(\App\Models\TypeGame::count() > 0)
     <div class="container mt-5">
-        <div class="d-flex swipe-controles align-items-center justify-content-between mb-2 container">
-            <div class="d-flex">
+        <div class="d-flex swipe-controles align-items-center mb-2">
             <h1 style="color:white">Todos os Jogos</h1>
-            <svg width="10" class="ml-3 mr-3 swiper-list-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path fill="currentColor"
-                    d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
-                </path>
-            </svg>
-            <svg width="10" class="swiper-list-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path fill="currentColor"
-                    d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
-                </path>
-            </svg>
-            </div>
-            <div>
-            <a href="/admin/findcategoria/loto_facil"><button class="btn btn-moregame">Ver todos</button></a> 
-            </div>
         </div>
 
-        <div class="swiper-list swiper-full">
-            <div class="swiper-wrapper">
-                @foreach(\App\Models\TypeGame::get() as $typeGame)
-                <div class="swiper-slide">
-                    <a href="{{ route('admin.bets.games.create', ['type_game' => $typeGame->id]) }}"
-                        class="hover-container">
-<img src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") : asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}" alt="{{ $typeGame->name }}">
-                        <div class="hover-content">
-                            <p>{{ $typeGame->name }}</p>
-                            <button class="btn btn-primary">Jogar Agora</button>
-                        </div>
-                    </a>
-                </div>
-                @endforeach
+        <div class="d-flex flex-wrap justify-content-center">
+            @php
+            $typeGames = \App\Models\TypeGame::get();
+            $count = 0;
+            @endphp
 
-
+            @foreach($typeGames as $typeGame)
+            <div class="d-flex p-2 box-imgs">
+                <a href="{{ route('admin.bets.games.create', ['type_game' => $typeGame->id]) }}"
+                    class="hover-container" >
+                    <img class="img-todos-jogos"  style="border-radius: 10px; width: 100%; height: 100%; object-fit: cover;" src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") :
+                    asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}"
+                    alt="{{ $typeGame->name }} " >
+                    <div class="hover-content">
+                        <p>{{ $typeGame->name }}</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
             </div>
+
+            @php
+            $count++;
+            if ($count == 12) {
+            break;
+            }
+            @endphp
+            @endforeach
+
+            @if($typeGames->count() > 12)
+            <p>
+            <div class="collapse" id="collapseExampledd">
+            <div class="d-flex flex-wrap justify-content-center justify-content-md-start ">
+                    @foreach($typeGames->splice(12) as $typeGame)
+                    <div class="d-flex p-2 box-imgs">
+                        <a href="{{ route('admin.bets.games.create', ['type_game' => $typeGame->id]) }}"
+                            class="hover-container">
+                            <img class="img-todos-jogos"  style="border-radius:10px;" src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") :
+                            asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}"
+                            alt="{{ $typeGame->name }} " >
+                            <div class="hover-content">
+                                <p>{{ $typeGame->name }}</p>
+                                <button class="btn btn-primary">Jogar Agora</button>
+                            </div>
+                        </a>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+            </p>
+            @endif
+        </div>
+        <div class="d-flex justify-content-center align-items-center mt-5">
+            <button class="btn btn-primary btn-collapse" data-toggle="collapse" href="#collapseExampledd" role="button"
+                aria-expanded="false" aria-controls="collapseExample">
+                Ver Mais
+            </button>
         </div>
     </div>
     @endif
@@ -305,76 +340,176 @@ function toggleModal(modalType) {
 
     <!-- Bichao da sorte -->
 
-    @if(\App\Models\TypeGame::count() > 0)
     <div class="container mt-5">
-        <div class="d-flex swipe-controles justify-content-between container align-items-center mb-2">
-            <div class="d-flex">
+        <div class="d-flex swipe-controles align-items-center mb-2">
             <h1 style="color:white">Bichão da Sorte</h1>
-            <svg width="10" class="ml-3 mr-3 swiper-bichao-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path fill="currentColor"
-                    d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
-                </path>
-            </svg>
-            <svg width="10" class="swiper-bichao-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path fill="currentColor"
-                    d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
-                </path>
-            </svg>
-            </div>
-            <div>
-               <a href="/admin/bets/bichao"><button class="btn btn-moregame">Ver todos</button></a> 
-            </div>
         </div>
 
-        <div class="swiper-bichao">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <a href="/admin/bets/bichao" class="hover-container">
-                        <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
-                            alt="{{ $typeGame->name }}">
-                        <div class="hover-content">
-                            <p>Milhar</p>
-                            <button class="btn btn-primary">Jogar Agora</button>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="/admin/bets/bichao/centena" class="hover-container">
-                        <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
-                            alt="{{ $typeGame->name }}">
-                        <div class="hover-content">
-                            <p>Centena</p>
-                            <button class="btn btn-primary">Jogar Agora</button>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="/admin/bets/bichao/dezena" class="hover-container">
-                        <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
-                            alt="{{ $typeGame->name }}">
-                        <div class="hover-content">
-                            <p>Dezena</p>
-                            <button class="btn btn-primary">Jogar Agora</button>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="/admin/bets/bichao/group" class="hover-container">
-                        <img src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
-                            alt="{{ $typeGame->name }}">
-                        <div class="hover-content">
-                            <p>Grupo</p>
-                            <button class="btn btn-primary">Jogar Agora</button>
-                        </div>
-                    </a>
-                </div>
+        <div class="d-flex flex-wrap justify-content-center">
+                                
 
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Milhar</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
             </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/centena" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Centena</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/dezena" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Dezena</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/group" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Grupo</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/milhar/centena" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Milhar/Centena</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/terno/dezena" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Terno/Dezena</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/duque/dezena" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Duque/Dezena</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/quina/grupo" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Quina/Grupo</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/quadra/grupo" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Quadra/Grupo</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/terno/grupo" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Terno/Grupo</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/duque/grupo" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Duque/Grupo</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/unidade" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Unidade</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+           
+            <p>
+            <div class="collapse" id="collapseExampleddd">
+                <div class="d-flex">
+                <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/milhar/invertida" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Milhar/Inverida</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div> <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/centena/invertida" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://imagedelivery.net/BgH9d8bzsn4n0yijn4h7IQ/3deaeed0-dbf3-4064-ada6-00ed81a72d00/ipad"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Centena/Invertida</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+                </div>
+            </div>
+
+            </p>
         </div>
+        <div class="d-flex justify-content-center align-items-center mt-5 mb-5">
+            <button class="btn btn-primary btn-collapse" data-toggle="collapse" href="#collapseExampleddd" role="button"
+                aria-expanded="false" aria-controls="collapseExample">
+                Ver Mais
+            </button>
+        </div>
+         
+        </div>
+       
     </div>
-    @endif
+
+
+
+    
 
 </div>
 
@@ -406,8 +541,6 @@ function toggleModal(modalType) {
     }
 </style>
 <style>
-
-    
     .modal-content {
         background-color: #212425;
     }
@@ -487,20 +620,21 @@ function toggleModal(modalType) {
             font-size: 25px;
             color: #A3D712;
         }
-        
 
-        .hover-content{
-            padding:10px !important;
+
+        .hover-content {
+            padding: 10px !important;
         }
 
-        .hover-content p{
+        .hover-content p {
             font-size: 10px;
 
         }
-        .hover-content button{  
+
+        .hover-content button {
             font-size: 10px;
             padding: 5px;
-            
+
         }
 
     }
@@ -593,25 +727,26 @@ function toggleModal(modalType) {
         .indica-corpo {
             padding: 0px;
         }
-        
-        .layout-fixed .main-sidebar{
+
+        .layout-fixed .main-sidebar {
             top: 56px;
         }
     }
 
     @media screen and (max-width: 1400px) {
-        .hover-content{
-            padding:10px !important;
+        .hover-content {
+            padding: 10px !important;
         }
 
-        .hover-content p{
+        .hover-content p {
             font-size: 12px;
 
         }
-        .hover-content button{  
+
+        .hover-content button {
             font-size: 10px;
             padding: 5px;
-            
+
         }
     }
 </style>
@@ -619,6 +754,19 @@ function toggleModal(modalType) {
 
 @push('scripts')
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var button = document.querySelector('.btn-collapse');
+        button.addEventListener('click', function () {
+            if (button.innerText === 'Ver Mais') {
+                button.innerText = 'Ver Menos';
+            } else {
+                button.innerText = 'Ver Mais';
+            }
+        });
+    });
+</script>
 <script>
 
 
