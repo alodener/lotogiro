@@ -130,6 +130,7 @@ class GameController extends Controller
         $game->commission_percentage = $bet->user->commission;
         $game->bet_id = $bet->id;
         $game->status = false;
+        $game->random_game = '1';
         $game->save();
        
 
