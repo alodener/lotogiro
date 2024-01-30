@@ -10,15 +10,40 @@
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="border-radius:10px;">
+            <div class="modal-content modal-login" style="border-radius:10px;">
 
                 @include('admin.pages.auth.login')
+
+
+            </div>
+            <div class="modal-content modal-register" style="border-radius:10px;">
+
+                @include('admin.pages.auth.register')
 
 
             </div>
         </div>
     </div>
 
+    <script>
+
+        
+$('.modal-register').hide();
+
+function toggleModal(modalType) {
+
+    if (!modalType) {
+        // Se nenhum parâmetro for fornecido, faz o toggle automaticamente
+        $('.modal-login, .modal-register').toggle();
+    } else if (modalType === 'login') {
+        $('.modal-login').show();
+        $('.modal-register').hide();
+    } else if (modalType === 'register') {
+        $('.modal-login').hide();
+        $('.modal-register').show();
+    }
+}
+    </script>
 
     <!-- CARD GRANDE -->
     <div class="container">
@@ -54,20 +79,7 @@
         </div>
     </div>
     <div class="container mt-2">
-        <div class="d-flex swipe-controles align-items-center">
-            <svg width="10" class="ml-3 mr-3 swiper-prev swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path fill="currentColor"
-                    d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
-                </path>
-            </svg>
-            <svg width="10" class="swiper-next swp" fill="#5A6268" color="#5A6268" data-v-3d6f2aec=""
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path fill="currentColor"
-                    d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z">
-                </path>
-            </svg>
-        </div>
+       
 
 
         <!-- Nav icons -->
@@ -141,6 +153,8 @@
             </div>
         </div>
         @endif
+        @if($User['type_client'] != 1)
+
         <div class="container-fluid d-flex align-items-center justify-content-center card-indica mt-2 "
             href="#collapseExample" data-toggle="collapse" role="button" aria-expanded="false"
             aria-controls="collapseExample" style="border-bottom:1px solid red;">
@@ -199,6 +213,7 @@
         <div id="categories-container">
         </div>
     </div>
+    @endif
     <!-- Recomendados -->
     <div class="container mt-5">
         <div class="d-flex swipe-controles justify-content-between align-items-center mb-2">

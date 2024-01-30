@@ -101,9 +101,9 @@
                 <div class="col-sm-12">
                     <p class="mb-1 text-bold">
                         {{ trans('admin.register-label') }}<br>
-                        <a class="btn btn-block btn-info right login" href="{{ route('register') }}">
+                        <button class="btn btn-block btn-info right login"  onclick="toggleModal()">
                             {{ trans('admin.register-button') }}
-                        </a>
+</button>
                     </p>
 
                     <a href="https://wa.me/558196826967?text=Olá, poderia me ajudar?" class="btn btn-block btn-success login"

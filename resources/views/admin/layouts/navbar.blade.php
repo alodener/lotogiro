@@ -212,11 +212,11 @@
         @else
         <!--BTN Depositar -->
         <li class="nav-item  pl-3">
-            <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-despositar">Entrar
+            <a href="{{ route('admin.dashboards.wallet.recharge') }}"  onclick="toggleModal('login')" type="button" class="btn btn-despositar">Entrar
             </a>
         </li>
         <li class="nav-item pl-3">
-            <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button"
+            <a href="{{ route('admin.dashboards.wallet.recharge') }}" onclick="toggleModal('register')" type="button"
                 class="btn btn-despositar">Cadastre-se
             </a>
         </li>
