@@ -29,7 +29,6 @@
 
 
 $('.modal-register').hide();
-$('.modal-login').hide();
 
 
 
