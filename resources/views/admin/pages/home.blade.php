@@ -328,12 +328,16 @@
             </p>
             @endif
         </div>
+        @if(\App\Models\TypeGame::count() > 12)
+
         <div class="d-flex justify-content-center align-items-center mt-5">
             <button class="btn btn-primary btn-collapse" data-toggle="collapse" href="#collapseExampledd" role="button"
                 aria-expanded="false" aria-controls="collapseExample">
                 Ver Mais
             </button>
         </div>
+        @endif
+
     </div>
     @endif
 
