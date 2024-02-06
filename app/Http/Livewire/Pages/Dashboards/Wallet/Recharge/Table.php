@@ -214,12 +214,13 @@ class Table extends Component
         $order->save();
 
         $response = Http::post('https://dobank.com.br/api/recebimento', [
-            'token' => 'GvfdgleZBKkV0ngQ766G0grRBRmPsiJFa0tc1QRHL2jtsrsBdtcxzbnL8mYI6AkteLzPmMGrmxxPccJ8Es2I8n57sP09UMMyBHYloMadNNYhjCdctDGHRy13jSbdncqmIHVErilLaRIkFKAJdMjlm8jb1DQX48WDnhIJSLNr0xbMNgWtvhmI80YkjaWBtbAn9hEekrnw',
+            'token' => env("TOKEN_RECEBIMENTO"),
             'amount' => Money::toDatabase($this->valueAdd),
-            'method_code' => "pix",
+            'method_code' => 'pix',
         ]);
-        $pix = json_decode($response->json());
-        //dd($pix->copiaecola);
+        $pix_json = json_encode($response->json());
+        $pix = json_decode($pix_json);
+    
         $order->update(['link' => $pix->copiaecola, 'reference' =>$pix->txid]);
         $baseURL = env('APP_URL');
         $url = $baseURL . "/admin/dashboards/wallet/recharge-order";
@@ -233,8 +234,11 @@ class Table extends Component
                         <input type='text' value='{$pix->copiaecola}' readonly class='form-control' placeholder='qrCodeZoop' aria-label='qrCodeZoop' aria-describedby='button-addon2' id='input_output'>
                         <button class='btn btn-outline-secondary'  onclick='copyText()'  type='button' id='copyPix'>Copiar</button>
                     </div>
+                    <div class='input-group mb-3'>
+                        <img src='data:image/gif;base64,{$pix->qrcode}' style='max-width:250px;margin:auto'>
+                    </div>'
                     <a class='btn btn-block btn-outline-info'
-                            onclick=redirect()>Confirmar Pagamento</a>'",
+                            onclick=redirectPix()>Confirmar Pagamento</a>'",
         ]);
     }
 
