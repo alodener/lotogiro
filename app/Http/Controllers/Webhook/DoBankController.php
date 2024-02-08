@@ -13,10 +13,6 @@ class DoBankController extends Controller
     public function processTransaction(Request $request)
     {
 
-        Log::info($request);
-        Log::info($request[0]['status']);
-        
-
         if($request[0]['status'] == "Pago" && $request[0]['api_token'] == ENV("TOKEN_RECEBIMENTO")) {
             $payload = $request;
             $data = new \stdClass;
