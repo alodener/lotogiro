@@ -18,7 +18,7 @@ class Wallet
         if($ACTIVE_GATEWAY == "doBank"){
             $typeStatus = [
                 'pending' => 0,
-                'Recebido' => 1,
+                'Pago' => 1,
                 'failure' => 3
             ];
         }else{
