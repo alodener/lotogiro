@@ -59,171 +59,134 @@
         </div>
 
         <div class="form-row">
-            <div class="form-group col-md-3">
-                <label for="startTime">{{ __('admin.lwTypeGame.startTime') }}</label>
-                <div class="input-group">
-                    <input wire:model="startTime" type="text"
-                        class="form-control @error('startTime') is-invalid @enderror" id="startTime" name="startTime"
-                        maxlength="200" value="{{ old('startTime', $typeGame->startTime ?? null) }}"
-                        placeholder="00:00">
-                    <div class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                    </div>
-                </div>
-                @error('startTime')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-
-            <div class="form-group col-md-3">
-                <label for="endTime">{{ __('admin.lwTypeGame.endTime') }}</label>
-                <div class="input-group">
-                    <input wire:model="endTime" type="text" class="form-control @error('endTime') is-invalid @enderror"
-                        id="endTime" name="endTime" maxlength="200"
-                        value="{{ old('endTime', $typeGame->endTime ?? null) }}" placeholder="00:00">
-                    <div class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                    </div>
-                </div>
-                @error('endTime')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div class="form-group col-md-3">
+            <div class="col-md-6 mr-md-5">
                 <label for="icon">Banner Mobile</label>
                 <input type="file" name="banner_mobile" class="form-control ">
             </div>
-            <div class="form-group text-center d-flex flex-column aling-items-end justify-content-end col-md-3 ml-auto">
-                <div></div>
-                <label >Ativar Em Recomendados</label>
-                <div>
-                <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="1" id="flexRadioDefault1" {{ $recomendado == 1 ? 'checked' : '' }}>
+            <div class="col-md-3 ">
+                <label>Ativar Em Recomendados</label>
+                <div class="ml-4">
+                    <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="1"
+                        id="flexRadioDefault1" {{ $recomendado==1 ? 'checked' : '' }}>
                     <label class="form-check-label" for="flexRadioDefault1">
                         Ativado </label>
                 </div>
-                <div>
-                <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="0" id="flexRadioDefault1" {{ $recomendado == 0 ? 'checked' : '' }}>
+                <div class="ml-4">
+                    <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="0"
+                        id="flexRadioDefault1" {{ $recomendado==0 ? 'checked' : '' }}>
                     <label class="form-check-label" for="flexRadioDefault2">
                         Desativado </label>
                 </div>
             </div>
-
-
-
-        </div>
-    </div>
-
-
-
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label for="category">Selecione uma Categoria</label>
-            <select wire:model="category" class="custom-select" id="category" name="category">
-                <option value="loto_facil">Loto Fácil</option>
-                <option value="quina">Quina</option>
-                <option value="mega_sena">Mega Sena</option>
-                <option value="dia_de_sorte">Dia De Sorte</option>
-                <option value="dupla_sena">Dupla Sena</option>
-                <option value="loto_mania">Loto Mania</option>
-                <option value="time_mania">Time Mania</option>
-                <option value="dupla_sena_dobrada">Dupla Sena Dobrada</option>
-                <option value="lotinha_corujao">Lotinha Corujão</option>
-                <option value="mais_milionaria">Mais Milionaria</option>
-                <option value="loto_one">Loto ONE</option>
-                <option value="loto_quatorze">Loto 14</option>
-                <option value="kino_loto">Kino Loto</option>
-                <option value="rekino_loto">Rekino Loto</option>
-                <option value="chanchito_Loto">Chanchito Loto</option>
-                <option value="easy_power_loto">Easy Power Loto</option>
-                <option value="chao_jefe_loto">Chao Jefe Loto</option>
-                <option value="chispaloto_segundo">Chispaloto Segundo</option>
-                <option value="mega_kino">Mega Kino</option>
-                <option value="mega_lotto">Mega Lotto</option>
-
-            </select>
-        </div>
-        <div class="form-group col-md-3">
-            <label for="icon">Selecione um Icone</label>
-            <select wire:model="icon" class="custom-select" id="icon" name="icon">
-                <option value="lotofacil.png">Loto Fácil</option>
-                <option value="quina.png">Quina</option>
-                <option value="megasena.png">Mega Sena</option>
-                <option value="diadesorte.png">Dia De Sorte</option>
-                <option value="duplasena.png">Dupla Sena</option>
-                <option value="lotomania.png">Loto Mania</option>
-                <option value="timemania.png">Time Mania</option>
-                @foreach(\App\Models\Layout_icons_sidebar::get() as $icons_sidebar)
-                <option value="{{$icons_sidebar->url}}">{{$icons_sidebar->nome}}</option>
-
-                @endforeach
-
-            </select>
-        </div>
-        <div class="form-group col-md-3">
-            <label for="icon">Banner PC *APARECE EM RECOMENDADOS*</label>
-            <input type="file" name="banner_pc" class="form-control ">
         </div>
 
-    </div>
 
 
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="category">Selecione uma Categoria</label>
+                <select wire:model="category" class="custom-select" id="category" name="category">
+                    <option value="loto_facil">Loto Fácil</option>
+                    <option value="quina">Quina</option>
+                    <option value="mega_sena">Mega Sena</option>
+                    <option value="dia_de_sorte">Dia De Sorte</option>
+                    <option value="dupla_sena">Dupla Sena</option>
+                    <option value="loto_mania">Loto Mania</option>
+                    <option value="time_mania">Time Mania</option>
+                    <option value="dupla_sena_dobrada">Dupla Sena Dobrada</option>
+                    <option value="lotinha_corujao">Lotinha Corujão</option>
+                    <option value="mais_milionaria">Mais Milionaria</option>
+                    <option value="loto_one">Loto ONE</option>
+                    <option value="loto_quatorze">Loto 14</option>
+                    <option value="kino_loto">Kino Loto</option>
+                    <option value="rekino_loto">Rekino Loto</option>
+                    <option value="chanchito_Loto">Chanchito Loto</option>
+                    <option value="easy_power_loto">Easy Power Loto</option>
+                    <option value="chao_jefe_loto">Chao Jefe Loto</option>
+                    <option value="chispaloto_segundo">Chispaloto Segundo</option>
+                    <option value="mega_kino">Mega Kino</option>
+                    <option value="mega_lotto">Mega Lotto</option>
 
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="icon">Selecione um Icone</label>
+                <select wire:model="icon" class="custom-select" id="icon" name="icon">
+                    <option value="lotofacil.png">Loto Fácil</option>
+                    <option value="quina.png">Quina</option>
+                    <option value="megasena.png">Mega Sena</option>
+                    <option value="diadesorte.png">Dia De Sorte</option>
+                    <option value="duplasena.png">Dupla Sena</option>
+                    <option value="lotomania.png">Loto Mania</option>
+                    <option value="timemania.png">Time Mania</option>
+                    @foreach(\App\Models\Layout_icons_sidebar::get() as $icons_sidebar)
+                    <option value="{{$icons_sidebar->url}}">{{$icons_sidebar->nome}}</option>
 
+                    @endforeach
 
-    @if(Route::currentRouteName() == 'admin.bets.type_games.edit')
-    <div class="row my-2">
-        <div class="col-md-12">
-            <a href="{{route('admin.bets.type_games.values.create', ['type_game' => $typeGameId ?? null])}}">
-                <button type="button" class="btn text-white btn-info mb-3">{{ trans('admin.lwTypeGame.addVal') }}
-                </button>
-            </a>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="icon">Banner PC *APARECE EM RECOMENDADOS*</label>
+                <input type="file" name="banner_pc" class="form-control ">
+            </div>
+
         </div>
-        <div class="table-responsive">
-            <table class="table table-striped table-hover table-sm" id="type_game_values_table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>{{ trans('admin.lwTypeGame.doz') }}</th>
-                        <th>{{ trans('admin.lwTypeGame.mult') }}</th>
-                        <th>{{ trans('admin.lwTypeGame.maxReais') }}</th>
-                        <th>{{ trans('admin.lwTypeGame.maxRepet') }}</th>
-                        <th>{{ trans('admin.lwTypeGame.creat') }}</th>
-                        <th style="width: 80px">{{ trans('admin.lwTypeGame.action') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    @endif
-    <div class="row">
-        <div class="col-md-12">
-            @if(isset($matriz))
-            <h3>Exemplo:</h3>
+
+
+
+
+
+        @if(Route::currentRouteName() == 'admin.bets.type_games.edit')
+        <div class="row my-2">
+            <div class="col-md-12">
+                <a href="{{route('admin.bets.type_games.values.create', ['type_game' => $typeGameId ?? null])}}">
+                    <button type="button" class="btn text-white btn-info mb-3">{{ trans('admin.lwTypeGame.addVal') }}
+                    </button>
+                </a>
+            </div>
             <div class="table-responsive">
-                <table class="table  text-center">
-                    <tbody>
-                        @foreach($matriz as $lines)
+                <table class="table table-striped table-hover table-sm" id="type_game_values_table">
+                    <thead>
                         <tr>
-                            @foreach($lines as $cols)
-                            <td>
-                                <button type="button" class="btn btn-warning btn-beat-number">{{$cols}}</button>
-                            </td>
-                            @endforeach
+                            <th>Id</th>
+                            <th>{{ trans('admin.lwTypeGame.doz') }}</th>
+                            <th>{{ trans('admin.lwTypeGame.mult') }}</th>
+                            <th>{{ trans('admin.lwTypeGame.maxReais') }}</th>
+                            <th>{{ trans('admin.lwTypeGame.maxRepet') }}</th>
+                            <th>{{ trans('admin.lwTypeGame.creat') }}</th>
+                            <th style="width: 80px">{{ trans('admin.lwTypeGame.action') }}</th>
                         </tr>
-                        @endforeach
+                    </thead>
+                    <tbody>
                     </tbody>
                 </table>
             </div>
-            @endif
+        </div>
+        @endif
+        <div class="row">
+            <div class="col-md-12">
+                @if(isset($matriz))
+                <h3>Exemplo:</h3>
+                <div class="table-responsive">
+                    <table class="table  text-center">
+                        <tbody>
+                            @foreach($matriz as $lines)
+                            <tr>
+                                @foreach($lines as $cols)
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-beat-number">{{$cols}}</button>
+                                </td>
+                                @endforeach
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @endif
+            </div>
         </div>
     </div>
-</div>
 
 </div>
 
