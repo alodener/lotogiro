@@ -86,6 +86,7 @@
             <div class="form-group col-md-3">
                 <label for="category">Selecione uma Categoria</label>
                 <select wire:model="category" class="custom-select" id="category" name="category">
+                <option></option>
                     <option value="loto_facil">Loto Fácil</option>
                     <option value="quina">Quina</option>
                     <option value="mega_sena">Mega Sena</option>
@@ -112,6 +113,8 @@
             <div class="form-group col-md-3">
                 <label for="icon">Selecione um Icone</label>
                 <select wire:model="icon" class="custom-select" id="icon" name="icon">
+                <option></option>
+
                     <option value="lotofacil.png">Loto Fácil</option>
                     <option value="quina.png">Quina</option>
                     <option value="megasena.png">Mega Sena</option>
