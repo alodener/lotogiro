@@ -131,7 +131,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+
+
+        dd($request->all());
         if(!auth()->user()->hasPermissionTo('create_user')){
             abort(403);
         }

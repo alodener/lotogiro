@@ -8,6 +8,8 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\LogUsuario;
 use Auth;
+use Spatie\Permission\Models\Role;
+
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -55,7 +57,7 @@ HTML);
 
     protected function create(Request $request)
     {   
-
+        
            
         $this->validate(request(), [
             'name' => ['required', 'string', 'max:255'],
@@ -67,21 +69,28 @@ HTML);
         ]);
  
 
-        try {
+        try {   
             
                 $phone = Str::of($request->phone)->replaceMatches('/[^A-Za-z0-9]++/', '');
                 $hashed = Hash::make($request->password);
-            
+
+                $userRoles[] = Role::whereId(13)->first();
+
+
+
+
                 $user = User::create([
                     'name' => $request->name,
                     'last_name' => $request->last_name,
                     'email' => $request->email,
                     'indicador' => $request->indicator,
                     'password' => $hashed,
-                    'type_client' => 1,
+                    'type_client' => null,
                     'is_active' => 1,
                     'contact_made' => 0
                 ]);
+                
+                $user->syncRoles($userRoles);
 
                 Client::create([
                     'name' => $request->name,
