@@ -1035,6 +1035,8 @@
 
         var swiper = new Swiper('.swiper', {
             slidesPerView: 3,
+            loop: true,
+            autoplay:true,
             navigation: {
                 nextEl: '.swiper-next',
                 prevEl: '.swiper-prev',
