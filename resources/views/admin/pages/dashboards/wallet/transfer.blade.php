@@ -3,7 +3,7 @@
 @section('title', 'Carteira - Transferência')
 
 @section('content')
-    <div class="row bg-white p-3">
+    <div class="row 
         <div class="col-md-12">
             @livewire('pages.dashboards.wallet.transfer.table')
         </div>

@@ -3,7 +3,7 @@
 @section('title', 'Usuários Indicados por você')
 
 @section('content')
-    <div class="row bg-white p-3">
+    <div class="d-flex p-3"> 
         @livewire('pages.dashboards.user.indicated')
     </div>
 @endsection
@@ -13,14 +13,20 @@
         .src-image {
             display: none;
         }
+
+        .card:hover{
+            border: 1px solid #A3D712;
+
+        }
         .card {
+            height: 300px;
             overflow: hidden;
             position: relative;
-            border: 1px solid #CCC;
+            border: 1px solid #212425;
             border-radius: 8px;
             text-align: center;
             padding: 0;
-            background-color: #284c79;
+            background-color: #212425;
             color: rgba(255,255,255,1);
         }
         .card .header-bg {

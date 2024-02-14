@@ -19,27 +19,43 @@ use PHPUnit\Exception;
 use App\Helper\GameHelper;
 use App\Models\Competition;
 use App\Models\Commission;
-
+use App\Models\Layout_Button;
+use App\Models\Layout_carousel_grande;
+use App\Models\Layout_icons_sidebar;
 
 class GameController extends Controller
 {
     public function betIndex(User $user, Bet $bet = null)
     {
+        $layout_button = Layout_Button::all();
+            $layout_carousel_grande = Layout_carousel_grande::all();
+            $layout_icons_sidebar = Layout_icons_sidebar::all();
+        
+            $allCategories = TypeGame::all();
+
+        $TypeGamesRoll = TypeGame::all()
+            ->groupBy('category')
+            ->map(function ($group) {
+                return $group->first();
+            });
+
         $typeGames = TypeGame::get();
-        return view('site.bets.games.bets.index', compact('user', 'bet', 'typeGames'));
+        return view('site.bets.games.bets.index', compact('user', 'bet', 'typeGames','layout_button','layout_carousel_grande','layout_icons_sidebar','allCategories','TypeGamesRoll'));
     }
 
     public function betStore(User $user)
     {
 
         try {
+
+            
             
             $bet = new Bet();
             $bet->user_id = $user->id;
             $bet->save();
 
             //session()->flash('success', 'Aposta criada com sucesso!');
-            return redirect()->route('games.bet', ['user' => $user->id, 'bet' => $bet->id]);
+            return redirect()->route('games.bet', ['user' => $user->id, 'bet' => $bet->id,]);
         } catch (Exception $exception) {
             session()->flash('error', config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro no processo!');
             return redirect()->route('games.bet', ['user' => $user->id, 'bet' => $bet->id]);

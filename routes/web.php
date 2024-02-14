@@ -27,9 +27,11 @@ use App\Http\Controllers\Admin\Pages\Dashboards\RankingController;
 use App\Http\Controllers\Admin\Pages\Settings\QualificationController;
 use App\Http\Controllers\Admin\Pages\Reports\ReportController;
 use App\Http\Controllers\Admin\Pages\Settings\SystemController;
+use App\Http\Controllers\Admin\Pages\Settings\LayoutController;
 use App\Http\Controllers\Admin\Pages\Settings\LogosController;
 use App\Http\Controllers\Admin\Pages\Bets\BichaoController;
 use App\Http\Controllers\Admin\Pages\Dashboards\TutoriaisController;
+use App\Http\Controllers\CategoriaController;
 
 // recuperar senha controller
 use App\Http\Controllers\ForgotPasswordController;
@@ -58,7 +60,9 @@ Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 Route::get('/updateStatusPaymentCron/2de1ce3ddcb20dda6e6ea9fba8031de4/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPaymentCron');
 
-Route::get('/', [LoginController::class, 'showLoginForm'])->middleware('guest:admin');
+Route::get('/', [HomeController::class, 'index'])->middleware('guest:admin');
+Route::get('admin/categoria/{typeGame}', [CategoriaController::class, 'getCategories']);
+Route::get('admin/categoriaavulso/{typeGame}', [CategoriaController::class, 'getCategoriesavulso']);
 
 Route::middleware('guest:web')->group(function () {
     Route::prefix('games')->name('games.')->group(function () {
@@ -66,18 +70,19 @@ Route::middleware('guest:web')->group(function () {
         Route::post('/{user}/store', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'betStore'])->name('bet.store');
         Route::post('/{user}/{bet?}/update', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'betUpdate'])->name('bet.update');
         Route::get('/{user}/{bet}/{typeGame}/game-create', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'gameCreate'])->name('bet.game.create');
+
     });
 });
 
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
-        Route::get('/login', [LoginController::class, 'showLoginForm'])->name('get.login');
+        //Route::get('/login', [LoginController::class, 'showLoginForm'])->name('get.login');
         Route::post('/login', [LoginController::class, 'login'])->name('post.login')->middleware('is.active');;
     });
     Route::middleware(['auth:admin', 'check.openModal'])->group(function () {
         Route::get('change-locale/{locale}', [HomeController::class, 'changeLocale'])->name('changeLocale');
-
         Route::get('/home', [HomeController::class, 'index'])->name('home');
+        Route::get('/findcategoria/{typeGame}', [HomeController::class, 'FindCategoria'])->name('findcategoria');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::prefix('dashboards')->name('dashboards.')->group(function () {
             Route::prefix('sales')->name('sales.')->group(function () {
@@ -223,6 +228,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('clients/list/select', [ClientController::class, 'listSelect'])->name('clients.list.select');
 
             Route::resource('systems', SystemController::class);
+            Route::resource('layout', LayoutController::class);
+
             Route::resource('logos', LogosController::class);
             
 

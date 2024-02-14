@@ -3,7 +3,7 @@
 @section('title', trans('admin.validate-games.listing-page-title'))
 
 @section('content')
-    <div class="row bg-white p-3">
+    <div class="row  p-3">
         <div class="col-md-12">
             @error('success')
             @push('scripts')

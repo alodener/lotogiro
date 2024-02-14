@@ -1,158 +1,186 @@
-@extends('admin.layouts.login')
+<div class="container-login100">
 
-@section('title', trans('admin.register.page-title'))
+    @if (session('SenhaRecuperada'))
+    <div class="alert alert-success" role="alert">
+        {{ session('SenhaRecuperada') }}
+    </div>
+    @endif
 
-@section('content')
-    <style type="text/css">
-        .login-page,
-        .register-page {
-          align-items: center;
-          background-image: url(/admin/images/painel/super-lotogiro03.jpg);
-          background-size: cover;
-          display: flex;
-          flex-direction: column;
-          height: 100vh;
-          justify-content: center;
-        }
-    </style>
-    <div class="col-lg-6 col-md-12 mt-5">
-        <div class="login-logo">
+    @if (session('error'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('error') }}
+    </div>
+    @endif
+    <div class="wrap-login100">
 
-            <img src="{{ asset(env('logo')) }}" alt="" width="300" height="150">
+        <div class="card-body login-card-body" style="border-radius:10px;">
+            @if (session('success'))
+            <div class="col-md-12 alert alert-success" style=" margin-right:0%;" role="alert">
+                {{ session('success') }}
+            </div>
+            @endif
+            <div class="login-logo mt-md-5">
 
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="col-md-12 px-4">
-                    @error('success')
-                    <div class="alert alert-success alert-dismissible fade show">
-                        {{ $message }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    @enderror
-                    @error('error')
-                    <div class="alert alert-default-danger alert-dismissible fade show">
-                        {{ $message }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    @enderror
-                    @if($indicator->name)
-                    <div class="alert alert-default-primary text-center text-bold fade show">
-                        {{ trans('admin.register.referred-by') }} {{ $indicator->name }}
-                    </div>
-                    @endif
+                <img src="{{ App\Helper\Configs::getConfigLogo() }}" alt="" width="150" height="150">
+
+            </div>
+            <div class="col-md-12 px-4">
+                @error('success')
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ $message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <h3 class="login-box-msg">{{ trans('admin.register.page-header') }}</h3>
+                @enderror
+                @if (session('erro'))
+                <div class="col-md-12 alert alert-danger" style=" margin-right:0%;" role="alert">
+                    {{ session('erro') }}
+                </div>
+                @endif
+                @error('error')
+                <div class="alert alert-default-danger alert-dismissible fade show">
+                    {{ $message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @enderror
+            </div>
+            <h3 class="login-box-msg" style="color:#A3D712">Faça seu cadastro</h3>
 
-                <form method="POST" action="{{ route('register') }}">
-                    @csrf
-                    <input type="hidden" name="indicator" id="indicator" value="{{ $indicator->id }}">
-                    <div class="form-group row">
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+                <input type="hidden" name="indicator" id="indicator" value="1">
 
-                        <div class="col-sm-12 col-md-12">
-                            <label for="email" class="col-form-label text-md-left">{{ trans('admin.register.email-label') }}</label>
-                            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
-                            @if ($errors->has('email'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
-                        </div>
+                <div class="wrap-input100">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fa fa-user mr-2" aria-hidden="true"></i>
 
-                        <div class="col-sm-12 col-md-6">
-                            <label for="name" class="col-form-label text-md-left">{{ trans('admin.register.name-label') }}</label>
-                            <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
-                            @if ($errors->has('name'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-
-                        <div class="col-sm-12 col-md-6">
-                            <label for="last_name" class="col-form-label text-md-left">{{ trans('admin.register.last-name-label') }}</label>
-                            <input id="last_name" type="text" class="form-control{{ $errors->has('last_name') ? '
-                            is-invalid' : '' }}" name="last_name" value="{{ old('last_name') }}" required autofocus>
-                            @if ($errors->has('last_name'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('last_name') }}</strong>
-                                </span>
-                            @endif
-                        </div>
+                        <input type="name" class="form-control input100" name="name" placeholder="Seu Nome">
                     </div>
 
-                    
+                </div>
+                <div class="wrap-input100">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fa fa-user mr-2" aria-hidden="true"></i>
 
-                    <div class="form-group row">
+                        <input type="text" class="form-control input100" name="last_name" placeholder="Sobrenome">
+                    </div>
 
-                        <div class="col-sm-12 col-md-6">
-                            <label for="pix" class="col-form-label text-md-left">{{ trans('admin.register.pix-label') }}</label>
-                            <input id="pix" type="text" class="form-control" name="pix" value="" autofocus placeholder="(opcional)">
+                </div>
+                <div class="wrap-input100">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fa fa-user mr-2" aria-hidden="true"></i>
+
+                        <input type="email" class="form-control @error('email') is-invalid @enderror input100"
+                            name="email" placeholder="E-mail">
+                    </div>
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        {{ $message }}
+                    </span>
+                    @enderror
+                </div>
+                <div class="d-flex ">
+
+                    <div class="wrap-input100 mr-2">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa fa-asterisk mr-2" aria-hidden="true"></i>
+
+                            <input type="password" class="form-control @error('password') is-invalid @enderror input100"
+                                name="password" placeholder="Senha">
+
                         </div>
+
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="wrap-input100">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa fa-asterisk mr-2" aria-hidden="true"></i>
+
+                            <input type="password" class="form-control @error('password') is-invalid @enderror input100"
+                                name="password" placeholder="Confirme sua senha">
+
+                        </div>
+
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    </div>
+
+                    <div class="wrap-input100">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fa fa-mobile mr-3" aria-hidden="true"></i>
+
+                            <input type="text" id="phone" class="form-control  input100" name="phone"
+                                placeholder="Telefone">
+
+                        </div>
+
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="wrap-input100">
+                        <div class="d-flex align-items-center">
+                            <i class="fa fa-university mr-2" aria-hidden="true"></i>
+
+                            <input type="text" id="pix" class="form-control  input100" name="pix"
+                                placeholder="Sua chave PIX">
+
+                        </div>
+
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="row">
                         
-                        <div class="col-sm-6 col-md-6">
-                            <label for="phone" class="col-form-label text-md-left">{{ trans('admin.register.phone-label') }}</label>
-                            <input id="phone" type="text"
-                                   class="form-control{{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                                   name="phone" value="{{ old('phone') }}" required>
-                            @if ($errors->has('phone'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('phone') }}</strong>
-                                </span>
-                            @endif
+                        <div class="col-12 mt-3">
+                            <button type="submit" class="login100-form-btn login">{{ trans('admin.pagesF.cadastrar')
+                                }}</button>
                         </div>
                     </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-12 col-md-6">
-                            <label for="password" class="col-form-label text-md-left">{{ trans('admin.register.password-label') }}</label>
-                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-                            @if ($errors->has('password'))
-                                <span class="invalid-feedback">
-                                <strong>{{ $errors->first('password') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-
-                        <div class="col-sm-12 col-md-6">
-                            <label for="password-confirm" class="col-form-label text-md-left">{{ trans('admin.register.confirm-password-label') }}</label>
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-
-                        </div>
-                    </div>
+            </form>
 
 
-                    @if(config('settings.reCaptchStatus'))
-                        <div class="form-group">
-                            <div class="col-sm-6 col-sm-offset-4">
-                                <div class="g-recaptcha" data-sitekey="{{ config('settings.reCaptchSite') }}"></div>
-                            </div>
-                        </div>
-                    @endif
-
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary btn-block">
-                                {{ trans('admin.register.button') }}
+            <div class="row">
+                <div class="col-sm-12">
+                    <p class="mb-1 text-bold">
+                        Já é cadastrado ?<br>
+                        <button class="btn btn-block btn-info right login" onclick="toggleModal()" href="">
+                            {{ trans('admin.login-button') }}
                             </button>
-                        </div>
-                    </div>
+                    </p>
 
-                </form>
+                    <a href="https://wa.me/558196826967?text=Olá, poderia me ajudar?"
+                        class="btn btn-block btn-success login" title="Precisa de ajuda?" target="_blank">
+                        <i style="border:none;" class="fa fa-whatsapp"></i> {{ trans('admin.pagesF.precisaAjuda') }}
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-@endsection
 
 <script src="{{asset('admin/layouts/plugins/jquery/jquery.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         let selector = document.getElementById("phone");
         Inputmask("(99) 9 9999-9999").mask(selector);
     });
