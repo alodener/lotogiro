@@ -26,12 +26,13 @@
          @empty
              <div class="col-sm-12">
                 <h4 class="my-4">{{ trans('admin.lwIndicated.nenhumaInd') }} </h4>
-             </div>
-         @endforelse
-     </div>
-     <div class="row">
-         <div class="col-sm-12">
-            {{ $indicateds->links() }}
+            </div>
+        @endforelse
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            {{ $indicatedsArray->links() }}
         </div>
     </div>
 </div>

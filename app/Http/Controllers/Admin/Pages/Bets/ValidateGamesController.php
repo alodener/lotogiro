@@ -92,10 +92,6 @@ class ValidateGamesController extends Controller
         $value = $request->valor;
         $ID_VALUE = auth()->user()->indicador;
         try {
-            $date = Carbon::now();
-            if ($date->hour >= 20 && $date->hour < 21) {
-                throw new \Exception('Banca Fechada!');
-            }
             $games = $validate_game->games;
             
           $valorCalculado = 0;
@@ -107,6 +103,13 @@ class ValidateGamesController extends Controller
                 $competition = Competition::find($game->competition_id);
                 $competA = substr($competition->number, -1);
                 $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+
+                $now = Carbon::now();
+                $sortDateTime = Carbon::parse($competition->sort_date);
+        
+                if ($now->gt($sortDateTime)) {
+                    throw new \Exception('Apostas encerradas para o sorteio atual.');
+                }
     
                 if ( $typeGameCategory == 'dupla_sena' && $competA == "A") {
                     if($valorCalculado > 0) {
