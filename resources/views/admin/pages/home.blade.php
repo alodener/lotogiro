@@ -191,13 +191,14 @@
                                     value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
                             </td>
                         </tr>
-
+                         @if($User['type_client'] != 1)
                         <tr>
                             <td>Jogo Avulso</td>
                             <td> <sl-copy-button class="icon-copy"
                                     value="{{ env('APP_URL') }}/games/{{ auth()->user()->id }}"></sl-copy-button>
                             </td>
                         </tr>
+                    @endif
                         <tr>
                             <td>Minhas Indicações</td>
                             <td><a href="{{ env('APP_URL') }}/admin/settings/indicated"><i
