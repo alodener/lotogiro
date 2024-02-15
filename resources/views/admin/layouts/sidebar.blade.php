@@ -96,7 +96,7 @@
                 </li>
                 @endif
                 @can('read_game')
-                
+
 
                 @canany(['read_sale', 'read_gain'])
                 <li
@@ -495,17 +495,17 @@
 
                 @endcanany
                
-            </li> 
-            <li class="nav-item nav-group-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
-                <a href="{{route('admin.dashboards.help.index')}}" class="nav-link @if(request()->is('admin/settings/*')) active @endif">
-                <i class="fas fa-book-open nav-icon"></i>
-                    <p class="title-link">
-                        {{ trans('admin.menu.tutoriais') }}
-                    </p>
-                </a>
+            </li>
+            <div class="nav-item nav-group-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
+                    <a href="{{route('admin.dashboards.help.index')}}"
+                        class="nav-link @if(request()->is('admin/settings/*')) active @endif">
+                        <i class="fas fa-book-open nav-icon"></i>
+                        <p class="title-link" style="margin:0px;">
+                            {{ trans('admin.menu.tutoriais') }}
+                        </p>
+                    </a>
 
-</li>
-
+                </div>
             <!-- <li class="nav-link">
                 <a href="{{route('admin.dashboards.wallet.index')}}"
                     class="nav-link  @if(request()->is('admin/dashboards/wallet/index*')) active @endif">

@@ -85,7 +85,7 @@ HTML);
                     'email' => $request->email,
                     'indicador' => $request->indicator,
                     'password' => $hashed,
-                    'type_client' => null,
+                    'type_client' => 1,
                     'is_active' => 1,
                     'contact_made' => 0
                 ]);

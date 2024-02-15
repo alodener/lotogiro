@@ -112,7 +112,7 @@
 
         @if(auth()->user())
         <!-- Se for usuario aparece -->
-        @if($User['type_client'] == null)
+        @if($User['type_client'] == 1)
         <div class="container-fluid d-flex align-items-center justify-content-center card-indica mt-2 "
             href="#collapseExample2" data-toggle="collapse" role="button" aria-expanded="false"
             aria-controls="collapseExample" style="border-bottom:1px solid #A3D712;">
@@ -141,7 +141,7 @@
                                     value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
                             </td>
                         </tr>
-                        @if($User['type_client'] == null)
+                        @if($User['type_client'] == 1)
 
 
                         <tr>
@@ -161,7 +161,7 @@
             </div>
         </div>
         @endif
-        @if($User['type_client'] == 1)
+        @if($User['type_client'] != 1)
 
         <div class="container-fluid d-flex align-items-center justify-content-center card-indica mt-2 "
             href="#collapseExample" data-toggle="collapse" role="button" aria-expanded="false"
@@ -191,14 +191,14 @@
                                     value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
                             </td>
                         </tr>
-                        @if($User['type_client'] == 1)
-
+                         @if($User['type_client'] != 1)
                         <tr>
                             <td>Jogo Avulso</td>
                             <td> <sl-copy-button class="icon-copy"
                                     value="{{ env('APP_URL') }}/games/{{ auth()->user()->id }}"></sl-copy-button>
                             </td>
                         </tr>
+                    @endif
                         <tr>
                             <td>Minhas Indicações</td>
                             <td><a href="{{ env('APP_URL') }}/admin/settings/indicated"><i
@@ -207,7 +207,6 @@
 
                             </td>
                         </tr>
-                        @endif
 
 
 
