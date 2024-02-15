@@ -134,7 +134,6 @@ class UserController extends Controller
     {   
 
 
-        dd($request->all());
         if(!auth()->user()->hasPermissionTo('create_user')){
             abort(403);
         }
