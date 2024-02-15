@@ -112,7 +112,7 @@
 
         @if(auth()->user())
         <!-- Se for usuario aparece -->
-        @if($User['type_client'] == 1)
+        @if($User['type_client'] == null)
         <div class="container-fluid d-flex align-items-center justify-content-center card-indica mt-2 "
             href="#collapseExample2" data-toggle="collapse" role="button" aria-expanded="false"
             aria-controls="collapseExample" style="border-bottom:1px solid #A3D712;">
@@ -141,7 +141,7 @@
                                     value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
                             </td>
                         </tr>
-                        @if($User['type_client'] != 1)
+                        @if($User['type_client'] == null)
 
 
                         <tr>
@@ -161,7 +161,7 @@
             </div>
         </div>
         @endif
-        @if($User['type_client'] != 1)
+        @if($User['type_client'] == 1)
 
         <div class="container-fluid d-flex align-items-center justify-content-center card-indica mt-2 "
             href="#collapseExample" data-toggle="collapse" role="button" aria-expanded="false"
@@ -191,7 +191,7 @@
                                     value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
                             </td>
                         </tr>
-                        @if($User['type_client'] != 1)
+                        @if($User['type_client'] == 1)
 
                         <tr>
                             <td>Jogo Avulso</td>
@@ -269,8 +269,37 @@
     </div>
 
     <!-- Todos os jogos -->
-
     @if(\App\Models\TypeGame::count() > 0)
+    <div class="container mt-5">
+        <div class="d-flex swipe-controles align-items-center mb-2">
+            <h1 style="color:white">Todos os Jogos</h1>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-center">
+            @php
+            $typeGames = \App\Models\TypeGame::get();
+            $count = 0;
+            @endphp
+
+            @foreach($typeGames as $typeGame)
+            <div class="d-flex p-2 box-imgs">
+                <a href="{{ route('admin.bets.games.create', ['type_game' => $typeGame->id]) }}"
+                    class="hover-container" >
+                    <img class="img-todos-jogos"  style="border-radius: 10px; width: 100%; height: 100%; object-fit: cover;" src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") :
+                    asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}"
+                    alt="{{ $typeGame->name }} " >
+                    <div class="hover-content">
+                        <p>{{ $typeGame->name }}</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+
+           
+            @endforeach
+        @endif
+     
+    <!-- @if(\App\Models\TypeGame::count() > 0)
     <div class="container mt-5">
         <div class="d-flex swipe-controles align-items-center mb-2">
             <h1 style="color:white">Todos os Jogos</h1>
@@ -327,8 +356,8 @@
 
             </p>
             @endif
-        </div>
-        @if(\App\Models\TypeGame::count() > 12)
+        </div> -->
+        <!-- @if(\App\Models\TypeGame::count() > 12)
 
         <div class="d-flex justify-content-center align-items-center mt-5">
             <button class="btn btn-primary btn-collapse" data-toggle="collapse" href="#collapseExampledd" role="button"
@@ -336,13 +365,13 @@
                 Ver Mais
             </button>
         </div>
-        @endif
+        @endif -->
 
     </div>
     @endif
 
 
-    <!-- Bichao da sorte -->
+    <!-- Bichao da sorte
 
     <div class="container mt-5">
         <div class="d-flex swipe-controles align-items-center mb-2">
@@ -509,8 +538,169 @@
          
         </div>
        
-    </div>
+    </div> -->
 
+   <!-- Bichao da sorte -->
+
+   <div class="container mt-5">
+        <div class="d-flex swipe-controles align-items-center mb-2">
+            <h1 style="color:white">Bichão da Sorte</h1>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-center">
+                                
+
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/m65kWYw/Milhar-165-x-192-px.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Milhar</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/centena" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/Wgtc5bN/Centena-165-x-192-px.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Centena</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/dezena" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/GHf0xCL/1.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Dezena</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/group" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/cNvL0Ky/2.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Grupo</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/milhar/centena" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/yN3GZHt/8.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Milhar/Centena</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/terno/dezena" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/wK8SCfb/3.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Terno/Dezena</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/duque/dezena" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/984j3Nv/4.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Duque/Dezena</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/quina/grupo" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/M6PjL5v/6.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Quina/Grupo</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/quadra/grupo" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/N2WD7Pg/7.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Quadra/Grupo</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/terno/grupo" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/7yMMg0L/8.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Terno/Grupo</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/duque/grupo" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/HdN58PM/9.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Duque/Grupo</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/unidade" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/svXBSb3/10.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Unidade</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+            <p>
+            <div class="collapse" id="collapseExampleddd">
+                <div class="d-flex">
+                <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/milhar/invertida" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/RH22Q2X/11.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Milhar/Inverida</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div> <div class="d-flex p-2 box-imgs">
+                <a href="/admin/bets/bichao/centena/invertida" class="hover-container">
+                    <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/nssBBTy/12.png"
+                        alt="{{ $typeGame->name }}">
+                    <div class="hover-content">
+                        <p>Centena/Invertida</p>
+                        <button class="btn btn-primary">Jogar Agora</button>
+                    </div>
+                </a>
+            </div>
+                </div>
+            </div>
+
+            </p>
+        </div>
+     
+        </div>
+       
+    </div>
 
 
     
@@ -845,6 +1035,8 @@
 
         var swiper = new Swiper('.swiper', {
             slidesPerView: 3,
+            loop: true,
+            autoplay:true,
             navigation: {
                 nextEl: '.swiper-next',
                 prevEl: '.swiper-prev',

@@ -2814,8 +2814,9 @@ font-size: 10px;
 .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #ffffff;
-  background-color: #0062cc;
-  border-color: #005cbf;
+  background:#A3D712;
+  border-color: #A3D712;
+  outline-style: none;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus,

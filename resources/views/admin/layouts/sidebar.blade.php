@@ -23,7 +23,7 @@
 
                 <!-- VISUALIZAÇÃO LIVRE A TODOS -->
                 <li
-                    class="nav-item nav-group-item has-treeview menu-open @if(request()->is('admin/bets*') && !request()->is('admin/bets/draws*') && !request()->is('admin/bets/comissions*')) menu-open @endif">
+                    class="nav-item nav-group-item has-treeview  @if(request()->is('admin/bets*') && !request()->is('admin/bets/draws*') && !request()->is('admin/bets/comissions*')) menu-open @endif">
                     <a href="#" class="nav-link nott">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" width="21"
                             viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -494,6 +494,18 @@
                 </ul>
 
                 @endcanany
+               
+            </li> 
+            <li class="nav-item nav-group-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
+                <a href="{{route('admin.dashboards.help.index')}}" class="nav-link @if(request()->is('admin/settings/*')) active @endif">
+                <i class="fas fa-book-open nav-icon"></i>
+                    <p class="title-link">
+                        {{ trans('admin.menu.tutoriais') }}
+                    </p>
+                </a>
+
+</li>
+
             <!-- <li class="nav-link">
                 <a href="{{route('admin.dashboards.wallet.index')}}"
                     class="nav-link  @if(request()->is('admin/dashboards/wallet/index*')) active @endif">
