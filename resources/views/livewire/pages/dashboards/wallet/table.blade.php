@@ -128,6 +128,31 @@
 
 
     }
+
+    @media (max-width: 442px) {
+        .card-master-bottom {
+            padding: 10px !important;
+            min-width: 130px;
+
+
+        }
+
+        .card-master-bottom h1 {
+            font-size: 25px;
+
+        }
+
+        .card-master-bottom p {
+            color: #a3d712;
+            font-weight: bold;
+        }
+
+        .btn-green {
+            font-size: 10px;
+        }
+
+
+    }
 </style>
 
 @push('scripts')

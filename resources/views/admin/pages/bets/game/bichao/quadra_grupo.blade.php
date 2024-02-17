@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col animal-wrapper">
+                <div class="d-flex flex-wrap justify-content-center align-items-center">
                     <div ion-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
                         <label class="btn btn-outline-primary animal-container-choose">
                             <div class="animal-container">
