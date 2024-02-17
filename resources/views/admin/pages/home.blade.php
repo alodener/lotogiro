@@ -94,7 +94,7 @@
                 <!-- {{$TypeGamesRoll}} -->
                 @foreach($TypeGamesRoll as $typeGame)
                 <div class="swiper-slide d-flex flex-column category-info"
-                    data-type-game-id="{{ $typeGame->category }}">
+                    data-type-game-id="{{ $typeGame->name }}">
                     <div class="icon-container">
                         <img class="img-bold"
                             src="{{ $typeGame->icon ? asset('/storage/' . str_replace('.png', '-bold.png', $typeGame->icon)) : asset('/storage/megasena-bold.png') }}"
@@ -102,7 +102,7 @@
 
                     </div>
                     <div>
-                        <p class="txtnav">{{ ucwords(str_replace('_', ' ', $typeGame->category)) }}</p>
+                        <p class="txtnav">{{ ucwords(str_replace('_', ' ', $typeGame->name)) }}</p>
                     </div>
                 </div>
                 @endforeach
