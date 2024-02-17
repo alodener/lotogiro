@@ -38,7 +38,7 @@
             {{ trans('admin.bichao.fatormult5') }}
             </p>
 
-            <p>{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
+            <p id="game">{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
         </div>
     </div>
     <hr />
@@ -930,14 +930,14 @@
         </div>
 
         <div>
-            <div id="message-minimum-value" class="col-12 hide">
+            <div id="message-minimum-value" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.valorM') }} 0,01</b></span>
             </div>
-            <div id="message-maximum-value" class="col-12 hide">
+            <div id="message-maximum-value" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoLCustom') }} R$ <span
                             id="maximum-prize-value"></span> {{ trans('admin.bichao.premiacaoRCustom') }}</b></span>
             </div>
-            <div id="message-no-prize" class="col-12 hide">
+            <div id="message-no-prize" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoSemLimite') }}</b></span>
             </div>
         </div>
@@ -948,7 +948,8 @@
                     <span id="price_award" style="color:#a3d712;">R$0,00</span>
 
                 </p>
-                <a><button id="btn-add-to-chart" class="btn btn-secondary disabled" disabled><b>{{
+                <button id="calculate-award-btn" class="btn btn-secondary " ><b>Calcular</b></button>
+<a><button id="btn-add-to-chart" class="btn btn-secondary disabled" disabled><b>{{
                             trans('admin.bichao.addCarrinho') }}</b></button></a>
             </div>
 
@@ -1080,7 +1081,8 @@ border-radius: 5px;
             return Math.floor(Math.random() * (max - min) + min);
         }
 
-        function insere_valor() {
+        
+function insere_valor() {
             const field = $('#input-group');
 
             const value = `${String(randomNumber(1, 25)).padStart(2, '0')}-${String(randomNumber(1, 25)).padStart(2, '0')}-${String(randomNumber(1, 25)).padStart(2, '0')}-${String(randomNumber(1, 25)).padStart(2, '0')}-${String(randomNumber(1, 25)).padStart(2, '0')}`;
@@ -1089,7 +1091,7 @@ border-radius: 5px;
             const old = field.val().split(',');
             old.push(value);
             field.val(old.join(','));
-            calculate_award();
+            calculate_awards();
         }
 
         $('#btn-add-to-chart').click(function() {
@@ -1115,7 +1117,7 @@ border-radius: 5px;
             addChartItem(item);
         });
 
-        function calculate_award() {
+        function calculate_awards() {
             const input_value_bet = $('#input_value_bet');
             const label_award = $('#price_award');
             const limit_minimum_bet = 0.01;
@@ -1174,7 +1176,7 @@ border-radius: 5px;
         }
 
         input_value_bet.keyup(function (){
-            calculate_award();
+            calculate_awards();
         });
 
         function button_first_to_third_award(){
@@ -1187,7 +1189,7 @@ border-radius: 5px;
                 button_first_to_fifth.removeClass('active');
                 award_type = 1;
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function button_first_to_fifth_award(){
@@ -1201,7 +1203,7 @@ border-radius: 5px;
                 
                 award_type = 2;
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function check_award(){
@@ -1258,7 +1260,7 @@ border-radius: 5px;
                 animal_container_1.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 1);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_2(){
@@ -1272,7 +1274,7 @@ border-radius: 5px;
                 animal_container_2.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 2);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_3(){
@@ -1286,7 +1288,7 @@ border-radius: 5px;
                 animal_container_3.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 3);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_4(){
@@ -1300,7 +1302,7 @@ border-radius: 5px;
                 animal_container_4.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 4);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_5(){
@@ -1314,7 +1316,7 @@ border-radius: 5px;
                 animal_container_5.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 5);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_6(){
@@ -1328,7 +1330,7 @@ border-radius: 5px;
                 animal_container_6.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 6);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_7(){
@@ -1342,7 +1344,7 @@ border-radius: 5px;
                 animal_container_7.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 7);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_8(){
@@ -1356,7 +1358,7 @@ border-radius: 5px;
                 animal_container_8.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 8);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_9(){
@@ -1370,7 +1372,7 @@ border-radius: 5px;
                 animal_container_9.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 9);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_10(){
@@ -1384,7 +1386,7 @@ border-radius: 5px;
                 animal_container_10.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 10);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_11(){
@@ -1398,7 +1400,7 @@ border-radius: 5px;
                 animal_container_11.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 11);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_12(){
@@ -1412,7 +1414,7 @@ border-radius: 5px;
                 animal_container_12.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 12);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_13(){
@@ -1426,7 +1428,7 @@ border-radius: 5px;
                 animal_container_13.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 13);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_14(){
@@ -1440,7 +1442,7 @@ border-radius: 5px;
                 animal_container_14.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 14);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_15(){
@@ -1454,7 +1456,7 @@ border-radius: 5px;
                 animal_container_15.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 15);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_16(){
@@ -1468,7 +1470,7 @@ border-radius: 5px;
                 animal_container_16.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 16);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_17(){
@@ -1482,7 +1484,7 @@ border-radius: 5px;
                 animal_container_17.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 17);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_18(){
@@ -1496,7 +1498,7 @@ border-radius: 5px;
                 animal_container_18.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 18);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_19(){
@@ -1510,7 +1512,7 @@ border-radius: 5px;
                 animal_container_19.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 19);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_20(){
@@ -1524,7 +1526,7 @@ border-radius: 5px;
                 animal_container_20.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 20);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_21(){
@@ -1538,7 +1540,7 @@ border-radius: 5px;
                 animal_container_21.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 21);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_22(){
@@ -1552,7 +1554,7 @@ border-radius: 5px;
                 animal_container_22.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 22);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_23(){
@@ -1566,7 +1568,7 @@ border-radius: 5px;
                 animal_container_23.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 23);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_24(){
@@ -1580,7 +1582,7 @@ border-radius: 5px;
                 animal_container_24.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 24);
             }
-            calculate_award();
+            calculate_awards();
         }
 
         function select_animals_25(){
@@ -1594,7 +1596,11 @@ border-radius: 5px;
                 animal_container_25.removeClass('active');
                 animais_escolhidos = animais_escolhidos = animais_escolhidos.filter((i) => i != 25);
             }
-            calculate_award();
+            calculate_awards();
         }
+        $('#calculate-award-btn').click(function(ev) {
+                ev.preventDefault();
+                calculate_awards();
+            })
     </script>
 @endpush

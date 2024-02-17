@@ -38,13 +38,13 @@
             {{ trans('admin.bichao.fatormult5') }}
             </p>
 
-            <p>{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
+            <p id="game">{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
         </div>
     </div>
     <hr />
 
 
-    <div class="">
+    <div class="" >
         <div class="form-group container card-master">
             <div wire:ignore>
                 <div class="card-header align-items-center">
@@ -152,14 +152,14 @@
         </div>
 
         <div>
-            <div id="message-minimum-value" class="col-12 hide">
+            <div id="message-minimum-value" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.valorM') }} 0,01</b></span>
             </div>
-            <div id="message-maximum-value" class="col-12 hide">
+            <div id="message-maximum-value" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoLCustom') }} R$ <span
                             id="maximum-prize-value"></span> {{ trans('admin.bichao.premiacaoRCustom') }}</b></span>
             </div>
-            <div id="message-no-prize" class="col-12 hide">
+            <div id="message-no-prize" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoSemLimite') }}</b></span>
             </div>
         </div>
@@ -170,7 +170,8 @@
                     <span id="price_award" style="color:#a3d712;">R$0,00</span>
 
                 </p>
-                <a><button id="btn-add-to-chart" class="btn btn-secondary disabled" disabled><b>{{
+                <button id="calculate-award-btn" class="btn btn-secondary " ><b>Calcular</b></button>
+<a><button id="btn-add-to-chart" class="btn btn-secondary disabled" disabled><b>{{
                             trans('admin.bichao.addCarrinho') }}</b></button></a>
             </div>
 
@@ -238,6 +239,8 @@
             width: 100%;
         }
     }
+
+  
 </style>
 @endpush
 
@@ -375,7 +378,8 @@
         calculate_awards();
     });
 
-    function insere_valor() {
+    
+function insere_valor() {
         const btn_gerar_milhar = $('#btn-gerar-milhar');
         const input_milhar = $('#input-milhar');
 
@@ -581,5 +585,10 @@
             btn_add_to_cart.removeClass('disabled');
         }
     }
+    $('#calculate-award-btn').click(function(ev) {
+                ev.preventDefault();
+                calculate_awards();
+            })
 </script>
+
 @endpush

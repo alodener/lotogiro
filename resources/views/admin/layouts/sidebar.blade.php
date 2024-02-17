@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-info elevation-4" style="overflow-x: hidden">
+<aside id="sidebar" class="main-sidebar sidebar-dark-info d-none d-md-block elevation-4" style="overflow-x: hidden">
 
     <div class="sidebar">
 
@@ -494,18 +494,18 @@
                 </ul>
 
                 @endcanany
-               
+
             </li>
             <div class="nav-item nav-group-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
-                    <a href="{{route('admin.dashboards.help.index')}}"
-                        class="nav-link @if(request()->is('admin/settings/*')) active @endif">
-                        <i class="fas fa-book-open nav-icon"></i>
-                        <p class="title-link" style="margin:0px;">
-                            {{ trans('admin.menu.tutoriais') }}
-                        </p>
-                    </a>
+                <a href="{{route('admin.dashboards.help.index')}}"
+                    class="nav-link @if(request()->is('admin/settings/*')) active @endif">
+                    <i class="fas fa-book-open nav-icon"></i>
+                    <p class="title-link" style="margin:0px;">
+                        {{ trans('admin.menu.tutoriais') }}
+                    </p>
+                </a>
 
-                </div>
+            </div>
             <!-- <li class="nav-link">
                 <a href="{{route('admin.dashboards.wallet.index')}}"
                     class="nav-link  @if(request()->is('admin/dashboards/wallet/index*')) active @endif">
@@ -530,3 +530,16 @@
         </nav>
     </div>
 </aside>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Verifique se a largura da tela é menor que 768 pixels (ou ajuste conforme necessário)
+        if (window.innerWidth < 768) {
+            setTimeout(function () {
+                // Quando a página carregar e estiver em uma tela mobile, remova a classe d-none do elemento com o id "sidebar"
+                var sidebar = document.getElementById("sidebar");
+                sidebar.classList.remove("d-none");
+            }, 1000);
+        }
+    });
+</script>
