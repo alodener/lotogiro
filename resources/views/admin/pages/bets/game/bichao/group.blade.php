@@ -38,7 +38,7 @@
             {{ trans('admin.bichao.fatormult5') }}
             </p>
 
-            <p>{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
+            <p id="game">{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
         </div>
     </div>
     <hr />
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col animal-wrapper">
+                <div class="d-flex flex-wrap justify-content-center align-items-center">
                     <div ion-variant="outline-primary" class="wrap-animal btn-group-toggle d-inline-block mb-1">
                         <label class="btn btn-outline-primary animal-container-choose">
                             <div class="animal-container">
@@ -940,14 +940,14 @@
         </div>
 
         <div>
-            <div id="message-minimum-value" class="col-12 hide">
+            <div id="message-minimum-value" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.valorM') }} 0,01</b></span>
             </div>
-            <div id="message-maximum-value" class="col-12 hide">
+            <div id="message-maximum-value" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoLCustom') }} R$ <span
                             id="maximum-prize-value"></span> {{ trans('admin.bichao.premiacaoRCustom') }}</b></span>
             </div>
-            <div id="message-no-prize" class="col-12 hide">
+            <div id="message-no-prize" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoSemLimite') }}</b></span>
             </div>
         </div>
@@ -958,7 +958,8 @@
                     <span id="price_award" style="color:#a3d712;">R$0,00</span>
 
                 </p>
-                <a><button id="btn-add-to-chart" class="btn btn-secondary disabled" disabled><b>{{
+                <button id="calculate-award-btn" class="btn btn-secondary " ><b>Calcular</b></button>
+<a><button id="btn-add-to-chart" class="btn btn-secondary disabled" disabled><b>{{
                             trans('admin.bichao.addCarrinho') }}</b></button></a>
             </div>
 
@@ -1083,7 +1084,8 @@
         return games.length === match.length;
     }
 
-    function insere_valor() {
+    
+function insere_valor() {
         const field = $('#input-group');
 
         const value = `${randomNumber(1, 25)}`.padStart(2, '0');
@@ -1092,7 +1094,7 @@
         const old = field.val().split(',');
         old.push(value);
         field.val(old.join(','));
-        calculate_award();
+        calculate_awards();
     }
 
     $('#btn-add-to-chart').click(function () {
@@ -1126,7 +1128,7 @@
         return Math.floor(Math.random() * (max - min) + min);
     }
 
-    function calculate_award() {
+    function calculate_awards() {
         const input_value_bet = $('#input_value_bet');
         const label_award = $('#price_award');
         const limit_minimum_bet = 0.01;
@@ -1139,7 +1141,7 @@
 
         $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
         $.ajax({
-            url: '{{url(' / ')}}/admin/bets/bichao/premio-maximo-json',
+            url: '{{url('/')}}/admin/bets/bichao/premio-maximo-json',
             type: 'POST',
             dataType: 'json',
             data: { modalidade_id: '{{$modalidade->id}}', game },
@@ -1198,6 +1200,7 @@
             }
         });
     }
+    
 
     function toggleAll() {
         if (
@@ -1211,11 +1214,11 @@
         } else {
             $('#btn-award-first-to-fifth').removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     input_value_bet.keyup(function () {
-        calculate_award();
+        calculate_awards();
     });
 
     function clear_animals() {
@@ -1233,7 +1236,7 @@
         } else {
             animal_container_1.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_2() {
@@ -1246,7 +1249,7 @@
         } else {
             animal_container_2.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_3() {
@@ -1259,7 +1262,7 @@
         } else {
             animal_container_3.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_4() {
@@ -1272,7 +1275,7 @@
         } else {
             animal_container_4.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_5() {
@@ -1285,7 +1288,7 @@
         } else {
             animal_container_5.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_6() {
@@ -1298,7 +1301,7 @@
         } else {
             animal_container_6.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_7() {
@@ -1311,7 +1314,7 @@
         } else {
             animal_container_7.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_8() {
@@ -1324,7 +1327,7 @@
         } else {
             animal_container_8.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_9() {
@@ -1337,7 +1340,7 @@
         } else {
             animal_container_9.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_10() {
@@ -1350,7 +1353,7 @@
         } else {
             animal_container_10.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_11() {
@@ -1363,7 +1366,7 @@
         } else {
             animal_container_11.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_12() {
@@ -1376,7 +1379,7 @@
         } else {
             animal_container_12.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_13() {
@@ -1389,7 +1392,7 @@
         } else {
             animal_container_13.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_14() {
@@ -1402,7 +1405,7 @@
         } else {
             animal_container_14.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_15() {
@@ -1415,7 +1418,7 @@
         } else {
             animal_container_15.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_16() {
@@ -1428,7 +1431,7 @@
         } else {
             animal_container_16.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_17() {
@@ -1441,7 +1444,7 @@
         } else {
             animal_container_17.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_18() {
@@ -1454,7 +1457,7 @@
         } else {
             animal_container_18.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_19() {
@@ -1467,7 +1470,7 @@
         } else {
             animal_container_19.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_20() {
@@ -1480,7 +1483,7 @@
         } else {
             animal_container_20.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_21() {
@@ -1493,7 +1496,7 @@
         } else {
             animal_container_21.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_22() {
@@ -1506,7 +1509,7 @@
         } else {
             animal_container_22.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_23() {
@@ -1519,7 +1522,7 @@
         } else {
             animal_container_23.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_24() {
@@ -1532,7 +1535,7 @@
         } else {
             animal_container_24.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function select_animals_25() {
@@ -1545,7 +1548,7 @@
         } else {
             animal_container_25.removeClass('active');
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function button_first_award() {
@@ -1558,7 +1561,7 @@
             button_first.removeClass('active');
             award_type = award_type = award_type.filter((i) => i != 1);
         }
-        calculate_award();
+        calculate_awards();
         toggleAll();
 
     }
@@ -1573,7 +1576,7 @@
             button_second.removeClass('active');
             award_type = award_type = award_type.filter((i) => i != 2);
         }
-        calculate_award();
+        calculate_awards();
         toggleAll();
 
     }
@@ -1588,7 +1591,7 @@
             button_third.removeClass('active');
             award_type = award_type = award_type.filter((i) => i != 3);
         }
-        calculate_award();
+        calculate_awards();
         toggleAll();
 
     }
@@ -1603,7 +1606,7 @@
             button_fourth.removeClass('active');
             award_type = award_type = award_type.filter((i) => i != 4);
         }
-        calculate_award();
+        calculate_awards();
         toggleAll();
 
     }
@@ -1618,7 +1621,7 @@
             button_fifth.removeClass('active');
             award_type = award_type = award_type.filter((i) => i != 5);
         }
-        calculate_award();
+        calculate_awards();
         toggleAll();
     }
 
@@ -1648,7 +1651,7 @@
             button_first_to_fifth.removeClass('active');
             award_type = [];
         }
-        calculate_award();
+        calculate_awards();
     }
 
     function validate_award() {
@@ -1731,5 +1734,9 @@
             btn_add_to_cart.removeClass('disabled');
         }
     }
+    $('#calculate-award-btn').click(function(ev) {
+                ev.preventDefault();
+                calculate_awards();
+            })
 </script>
 @endpush

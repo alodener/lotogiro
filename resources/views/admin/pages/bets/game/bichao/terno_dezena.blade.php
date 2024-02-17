@@ -38,7 +38,7 @@
             {{ trans('admin.bichao.fatormult5') }}
             </p>
 
-            <p>{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
+            <p id="game">{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
         </div>
     </div>
     <hr />
@@ -142,14 +142,14 @@
         </div>
 
         <div>
-            <div id="message-minimum-value" class="col-12 hide">
+            <div id="message-minimum-value" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.valorM') }} 0,01</b></span>
             </div>
-            <div id="message-maximum-value" class="col-12 hide">
+            <div id="message-maximum-value" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoLCustom') }} R$ <span
                             id="maximum-prize-value"></span> {{ trans('admin.bichao.premiacaoRCustom') }}</b></span>
             </div>
-            <div id="message-no-prize" class="col-12 hide">
+            <div id="message-no-prize" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoSemLimite') }}</b></span>
             </div>
         </div>
@@ -160,7 +160,8 @@
                     <span id="price_award" style="color:#a3d712;">R$0,00</span>
 
                 </p>
-                <a><button id="btn-add-to-chart" class="btn btn-secondary disabled" disabled><b>{{
+                <button id="calculate-award-btn" class="btn btn-secondary " ><b>Calcular</b></button>
+<a><button id="btn-add-to-chart" class="btn btn-secondary disabled" disabled><b>{{
                             trans('admin.bichao.addCarrinho') }}</b></button></a>
             </div>
 
@@ -362,7 +363,8 @@ border-radius: 5px;
             calculate_awards();
         });
 
-        function insere_valor() {
+        
+function insere_valor() {
             const field = $('#input-milhar');
 
             const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}-${randomNumber(0, 9)}${randomNumber(0, 9)}-${randomNumber(0, 9)}${randomNumber(0, 9)}`;
@@ -384,7 +386,7 @@ border-radius: 5px;
             button_first_to_fifth.removeClass('active');
             award_type = 1;
         }
-        calculate_award();
+        calculate_awards();
         }
 
         function button_first_to_fifth_award(){
@@ -398,7 +400,7 @@ border-radius: 5px;
             
             award_type = 2;
         }
-        calculate_award();
+        calculate_awards();
         }
 
         function validate_award(){
@@ -480,5 +482,9 @@ border-radius: 5px;
                 btn_add_to_cart.removeClass('disabled');
             }
         }
+        $('#calculate-award-btn').click(function(ev) {
+                ev.preventDefault();
+                calculate_awards();
+            })
     </script>
 @endpush

@@ -28,7 +28,10 @@
 </div>
 <div class="row">
     <div class="col-md-6 mb-3">
-        <a href="{{route('admin.bets.games.index', ['type_game' => $typeGame->id])}}">
+        <!-- <a href="{{route('admin.bets.games.index', ['type_game' => $typeGame->id])}}">
+            <button type="button" class="btn btn-block btn-info">{{ trans('admin.back-to-main-page') }}</button>
+        </a> -->
+        <a href="{{route('homepage')}}">
             <button type="button" class="btn btn-block btn-info">{{ trans('admin.back-to-main-page') }}</button>
         </a>
     </div>

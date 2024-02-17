@@ -60,7 +60,7 @@ Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 Route::get('/updateStatusPaymentCron/2de1ce3ddcb20dda6e6ea9fba8031de4/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPaymentCron');
 
-Route::get('/', [HomeController::class, 'index'])->middleware('guest:admin');
+Route::get('/', [HomeController::class, 'index'])->middleware('guest:admin')->name('homepage');
 Route::get('admin/categoria/{typeGame}', [CategoriaController::class, 'getCategories']);
 Route::get('admin/categoriaavulso/{typeGame}', [CategoriaController::class, 'getCategoriesavulso']);
 

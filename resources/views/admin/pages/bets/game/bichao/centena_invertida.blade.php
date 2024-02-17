@@ -38,7 +38,7 @@
             {{ trans('admin.bichao.fatormult5') }}
             </p>
 
-            <p>{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
+            <p id="game">{{ trans('admin.bichao.details') }} <b>{{ trans('admin.bichao.cotacaoo') }}</b></p>
         </div>
     </div>
     <hr />
@@ -152,14 +152,14 @@
         </div>
 
         <div>
-            <div id="message-minimum-value" class="col-12 hide">
+            <div id="message-minimum-value" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.valorM') }} 0,01</b></span>
             </div>
-            <div id="message-maximum-value" class="col-12 hide">
+            <div id="message-maximum-value" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoLCustom') }} R$ <span
                             id="maximum-prize-value"></span> {{ trans('admin.bichao.premiacaoRCustom') }}</b></span>
             </div>
-            <div id="message-no-prize" class="col-12 hide">
+            <div id="message-no-prize" class="col-12 hide text-center mt-3">
                 <span class="text-danger"><b>{{ trans('admin.bichao.premiacaoSemLimite') }}</b></span>
             </div>
         </div>
@@ -170,6 +170,9 @@
                     <span id="price_award" style="color:#a3d712;">R$0,00</span>
 
                 </p>
+
+
+                <button id="calculate-award-btn" class="btn btn-secondary "><b>Calcular</b></button>
                 <a><button id="btn-add-to-chart" class="btn btn-secondary disabled" disabled><b>{{
                             trans('admin.bichao.addCarrinho') }}</b></button></a>
             </div>
@@ -181,414 +184,419 @@
 
 
 </div>
-    @endsection
+@endsection
 
-    @push('styles')
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css"
-            integrity="sha512-bkB9w//jjNUnYbUpATZQCJu2khobZXvLP5GZ8jhltg7P/dghIrTaSJ7B/zdlBUT0W/LXGZ7FfCIqNvXjWKqCYA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer" />
+@push('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css"
+    integrity="sha512-bkB9w//jjNUnYbUpATZQCJu2khobZXvLP5GZ8jhltg7P/dghIrTaSJ7B/zdlBUT0W/LXGZ7FfCIqNvXjWKqCYA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <style>
-                         .card-master {
+<style>
+    .card-master {
 
 
-background-color: #323637;
-padding: 10px;
-border-radius: 5px;
-}
-            #filterForm {
-                margin-top: 30px;
-                margin-bottom: 30px;
-            }
+        background-color: #323637;
+        padding: 10px;
+        border-radius: 5px;
+    }
 
-            #filterForm .form-row {
-                justify-content: flex-end;
-                align-items: flex-end;
-                margin: 0;
-            }
+    #filterForm {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
 
-            .button-group button {
-                background-color: #fff !important;
-                color: #007bff !important;
-            }
+    #filterForm .form-row {
+        justify-content: flex-end;
+        align-items: flex-end;
+        margin: 0;
+    }
 
-            .button-group .active {
-                background-color: #007bff !important;
-                color: #fff !important;
-            }
+    .button-group button {
+        background-color: #fff !important;
+        color: #007bff !important;
+    }
 
-            @media(max-width: 467px) {
-                #filterForm .form-row {
-                    flex-direction: column;
+    .button-group .active {
+        background-color: #007bff !important;
+        color: #fff !important;
+    }
+
+    @media(max-width: 467px) {
+        #filterForm .form-row {
+            flex-direction: column;
+        }
+    }
+
+    @media(max-width: 600px) {
+        .container-menu-items {
+            flex-wrap: wrap;
+        }
+
+        .container-menu-items a {
+            flex: 50%;
+            width: 100%;
+        }
+
+        .container-menu-items a button {
+            width: 100%;
+        }
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"
+    integrity="sha512-pF+DNRwavWMukUv/LyzDyDMn8U2uvqYQdJN0Zvilr6DDo/56xPDZdDoyPDYZRSL4aOKO/FGKXTpzDyQJ8je8Qw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const field_size = parseInt('{{$game_limit}}');
+    const award = parseInt('{{$modalidade->multiplicador}}');
+    const initial_value = 0;
+    const button_first = $('#btn-award-first');
+    const button_second = $('#btn-award-second');
+    const label_award = $('#price_award');
+    const input_value_bet = $('#input_value_bet');
+    const message_minimum = $('#message-minimum-value');
+    const message_maximum = $('#message-maximum-value');
+    let award_type = [];
+    let value = 0;
+
+    function checkGame() {
+        const games = $('#input-milhar').val().split(',');
+        const match = games.filter((item) => item.length >= 3 && item.length <= field_size);
+        return games.length === match.length;
+    }
+
+    $('#input-milhar').change(function () {
+        calculate_awards();
+    });
+
+
+
+    $('#btn-add-to-chart').click(async function () {
+        const option_award = validate_award();
+        const value = $('#input_value_bet').val();
+        const client_id = $('#livewire-client-id').val();
+        const milhar_input = $('#input-milhar').val();
+        const teimosinha = $('#input_teimosinha_bet').val();
+
+        if (!option_award > 0) return alert('Selecione um dos prêmios');
+        if (!value > 0) return alert('Insira um valor pra aposta');
+        if (!client_id > 0) return alert('Escolha um cliente');
+        if (!checkGame()) return alert(`Os jogos precisam ter entre 3 e ${field_size} números`);
+
+        award_type.sort();
+
+        const item = {
+            award_type,
+            value: value.replace(',', '.'),
+            client_id,
+            modality: '{{$modalidade->nome}}',
+            game: milhar_input,
+            teimosinha: parseInt(teimosinha),
+        };
+
+        addChartItem(item);
+    });
+
+    function randomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+    function calculate_awards() {
+        const input_value_bet = $('#input_value_bet');
+        const label_award = $('#price_award');
+        const limit_minimum_bet = 0.01;
+        const message = $('#message-minimum-value');
+        const award_total = parseInt('{{$modalidade->multiplicador}}');
+        const option_award = validate_award() === 6 ? 5 : validate_award();
+        const game = $('#input-milhar').val();
+        // const divider = getFatorialInvertidoCentena(game);
+
+        if (!checkGame()) return;
+
+        $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
+        $.ajax({
+            url: '{{url(' / ')}}/admin/bets/bichao/premio-maximo-json',
+            type: 'POST',
+            dataType: 'json',
+            data: { modalidade_id: '{{$modalidade->id}}', game },
+            success: function (data) {
+                message_maximum.addClass('hide');
+                message_minimum.addClass('hide');
+                $('#message-no-prize').addClass('hide');
+
+                $('#price_award_check').hide();
+                const { premio_maximo, divider } = data;
+                if (premio_maximo === 0) {
+                    $('#message-no-prize').removeClass('hide');
+                    return;
+                }
+
+                let limit_maximum_bet = premio_maximo / award;
+                let value = 0;
+
+                if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
+
+                const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
+                $('#price_award_check').hide();
+                if (value_input_bet < limit_minimum_bet) {
+                    message_minimum.removeClass('hide');
+                } else if (!limit_maximum_bet > 0 || (value_input_bet / divider) > limit_maximum_bet) {
+                    $('#maximum-prize-value').text(premio_maximo.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                    message_maximum.removeClass('hide');
+                } else {
+                    $('#price_award_check').show();
+
+                    if (option_award == 1) {
+                        value = award_total;
+                    } else if (option_award == 2) {
+                        value = (award_total / 2);
+                    } else if (option_award == 3) {
+                        value = (award_total / 3);
+                    } else if (option_award == 4) {
+                        value = (award_total / 4);
+                    } else if (option_award == 5) {
+                        value = (award_total / 5);
+                    } else if (option_award == 6) {
+                        value = (award_total / 5);
+                    }
+
+                    const result = value * (value_input_bet / divider);
+                    if (result > 0) {
+                        $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
+                    } else {
+                        $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
+                    }
+
+                    label_award.text('R$' + result.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
                 }
             }
+        });
+    }
 
-            @media(max-width: 600px) {
-                .container-menu-items {
-                    flex-wrap: wrap;
-                }
+    input_value_bet.keyup(function () {
+        calculate_awards();
+    });
 
-                .container-menu-items a {
-                    flex: 50%;
-                    width: 100%;
-                }
 
-                .container-menu-items a button {
-                    width: 100%;
-                }
+
+
+    function insere_valor() {
+        const btn_gerar_milhar = $('#btn-gerar-milhar');
+        const input_milhar = $('#input-milhar');
+        let value = '';
+
+        for (i = 0; i < field_size; i++) {
+            value = value + randomNumber(0, 9);
+        }
+
+        // const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}`;
+        if (!input_milhar.val()) return input_milhar.val(value);
+
+        const old = input_milhar.val().split(',');
+        old.push(value);
+        input_milhar.val(old.join(','));
+        calculate_awards();
+    }
+
+    function button_first_award() {
+        const button_first = $('#btn-award-first');
+
+        if (!button_first.hasClass('active')) {
+            button_first.addClass('active');
+            award_type.push(1);
+        } else {
+            button_first.removeClass('active');
+            award_type = award_type = award_type.filter((i) => i != 1);
+        }
+        calculate_awards();
+        toggleAll();
+    }
+
+    function button_second_award() {
+        const button_second = $('#btn-award-second');
+
+        if (!button_second.hasClass('active')) {
+            button_second.addClass('active');
+            award_type.push(2);
+        } else {
+            button_second.removeClass('active');
+            award_type = award_type = award_type.filter((i) => i != 2);
+        }
+        calculate_awards();
+        toggleAll();
+    }
+
+    function button_third_award() {
+        const button_third = $('#btn-award-third');
+
+        if (!button_third.hasClass('active')) {
+            button_third.addClass('active');
+            award_type.push(3);
+        } else {
+            button_third.removeClass('active');
+            award_type = award_type = award_type.filter((i) => i != 3);
+        }
+        calculate_awards();
+        toggleAll();
+    }
+
+    function button_fourth_award() {
+        const button_fourth = $('#btn-award-fourth');
+
+        if (!button_fourth.hasClass('active')) {
+            button_fourth.addClass('active');
+            award_type.push(4);
+        } else {
+            button_fourth.removeClass('active');
+            award_type = award_type = award_type.filter((i) => i != 4);
+        }
+        calculate_awards();
+        toggleAll();
+    }
+
+    function button_fifth_award() {
+        const button_fifth = $('#btn-award-fifth');
+
+        if (!button_fifth.hasClass('active')) {
+            button_fifth.addClass('active');
+            award_type.push(5);
+        } else {
+            button_fifth.removeClass('active');
+            award_type = award_type = award_type.filter((i) => i != 5);
+        }
+        calculate_awards();
+        toggleAll();
+    }
+
+    function button_first_to_fifth_award() {
+
+        const button_first = $('#btn-award-first');
+        const button_second = $('#btn-award-second');
+        const button_fifth = $('#btn-award-fifth');
+        const button_third = $('#btn-award-third');
+        const button_fourth = $('#btn-award-fourth');
+        const button_first_to_fifth = $('#btn-award-first-to-fifth');
+
+        if (!button_first_to_fifth.hasClass('active')) {
+            button_first.addClass('active');
+            button_second.addClass('active');
+            button_third.addClass('active');
+            button_fourth.addClass('active');
+            button_fifth.addClass('active');
+            button_first_to_fifth.addClass('active');
+            award_type = [1, 2, 3, 4, 5];
+        } else {
+            button_first.removeClass('active');
+            button_second.removeClass('active');
+            button_third.removeClass('active');
+            button_fourth.removeClass('active');
+            button_fifth.removeClass('active');
+            button_first_to_fifth.removeClass('active');
+            award_type = [];
+        }
+        // calculate_awards()
+    }
+
+    function toggleAll() {
+        if (
+            $('#btn-award-first').hasClass('active') &&
+            $('#btn-award-second').hasClass('active') &&
+            $('#btn-award-third').hasClass('active') &&
+            $('#btn-award-fourth').hasClass('active') &&
+            $('#btn-award-fifth').hasClass('active')
+        ) {
+            $('#btn-award-first-to-fifth').addClass('active');
+        } else {
+            $('#btn-award-first-to-fifth').removeClass('active');
+        }
+        calculate_awards();
+    }
+
+    function validate_award() {
+        const array_buttons = $('.btn-award');
+        const label_award = $('#price_award');
+
+        const message = $('#message-award-value');
+        let contador = 0;
+
+        for (i = 0; i < array_buttons.length; i++) {
+            const btn_id = $(`#${array_buttons[i]['id']}`);
+            if (btn_id.hasClass('active')) {
+                contador += 1;
             }
-        </style>
-    @endpush
+        }
+        return contador;
+    }
 
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"
-        integrity="sha512-pF+DNRwavWMukUv/LyzDyDMn8U2uvqYQdJN0Zvilr6DDo/56xPDZdDoyPDYZRSL4aOKO/FGKXTpzDyQJ8je8Qw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script>
-            const field_size = parseInt('{{$game_limit}}');
-            const award = parseInt('{{$modalidade->multiplicador}}');
+    function check_award() {
+        const message = $('#message-award-value');
+        const label_award = $('#price_award');
+        const btn_add_to_cart = $('#btn-add-to-chart');
+
+        if (validate_award() == 0) {
+            message.removeClass('d-none');
+            message.addClass('d-block');
             const initial_value = 0;
-            const button_first = $('#btn-award-first');
-            const button_second = $('#btn-award-second');
-            const label_award = $('#price_award');
-            const input_value_bet = $('#input_value_bet');
-            const message_minimum = $('#message-minimum-value');
-            const message_maximum = $('#message-maximum-value');
-            let award_type = [];
-            let value = 0;
 
-            function checkGame() {
-                const games = $('#input-milhar').val().split(',');
-                const match = games.filter((item) => item.length >= 3 && item.length <= field_size);
-                return games.length === match.length;
-            }
+            label_award.text(('R$' + initial_value + ',00').toLocaleString('pt-BR', {
+                minimumFractionDigits: 2
+            }));
+        } else if (validate_award() == 1) {
+            message.removeClass('d-block');
+            message.addClass('d-none');
 
-            $('#input-milhar').change(function() {
-                // calculate_awards();
-            });
+            label_award.text('R$' + award.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+            }));
+            btn_add_to_cart.removeClass('disabled');
+        } else if (validate_award() == 2) {
+            message.removeClass('d-block');
+            message.addClass('d-none');
 
-            $('#calculate-award-btn').click(function(ev) {
+            label_award.text('R$' + (award / 2).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+            }));
+            btn_add_to_cart.removeClass('disabled');
+        } else if (validate_award() == 3) {
+            message.removeClass('d-block');
+            message.addClass('d-none');
+
+            label_award.text('R$' + (award / 3).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+            }));
+            btn_add_to_cart.removeClass('disabled');
+        } else if (validate_award() == 4) {
+            message.removeClass('d-block');
+            message.addClass('d-none');
+
+            label_award.text('R$' + (award / 4).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+            }));
+            btn_add_to_cart.removeClass('disabled');
+        } else if (validate_award() == 5) {
+            message.removeClass('d-block');
+            message.addClass('d-none');
+
+            label_award.text('R$' + (award / 5).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+            }));
+            btn_add_to_cart.removeClass('disabled');
+        } else if (validate_award() == 6) {
+            message.removeClass('d-block');
+            message.addClass('d-none');
+
+            label_award.text('R$' + (award / 5).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+            }));
+            btn_add_to_cart.removeClass('disabled');
+        }
+    }
+    $('#calculate-award-btn').click(function(ev) {
                 ev.preventDefault();
                 calculate_awards();
             })
-
-            $('#btn-add-to-chart').click(async function() {
-                const option_award = validate_award();
-                const value = $('#input_value_bet').val();
-                const client_id = $('#livewire-client-id').val();
-                const milhar_input = $('#input-milhar').val();
-                const teimosinha = $('#input_teimosinha_bet').val();
-
-                if (!option_award > 0) return alert('Selecione um dos prêmios');
-                if (!value > 0) return alert('Insira um valor pra aposta');
-                if (!client_id > 0) return alert('Escolha um cliente');
-                if (!checkGame()) return alert(`Os jogos precisam ter entre 3 e ${field_size} números`);
-
-                award_type.sort();
-                
-                const item = {
-                    award_type,
-                    value: value.replace(',', '.'),
-                    client_id,
-                    modality: '{{$modalidade->nome}}',
-                    game: milhar_input,
-                    teimosinha: parseInt(teimosinha),
-                };
-
-                addChartItem(item);
-            });
-
-            function randomNumber(min, max) {
-                return Math.floor(Math.random() * (max - min) + min);
-            }
-
-            function calculate_awards() {
-                const input_value_bet = $('#input_value_bet');
-                const label_award = $('#price_award');
-                const limit_minimum_bet = 0.01;
-                const message = $('#message-minimum-value');
-                const award_total = parseInt('{{$modalidade->multiplicador}}');
-                const option_award = validate_award() === 6 ? 5 : validate_award();
-                const game = $('#input-milhar').val();
-                // const divider = getFatorialInvertidoCentena(game);
-
-                if (!checkGame()) return;
-
-                $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
-                $.ajax({
-                    url: '{{url('/')}}/admin/bets/bichao/premio-maximo-json',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: { modalidade_id: '{{$modalidade->id}}', game },
-                    success: function(data) {
-                        message_maximum.addClass('hide');
-                        message_minimum.addClass('hide');
-                        $('#message-no-prize').addClass('hide');
-
-                        $('#price_award_check').hide();
-                        const { premio_maximo, divider } = data;
-                        if (premio_maximo === 0) {
-                            $('#message-no-prize').removeClass('hide');
-                            return;
-                        }
-
-                        let limit_maximum_bet = premio_maximo / award;
-                        let value = 0;
-        
-                        if (option_award > 0) limit_maximum_bet = limit_maximum_bet * option_award;
-        
-                        const value_input_bet = parseFloat(input_value_bet.val().replace(',', '.')) || 0;
-                        $('#price_award_check').hide();
-                        if (value_input_bet < limit_minimum_bet) {
-                            message_minimum.removeClass('hide');
-                        } else if (!limit_maximum_bet > 0 || (value_input_bet / divider) > limit_maximum_bet) {
-                            $('#maximum-prize-value').text(premio_maximo.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-                            message_maximum.removeClass('hide');
-                        } else {
-                            $('#price_award_check').show();
-        
-                            if (option_award == 1) {
-                                value = award_total;
-                            } else if (option_award == 2) {
-                                value = (award_total / 2);
-                            } else if (option_award == 3) {
-                                value = (award_total / 3);
-                            } else if (option_award == 4) {
-                                value = (award_total / 4);
-                            } else if (option_award == 5) {
-                                value = (award_total / 5);
-                            } else if (option_award == 6) {
-                                value = (award_total / 5);
-                            }
-        
-                            const result = value * (value_input_bet / divider);
-                            if (result > 0) {
-                                $('#btn-add-to-chart').removeClass('disabled').attr('disabled', false);
-                            } else {
-                                $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
-                            }
-        
-                            label_award.text('R$' + result.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-                        }
-                    }
-                });
-            }
-
-            input_value_bet.keyup(function() {
-                // calculate_awards();
-            });
-
-            function insere_valor() {
-                const btn_gerar_milhar = $('#btn-gerar-milhar');
-                const input_milhar = $('#input-milhar');
-                let value = '';
-
-                for (i = 0; i < field_size; i++) {
-                    value = value + randomNumber(0, 9);
-                }
-
-                // const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}`;
-                if (!input_milhar.val()) return input_milhar.val(value);
-
-                const old = input_milhar.val().split(',');
-                old.push(value);
-                input_milhar.val(old.join(','));
-                // calculate_awards();
-            }
-
-            function button_first_award() {
-                const button_first = $('#btn-award-first');
-
-                if (!button_first.hasClass('active')) {
-                    button_first.addClass('active');
-                    award_type.push(1);
-                } else {
-                    button_first.removeClass('active');
-                    award_type = award_type = award_type.filter((i) => i != 1);
-                }
-                // calculate_awards();
-                toggleAll();
-            }
-
-            function button_second_award() {
-                const button_second = $('#btn-award-second');
-
-                if (!button_second.hasClass('active')) {
-                    button_second.addClass('active');
-                    award_type.push(2);
-                } else {
-                    button_second.removeClass('active');
-                    award_type = award_type = award_type.filter((i) => i != 2);
-                }
-                // calculate_awards();
-                toggleAll();
-            }
-
-            function button_third_award() {
-                const button_third = $('#btn-award-third');
-
-                if (!button_third.hasClass('active')) {
-                    button_third.addClass('active');
-                    award_type.push(3);
-                } else {
-                    button_third.removeClass('active');
-                    award_type = award_type = award_type.filter((i) => i != 3);
-                }
-                // calculate_awards();
-                toggleAll();
-            }
-
-            function button_fourth_award() {
-                const button_fourth = $('#btn-award-fourth');
-
-                if (!button_fourth.hasClass('active')) {
-                    button_fourth.addClass('active');
-                    award_type.push(4);
-                } else {
-                    button_fourth.removeClass('active');
-                    award_type = award_type = award_type.filter((i) => i != 4);
-                }
-                // calculate_awards();
-                toggleAll();
-            }
-
-            function button_fifth_award() {
-                const button_fifth = $('#btn-award-fifth');
-
-                if (!button_fifth.hasClass('active')) {
-                    button_fifth.addClass('active');
-                    award_type.push(5);
-                } else {
-                    button_fifth.removeClass('active');
-                    award_type = award_type = award_type.filter((i) => i != 5);
-                }
-                // calculate_awards();
-                toggleAll();
-            }
-
-            function button_first_to_fifth_award() {
-
-                const button_first = $('#btn-award-first');
-                const button_second = $('#btn-award-second');
-                const button_fifth = $('#btn-award-fifth');
-                const button_third = $('#btn-award-third');
-                const button_fourth = $('#btn-award-fourth');
-                const button_first_to_fifth = $('#btn-award-first-to-fifth');
-
-                if (!button_first_to_fifth.hasClass('active')) {
-                    button_first.addClass('active');
-                    button_second.addClass('active');
-                    button_third.addClass('active');
-                    button_fourth.addClass('active');
-                    button_fifth.addClass('active');
-                    button_first_to_fifth.addClass('active');
-                    award_type = [1,2,3,4,5];
-                } else {
-                    button_first.removeClass('active');
-                    button_second.removeClass('active');
-                    button_third.removeClass('active');
-                    button_fourth.removeClass('active');
-                    button_fifth.removeClass('active');
-                    button_first_to_fifth.removeClass('active');
-                    award_type = [];
-                }
-                // calculate_awards()
-            }
-
-            function toggleAll() {
-                if (
-                    $('#btn-award-first').hasClass('active') &&
-                    $('#btn-award-second').hasClass('active') &&
-                    $('#btn-award-third').hasClass('active') &&
-                    $('#btn-award-fourth').hasClass('active') &&
-                    $('#btn-award-fifth').hasClass('active')
-                ) {
-                    $('#btn-award-first-to-fifth').addClass('active');
-                } else {
-                    $('#btn-award-first-to-fifth').removeClass('active');
-                }
-                // calculate_awards();
-            }
-
-            function validate_award() {
-                const array_buttons = $('.btn-award');
-                const label_award = $('#price_award');
-
-                const message = $('#message-award-value');
-                let contador = 0;
-
-                for (i = 0; i < array_buttons.length; i++) {
-                    const btn_id = $(`#${array_buttons[i]['id']}`);
-                    if (btn_id.hasClass('active')) {
-                        contador += 1;
-                    }
-                }
-                return contador;
-            }
-
-            function check_award() {
-                const message = $('#message-award-value');
-                const label_award = $('#price_award');
-                const btn_add_to_cart = $('#btn-add-to-chart');
-
-                if (validate_award() == 0) {
-                    message.removeClass('d-none');
-                    message.addClass('d-block');
-                    const initial_value = 0;
-
-                    label_award.text(('R$' + initial_value + ',00').toLocaleString('pt-BR', {
-                        minimumFractionDigits: 2
-                    }));
-                } else if (validate_award() == 1) {
-                    message.removeClass('d-block');
-                    message.addClass('d-none');
-
-                    label_award.text('R$' + award.toLocaleString('pt-BR', {
-                        minimumFractionDigits: 2,
-                    }));
-                    btn_add_to_cart.removeClass('disabled');
-                } else if (validate_award() == 2) {
-                    message.removeClass('d-block');
-                    message.addClass('d-none');
-
-                    label_award.text('R$' + (award / 2).toLocaleString('pt-BR', {
-                        minimumFractionDigits: 2,
-                    }));
-                    btn_add_to_cart.removeClass('disabled');
-                } else if (validate_award() == 3) {
-                    message.removeClass('d-block');
-                    message.addClass('d-none');
-
-                    label_award.text('R$' + (award / 3).toLocaleString('pt-BR', {
-                        minimumFractionDigits: 2,
-                    }));
-                    btn_add_to_cart.removeClass('disabled');
-                } else if (validate_award() == 4) {
-                    message.removeClass('d-block');
-                    message.addClass('d-none');
-
-                    label_award.text('R$' + (award / 4).toLocaleString('pt-BR', {
-                        minimumFractionDigits: 2,
-                    }));
-                    btn_add_to_cart.removeClass('disabled');
-                } else if (validate_award() == 5) {
-                    message.removeClass('d-block');
-                    message.addClass('d-none');
-
-                    label_award.text('R$' + (award / 5).toLocaleString('pt-BR', {
-                        minimumFractionDigits: 2,
-                    }));
-                    btn_add_to_cart.removeClass('disabled');
-                } else if (validate_award() == 6) {
-                    message.removeClass('d-block');
-                    message.addClass('d-none');
-
-                    label_award.text('R$' + (award / 5).toLocaleString('pt-BR', {
-                        minimumFractionDigits: 2,
-                    }));
-                    btn_add_to_cart.removeClass('disabled');
-                }
-            }
-        </script>
-    @endpush
+</script>
+@endpush

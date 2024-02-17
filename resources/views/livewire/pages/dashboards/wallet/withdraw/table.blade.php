@@ -15,8 +15,8 @@
                 <div x-data="{data: @entangle('user')}">
                     <form wire:submit.prevent="transferToClient()">
                         <div class="d-flex flex-column mt-5">
-                            <div class="d-flex justify-content-center ">
-                                <div class="card-master mr-5">
+                            <div class="d-flex justify-content-center flex-column flex-md-row ">
+                                <div class="card-master mb-md-0 mr-md-3 ">
                                     <div class="card-header ">
                                         <h6><b>{{ trans('admin.pagesF.dadosRec') }}</b></h6>
                                     </div>
@@ -39,7 +39,7 @@
                                     <small>{{ trans('admin.pagesF.aoAlt') }}</small>
 
                                 </div>
-                                <div class="card-master">
+                                <div class="card-master mt-md-0 mt-2">
 
                                     <div class="card-header mb-5 ">
                                         <h6><b>{{ trans('admin.pagesF.valorRet') }}</b></h6>
@@ -90,20 +90,23 @@
         color: #424647;
         background: #a3d712;
         border: #a3d712;
-        box-shadow: 0 0 10px 2px rgba(163, 215, 18, .5);
+        box-shadow: 0 0 10px 2px rgba(163,215,18,.5);
 
     }
 
-    .btn-primary {
-        min-width: 200px;
+    .btn-primary{
+        min-width:200px;
     }
 
-    .btn-green:hover {}
+    .btn-green:hover {
+      
+     
+    }
 
     .card-master-bottom p {
-        color: #a3d712;
-        font-weight: bold;
-    }
+            color: #a3d712;
+            font-weight: bold;
+        }
 
     @media (max-width: 992px) {
         .card-master-bottom {
@@ -121,6 +124,31 @@
         .card-master-bottom p {
             color: #a3d712;
             font-weight: bold;
+        }
+
+
+    }
+
+    @media (max-width: 442px) {
+        .card-master-bottom {
+            padding: 10px !important;
+            min-width: 130px;
+
+
+        }
+
+        .card-master-bottom h1 {
+            font-size: 25px;
+
+        }
+
+        .card-master-bottom p {
+            color: #a3d712;
+            font-weight: bold;
+        }
+
+        .btn-green {
+            font-size: 10px;
         }
 
 
