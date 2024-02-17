@@ -136,7 +136,7 @@
             `);
 
         $.ajax({
-            url: '{{url(' / ')}}/admin/bets/bichao/get-results-json',
+            url: '{{url('/')}}/admin/bets/bichao/get-results-json',
             type: 'POST',
             dataType: 'json',
             data: { data, estado },

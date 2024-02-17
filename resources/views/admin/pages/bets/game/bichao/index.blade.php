@@ -311,7 +311,7 @@
 
         $('#btn-add-to-chart').addClass('disabled').attr('disabled', true);
         $.ajax({
-            url: '{{url(' / ')}}/admin/bets/bichao/premio-maximo-json',
+            url: '{{url('/')}}/admin/bets/bichao/premio-maximo-json',
             type: 'POST',
             dataType: 'json',
             data: { modalidade_id: '{{$modalidade->id}}', game },
