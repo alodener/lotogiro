@@ -46,11 +46,11 @@ HTML);
 
     public function showRegisterForm()
     {
-        $findIndicator = 1;
+        $findIndicator = 2;
         if(Cookie::has('indicatorSuperLoto')){
             $findIndicator = Cookie::get('indicatorSuperLoto');
         }
-        $indicator = User::find($findIndicator);
+        $indicator = $findIndicator;
 
         return view('admin.pages.auth.register', ['indicator' => $indicator]);
     }

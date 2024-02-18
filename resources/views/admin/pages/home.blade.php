@@ -138,7 +138,7 @@
                         <tr>
                             <td>Cadastro</td>
                             <td> <sl-copy-button class="icon-copy"
-                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
+                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}"></sl-copy-button>
                             </td>
                         </tr>
                         @if($User['type_client'] == 1)

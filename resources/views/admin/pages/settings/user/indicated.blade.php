@@ -3,7 +3,7 @@
 @section('title', 'Usuários Indicados por você')
 
 @section('content')
-    <div class="d-flex p-3"> 
+    <div class="d-flex justify-content-center p-3"> 
         @livewire('pages.dashboards.user.indicated')
     </div>
 @endsection
@@ -67,6 +67,10 @@
             -moz-border-radius: 50%;
             border-radius: 50%;
             border: 5px solid rgba(0,0,30,0.8);
+        }
+
+        .card-master{
+            min-width:389px;
         }
     </style>
 @endpush
