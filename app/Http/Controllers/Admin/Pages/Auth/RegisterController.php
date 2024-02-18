@@ -52,7 +52,7 @@ HTML);
         }
         $indicator = User::find($findIndicator);
 
-        return view('admin.pages.auth.register', ['indicator' => $indicator]);
+        return view('admin.pages.auth.register2', ['indicator' => $indicator]);
     }
 
     protected function create(Request $request)

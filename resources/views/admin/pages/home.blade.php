@@ -94,10 +94,10 @@
                 <!-- {{$TypeGamesRoll}} -->
                 @foreach($TypeGamesRoll as $typeGame)
                 <div class="swiper-slide d-flex flex-column category-info"
-                    data-type-game-id="{{ $typeGame->name }}">
+                    data-type-game-id="{{ $typeGame->category }}">
                     <div class="icon-container">
                         <img class="img-bold"
-                            src="{{ $typeGame->icon ? asset('/storage/' . str_replace('.png', '-bold.png', $typeGame->icon)) : asset('/storage/megasena-bold.png') }}"
+                            src="{{ $typeGame->icon ? asset('/storage/'.str_replace('.png', '-bold.png', $typeGame->icon)) : asset('/storage/megasena-bold.png') }}"
                             alt="">
 
                     </div>
@@ -138,7 +138,7 @@
                         <tr>
                             <td>Cadastro</td>
                             <td> <sl-copy-button class="icon-copy"
-                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
+                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}"></sl-copy-button>
                             </td>
                         </tr>
                         @if($User['type_client'] == 1)
@@ -975,7 +975,7 @@
             } else {
                 // Faz uma requisição AJAX para obter as categorias
                 $.ajax({
-                    url: '/admin/categoria/' + typeGameId,
+                    url: '/admin/categoria/'+typeGameId,
                     type: 'GET',
                     success: function (data) {
                         $('#categories-container').html(data);
