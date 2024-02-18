@@ -18,7 +18,7 @@
     <div class="col-lg-6 col-md-12 mt-5">
         <div class="login-logo">
 
-            <img src="{{ asset(env('logo')) }}" alt="" width="300" height="150">
+            <img src="{{ App\Helper\Configs::getConfigLogo() }}" alt="" width="200">
 
         </div>
         <div class="card">

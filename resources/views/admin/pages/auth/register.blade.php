@@ -1,3 +1,4 @@
+
 <div class="container-login100">
 
     @if (session('SenhaRecuperada'))
@@ -51,7 +52,7 @@
 
             <form method="POST" action="{{ route('register') }}">
                 @csrf
-                <input type="hidden" name="indicator" id="indicator" value="{{ isset($indicator) ? $indicator : 1 }}">
+                <input type="hidden" name="indicator" id="indicator" value="1">
 
                 <div class="wrap-input100">
                     <div class="d-flex align-items-center mb-3">
