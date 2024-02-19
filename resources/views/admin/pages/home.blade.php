@@ -540,6 +540,7 @@
     </div> -->
 
    <!-- Bichao da sorte -->
+   @if(\App\Helper\Configs::getBichao() == "Ativado")
 
    <div class="container mt-5">
         <div class="d-flex swipe-controles align-items-center mb-2">
@@ -701,7 +702,7 @@
        
     </div>
 
-
+@endif
     
 
 </div>
