@@ -7,7 +7,7 @@
 
  
      <div class="row">
-         @forelse($indicateds as $indicated)
+         @forelse($indicatedsArray as $indicated)
          <div class="col-sm-3">
             <div class="card" style="cursor: pointer" wire:click="redirectToRoute({{ $indicated->id }})">>
                 <div class="avatar">
