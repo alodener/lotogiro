@@ -57,7 +57,7 @@ class DrawController extends Controller
                 ->addColumn('competition', function ($draw) {
                     return $draw->competition->number;
                 })
-                ->editColumn('created_at', function ($draw) {
+                ->editColumn('created_at', function ($draw) { 
                     return Carbon::parse($draw->competition->sort_date)->format('d/m/Y'); 
                 })
                 ->rawColumns(['action'])
@@ -173,9 +173,9 @@ class DrawController extends Controller
         $startDate = Carbon::parse($request->input('date'))->startOfDay();
         $endDate = Carbon::parse($request->input('date'))->endOfDay();
 
-        $drawsByDay = Draw::with('typeGame')
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->orderBy('type_game_id')
+        $drawsByDay = Draw::join('competitions', 'competitions.id', '=', 'draws.competition_id')
+        ->whereBetween('competitions.sort_date', [$startDate, $endDate])
+            ->orderBy('draws.type_game_id')
             ->get();
 
         foreach ($drawsByDay as $draw) {
