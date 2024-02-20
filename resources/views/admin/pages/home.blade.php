@@ -188,7 +188,7 @@
                         <tr>
                             <td>Cadastro</td>
                             <td> <sl-copy-button class="icon-copy"
-                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
+                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}"></sl-copy-button>
                             </td>
                         </tr>
                          @if($User['type_client'] != 1)
@@ -540,6 +540,7 @@
     </div> -->
 
    <!-- Bichao da sorte -->
+   @if(\App\Helper\Configs::getBichao() == "Ativado")
 
    <div class="container mt-5">
         <div class="d-flex swipe-controles align-items-center mb-2">
@@ -701,7 +702,7 @@
        
     </div>
 
-
+@endif
     
 
 </div>
