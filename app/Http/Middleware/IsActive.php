@@ -23,7 +23,7 @@ class IsActive
      
         if ($user && $user['is_active'] == 0) {
             session()->flash('erro', 'Conta Bloqueada. Favor entrar em contato com o Administrador!');
-            return redirect()->route('admin.get.login');
+            return redirect()->route('homepage');
         }
     
         return $next($request);

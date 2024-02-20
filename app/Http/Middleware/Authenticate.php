@@ -17,11 +17,13 @@ class Authenticate extends Middleware
 
         if ($this->auth->guard('admin')) {
             if (!$request->expectsJson()) {
-                return route('admin.get.login');
+                session()->flash('login', 1);
+                return route('homepage');
             }
         } else {
             if (!$request->expectsJson()) {
-                return route('login');
+                session()->flash('login', 1);
+                return route('homepage');
             }
         }
 

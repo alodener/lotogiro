@@ -1056,6 +1056,13 @@
             return words.join(' ');
         }
 
+        var suaVariavelJavaScript = @json(session('login'));
+
+    if(suaVariavelJavaScript){
+    $('#exampleModalCenter').modal('show');
+
+}
+
 
         @if (session('error') || session('erro') || $errors -> has('email') || $errors -> has('password'))
             $('#exampleModalCenter').modal('show');
@@ -1069,6 +1076,8 @@
                 $('#exampleModalCenter').modal('show');
             });
         @endif
+
+       
 
 
 
