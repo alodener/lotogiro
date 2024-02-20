@@ -74,7 +74,7 @@ HTML);
                 $phone = Str::of($request->phone)->replaceMatches('/[^A-Za-z0-9]++/', '');
                 $hashed = Hash::make($request->password);
 
-                $userRoles[] = Role::whereId(13)->first();
+                $userRoles[] = Role::whereId(6)->first();
 
 
 
