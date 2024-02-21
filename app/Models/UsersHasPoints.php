@@ -67,10 +67,27 @@ class UsersHasPoints extends Model
         $level = 1;
         while ($check) {
             $sponsor = User::find($sponsor->indicador);
-            if (!$sponsor) {
+            if (!$sponsor || $level > 2) {
                 $check = false;
                 break;
             }
+            
+            if($owner->type_client == 1 && $level < 2){
+                $lastBalance = UsersHasPoints::getBalancesByUser($sponsor);
+
+            $newPoint = new UsersHasPoints([
+                'user_id' => $sponsor->id,
+                'origin_id' => $owner->id,
+                'level' => $level,
+                'description' => $description,
+                'total' => $total,
+                'personal_balance' => $lastBalance['personal_balance'] + $total,
+                'group_balance' => $lastBalance['group_balance'],
+                'total_balance' => $lastBalance['total_balance'] + $total,
+            ]);
+            $newPoint->save();
+            UsersHasQualifications::generateByUser($sponsor);
+            }else{
 
             $lastBalance = UsersHasPoints::getBalancesByUser($sponsor);
 
@@ -86,7 +103,7 @@ class UsersHasPoints extends Model
             ]);
             $newPoint->save();
             UsersHasQualifications::generateByUser($sponsor);
-
+            }
             if ($sponsor->id == $sponsor->indicador) {
                 $check = false;
                 break;
