@@ -90,7 +90,7 @@
                 <option value="chispaloto_segundo">Chispaloto Segundo</option>
                 <option value="mega_kino">Mega Kino</option> 
                 <option value="mega_lotto">Mega Lotto</option>
-
+                <option value="santa_lucia_double">Santa Lúcia Double</option>
                 </select>
             </div>
         </div>
