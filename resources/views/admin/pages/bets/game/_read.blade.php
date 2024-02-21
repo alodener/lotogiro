@@ -110,7 +110,7 @@
                                                 <td>
                                                     <button id="number_{{$cols}}"
                                                             type="button"
-                                                            class="btn btn-success {{in_array($cols, $selectedNumbers) ? 'btn-success' : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
+                                                            class="btn  {{in_array($cols, $selectedNumbers) ? 'btn-beat-number' : 'btn-warning'}} btn-full">{{$cols}}</button>
                                                 </td>
                                             @endforeach
                                         </tr>
