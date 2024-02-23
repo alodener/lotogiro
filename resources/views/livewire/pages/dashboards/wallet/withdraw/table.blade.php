@@ -60,11 +60,9 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6 mx-auto mt-5">
-                                <div class="input-group">
-
-                                    <button wire:click="requestWithdraw" type="button" class="btn btn-green btn-block">
+                              <div class="input-group">
+                                    <button wire:click="requestWithdraw" type="button" class="btn btn-info btn-block" @if($botaoClicado) disabled @endif>
                                         {{ trans('admin.pagesF.solicitar') }} <span class="fa fa-send"></span>
-
                                     </button>
                                 </div>
                             </div>
