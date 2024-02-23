@@ -200,13 +200,15 @@
         var numberReais = parseInt(maxreais);
 
         //evento dispara quando retira o foco do campo texto
-        if (numberReais >= numberValor) {
+        if(!isNaN(numberValor)){
+            if (numberReais >= numberValor) {
             resultado = valor * multiplicador;
             campoDoCalculo.value = resultado;
-        } else {
+            } else {
             resultado = maxreais * multiplicador;
             campoDoCalculo.value = resultado;
             Campovalor.value = maxreais;
+            }
         }
     }
 
