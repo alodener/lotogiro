@@ -65,20 +65,18 @@
                         </div>
                         <div class="col-md-6 mt-3 mx-auto text-center col-sm-12">
                             <h6> {{ trans('admin.pagesF.valTrans') }}</h6>
-                            <small>({{ trans('admin.pagesF.valIgual') }}<b> {{ trans('admin.pagesF.BONUS')
-                                    }}</b>)</small>
-                            <div class="input-group mt-4">
-                                <input wire:model="valueConvert" x-on:focus="formatInput()" type="text"
-                                    class="search-query form-control" placeholder="Valor a converter" id="valueConvert"
-                                    inputmode="numeric" value="0,00" />
+                            <small>({{ trans('admin.pagesF.valIgual') }}<b> {{ trans('admin.pagesF.BONUS') }}</b>)</small>
+                            <div class="input-group">
+                                <input wire:model="valueConvertBonus" x-on:focus="formatInputBonus()" type="text"
+                                       class="search-query form-control" placeholder="Valor a converter"
+                                       id="valueConvertBonus" inputmode="numeric" value="0,00" />
                             </div>
                         </div>
                         <div class="col-sm-12 mt-5">
                             <div class="input-group">
                                 <button wire:click="transferBonusToAvailableWithdraw" type="button" class="btn btn-dark
                                 btn-block">
-                                    {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt"
-                                        style="color: #fff938"></span>
+                                {{ trans('admin.pagesF.converter') }} <span class="fa fa-exchange-alt" style="color: #fff938"></span>
                                 </button>
                             </div>
                         </div>
