@@ -60,19 +60,19 @@ class Convert extends Component
         $this->valueConvertBonus = Money::toDatabase($this->valueConvertBonus);
         $myOldBonus = $this->user->bonus;
         $now = Carbon::now()->format('H');
-
+    
         if(intval($now) > 23) {
-            $this->alert('error', 'A conversão bônus para saque só poderá ser solicitado até 15:00 horas todos os dias', [
+            $this->alert('error', 'A conversão bônus para saque só poderá ser solicitada até 15:00 horas todos os dias', [
                 'position' => 'center',
                 'timer' => '2000',
                 'toast' => false,
                 'timerProgressBar' => true,
                 'allowOutsideClick' => false
             ]);
-
+    
             return;
         }
-
+    
         if($myOldBonus < $this->valueConvertBonus){
             $this->alert('error', 'Valor precisa ser menor ou igual ao seu Bônus!', [
                 'position' => 'center',
@@ -81,18 +81,18 @@ class Convert extends Component
                 'timerProgressBar' => true,
                 'allowOutsideClick' => false
             ]);
-
+    
             return;
         }
-
+    
         $withdraw_request = WithdrawRequest::select(DB::raw('SUM(value) AS convert_requested'))
                                             ->where('user_id', auth()->user()->id)
                                             ->where('status', 0)
                                             ->where('type', 'bonus_to_available_withdraw')
                                             ->first();
-
+    
         $available_to_request = $myOldBonus - $withdraw_request->convert_requested;
-
+    
         if($this->valueConvertBonus > $available_to_request) {
             $this->alert('error', 'Valor precisa ser menor ou igual ao seu Bônus disponível! Bônus disponível: R$'. $available_to_request , [
                 'position' => 'center',
@@ -101,23 +101,25 @@ class Convert extends Component
                 'timerProgressBar' => true,
                 'allowOutsideClick' => false
             ]);
-
+    
             return;
         }
-
-
-        if($myOldBonus >= $this->valueConvertBonus) {
+    
+    
+       /* if($myOldBonus >= $this->valueConvertBonus) {
             WithdrawRequest::create([
                 'user_id'   => $this->user->id,
                 'value'     => $this->valueConvertBonus,
                 'type'      => 'bonus_to_available_withdraw'
-            ]);
-
-            $this->user->balance += $this->valueConvertWithdraw;
-            $this->user->available_withdraw -= $this->valueConvertWithdraw;
+            ]);*/
+    
+            $this->user->bonus -= $this->valueConvertBonus;
+            $this->user->available_withdraw += $this->valueConvertBonus;
             
             $this->user->save();
 
+            $this->storeTransact($this->user, $this->valueConvertBonus, $myOldBonus, $this->user->bonus,  "Saldo disponivel recebido atravez do bônus.");
+    
             $this->flash('success', 'Conversão solicitada com sucesso!', [
                 'position' => 'center',
                 'timer' => '2000',
@@ -125,9 +127,9 @@ class Convert extends Component
                 'timerProgressBar' => true,
                 'allowOutsideClick' => false
             ], route('admin.dashboards.wallet.index'));
-        }
+        /*}*/
     }
-
+    
     public function transferAvailableWithdrawToBalance(): void
     {
         $this->valueConvertWithdraw = Money::toDatabase($this->valueConvertWithdraw);
