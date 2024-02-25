@@ -20,7 +20,7 @@ class GameCreate extends Component
         $i = 0;
         $numInicial = 1;
 
-        //if - se for lotomania, variavel ficar com 0  
+        //if - se for lotomania, variavel ficar com 0
         if ($this->typeGames->category == 'loto_mania') {
             $numInicial = 0;
         }
@@ -69,5 +69,12 @@ class GameCreate extends Component
 
         return view('livewire.pages.bets.game.game-create')
             ->extends('admin.layouts.master');
+    }
+
+    public function submitForm()
+    {
+        if ($this->hasErrors()) {
+            $this->addError('modalError', 'O erro específico ocorreu. Abrir modal.');
+        }
     }
 }
