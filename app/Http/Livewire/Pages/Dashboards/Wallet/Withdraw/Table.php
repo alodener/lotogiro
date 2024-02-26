@@ -20,9 +20,13 @@ class Table extends Component
     public $userId;
     public $valueTransfer;
     public $pixSaque;
+    public $botaoClicado = false;
 
     public function requestWithdraw(): void
     {
+        if ($this->botaoClicado) {
+            return;
+        }
         $valorMinimo = System::where('nome_config', 'Valor Minimo')->first()->value;
         $horarioMaximo = System::where('nome_config', 'Horario Maximo')->first()->value;
         $value = Money::toDatabase($this->valueTransfer);
@@ -82,6 +86,7 @@ class Table extends Component
            $this->userObj->pixSaque = $this->pixSaque;
 
            $this->userObj->save();
+           $this->botaoClicado = true;
 
            $this->flash('success', 'Solicitação realizada com sucesso!', [
                'position' => 'center',

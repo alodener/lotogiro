@@ -33,15 +33,12 @@
                                 </div>
                             </div>
                             <div class="col-sm-5">
-
                                 <div class="card-header ganhos-card">
                                 <h6><b>{{ trans('admin.pagesF.valorRet') }}</b></h6>
                                 </div>
                                 <small class="text-muted">{{ trans('admin.pagesF.valorMin') }} R$ {{ $valorMinimo }}
-
                                     <small class="text-muted"><p>{{ trans('admin.pagesF.valorInse') }}</p></small>
                                 </small>
-
                                 <div class="input-group">
                                     <input wire:model="valueTransfer" x-on:focus="formatInput()" type="text"
                                            class="search-query form-control" placeholder="Valor a retirar"
@@ -50,10 +47,8 @@
                             </div>
                             <div class="col-sm-12 mt-5">
                                 <div class="input-group">
-
-                                    <button wire:click="requestWithdraw" type="button" class="btn btn-info btn-block">
-                                    {{ trans('admin.pagesF.solicitar') }} <span class="fa fa-send"></span>
-
+                                    <button wire:click="requestWithdraw" type="button" class="btn btn-info btn-block" @if($botaoClicado) disabled @endif>
+                                        {{ trans('admin.pagesF.solicitar') }} <span class="fa fa-send"></span>
                                     </button>
                                 </div>
                             </div>
@@ -64,7 +59,6 @@
         </div>
     </div>
 </div>
-
 
 @push('scripts')
 
