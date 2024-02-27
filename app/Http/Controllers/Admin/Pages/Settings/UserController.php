@@ -607,6 +607,8 @@ class UserController extends Controller
             $user->commission = $request->commission;
             $user->commission_lv_1 = $request->commission_lv_1;
             $user->commission_lv_2 = $request->commission_lv_2;
+            $user->commission_lv_3 = $request->commission_lv_3;
+            $user->commission_lv_3 = $request->commission_lv_4;
             $user->commission_individual = json_encode($commission_individual);
             $user->commission_individual_lv_1 = json_encode($commission_individual_lv_1);
             $user->commission_individual_lv_2 = json_encode($commission_individual_lv_2);
