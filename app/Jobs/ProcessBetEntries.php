@@ -165,7 +165,7 @@ class ProcessBetEntries implements ShouldQueue
             ];
             $ID_VALUE = $this->user->indicador;
             $storeExtact = ExtractController::store($extract);
-            $commissions = Commision::calculationNew($game->value, $game->user_id, '', $game->type_game_value_id);
+            $commissions = Commision::calculationNew($game->value, $game->user_id, '', $game->type_game_value_id, $game);
 
             $planodecarreira = Configs::getPlanoDeCarreira();
             if( $planodecarreira == "Ativado"){

@@ -424,9 +424,9 @@ class GameController extends Controller
                     'user_id' => $game->user_id,
                     'client_id' => $game->client_id
                 ];
-                $ID_VALUE = auth()->user()->indicador;
+                 $ID_VALUE = auth()->user()->indicador;
                 $storeExtact = ExtractController::store($extract);
-                $commissions = Commision::calculationNew($request->value, $game->user_id, '', $game->type_game_value_id);
+                $commissions = Commision::calculationNew($request->value, $game->user_id, '', $game->type_game_value_id, $game);
 
                 $game->commission_percentage = $commissions['percentage'];
                 $game->commission_value = $commissions['commission'];

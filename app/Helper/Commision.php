@@ -75,21 +75,33 @@ class Commision
     }
 
 
-    public static function calculationNew($value, $user_id, $game_type, $type_id)
+     public static function calculationNew($value, $user_id, $game_type, $type_id, $game)
     {
         $user = User::find($user_id);
         if (!$user) return 0;
-
+    
         $percentage = static::getCommission($user, $type_id, $game_type);
         $commission = (($value / 100) * $percentage);
         $commission_pai = 0;
         $commission_avo = 0;
-
+    
         if ($user->type_client != 1) {
             $user->bonus = $user->bonus + $commission;
             $user->save();
+    
+            if ($commission > 0) {
+                TransactBalance::create([
+                    'user_id_sender' => $user->id,
+                    'user_id' => $user->id,
+                    'value' => $commission,
+                    'old_value' => $user->bonus - $commission, 
+                    'value_a' => $user->bonus, 
+                    'type' => 'Bônus de jogo: ' . $game->id,
+                    'wallet' => 'bonus'
+                ]);
+            }
         }
-
+    
         $userLv1 = User::find($user->indicador);
         if ($userLv1) {
             $commission_pai = (($value / 100) * static::getCommission($userLv1, $type_id, $game_type, 1));
@@ -100,15 +112,40 @@ class Commision
             
             $userLv1->bonus = $userLv1->bonus + $commission_pai;
             $userLv1->save();
-
+            
+            if ($commission_pai > 0) {
+                TransactBalance::create([
+                    'user_id_sender' => $user->id,
+                    'user_id' => $userLv1->id, //  pai
+                    'value' => $commission_pai,
+                    'old_value' => $userLv1->bonus - $commission_pai,
+                    'value_a' => $userLv1->bonus,
+                    'type' => 'Bônus, jogo de id: ' . $game->id ,
+                    'wallet' => 'bonus'
+                ]);
+            }
+            
+    
             $userLv2 = User::find($userLv1->indicador);
             if ($userLv2) {
                 $commission_avo = (($value / 100) * static::getCommission($userLv2, $type_id, $game_type, 2));
                 $userLv2->bonus = $userLv2->bonus + $commission_avo;
                 $userLv2->save();
+    
+                if ($commission_avo > 0) {
+                    TransactBalance::create([
+                        'user_id_sender' => $user->id,
+                        'user_id' => $userLv2->id, //  avô
+                        'value' => $commission_avo,
+                        'old_value' => $userLv2->bonus - $commission_avo,
+                        'value_a' => $userLv2->bonus,
+                        'type' => 'Bônus, jogo de id: ' . $game->id ,
+                        'wallet' => 'bonus'
+                    ]);
+                }
             }
         }
-
+    
         return ['percentage' => $percentage, 'commission' => $commission, 'commission_pai' => $commission_pai, 'commission_avo' => $commission_avo];
     }
 

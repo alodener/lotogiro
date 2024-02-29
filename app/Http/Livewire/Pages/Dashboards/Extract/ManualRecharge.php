@@ -36,29 +36,27 @@ class ManualRecharge extends Component
 
     public function render()
     {
-        $admins = [];
-        if($this->adminSelected != 0){
-            $adms = null;
-            $adms[] = $this->adminSelected;
-        }
-
-        if($this->adminSelected === 0){
-            $adms = null;
+        $adms = [];
+        if ($this->adminSelected === 0) {
             $roles = ModelHasRole::with('user')->where('role_id', 1)->get();
-
-            $roles->each(function ($item, $key){
-                $this->admins[] = [
-                    'id' => $item->user->id,
-                    'name' => $item->user->name . ' ' . $item->user->last_name
-                ];
-            });
             $adms = $roles->pluck('model_id')->toArray();
-        }
+            $this->admins = $roles->map(function ($role) {
+                return [
+                    'id' => $role->user->id,
+                    'name' => $role->user->name . ' ' . $role->user->last_name
+                ];
+            })->toArray();
+        } else {
+            $adms[] = $this->adminSelected;
+        }   
 
         $transacts = TransactBalance::with('userSender', 'user')
-            ->whereIn('user_id_sender', $adms)
-            ->whereNotIn('user_id', $adms)
-            ->when($this->range > 0, function ($q) {
+        ->where(function ($query) use ($adms) {
+            $query->whereIn('user_id_sender', $adms)
+                ->orWhere('wallet', 'bonus'); 
+        })
+        ->whereNotIn('user_id', $adms)
+        ->when($this->range > 0, function ($q) {
                 $now = Carbon::now();
                 if($this->range === '1'){
                     return $q->whereMonth('created_at', '=', $now->month);
@@ -89,7 +87,7 @@ class ManualRecharge extends Component
             ->whereIn('user_id_sender', $adms)
             ->whereNotIn('user_id', $adms)
             ->where('type', 'LIKE', "%recarga%")
-            ->where('wallet', '=', 'balance')
+            ->where('wallet', '=', 'bonus')
             ->when($this->range > 0, function ($q) {
                 $now = Carbon::now();
                 if ($this->range === '1') {
@@ -115,12 +113,10 @@ class ManualRecharge extends Component
 
             $totalpix = number_format($totalpix, 2, ',','.');
 
-            
-            //calculo do bônus pix
-            $totalbonus = TransactBalance::with('userSender', 'user')
-            ->whereIn('user_id_sender', $adms)
-            ->whereNotIn('user_id', $adms)
-            ->where('wallet', 'bonus')
+          
+
+            //total de bônus
+            $totalbonus = TransactBalance:: where('wallet', 'bonus')
             ->when($this->range > 0, function ($q) {
                 
                 $now = Carbon::now();
@@ -193,6 +189,7 @@ class ManualRecharge extends Component
 
             $item->usuario = "{$item->user['name']} {$item->user['last_name']}";
             $item->responsavel = "{$item->userSender['name']} {$item->userSender['last_name']}";
+            
         });
 
           return view('livewire.pages.dashboards.extract.manual-recharge', compact('transacts', 'totalpix','totalbonus','totalrecargamanual'));
