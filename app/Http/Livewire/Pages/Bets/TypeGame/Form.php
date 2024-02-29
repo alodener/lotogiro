@@ -6,12 +6,13 @@ use Livewire\Component;
 
 class Form extends Component
 {
-    public $typeGameId, $name, $numbers, $columns, $color, $description, $matriz, $category; 
+   public $typeGameId, $name, $numbers, $columns, $color, $description, $matriz, $category, $qtd_dezena_sorteada; 
 
     protected $rules = [
         'name' => 'required',
         'numbers' => 'required|numeric|digits_between:1,10',
         'columns' => 'required|numeric|digits_between:1,10',
+        'qtd_dezena_sorteada' => 'required|numeric|digits_between:1,10',
         'description' => 'nullable|max:150',
     ];
 
@@ -23,6 +24,7 @@ class Form extends Component
             $this->numbers = $typeGame->numbers;
             $this->columns = $typeGame->columns;
             $this->color = $typeGame->color;
+            $this->qtd_dezena_sorteada = $typeGame->qtd_dezena_sorteada;
             $this->description = $typeGame->description;
             $this->category = $typeGame->category;
             $this->matriz();
