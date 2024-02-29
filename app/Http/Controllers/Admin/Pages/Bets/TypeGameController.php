@@ -91,6 +91,7 @@ class TypeGameController extends Controller
             'banner_pc' => 'nullable|max:200',
             'recomendado' => 'nullable|max:200',
             'description' => 'nullable|max:200',
+            'qtd_dezena_sorteada' => 'required|numeric|digits_between:1,10',
             
         ]);
         
@@ -106,6 +107,7 @@ class TypeGameController extends Controller
             $typeGame->category = $request->category;
             $typeGame->icon = $request->icon;  
             $typeGame->recomendado = $request->recomendado;
+            $typeGame->qtd_dezena_sorteada = $request->qtd_dezena_sorteada;
          
             if (isset($request->banner_mobile)) {
                 if ($request->file('banner_mobile')->isValid()) {
@@ -174,6 +176,7 @@ class TypeGameController extends Controller
             'banner_pc' => 'nullable|max:200',
             'recomendado' => 'nullable|max:200',
             'description' => 'nullable|max:200',
+            'qtd_dezena_sorteada' => 'required|digits_between:1,10|numeric',
         ]);
 
         try {
@@ -185,6 +188,7 @@ class TypeGameController extends Controller
             $typeGame->category = $request->category;
             $typeGame->icon = $request->icon;
             $typeGame->recomendado = $request->recomendado;
+            $typeGame->qtd_dezena_sorteada = $request->qtd_dezena_sorteada;
    
             if (isset($request->banner_mobile)) {
                 if ($request->file('banner_mobile')->isValid()) {
