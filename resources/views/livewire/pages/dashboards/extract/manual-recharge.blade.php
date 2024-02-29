@@ -158,13 +158,15 @@
                 </thead>
                 <tbody>
                     @forelse($transacts as $transact)
-                    <tr>
-                        <td>{{ $transact->data }}</td>
-                        <td>{{ $transact->responsavel }}</td>
-                        <td>{{ $transact->usuario }}</td>
-                        <td>{{ $transact->value }}</td>
-                        <td>{{ $transact->wallet == 'balance' ? trans('admin.balance') : trans('admin.bonus') }}</td>
-                    </tr>
+                        <tr>
+                                <td>{{ $transact->data }}</td>
+                                <td>{{ $transact->responsavel }}</td>
+                                <td>{{ $transact->usuario }}</td>
+                                <td>
+                                    {{ is_numeric($transact->value) ? number_format($transact->value, 2, ',', '.') : $transact->value }}
+                                </td>
+                                <td>{{ $transact->wallet == 'balance' ? trans('admin.balance') : trans('admin.bonus') }}</td>
+                        </tr>
                     @empty
                     <tr>
                         <td colspan="5">
