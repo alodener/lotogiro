@@ -167,12 +167,11 @@ class TypeGameController extends Controller
 
 
         $validatedData = $request->validate([
-            'name' => 'required',
-            'numbers' => 'required|numeric|digits_between:1,10',
-            'columns' => 'required|numeric|digits_between:1,10',
-            'banner_mobile' => 'nullable|max:200',
-            'banner_pc' => 'nullable|max:200',
-            'recomendado' => 'nullable|max:200',
+            'name' => 'required|max:100',
+            'numbers' => 'required|digits_between:1,10|numeric',
+            'columns' => 'required|digits_between:1,10|numeric',
+            'qtd_dezena_sorteada' => 'required|digits_between:1,10|numeric',
+            'color' => 'required',
             'description' => 'nullable|max:200',
         ]);
 
@@ -181,10 +180,10 @@ class TypeGameController extends Controller
             $typeGame->numbers = $request->numbers;
             $typeGame->columns = $request->columns;
             $typeGame->color = $request->color;
+            $typeGame->qtd_dezena_sorteada = $request->qtd_dezena_sorteada;
             $typeGame->description = $request->description;
             $typeGame->category = $request->category;
-            $typeGame->icon = $request->icon;
-            $typeGame->recomendado = $request->recomendado;
+            $typeGame->save();
    
             if (isset($request->banner_mobile)) {
                 if ($request->file('banner_mobile')->isValid()) {
