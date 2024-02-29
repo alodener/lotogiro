@@ -7,13 +7,14 @@ use Livewire\Component;
 class Form extends Component
 {
 
-    public $typeGameId, $name, $numbers, $columns, $color, $description, $matriz, $category, $icon, $recomendado; 
+    public $typeGameId, $name, $numbers, $columns, $color, $description, $matriz, $category, $icon, $recomendado, $qtd_dezena_sorteada; 
 
     protected $rules = [
         'name' => 'required',
         'numbers' => 'required|numeric|digits_between:1,10',
         'columns' => 'required|numeric|digits_between:1,10',
         'description' => 'nullable|max:150',
+        'qtd_dezena_sorteada' => 'required|numeric|digits_between:1,10',
     ];
 
     public function mount($typeGame)
@@ -28,6 +29,7 @@ class Form extends Component
             $this->description = $typeGame->description;
             $this->category = $typeGame->category;
             $this->recomendado = $typeGame->recomendado;
+            $this->qtd_dezena_sorteada = $typeGame->qtd_dezena_sorteada;
             $this->matriz();
         }
     }
