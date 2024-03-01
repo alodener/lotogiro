@@ -63,6 +63,16 @@ class Commision
             }
         }
 
+        // Adicionado para lidar com o nível 5
+        if ($lvl === 5) {
+            $percentage = $user->commission_lvl_5;
+            $commission_individual = json_decode($user->commission_individual_lvl_5);
+            
+            if ($game_type === 'bichao') {
+                $commission_individual = json_decode($user->commission_individual_bichao_lvl_5);
+            }
+        }
+
         if (is_array($commission_individual)) {
             $check = array_filter($commission_individual, fn ($value) => $value->type_id == $type_id);
             
