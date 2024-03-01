@@ -22,55 +22,65 @@ class Commision
     {
         $percentage = $user->commission;
         $commission_individual = json_decode($user->commission_individual);
-
+        
         if ($game_type === 'bichao') {
             $commission_individual = json_decode($user->commission_individual_bichao);
         }
-
+    
         if ($lvl === 1) {
             $percentage = $user->commission_lv_1;
             $commission_individual = json_decode($user->commission_individual_lv_1);
-
+            
             if ($game_type === 'bichao') {
                 $commission_individual = json_decode($user->commission_individual_bichao_lv_1);
             }
         }
-
+    
         if ($lvl === 2) {
             $percentage = $user->commission_lv_2;
             $commission_individual = json_decode($user->commission_individual_lv_2);
-
+            
             if ($game_type === 'bichao') {
                 $commission_individual = json_decode($user->commission_individual_bichao_lv_2);
             }
         }
-
-        // Adicionando comissões 3 e 4
+    
         if ($lvl === 3) {
-            $percentage = $user->commission_lv_3;
-            $commission_individual = json_decode($user->commission_individual_lv_3);
-
+            $percentage = $user->commission_lvl_3;
+            $commission_individual = json_decode($user->commission_individual_lvl_3);
+            
             if ($game_type === 'bichao') {
-                $commission_individual = json_decode($user->commission_individual_bichao_lv_3);
+                $commission_individual = json_decode($user->commission_individual_bichao_lvl_3);
             }
         }
-
+    
         if ($lvl === 4) {
-            $percentage = $user->commission_lv_4;
-            $commission_individual = json_decode($user->commission_individual_lv_4);
-
+            $percentage = $user->commission_lvl_4;
+            $commission_individual = json_decode($user->commission_individual_lvl_4);
+            
             if ($game_type === 'bichao') {
-                $commission_individual = json_decode($user->commission_individual_bichao_lv_4);
+                $commission_individual = json_decode($user->commission_individual_bichao_lvl_4);
             }
         }
-
+    
+        // Adicionado para lidar com o nível 5
+        if ($lvl === 5) {
+            $percentage = $user->commission_lvl_5;
+            $commission_individual = json_decode($user->commission_individual_lvl_5);
+            
+            if ($game_type === 'bichao') {
+                $commission_individual = json_decode($user->commission_individual_bichao_lvl_5);
+            }
+        }
+    
         if (is_array($commission_individual)) {
             $check = array_filter($commission_individual, fn ($value) => $value->type_id == $type_id);
+            
             if (sizeof($check) > 0) {
                 $percentage = $check[0]->commission;
             }
         }
-
+    
         return $percentage;
     }
 
