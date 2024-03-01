@@ -11,7 +11,7 @@ class GameCreate extends Component
     public TypeGame $typeGames;
     public array $selectedNumbers = [];
     public array $matriz = [];
-
+    public $receivedMessage;
     public function matriz($numbers, $columns)
     {
         $matriz = [];
@@ -69,12 +69,5 @@ class GameCreate extends Component
 
         return view('livewire.pages.bets.game.game-create')
             ->extends('admin.layouts.master');
-    }
-
-    public function submitForm()
-    {
-        if ($this->hasErrors()) {
-            $this->addError('modalError', 'O erro específico ocorreu. Abrir modal.');
-        }
     }
 }

@@ -25,3 +25,7 @@ php_errors.log
 plano.sql
 
 /db
+.docker/
+/docker/
+docker-compose.yml
+Dockerfile

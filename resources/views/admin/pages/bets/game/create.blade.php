@@ -52,7 +52,6 @@
           <div class="modal-footer">
             <button type="submit" class="btn btn-info">{{ trans('admin.create') }}</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.close') }}</button>
-
         </form>
       </div>
     </div>

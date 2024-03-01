@@ -146,7 +146,6 @@ class GameController extends Controller
     public function store(Request $request, Bet $validate_game, Game $game)
     {
         $typeGame = TypeGame::find($request->type_game);
-
         $numbers = explode(',', $request->numbers);
         sort($numbers, SORT_NUMERIC);
         $numbers = implode(',', $numbers);
@@ -158,7 +157,13 @@ class GameController extends Controller
             $typeGame = $this->game->join('type_games AS tp', 'tp.id', '=', 'games.type_game_id')->where('games.numbers', $numbers)->first();
 
             if (($sumExistingPrizes + (float)$request->premio) > $typeGame->odd) {
-                return back()->withErrors(['error' => 'Este jogo não pode mais ser jogado. Por favor, escolha outro jogo ou diminua a aposta.']);
+
+                return back()->withErrors([
+                    'error' => 'oddError',
+                    'description' => 'Este jogo não pode mais ser jogado. Por favor, escolha outro jogo ou diminua a aposta.',
+                    'append' => (float) ($typeGame->odd - $sumExistingPrizes),
+                    'numbers' => $request->numbers
+                ]);
             }
         }
         if ($typeGame) {
