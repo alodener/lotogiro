@@ -186,8 +186,8 @@
                 @endcanany
 
                 <li
-                    class="nav-item @if(auth()->user()->hasRole('Administrador')) nav-group-item @endif has-treeview @if(request()->is('admin/bets/*/')) menu-open @endif">
-                    @if(auth()->user()->hasRole('Administrador'))
+                    class="nav-item nav-group-item has-treeview @if(request()->is('admin/bets/*/')) menu-open @endif">
+                    
                     @can('read_client')
                     <a href="#" class="nav-link @if(request()->is('admin/bets/*'))  @endif">
                         <i class="nav-icon fas fa-ticket-alt"></i>
@@ -199,7 +199,7 @@
                         </p>
                     </a>
                     @endcan
-                    @endif
+                    
                     <ul class="nav nav-treeview">
                         @if(auth()->user()->hasRole('Administrador'))
                         @can('read_client')
@@ -212,18 +212,6 @@
                         </li>
                         @endcan
                         @endif
-                        @unless(auth()->user()->hasRole('Administrador'))
-                        @can('read_client')
-                        <li class="nav-item">
-                            <a href="{{route('admin.bets.consultor')}}"
-                                class="nav-link @if(request()->is('admin/bets/clients*')) active @endif">
-                                <i class="fas fa-users nav-icon"></i>
-                                <p>{{ trans('admin.menu.cliente') }}</p>
-                            </a>
-                        </li>
-                        @endcan
-                        @endunless
-
 
                         @can('read_client')
                         <li class="nav-item">
