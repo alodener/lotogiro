@@ -135,11 +135,18 @@
                 <input type="file" name="banner_pc" class="form-control ">
             </div>
 
+            <div class="form-group col-md-3">
+                <label for="odd">Adicione um limite por Jogo </label>
+                <input wire:model="odd" type="number" class="form-control @error('odd') is-invalid @enderror"
+                    id="odd" name="odd" maxlength="100" value="{{old('odd', $typeGame->odd ?? null)}}">
+                @error('odd')
+                <span class="invalid-feedback" role="alert">
+                    {{ $message }}
+                </span>
+                @enderror
+            </div>
+
         </div>
-
-
-
-
 
         @if(Route::currentRouteName() == 'admin.bets.type_games.edit')
         <div class="row my-2">
@@ -209,7 +216,7 @@
                 <div class="modal-footer">
                     <form id="destroy2" action="" method="POST">
                         @csrf
-                        
+
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         <button type="button" id="btn_delete_type_game_value2" class="btn btn-danger">Excluir</button>
                     </form>
