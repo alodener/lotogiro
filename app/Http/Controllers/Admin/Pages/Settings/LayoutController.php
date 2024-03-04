@@ -153,7 +153,7 @@ class LayoutController extends Controller
 
         foreach ($valoreslink as $index => $valor) {
             $layout_carousel_grande->where('id', $valor)->update([
-                'link' => $dataslink[$index]
+                'link' => $datas[$index]
             ]);
         }
 
@@ -183,12 +183,18 @@ class LayoutController extends Controller
             $layout_button->link = $data['link_btn1'];
         }
 
+        if (isset($request->novapagina_button1)) {
+            $layout_button->novapagina = $data['novapagina_button1'];
+        }
+
         $layout_button->where('id', 1)->update([
             'visivel' => $layout_button->visivel,
             'first_text' => $layout_button->first_text,
             'second_text' => $layout_button->second_text,
             'cor' => $layout_button->cor,
             'link' => $layout_button->link,
+            'novapagina' => $layout_button->novapagina,
+
         ]);
 
         // Campos PUT Button 2
@@ -213,12 +219,17 @@ class LayoutController extends Controller
             $layout_button->link = $data['link_btn2'];
         }
 
+        if (isset($request->novapagina_button2)) {
+            $layout_button->novapagina = $data['novapagina_button2'];
+        }
         $layout_button->where('id', 2)->update([
             'visivel' => $layout_button->visivel,
             'first_text' => $layout_button->first_text,
             'second_text' => $layout_button->second_text,
             'cor' => $layout_button->cor,
             'link' => $layout_button->link,
+            'novapagina' => $layout_button->novapagina,
+
         ]);
 
     }

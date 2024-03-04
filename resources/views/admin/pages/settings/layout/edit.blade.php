@@ -62,8 +62,27 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div>
+                                        <div class="d-flex flex-column">
+                                            <label for="alias">Abrir Nova Pagina</label>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    name="novapagina_button{{$count}}" id="exampleRadios1_{{$count}}"
+                                                    value="1" @if($layout->novapagina == 1) checked @endif>
+                                                <label class="form-check-label" for="exampleRadios1_{{$count}}">
+                                                    <b> Sim </b>
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    name="novapagina_button{{$count}}" id="exampleRadios2_{{$count}}"
+                                                    value="0" @if($layout->novapagina == 0) checked @endif>
+                                                <label class="form-check-label" for="exampleRadios2_{{$count}}">
+                                                    <b> Não </b>
+                                                </label>
+                                            </div>
                                         </div>
+                                        
 
                                         <label for="cor_btn{{$count}}">
                                             <label>Cor do Botão</label>
