@@ -660,6 +660,7 @@
                     </div>
                 </a>
             </div>
+            
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/unidade" class="hover-container">
                     <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/svXBSb3/10.png"
@@ -670,10 +671,7 @@
                     </div>
                 </a>
             </div>
-            <p>
-            <div class="collapse" id="collapseExampleddd">
-                <div class="d-flex">
-                <div class="d-flex p-2 box-imgs">
+            <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/milhar/invertida" class="hover-container">
                     <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/RH22Q2X/11.png"
                         alt="{{ $typeGame->name }}">
@@ -682,7 +680,8 @@
                         <button class="btn btn-primary">Jogar Agora</button>
                     </div>
                 </a>
-            </div> <div class="d-flex p-2 box-imgs">
+        </div>
+        <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/centena/invertida" class="hover-container">
                     <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/nssBBTy/12.png"
                         alt="{{ $typeGame->name }}">
@@ -692,10 +691,7 @@
                     </div>
                 </a>
             </div>
-                </div>
-            </div>
-
-            </p>
+   
         </div>
      
         </div>
