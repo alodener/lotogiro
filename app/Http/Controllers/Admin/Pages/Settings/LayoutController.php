@@ -105,6 +105,7 @@ class LayoutController extends Controller
 
         if($data['nome_config'] == "Carousel Grande"){
 
+
             if (isset($request->image)) {
                 if ($request->file('image')->isValid()) {
                     $image = $request->image->store('carousel_grande');
@@ -122,13 +123,25 @@ class LayoutController extends Controller
         $valores = [];
         $datas = [];
 
+        $valoreslink = [];
+        $dataslink = [];
+
         foreach ($data as $key => $value) {
             if (strpos($key, 'img_visivel') !== false) {
                 $valor = explode('_', $key)[2];
                 $valores[] = $valor;
                 $datas[] = $value;
             }
+            if (strpos($key, 'link_edit') !== false) {
+                $valor = explode('_', $key)[2];
+                $valoreslink[] = $valor;
+                $dataslink[] = $value;
+            }
+            
         }
+
+
+        
 
         // Atualiza automaticamente para todos os valores em $valores
         foreach ($valores as $index => $valor) {
@@ -136,6 +149,14 @@ class LayoutController extends Controller
                 'visivel' => $datas[$index]
             ]);
         }
+
+
+        foreach ($valoreslink as $index => $valor) {
+            $layout_carousel_grande->where('id', $valor)->update([
+                'link' => $dataslink[$index]
+            ]);
+        }
+
     }
 
     if($data['nome_config'] == "Botões"){
