@@ -430,11 +430,17 @@
         // Adiciona um ouvinte de evento para detectar mudase   document.getElementById('cor_btn1').addEventListener('input', function () {
         // Obtém o valor da cor selecionada
 
-        // Atualiza a cor da área de exibição
     });
-    var corSelecionada = this.value;
-    document.getElementById('areaCor1').style.backgroundColor = corSelecionada;
+ 
+    // Atualiza a cor da área de exibição
+            
+    document.getElementById('cor_btn1').addEventListener('input', function () {
+        // Obtém o valor da cor selecionada
+        var corSelecionada = this.value;
 
+        // Atualiza a cor da área de exibição
+        document.getElementById('areaCor1').style.backgroundColor = corSelecionada;
+    });
     document.getElementById('cor_btn2').addEventListener('input', function () {
         // Obtém o valor da cor selecionada
         var corSelecionada = this.value;
