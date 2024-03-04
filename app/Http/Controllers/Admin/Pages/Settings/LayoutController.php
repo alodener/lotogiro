@@ -153,7 +153,7 @@ class LayoutController extends Controller
 
         foreach ($valoreslink as $index => $valor) {
             $layout_carousel_grande->where('id', $valor)->update([
-                'link' => $datas[$index]
+                'link' => $dataslink[$index]
             ]);
         }
 
