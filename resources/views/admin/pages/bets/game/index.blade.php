@@ -97,15 +97,16 @@
                 <tbody>
                 </tbody>
             </table>
-
-            <div class="row-actions">
-                <div class="form-group actions-wrapper col-12 col-sm-2">
-                    <select name="table-actions" id="tableActions" class="form-control">
-                        <option value="">{{ trans('admin.select') }}</option>
-                        <option value="delete">{{ trans('admin.delete') }}</option>
-                    </select>
+            @can('read_client')
+                <div class="row-actions">
+                    <div class="form-group actions-wrapper col-12 col-sm-2">
+                        <select name="table-actions" id="tableActions" class="form-control">
+                            <option value="">{{ trans('admin.select') }}</option>
+                            <option value="delete">{{ trans('admin.delete') }}</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+            @endcan
         </div>
     </div>
 </div>
