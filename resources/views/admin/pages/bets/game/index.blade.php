@@ -25,7 +25,7 @@
         </a>
 
         <div class="table-responsive extractable-cel">
-            @if(auth()->user()->hasRole('Administrador'))
+            @can('read_client')
                 <div class="filter-wrapper">
                     <form class="form" id="filterForm">
                         <div class="form-row no-gutters">
@@ -79,7 +79,7 @@
                         </div>
                     </form>
                 </div>
-            @endif
+            @endcan
 
             <table class="table table-striped table-hover table-sm" id="game_table">
                 <thead>
