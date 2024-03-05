@@ -60,18 +60,23 @@
                 @endforeach
             </ol>
             <div class="carousel-inner">
-                @foreach($layout_carousel_grande as $key => $item)
-                @if($item['visivel'] == 1)
-                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                    <a href="{{$item['link']}}" target="_blank">
-                        <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") :
-                            asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}"
-                            alt="{{ $item['nome'] }}">
-                    </a>
-                </div>
+    @foreach($layout_carousel_grande as $key => $item)
+        @if($item['visivel'] == 1)
+            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                @if(!empty($item['link']))
+                    <a href="{{ $item['link'] }}" target="_blank">
                 @endif
-                @endforeach
+                    <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") :
+                        asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}"
+                        alt="{{ $item['nome'] }}">
+                @if(!empty($item['link']))
+                    </a>
+                @endif
             </div>
+        @endif
+    @endforeach
+</div>
+
             <a class="carousel-control-prev nott" href="#carouselExampleIndicators" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon " aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
@@ -660,6 +665,7 @@
                     </div>
                 </a>
             </div>
+            
             <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/unidade" class="hover-container">
                     <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/svXBSb3/10.png"
@@ -670,10 +676,7 @@
                     </div>
                 </a>
             </div>
-            <p>
-            <div class="collapse" id="collapseExampleddd">
-                <div class="d-flex">
-                <div class="d-flex p-2 box-imgs">
+            <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/milhar/invertida" class="hover-container">
                     <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/RH22Q2X/11.png"
                         alt="{{ $typeGame->name }}">
@@ -682,7 +685,8 @@
                         <button class="btn btn-primary">Jogar Agora</button>
                     </div>
                 </a>
-            </div> <div class="d-flex p-2 box-imgs">
+        </div>
+        <div class="d-flex p-2 box-imgs">
                 <a href="/admin/bets/bichao/centena/invertida" class="hover-container">
                     <img class="img-todos-jogos" style="border-radius:10px;"  src="https://i.ibb.co/nssBBTy/12.png"
                         alt="{{ $typeGame->name }}">
@@ -692,10 +696,7 @@
                     </div>
                 </a>
             </div>
-                </div>
-            </div>
-
-            </p>
+   
         </div>
      
         </div>

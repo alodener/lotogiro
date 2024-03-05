@@ -8,7 +8,7 @@
 
                 @foreach ($layout_button as $layout)
                 <li>
-                    <a href="{{$layout->link}}" class="nav-link @if ($layout->visivel == 0) d-none @endif">
+                <a href="{{$layout->link}}" @if ($layout->novapagina == 1) target="_blank" @endif class="nav-link @if ($layout->visivel == 0) d-none @endif">
                         <button type="button" style="background:{{$layout->cor}};"
                             class="btn btn-success btn-side d-flex justify-content-around align-items-center">
                             <p>{!!$layout->first_text!!}</p>

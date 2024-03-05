@@ -62,8 +62,27 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div>
+                                        <div class="d-flex flex-column">
+                                            <label for="alias">Abrir Nova Pagina</label>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    name="novapagina_button{{$count}}" id="exampleRadios1_{{$count}}"
+                                                    value="1" @if($layout->novapagina == 1) checked @endif>
+                                                <label class="form-check-label" for="exampleRadios1_{{$count}}">
+                                                    <b> Sim </b>
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    name="novapagina_button{{$count}}" id="exampleRadios2_{{$count}}"
+                                                    value="0" @if($layout->novapagina == 0) checked @endif>
+                                                <label class="form-check-label" for="exampleRadios2_{{$count}}">
+                                                    <b> Não </b>
+                                                </label>
+                                            </div>
                                         </div>
+                                        
 
                                         <label for="cor_btn{{$count}}">
                                             <label>Cor do Botão</label>
@@ -207,7 +226,8 @@
                                     <th><img width="90px" src="{{ url("storage/{$carousel_grande->url}")}}" alt="">
                                     </th>
                                     <th>{{$carousel_grande->nome}}</th>
-                                    <th>{{$carousel_grande->link}}</th>
+                                    <th ><h6  id="link_{{$carousel_grande->id}}">{{$carousel_grande->link}}</h6>    <input name="link_edit_{{$carousel_grande->id}}" type="text"class="form-control text-center" id="input_link_{{$carousel_grande->id}}" value="{{$carousel_grande->link}}" style="display: none;">
+</th>
 
                                     <th>
                                         <div class="d-flex flex-column ">
@@ -236,8 +256,14 @@
 
                                     <th>
 
-
-
+                                    <button type="button" id="btn_confirm{{$carousel_grande->id}}" onclick="ConfirmButton({{$carousel_grande->id}})" class="btn btn-sm btn-danger btn-confirm"style="display: none;"
+                                            data-id="{{$carousel_grande->id}}">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </button>
+                                    <button type="button" id="btn_editavel{{$carousel_grande->id}}" onclick="tornarEditavel({{$carousel_grande->id}})" class="btn btn-sm btn-danger btn-edit"
+                                            data-id="{{$carousel_grande->id}}">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
                                         <button type="button" class="btn btn-sm btn-danger delete-btn"
                                             data-id="{{$carousel_grande->id}}">
                                             <i class="far fa-trash-alt"></i>
@@ -404,6 +430,37 @@
 
 
     });
+
+
+    
+
+    function tornarEditavel(carouselId) {
+        // Oculta o texto e exibe o campo de input
+
+        document.getElementById(`btn_editavel${carouselId}`).style.display = 'none';
+        document.getElementById(`btn_confirm${carouselId}`).style.display = 'inline';
+
+        document.getElementById(`link_${carouselId}`).style.display = 'none';
+        document.getElementById(`input_link_${carouselId}`).style.display = 'block';
+        document.getElementById(`input_link_${carouselId}`).style.display = 'block';
+
+        // Recupera o valor atual usando o ID e insere no campo editável
+        var valorAtual = document.getElementById(`link_${carouselId}`).innerHTML;
+        document.getElementById(`input_link_${carouselId}`).value = valorAtual;
+    }
+
+    function ConfirmButton(carouselId){
+        document.getElementById(`btn_editavel${carouselId}`).style.display = 'inline';
+        document.getElementById(`btn_confirm${carouselId}`).style.display = 'none';
+        
+        var valorAtual = document.getElementById(`input_link_${carouselId}`).value;
+        document.getElementById(`link_${carouselId}`).innerHTML = valorAtual;
+
+        document.getElementById(`input_link_${carouselId}`).style.display = 'none';
+        document.getElementById(`link_${carouselId}`).style.display = 'block';
+
+
+    }
     
     $('.delete-btn-icons').on('click', function () {
         var layoutId = $(this).data('id'); // Obtém o ID do layout a ser excluído
@@ -430,11 +487,17 @@
         // Adiciona um ouvinte de evento para detectar mudase   document.getElementById('cor_btn1').addEventListener('input', function () {
         // Obtém o valor da cor selecionada
 
-        // Atualiza a cor da área de exibição
     });
-    var corSelecionada = this.value;
-    document.getElementById('areaCor1').style.backgroundColor = corSelecionada;
+ 
+    // Atualiza a cor da área de exibição
+            
+    document.getElementById('cor_btn1').addEventListener('input', function () {
+        // Obtém o valor da cor selecionada
+        var corSelecionada = this.value;
 
+        // Atualiza a cor da área de exibição
+        document.getElementById('areaCor1').style.backgroundColor = corSelecionada;
+    });
     document.getElementById('cor_btn2').addEventListener('input', function () {
         // Obtém o valor da cor selecionada
         var corSelecionada = this.value;
