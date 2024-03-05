@@ -25,55 +25,57 @@
                 </a>
            
             <div class="table-responsive extractable-cel">
-                <div class="filter-wrapper">
-                    <form class="form" id="filterForm">
-                        <div class="form-row no-gutters">
-                            <div class="form-group col-md-6 col-sm-12">
-
-                                <label for="client_id">{{ trans('admin.games.customer-input-label') }}</label> <!-- cliente -->
-                                {{-- <select name="client_id" id="client_id" class="form-control">
-                                    @if($clients->count() > 0)
+                @can('read_client')
+                    <div class="filter-wrapper">
+                        <form class="form" id="filterForm">
+                            <div class="form-row no-gutters">
+                                <div class="form-group col-md-6 col-sm-12">
+    
+                                    <label for="client_id">{{ trans('admin.games.customer-input-label') }}</label> <!-- cliente -->
+                                    {{-- <select name="client_id" id="client_id" class="form-control">
+                                        @if($clients->count() > 0)
+                                            <option value="">Todos</option>
+    
+                                            @foreach($clients as $client)
+                                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select> --}}
+                                    <input type="text" id="client_id" name="client_id" class="selectize" />
+                                </div>
+    
+                                <div class="form-group col-md-6 col-sm-12">
+                                    <label for="user_id">{{ trans('admin.games.user-input-label') }}</label> <!-- usuario -->
+                                    {{-- <select name="user_id" id="user_id" class="form-control">
                                         <option value="">Todos</option>
-
-                                        @foreach($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                        @endforeach
-                                    @endif
-                                </select> --}}
-                                <input type="text" id="client_id" name="client_id" class="selectize" />
+    
+                                        @if($users->count() > 0)
+                                            @foreach($users as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select> --}}
+    
+                                    <input type="text" id="user_id" name="user_id" class="selectize" />
+                                </div>
+    
+                                <div class="form-group col-md-6 col-sm-12">
+                                    <label for="startDate">{{ trans('admin.games.initial-date-input-label') }}</label> <!-- data inicial -->
+                                    <input type="date" name="startDate" id="startDate" class="form-control" />
+                                </div>
+    
+                                <div class="form-group col-md-6 col-sm-12">
+                                    <label for="endDate">{{ trans('admin.games.end-date-input-label') }}</label> <!-- data final -->
+                                    <input type="date" name="endDate" id="endDate" class="form-control" />
+                                </div>
+    
+                                <div class="form-group col-12">
+                                    <button class="btn btn-primary" id="filterBtn">{{ trans('admin.games.filter-button-label') }}</button> <!-- botao filtrar -->
+                                </div>
                             </div>
-
-                            <div class="form-group col-md-6 col-sm-12">
-                                <label for="user_id">{{ trans('admin.games.user-input-label') }}</label> <!-- usuario -->
-                                {{-- <select name="user_id" id="user_id" class="form-control">
-                                    <option value="">Todos</option>
-
-                                    @if($users->count() > 0)
-                                        @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endforeach
-                                    @endif
-                                </select> --}}
-
-                                <input type="text" id="user_id" name="user_id" class="selectize" />
-                            </div>
-
-                            <div class="form-group col-md-6 col-sm-12">
-                                <label for="startDate">{{ trans('admin.games.initial-date-input-label') }}</label> <!-- data inicial -->
-                                <input type="date" name="startDate" id="startDate" class="form-control" />
-                            </div>
-
-                            <div class="form-group col-md-6 col-sm-12">
-                                <label for="endDate">{{ trans('admin.games.end-date-input-label') }}</label> <!-- data final -->
-                                <input type="date" name="endDate" id="endDate" class="form-control" />
-                            </div>
-
-                            <div class="form-group col-12">
-                                <button class="btn btn-primary" id="filterBtn">{{ trans('admin.games.filter-button-label') }}</button> <!-- botao filtrar -->
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                @endcan
 
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
