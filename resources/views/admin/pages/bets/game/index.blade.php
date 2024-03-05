@@ -121,13 +121,15 @@
                 {{ trans('admin.exclude-game-text') }}
             </div>
             <div class="modal-footer">
-                <form id="destroy" action="" method="POST">
-                    @method('DELETE')
-                    @csrf
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{
-                        trans('admin.exclude-game-cancel') }}</button>
-                    <button type="submit" class="btn btn-danger">{{ trans('admin.exclude-game-confirm') }}</button>
-                </form>
+                @can('read_client')
+                    <form id="destroy" action="" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{
+                            trans('admin.exclude-game-cancel') }}</button>
+                        <button type="submit" class="btn btn-danger">{{ trans('admin.exclude-game-confirm') }}</button>
+                    </form>
+                @endcan
             </div>
         </div>
     </div>
