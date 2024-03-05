@@ -97,10 +97,7 @@
                             <option>100</option>
                         </select>
                     </div>
-                <div class="col-md-3">
-                    <button wire:click="getReport" type="button" class="btn btn-info btn-block">{{
-                        trans('admin.generate-report') }}</button>
-                </div>
+               
             </div>
             <div class="table-responsive">
 
