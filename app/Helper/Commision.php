@@ -2,6 +2,8 @@
 
 namespace App\Helper;
 use App\Models\User;
+use App\Models\TransactBalance;
+
 class Commision
 {
     public static function calculation($percentage, $value)
