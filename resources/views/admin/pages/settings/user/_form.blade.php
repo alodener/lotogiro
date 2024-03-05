@@ -249,6 +249,17 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="commission_lv_6">{{ trans('admin.pagesF.porcentComissao6') }}</label>
+                            <input type="text" class="form-control @error('commission_lv_6') is-invalid @enderror" id="commission_lv_6"
+                                   name="commission_lv_6"
+                                   maxlength="100" value="{{old('commission_lv_6', $user->commission_lv_6 ?? null)}}">
+                            @error('commission_lv_6')
+                            <span class="invalid-feedback" role="alert">
+                               {{ $message }}
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="balanceAtual">{{ trans('admin.pagesF.saldoAtual') }}</label>
                             <input type="text" readonly class="form-control text-right" id="balanceAtual"
                                    name="balanceAtual"

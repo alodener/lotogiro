@@ -74,6 +74,15 @@ class Commision
                 $commission_individual = json_decode($user->commission_individual_bichao_lvl_5);
             }
         }
+
+        if ($lvl === 6) {
+            $percentage = $user->commission_lvl_6;
+            $commission_individual = json_decode($user->commission_individual_lvl_6);
+            
+            if ($game_type === 'bichao') {
+                $commission_individual = json_decode($user->commission_individual_bichao_lvl_6);
+            }
+        }
     
         if (is_array($commission_individual)) {
             $check = array_filter($commission_individual, fn ($value) => $value->type_id == $type_id);

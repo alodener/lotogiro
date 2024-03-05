@@ -328,6 +328,10 @@ class UserController extends Controller
         $commissions->commission_individual = static::createCommissionIndividual($user->commission_individual);
         $commissions->commission_individual_lv_1 = static::createCommissionIndividual($user->commission_individual_lv_1);
         $commissions->commission_individual_lv_2 = static::createCommissionIndividual($user->commission_individual_lv_2);
+        $commissions->commission_individual_lv_3 = static::createCommissionIndividual($user->commission_individual_lv_3);
+        $commissions->commission_individual_lv_4 = static::createCommissionIndividual($user->commission_individual_lv_4);
+        $commissions->commission_individual_lv_5 = static::createCommissionIndividual($user->commission_individual_lv_5);
+        $commissions->commission_individual_lv_6 = static::createCommissionIndividual($user->commission_individual_lv_6);
         $commissions->commission_individual_bichao = static::createCommissionIndividual($user->commission_individual_bichao);
         $commissions->commission_individual_bichao_lv_1 = static::createCommissionIndividual($user->commission_individual_bichao_lv_1);
         $commissions->commission_individual_bichao_lv_2 = static::createCommissionIndividual($user->commission_individual_bichao_lv_2);
@@ -372,6 +376,10 @@ class UserController extends Controller
             'commission' => 'integer|between:0,100',
             'commission_lv_1' => 'integer|between:0,100',
             'commission_lv_2' => 'integer|between:0,100',
+            'commission_lv_3' => 'integer|between:0,100',
+            'commission_lv_4' => 'integer|between:0,100',
+            'commission_lv_5' => 'integer|between:0,100',
+            'commission_lv_6' => 'integer|between:0,100',
         ]);
 
         $commission_individual = array_filter($request->commission_individual, fn ($val) => $val > 0);
@@ -610,7 +618,9 @@ class UserController extends Controller
             $user->commission_lv_1 = $request->commission_lv_1;
             $user->commission_lv_2 = $request->commission_lv_2;
             $user->commission_lv_3 = $request->commission_lv_3;
-            $user->commission_lv_3 = $request->commission_lv_4;
+            $user->commission_lv_4 = $request->commission_lv_4;
+            $user->commission_lv_5 = $request->commission_lv_5;
+            $user->commission_lv_6 = $request->commission_lv_6;
             $user->commission_individual = json_encode($commission_individual);
             $user->commission_individual_lv_1 = json_encode($commission_individual_lv_1);
             $user->commission_individual_lv_2 = json_encode($commission_individual_lv_2);

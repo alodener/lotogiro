@@ -685,6 +685,7 @@ return [
                 'porcentComissao3' => 'Porcentagem de Comissão Nivel 3',
                 'porcentComissao4' => 'Porcentagem de Comissão Nivel 4',
                 'porcentComissao5' => 'Porcentagem de Comissão Nivel 5',
+                'porcentComissao6' => 'Porcentagem de Comissão Nivel 6',
                 'saldoAtual' => 'Saldo Atual',
                 'addSaldo' => 'Adicionar Saldo',
                 'extratSaldo' => 'Extrato de Saldo',
