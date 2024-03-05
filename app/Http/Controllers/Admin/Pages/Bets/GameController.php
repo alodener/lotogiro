@@ -21,6 +21,7 @@ use App\Models\Bet;
 use App\Models\TypeGameValue;
 use Illuminate\Support\Facades\Auth;
 use App\Helper\GameHelper;
+use App\Libs\Matriz\Matriz;
 
 use App\Models\User;
 use App\Models\UsersHasPoints;
@@ -146,22 +147,23 @@ class GameController extends Controller
     public function store(Request $request, Bet $validate_game, Game $game)
     {
         $typeGame = TypeGame::find($request->type_game);
-        
-        if ($typeGame) {
+      
+        // if ($typeGame) {
             
-            $competition = Competition::where('type_game_id', $typeGame->id)->latest()->first();
-            if ($competition) {
+        //     $competition = Competition::where('type_game_id', $typeGame->id)->latest()->first();
+        //     if ($competition) {
                 
-                $sortDate = Carbon::parse($competition->sort_date);
-                $now = Carbon::now();
+        //         $sortDate = Carbon::parse($competition->sort_date);
+        //         $now = Carbon::now();
 
-                if ($now->gt($sortDate)) {
-                    return back()->withErrors(['error' => 'Apostas fechadas para esta competição!']);
-                }
-            }
-        }
+        //         if ($now->gt($sortDate)) {
+        //             return back()->withErrors(['error' => 'Apostas fechadas para esta competição!']);
+        //         }
+        //     }
+        // }
 
-        if ($request->controle == 1) {
+        if (isset($request->controle) && $request->controle == 1) {
+
             if (!auth()->user()->hasPermissionTo('create_game')) {
                 abort(403);
             }
@@ -212,7 +214,6 @@ class GameController extends Controller
                 $dezenas = explode(",", $request->dezena);
                 $totaldeJogos = count($dezenas);
                 $totaldeAposta = $totaldeJogos * $request->value;
-                $dezenasSeparadas;
                 $competition = TypeGame::find($request->type_game)->competitions->last();
                 if (empty($competition)) {
                     $bet->status_xml = 3;
@@ -286,6 +287,7 @@ class GameController extends Controller
         } else {
 
             if (!auth()->user()->hasPermissionTo('create_game')) {
+                dd('Entrou no if');
                 abort(403);
             }
 
@@ -303,6 +305,7 @@ class GameController extends Controller
                 $balance = Balance::calculation($request->value);
 
                 if (!$balance) {
+                    dd('primeiro if');
                     return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                         'error' => 'Saldo Insuficiente!'
                     ]);
@@ -310,6 +313,7 @@ class GameController extends Controller
 
                 $competition = TypeGame::find($request->type_game)->competitions->last();
                 if (empty($competition)) {
+                    dd('segundo if');
                     return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                         'error' => 'Não existe concurso cadastrado!'
                     ]);
@@ -323,30 +327,30 @@ class GameController extends Controller
                 
                 $typeGameValue = TypeGameValue::find($request['valueId']);
 
-                if(!empty($typeGameValue->max_repeated_games)) {
-                    $foundGames = Game::where('numbers', $numbers)
-                    ->where('competition_id', $competition->id)
-                    ->where('type_game_value_id', $request['valueId'])
-                    ->get();
+                // if(!empty($typeGameValue->max_repeated_games)) {
+                //     dd('terceiro if');
+                //     $foundGames = Game::where('numbers', $numbers)
+                //     ->where('competition_id', $competition->id)
+                //     ->where('type_game_value_id', $request['valueId'])
+                //     ->get();
 
-                    if ($foundGames->count() >= $typeGameValue->max_repeated_games) {
-                        return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                            'error' => 'Essa dezena já atingiu o número máximo de apostas com esses números!'
-                        ]);
-                    }
-                }
+                //     if ($foundGames->count() >= $typeGameValue->max_repeated_games) {
+                //         return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                //             'error' => 'Essa dezena já atingiu o número máximo de apostas com esses números!'
+                //         ]);
+                //     }
+                // }
 
                 
                 $hasDraws = Draw::where('competition_id', $competition->id)->count();
                 
                 if($hasDraws > 0) {
+                    dd('quarto if');
                     return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                         'error' => 'Esse sorteio já foi finalizado!'
                     ]);
                 }
-                
-                
-                
+            
                  $game = new $this->game;
                 if($request->type_client != 1 && !auth()->user()->hasRole('Administrador')){
                 $userclient = User::where('id', $request->client)->first();
@@ -364,7 +368,6 @@ class GameController extends Controller
 
                     $game->client_id = $request->client;
                 }
-
 
 
                 //salvar jogo
@@ -463,37 +466,68 @@ class GameController extends Controller
                 // nome cliente
                 $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
 
-                global $data;
-                $data = [
-                    'prize' => false,
-                    'jogosCliente' => $jogosCliente,
-                    'Nome' => $Nome,
-                    'Datas' => $Datas,
-                    'TipoJogo' => $TipoJogo
-                ];
-                global $fileName;
-                $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
+                // global $data;
+                // $data = [
+                //     'prize' => false,
+                //     'jogosCliente' => $jogosCliente,
+                //     'Nome' => $Nome,
+                //     'Datas' => $Datas,
+                //     'TipoJogo' => $TipoJogo
+                // ];
+                // global $fileName;
+                // $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
 
                 // return view('admin.layouts.pdf.receiptTudo', $data);
-                global $pdf;
-                $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
-                // return $pdf->download($fileName);
+                // global $pdf;
+                // $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
+                // // return $pdf->download($fileName);
 
-                // $arquivo = $pdf->output($fileName);
-                Mail::send('email.jogo', ['idjogo' => $game->id], function ($m) {
-                    global $data;
-                    global $fileName;
-                    global $pdf;
-                    $m->from('admin@superlotogiro.com', 'SuperLotogiro');
-                    $m->subject('Seu Bilhete');
-                    $m->to(auth()->user()->email);
-                    $m->attachData($pdf->output(), $fileName);
-                });
+                // // $arquivo = $pdf->output($fileName);
+                // Mail::send('email.jogo', ['idjogo' => $game->id], function ($m) {
+                //     global $data;
+                //     global $fileName;
+                //     global $pdf;
+                //     $m->from('admin@superlotogiro.com', 'SuperLotogiro');
+                //     $m->subject('Seu Bilhete');
+                //     $m->to(auth()->user()->email);
+                //     $m->attachData($pdf->output(), $fileName);
+                // });
+
+                try{
+                if($game){
+
+                    $jogo = TypeGame::find($game->type_game_id);
+
+                    $info = [
+                        'tipo_jogo' => 'LOTERIA',
+                        'jogo' =>  $jogo->name,
+                        'jogo_id' => $game->type_game_id,
+                        'usuario_id' => $game->user_id,
+                        'nome_usuario' => Auth()->user()->name,
+                        'numbers' => $game->numbers,
+                        'valor_aposta' => $game->value,
+                        'valor_premio' => $game->premio,
+                        'concurso' => TypeGame::find($request->type_game)->competitions->last()->number
+                    ];
+
+                    $matriz = new Matriz();
+                    $matriz->loteriaLog($info);
+
+                }
+                }catch (\Exception $exception) {
+               
+                }
+
+                
 
                 return redirect()->route('admin.bets.games.edit', ['game' => $game->id])->withErrors([
                     'success' => 'Jogo cadastrado com sucesso2'
                 ]);
             } catch (\Exception $exception) {
+                dd([
+                [ 'erro' => $exception->getMessage(), 'line' => $exception->getLine(),
+                'file' => $exception->getFile()]
+             ]);
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                     'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o jogo, tente novamente'
                 ]);
