@@ -146,26 +146,72 @@ class GameController extends Controller
     public function store(Request $request, Bet $validate_game, Game $game)
     {
         $typeGame = TypeGame::find($request->type_game);
-        $numbers = explode(',', $request->numbers);
-        sort($numbers, SORT_NUMERIC);
-        $numbers = implode(',', $numbers);
 
-        $game = $this->game->where('numbers', $numbers)->get();
-        if(!$game->isEmpty()){
-            $sumExistingPrizes = $this->game->where('numbers', $numbers)->sum('premio');
+        if($request->numbers){
+            $numbers = explode(',', $request->numbers);
+            sort($numbers, SORT_NUMERIC);
+            $numbers = implode(',', $numbers);
+            $game = $this->game->where('numbers', $numbers)->get();
 
-            $typeGame = $this->game->join('type_games AS tp', 'tp.id', '=', 'games.type_game_id')->where('games.numbers', $numbers)->first();
+            if($request->premio > $typeGame->odd) {
+                $sumExistingPrizes = $this->game->where('numbers', $numbers)->sum('premio');
+                return back()->withErrors([
+                    'error' => 'oddError',
+                    'description' => 'Este jogo não pode mais ser jogado. Por favor, escolha outro jogo ou diminua a aposta.',
+                    'numbers' => $request->numbers
+                ]);
+            };
 
-            if (($sumExistingPrizes + (float)$request->premio) > $typeGame->odd) {
+            if(!$game->isEmpty()){
+                $sumExistingPrizes = $this->game->where('numbers', $numbers)->sum('premio');
+
+                $typeGame = $this->game->join('type_games AS tp', 'tp.id', '=', 'games.type_game_id')->where('games.numbers', $numbers)->first();
+
+                if (($sumExistingPrizes + (float)$request->premio) > $typeGame->odd) {
+
+                    return back()->withErrors([
+                        'error' => 'oddError',
+                        'description' => 'Este jogo não pode mais ser jogado. Por favor, escolha outro jogo ou diminua a aposta.',
+                        'numbers' => $request->numbers
+                    ]);
+                }
+            }
+        }
+
+        if($request->dezena){
+            $games = explode(",", $request->dezena);
+            foreach ($games as $game) {
+                $dezenas = $this->game->where('numbers', $game)->get();
+
+                if(!$dezenas->isEmpty()){
+                    $sumExistingPrizes = $this->game->where('numbers', $game)->sum('premio');
+
+                    $typeGame = $this->game->join('type_games AS tp', 'tp.id', '=', 'games.type_game_id')->where('games.numbers', $game)->first();
+
+                    if (($sumExistingPrizes + (float)$request->premio) > $typeGame->odd) {
+                        return back()->withErrors([
+                            'error' => 'oddError',
+                            'description' => 'Este jogo não pode mais ser jogado. Por favor, escolha outro jogo ou diminua a aposta.',
+                            'numbers' => $games
+                        ]);
+                    }
+                }
+            }
+            if($request->premio > $typeGame->odd) {
+                foreach ($games as $game) {
+                    $sumExistingPrizes = $this->game->where('numbers', $game)->sum('premio');
+                }
 
                 return back()->withErrors([
                     'error' => 'oddError',
                     'description' => 'Este jogo não pode mais ser jogado. Por favor, escolha outro jogo ou diminua a aposta.',
-                    'append' => (float) ($typeGame->odd - $sumExistingPrizes),
-                    'numbers' => $request->numbers
+                    'numbers' => $games
                 ]);
-            }
+            };
+
         }
+
+
         if ($typeGame) {
 
             $competition = Competition::where('type_game_id', $typeGame->id)->latest()->first();

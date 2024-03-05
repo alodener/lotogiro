@@ -33,8 +33,6 @@
 
                             numbersGrid.appendChild(row);
                         }
-
-                        document.getElementById("suggestedValue").innerText = formatCurrency(errors.append[0]);
                     }
 
                     function formatCurrency(valueInCents) {
@@ -86,38 +84,38 @@
             <span class="close" onclick="closeModal()">&times;</span>
         </div>
 
-        <div class="modal-content" style="color: #000;">
+        <div class="modal-content">
             <div class="text-center">
                 <h3 class="mb-4">Ops! Aposta inválida</h3>
                 <p id="errorDescription" class="mb-4">A descrição do erro será exibida aqui.</p>
                 <hr class="mb-4">
                 <div class="d-flex justify-content-between">
-                    <div>
+                    <div class="flex">
                         <h5>Opções:</h5>
                         <div class="flex flex-col justify-content-around mt-5">
                             <div class="flex">
-                                <button class="btn btn-primary" onclick="adjustBet()">Diminuir o valor da aposta
-                                    <span id="suggestedValue" class="ml-2"></span>
+                                <button class="btn btn-primary btn-lg btn-custom" onclick="adjustBet()">Diminuir o valor da aposta
+                                    <span id="suggestedValue" class="ml-2" ></span>
                                 </button>
                             </div>
                             <div>
-                                <button class="btn btn-primary mt-2" onclick="chooseNewGame()">Escolher um novo jogo</button>
+                                <button class="btn btn-primary mt-2 btn-lg btn-custom" onclick="chooseNewGame()">Escolher um novo jogo</button>
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div class="flex d-none d-lg-block"> <!-- Esta div só será exibida em dispositivos de médio a grandes (a partir de 768px) -->
                         <h5>Jogo:</h5>
-                            <div class="game-numbers">
-                                <h4>Jogo Escolhido:</h4>
-                                <div class="numbers-grid" id="errorNumbers">
-                                </div>
+                        <div class="game-numbers">
+                            <h4>Jogo Escolhido:</h4>
+                            <div class="numbers-grid" id="errorNumbers">
+                                <!-- Add error numbers here -->
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
 
@@ -172,10 +170,12 @@
 
     .modal-content {
         background-color: #fefefe;
-        margin: 15% auto;
+        max-width: 100%;
+        margin: auto;
         padding: 20px;
         border: 1px solid #888;
         width: 50%;
+        color: #000;
     }
 
     .close {
@@ -190,6 +190,16 @@
         color: black;
         text-decoration: none;
         cursor: pointer;
+    }
+    .btn-custom {
+        padding: 0.25rem 0.5rem;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+    .btn-custom {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.6rem;
     }
     </style>
 @endpush
