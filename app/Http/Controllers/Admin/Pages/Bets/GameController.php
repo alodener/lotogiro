@@ -484,7 +484,7 @@ class GameController extends Controller
                     global $data;
                     global $fileName;
                     global $pdf;
-                    $m->from('admin@superlotogiro.com', 'SuperLotogiro');
+                    $m->from('admin@loteriasalternativas.com', 'SuperLotogiro');
                     $m->subject('Seu Bilhete');
                     $m->to(auth()->user()->email);
                     $m->attachData($pdf->output(), $fileName);
