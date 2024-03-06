@@ -188,7 +188,7 @@ class ManualRecharge extends Component
         $transacts->valueTotal = $total;
 
         $transacts->each(function($item, $key) use ($total) {
-            $item->data = Carbon::parse($item->created_at)->format('d/m/y 脿\\s H:i');
+            $item->data = Carbon::parse($item->created_at)->format('d/m/y H:i');
             $item->value = Money::toReal($item->value);
 
             $item->usuario = "{$item->user['name']} {$item->user['last_name']}";
