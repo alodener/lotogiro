@@ -29,7 +29,7 @@
                                     <small>{{ trans('admin.pagesF.aoAlt') }}</small>
                                 </div>
                                 <div class="col-sm-12">
-                                    <input wire:model.defer="pixSaque" class='col-sm-10' type="text" style="margin-bottom: 15px;"/>
+                                    <input wire:model.defer="pix" class='col-sm-10' type="text" style="margin-bottom: 15px;" disabled/>
                                 </div>
                             </div>
                             <div class="col-sm-5">
