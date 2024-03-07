@@ -168,7 +168,7 @@
                                             <input class="form-check-input" type="radio" name="visible_type_client"
                                                 id="exampleRadios2_" value="0">
                                             <label class="form-check-label" for="exampleRadios2_">
-                                                <b> Apenas Consulores </b>
+                                                <b> Apenas Consultores </b>
                                             </label>
                                         </div>
                                     </div>
