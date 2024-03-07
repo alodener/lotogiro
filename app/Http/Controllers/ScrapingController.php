@@ -27,7 +27,7 @@ class ScrapingController extends Controller
     
         $crawler->filter('table')->each(function ($table) use (&$targetTable, $data) {
             $tableContent = $table->html();
-            if (strpos($tableContent, 'Resultado Jogo do Bicho 1° ao 7° (PTM-Rio) 11:00 Hoje '. $data) !== false) {
+            if (strpos($tableContent, '(PTM-Rio) 11:00 Hoje '. $data) !== false) {
                 $targetTable = $tableContent;
                 return false; // Para parar a iteração quando a tabela desejada for encontrada
             }
