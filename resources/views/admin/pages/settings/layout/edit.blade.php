@@ -135,6 +135,7 @@
                             <div class="form-group">
 
                                 <div class="d-flex justify-content-between">
+                                    <div class="d-flex flex-column ">
                                     <div class="d-flex flex-column">
                                         <label for="alias">Visibilidade</label>
 
@@ -153,7 +154,25 @@
                                             </label>
                                         </div>
                                     </div>
+                                    <div class="d-flex flex-column mt-3">
+                                        <label for="alias">Visivel Por</label>
 
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="visible_type_client"
+                                                id="exampleRadios1_" value="1" checked>
+                                            <label class="form-check-label" for="exampleRadios1_">
+                                                <b> Todos </b>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="visible_type_client"
+                                                id="exampleRadios2_" value="0">
+                                            <label class="form-check-label" for="exampleRadios2_">
+                                                <b> Apenas Consulores </b>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    </div>
                                     <div class="d-flex flex-column">
 
                                     <div class="d-flex justify-content-around">
@@ -213,6 +232,8 @@
                                     <th>Nome</th>
                                     <th>Link</th>
                                     <th>Visivel</th>
+                                    <th>Visivel Por</th>
+
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -228,9 +249,7 @@
                                     <th>{{$carousel_grande->nome}}</th>
                                     <th ><h6  id="link_{{$carousel_grande->id}}">{{$carousel_grande->link}}</h6>    <input name="link_edit_{{$carousel_grande->id}}" type="text"class="form-control text-center" id="input_link_{{$carousel_grande->id}}" value="{{$carousel_grande->link}}" style="display: none;">
 </th>
-
-                                    <th>
-                                        <div class="d-flex flex-column ">
+<th> <div class="d-flex flex-column ">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio"
                                                     name="img_visivel_{{$carousel_grande->id}}" id="exampleRadios1_"
@@ -249,6 +268,30 @@
                                                 @endif>
                                                 <label class="form-check-label" for="exampleRadios2_">
                                                     <b> {{ trans('admin.pagesF.desativar') }} </b>
+                                                </label>
+                                            </div>
+                                        </div></th>
+
+                                    <th>
+                                        <div class="d-flex flex-column ">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    name="visible_typeclient_{{$carousel_grande->id}}" id="exampleRadios1_"
+                                                    value="1" @if($carousel_grande->visible_type_client == 1)
+                                                checked
+                                                @endif>
+                                                <label class="form-check-label" for="exampleRadios1_">
+                                                    <b> Todos </b>
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    name="visible_typeclient_{{$carousel_grande->id}}" id="exampleRadios2_"
+                                                    value="0" @if($carousel_grande->visible_type_client == 0)
+                                                checked
+                                                @endif>
+                                                <label class="form-check-label" for="exampleRadios2_">
+                                                    <b> Apenas Consultores </b>
                                                 </label>
                                             </div>
                                         </div>
