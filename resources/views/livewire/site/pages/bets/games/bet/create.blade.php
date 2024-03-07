@@ -82,8 +82,8 @@
                                     @foreach($lines as $cols)
                                         <td>
                                             <button wire:click="selectNumber({{$cols}})"  type="button"
-                                                    class="btn btn-info btn-block {{in_array($cols, $selectedNumbers) ? 'btn-info' : 'btn-warning'}}"
-                                                    id="number_{{$cols}}">
+                                                    class="btn btn-block"
+                                                    style="background-color: {{ in_array($cols, $selectedNumbers) ? 'limegreen' : '#363636' }}; color: white; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
                                                 {{$cols}}
                                             </button>
                                         </td>
