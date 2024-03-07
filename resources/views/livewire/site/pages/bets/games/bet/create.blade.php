@@ -71,7 +71,10 @@
                     {{-- puxar do banco de dados quantos numeros pode se jogar --}}
                     <div class="d-flex p-3">
                     @foreach ($busca as $buscas)
-                        <button wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-despositar m-1" type="button">{{ $buscas['numbers'] }}</button>
+                        <button wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-despositar m-1"
+                                type="button" style="background-color: 'limegreen' : '#363636' }}; color: white; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
+                            {{ $buscas['numbers'] }}
+                        </button>
                     @endforeach   
                     </div>
                     <div class="table-responsive">
