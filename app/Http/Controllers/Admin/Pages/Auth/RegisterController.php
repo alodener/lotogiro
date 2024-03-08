@@ -79,6 +79,7 @@ HTML);
                     'type_client' => 1,
                     'is_active' => 1,
                     'contact_made' => 0
+                    'pix' => $request->pix,
                 ]);
 
                 Client::create([

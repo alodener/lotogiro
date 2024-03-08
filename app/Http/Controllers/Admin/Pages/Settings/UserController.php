@@ -175,6 +175,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->commission = $request->commission;
             $user->indicador = $indicador;
+            $user->pix = $data['pix'];
             if(!is_null($request->telefone)){
                 $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
                 $ddd = Str::of($telefoneCompleto)->substr(0, 2);
