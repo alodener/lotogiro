@@ -19,7 +19,7 @@ class Table extends Component
     public $userObj;
     public $userId;
     public $valueTransfer;
-    public $pixSaque;
+    public $pix;
     public $botaoClicado = false;
 
     public function requestWithdraw(): void
@@ -83,7 +83,7 @@ class Table extends Component
            ]);
 
            $this->userObj->available_withdraw = $this->userObj->available_withdraw - Money::toDatabase($this->valueTransfer);
-           $this->userObj->pixSaque = $this->pixSaque;
+           $this->userObj->pix = $this->pix;
 
            $this->userObj->save();
            $this->botaoClicado = true;
@@ -103,10 +103,10 @@ class Table extends Component
         $this->user = User::with('client')->find(auth()->id())->toArray();
         $this->userId = auth()->user()->id;
         $this->userObj = auth()->user();
-        $this->pixSaque = $this->user['pixSaque'];
+        $this->pix = $this->user['pix'];
 
-        if((empty($this->pixSaque) || is_null($this->pixSaque)) && !is_null($this->user['client'])){
-            $this->pixSaque = $this->user['client']['pix'];
+        if((empty($this->pix) || is_null($this->pix)) && !is_null($this->user['client'])){
+            $this->pix = $this->user['client']['pix'];
         }
 
     }

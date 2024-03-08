@@ -53,15 +53,39 @@
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 @foreach($layout_carousel_grande as $key => $item)
-                @if($item['visivel'] == 1)
-                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}"
-                    class="{{ $key == 0 ? 'active' : '' }}"></li>
-                @endif
+                    @if (isset($User))
+                        @if($item['visivel'] == 1 && ($item['visible_type_client'] == 1 || $User['type_client'] != 1))
+                            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}"
+                                class="{{ $key == 0 ? 'active' : '' }}"></li>
+                        @endif
+                    @else
+                        @if($item['visivel'] == 1 && $item['visible_type_client'] == 1 )
+                        <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}"
+                            class="{{ $key == 0 ? 'active' : '' }}"></li>
+                        @endif 
+                    @endif
                 @endforeach
             </ol>
-            <div class="carousel-inner">
-    @foreach($layout_carousel_grande as $key => $item)
-        @if($item['visivel'] == 1)
+        <div class="carousel-inner">
+
+        @foreach($layout_carousel_grande as $key => $item)
+            @if (isset($User))
+                @if($item['visivel'] == 1 && ($item['visible_type_client'] == 1 || $User['type_client'] != 1))
+                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                    @if(!empty($item['link']))
+                        <a href="{{ $item['link'] }}" target="_blank">
+                    @endif
+                    <img class="d-block w-100" src="{{ isset($item['url']) ? asset("storage/{$item['url']}") :
+                    asset('https://i.ibb.co/68Nh8sS/pf-Skj6-MF8b-Rv1-POOPGCee-EL94u8-P2bf9jl2czixi.jpg') }}"
+                    alt="{{ $item['nome'] }}">
+                @if(!empty($item['link']))
+                    </a>
+                @endif
+            </div>
+        @endif
+
+        @else
+        @if($item['visivel'] == 1 && $item['visible_type_client'] == 1 )
             <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                 @if(!empty($item['link']))
                     <a href="{{ $item['link'] }}" target="_blank">
@@ -73,6 +97,7 @@
                     </a>
                 @endif
             </div>
+        @endif
         @endif
     @endforeach
 </div>

@@ -30,6 +30,7 @@
                     <tr>
                         <th>{{ trans('admin.game-types.table-id') }}</th>
                         <th>{{ trans('admin.game-types.table-name') }}</th>
+                        <th> Quantidade de dezenas sorteadas </th> 
                         <th>{{ trans('admin.game-types.table-created-at') }}</th>
                         <th class="acoes">{{ trans('admin.game-types.table-actions') }}</th>
                     </tr>
@@ -96,6 +97,7 @@
                 columns: [
                     {data: 'id', name: 'id'},
                         {data: 'name', name: 'name'},
+                    {data: 'qtd_dezena_sorteada', name: 'qtd_dezena_sorteada'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]

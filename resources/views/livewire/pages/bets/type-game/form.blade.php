@@ -44,6 +44,19 @@
                 </div>
             </div>
         </div>
+           <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="qtd_dezena_sorteada">Quantidade de dezenas sorteadas</label>
+            <input wire:model="qtd_dezena_sorteada" type="text" class="form-control @error('qtd_dezena_sorteada') is-invalid @enderror" id="qtd_dezena_sorteada"
+                   name="qtd_dezena_sorteada"
+                   maxlength="50" value="{{old('qtd_dezena_sorteada', $typeGame->qtd_dezena_sorteada ?? null)}}">
+            @error('qtd_dezena_sorteada')
+            <span class="invalid-feedback" role="alert">
+                {{ $message }}
+            </span>
+            @enderror
+        </div>
+    </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label for="description">{{ trans('admin.lwTypeGame.desc') }}</label>

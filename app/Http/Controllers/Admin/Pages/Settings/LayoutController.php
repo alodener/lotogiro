@@ -115,6 +115,7 @@ class LayoutController extends Controller
                     $layout_carousel_grande->nome = $request->nome;
                     $layout_carousel_grande->link = $request->link;
                     $layout_carousel_grande->visivel = $request->visivel_btn;
+                    $layout_carousel_grande->visible_type_client = $request->visible_type_client;
                     $layout_carousel_grande->config = $request->nome_config;
                     $layout_carousel_grande->save();
     
@@ -126,6 +127,9 @@ class LayoutController extends Controller
         $valoreslink = [];
         $dataslink = [];
 
+        $valoresvisivelby = [];
+        $datasvisivelby = [];
+
         foreach ($data as $key => $value) {
             if (strpos($key, 'img_visivel') !== false) {
                 $valor = explode('_', $key)[2];
@@ -136,6 +140,12 @@ class LayoutController extends Controller
                 $valor = explode('_', $key)[2];
                 $valoreslink[] = $valor;
                 $dataslink[] = $value;
+            }
+
+            if (strpos($key, 'visible_typeclient') !== false) {
+                $valor = explode('_', $key)[2];
+                $valoresvisivelby[] = $valor;
+                $datasvisivelby[] = $value;
             }
             
         }
@@ -154,6 +164,12 @@ class LayoutController extends Controller
         foreach ($valoreslink as $index => $valor) {
             $layout_carousel_grande->where('id', $valor)->update([
                 'link' => $dataslink[$index]
+            ]);
+        }
+
+        foreach ($valoresvisivelby as $index => $valor) {
+            $layout_carousel_grande->where('id', $valor)->update([
+                'visible_type_client' => $datasvisivelby[$index]
             ]);
         }
 
