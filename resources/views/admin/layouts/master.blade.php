@@ -52,9 +52,9 @@
         .layout-fixed .main-sidebar {
     top: 600px !important;
 }
-        
 
-       
+
+
     }
         body.impersonating{
             padding-top:44px;
@@ -71,7 +71,7 @@
             text-align: center;
             color: #fff
         }
-       
+
 
         .layout-fixed .main-sidebar{
             top: 116px !important;
@@ -104,7 +104,7 @@
 
     <div class="content-wrapper">
         <div class="container-fluid pt-3" style="padding-top:70px !important">
-            
+
             @yield('content')
         </div>
     </div>
@@ -154,7 +154,7 @@
                 }
             })
         }, 10000);
-        
+
 
         $('.notification_dropdown .nav-link').on('click', function() {
             $.ajax({

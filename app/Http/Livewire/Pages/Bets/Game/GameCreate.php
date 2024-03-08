@@ -11,7 +11,7 @@ class GameCreate extends Component
     public TypeGame $typeGames;
     public array $selectedNumbers = [];
     public array $matriz = [];
-
+    public $receivedMessage;
     public function matriz($numbers, $columns)
     {
         $matriz = [];
@@ -20,7 +20,7 @@ class GameCreate extends Component
         $i = 0;
         $numInicial = 1;
 
-        //if - se for lotomania, variavel ficar com 0  
+        //if - se for lotomania, variavel ficar com 0
         if ($this->typeGames->category == 'loto_mania') {
             $numInicial = 0;
         }

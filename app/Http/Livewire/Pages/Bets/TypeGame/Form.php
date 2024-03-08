@@ -7,7 +7,9 @@ use Livewire\Component;
 class Form extends Component
 {
 
-    public $typeGameId, $name, $numbers, $columns, $color, $description, $matriz, $category, $icon, $recomendado, $qtd_dezena_sorteada; 
+
+    public $typeGameId, $name, $numbers, $columns, $color, $description, $matriz, $category, $icon, $recomendado, $qtd_dezena_sorteada, $odd; 
+
 
     protected $rules = [
         'name' => 'required',
@@ -30,6 +32,7 @@ class Form extends Component
             $this->category = $typeGame->category;
             $this->recomendado = $typeGame->recomendado;
             $this->qtd_dezena_sorteada = $typeGame->qtd_dezena_sorteada;
+            $this->odd = $typeGame->odd;
             $this->matriz();
         }
     }

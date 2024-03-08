@@ -23,8 +23,12 @@ class Form extends Component
     public $values;
     public $selecionado = 0;
     public $search;
-    public $teste;
+    public $message;
 
+    public function sendMessage()
+    {
+        $this->emitUp('messageSent', $this->numbers);
+    }
 
     public function mount($typeGame, $clients)
     {
@@ -74,18 +78,18 @@ class Form extends Component
 
     public function updatedSearch($value)
     {
-        
-        $userlogado = Auth::user(); 
-        
+
+        $userlogado = Auth::user();
+
         if (auth()->user()->hasRole('Administrador')) {
-            
+
             $this->clients = Client::where(function($query) {
                 $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
             })
             ->get();
 
         } else {
-            
+
             $this->clients = User::where('indicador', $userlogado->id)
                 ->where(function($query) {
                 $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
@@ -121,13 +125,13 @@ class Form extends Component
         if($this->typeGame->category == 'loto_mania'){
             $rangeMax = $this->typeGame->numbers - 1;
             $numInicial = 0;
-             
+
         }
-        
+
         for($i = 0; $i != $loopVezes ; $i++){
 
             $addNumeroAleatorio =  rand($numInicial, $rangeMax);
-            
+
             // condição pra checar se o número já existe na lista
             while (in_array($addNumeroAleatorio, $numerosAletatorios)){
                 $addNumeroAleatorio =  rand($numInicial, $rangeMax);
@@ -139,7 +143,7 @@ class Form extends Component
         // $selectedNumbers = array();
         // $numerosAletatorios = json_decode($numerosAletatorios);
         $selectedNumbers = $numerosAletatorios;
-        
+
         $this->selectedNumbers = $numerosAletatorios;
         $this->verifyValue();
     }
@@ -167,7 +171,7 @@ class Form extends Component
         $i = 0;
         $numInicial = 1;
 
-        //if - se for lotomania, variavel ficar com 0  
+        //if - se for lotomania, variavel ficar com 0
         if ($this->typeGame->category == "loto_mania") {
             $numInicial = 0;
         }
@@ -183,14 +187,14 @@ class Form extends Component
             }
             $matriz[$index][] = $number;
         }
-    
+
         $this->matriz = $matriz;
     }
 
     public function render()
     {
         $User = Auth::user();
-        $FiltroUser = client::where('email', $User['email'])->first();
+        $FiltroUser = Client::where('email', $User['email'])->first();
         $this->FiltroUser = $FiltroUser;
 
         $busca = TypeGameValue::select('numbers')->where('type_game_id', $this->typeGame->id)->orderBy('numbers', 'asc')->get();
