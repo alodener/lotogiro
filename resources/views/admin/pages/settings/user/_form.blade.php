@@ -141,7 +141,7 @@
                                 <label for="pix" id="pixL">Pix</label>
                                 <input type="" class="form-control @error('pix') is-invalid @enderror"
                                        id="pix"
-                                       name="pix" maxlength="50" value="{{old('pixSaque', $user->pixSaque ?? null)}}">
+                                       name="pix" maxlength="50" value="{{old('pix', $user->pix ?? null)}}">
                                 @error('pix')
                                 <span class="invalid-feedback" role="alert">
                                    {{ $message }}
