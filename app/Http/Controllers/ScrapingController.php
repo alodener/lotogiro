@@ -22,7 +22,7 @@ class ScrapingController extends Controller
         $data = str_replace('-', '/', $data);
 
         $urls = [
-            'rj' => [
+            'RJ' => [
                 'PTM' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptm-rio/',
                     'phrase' => '(PTM-Rio) 11:00 Hoje ' . $data
@@ -44,7 +44,7 @@ class ScrapingController extends Controller
                     'phrase' => '(Coruja-Rio) 21:00 Hoje ' . $data
                 ]
             ],
-            'sp' => [
+            'SP' => [
                 'PT-SP' => [
                     'url' => null, // Esta bancas parece não existir na fonte de dados fornecida
                     'phrase' => '(Pt-Sp) 13:20 Hoje ' . $data
@@ -58,13 +58,13 @@ class ScrapingController extends Controller
                     'phrase' => '(Ptn-Sp) 20:20 Hoje ' . $data
                 ]
             ],
-            'goias' => [
+            'GO' => [
                 'Look' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-look/',
                     'phrase' => '(Look-Goias) 11:20 Hoje ' . $data
                 ]
             ],
-            'mg' => [
+            'MG' => [
                 'Alvorada' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-alvorada-minas/',
                     'phrase' => '(Minas Gerais) 12:00 Hoje ' . $data
@@ -78,7 +78,7 @@ class ScrapingController extends Controller
                     'phrase' => '(Minas Gerais) 19:00 Hoje ' . $data
                 ]
             ],
-            'ba' => [
+            'BA' => [
                 'BA' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
                     'phrase' => '(Bahia) 10:00 Hoje ' . $data
@@ -88,7 +88,7 @@ class ScrapingController extends Controller
                     'phrase' => 'Federal (Bahia) 19:00 Hoje ' . $data
                 ]
             ],
-            'pb' => [
+            'PB' => [
                 'LOTEP' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
                     'phrase' => '(Lotep Paraíba) 10:45 Hoje ' . $data
