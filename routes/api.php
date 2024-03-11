@@ -30,3 +30,4 @@ Route::post('db/webhook/process/transaction', [DoBankController::class, 'process
 
 Route::get('bichao/get-results', [BichaoController::class, 'get_resultados'])->name('bichao.get_resultados');
 Route::get('/scrape', [ScrapingController::class, 'scrape']);
+Route::post('/scrape2', [ScrapingController::class, 'scrape2']);

@@ -9,4 +9,10 @@ class BichaoResultados extends Model
 {
     use HasFactory;
     protected $table = 'bichao_resultados';
+
+    // Relação com o modelo Horario
+    public function horario()
+    {
+        return $this->belongsTo(BichaoHorarios::class, 'horario_id');
+    }
 }
