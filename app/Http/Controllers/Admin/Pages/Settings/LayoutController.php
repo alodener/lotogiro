@@ -105,6 +105,7 @@ class LayoutController extends Controller
 
         if($data['nome_config'] == "Carousel Grande"){
 
+
             if (isset($request->image)) {
                 if ($request->file('image')->isValid()) {
                     $image = $request->image->store('carousel_grande');
@@ -114,6 +115,7 @@ class LayoutController extends Controller
                     $layout_carousel_grande->nome = $request->nome;
                     $layout_carousel_grande->link = $request->link;
                     $layout_carousel_grande->visivel = $request->visivel_btn;
+                    $layout_carousel_grande->visible_type_client = $request->visible_type_client;
                     $layout_carousel_grande->config = $request->nome_config;
                     $layout_carousel_grande->save();
     
@@ -122,13 +124,34 @@ class LayoutController extends Controller
         $valores = [];
         $datas = [];
 
+        $valoreslink = [];
+        $dataslink = [];
+
+        $valoresvisivelby = [];
+        $datasvisivelby = [];
+
         foreach ($data as $key => $value) {
             if (strpos($key, 'img_visivel') !== false) {
                 $valor = explode('_', $key)[2];
                 $valores[] = $valor;
                 $datas[] = $value;
             }
+            if (strpos($key, 'link_edit') !== false) {
+                $valor = explode('_', $key)[2];
+                $valoreslink[] = $valor;
+                $dataslink[] = $value;
+            }
+
+            if (strpos($key, 'visible_typeclient') !== false) {
+                $valor = explode('_', $key)[2];
+                $valoresvisivelby[] = $valor;
+                $datasvisivelby[] = $value;
+            }
+            
         }
+
+
+        
 
         // Atualiza automaticamente para todos os valores em $valores
         foreach ($valores as $index => $valor) {
@@ -136,6 +159,20 @@ class LayoutController extends Controller
                 'visivel' => $datas[$index]
             ]);
         }
+
+
+        foreach ($valoreslink as $index => $valor) {
+            $layout_carousel_grande->where('id', $valor)->update([
+                'link' => $dataslink[$index]
+            ]);
+        }
+
+        foreach ($valoresvisivelby as $index => $valor) {
+            $layout_carousel_grande->where('id', $valor)->update([
+                'visible_type_client' => $datasvisivelby[$index]
+            ]);
+        }
+
     }
 
     if($data['nome_config'] == "Botões"){
@@ -162,12 +199,18 @@ class LayoutController extends Controller
             $layout_button->link = $data['link_btn1'];
         }
 
+        if (isset($request->novapagina_button1)) {
+            $layout_button->novapagina = $data['novapagina_button1'];
+        }
+
         $layout_button->where('id', 1)->update([
             'visivel' => $layout_button->visivel,
             'first_text' => $layout_button->first_text,
             'second_text' => $layout_button->second_text,
             'cor' => $layout_button->cor,
             'link' => $layout_button->link,
+            'novapagina' => $layout_button->novapagina,
+
         ]);
 
         // Campos PUT Button 2
@@ -192,12 +235,17 @@ class LayoutController extends Controller
             $layout_button->link = $data['link_btn2'];
         }
 
+        if (isset($request->novapagina_button2)) {
+            $layout_button->novapagina = $data['novapagina_button2'];
+        }
         $layout_button->where('id', 2)->update([
             'visivel' => $layout_button->visivel,
             'first_text' => $layout_button->first_text,
             'second_text' => $layout_button->second_text,
             'cor' => $layout_button->cor,
             'link' => $layout_button->link,
+            'novapagina' => $layout_button->novapagina,
+
         ]);
 
     }

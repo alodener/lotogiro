@@ -124,7 +124,7 @@
                     <div class="d-flex justify-content-center aling-items-center">
                     <div class="mr-5">
                         {{ trans('admin.falta.digitValor') }}
-                        <input class="form-control" type="text" id="value" onchange="altera()" value="" name="value"
+                        <input class="form-control" type="text" id="value" onchange="altera()" value="" name="value" value="{{ old('value') ?? session('value') }}"
                             required
                             oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                     </div>
@@ -211,8 +211,6 @@
             }
         }
     }
-
-
 
     function mudarListaNumeros() {
         var input = document.querySelector("#numbers");

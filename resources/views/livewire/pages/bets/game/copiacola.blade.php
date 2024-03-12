@@ -69,8 +69,8 @@
             <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
             {{ trans('admin.games.bet-value-label') }}
             <input type="text" id="value" class="form-control" onchange="altera();" value="" name="value" required
-                oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1'); 
-                        
+                oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');
+
                                 var valor = document.getElementById('value').value;
                                 var contadorJogos = document.getElementById('contadorJogos').value;
                                 var contadorJogos =  parseFloat(contadorJogos);

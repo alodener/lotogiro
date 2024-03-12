@@ -141,7 +141,7 @@
                                 <label for="pix" id="pixL">Pix</label>
                                 <input type="" class="form-control @error('pix') is-invalid @enderror"
                                        id="pix"
-                                       name="pix" maxlength="50" value="{{old('pixSaque', $user->pixSaque ?? null)}}">
+                                       name="pix" maxlength="50" value="{{old('pix', $user->pix ?? null)}}">
                                 @error('pix')
                                 <span class="invalid-feedback" role="alert">
                                    {{ $message }}
@@ -210,6 +210,50 @@
                                    name="commission_lv_2"
                                    maxlength="100" value="{{old('commission_lv_2', $user->commission_lv_2 ?? null)}}">
                             @error('commission_lv_2')
+                            <span class="invalid-feedback" role="alert">
+                               {{ $message }}
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="commission_lv_3">{{ trans('admin.pagesF.porcentComissao3') }}</label>
+                            <input type="text" class="form-control @error('commission_lv_3') is-invalid @enderror" id="commission_lv_3"
+                                   name="commission_lv_3"
+                                   maxlength="100" value="{{old('commission_lv_3', $user->commission_lv_3 ?? null)}}">
+                            @error('commission_lv_3')
+                            <span class="invalid-feedback" role="alert">
+                               {{ $message }}
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="commission_lv_4">{{ trans('admin.pagesF.porcentComissao4') }}</label>
+                            <input type="text" class="form-control @error('commission_lv_4') is-invalid @enderror" id="commission_lv_4"
+                                   name="commission_lv_4"
+                                   maxlength="100" value="{{old('commission_lv_4', $user->commission_lv_4 ?? null)}}">
+                            @error('commission_lv_4')
+                            <span class="invalid-feedback" role="alert">
+                               {{ $message }}
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="commission_lv_5">{{ trans('admin.pagesF.porcentComissao5') }}</label>
+                            <input type="text" class="form-control @error('commission_lv_5') is-invalid @enderror" id="commission_lv_5"
+                                   name="commission_lv_5"
+                                   maxlength="100" value="{{old('commission_lv_5', $user->commission_lv_5 ?? null)}}">
+                            @error('commission_lv_5')
+                            <span class="invalid-feedback" role="alert">
+                               {{ $message }}
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="commission_lv_6">{{ trans('admin.pagesF.porcentComissao6') }}</label>
+                            <input type="text" class="form-control @error('commission_lv_6') is-invalid @enderror" id="commission_lv_6"
+                                   name="commission_lv_6"
+                                   maxlength="100" value="{{old('commission_lv_6', $user->commission_lv_6 ?? null)}}">
+                            @error('commission_lv_6')
                             <span class="invalid-feedback" role="alert">
                                {{ $message }}
                             </span>

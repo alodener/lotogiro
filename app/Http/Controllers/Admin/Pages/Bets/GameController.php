@@ -59,9 +59,9 @@ class GameController extends Controller
 
         if ($request->ajax()) {
             $game = $this->game->whereRaw('type_game_id = ? and checked = 1', $typeGame);
-            
+
             $params = array();
-            parse_str($request->form, $params);    
+            parse_str($request->form, $params);
 
             if(isset($params['client_id']) && !empty($params['client_id'])) {
                 $game = $game->where('client_id', $params['client_id']);
@@ -78,7 +78,7 @@ class GameController extends Controller
             if(isset($params['endDate']) && !empty($params['endDate'])) {
                 $game = $game->where('created_at', '<=', $params['endDate'] . ' 23:59:59');
             }
-            
+
             if (!auth()->user()->hasPermissionTo('read_all_games')) $game->where('user_id', auth()->id());
             $game->get();
             return DataTables::of($game)
@@ -147,12 +147,76 @@ class GameController extends Controller
     public function store(Request $request, Bet $validate_game, Game $game)
     {
         $typeGame = TypeGame::find($request->type_game);
-      
-        if ($typeGame) {
-            
+
+        if($request->numbers){
+            $numbers = explode(',', $request->numbers);
+            sort($numbers, SORT_NUMERIC);
+            $numbers = implode(',', $numbers);
+            $game = $this->game->where('numbers', $numbers)->get();
+
+            if($request->premio > $typeGame->odd) {
+                $sumExistingPrizes = $this->game->where('numbers', $numbers)->sum('premio');
+                return back()->withErrors([
+                    'error' => 'oddError',
+                    'description' => 'Este jogo não pode mais ser jogado. Por favor, escolha outro jogo ou diminua a aposta.',
+                    'numbers' => $request->numbers
+                ]);
+            };
+
+            if(!$game->isEmpty()){
+                $sumExistingPrizes = $this->game->where('numbers', $numbers)->sum('premio');
+
+                $typeGame = $this->game->join('type_games AS tp', 'tp.id', '=', 'games.type_game_id')->where('games.numbers', $numbers)->first();
+
+                if (($sumExistingPrizes + (float)$request->premio) > $typeGame->odd) {
+
+                    return back()->withErrors([
+                        'error' => 'oddError',
+                        'description' => 'Este jogo não pode mais ser jogado. Por favor, escolha outro jogo ou diminua a aposta.',
+                        'numbers' => $request->numbers
+                    ]);
+                }
+            }
+        }
+
+        if($request->dezena){
+            $games = explode(",", $request->dezena);
+            foreach ($games as $game) {
+                $dezenas = $this->game->where('numbers', $game)->get();
+
+                if(!$dezenas->isEmpty()){
+                    $sumExistingPrizes = $this->game->where('numbers', $game)->sum('premio');
+
+                    $typeGame = $this->game->join('type_games AS tp', 'tp.id', '=', 'games.type_game_id')->where('games.numbers', $game)->first();
+
+                    if (($sumExistingPrizes + (float)$request->premio) > $typeGame->odd) {
+                        return back()->withErrors([
+                            'error' => 'oddError',
+                            'description' => 'Este jogo não pode mais ser jogado. Por favor, escolha outro jogo ou diminua a aposta.',
+                            'numbers' => $games
+                        ]);
+                    }
+                }
+            }
+            if($request->premio > $typeGame->odd) {
+                foreach ($games as $game) {
+                    $sumExistingPrizes = $this->game->where('numbers', $game)->sum('premio');
+                }
+
+                return back()->withErrors([
+                    'error' => 'oddError',
+                    'description' => 'Este jogo não pode mais ser jogado. Por favor, escolha outro jogo ou diminua a aposta.',
+                    'numbers' => $games
+                ]);
+            };
+
+        }
+
+      if ($typeGame) {
+
             $competition = Competition::where('type_game_id', $typeGame->id)->latest()->first();
             if ($competition) {
-                
+
                 $sortDate = Carbon::parse($competition->sort_date);
                 $now = Carbon::now();
 
@@ -181,7 +245,7 @@ class GameController extends Controller
                 $bet = new Bet();
 
                 if(!auth()->user()->hasRole('Administrador') && ($request->type_client != 1 || $request->type_client == null) ){
-                                    
+
                 $userclient = User::where('id', $request->client)->first();
 
                     if($userclient != null){
@@ -198,7 +262,7 @@ class GameController extends Controller
 
                     $bet->client_id = $request->client;
                 }
-                
+
                 $bet->user_id = Auth()->user()->id;
                 $bet->status_xml = 1;
                 $bet->key_reg = $chaveregistro;
@@ -316,12 +380,6 @@ class GameController extends Controller
                     ]);
                 }
 
-                $numbers = explode(',', $request->numbers);
-            
-
-                sort($numbers, SORT_NUMERIC);
-                $numbers = implode(',', $numbers);
-                
                 $typeGameValue = TypeGameValue::find($request['valueId']);
 
                 if(!empty($typeGameValue->max_repeated_games)) {
@@ -337,16 +395,17 @@ class GameController extends Controller
                     }
                 }
 
-                
+
                 $hasDraws = Draw::where('competition_id', $competition->id)->count();
-                
+
                 if($hasDraws > 0) {
                     return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                         'error' => 'Esse sorteio já foi finalizado!'
                     ]);
                 }
-            
-                 $game = new $this->game;
+
+              $game = new $this->game;
+
                 if($request->type_client != 1 && !auth()->user()->hasRole('Administrador')){
                 $userclient = User::where('id', $request->client)->first();
                     if($userclient != null){
@@ -375,36 +434,36 @@ class GameController extends Controller
                 $game->numbers = $numbers;
                 $game->competition_id = $competition->id;
                 $game->checked = 1;
-                
+
                 $game->save();
 
                 $typeGameCategory = TypeGame::where('id', $request->type_game)->value('category');
-               
+
                 if ($typeGameCategory == 'dupla_sena'){
                     //encontrar o concurso com o final A na tabela
                     $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
 
-                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $request->valueId, $numbers, 1, $request->value, $request->premio);    
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $request->valueId, $numbers, 1, $request->value, $request->premio);
 
                 }
-                
+
                 if ($typeGameCategory == 'mega_kino') {
                     $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-                    
+
                     foreach ($letters as $letter) {
                         $searchNumber = $competition->number . $letter;
-                     
-                
+
+
                         $competitionLetter = Competition::where('number', $searchNumber)->first();
-                
+
                         if ($competitionLetter) {
-                           
+
                             GameHelper::duplicateGame($game, $competitionLetter, $request, $request->valueId, $numbers, 1, $request->value, $request->premio);
                         }
                     }
                 }
-               
+
                 $transact_balance = new TransactBalance;
                 $transact_balance->user_id_sender = auth()->id();
                 $transact_balance->user_id = auth()->id();
@@ -422,9 +481,9 @@ class GameController extends Controller
                     'user_id' => $game->user_id,
                     'client_id' => $game->client_id
                 ];
-                $ID_VALUE = auth()->user()->indicador;
+                 $ID_VALUE = auth()->user()->indicador;
                 $storeExtact = ExtractController::store($extract);
-                $commissions = Commision::calculationNew($request->value, $game->user_id, '', $game->type_game_value_id);
+                $commissions = Commision::calculationNew($request->value, $game->user_id, '', $game->type_game_value_id, $game);
 
                 $game->commission_percentage = $commissions['percentage'];
                 $game->commission_value = $commissions['commission'];
@@ -432,7 +491,7 @@ class GameController extends Controller
                 $game->commision_value_avo = $commissions['commission_avo'];
                 $game->save();
 
-                
+
                 $planodecarreira = Configs::getPlanoDeCarreira();
                 if($planodecarreira == "Ativado"){
                 UsersHasPoints::generatePoints(auth()->user(), $game->value, 'Venda - Jogo de id: ' . $game->id);
@@ -482,7 +541,7 @@ class GameController extends Controller
                     global $data;
                     global $fileName;
                     global $pdf;
-                    $m->from('admin@superlotogiro.com', 'SuperLotogiro');
+                    $m->from('admin@loteriasalternativas.com', 'SuperLotogiro');
                     $m->subject('Seu Bilhete');
                     $m->to(auth()->user()->email);
                     $m->attachData($pdf->output(), $fileName);
@@ -584,7 +643,7 @@ class GameController extends Controller
         $i = 0;
         $numInicial = 1;
 
-        //if - se for lotomania, variavel ficar com 0  
+        //if - se for lotomania, variavel ficar com 0
         if ($typeGame->category == "loto_mania") {
             $numInicial = 0;
         }
@@ -600,7 +659,7 @@ class GameController extends Controller
             }
             $matriz[$index][] = $number;
         }
-    
+
         $this->matriz = $matriz;
 
         return view('admin.pages.bets.game.edit', compact('game', 'matriz', 'selectedNumbers', 'typeGame', 'typeGameValue', 'client'));
@@ -640,11 +699,11 @@ class GameController extends Controller
                 $gameDraw = in_array($game->id, $draw->games);
 
                 if ($gameDraw)
-                    throw new \Exception('Jogo vinculado em um sorteio');         
-              
+                    throw new \Exception('Jogo vinculado em um sorteio');
+
             }
 
-    
+
             if($game->delete()){
 
                 $idUsuario = $game->user_id;
@@ -652,13 +711,13 @@ class GameController extends Controller
                 $CommissionPai = false;
                 $Competition = Competition::find($game->competition_id);
 
-                // Verifica se o jogo é do tipo "competitionA" 
-                if (substr($Competition->number, -1) !== 'A') {  //pega uma string e retorna começando no ultimo caractere (-1) verificando se o ultimo caractere é diferente de A 
+                // Verifica se o jogo é do tipo "competitionA"
+                if (substr($Competition->number, -1) !== 'A') {  //pega uma string e retorna começando no ultimo caractere (-1) verificando se o ultimo caractere é diferente de A
                 // Devolvendo o valor do saldo para jogos que não são do tipo "concurso com final A"
                 Balance::calculationEstorno($idUsuario, $game->value);
 
                 Commision::calculationNewEstorno($game->value, $game->user_id, $game->game_type, $game->type_id);
-                
+
                 //Criando o Registro no Extrato da Carteira do Estorno.
                 $transact_balance = new TransactBalance;
                 $transact_balance->user_id_sender = $user->id;
@@ -670,7 +729,7 @@ class GameController extends Controller
                 $transact_balance->save();
             }
                 }
-    
+
 
             return redirect()->route('admin.bets.games.index', ['type_game' => $typeGame])->withErrors([
                 'success' => 'Jogo deletado com sucesso'
@@ -701,23 +760,23 @@ class GameController extends Controller
                     $typeGame = $game->type_game_id;
 
                     $draws = Draw::get();
-        
+
                     foreach ($draws as $draw) {
                         $draw->games = explode(',', $draw->games);
                         $gameDraw = in_array($game->id, $draw->games);
-        
+
                         if ($gameDraw)
                             throw new \Exception('Jogo #' . $game->id . ' vinculado em um sorteio');
                     }
-                    
-        
+
+
                   if($game->delete()){
 
                     $idUsuario = $game->user_id;
                     $user = User::find($idUsuario);
                     $CommissionPai = false;
                     $Competition = Competition::find($game->competition_id);
-    
+
                     if(substr($Competition->number, -1) !== 'A') {  //pega uma string e retorna começando no ultimo caractere (-1) verificando se o ultimo caractere é diferente de A
                     //Devolvendo o valor do saldo.
                     Balance::calculationEstorno($idUsuario, $game->value);
@@ -726,9 +785,9 @@ class GameController extends Controller
                     }
                     //Devolvendo o valor do Bônus.
 
-                   
+
                     Commision::calculationNewEstorno($game->value, $game->user_id, $game->game_type, $game->type_id);
-    
+
                     //Criando o Registro no Extrato da Carteira do Estorno.
                     $transact_balance = new TransactBalance;
                     $transact_balance->user_id_sender = $user->id;

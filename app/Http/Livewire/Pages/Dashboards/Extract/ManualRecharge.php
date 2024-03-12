@@ -116,7 +116,7 @@ class ManualRecharge extends Component
             $totalpix = number_format($totalpix, 2, ',','.');
 
             
-            //calculo do bônus pix
+            //calculo do b么nus pix
             $totalbonus = TransactBalance::with('userSender', 'user')
             ->whereIn('user_id_sender', $adms)
             ->whereNotIn('user_id', $adms)
@@ -188,7 +188,7 @@ class ManualRecharge extends Component
         $transacts->valueTotal = $total;
 
         $transacts->each(function($item, $key) use ($total) {
-            $item->data = Carbon::parse($item->created_at)->format('d/m/y à\\s H:i');
+            $item->data = Carbon::parse($item->created_at)->format('d/m/y H:i');
             $item->value = Money::toReal($item->value);
 
             $item->usuario = "{$item->user['name']} {$item->user['last_name']}";

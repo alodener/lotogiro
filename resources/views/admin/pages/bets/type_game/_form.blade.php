@@ -35,7 +35,7 @@
     </div>
     <div class="col-md-3 mb-3">
         <button type="submit"
-                class="btn btn-block btn-outline-success">@if(request()->is('admin/bets/type_games/create')) {{ trans('admin.game-types.game-type-register-button') }}  
+                class="btn btn-block btn-outline-success">@if(request()->is('admin/bets/type_games/create')) {{ trans('admin.game-types.game-type-register-button') }}
                 @else  {{ trans('admin.game-types.game-type-update-button') }} @endif </button>
     </div>
 </div>

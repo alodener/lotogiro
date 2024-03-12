@@ -33,8 +33,8 @@
                                         <b>PIX: </b>
                                     </div>
                                     <div class="col-sm-12">
-                                        <input wire:model.defer="pixSaque" class='col-sm-10 form-control' type="text"
-                                            style="margin-bottom: 15px;" />
+                                        <input wire:model.defer="pix" class='col-sm-10 form-control' type="text"
+                                            style="margin-bottom: 15px;" disabled />
                                     </div>
                                     <small>{{ trans('admin.pagesF.aoAlt') }}</small>
 
