@@ -201,7 +201,6 @@
                     @endcan
                     
                     <ul class="nav nav-treeview">
-                        @if(auth()->user()->hasRole('Administrador'))
                         @can('read_client')
                         <li class="nav-item">
                             <a href="{{route('admin.bets.clients.index')}}"
@@ -211,7 +210,6 @@
                             </a>
                         </li>
                         @endcan
-                        @endif
 
                         @can('read_client')
                         <li class="nav-item">
