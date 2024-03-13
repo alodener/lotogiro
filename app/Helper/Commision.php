@@ -73,7 +73,7 @@ class Commision
     
         // Adicionado para lidar com o nível 5
         if ($lvl === 5) {
-            $percentage = $user->commission_lvl_5;
+            $percentage = $user->commission_lv_5;
             $commission_individual = json_decode($user->commission_individual_lvl_5);
 
             
@@ -83,7 +83,7 @@ class Commision
         }
 
         if ($lvl === 6) {
-            $percentage = $user->commission_lvl_6;
+            $percentage = $user->commission_lv_6;
             $commission_individual = json_decode($user->commission_individual_lvl_6);
             
             if ($game_type === 'bichao') {
