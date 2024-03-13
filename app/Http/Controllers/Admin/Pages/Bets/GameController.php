@@ -489,6 +489,8 @@ class GameController extends Controller
                 $game->commission_value = $commissions['commission'];
                 $game->commision_value_pai = $commissions['commission_pai'];
                 $game->commision_value_avo = $commissions['commission_avo'];
+                $game->commission_value_bisavo = $commissions['commission_bisavo'];
+                $game->commission_value_tataravo = $commissions['commission_tataravo'];
                 $game->save();
 
 

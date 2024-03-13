@@ -6,6 +6,7 @@ use App\Http\Controllers\Webhook\ZoopController;
 use App\Http\Controllers\Webhook\MercadoPagoController;
 use App\Http\Controllers\Webhook\DoBankController;
 use App\Http\Controllers\Admin\Pages\Bets\BichaoController;
+use App\Http\Controllers\ScrapingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,6 @@ Route::post('db/webhook/process/transaction', [DoBankController::class, 'process
 
 
 Route::get('bichao/get-results', [BichaoController::class, 'get_resultados'])->name('bichao.get_resultados');
+Route::get('/scrape0', [ScrapingController::class, 'scrape0']);
+Route::post('/scrape2', [ScrapingController::class, 'scrape2']);
+Route::get('/scrapeAllStates', [ScrapingController::class, 'scrapeAllStates']);
