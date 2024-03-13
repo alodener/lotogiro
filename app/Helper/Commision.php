@@ -50,6 +50,8 @@ class Commision
 
         if ($lvl === 3) {
             $percentage = $user->commission_lv_3;
+            // dd($user->commission_lv_3, $user->name, $user->last_name);
+
             $commission_individual = json_decode($user->commission_individual_lv_3);            
             if ($game_type === 'bichao') {
                 $commission_individual = json_decode($user->commission_individual_bichao_lv_3);
@@ -58,7 +60,9 @@ class Commision
     
     
         if ($lvl === 4) {
-            $percentage = $user->commission_lvl_4;
+            $percentage = $user->commission_lv_4;
+            // dd($user->commission_lv_4, $user->name, $user->last_name);
+
             $commission_individual = json_decode($user->commission_individual_lvl_4);
 
             
@@ -108,6 +112,11 @@ class Commision
         $commission = (($value / 100) * $percentage);
         $commission_pai = 0;
         $commission_avo = 0;
+        $commission_bisavo = 0;
+        $commission_tataravo = 0;
+        $commission_quarto_grau = 0;
+        $commission_quinto_grau = 0;
+        $commission_sexto_grau = 0;
     
         if ($user->type_client != 1) {
             $user->bonus = $user->bonus + $commission;
@@ -187,16 +196,15 @@ class Commision
     
                     $userLv4 = User::find($userLv3->indicador);
                     if ($userLv4) {
-                        $commission_trisavo = (($value / 100) * static::getCommission($userLv4, $type_id, $game_type, 4));
-                        $userLv4->bonus = $userLv4->bonus + $commission_trisavo;
-                        $userLv4->save();
-    
-                        if ($commission_trisavo > 0) {
+                        $commission_tataravo = (($value / 100) * static::getCommission($userLv4, $type_id, $game_type, 4));
+                        $userLv4->bonus = $userLv4->bonus + $commission_tataravo;
+                        $userLv4->save();    
+                        if ($commission_tataravo > 0) {
                             TransactBalance::create([
                                 'user_id_sender' => $user->id,
-                                'user_id' => $userLv4->id, //  trisavô
-                                'value' => $commission_trisavo,
-                                'old_value' => $userLv4->bonus - $commission_trisavo,
+                                'user_id' => $userLv4->id, //  tataravô
+                                'value' => $commission_tataravo,
+                                'old_value' => $userLv4->bonus - $commission_tataravo,
                                 'value_a' => $userLv4->bonus,
                                 'type' => 'Bônus, jogo de id: ' . $game->id ,
                                 'wallet' => 'bonus'
@@ -205,16 +213,15 @@ class Commision
     
                         $userLv5 = User::find($userLv4->indicador);
                         if ($userLv5) {
-                            $commission_tataravo = (($value / 100) * static::getCommission($userLv5, $type_id, $game_type, 5));
-                            $userLv5->bonus = $userLv5->bonus + $commission_tataravo;
-                            $userLv5->save();
-    
-                            if ($commission_tataravo > 0) {
+                            $commission_quarto_grau = (($value / 100) * static::getCommission($userLv5, $type_id, $game_type, 5));
+                            $userLv5->bonus = $userLv5->bonus + $commission_quarto_grau;
+                            $userLv5->save();    
+                            if ($commission_quarto_grau > 0) {
                                 TransactBalance::create([
                                     'user_id_sender' => $user->id,
-                                    'user_id' => $userLv5->id, //  tataravô
-                                    'value' => $commission_tataravo,
-                                    'old_value' => $userLv5->bonus - $commission_tataravo,
+                                    'user_id' => $userLv5->id, //  quarto grau
+                                    'value' => $commission_quarto_grau,
+                                    'old_value' => $userLv5->bonus - $commission_quarto_grau,
                                     'value_a' => $userLv5->bonus,
                                     'type' => 'Bônus, jogo de id: ' . $game->id ,
                                     'wallet' => 'bonus'
@@ -223,21 +230,21 @@ class Commision
     
                             $userLv6 = User::find($userLv5->indicador);
                             if ($userLv6) {
-                                $commission_hexavovo = (($value / 100) * static::getCommission($userLv6, $type_id, $game_type, 6));
-                                $userLv6->bonus = $userLv6->bonus + $commission_hexavovo;
+                                $commission_quinto_grau = (($value / 100) * static::getCommission($userLv6, $type_id, $game_type, 6));
+                                $userLv6->bonus = $userLv6->bonus + $commission_quinto_grau;
                                 $userLv6->save();
     
-                                if ($commission_hexavovo > 0) {
+                                if ($commission_quinto_grau > 0) {
                                     TransactBalance::create([
                                         'user_id_sender' => $user->id,
-                                        'user_id' => $userLv6->id, //  hexavô
-                                        'value' => $commission_hexavovo,
-                                        'old_value' => $userLv6->bonus - $commission_hexavovo,
+                                        'user_id' => $userLv6->id, //  quinto grau
+                                        'value' => $commission_quinto_grau,
+                                        'old_value' => $userLv6->bonus - $commission_quinto_grau,
                                         'value_a' => $userLv6->bonus,
                                         'type' => 'Bônus, jogo de id: ' . $game->id ,
                                         'wallet' => 'bonus'
                                     ]);
-                                }
+                                }    
                             }
                         }
                     }
@@ -245,8 +252,19 @@ class Commision
             }
         }
     
-        return ['percentage' => $percentage, 'commission' => $commission, 'commission_pai' => $commission_pai, 'commission_avo' => $commission_avo];
+        return [
+            'percentage' => $percentage,
+            'commission' => $commission,
+            'commission_pai' => $commission_pai,
+            'commission_avo' => $commission_avo,
+            'commission_bisavo' => $commission_bisavo,
+            'commission_tataravo' => $commission_tataravo,
+            'commission_quarto_grau' => $commission_quarto_grau,
+            'commission_quinto_grau' => $commission_quinto_grau,
+            'commission_sexto_grau' => $commission_sexto_grau, // Você pode adicionar mais níveis aqui
+        ];
     }
+    
     
 
     public static function calculationPai($percentage, $value, $ID_VALUE, $user = false){
