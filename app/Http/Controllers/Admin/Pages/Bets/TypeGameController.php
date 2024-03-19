@@ -92,6 +92,7 @@ class TypeGameController extends Controller
             'recomendado' => 'nullable|max:200',
             'description' => 'nullable|max:200',
             'qtd_dezena_sorteada' => 'required|numeric|digits_between:1,10',
+            'odd'         => 'nullable|numeric'
 
         ]);
 
@@ -108,6 +109,7 @@ class TypeGameController extends Controller
             $typeGame->icon = $request->icon;
             $typeGame->recomendado = $request->recomendado;
             $typeGame->qtd_dezena_sorteada = $request->qtd_dezena_sorteada;
+            $typeGame->odd = $request->odd;
          
 
             if (isset($request->banner_mobile)) {
