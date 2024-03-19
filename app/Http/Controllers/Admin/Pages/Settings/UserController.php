@@ -169,7 +169,7 @@ class UserController extends Controller
 
             
            
-
+            $data = $request->only('pix', 'cpf');
             $user = new $this->user;
             $user->name = $request->name;
             $user->last_name = $request->last_name;
@@ -190,7 +190,7 @@ class UserController extends Controller
             }
            
 
-                $data = $request->only('pix', 'cpf');
+                
                 $passardados = New Client;
                 $passardados->cpf = $data['cpf'];
                 $passardados->name = $request->name;
