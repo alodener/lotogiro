@@ -221,7 +221,7 @@ class GameController extends Controller
                 $now = Carbon::now();
 
                 if ($now->gt($sortDate)) {
-                    return back()->withErrors(['error' => 'Apostas fechadas para esta competição!']);
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors(['error' => 'Apostas encerradas para esse concurso!']);
                 }
             }
         }
@@ -543,7 +543,8 @@ class GameController extends Controller
                     global $data;
                     global $fileName;
                     global $pdf;
-                    $m->from('admin@loteriasalternativas.com', 'SuperLotogiro');
+                    $email_sistema = env("nome_sistema");
+                    $m->from('admin@loteriasalternativas.com', $email_sistema);
                     $m->subject('Seu Bilhete');
                     $m->to(auth()->user()->email);
                     $m->attachData($pdf->output(), $fileName);
@@ -576,7 +577,7 @@ class GameController extends Controller
 
 
                 return redirect()->route('admin.bets.games.edit', ['game' => $game->id])->withErrors([
-                    'success' => 'Jogo cadastrado com sucesso2'
+                    'success' => 'Jogo cadastrado com sucesso'
                 ]);
             } catch (\Exception $exception) {
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([

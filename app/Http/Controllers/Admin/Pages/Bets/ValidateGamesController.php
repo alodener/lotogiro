@@ -231,7 +231,8 @@ class ValidateGamesController extends Controller
                 global $data;
                 global $fileName;
                 global $pdf;
-                $m->from('admin@loteriasalternativas.com', 'SuperLotogiro');
+                $email_sistema = env("nome_sistema");
+                $m->from('admin@loteriasalternativas.com', $email_sistema);
                 $m->subject('Seu Bilhete');
                 $m->to(auth()->user()->email);
                 $m->attachData($pdf->output(), $fileName);
