@@ -74,6 +74,10 @@ class GameController extends Controller
             if(isset($params['startDate']) && !empty($params['startDate'])) {
                 $game = $game->where('created_at', '>=', $params['startDate']);
             }
+            if(auth()->user()->hasPermissionTo('read_all_games') && empty($params['startDate'])){
+                $now = Carbon::now();
+                $game = $game->whereMonth('created_at', '=', $now->month);
+            }
 
             if(isset($params['endDate']) && !empty($params['endDate'])) {
                 $game = $game->where('created_at', '<=', $params['endDate'] . ' 23:59:59');
