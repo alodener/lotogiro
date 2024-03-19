@@ -533,7 +533,7 @@ class GameController extends Controller
                 global $fileName;
                 $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
 
-                return view('admin.layouts.pdf.receiptTudo', $data);
+                // return view('admin.layouts.pdf.receiptTudo', $data);
                 global $pdf;
                 $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
                 // return $pdf->download($fileName);
