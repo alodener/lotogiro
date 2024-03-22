@@ -74,6 +74,10 @@ class GameController extends Controller
             if(isset($params['startDate']) && !empty($params['startDate'])) {
                 $game = $game->where('created_at', '>=', $params['startDate']);
             }
+            if(auth()->user()->hasPermissionTo('read_all_games') && empty($params['startDate'])){
+                $now = Carbon::now();
+                $game = $game->whereMonth('created_at', '=', $now->month);
+            }
 
             if(isset($params['endDate']) && !empty($params['endDate'])) {
                 $game = $game->where('created_at', '<=', $params['endDate'] . ' 23:59:59');
@@ -221,7 +225,7 @@ class GameController extends Controller
                 $now = Carbon::now();
 
                 if ($now->gt($sortDate)) {
-                    return back()->withErrors(['error' => 'Apostas fechadas para esta competição!']);
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors(['error' => 'Apostas encerradas para esse concurso!']);
                 }
             }
         }
@@ -533,7 +537,7 @@ class GameController extends Controller
                 global $fileName;
                 $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
 
-                return view('admin.layouts.pdf.receiptTudo', $data);
+                // return view('admin.layouts.pdf.receiptTudo', $data);
                 global $pdf;
                 $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
                 // return $pdf->download($fileName);
@@ -543,7 +547,8 @@ class GameController extends Controller
                     global $data;
                     global $fileName;
                     global $pdf;
-                    $m->from('admin@loteriasalternativas.com', 'SuperLotogiro');
+                    $email_sistema = env("nome_sistema");
+                    $m->from('admin@loteriasalternativas.com', $email_sistema);
                     $m->subject('Seu Bilhete');
                     $m->to(auth()->user()->email);
                     $m->attachData($pdf->output(), $fileName);
@@ -576,7 +581,7 @@ class GameController extends Controller
 
 
                 return redirect()->route('admin.bets.games.edit', ['game' => $game->id])->withErrors([
-                    'success' => 'Jogo cadastrado com sucesso2'
+                    'success' => 'Jogo cadastrado com sucesso'
                 ]);
             } catch (\Exception $exception) {
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([

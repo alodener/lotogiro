@@ -46,7 +46,7 @@
         </div>
            <div class="form-row">
         <div class="form-group col-md-3">
-            <label for="qtd_dezena_sorteada">Quantidade de dezenas sorteadas</label>
+            <label for="qtd_dezena_sorteada">Qtd de dezenas sorteadas</label>
             <input wire:model="qtd_dezena_sorteada" type="text" class="form-control @error('qtd_dezena_sorteada') is-invalid @enderror" id="qtd_dezena_sorteada"
                    name="qtd_dezena_sorteada"
                    maxlength="50" value="{{old('qtd_dezena_sorteada', $typeGame->qtd_dezena_sorteada ?? null)}}">
@@ -56,46 +56,6 @@
             </span>
             @enderror
         </div>
-    </div>
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                <label for="description">{{ trans('admin.lwTypeGame.desc') }}</label>
-                <textarea wire:model="description" class="form-control @error('description') is-invalid @enderror"
-                    id="description" rows="3" id="description" name="description"
-                    maxlength="200">{{old('description', $typeGame->description ?? null)}}</textarea>
-                @error('description')
-                <span class="invalid-feedback" role="alert">
-                    {{ $message }}
-                </span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="col-md-6 mr-md-5">
-                <label for="icon">Banner Mobile</label>
-                <input type="file" name="banner_mobile" class="form-control ">
-            </div>
-            <div class="col-md-3 ">
-                <label>Ativar Em Recomendados</label>
-                <div class="ml-4">
-                    <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="1"
-                        id="flexRadioDefault1" {{ $recomendado==1 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Ativado </label>
-                </div>
-                <div class="ml-4">
-                    <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="0"
-                        id="flexRadioDefault1" {{ $recomendado==0 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Desativado </label>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="form-row">
             <div class="form-group col-md-3">
                 <label for="category">Selecione uma Categoria</label>
                 <select wire:model="category" class="custom-select" id="category" name="category">
@@ -143,11 +103,7 @@
 
                 </select>
             </div>
-            <div class="form-group col-md-3">
-                <label for="icon">Banner PC *APARECE EM RECOMENDADOS*</label>
-                <input type="file" name="banner_pc" class="form-control ">
-            </div>
-
+            
             <div class="form-group col-md-3">
                 <label for="odd">Adicione um limite por Jogo </label>
                 <input wire:model="odd" type="number" class="form-control @error('odd') is-invalid @enderror"
@@ -158,8 +114,51 @@
                 </span>
                 @enderror
             </div>
-
+            
         </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="description">{{ trans('admin.lwTypeGame.desc') }}</label>
+                <textarea wire:model="description" class="form-control @error('description') is-invalid @enderror"
+                    id="description" rows="3" id="description" name="description"
+                    maxlength="200">{{old('description', $typeGame->description ?? null)}}</textarea>
+                @error('description')
+                <span class="invalid-feedback" role="alert">
+                    {{ $message }}
+                </span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-6 mr-md-5">
+                <label for="icon">Banner Mobile</label>
+                <input type="file" name="banner_mobile" class="form-control ">
+            </div>
+            <div class="col-md-3 ">
+                <label>Ativar Em Recomendados</label>
+                <div class="ml-4">
+                    <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="1"
+                        id="flexRadioDefault1" {{ $recomendado==1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Ativado </label>
+                </div>
+                <div class="ml-4">
+                    <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="0"
+                        id="flexRadioDefault1" {{ $recomendado==0 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Desativado </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+                <label for="icon">Banner PC *APARECE EM RECOMENDADOS*</label>
+                <input type="file" name="banner_pc" class="form-control ">
+            </div>
+
+        
+        
 
         @if(Route::currentRouteName() == 'admin.bets.type_games.edit')
         <div class="row my-2">
