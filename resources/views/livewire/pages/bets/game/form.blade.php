@@ -52,7 +52,7 @@
                 <div class="col-md-12">
                     <div class="input-group mb-3">
                         <input wire:model="search" type="text" id="author" class="form-control"
-                            placeholder="Pesquisar Cliente" autocomplete="off">
+                            placeholder="Pesquisar Cliente" autocomplete="off" required>
                         <div class="input-group-append">
                             <span wire:click="clearUser" class="input-group-text" title="Limpar"><i
                                     class="fas fa-user-times"></i></span>
