@@ -95,7 +95,7 @@
             </form>
 
             <div class="d-flex justify-content-center align-items-center p-2 login">
-                <a href="{{ route('forget.password.get') }}" style="color:#666;">{{ trans('admin.forgot-password-link') }}</a>
+               <a href="{{ route('forget.password.get') }}" class="btn btn-block btn-success login">{{ trans('admin.forgot-password-link') }}</a>
             </div>
             <div class="row">
                 <div class="col-sm-12">
