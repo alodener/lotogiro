@@ -33,7 +33,7 @@
                 <div class="col-md-3 col-6">
                     <div class="form-group w-100">
                         <input type="date" class="change-busca form-control" value="{{$endAt}}" min="{{$startAt}}"
-                            max="{{date('Y-m-d')}}" data-busca-param="endAt">
+                             data-busca-param="endAt">
                     </div>
                 </div>
             </div>
