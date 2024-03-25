@@ -33,3 +33,6 @@ Route::get('/scrape0', [ScrapingController::class, 'scrape0']);
 Route::get('/scrape', [ScrapingController::class, 'scrape']);
 Route::get('/scrape2', [ScrapingController::class, 'scrape2']);
 Route::get('/scrapeAllStates', [ScrapingController::class, 'scrapeAllStates']);
+Route::get('/hoje', [ScrapingController::class, 'get_games_today']);
+Route::get('/ganhadores', [ScrapingController::class, 'getWinners']);
+
