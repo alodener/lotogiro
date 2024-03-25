@@ -43,14 +43,14 @@ class CallRoutes extends Command
     {
         // Criar uma instância de Request com os dados necessários
         $dataAtual = now()->format('d-m-Y');
-        // $dataAtual = '2024-03-21';
+        $dataAtual2 = now()->format('Y-m-d');
 
         $request = Request::create('/scrapeAllStates', 'GET', ['estado' => '', 'data' => $dataAtual]);
 
         // Chamar o método do controlador passando a instância de Request
         $controller = new ScrapingController();
         $response = $controller->scrapeAllStates($request);
-        $response2 = $controller->getWinners($dataAtual);
+        $response2 = $controller->getWinners($dataAtual2);
 
 
         return 0;

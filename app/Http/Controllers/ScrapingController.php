@@ -761,7 +761,7 @@ class ScrapingController extends Controller
 
     public function getWinners($data){
 
-        // $data = '2024-03-24';
+    // $data = '2024-03-25';
 
         if (!$data) {
             return response()->json(['error' => 'Data não fornecida'], 400);
@@ -1034,7 +1034,6 @@ class ScrapingController extends Controller
                     if (!$gameExistente) {
                         // Adicionar informações sobre o vencedor ao array
                         $vencedores[] = [
-                            'modalidade_id' => $jogo->modalidade_id,
                             'game_id' => $jogo->id, 
                             'valor_premio' => $valor_premio,
                             'resultado_id' => $resultado->id,
@@ -1049,7 +1048,7 @@ class ScrapingController extends Controller
 
         }
 
-        // BichaoGamesVencedores::insert($vencedores);
+        BichaoGamesVencedores::insert($vencedores);
 
         return response()->json($vencedores);
     }
