@@ -622,26 +622,34 @@ class ScrapingController extends Controller
             ],
             'DF' => [
                 'LBR (12:40)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 10:45 Hoje ' . $data,
-                    'id'=> 21,
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 12:40 Hoje ' . $data,
+                    'id'=> 25,
                 ],
-                'LOTEP (12:45)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 12:45 Hoje ' . $data,
-                    'id'=> 22,
+                'LBR (15:30)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 15:30 Hoje ' . $data,
+                    'id'=> 26,
                 ],
-                'LOTEP (15:45)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 15:45 Hoje ' . $data,
-                    'id'=> 23,
+                'LBR (17:30)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 17:30 Hoje ' . $data,
+                    'id'=> 27,
                 ],
-                'LOTEP (18:00)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 18:05 Hoje ' . $data,
-                    'id'=> 24,
+                'LBR (19:30)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 19:30 Hoje ' . $data,
+                    'id'=> 28,
                 ],
-            ]
+            ],
+            'FED' => [
+                'Loteria Federal do Brasil (12:40)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/loteria-federal/',
+                    'phrase' => '(Extraçao Federal do Brasil) 19:00 Hoje ' . $data,
+                    'id'=> 32,
+                ],
+            ],
+
 
         ];
 
@@ -735,7 +743,7 @@ class ScrapingController extends Controller
     public function scrapeAllStates(Request $request)
     {
         // Lista de estados
-        $estados = ['RJ', 'SP', 'GO', 'MG', 'BA', 'PB', 'DF'];
+        $estados = ['RJ', 'SP', 'GO', 'MG', 'BA', 'PB', 'DF', 'FED'];
     
         // Obtém a data atual formatada no formato dd-mm-yyyy
         $dataAtual = now()->format('d-m-Y');
