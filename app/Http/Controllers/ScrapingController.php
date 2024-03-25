@@ -28,30 +28,29 @@ class ScrapingController extends Controller
         }
     
         $data = str_replace('-', '/', $data);
-
         $urls = [
             'RJ' => [
-                'PTM' => [
+                'PTM (11:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptm-rio/',
                     'phrase' => '(PTM-Rio) 11:00 Hoje ' . $data,
                     'id' => 1,
                 ],
-                'PT' => [
+                'PT (14:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/pt-riopt-rio/',
                     'phrase' => '(PT-Rio) 14:00 Hoje ' . $data,
                     'id' => 2,
                 ],
-                'PTV' => [
+                'PTV (16:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptv-rio/',
                     'phrase' => '(PTV-Rio) 16:00 Hoje ' . $data,
                     'id'=> 3,
                 ],
-                'PTN' => [
+                'PTN (18:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptn-rio/',
                     'phrase' => '(PTN-Rio) 18:00 Hoje ' . $data,
                     'id'=> 4,
                 ],
-                'COR' => [
+                'COR (21:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-coruja/',
                     'phrase' => '(Coruja-Rio) 21:00 Hoje ' . $data,
                     'id'=> 5,
@@ -59,21 +58,16 @@ class ScrapingController extends Controller
             ],
             'SP' => [
                 'PT-SP (13:20)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-pt-sp/', // Esta bancas parece não existir na fonte de dados fornecida
+                    'url' => null, // Esta bancas parece não existir na fonte de dados fornecida
                     'phrase' => '(Pt-Sp) 13:20 Hoje ' . $data,
                     'id'=> 6,
                 ],
-                'PT-SP (17:20)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-pt-sp/', // Esta bancas parece não existir na fonte de dados fornecida
-                    'phrase' => '(Pt-Sp) 13:20 Hoje ' . $data,
-                    'id'=> 6,
-                ],
-                'Bandeirantes' => [
+                'Bandeirantes (15:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-bandeirante/',
                     'phrase' => '(Bandeirante-Sp) 15:20 Hoje ' . $data,
                     'id'=> 7,
                 ],
-                'PTN' => [
+                'PTN (20:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptn-sp/',
                     'phrase' => '(Ptn-Sp) 20:20 Hoje ' . $data,
                     'id'=> 8,
@@ -107,28 +101,28 @@ class ScrapingController extends Controller
                 ]
             ],
             'MG' => [
-                'Alvorada' => [
+                'Alvorada (12:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-alvorada-minas/',
                     'phrase' => '(Minas Gerais) 12:00 Hoje ' . $data,
                     'id'=> 14,
                 ],
-                'Minas-dia' => [
+                'Minas-dia (15:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-minas-dia/',
                     'phrase' => '(Minas Gerais) 15:00 Hoje ' . $data,
                     'id'=> 15,
                 ],
-                'Minas-noite' => [
+                'Minas-noite (19:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-minas-noite/',
                     'phrase' => '(Minas Gerais) 19:00 Hoje ' . $data,
                     'id'=> 16,
                 ]
             ],
             'BA' => [
-                'BA (10:00)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
-                    'phrase' => '(Bahia) 10:00 Hoje ' . $data,
-                    'id'=> 17,
-                ],
+                // 'BA (10:00)' => [
+                //     'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
+                //     'phrase' => '(Bahia) 10:00 Hoje ' . $data,
+                //     'id'=> 17,
+                // ],
                 'BA (12:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
                     'phrase' => '(Bahia) 12:00 Hoje ' . $data,
@@ -168,32 +162,41 @@ class ScrapingController extends Controller
                 ],
                 'LOTEP (18:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 18:05 Hoje ' . $data,
+                    'phrase' => '(Lotep Paraíba) 18:00 Hoje ' . $data,
                     'id'=> 24,
                 ],
             ],
             'DF' => [
                 'LBR (12:40)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 10:45 Hoje ' . $data,
-                    'id'=> 21,
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 12:40 Hoje ' . $data,
+                    'id'=> 25,
                 ],
-                'LOTEP (12:45)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 12:45 Hoje ' . $data,
-                    'id'=> 22,
+                'LBR (15:30)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 15:30 Hoje ' . $data,
+                    'id'=> 26,
                 ],
-                'LOTEP (15:45)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 15:45 Hoje ' . $data,
-                    'id'=> 23,
+                'LBR (17:30)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 17:30 Hoje ' . $data,
+                    'id'=> 27,
                 ],
-                'LOTEP (18:00)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 18:05 Hoje ' . $data,
-                    'id'=> 24,
+                'LBR (19:30)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 19:30 Hoje ' . $data,
+                    'id'=> 28,
                 ],
-            ]
+            ],
+            'FED' => [
+                'Loteria Federal do Brasil (12:40)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/loteria-federal/',
+                    'phrase' => '(Extraçao Federal do Brasil) 19:00 Hoje ' . $data,
+                    'id'=> 32,
+                ],
+            ],
+
+
         ];
     
         // Verifica se o estado é válido
