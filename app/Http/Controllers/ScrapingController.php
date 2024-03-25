@@ -759,9 +759,9 @@ class ScrapingController extends Controller
 
     // $data = '2024-03-21';
 
-    public function getWinners(){
+    public function getWinners($data){
 
-        $data = '2024-03-24';
+        // $data = '2024-03-24';
 
         if (!$data) {
             return response()->json(['error' => 'Data não fornecida'], 400);
