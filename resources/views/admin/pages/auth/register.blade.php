@@ -89,8 +89,8 @@
                         <div class="d-flex align-items-center mb-3">
                             <i class="fa fa-asterisk mr-2" aria-hidden="true"></i>
 
-                            <input type="password" class="form-control @error('password') is-invalid @enderror input100"
-                                name="password" placeholder="Senha">
+                           <input type="password" class="form-control @error('password') is-invalid @enderror input100"
+                                name="password" placeholder="Senha de 6 até 8 digitos">
 
                         </div>
 
