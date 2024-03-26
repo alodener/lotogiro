@@ -26887,6 +26887,17 @@ textarea.form-control.is-warning {
   padding: 10px;
   border-radius: 5px;
   }
+
+  .card-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+cursor: pointer;
+    margin-left: 3px;
+    margin-right: 3px;
+    background-color: #323637;
+    padding: 10px;
+    }
 .card-maroon:not(.card-outline) > .card-header,
 .card-maroon:not(.card-outline) > .card-header a {
   color: #ffffff;
