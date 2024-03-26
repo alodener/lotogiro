@@ -152,18 +152,54 @@ function fetchResultados() {
                     `);
             }
 
+            // Mapear os números para os nomes dos animais
+            const animais = {
+                "01": "Avestruz",
+                "02": "Águia",
+                "03": "Burro",
+                "04": "Borboleta",
+                "05": "Cachorro",
+                "06": "Cabra",
+                "07": "Carneiro",
+                "08": "Camelo",
+                "09": "Cobra",
+                "10": "Coelho",
+                "11": "Cavalo",
+                "12": "Elefante",
+                "13": "Galo",
+                "14": "Gato",
+                "15": "Jacaré",
+                "16": "Leão",
+                "17": "Macaco",
+                "18": "Porco",
+                "19": "Pavão",
+                "20": "Peru",
+                "21": "Touro",
+                "22": "Tigre",
+                "23": "Urso",
+                "24": "Veado",
+                "25": "Vaca"
+            };
+
             const html = Object.keys(data).map(function (lottery) {
-                const lotteryData = data[lottery];
+                const lotteryData = data[lottery].slice(0, 5); // Aqui é onde limitamos para os 5 primeiros itens
                 const subhtml = lotteryData.map(function (item, index) {
                     // Tratamento dos caracteres malformados
                     const formattedItem = item.map(function (value) {
                         return value.replace(/[^a-zA-Z0-9 ]/g, '');
                     });
+
+                    // Extrair o número do bicho
+                    const animalNumber = formattedItem[2].match(/\d+/)[0];
+                    // Obter o nome do animal a partir do número
+                    const animalName = animais[animalNumber];
+
                     return `
                         <tr>
                             <td>${formattedItem[0]}</td>
                             <td>${formattedItem[1]}</td>
-                            <td>${formattedItem[2]}</td>
+                            <td>${animalNumber}</td>
+                            <td>${animalName ? animalName : formattedItem[2]}</td>
                         </tr>
                     `;
                 }).join('');
@@ -173,13 +209,14 @@ function fetchResultados() {
                         <table class="table table-striped table-bordered table-dark">
                             <thead>
                                 <tr class="table-header">
-                                    <th class="text-center" colspan="3">${lottery}</th>
+                                    <th class="text-center" colspan="4">${lottery}</th>
                                 </tr>
                             </thead>
                             <tbody class="table-body">
                                 <tr class="second-header">
                                     <td>Prêmio</td>
                                     <td>Milhar</td>
+                                    <td>Grupo</td>
                                     <td>Bicho</td>
                                 </tr>
                                 ${subhtml}
@@ -193,6 +230,7 @@ function fetchResultados() {
         }
     });
 }
+
 
 $('#bichao-buscar-resultados').click(function () {
     fetchResultados();
