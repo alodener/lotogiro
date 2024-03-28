@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\Pages\Settings\LayoutController;
 use App\Http\Controllers\Admin\Pages\Settings\LogosController;
 use App\Http\Controllers\Admin\Pages\Bets\BichaoController;
 use App\Http\Controllers\Admin\Pages\Dashboards\TutoriaisController;
+use App\Http\Controllers\Admin\Pages\Dashboards\ResultController;   
 use App\Http\Controllers\CategoriaController;
 
 // recuperar senha controller
@@ -105,6 +106,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/manual-recharge', [ExtractController::class, 'manualRecharge'])->name('manualRecharge');
                 Route::get('/extracts-all', [ExtractController::class, 'extractsAll'])->name('extractsAll');
                 Route::resource('points', ExtractPointsController::class);
+                Route::get('/new-recharge', [ExtractController::class, 'newExtract'])->name('newExtract');
             });
 
             Route::prefix('ranking')->name('ranking.')->group(function () {
@@ -112,6 +114,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
             Route::prefix('help')->name('help.')->group(function () {
                 Route::get('/tutoriais', [TutoriaisController::class, 'index'])->name('index');
+            });
+            Route::prefix('result')->name('result.')->group(function () {
+                Route::get('/', [ResultController::class, 'index'])->name('index');
             });
 
             Route::prefix('wallet')->name('wallet.')->group(function () {
@@ -259,3 +264,4 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
 Route::get('/users/winners', [CustomeBalanceController::class, 'userswinnersAPI']);
 Route::get('/users/winners-clients', [CustomeBalanceController::class, 'userswinnersClientesAPI']);
+URL::forceScheme('https');

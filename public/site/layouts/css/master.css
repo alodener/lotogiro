@@ -2196,7 +2196,7 @@ tr,td,th{
   }
 }
 
-#areaCor1, #areaCor2 {
+#areaCor1, #areaCor2,#areaCor3,#areaCor4 {
   width: 100px;
   height: 100px;
   border: 1px solid #212425;

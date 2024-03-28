@@ -34,12 +34,12 @@
                 <div class="">
                     <div class="form-row">
                         @if ($layout->nome_config == "Botões")
-                        <div class="container d-flex flex-md-row flex-column">
+                        <div class="container-fluid d-flex flex-md-row flex-column" style="overflow:auto;">
                             <input type="hidden" name="nome_config" class="" value="{{$layout->nome_config}}">
 
                             @php $count = 1; @endphp
                             @foreach ($layout_button as $layout)
-                            <div class="col-md-6 d-flex align-items-center card-button-edit mr-md-4 mb-4 mb-md-0">
+                            <div class="col-md-3 d-flex align-items-center card-button-edit mr-md-4 mb-4 mb-md-0">
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between">
                                         <div class="d-flex flex-column">
@@ -547,6 +547,20 @@
 
         // Atualiza a cor da área de exibição
         document.getElementById('areaCor2').style.backgroundColor = corSelecionada;
+    });
+    document.getElementById('cor_btn3').addEventListener('input', function () {
+        // Obtém o valor da cor selecionada
+        var corSelecionada = this.value;
+
+        // Atualiza a cor da área de exibição
+        document.getElementById('areaCor3').style.backgroundColor = corSelecionada;
+    });
+    document.getElementById('cor_btn4').addEventListener('input', function () {
+        // Obtém o valor da cor selecionada
+        var corSelecionada = this.value;
+
+        // Atualiza a cor da área de exibição
+        document.getElementById('areaCor4').style.backgroundColor = corSelecionada;
     });
 </script>
 

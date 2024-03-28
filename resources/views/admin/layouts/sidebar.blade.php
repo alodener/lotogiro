@@ -355,8 +355,8 @@
 
                         @if(\App\Helper\UserValidate::iAmAdmin())
                         <li class="nav-item">
-                            <a href="{{route('admin.dashboards.extracts.manualRecharge')}}"
-                                class="nav-link @if(request()->is('admin/dashboards/extracts/manual-recharge')) active @endif">
+                            <a href="{{route('admin.dashboards.extracts.newExtract')}}"
+                                class="nav-link @if(request()->is('admin/dashboards/extracts/new-extract')) active @endif">
                                 <i class="fas fa-file-alt nav-icon"></i>
                                 <p>{{ trans('admin.menu.extratoRecarga') }} </p>
                             </a>
@@ -484,6 +484,20 @@
                 @endcanany
 
             </li>
+            @canany(['read_user', 'read_role', 'read_permission'])
+
+            <div class="nav-item nav-group-item has-treeview @if(request()->is('admin/result/*')) menu-open @endif">
+                <a href="{{route('admin.dashboards.result.index')}}"
+                    class="nav-link @if(request()->is('admin/result/*')) active @endif">
+                    <i class="fa fa-trophy" aria-hidden="true"></i>
+                    <p class="title-link" style="margin:0px;">
+                        Resultados
+                    </p>
+                </a>
+
+            </div>
+            @endcanany
+
             <div class="nav-item nav-group-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
                 <a href="{{route('admin.dashboards.help.index')}}"
                     class="nav-link @if(request()->is('admin/settings/*')) active @endif">
