@@ -104,8 +104,13 @@ class Commision
 
 
     public static function calculationNew($value, $user_id, $game_type, $type_id, $game)
-    {
-        $user = User::find($user_id);
+    {   
+
+        if (is_int($game)) {
+            $idgame = $game;
+        } elseif (is_object($game) && property_exists($game, 'id')) {
+            $idgame = $game->id;
+        }        $user = User::find($user_id);
         if (!$user) return 0;
     
         $percentage = static::getCommission($user, $type_id, $game_type);
@@ -129,7 +134,7 @@ class Commision
                     'value' => $commission,
                     'old_value' => $user->bonus - $commission, 
                     'value_a' => $user->bonus, 
-                    'type' => 'Bônus de jogo: ' . $game->id,
+                    'type' => 'Bônus de jogo: ' . $idgame,
                     'wallet' => 'bonus'
                 ]);
             }
@@ -153,7 +158,7 @@ class Commision
                     'value' => $commission_pai,
                     'old_value' => $userLv1->bonus - $commission_pai,
                     'value_a' => $userLv1->bonus,
-                    'type' => 'Bônus, jogo de id: ' . $game->id ,
+                    'type' => 'Bônus, jogo de id: ' . $idgame ,
                     'wallet' => 'bonus'
                 ]);
             }
@@ -171,7 +176,7 @@ class Commision
                         'value' => $commission_avo,
                         'old_value' => $userLv2->bonus - $commission_avo,
                         'value_a' => $userLv2->bonus,
-                        'type' => 'Bônus, jogo de id: ' . $game->id ,
+                        'type' => 'Bônus, jogo de id: ' . $idgame ,
                         'wallet' => 'bonus'
                     ]);
                 }
@@ -189,7 +194,7 @@ class Commision
                             'value' => $commission_bisavo,
                             'old_value' => $userLv3->bonus - $commission_bisavo,
                             'value_a' => $userLv3->bonus,
-                            'type' => 'Bônus, jogo de id: ' . $game->id ,
+                            'type' => 'Bônus, jogo de id: ' . $idgame ,
                             'wallet' => 'bonus'
                         ]);
                     }
@@ -206,7 +211,7 @@ class Commision
                                 'value' => $commission_tataravo,
                                 'old_value' => $userLv4->bonus - $commission_tataravo,
                                 'value_a' => $userLv4->bonus,
-                                'type' => 'Bônus, jogo de id: ' . $game->id ,
+                                'type' => 'Bônus, jogo de id: ' . $idgame ,
                                 'wallet' => 'bonus'
                             ]);
                         }
@@ -223,7 +228,7 @@ class Commision
                                     'value' => $commission_quarto_grau,
                                     'old_value' => $userLv5->bonus - $commission_quarto_grau,
                                     'value_a' => $userLv5->bonus,
-                                    'type' => 'Bônus, jogo de id: ' . $game->id ,
+                                    'type' => 'Bônus, jogo de id: ' . $idgame ,
                                     'wallet' => 'bonus'
                                 ]);
                             }
@@ -241,7 +246,7 @@ class Commision
                                         'value' => $commission_quinto_grau,
                                         'old_value' => $userLv6->bonus - $commission_quinto_grau,
                                         'value_a' => $userLv6->bonus,
-                                        'type' => 'Bônus, jogo de id: ' . $game->id ,
+                                        'type' => 'Bônus, jogo de id: ' . $idgame ,
                                         'wallet' => 'bonus'
                                     ]);
                                 }    
