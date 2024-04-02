@@ -929,7 +929,7 @@ class BichaoController extends Controller
 
             $ID_VALUE = auth()->user()->indicador;
             $storeExtact = ExtractController::store($extract);
-            $commissions = Commision::calculationNew($checkoutItem['valor'], $checkoutItem['user_id'], 'bichao', $checkoutItem['modalidade_id']);
+            $commissions = Commision::calculationNew($checkoutItem['valor'], $checkoutItem['user_id'], 'bichao', $checkoutItem['modalidade_id'], $checkoutItem['id']);
 
             BichaoGames::where('id', $checkoutItem['id'])->update(['commission_percentage' => $commissions['percentage'], 'comission_value' => $commissions['commission'], 'comission_value_pai' => $commissions['commission_pai'], 'comission_value_avo' => $commissions['commission_avo']]);
         }
