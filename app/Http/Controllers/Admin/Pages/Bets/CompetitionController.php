@@ -104,7 +104,7 @@ class CompetitionController extends Controller
                 $competitionA->save();
             } elseif ($typeGameCategory == 'mega_kino') {
                 
-                $letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                $letras = ['A', 'B', 'C', 'D', 'E', 'F'];
                 foreach ($letras as $letra) {
                     $competitionLetter = new Competition();
                     $competitionLetter->number = $request->number . $letra;
