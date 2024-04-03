@@ -392,7 +392,7 @@ class GameController extends Controller
                 }
                 
                 if ($typeGameCategory == 'mega_kino') {
-                    $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                    $letters = ['A', 'B', 'C', 'D', 'E', 'F'];
                     
                     foreach ($letters as $letter) {
                         $searchNumber = $competition->number . $letter;
