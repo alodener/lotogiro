@@ -289,6 +289,25 @@ class ScrapingController extends Controller
                     'phrase' => '(Lbr-Brasilia) 19:30 Hoje ' . $data,
                     'id'=> 28,
                 ],
+                
+            ],
+            'CE' => [
+                'LOTOCE (11:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lotece-Ceará) 11:20 Hoje ' . $data,
+                    'id'=> 29,
+                ],
+                'LOTOCE (14:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lbr-Brasilia) 14:00 Hoje ' . $data,
+                    'id'=> 30,
+                ],
+                'LOTOCE (19:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lbr-Brasilia) 19:00 Hoje ' . $data,
+                    'id'=> 31,
+                ],
+                
             ],
             'FED' => [
                 'Loteria Federal do Brasil (19:00)' => [
@@ -376,6 +395,7 @@ class ScrapingController extends Controller
         $data = str_replace('-', '/', $data);
         $dataFormatada = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $data)));
 
+    
         $urls = [
             'RJ' => [
                 'PTM - RIO (11:20)' => [
@@ -535,6 +555,25 @@ class ScrapingController extends Controller
                     'phrase' => '(Lbr-Brasilia) 19:30 Hoje ' . $data,
                     'id'=> 28,
                 ],
+                
+            ],
+            'CE' => [
+                'LOTOCE (11:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lotece-Ceará) 11:20 Hoje ' . $data,
+                    'id'=> 29,
+                ],
+                'LOTOCE (14:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lbr-Brasilia) 14:00 Hoje ' . $data,
+                    'id'=> 30,
+                ],
+                'LOTOCE (19:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lbr-Brasilia) 19:00 Hoje ' . $data,
+                    'id'=> 31,
+                ],
+                
             ],
             'FED' => [
                 'Loteria Federal do Brasil (19:00)' => [
@@ -637,7 +676,7 @@ class ScrapingController extends Controller
     public function scrapeAllStates(Request $request)
     {
         // Lista de estados
-        $estados = ['RJ', 'SP', 'GO', 'MG', 'BA', 'PB', 'DF', 'FED'];
+        $estados = ['RJ', 'SP', 'GO', 'MG', 'BA', 'PB', 'DF', 'CE', 'FED'];
     
         // Obtém a data atual formatada no formato dd-mm-yyyy
         $dataAtual = now()->format('d-m-Y');
