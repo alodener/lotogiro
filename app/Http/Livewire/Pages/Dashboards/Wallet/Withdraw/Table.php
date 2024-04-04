@@ -103,7 +103,7 @@ class Table extends Component
         $this->user = User::with('client')->find(auth()->id())->toArray();
         $this->userId = auth()->user()->id;
         $this->userObj = auth()->user();
-        $this->pix = $this->user['pixS'];
+        $this->pix = $this->user['pix'];
 
         if((empty($this->pix) || is_null($this->pix)) && !is_null($this->user['client'])){
             $this->pix = $this->user['client']['pix'];
