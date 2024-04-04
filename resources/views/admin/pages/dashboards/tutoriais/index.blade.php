@@ -36,7 +36,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal1()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.convclientes') }}</h3>
+                  <h3 class="card-title">CONSULTOR 001 - Como Apostar para o Cliente</h3>
                 </div>
               </div>
             </div>
@@ -44,7 +44,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal2()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.realrecargas') }}</h3>
+                  <h3 class="card-title">CONSULTOR 002 - Como Apostar Para Si</h3>
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal3()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.comosecadastrar') }}</h3>
+                  <h3 class="card-title">JOGO 001 - Chispaloto</h3>
                 </div>
               </div>
             </div>
@@ -61,7 +61,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal4()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.converter') }}</h3>
+                  <h3 class="card-title">JOGO 002 - Dia de Alegria</h3>
                 </div>
               </div>
             </div>
@@ -70,7 +70,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal5()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.atualizarcadastro') }}</h3>
+                  <h3 class="card-title">JOGO 003 - Lotinha</h3>
                 </div>
               </div>
             </div>
@@ -79,7 +79,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal6()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.multiplosjogos') }}</h3>
+                  <h3 class="card-title">JOGO 004 - Mania de Jogo</h3>
                 </div>
               </div>
             </div>
@@ -88,7 +88,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal7()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.apostarlotofacil') }}</h3>
+                  <h3 class="card-title">JOGO 005 - Mania de Time</h3>
                 </div>
               </div>
             </div>
@@ -96,7 +96,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal8()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.apostarlotocliente') }}</h3>
+                  <h3 class="card-title">JOGO 006 - O milionário</h3>
                 </div>
               </div>
             </div>
@@ -105,7 +105,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal9()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.quina') }}</h3>
+                  <h3 class="card-title">JOGO 007 - Super 5</h3>
                 </div>
               </div>
             </div>
@@ -113,7 +113,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal10()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.jogarmegasena') }}</h3>
+                  <h3 class="card-title">JOGO 008 - Super 6</h3>
                 </div>
               </div>
             </div>
@@ -122,7 +122,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal11()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.jogarduplasena') }}</h3>
+                  <h3 class="card-title">JOGO 009 - Santa Lúcia Loto</h3>
                 </div>
               </div>
             </div>
@@ -131,7 +131,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal12()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.jogardie') }}</h3>
+                  <h3 class="card-title">JOGO 010 - Quina Fácil</h3>
                 </div>
               </div>
             </div>
@@ -140,7 +140,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal13()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.apostarlotomania') }}</h3>
+                  <h3 class="card-title">JOGO 011 - Duplo 6</h3>
                 </div>
               </div>
             </div>
@@ -148,7 +148,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal14()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.jogartimemania') }}</h3>
+                  <h3 class="card-title">PLATAFORMA 002 - Convidar Cliente (Consultor)</h3>
                 </div>
               </div>
             </div>
@@ -156,7 +156,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal22()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.quinasaojoao') }}</h3>
+                  <h3 class="card-title">PLATAFORMA 003 - Ver Apostas Realizadas</h3>
                 </div>
               </div>
             </div>
@@ -164,7 +164,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal23()">
                 <div class="card-content">
-                  <h3 class="card-title">{{ trans('admin.tutoriais.apostmilharcent') }}</h3>
+                  <h3 class="card-title">PLATAFORMA 004 - Depositar</h3>
                 </div>
               </div>
             </div>
@@ -172,7 +172,15 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal25()">
                 <div class="card-content">
-                  <h3 class="card-title">017 - Múltiplos Jogos com carácter especial</h3>
+                  <h3 class="card-title">PLATAFORMA 005 - Sacar</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 d-flex justify-content-center">
+              <div class="card" onclick="openModal26()">
+                <div class="card-content">
+                  <h3 class="card-title">PLATAFORMA 006 - Converter</h3>
                 </div>
               </div>
             </div>
@@ -270,7 +278,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-1-label">{{ trans('admin.tutoriais.convclientes') }}</h5>
+        <h5 class="modal-title" id="video-modal-1-label">CONSULTOR 001 - Como Apostar para o Cliente</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -278,7 +286,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/como-convidar-clientes.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/apostar_cliente.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -292,7 +300,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-2-label">{{ trans('admin.tutoriais.realrecargas') }}</h5>
+        <h5 class="modal-title" id="video-modal-2-label">CONSULTOR 002 - Como Apostar Para Si</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -300,7 +308,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/como-realizar-recarga.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/apostar_si.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -314,7 +322,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-3-label">{{ trans('admin.tutoriais.comosecadastrar') }}</h5>
+        <h5 class="modal-title" id="video-modal-3-label">JOGO 001 - Chispaloto</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -322,7 +330,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/como-se-cadastrar.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/chispaloto.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -336,7 +344,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-4-label">{{ trans('admin.tutoriais.converter') }}</h5>
+        <h5 class="modal-title" id="video-modal-4-label">JOGO 002 - Dia de Alegria</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -344,7 +352,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/converter-bonus-em-saldo.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/dia_alegria.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -358,7 +366,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-5-label">{{ trans('admin.tutoriais.atualizarcadastro') }}</h5>
+        <h5 class="modal-title" id="video-modal-5-label">JOGO 003 - Lotinha</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -366,7 +374,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/como-atualizar-o-cadastro.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/lotinha.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -380,7 +388,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-6-label">{{ trans('admin.tutoriais.multiplosjogos') }}</h5>
+        <h5 class="modal-title" id="video-modal-6-label">JOGO 004 - Mania de Jogo</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -388,7 +396,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/fazer-multiplos-jogos.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/mania_jogo.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -402,7 +410,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-7-label">{{ trans('admin.tutoriais.apostarlotofacil') }}</h5>
+        <h5 class="modal-title" id="video-modal-7-label">JOGO 005 - Mania de Time</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -410,7 +418,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/apostar-na-lotofacil.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/mania_time.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -424,7 +432,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-8-label">{{ trans('admin.tutoriais.apostarlotocliente') }}</h5>
+        <h5 class="modal-title" id="video-modal-8-label">JOGO 006 - O milionário</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -432,7 +440,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/lotofacil-para-clientt.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/milionario.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -446,7 +454,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-9-label">{{ trans('admin.tutoriais.quina') }}</h5>
+        <h5 class="modal-title" id="video-modal-9-label">JOGO 007 - Super 5</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -454,7 +462,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/quina.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/super5.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -468,7 +476,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-10-label">{{ trans('admin.tutoriais.jogarmegasena') }}</h5>
+        <h5 class="modal-title" id="video-modal-10-label">JOGO 008 - Super 6</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -476,7 +484,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/como-jogar-na-mega-sena.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/super6.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -490,7 +498,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-11-label">{{ trans('admin.tutoriais.jogarduplasena') }}</h5>
+        <h5 class="modal-title" id="video-modal-11-label">JOGO 009 - Santa Lúcia Loto</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -498,7 +506,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/como-jogar-na-dupla-sena.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/sta_lucia.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -512,7 +520,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-12-label">{{ trans('admin.tutoriais.jogardie') }}</h5>
+        <h5 class="modal-title" id="video-modal-12-label">JOGO 010 - Quina Fácil</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -520,7 +528,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/como-jogar-na-die-da-sorte.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/quina_facil.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -534,7 +542,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-13-label">{{ trans('admin.tutoriais.apostarlotomania') }}</h5>
+        <h5 class="modal-title" id="video-modal-13-label">JOGO 011 - Duplo 6</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -542,7 +550,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/apostar-lotomania.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/duplo6.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -556,7 +564,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-14-label">{{ trans('admin.tutoriais.jogartimemania') }}</h5>
+        <h5 class="modal-title" id="video-modal-14-label">PLATAFORMA 002 - Convidar Cliente (Consultor)</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -564,7 +572,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/como-jogar-na-timemania.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/conv_cliente.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -732,7 +740,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-22-label">Apostar na Quina de São João</h5>
+        <h5 class="modal-title" id="video-modal-22-label">PLATAFORMA 003 - Ver Apostas Realizadas</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -740,7 +748,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/apostar-quina-saojoao.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/apostas_realizadas.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -754,7 +762,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-23-label">{{ trans('admin.tutoriais.apostmilharcent') }}</h5>
+        <h5 class="modal-title" id="video-modal-23-label">PLATAFORMA 004 - Depositar</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -762,7 +770,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/comojogar-milharcentena.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/depositar.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -798,7 +806,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="video-modal-25-label">017 - Múltiplos Jogos com carácter especial</h5>
+        <h5 class="modal-title" id="video-modal-25-label">PLATAFORMA 005 - Sacar</h5>
         <div class="close-button">
           <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
         </div>
@@ -806,13 +814,36 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/caracter-especial.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/sacar.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- modal 26-->
+
+<div class="modal fade" id="video-modal-26" tabindex="-26" aria-labelledby="video-modal-26-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-26-label">PLATAFORMA 006 - Converter</h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/converter.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -899,6 +930,9 @@
   }
   function openModal25() {
     $('#video-modal-25').modal('show');
+  }
+  function openModal26() {
+    $('#video-modal-26').modal('show');
   }
 
 </script>
