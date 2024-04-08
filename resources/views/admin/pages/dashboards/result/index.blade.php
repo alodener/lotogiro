@@ -76,7 +76,6 @@
                 <th>Prêmio</th>
                 <th>Bilhetes</th>
                 <th>Modalidade</th>
-                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -130,8 +129,7 @@ function adicionarDadosATabela(dados) {
             "<td>" + dados[i].name + "</td>" +
             "<td>" + dados[i].premio_formatted + "</td>" +
             "<td>" + dados[i].num_tickets + "</td>" +
-            "<td>" + dados[i].game_name + "</td>" +
-            "<td>" + (dados[i].status === 1 ? "Pago" : "Não Pago") + "</td>";
+            "<td>" + dados[i].game_name + "</td>";
     }
     document.getElementById('relatorio').style.display = 'table'; // Exibe a tabela após adicionar os dados
 }
@@ -205,7 +203,7 @@ function somarNumTickets(dados) {
     function listaall(dataSelecionada) {
     $.ajax({
         type: 'GET',
-        url: 'https://web.loteriasalternativas.com.br/api/winners-list?partner=1&sort_date=' + dataSelecionada,
+        url: 'https://web.loteriasalternativas.com.br/api/winners-list?partner=+partnerId+'&sort_date=' + dataSelecionada,
         success: function(response) {
             var totalPremios = somarPremios(response);
             var totalTickets = somarNumTickets(response);
@@ -220,7 +218,7 @@ function somarNumTickets(dados) {
         // Faz uma solicitação AJAX para o endpoint
         $.ajax({
             type: 'GET',
-            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner=1&sort_date=' + dataSelecionada,
+            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner=+partnerId+'&sort_date=' + dataSelecionada,
             success: function(response) {
                 // Manipula o texto retornado
                 var texto = response.formatted_content;
@@ -240,7 +238,7 @@ function somarNumTickets(dados) {
         // Faz uma solicitação AJAX para o endpoint
         $.ajax({
             type: 'GET',
-            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner=1&sort_date=' + dataSelecionada,
+            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner=+partnerId+'&sort_date=' + dataSelecionada,
             success: function(response) {
                 // Manipula o texto retornado
                 var texto = response.formatted_content;
