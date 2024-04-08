@@ -491,7 +491,7 @@
                     class="nav-link @if(request()->is('admin/result/*')) active @endif">
                     <i class="fa fa-trophy" aria-hidden="true"></i>
                     <p class="title-link" style="margin:0px;">
-                        Resultados
+                        Lista de Ganhadores
                     </p>
                 </a>
 
