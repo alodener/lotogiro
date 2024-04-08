@@ -56,7 +56,7 @@
         </button>
         <p style="margin:0;" >Copiar Lista</p>
     </div>
-    <div class="col-md-3 card-2" style="max-height:57px">
+    <div id="envianozap" class="col-md-3 card-2" style="max-height:57px">
         <button class="btn btn-secondary mr-md-3 mr-2 d-flex justify-content-center align-items-center "
             style="border-radius: 90px;">
             <i style="color:#a3d712" class="fa fa-whatsapp wallet-nav"></i>
@@ -138,13 +138,18 @@ function adicionarDadosATabela(dados) {
 function somarPremios(dados) {
     var total = 0;
     for (var i = 0; i < dados.length; i++) {
-        // Remove vírgula e converte para número
-        var premio = parseFloat(dados[i].premio.replace(',', '.'));
+        // Remove a formatação monetária e converte para float
+        var premio = parseFloat(dados[i].premio.replace(/\./g, '').replace(',', '.'));
         total += premio;
     }
-    // Formata o total com 2 casas decimais
-    return total.toFixed(2);
+    // Formata o total como moeda real
+    var totalFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    // Retorna o total formatado como moeda real
+    return totalFormatado;
 }
+
+
+
 
 
 function somarNumTickets(dados) {
@@ -188,6 +193,9 @@ function somarNumTickets(dados) {
         }  
         }    });
 
+
+        
+
     function listaall(dataSelecionada) {
     $.ajax({
         type: 'GET',
@@ -196,10 +204,31 @@ function somarNumTickets(dados) {
             var totalPremios = somarPremios(response);
             var totalTickets = somarNumTickets(response);
             $('#campobilhetes').text(totalTickets + ' bilhetes');
-            $('#campopremiacoes').text('R$ ' + totalPremios);
+            $('#campopremiacoes').text(totalPremios);
             adicionarDadosATabela(response);
         }
     });
+
+
+    $('#envianozap').click(function() {
+        // Faz uma solicitação AJAX para o endpoint
+        $.ajax({
+            type: 'GET',
+            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner='+partnerId+'&sort_date=' + dataSelecionada,
+            success: function(response) {
+                // Manipula o texto retornado
+                var texto = response.formatted_content;
+                // URL para o WhatsApp
+                let cont = 'https://api.whatsapp.com/send?text='+texto;
+                // Abre uma nova guia com a URL
+                window.open(cont);
+            },
+            error: function(xhr, status, error) {
+                console.error('Erro ao obter o texto:', error);
+            }
+        });
+    });
+
 
     $('#copiarTexto').click(function() {
         // Faz uma solicitação AJAX para o endpoint
@@ -233,12 +262,15 @@ function somarNumTickets(dados) {
         // Exibe uma mensagem de confirmação
         alert('Texto copiado para a área de transferência!');
     }
+
+    
 }
 
 $(document).ready(function() {
     $('#dataInput').change(function() {
         var dataSelecionada = $(this).val();
         listaall(dataSelecionada);
+        
     });
 
     // Define a data hoje
