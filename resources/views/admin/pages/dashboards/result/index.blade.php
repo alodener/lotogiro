@@ -8,13 +8,13 @@
 
 {{-- formulario onde buscaremos uma data especifica --}}
 
-<div class="container">
+<div class="container mt-5">
     <div class="card-deck container d-flex justify-content-between card-header" style="padding: 30px;">
-        <div class="col-md-6">
+        <div class="col-md-6 text-md-start ">
             <h3 style="margin:0;">Lista de Ganhadores</h3>
         </div>
-        <div class="col-md-6 d-flex align-items-center">
-            <h4 style="margin:0;" class="mr-2">Data:</h4>
+        <div class="col-md-6 d-flex align-items-center flex-md-row flex-column">
+            <h4 style="margin:0;" class="mr-2 mt-3 mt-md-0">Data:</h4>
             <input class="form-control date" id="dataInput" type="date">
         </div>
     </div>
@@ -138,9 +138,15 @@ function adicionarDadosATabela(dados) {
 function somarPremios(dados) {
     var total = 0;
     for (var i = 0; i < dados.length; i++) {
-        // Remove a formatação monetária e converte para float
-        var premio = parseFloat(dados[i].premio.replace(/\./g, '').replace(',', '.'));
-        total += premio;
+        // Verifica se o tipo de dado do prêmio é string
+        if (typeof dados[i].premio === 'string') {
+            // Remove caracteres não numéricos
+            var premioNumerico = parseFloat(dados[i].premio.replace(/\D/g, ''));
+            total += premioNumerico;
+        } else if (typeof dados[i].premio === 'number') {
+            // Se for um número, adiciona diretamente
+            total += dados[i].premio;
+        }
     }
     // Formata o total como moeda real
     var totalFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -199,7 +205,7 @@ function somarNumTickets(dados) {
     function listaall(dataSelecionada) {
     $.ajax({
         type: 'GET',
-        url: 'https://web.loteriasalternativas.com.br/api/winners-list?partner='+partnerId+'&sort_date=' + dataSelecionada,
+        url: 'https://web.loteriasalternativas.com.br/api/winners-list?partner=1&sort_date=' + dataSelecionada,
         success: function(response) {
             var totalPremios = somarPremios(response);
             var totalTickets = somarNumTickets(response);
@@ -214,7 +220,7 @@ function somarNumTickets(dados) {
         // Faz uma solicitação AJAX para o endpoint
         $.ajax({
             type: 'GET',
-            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner='+partnerId+'&sort_date=' + dataSelecionada,
+            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner=1&sort_date=' + dataSelecionada,
             success: function(response) {
                 // Manipula o texto retornado
                 var texto = response.formatted_content;
@@ -234,7 +240,7 @@ function somarNumTickets(dados) {
         // Faz uma solicitação AJAX para o endpoint
         $.ajax({
             type: 'GET',
-            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner='+partnerId+'&sort_date=' + dataSelecionada,
+            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner=1&sort_date=' + dataSelecionada,
             success: function(response) {
                 // Manipula o texto retornado
                 var texto = response.formatted_content;
