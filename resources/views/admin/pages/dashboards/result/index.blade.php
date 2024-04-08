@@ -203,7 +203,7 @@ function somarNumTickets(dados) {
     function listaall(dataSelecionada) {
     $.ajax({
         type: 'GET',
-        url: 'https://web.loteriasalternativas.com.br/api/winners-list?partner=+partnerId+'&sort_date=' + dataSelecionada,
+        url: 'https://web.loteriasalternativas.com.br/api/winners-list?partner='+partnerId+'&sort_date=' + dataSelecionada,
         success: function(response) {
             var totalPremios = somarPremios(response);
             var totalTickets = somarNumTickets(response);
@@ -218,7 +218,7 @@ function somarNumTickets(dados) {
         // Faz uma solicitação AJAX para o endpoint
         $.ajax({
             type: 'GET',
-            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner=+partnerId+'&sort_date=' + dataSelecionada,
+            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner='+partnerId+'&sort_date=' + dataSelecionada,
             success: function(response) {
                 // Manipula o texto retornado
                 var texto = response.formatted_content;
@@ -238,7 +238,7 @@ function somarNumTickets(dados) {
         // Faz uma solicitação AJAX para o endpoint
         $.ajax({
             type: 'GET',
-            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner=+partnerId+'&sort_date=' + dataSelecionada,
+            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner='+partnerId+'&sort_date=' + dataSelecionada,
             success: function(response) {
                 // Manipula o texto retornado
                 var texto = response.formatted_content;
