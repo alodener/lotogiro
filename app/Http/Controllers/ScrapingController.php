@@ -32,11 +32,11 @@ class ScrapingController extends Controller
             return response()->json(['error' => 'Estado não encontrado'], 404);
         }
     
-        // Obtém todos os horários de sorteio para esse estado
+        // Obtém todos os horários de sorteio para esse estado com seus respectivos nomes de banca
         $horarios = DB::table('bichao_horarios')
-                    ->select(DB::raw("CONCAT(banca, ' (', DATE_FORMAT(horario, '%H:%i'), ')') AS horario"))
+                    ->select('id', 'banca', DB::raw("CONCAT(banca, ' (', DATE_FORMAT(horario, '%H:%i'), ')') AS horario"))
                     ->where('estado_id', $estado)
-                    ->pluck('horario');
+                    ->get();
     
         if ($horarios->isEmpty()) {
             return response()->json(['error' => 'Nenhum horário de sorteio encontrado para este estado'], 404);
@@ -48,7 +48,7 @@ class ScrapingController extends Controller
         // Para cada horário de sorteio, buscar os resultados correspondentes na tabela de resultados
         foreach ($horarios as $horario) {
             $resultados = DB::table('bichao_resultados')
-                            ->where('horario_id', $estado)
+                            ->where('horario_id', $horario->id)
                             ->whereDate('data_sorteio', $data)
                             ->first();
     
@@ -88,14 +88,18 @@ class ScrapingController extends Controller
                 ];
     
                 // Adiciona os resultados formatados ao array principal
-                $todosResultados[$horario] = $formattedResults;
+                $todosResultados[$horario->horario] = $formattedResults;
             }
+        }
+    
+        if (empty($todosResultados)) {
+            return response()->json(['error' => 'Nenhum resultado encontrado para os horários e data especificados'], 404);
         }
     
         // Retorna os resultados do banco de dados
         return response()->json($todosResultados);
     }
-    
+     
     private function getGroupAndAnimal($number)
     {
         // Obtém o grupo e o animal com base no número fornecido
