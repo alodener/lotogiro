@@ -8,13 +8,13 @@
 
 {{-- formulario onde buscaremos uma data especifica --}}
 
-<div class="container">
+<div class="container mt-5">
     <div class="card-deck container d-flex justify-content-between card-header" style="padding: 30px;">
-        <div class="col-md-6">
+        <div class="col-md-6 text-md-start ">
             <h3 style="margin:0;">Lista de Ganhadores</h3>
         </div>
-        <div class="col-md-6 d-flex align-items-center">
-            <h4 style="margin:0;" class="mr-2">Data:</h4>
+        <div class="col-md-6 d-flex align-items-center flex-md-row flex-column">
+            <h4 style="margin:0;" class="mr-2 mt-3 mt-md-0">Data:</h4>
             <input class="form-control date" id="dataInput" type="date">
         </div>
     </div>
@@ -76,7 +76,6 @@
                 <th>Prêmio</th>
                 <th>Bilhetes</th>
                 <th>Modalidade</th>
-                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -130,17 +129,22 @@ function adicionarDadosATabela(dados) {
             "<td>" + dados[i].name + "</td>" +
             "<td>" + dados[i].premio_formatted + "</td>" +
             "<td>" + dados[i].num_tickets + "</td>" +
-            "<td>" + dados[i].game_name + "</td>" +
-            "<td>" + (dados[i].status === 1 ? "Pago" : "Não Pago") + "</td>";
+            "<td>" + dados[i].game_name + "</td>";
     }
     document.getElementById('relatorio').style.display = 'table'; // Exibe a tabela após adicionar os dados
 }
 function somarPremios(dados) {
     var total = 0;
     for (var i = 0; i < dados.length; i++) {
-        // Remove a formatação monetária e converte para float
-        var premio = parseFloat(dados[i].premio.replace(/\./g, '').replace(',', '.'));
-        total += premio;
+        // Verifica se o tipo de dado do prêmio é string
+        if (typeof dados[i].premio === 'string') {
+            // Remove caracteres não numéricos
+            var premioNumerico = parseFloat(dados[i].premio.replace(/\D/g, ''));
+            total += premioNumerico;
+        } else if (typeof dados[i].premio === 'number') {
+            // Se for um número, adiciona diretamente
+            total += dados[i].premio;
+        }
     }
     // Formata o total como moeda real
     var totalFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
