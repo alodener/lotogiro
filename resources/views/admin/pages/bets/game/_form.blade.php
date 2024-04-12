@@ -10,6 +10,9 @@
 
         @error('error')
             @push('scripts')
+            <script>
+                toastr["error"]("{{ $message }}")
+            </script>
                 <script>
                     const errors = @json($errors->toArray());
                     toastr["error"](errors.description[0]);

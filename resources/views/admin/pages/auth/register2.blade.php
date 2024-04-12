@@ -110,7 +110,7 @@
                     <div class="form-group row">
                         <div class="col-sm-12 col-md-6">
                             <label for="password" class="col-form-label text-md-left">{{ trans('admin.register.password-label') }}</label>
-                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                           <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Senha de 6 até 8 digitos" required>
                             @if ($errors->has('password'))
                                 <span class="invalid-feedback">
                                 <strong>{{ $errors->first('password') }}</strong>
@@ -120,8 +120,7 @@
 
                         <div class="col-sm-12 col-md-6">
                             <label for="password-confirm" class="col-form-label text-md-left">{{ trans('admin.register.confirm-password-label') }}</label>
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirme sua senha" required>
                         </div>
                     </div>
 

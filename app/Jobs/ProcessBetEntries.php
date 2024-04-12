@@ -137,7 +137,7 @@ class ProcessBetEntries implements ShouldQueue
                     
                 }
                 if ( $typeGame == 'mega_kino'){
-                        $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                        $letters = ['A', 'B', 'C', 'D', 'E', 'F'];
                         foreach ($letters as $letter) { 
                         $competitionLetter = Competition::where('number', $this->competition->number . $letter)->first();
                         
@@ -228,7 +228,8 @@ class ProcessBetEntries implements ShouldQueue
             global $data;
             global $fileName;
             global $pdf;
-            $m->from('admin@superlotogiro.com', 'SuperLotogiro');
+            $email_sistema = env("nome_sistema");
+            $m->from('admin@loteriasalternativas.com', $email_sistema);
             $m->subject('Seu Bilhete');
             $m->to($this->user->email);
             $m->attachData($pdf->output(), $fileName);

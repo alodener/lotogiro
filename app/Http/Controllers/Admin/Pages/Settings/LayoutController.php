@@ -248,6 +248,112 @@ class LayoutController extends Controller
 
         ]);
 
+         // Campos PUT Button 2
+
+         if (isset($request->visivel_btn2)) {
+            $layout_button->visivel = $data['visivel_btn2'];
+        }
+
+        if (isset($request->first_text_btn2)) {
+            $layout_button->first_text = $data['first_text_btn2'];
+        }
+
+        if (isset($request->second_text_btn2)) {
+            $layout_button->second_text = $data['second_text_btn2'];
+        }
+
+        if (isset($request->cor_btn2)) {
+            $layout_button->cor = $data['cor_btn2'];
+        }
+
+        if (isset($request->link_btn2)) {
+            $layout_button->link = $data['link_btn2'];
+        }
+
+        if (isset($request->novapagina_button2)) {
+            $layout_button->novapagina = $data['novapagina_button2'];
+        }
+        $layout_button->where('id', 2)->update([
+            'visivel' => $layout_button->visivel,
+            'first_text' => $layout_button->first_text,
+            'second_text' => $layout_button->second_text,
+            'cor' => $layout_button->cor,
+            'link' => $layout_button->link,
+            'novapagina' => $layout_button->novapagina,
+
+        ]);
+
+        // Campos PUT Button 3
+
+if (isset($request->visivel_btn3)) {
+    $layout_button->visivel = $data['visivel_btn3'];
+}
+
+if (isset($request->first_text_btn3)) {
+    $layout_button->first_text = $data['first_text_btn3'];
+}
+
+if (isset($request->second_text_btn3)) {
+    $layout_button->second_text = $data['second_text_btn3'];
+}
+
+if (isset($request->cor_btn3)) {
+    $layout_button->cor = $data['cor_btn3'];
+}
+
+if (isset($request->link_btn3)) {
+    $layout_button->link = $data['link_btn3'];
+}
+
+if (isset($request->novapagina_button3)) {
+    $layout_button->novapagina = $data['novapagina_button3'];
+}
+
+$layout_button->where('id', 3)->update([
+    'visivel' => $layout_button->visivel,
+    'first_text' => $layout_button->first_text,
+    'second_text' => $layout_button->second_text,
+    'cor' => $layout_button->cor,
+    'link' => $layout_button->link,
+    'novapagina' => $layout_button->novapagina,
+]);
+
+// Campos PUT Button 4
+
+if (isset($request->visivel_btn4)) {
+    $layout_button->visivel = $data['visivel_btn4'];
+}
+
+if (isset($request->first_text_btn4)) {
+    $layout_button->first_text = $data['first_text_btn4'];
+}
+
+if (isset($request->second_text_btn4)) {
+    $layout_button->second_text = $data['second_text_btn4'];
+}
+
+if (isset($request->cor_btn4)) {
+    $layout_button->cor = $data['cor_btn4'];
+}
+
+if (isset($request->link_btn4)) {
+    $layout_button->link = $data['link_btn4'];
+}
+
+if (isset($request->novapagina_button4)) {
+    $layout_button->novapagina = $data['novapagina_button4'];
+}
+
+$layout_button->where('id', 4)->update([
+    'visivel' => $layout_button->visivel,
+    'first_text' => $layout_button->first_text,
+    'second_text' => $layout_button->second_text,
+    'cor' => $layout_button->cor,
+    'link' => $layout_button->link,
+    'novapagina' => $layout_button->novapagina,
+]);
+
+
     }
 
         // Save card grande

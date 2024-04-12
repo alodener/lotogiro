@@ -126,11 +126,19 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6 mb-3">
-        <a href="{{route('admin.bets.games.index', ['type_game' => $typeGame->id])}}">
+<div class="col-md-6 mb-3">
+        
+        <a href="{{route('homepage')}}">
             <button type="button" class="btn btn-block btn-outline-secondary">{{ trans('admin.back-to-main-page') }}</button>
         </a>
     </div>
+    <div class="col-md-6 mb-3">
+        
+        <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
+            <button type="button" class="btn btn-block btn-outline-secondary">Novo Jogo</button>
+        </a>
+    </div>
+  
 </div>
 
 @push('styles')

@@ -903,7 +903,7 @@ return [
                 'valorInse' => 'O valor inserido, será creditado
                 em sua conta assim que formos notificados.',
                 'solicitar' => 'Solicitar',
-                'aoAlt' => 'Ao alterar essa informação, ela passa a ser sua principal.',
+                'aoAlt' => 'Para alterar o Pix, solicite ao suporte',
                 'solicitSaque' => 'Solicitações de Saque - Visualizar Histórico',
                 'voltar' => 'Voltar',
                 'solicitSaquee' => 'Solicitações de Saque',

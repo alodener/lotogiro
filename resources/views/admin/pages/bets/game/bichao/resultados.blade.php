@@ -36,7 +36,7 @@
                                 <option value="PB">Paraíba</option>
                                 <option value="DF">Brasília</option>
                                 <option value="CE">Ceará</option>
-                                <option value="PO">Federal</option>
+                                <option value="FED">Federal</option>
                             </select>
                         </div>
                     </div>
@@ -120,81 +120,83 @@
 
 @push('scripts')
 <script>
-    $(document).ready(function () {
+$(document).ready(function () {
+    $('#bichao-buscar-resultados').click(function () {
         fetchResultados();
     });
+});
 
-    function fetchResultados() {
-        const estado = $('#selecionar-estado-bichao-resultados').val();
-        const data = $('#initial_date').val().split('-');
-        if (!estado) return alert('Selecione um estado');
+function fetchResultados() {
+    const estado = $('#selecionar-estado-bichao-resultados').val();
+    const data = $('#initial_date').val();
 
-        $('#bichao-resultado-busca').html(`
-                <div class="col-12">
-                    <p>Procurando resultados...</p>
-                </div>
-            `);
+    if (!estado) return alert('Selecione um estado');
 
-        $.ajax({
-            url: '{{url('/')}}/admin/bets/bichao/get-results-json',
-            type: 'POST',
-            dataType: 'json',
-            data: { data, estado },
-            success: function (data) {
-                if (!data.length) {
-                    return $('#bichao-resultado-busca').html(`
-                            <div class="col-12">
-                                <p>Nenhum resultado encontrado.</p>
-                            </div>
-                        `);
-                }
+    $('#bichao-resultado-busca').html(`
+            <div class="col-12">
+                <p>Procurando resultados...</p>
+            </div>
+        `);
 
-                const html = data.map((jogo) => {
-                    let subhtml = '';
-
-                    jogo.placement.forEach((placement, index) => {
-                        subhtml = subhtml + `
-                                <tr>
-                                    <td>${index + 1}° Prêmio</td>
-                                    <td>${placement.milhar}</td>
-                                    <td>${placement.grupo}</td>
-                                    <td>${placement.bicho}</td>
-                                </tr>
-                            `;
-                    });
-
-                    if (!jogo.placement.length) {
-                        subhtml = '<tr><td colspan="4"><p>Aguardando divulgação de resultados.</p></td></tr>';
-                    }
-
-                    return (`
-                            <div class="mr-md-5">
-                                <table class="table table-striped table-bordered table-dark">
-                                    <thead>
-                                        <tr class="table-header">
-                                            <th class="text-center" colspan="4">${jogo.date} - ${jogo.lottery} - ${jogo.time}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-body">
-                                        <tr class="second-header">
-                                            <td>Prêmio</td>
-                                            <td>Milhar</td>
-                                            <td>Grupo</td>
-                                            <td>Bicho</td>
-                                        </tr>
-                                        ${subhtml}
-                                    </tbody>
-                                </table>
-                            </div>
-                        `);
-                });
-                $('#bichao-resultado-busca').html(html);
+    $.ajax({
+        url: '{{ url('/') }}/api/scrape',
+        type: 'GET',
+        dataType: 'json',
+        data: { data, estado },
+        success: function (data) {
+            if ($.isEmptyObject(data)) {
+                $('#bichao-resultado-busca').html(`
+                        <div class="col-12">
+                            <p>Sem jogos hoje!</p>
+                        </div>
+                    `);
+                return;
             }
-        });
-    }
 
-    $('#bichao-buscar-resultados').click(async function () {
-        fetchResultados();
+            const html = Object.keys(data).map(function (lottery) {
+                const subhtml = data[lottery].map(function (item) {
+                    return `
+                        <tr>
+                            <td>${item.lugar}</td>
+                            <td>${item.numero}</td>
+                            <td>${item.grupo}</td>
+                            <td>${item.animal}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="mr-md-5">
+                        <table class="table table-striped table-bordered table-dark">
+                            <thead>
+                                <tr class="table-header">
+                                    <th class="text-center" colspan="4">${lottery}</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                <tr class="second-header">
+                                    <td>Lugar</td>
+                                    <td>Número</td>
+                                    <td>Grupo</td>
+                                    <td>Animal</td>
+                                </tr>
+                                ${subhtml}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }).join('');
+
+            $('#bichao-resultado-busca').html(html);
+        },
+        error: function () {
+            $('#bichao-resultado-busca').html(`
+                    <div class="col-12">
+                        <p>Nenhum resultado encontrado.</p>
+                    </div>
+                `);
+        }
     });
+}
 </script>
 @endpush

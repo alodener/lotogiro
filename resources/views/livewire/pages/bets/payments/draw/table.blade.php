@@ -1,4 +1,4 @@
-<div>
+    <div>
     <div class="card-header ">
        Vencedores
 
@@ -99,6 +99,14 @@
                     </div>
                
             </div>
+            <div class="d-flex justify-content-center text-center align-items-center">
+                    <div class="col-md-6">   
+                        <b>{{ trans('admin.draws.game-count') }}:</b> {{$games->count()}}
+                    </div>
+                    <div class="col-md-6">
+                        <b>{{ trans('admin.total') }}:</b> R${{\App\Helper\Money::toReal($value)}}
+                    </div>
+        </div>
             <div class="table-responsive">
 
                 <table class="table table-striped table-hover table-sm" id="game_table">

@@ -21,6 +21,7 @@ use App\Models\Bet;
 use App\Models\TypeGameValue;
 use Illuminate\Support\Facades\Auth;
 use App\Helper\GameHelper;
+use App\Libs\Matriz\Matriz;
 
 use App\Models\User;
 use App\Models\UsersHasPoints;
@@ -72,6 +73,10 @@ class GameController extends Controller
 
             if(isset($params['startDate']) && !empty($params['startDate'])) {
                 $game = $game->where('created_at', '>=', $params['startDate']);
+            }
+            if(auth()->user()->hasPermissionTo('read_all_games') && empty($params['startDate'])){
+                $now = Carbon::now();
+                $game = $game->whereMonth('created_at', '=', $now->month);
             }
 
             if(isset($params['endDate']) && !empty($params['endDate'])) {
@@ -211,8 +216,7 @@ class GameController extends Controller
 
         }
 
-
-        if ($typeGame) {
+      if ($typeGame) {
 
             $competition = Competition::where('type_game_id', $typeGame->id)->latest()->first();
             if ($competition) {
@@ -221,12 +225,13 @@ class GameController extends Controller
                 $now = Carbon::now();
 
                 if ($now->gt($sortDate)) {
-                    return back()->withErrors(['error' => 'Apostas fechadas para esta competição!']);
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors(['error' => 'Apostas encerradas para esse concurso!']);
                 }
             }
         }
 
-        if ($request->controle == 1) {
+        if (isset($request->controle) && $request->controle == 1) {
+
             if (!auth()->user()->hasPermissionTo('create_game')) {
                 abort(403);
             }
@@ -277,7 +282,6 @@ class GameController extends Controller
                 $dezenas = explode(",", $request->dezena);
                 $totaldeJogos = count($dezenas);
                 $totaldeAposta = $totaldeJogos * $request->value;
-                $dezenasSeparadas;
                 $competition = TypeGame::find($request->type_game)->competitions->last();
                 if (empty($competition)) {
                     $bet->status_xml = 3;
@@ -404,9 +408,7 @@ class GameController extends Controller
                     ]);
                 }
 
-
-
-                 $game = new $this->game;
+              $game = new $this->game;
 
                 if($request->type_client != 1 && !auth()->user()->hasRole('Administrador')){
                 $userclient = User::where('id', $request->client)->first();
@@ -424,7 +426,6 @@ class GameController extends Controller
 
                     $game->client_id = $request->client;
                 }
-
 
 
                 //salvar jogo
@@ -452,7 +453,7 @@ class GameController extends Controller
                 }
 
                 if ($typeGameCategory == 'mega_kino') {
-                    $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                    $letters = ['A', 'B', 'C', 'D', 'E', 'F'];
 
                     foreach ($letters as $letter) {
                         $searchNumber = $competition->number . $letter;
@@ -492,6 +493,8 @@ class GameController extends Controller
                 $game->commission_value = $commissions['commission'];
                 $game->commision_value_pai = $commissions['commission_pai'];
                 $game->commision_value_avo = $commissions['commission_avo'];
+                $game->commission_value_bisavo = $commissions['commission_bisavo'];
+                $game->commission_value_tataravo = $commissions['commission_tataravo'];
                 $game->save();
 
 
@@ -544,14 +547,41 @@ class GameController extends Controller
                     global $data;
                     global $fileName;
                     global $pdf;
-                    $m->from('admin@loteriasalternativas.com', 'SuperLotogiro');
+                    $email_sistema = env("nome_sistema");
+                    $m->from('admin@loteriasalternativas.com', $email_sistema);
                     $m->subject('Seu Bilhete');
                     $m->to(auth()->user()->email);
                     $m->attachData($pdf->output(), $fileName);
                 });
 
+                try{
+                if($game){
+
+                    $jogo = TypeGame::find($game->type_game_id);
+
+                    $info = [
+                        'tipo_jogo' => 'LOTERIA',
+                        'jogo' =>  $jogo->name,
+                        'jogo_id' => $game->type_game_id,
+                        'usuario_id' => $game->user_id,
+                        'nome_usuario' => Auth()->user()->name,
+                        'numbers' => $game->numbers,
+                        'valor_aposta' => $game->value,
+                        'valor_premio' => $game->premio,
+                        'concurso' => TypeGame::find($request->type_game)->competitions->last()->number
+                    ];
+
+                    $matriz = new Matriz();
+                    $matriz->loteriaLog($info);
+
+                }
+                }catch (\Exception $exception) {
+               
+                }
+
+
                 return redirect()->route('admin.bets.games.edit', ['game' => $game->id])->withErrors([
-                    'success' => 'Jogo cadastrado com sucesso2'
+                    'success' => 'Jogo cadastrado com sucesso'
                 ]);
             } catch (\Exception $exception) {
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([

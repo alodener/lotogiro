@@ -173,7 +173,7 @@ class GameController extends Controller
         }
         
         if ($typeGameCategory == 'mega_kino') {
-            $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+            $letters = ['A', 'B', 'C', 'D', 'E', 'F'];
             $OpcaoJogo = 3;
 
             foreach ($letters as $letter) {
