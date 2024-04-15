@@ -1102,6 +1102,7 @@ function insere_valor() {
             const client_id = $('#livewire-client-id').val();
             const game = $('#input-group').val().replaceAll(' ', '');
             const teimosinha = $('#input_teimosinha_bet').val();
+            const premiacao = $('#price_award').text();
 
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
@@ -1115,6 +1116,7 @@ function insere_valor() {
                 modality: '{{$modalidade->nome}}',
                 game,
                 teimosinha: parseInt(teimosinha),
+                premiacao: premiacao,
             };
 
             addChartItem(item);
