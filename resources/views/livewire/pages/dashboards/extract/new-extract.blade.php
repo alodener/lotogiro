@@ -10,19 +10,32 @@
     <div class="container  ganhos card-master">
         <div class="card-header indica-card">
             {{ trans('admin.filters') }}
-            <div class="row">
-                <div class="col-md-6">
+            <div class="form-row">
+                <div class="form-group col-md-6">
                     <div class="form-group">
                         <input wire:model="searchTerm" type="text" class="form-control" placeholder="Pesquisar por nome...">
-                        @if (!empty($searchTerm))
-                            <ul class="name-list">
-                                @foreach($users as $user)
-                                    <li wire:click="selectUser({{$user->id}}, '{{$user->name}} {{$user->last_name}}')" class="name-item">{{$user->name}} {{$user->last_name}}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+                            @if (!empty($searchTerm))
+                                <ul class="name-list">
+                                    @foreach($users as $user)
+                                        <li wire:click="selectUser({{$user->id}}, '{{$user->name}} {{$user->last_name}}')" class="name-item">{{$user->name}} {{$user->last_name}}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
                     </div>
                 </div>
+                
+                <div class="form-group col-md-6">
+                    <select wire:model="adminFilter" class="custom-select" id="adminFilter" name="adminFilter" wire:change="updateAdminFilter($event.target.value)">
+                        <option value="">Selecione um administrador</option>
+                        @foreach($admins as $admin)
+                            <option value="{{ $admin->id }}">{{ $admin->name }} {{ $admin->last_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                
+                
+            </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <select wire:model="range" class="custom-select" id="range" name="range">
@@ -34,7 +47,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            
         </div>
                   
     <div class="col-md-12">
@@ -134,6 +147,7 @@
                         <tr>
                             <th>{{ trans('admin.extracts.table-date-header') }}</th>
                             <th>{{ trans('admin.extracts.table-user-header') }}</th>
+                            <th>{{ trans('admin.extracts.table-responsible-header') }}</th>
                             <th>{{ trans('admin.extracts.table-value-header') }}</th>
                             <th>{{ trans('admin.extracts.table-wallet-header') }}</th>
                             <th>{{ "Type" }}</th>
@@ -142,8 +156,23 @@
                     <tbody>
                         @foreach($transacts as $transact)
                             <tr>
+                                
                                 <td>{{ $transact->created_at->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s') }}</td>
                                 <td>{{ $transact->user ? $transact->user->name . ' ' . $transact->user->last_name : 'Usuário não encontrado' }}</td>
+                                <td>  
+                                    @if($transact->user_id_sender)
+                                        <?php
+                                        $sender = App\Models\User::find($transact->user_id_sender);
+                                        ?>
+                                        @if($sender)
+                                            {{ $sender->name }} {{ $sender->last_name }}
+                                        @else
+                                            Não encontrado
+                                        @endif
+                                        @else
+                                            Não encontrado
+                                    @endif
+                                </td> 
                                 <td>{{ is_numeric($transact->value) ? number_format($transact->value, 2, ',', '.') : $transact->value }}</td>
                                 <td>{{ $transact->wallet == 'balance' ? trans('admin.balance') : trans('admin.bonus') }}</td>
                                 <td>{{  $transact->type }}</td>
@@ -165,9 +194,10 @@
             </div>
         </div>
     </div>
-    </div>
 </div>
 </div>
+</div>
+
 
 <style>
 

@@ -8,6 +8,7 @@ use App\Models\TransactBalance;
 use App\Models\User;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use App\Models\ModelHasRole;
 
 class NewExtract extends Component
 {
@@ -22,6 +23,8 @@ class NewExtract extends Component
     public $userTransactions = [];
     public $searching = false;
     public $selectedUsers = [];
+    public $isAdmin;
+    public $adminFilter;
 
     public function mount()
     {
@@ -42,7 +45,6 @@ class NewExtract extends Component
         $this->dateStart = $dataFromatadaInicial;
         $this->dateEnd = $dataFromatadaFinal;
 
-
     }
 
     public function getTransactsProperty()
@@ -62,19 +64,47 @@ class NewExtract extends Component
     }
 
     public function selectUser($userId, $userName)
-    {
-        
+    { 
         // transações do usuário selecionado
         $this->selectedUserId = $userId;
         $this->searchTerm = $userName;
 
-        // Depurar para verificar se as transações do usuário estão sendo recuperadas corretamente
+        $this->isAdmin = $this->isAdminF($userId);
+
+        $this->selectedUser = [
+            'id' => $userId,
+            'name' => $userName,
+            'isAdmin' => $this->isAdmin,
+        ];
+
+         if (!$this->isAdmin) {
+        $this->adminFilter = null;
+    }
         
+    }
+    public function isAdminF($userId)
+    {
+        return in_array($userId, $this->getAdmins()->pluck('id')->toArray());
+    }
+    public function getAdmins()
+    {
+        
+        return User::whereIn('id', ModelHasRole::where('role_id', 1)->pluck('model_id'))->get();
+    }
+
+    public function updateAdminFilter()
+    {
+        $this->isAdmin = true; 
+        $this->selectedUserId = null; 
+        $this->render(); 
     }
     
     public function render()
     {
-        $users = User::where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->searchTerm}%")->get();
+        $admins = $this->getAdmins();
+        $users = User::where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->searchTerm}%")
+             ->whereNotIn('id', $admins->pluck('id')) 
+             ->get();
          
         
         
@@ -87,13 +117,15 @@ class NewExtract extends Component
                         ->where('wallet', 'LIKE', '%balance%');
                 });
         });
-        
-        if($this->selectedUserId > 0 ){ 
+         
+      
+        if($this->selectedUserId > 0  && !$this->isAdmin){ 
+
             $transactsQuery->where('user_id', $this->selectedUserId); 
       
-        }
-        if($this->selectedUserId > 0 ){ 
-            $transactsQuery->where('user_id', $this->selectedUserId); 
+        }else if($this->adminFilter > 0 && $this->isAdmin ){ 
+  
+            $transactsQuery->where('user_id_sender', $this->adminFilter); 
       
         }
 
@@ -138,8 +170,11 @@ class NewExtract extends Component
             }
                 
             })
-            ->when($this->selectedUserId > 0, function($q){
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
                 return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
             })
             ->sum('value');
 
@@ -165,8 +200,11 @@ class NewExtract extends Component
                     ]);
                 }
             })
-            ->when($this->selectedUserId > 0, function($q){
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
                 return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
             })
             ->sum('value');
 
@@ -194,8 +232,11 @@ class NewExtract extends Component
                             ]);
                         }
             })
-            ->when($this->selectedUserId > 0, function($q){
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
                 return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
             })
             ->sum('value');
             
@@ -211,6 +252,7 @@ class NewExtract extends Component
             'recargaManual' => $recargaManual,
             'totalTransacts' => $totalTransacts,
             'userTransactions' => $this->userTransactions,
+            'admins' => $admins,
         ]);
     }   
 }

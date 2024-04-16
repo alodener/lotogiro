@@ -278,6 +278,7 @@ border-radius: 5px;
             const client_id = $('#livewire-client-id').val();
             const dezena_input = $('#input-dezena').val();
             const teimosinha = $('#input_teimosinha_bet').val();
+            const premiacao = $('#price_award').text();
 
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
@@ -293,6 +294,7 @@ border-radius: 5px;
                 modality: '{{$modalidade->nome}}',
                 game: dezena_input,
                 teimosinha: parseInt(teimosinha),
+                premiacao: premiacao,
             };
 
             addChartItem(item);
