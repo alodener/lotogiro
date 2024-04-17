@@ -698,19 +698,14 @@ class GameController extends Controller
 
         try {
             $typeGame = $game->type_game_id;
+            $competitionId = $game->competition_id;
 
-            $draws = Draw::get();
+            $draw = Draw::where('competition_id', $competitionId)->first();
 
-            foreach ($draws as $draw) {
-                $draw->games = explode(',', $draw->games);
-                $gameDraw = in_array($game->id, $draw->games);
-
-                if ($gameDraw)
-                    throw new \Exception('Jogo vinculado em um sorteio');
-
+            if ($draw !== null) { 
+                throw new \Exception('Jogo vinculado em um sorteio');
             }
-
-
+            
             if($game->delete()){
 
                 $idUsuario = $game->user_id;
@@ -765,18 +760,14 @@ class GameController extends Controller
             if($games->count() > 0) {
                 foreach($games->all() as $game) {
                     $typeGame = $game->type_game_id;
-
-                    $draws = Draw::get();
-
-                    foreach ($draws as $draw) {
-                        $draw->games = explode(',', $draw->games);
-                        $gameDraw = in_array($game->id, $draw->games);
-
-                        if ($gameDraw)
-                            throw new \Exception('Jogo #' . $game->id . ' vinculado em um sorteio');
+                    $competitionId = $game->competition_id;
+        
+                    $draw = Draw::where('competition_id', $competitionId)->first();
+        
+                    if ($draw !== null) { 
+                        throw new \Exception('Jogo vinculado em um sorteio');
                     }
-
-
+                    
                   if($game->delete()){
 
                     $idUsuario = $game->user_id;
