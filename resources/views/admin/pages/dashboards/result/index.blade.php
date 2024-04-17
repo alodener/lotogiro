@@ -4,8 +4,6 @@
 
 @section('content')
 
-
-
 {{-- formulario onde buscaremos uma data especifica --}}
 
 <div class="container mt-5">
@@ -19,6 +17,7 @@
         </div>
     </div>
 </div>
+
 {{-- interface dos cards --}}
 <div class="card-deck container card-master" style="width: 100%; margin-bottom: 30px; margin-left: auto;
     margin-right: auto; margin-top:30px">
@@ -68,7 +67,12 @@
 
 {{-- tabela de rede --}}
 <div class="container card-master mt-3">
+    
     <table id="relatorio" class="table table-striped" style="width: 100%">
+        <div class="d-flex justify-content-end">
+            <button id="downloadPDF" class="btn btn-primary mb-2">PDF Ganhadores</button>
+
+        </div>
         <thead>
             <tr>
                 <th>{{ trans('admin.network-sales.table-id-header') }}</th>
@@ -88,92 +92,22 @@
 
 @endsection
 
-
-
 @push('scripts')
-
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 <script>
-    function Filtro() {
-        var select = document.getElementById('Filtro');
-        var value = select.options[select.selectedIndex].value;
-        if (value == 4) {
-            document.getElementById("FiltroPersonalizado").style.display = "block";
-        }
-        else if (value == 0) {
-            document.getElementById("FiltroPersonalizado").style.display = "none";
-        }
-        else {
-            document.getElementById("FiltroPersonalizado").style.display = "none";
-            location.href = "{{env('APP_URL')}}/admin/dashboards/Reportday/FiltroEspecifico/" + value;
-        }
-    }
 
-</script>
-
-<script>
-    function limparTabela() {
-    var tabela = document.getElementById('relatorio').getElementsByTagName('tbody')[0];
-    tabela.innerHTML = ''; // Remove todas as linhas do corpo da tabela
-}
-
-function adicionarDadosATabela(dados) {
-    limparTabela(); // Limpa a tabela antes de adicionar novos dados
-    var tabela = document.getElementById('relatorio').getElementsByTagName('tbody')[0];
-    for (var i = 0; i < dados.length; i++) {
-        var newRow = tabela.insertRow(tabela.rows.length);
-        newRow.innerHTML = "<td>" + dados[i].id + "</td>" +
-            "<td>" + dados[i].name + "</td>" +
-            "<td>" + dados[i].premio_formatted + "</td>" +
-            "<td>" + dados[i].num_tickets + "</td>" +
-            "<td>" + dados[i].game_name + "</td>";
-    }
-    document.getElementById('relatorio').style.display = 'table'; // Exibe a tabela após adicionar os dados
-}
-function somarPremios(dados) {
-    var total = 0;
-    for (var i = 0; i < dados.length; i++) {
-        // Verifica se o tipo de dado do prêmio é string
-        if (typeof dados[i].premio === 'string') {
-            // Remove caracteres não numéricos
-            var premioNumerico = parseFloat(dados[i].premio.replace(/\D/g, ''));
-            total += premioNumerico;
-        } else if (typeof dados[i].premio === 'number') {
-            // Se for um número, adiciona diretamente
-            total += dados[i].premio;
-        }
-    }
-    // Formata o total como moeda real
-    var totalFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    // Retorna o total formatado como moeda real
-    return totalFormatado;
-}
-
-
-
-
-
-function somarNumTickets(dados) {
-    var total = 0;
-    for (var i = 0; i < dados.length; i++) {
-        total += dados[i].num_tickets;
-    }
-    return total;
-}
-    $(document).ready(function () {
-        $('#relatorio').DataTable({
+    
+    $(document).ready(function() {
+        // Inicializa o DataTable
+        var table = $('#relatorio').DataTable({
             theme: "bootstrap",
             "scrollX": true,
             "columnDefs": [
                 { "className": "dt-center", "targets": "_all" }
             ],
-            paging: false, // Define a opção paging como false para remover a navegação
-    pagingType: "", // Define a opção pagingType como vazia para remover a navegação
-    lengthChange: false, // Remove o campo de seleção do número de registros por página
-    searching: false, // Remove o campo de busca
+         
             "language": {
                 "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
                 "zeroRecords": "{{ trans('admin.pagesF.ndEncont') }}",
@@ -183,111 +117,198 @@ function somarNumTickets(dados) {
                 "search": "{{ trans('admin.pagesF.search') }}",
                 "previous": "{{ trans('admin.pagesF.previous') }}",
                 "next": "{{ trans('admin.pagesF.next') }}"
-
             }
         });
 
-
-        var system = <?php echo json_encode($system); ?>;
-        for (var i = 0; i < system.length; i++) {
-        // Verifica se a chave nome_config é igual a "partner_id"
-        if (system[i].nome_config === "partner_id") {
-            partnerId = system[i].value;
-            break; 
-        }  
-        }    });
-
-
-        
-
-    function listaall(dataSelecionada) {
-    $.ajax({
-        type: 'GET',
-        url: 'https://web.loteriasalternativas.com.br/api/winners-list?partner='+partnerId+'&sort_date=' + dataSelecionada,
-        success: function(response) {
-            var totalPremios = somarPremios(response);
-            var totalTickets = somarNumTickets(response);
-            $('#campobilhetes').text(totalTickets + ' bilhetes');
-            $('#campopremiacoes').text(totalPremios);
-            adicionarDadosATabela(response);
+        // Função para limpar a tabela
+        function limparTabela() {
+            table.clear().draw();
         }
-    });
 
-
-    $('#envianozap').click(function() {
-        // Faz uma solicitação AJAX para o endpoint
-        $.ajax({
-            type: 'GET',
-            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner='+partnerId+'&sort_date=' + dataSelecionada,
-            success: function(response) {
-                // Manipula o texto retornado
-                var texto = response.formatted_content;
-                // URL para o WhatsApp
-                let cont = 'https://api.whatsapp.com/send?text='+texto;
-                // Abre uma nova guia com a URL
-                window.open(cont);
-            },
-            error: function(xhr, status, error) {
-                console.error('Erro ao obter o texto:', error);
+        // Função para adicionar os dados à tabela
+        function adicionarDadosATabela(dados) {
+            limparTabela(); // Limpa a tabela antes de adicionar novos dados
+            for (var i = 0; i < dados.length; i++) {
+                table.row.add([
+                    dados[i].id,
+                    dados[i].name,
+                    dados[i].premio_formatted,
+                    dados[i].num_tickets,
+                    dados[i].game_name
+                ]).draw();
             }
-        });
-    });
+        }
 
-
-    $('#copiarTexto').click(function() {
-        // Faz uma solicitação AJAX para o endpoint
-        $.ajax({
-            type: 'GET',
-            url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner='+partnerId+'&sort_date=' + dataSelecionada,
-            success: function(response) {
-                // Manipula o texto retornado
-                var texto = response.formatted_content;
-
-                // Copia o texto para a área de transferência
-                copiarTexto(texto);
-            },
-            error: function(xhr, status, error) {
-                console.error('Erro ao obter o texto:', error);
+        // Função para somar os prêmios
+        function somarPremios(dados) {
+            var total = 0;
+            for (var i = 0; i < dados.length; i++) {
+                // Verifica se o tipo de dado do prêmio é string
+                if (typeof dados[i].premio === 'string') {
+                    // Remove caracteres não numéricos
+                    var premioNumerico = parseFloat(dados[i].premio.replace(/\D/g, ''));
+                    total += premioNumerico;
+                } else if (typeof dados[i].premio === 'number') {
+                    // Se for um número, adiciona diretamente
+                    total += dados[i].premio;
+                }
             }
-        });
-    });
+            // Formata o total como moeda real
+            var totalFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            // Retorna o total formatado como moeda real
+            return totalFormatado;
+        }
 
-    // Função para copiar o texto para a área de transferência
-    function copiarTexto(texto) {
-        // Cria um elemento de textarea temporário
-        var textareaTemp = $('<textarea>').val(texto).appendTo('body').select();
+        // Função para somar o número de tickets
+        function somarNumTickets(dados) {
+            var total = 0;
+            for (var i = 0; i < dados.length; i++) {
+                total += dados[i].num_tickets;
+            }
+            return total;
+        }
 
-        // Copia o texto selecionado para a área de transferência
-        document.execCommand('copy');
+        // Função para realizar a chamada AJAX e carregar os dados
+  
 
-        // Remove o elemento de textarea temporário
-        textareaTemp.remove();
+function listaall(dataSelecionada) {
+            $.ajax({
+                type: 'GET',
+                url: 'https://web.loteriasalternativas.com.br/api/winners-list?partner=1&sort_date=' + dataSelecionada,
+                success: function(response) {
+                    var totalPremios = somarPremios(response);
+                    var totalTickets = somarNumTickets(response);
+                    $('#campobilhetes').text(totalTickets + ' bilhetes');
+                    $('#campopremiacoes').text(totalPremios);
+                    adicionarDadosATabela(response);
+                    $('#downloadPDF').show();
 
-        // Exibe uma mensagem de confirmação
-        alert('Texto copiado para a área de transferência!');
+            // Atribuir a tabela HTML ao botão de download do PDF
+            $('#downloadPDF').off('click').on('click', function() {
+                gerarPDF(response,dataSelecionada);
+            });
+                }
+            });
+        }
+
+        function gerarPDF(dados,datasrc) {
+    // Crie uma nova instância de jsPDF
+    var doc = new jsPDF();
+
+    // Adicione título e data de hoje
+    doc.setFontSize(20);
+    doc.text('Relatório de Ganhadores', 10, 10);
+    doc.setFontSize(12);
+    var hoje = new Date();
+    var dataFormatada = hoje.toLocaleDateString('pt-BR');
+    doc.text('Data: ' + dataFormatada, 10, 20);
+
+    var nomeArquivo = 'lista-ganhadores-' + datasrc + '.pdf';
+
+    // Defina as coordenadas iniciais para a tabela
+    var y = 30;
+
+    // Crie as células do cabeçalho da tabela
+    doc.setFontStyle('bold');
+    doc.text('Nome', 10, y);
+    doc.text('Prêmio', 80, y);
+    doc.text('Quantidade de Bilhetes', 110, y);
+    doc.text('Modalidade', 170, y);
+
+    // Ajuste a posição vertical para as próximas linhas
+    y += 10;
+
+    // Adicione os dados à tabela
+    for (var i = 0; i < dados.length; i++) {
+        var linha = dados[i];
+        var name = linha.name.toString(); // Converta para string
+        var premio_formatted = linha.premio_formatted.toString(); // Converta para string
+        var num_tickets = linha.num_tickets.toString(); // Converta para string
+        var game_name = linha.game_name.toString(); // Converta para string
+        doc.text(name, 10, y);
+        doc.text(premio_formatted, 80, y);
+        doc.text(num_tickets, 130, y);
+        doc.text(game_name, 170, y);
+        y += 10;
     }
 
-    
+    // Salve o PDF
+    doc.save(nomeArquivo);
 }
 
-$(document).ready(function() {
-    $('#dataInput').change(function() {
-        var dataSelecionada = $(this).val();
-        listaall(dataSelecionada);
+
+        // Evento para carregar os dados quando a data é alterada
+        $('#dataInput').change(function() {
+            var dataSelecionada = $(this).val();
+            listaall(dataSelecionada);
+        });
+
+        // Define a data hoje
+        var hoje = new Date();
+        // Formata a data como YYYY-MM-DD
+        var dataFormatada = hoje.toISOString().split('T')[0];
+        $('#dataInput').val(dataFormatada);
+        listaall(dataFormatada); // Chamada inicial para carregar os dados com a data inicial
+
+        // Evento para pesquisar ao digitar no campo de busca
+        $('#searchInput').on('input', function() {
+            var searchText = $(this).val().toLowerCase(); // Obtém o texto de pesquisa em minúsculas
+            table.search(searchText).draw(); // Aplica a pesquisa e redesenha a tabela
+        });
+
+        
+        // Evento para copiar o texto para o WhatsApp
+        $('#envianozap').click(function() {
+            var dataSelecionada = $('#dataInput').val();
+            // Faz uma solicitação AJAX para o endpoint
+            $.ajax({
+                type: 'GET',
+                url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner=1&sort_date=' + dataSelecionada,
+                success: function(response) {
+                    // Manipula o texto retornado
+                    var texto = response.formatted_content;
+                    // URL para o WhatsApp
+                    let cont = 'https://api.whatsapp.com/send?text=' + texto;
+                    // Abre uma nova guia com a URL
+                    window.open(cont);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erro ao obter o texto:', error);
+                }
+            });
+        });
+
+        // Evento para copiar o texto para a área de transferência
+        $('#copiarTexto').click(function() {
+            var dataSelecionada = $('#dataInput').val();
+            // Faz uma solicitação AJAX para o endpoint
+            $.ajax({
+                type: 'GET',
+                url: 'https://web.loteriasalternativas.com.br/api/copia-e-cola?partner=1&sort_date=' + dataSelecionada,
+                success: function(response) {
+                    // Manipula o texto retornado
+                    var texto = response.formatted_content;
+                    // Copia o texto para a área de transferência
+                    copiarTexto(texto);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erro ao obter o texto:', error);
+                }
+            });
+        });
+
+        // Função para copiar o texto para a área de transferência
+        function copiarTexto(texto) {
+            // Cria um elemento de textarea temporário
+            var textareaTemp = $('<textarea>').val(texto).appendTo('body').select();
+            // Copia o texto selecionado para a área de transferência
+            document.execCommand('copy');
+            // Remove o elemento de textarea temporário
+            textareaTemp.remove();
+            // Exibe uma mensagem de confirmação
+            alert('Texto copiado para a área de transferência!');
+        }
         
     });
-
-    // Define a data hoje
-    var hoje = new Date();
-    // Formata a data como YYYY-MM-DD
-    var dataFormatada = hoje.toISOString().split('T')[0];    
-    $('#dataInput').val(dataFormatada);
-    listaall(dataFormatada); // Chamada inicial para carregar os dados com a data inicial
-
-});
-
-
-
-  
 </script>
 @endpush
