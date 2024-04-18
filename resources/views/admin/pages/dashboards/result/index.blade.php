@@ -125,6 +125,15 @@
             table.clear().draw();
         }
 
+        var system = <?php echo json_encode($system); ?>;
+        for (var i = 0; i < system.length; i++) {
+        // Verifica se a chave nome_config é igual a "partner_id"
+        if (system[i].nome_config === "partner_id") {
+            partnerId = system[i].value;
+            break; 
+        }  
+        }    
+
         // Função para adicionar os dados à tabela
         function adicionarDadosATabela(dados) {
             limparTabela(); // Limpa a tabela antes de adicionar novos dados
