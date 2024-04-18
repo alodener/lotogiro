@@ -163,6 +163,7 @@
                     <th class="text-size-1 text-left">NOME CLIENTE</th>
                     <th class="text-size-1 text-left">CRIAÇÃO</th>
                     <th class="text-size-1 text-left">LOTERIA</th>
+                    <th class="text-size-1 text-left">VALOR DO PRÊMIO</th>
                     <th class="text-size-1 text-left">MODALIDADE</th>
                     <th class="text-size-1 text-left">APOSTA</th>
                     <th class="text-size-1 text-left">POSIÇÃO</th>
@@ -203,6 +204,9 @@
                         </td>
                         <td class="font text-size-1 border-bottom">
                             {{ date('H\hi', strtotime($game['horario']['horario'])) }} - {{ $game['horario']['banca'] }}
+                        </td>
+                        <td class="font text-size-1 border-bottom">
+                           R$ {{ $game['premio_a_receber'] }}
                         </td>
                         <td class="font text-size-1 border-bottom">
                             {{ $game['modalidade']['nome'] }}

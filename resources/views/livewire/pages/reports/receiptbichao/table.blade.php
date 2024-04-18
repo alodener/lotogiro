@@ -182,7 +182,7 @@
                                 {{ \App\Helper\Mask::addMaskCpf($game->client->cpf) }}
                             </td>
                             <td>
-                                {{$game->premio_a_receber}}
+                               R$ {{$game->premio_a_receber}}
                             </td>
                             <td>
                                 {{ $game->client->name . ' ' . $game->client->last_name }}
