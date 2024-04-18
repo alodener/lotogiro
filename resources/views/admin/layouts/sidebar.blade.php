@@ -496,6 +496,17 @@
                 </a>
 
             </div>
+
+            <div class="nav-item nav-group-item has-treeview @if(request()->is('admin/dashboards/selectresult/*')) menu-open @endif">
+                <a href="{{route('admin.dashboards.selectresult.index')}}"
+                    class="nav-link @if(request()->is('admin/dashboards/selectresult/*')) active @endif">
+                    <i class="fa fa-trophy" aria-hidden="true"></i>
+                    <p class="title-link" style="margin:0px;">
+                        Resultados
+                    </p>
+                </a>
+
+            </div>
             @endcanany
 
             <div class="nav-item nav-group-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
