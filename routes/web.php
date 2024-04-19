@@ -122,6 +122,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::prefix('selectresult')->name('selectresult.')->group(function () {
                 Route::get('/', [SelectresultController::class, 'index'])->name('index');
             });
+            Route::prefix('foundresult')->name('foundresult.')->group(function () {
+                Route::get('/', [SelectresultController::class, 'selected'])->name('selected');
+            });
 
             Route::prefix('wallet')->name('wallet.')->group(function () {
                 Route::get('/', [WalletController::class, 'index'])->name('index');

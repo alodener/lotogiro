@@ -7,7 +7,7 @@
 
 
 {{-- interface dos cards --}}
-<div class="container">
+<div class="container" style="padding:0px;">
     <img src="https://i.ibb.co/JQrky55/360-F-419131523-Qb-Mk-KL8h-THMx-B15-Vluf-Qb-ETEf59-Otzj-A.jpg"
         style="width:100%;max-height:150px;">
 
@@ -35,8 +35,8 @@
 {{-- formulario onde buscaremos uma data especifica --}}
 
 
-<div class="container mt-1">
-    <div class="card-deck container d-flex justify-content-between card-header">
+<div class="container mt-1 d-flex justify-content-center align-items-center" style="padding: 0px; ">
+    <div class="card-deck container d-flex justify-content-between card-header" style="margin:0px;">
         <div class="col-md-6 text-md-start ">
             <h3 style="margin:0;">Concursos Sorteados</h3>
         </div>

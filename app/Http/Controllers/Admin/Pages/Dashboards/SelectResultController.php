@@ -15,4 +15,12 @@ class SelectResultController extends Controller
 
         return view('admin.pages.dashboards.selectresult.index', compact('system'));
     }
+
+    public function selected()
+    {
+
+        $system = System::get();
+
+        return view('admin.pages.dashboards.selectresult.selected', compact('system'));
+    }
 }
