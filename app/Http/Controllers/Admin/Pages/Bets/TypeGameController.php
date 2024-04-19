@@ -87,12 +87,13 @@ class TypeGameController extends Controller
             'name' => 'required',
             'numbers' => 'required|numeric|digits_between:1,10',
             'columns' => 'required|numeric|digits_between:1,10',
+            'banner_resultados' => 'nullable|max:200',
             'banner_mobile' => 'nullable|max:200',
             'banner_pc' => 'nullable|max:200',
             'recomendado' => 'nullable|max:200',
             'description' => 'nullable|max:200',
             'qtd_dezena_sorteada' => 'required|numeric|digits_between:1,10',
-            'odd'         => 'nullable|numeric'
+            'odd'=> 'nullable|numeric'
 
         ]);
 
@@ -126,6 +127,14 @@ class TypeGameController extends Controller
                     $image = $request->banner_pc->store('banner_pc');
                     $data['logo'] = $image;
                     $typeGame->banner_pc = $data['logo'];
+
+                }
+            }
+            if (isset($request->banner_resultados)) {
+                if ($request->file('banner_resultados')->isValid()) {
+                    $image = $request->banner_resultados->store('banner_resultados');
+                    $data['logo'] = $image;
+                    $typeGame->banner_resultados = $data['logo'];
 
                 }
             }
@@ -175,6 +184,7 @@ class TypeGameController extends Controller
             'name' => 'required',
             'numbers' => 'required|numeric|digits_between:1,10',
             'columns' => 'required|numeric|digits_between:1,10',
+            'banner_resultados' => 'nullable|max:200',
             'banner_mobile' => 'nullable|max:200',
             'banner_pc' => 'nullable|max:200',
             'recomendado' => 'nullable|max:200',
@@ -210,6 +220,14 @@ class TypeGameController extends Controller
                     $image = $request->banner_pc->store('banner_pc');
                     $data['logo'] = $image;
                     $typeGame->banner_pc = $data['logo'];
+
+                }
+            }
+            if (isset($request->banner_resultados)) {
+                if ($request->file('banner_resultados')->isValid()) {
+                    $image = $request->banner_resultados->store('banner_resultados');
+                    $data['logo'] = $image;
+                    $typeGame->banner_resultados = $data['logo'];
 
                 }
             }
