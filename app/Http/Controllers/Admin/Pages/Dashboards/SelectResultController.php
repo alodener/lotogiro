@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Pages\Dashboards;
 
 use App\Http\Controllers\Controller;
 use App\Models\System;
+use App\Models\TypeGame;
 use Illuminate\Http\Request;
 
 class SelectResultController extends Controller
@@ -16,11 +17,11 @@ class SelectResultController extends Controller
         return view('admin.pages.dashboards.selectresult.index', compact('system'));
     }
 
-    public function selected()
+    public function selected(Request $request, $id)
     {
 
-        $system = System::get();
-
-        return view('admin.pages.dashboards.selectresult.selected', compact('system'));
+        $game = TypeGame::find($id);
+        
+        return view('admin.pages.dashboards.selectresult.selected', compact('game'));
     }
 }

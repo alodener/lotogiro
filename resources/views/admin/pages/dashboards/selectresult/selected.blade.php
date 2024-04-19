@@ -8,8 +8,10 @@
 
 {{-- interface dos cards --}}
 <div class="container" style="padding:0px;">
-    <img src="https://i.ibb.co/JQrky55/360-F-419131523-Qb-Mk-KL8h-THMx-B15-Vluf-Qb-ETEf59-Otzj-A.jpg"
-        style="width:100%;max-height:150px;">
+    {{$game->banner_resultados}}
+    <img src="{{ $game->banner_resultados ? asset("storage/{$game->banner_resultados}") : asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg') }}"
+     style="width:100%;max-height:150px;">
+
 
 </div>
 
@@ -24,7 +26,9 @@
             </div>
             <div class="card container d-flex flex-row align-items-center"
                 style="background-color:#202223; padding:10px;">
-                <h4 class="numbertext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</h4>
+
+                <h4 class="numbertext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25
+                </h4>
             </div>
         </div>
     </div>

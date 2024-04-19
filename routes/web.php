@@ -123,7 +123,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/', [SelectresultController::class, 'index'])->name('index');
             });
             Route::prefix('foundresult')->name('foundresult.')->group(function () {
-                Route::get('/', [SelectresultController::class, 'selected'])->name('selected');
+                Route::get('/{id}', [SelectresultController::class, 'selected'])->name('selected');
             });
 
             Route::prefix('wallet')->name('wallet.')->group(function () {
