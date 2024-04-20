@@ -420,6 +420,102 @@
                     </div>
                     @endif
 
+                    @if ($layout->nome_config == 'Imagens Resultados')
+
+                    <div class="container  d-flex flex-md-row flex-column">
+
+                        <div class="col-md-6 mx-auto d-flex flex-column align-items-center card-button-edit ">
+                            <h4 class="mb-4">Insira um Banner para Resultados</h4>
+
+                            <div class="form-group">
+
+                                <div class="d-flex justify-content-between">
+
+
+                                    <div class="d-flex justify-content-around mr-3">
+                                        <div class="mr-3">
+                                            <label for="alias">Nome</label>
+                                            <input type="text" name="nome" class="form-control"
+                                                value="{{$layout->first_text}}">
+                                        </div>
+                                    </div>
+
+                                        <div class="form-group d-flex flex-column text-center">
+                                        <label for="alias">Clique e Escolha</label>
+
+                                            <input type="file" name="imagens_resultados" class="custom-file-input form-control"
+                                                id="fileInput" style="display: none">
+                                            <label for="fileInput"><i style="font-size:30px;" class="fa fa-upload" aria-hidden="true"></i>
+                                            </label>
+
+                                            @error('file')
+                                            <span class="invalid-feedback" role="alert">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                </div>
+
+
+
+
+
+                                <input type="hidden" name="nome_config" class="" value="{{$layout->nome_config}}">
+
+                                @error('text')
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $message }}
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="table-responsive">
+
+                        <table class="table table-striped table-hover table-sm" id="game_table">
+                            <thead>
+                                <tr>
+                                    <th>{{ trans('admin.gains.table-id-header') }}</th>
+                                    <th>Preview</th>
+                                    <th>Nome</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $count = 1; @endphp
+
+                                @foreach ($layout_imagens_resultado as $imagens_resultado)
+
+                                <tr>
+                                    <th>{{$imagens_resultado->id}}</th>
+                                    <th><img width="90px" src="{{ url("storage/{$imagens_resultado->url}")}}" alt="">
+                                    </th>
+                                    <th>{{$imagens_resultado->nome}}</th>
+
+
+                                    <th>
+
+
+
+                                        <button type="button" class="btn btn-sm btn-danger delete-btn-imagem-resultado"
+                                            data-id="{{$imagens_resultado->id}}">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+
+                                    </th>
+                                </tr>
+                                @php $count++; @endphp
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                    @endif
+
+
 
 
 
@@ -459,6 +555,30 @@
                 _token: "{{ csrf_token() }}",
                 id: layoutId,
                 config: 'Carousel Grande',
+            },
+            success: function () {
+                // Executa ações de sucesso, se necessário
+                console.log('Exclusão bem-sucedida');
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                // Trata erros, se necessário
+                console.error('Erro durante a exclusão:', error);
+            }
+        });
+
+
+    });
+
+    $('.delete-btn-imagem-resultado').on('click', function () {
+        var layoutId = $(this).data('id'); // Obtém o ID do layout a ser excluído
+        $.ajax({
+            type: 'DELETE',
+            url: "{{route('admin.settings.layout.destroy', ['layout' => $layout->id])}}",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: layoutId,
+                config: 'Imagens Resultados',
             },
             success: function () {
                 // Executa ações de sucesso, se necessário

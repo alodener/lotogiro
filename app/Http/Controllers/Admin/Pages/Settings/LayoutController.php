@@ -7,6 +7,7 @@ use App\Models\Layout;
 use App\Models\Layout_Button;
 use App\Models\Layout_carousel_grande;
 use App\Models\Layout_icons_sidebar;
+use App\Models\Layout_imagens_resultado;
 
 use Carbon\Carbon;
 use FontLib\Table\Type\post;
@@ -62,6 +63,13 @@ class LayoutController extends Controller
 
                 }
         }
+        if($config == 'Imagens Resultados'){
+            $busca = Layout_imagens_resultado::find($id);
+                if ($busca) {
+                    $busca->delete();
+
+                }
+        }
 
 
       
@@ -73,21 +81,35 @@ class LayoutController extends Controller
         $layout_button = Layout_Button::all();
         $layout_carousel_grande = Layout_carousel_grande::all();
         $layout_icons_sidebar = Layout_icons_sidebar::all();
+        $layout_imagens_resultado = Layout_imagens_resultado::all();
 
-        return view('admin.pages.settings.layout.edit', ['layout' => $layout, 'layout_button' => $layout_button, 'layout_carousel_grande' => $layout_carousel_grande, 'layout_icons_sidebar' =>  $layout_icons_sidebar]);
+        return view('admin.pages.settings.layout.edit', ['layout' => $layout, 'layout_button' => $layout_button, 'layout_carousel_grande' => $layout_carousel_grande, 'layout_icons_sidebar' =>  $layout_icons_sidebar,'layout_imagens_resultado' =>  $layout_imagens_resultado]);
     }
 
 
 
 
-    public function update(Request $request, Layout_Button $layout_button, Layout_carousel_grande $layout_carousel_grande, Layout_icons_sidebar $layout_icons_sidebar)
+    public function update(Request $request, Layout_Button $layout_button, Layout_carousel_grande $layout_carousel_grande, Layout_icons_sidebar $layout_icons_sidebar,Layout_imagens_resultado $layout_imagens_resultado)
     {
 
 
 
         $data = $request->all();
 
+        if($data['nome_config'] == 'Imagens Resultados'){
 
+
+            if (isset($request->imagens_resultados)) {
+                if ($request->file('imagens_resultados')->isValid()) {
+                    $image = $request->imagens_resultados->store('banner_resultados');
+                    $data['logo'] = $image;
+                    $layout_imagens_resultado->url = $data['logo'];
+                    $layout_imagens_resultado->nome = $request->nome;
+                    $layout_imagens_resultado->save();
+    
+                }
+            }
+        }
         if($data['nome_config'] == 'Icons Sidebar'){
 
 
@@ -103,7 +125,7 @@ class LayoutController extends Controller
             }
         }
 
-        if($data['nome_config'] == "Carousel Grande"){
+        if($data['nome_config'] == 'Carousel Grande'){
 
 
             if (isset($request->image)) {
