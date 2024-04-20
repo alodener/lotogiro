@@ -36,7 +36,7 @@
                                 <option value="PB">Paraíba</option>
                                 <option value="DF">Brasília</option>
                                 <option value="CE">Ceará</option>
-                                <option value="PO">Federal</option>
+                                <option value="FED">Federal</option>
                             </select>
                         </div>
                     </div>
@@ -121,15 +121,15 @@
 @push('scripts')
 <script>
 $(document).ready(function () {
-    fetchResultados();
+    $('#bichao-buscar-resultados').click(function () {
+        fetchResultados();
+    });
 });
 
 function fetchResultados() {
     const estado = $('#selecionar-estado-bichao-resultados').val();
-    let data = $('#initial_date').val();
+    const data = $('#initial_date').val();
 
-    // Reformatar a data para o formato dd/mm/yyyy
-    data = data.split('-').reverse().join('-');
     if (!estado) return alert('Selecione um estado');
 
     $('#bichao-resultado-busca').html(`
@@ -139,31 +139,28 @@ function fetchResultados() {
         `);
 
     $.ajax({
-        url: '{{url('/')}}/api/scrape',
+        url: '{{ url('/') }}/api/scrape',
         type: 'GET',
         dataType: 'json',
         data: { data, estado },
         success: function (data) {
             if ($.isEmptyObject(data)) {
-                return $('#bichao-resultado-busca').html(`
+                $('#bichao-resultado-busca').html(`
                         <div class="col-12">
-                            <p>Nenhum resultado encontrado.</p>
+                            <p>Sem jogos hoje!</p>
                         </div>
                     `);
+                return;
             }
 
             const html = Object.keys(data).map(function (lottery) {
-                const lotteryData = data[lottery];
-                const subhtml = lotteryData.map(function (item, index) {
-                    // Tratamento dos caracteres malformados
-                    const formattedItem = item.map(function (value) {
-                        return value.replace(/[^a-zA-Z0-9 ]/g, '');
-                    });
+                const subhtml = data[lottery].map(function (item) {
                     return `
                         <tr>
-                            <td>${formattedItem[0]}</td>
-                            <td>${formattedItem[1]}</td>
-                            <td>${formattedItem[2]}</td>
+                            <td>${item.lugar}</td>
+                            <td>${item.numero}</td>
+                            <td>${item.grupo}</td>
+                            <td>${item.animal}</td>
                         </tr>
                     `;
                 }).join('');
@@ -173,14 +170,15 @@ function fetchResultados() {
                         <table class="table table-striped table-bordered table-dark">
                             <thead>
                                 <tr class="table-header">
-                                    <th class="text-center" colspan="3">${lottery}</th>
+                                    <th class="text-center" colspan="4">${lottery}</th>
                                 </tr>
                             </thead>
                             <tbody class="table-body">
                                 <tr class="second-header">
-                                    <td>Prêmio</td>
-                                    <td>Milhar</td>
-                                    <td>Bicho</td>
+                                    <td>Lugar</td>
+                                    <td>Número</td>
+                                    <td>Grupo</td>
+                                    <td>Animal</td>
                                 </tr>
                                 ${subhtml}
                             </tbody>
@@ -190,12 +188,15 @@ function fetchResultados() {
             }).join('');
 
             $('#bichao-resultado-busca').html(html);
+        },
+        error: function () {
+            $('#bichao-resultado-busca').html(`
+                    <div class="col-12">
+                        <p>Nenhum resultado encontrado.</p>
+                    </div>
+                `);
         }
     });
 }
-
-$('#bichao-buscar-resultados').click(function () {
-    fetchResultados();
-});
 </script>
 @endpush

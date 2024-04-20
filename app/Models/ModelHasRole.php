@@ -16,6 +16,6 @@ class ModelHasRole extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id', 'model_id');
+        return $this->belongsTo(User::class, 'user_id', 'id', 'name', 'last_name');
     }
 }

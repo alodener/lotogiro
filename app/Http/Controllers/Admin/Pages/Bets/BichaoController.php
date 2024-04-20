@@ -773,6 +773,8 @@ class BichaoController extends Controller
 
             if ($modalidade) {
                 $modalidades[$modalidade->id] = $modalidade->nome;
+                $premioReceber = str_replace(['R$', ','], ['', '.'], $chart['premiacao']);
+
                 $checkout[] = [
                     'modalidade_id' => $modalidade->id,
                     'client_id' => $chart['client_id'],
@@ -790,6 +792,7 @@ class BichaoController extends Controller
                     'premio_3' => in_array(3, $chart['award_type']),
                     'premio_4' => in_array(4, $chart['award_type']),
                     'premio_5' => in_array(5, $chart['award_type']),
+                    'premio_a_receber' => $premioReceber,
                     'created_at' => $created_at,
                 ];
 
@@ -836,6 +839,7 @@ class BichaoController extends Controller
                                 'premio_3' => in_array(3, $chart['award_type']),
                                 'premio_4' => in_array(4, $chart['award_type']),
                                 'premio_5' => in_array(5, $chart['award_type']),
+                                'premio_a_receber' => $premioReceber,
                                 'created_at' => $created_at,
                             ];
                         }

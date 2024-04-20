@@ -137,7 +137,7 @@ class ProcessBetEntries implements ShouldQueue
                     
                 }
                 if ( $typeGame == 'mega_kino'){
-                        $letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                        $letters = ['A', 'B', 'C', 'D', 'E', 'F'];
                         foreach ($letters as $letter) { 
                         $competitionLetter = Competition::where('number', $this->competition->number . $letter)->first();
                         
