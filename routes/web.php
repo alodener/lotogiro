@@ -32,6 +32,8 @@ use App\Http\Controllers\Admin\Pages\Settings\LogosController;
 use App\Http\Controllers\Admin\Pages\Bets\BichaoController;
 use App\Http\Controllers\Admin\Pages\Dashboards\TutoriaisController;
 use App\Http\Controllers\Admin\Pages\Dashboards\ResultController;   
+use App\Http\Controllers\Admin\Pages\Dashboards\SelectResultController;   
+
 use App\Http\Controllers\CategoriaController;
 
 // recuperar senha controller
@@ -117,6 +119,12 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
             Route::prefix('result')->name('result.')->group(function () {
                 Route::get('/', [ResultController::class, 'index'])->name('index');
+            });
+            Route::prefix('selectresult')->name('selectresult.')->group(function () {
+                Route::get('/', [SelectresultController::class, 'index'])->name('index');
+            });
+            Route::prefix('foundresult')->name('foundresult.')->group(function () {
+                Route::get('/{id}', [SelectresultController::class, 'selected'])->name('selected');
             });
 
             Route::prefix('wallet')->name('wallet.')->group(function () {

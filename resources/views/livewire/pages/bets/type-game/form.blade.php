@@ -131,33 +131,39 @@
         </div>
 
         <div class="form-row">
-            <div class="col-md-6 mr-md-5">
+            <div class="form-group ">
+                <label for="icon">Banner de Resultados</label>
+                <input type="file" name="banner_resultados" class="form-control ">
+            </div>
+            <div class="form-group">
                 <label for="icon">Banner Mobile</label>
                 <input type="file" name="banner_mobile" class="form-control ">
             </div>
-            <div class="col-md-3 ">
-                <label>Ativar Em Recomendados</label>
-                <div class="ml-4">
-                    <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="1"
-                        id="flexRadioDefault1" {{ $recomendado==1 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Ativado </label>
-                </div>
-                <div class="ml-4">
-                    <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="0"
-                        id="flexRadioDefault1" {{ $recomendado==0 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Desativado </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group col-md-6">
+            
+        
+            <div class="form-group mr-md-5 ml-md-5 ">
                 <label for="icon">Banner PC *APARECE EM RECOMENDADOS*</label>
                 <input type="file" name="banner_pc" class="form-control ">
             </div>
+           
 
-        
+        </div>
+       
+        <div class="col-md-3 ">
+            <label>Ativar Em Recomendados</label>
+            <div class="ml-4">
+                <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="1"
+                    id="flexRadioDefault1" {{ $recomendado==1 ? 'checked' : '' }}>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Ativado </label>
+            </div>
+            <div class="ml-4">
+                <input wire:model="recomendado" class="form-check-input" type="radio" name="recomendado" value="0"
+                    id="flexRadioDefault1" {{ $recomendado==0 ? 'checked' : '' }}>
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Desativado </label>
+            </div>
+        </div>
         
 
         @if(Route::currentRouteName() == 'admin.bets.type_games.edit')
