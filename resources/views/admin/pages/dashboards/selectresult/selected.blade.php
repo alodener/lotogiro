@@ -8,7 +8,6 @@
 
 {{-- interface dos cards --}}
 <div class="container" style="padding:0px;">
-    {{$game->banner_resultados}}
     <img src="{{ $game->banner_resultados ? asset("storage/{$game->banner_resultados}") : asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg') }}"
      style="width:100%;max-height:150px;">
 
