@@ -119,8 +119,12 @@
 
             <div class="computar">
                 @if($exibirBotao)
-                <button type="button" class="btn btn-secondary btn-computar" wire:click="dezenas">{{
-                    trans('admin.lwGame.comput') }}</button>
+                <button type="button" class="btn btn-secondary btn-computar" wire:click="dezenas" wire:loading.attr="disabled">
+                    <span wire:loading wire:target="dezenas">Aguarde...</span>
+                        
+                            <span wire:loading.remove wire:target="dezenas">Computar</span>
+                    
+                </button>
                 @endif
             </div>
 

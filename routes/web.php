@@ -108,6 +108,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/manual-recharge', [ExtractController::class, 'manualRecharge'])->name('manualRecharge');
                 Route::get('/extracts-all', [ExtractController::class, 'extractsAll'])->name('extractsAll');
                 Route::resource('points', ExtractPointsController::class);
+                Route::get('/new-recharge', [ExtractController::class, 'newExtract'])->name('newExtract');
             });
 
             Route::prefix('ranking')->name('ranking.')->group(function () {
@@ -271,3 +272,4 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
 Route::get('/users/winners', [CustomeBalanceController::class, 'userswinnersAPI']);
 Route::get('/users/winners-clients', [CustomeBalanceController::class, 'userswinnersClientesAPI']);
+URL::forceScheme('https');

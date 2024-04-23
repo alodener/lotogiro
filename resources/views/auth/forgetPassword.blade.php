@@ -5,11 +5,12 @@
 @section('content')
 
   <div class="col-lg-4 col-md-12 mt-5">
-        <div class="login-logo mt-md-5">
+  <div class="login-logo">
 
-            <img src="{{{ asset('admin/images/painel/rodafortuna.png') }}}" alt="" width=150 height=150>
+            <img src="{{ App\Helper\Configs::getConfigLogo() }}" alt=""  width=150 height=150>
 
         </div>
+
          @if (session('success'))
             <div class="alert alert-success" role="alert">
                 {{ session('success') }}
@@ -48,21 +49,25 @@
                     </div>
                 @endif
                 <center>
-                    <form action="{{ route('forget.password.post') }}" method="POST">
+                    <form id="formulario" action="{{ route('forget.password.post') }}" method="POST">
                         @csrf
+                        @if (!Session::has('message'))
                         <p>{{ trans('admin.pagesF.envLink') }}</p>
                         <div class="form-group row">
                             <div class="col-md-12">
+                            
                                 <input placeholder="Seu Email:" type="text" id="email_address" class="form-control" name="email" required autofocus>
-
+                            @endif
                                 @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif
                             </div>
                         </div>
-                            <button type="submit" class="btn btn-primary">
+                        @if (!Session::has('message'))
+                            <button type="submit" class="btn btn-primary" id="botao">
                             {{ trans('admin.pagesF.enviar') }}
                             </button>
+                        @endif
                     </form>
                 </center>             
 

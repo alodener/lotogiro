@@ -20,7 +20,7 @@ class Copiacola extends Component
     public $users;
     public $clientId;
     public $showList = false;
-    public $search;
+    public $search; 
     public $values;
     public $qtdDezena;
     public $msg;
@@ -29,6 +29,7 @@ class Copiacola extends Component
     public $auth;
     public $podeCriar = false;
     public $exibirBotao = true;
+    public $loading = false; // propriedade para controlar o estado de carregamento
 
 
 
@@ -47,6 +48,12 @@ class Copiacola extends Component
     {
         $this->reset('msg');
         $this->reset('values');
+
+        $this->loading = true; // ativar o indicador de carregamento
+       
+    
+
+
         $this->dezena = preg_replace("/[,. _-]/", " ", $this->dezena);
         $this->dezena = explode("\n", $this->dezena);
         foreach ($this->dezena as &$linha) {
@@ -113,6 +120,8 @@ class Copiacola extends Component
                 }
             }
         }
+     
+        $this->loading = false;
     }
 
  
