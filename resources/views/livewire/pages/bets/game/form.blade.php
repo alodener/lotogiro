@@ -1,145 +1,185 @@
 <div>
-    <table class="table table-striped table-hover table-sm dataTable no-footer">
-        <thead>
-            <tr>
-                <th class="col1" scope="col">{{ trans('admin.falta.tipo') }}</th>
-                <th scope="col">{{ trans('admin.falta.concurso') }}</th>
-                <th scope="col">{{ trans('admin.falta.dataSort') }}</th>
-                <th scope="col">{{ trans('admin.falta.importJogo') }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{$typeGame->name}}</td>
-                @if(empty($typeGame->competitions->last()))
-                <td colspan="2" class="text-danger">{{ trans('admin.falta.nExist') }}</td>
-                @else
-                <td>{{$typeGame->competitions->last()->number}}</td>
-                <td>{{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}</td>
-                <td> <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"><button
-                            class="btn btn-info" type="button">{{ trans('admin.falta.carregar') }} </button></a></td>
-                @endif
-            </tr>
-        </tbody>
-    </table>
+    <div class="divider mt-2"></div>
 
-    @if($User['type_client'] == 1)
+    <div class="d-flex flex-md-row flex-column-reverse mt-2">
+        {{-- CARD 1 --}}
 
-    <input type="text" value="{{ $FiltroUser['name'] }}" disabled class="form-control">
-    <input type="hidden" name="client" value="{{ $FiltroUser['id'] }}" readonly>
-    <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
-    @endif
-
-
-    @if($User['type_client'] == 1)
-    <input type="hidden" name="numbers" id="numbers"
-        value="@foreach ($selectedNumbers as $selectedNumbers1) {{ $selectedNumbers1 }} @endforeach" readonly>
-    <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}" readonly>
-    @endif
-
-    @if($User['type_client'] == null)
-
-    {{-- INPUT DO SEARCH SE NÃO TIVER AUTENTICADO --}}
-
-    <div class="form-row">
-        <div class="form-group col-md-12">
-            <div wire:ignore>
-                <div class="mt-3">
-                    <h4>Selecione o {{ trans('admin.lwGame.client') }}</h4>
+        {{-- PARTE DE CALCULO DE VALORES DO JOGO --}}
+        @if(isset($values) && $values->count() > 0)
+        @foreach($values as $value)
+        <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
+        <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
+        <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
+        <div class="d-flex flex-column col-md-4">
+            <div class="card-header text-center d-flex flex-column justify-content-center align-items-center"
+                style="min-height: 162px;">
+                <h5 style="font-weight: bold;" class="textcard">{{ trans('admin.falta.digitValor') }}</h5>
+                <input class="form-control" style="text-align:center;" type="text" id="value" onchange="altera()"
+                    value="" name="value" value="{{ old('value') ?? session('value') }}" required
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                <div class="d-flex cardbtsadd container justify-content-around align-items-center mt-2">
+                    <p style="font-size:10px; margin:0px;">Valores Rápidos:</p>
+                    <button class="btn-add-value-extra" onclick="addmoney(event,1)">+ R$ 1,00</button>
+                    <button class="btn-add-value-extra btspadding" onclick="addmoney(event,5)">+ R$ 5,00</button>
+                    <button class="btn-add-value-extra" onclick="addmoney(event,10)">+ R$ 10,00</button>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="input-group mb-3">
-                        <input wire:model="search" type="text" id="author" class="form-control"
-                            placeholder="Pesquisar Cliente" autocomplete="off" required>
-                        <div class="input-group-append">
-                            <span wire:click="clearUser" class="input-group-text" title="Limpar"><i
-                                    class="fas fa-user-times"></i></span>
-                        </div>
-                    </div>
-                </div>
+            <div class="d-flex card-header flex-column justify-content-center align-items-center"
+                style="min-height: 62px;">
+                <h5 style="font-weight: bold; font-size:15px; min-width:150px; margin:0px;">Premiação Total</h5>
+                <input class="form-control" type="text" id="premio" value="" name="premio" readonly>
             </div>
-
-            {{-- PARTE DE PESQUISA DE CLIENTE SE NÃO TIVER AUTENTICAÇÃO --}}
-
-            <input type="hidden" name="client" value="{{$clientId}}">
-            <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
-                <div class="col-md-12">
-                    @if($showList)
-                    <ul class="list-group">
-                        @if(isset($clients) && $clients->count() > 0)
-                        @foreach($clients as $client)
-                        <li wire:click="setId({{ $client }})" class="list-group-item" style="cursor:pointer;">{{
-                            $client->name . ' ' . $client->last_name .' - '. $client->email . ' - '.
-                            \App\Helper\Mask::addMaksPhone($client->ddd.$client->phone)}} </li>
-                        @endforeach
-                        @endif
-                    </ul>
-                    @endif
-                </div>
-            </div>
-
-            <input type="hidden" name="numbers" id="numbers"
-                value="@foreach ($selectedNumbers as $selectedNumbers1) {{ $selectedNumbers1 }} @endforeach" readonly>
         </div>
-        <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}" readonly>
+        <!-- <button  class="btn btn-info" type="button" onclick="altera();">{{ trans('admin.falta.calcular') }}</button> -->
+        @endforeach
+        @else
+
+        @endif
+
+
+
+        {{-- CARD 2 --}}
+
+        <div class="col-md-4 justify-content-center align-items-center text-center">
+            <div class="card-header automatic-bet d-flex flex-column justify-content-center align-items-center "
+                style="min-height: 162px;">
+                <h5 style="font-weight: bold;" class="textcard"> Gerar Jogo Aleatório </h5>
+                {{-- puxar do banco de dados quantos numeros pode se jogar --}}
+                <div>
+                    @foreach ($busca as $buscas)
+
+                    <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})"
+                        class="{{ env('randomNumbersColor') }}" type="button" onclick="limpacampos();">{{
+                        $buscas['numbers']
+                        }}</button>
+                    @endforeach
+                </div>
+            </div>
+            <div class="d-flex card-header flex-column justify-content-center align-items-center"
+                style="min-height: 62px;">
+                <h5 style="font-weight: bold; font-size:15px; min-width:150px; margin:0px;" class="mb-1">Multiplos Jogos
+                </h5>
+                <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}" class="btn btn-copiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
+                    aria-hidden="true"></i>
+                Copia e Cola</a>
+            </div>
+        </div>
+        {{-- CARD 3 --}}
+
+        <div class="col-md-4 flex-column d-flex  align-items-center text-center">
+            <div class="card-header container" style="min-height: 162px;">
+                @if($User['type_client'] == 1)
+
+                <input type="text" value="{{ $FiltroUser['name'] }}" disabled class="form-control">
+                <input type="hidden" name="client" value="{{ $FiltroUser['id'] }}" readonly>
+                <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
+                @endif
+
+
+                @if($User['type_client'] == 1)
+                <input type="hidden" name="numbers" id="numbers"
+                    value="@foreach ($selectedNumbers as $selectedNumbers1) {{ $selectedNumbers1 }} @endforeach"
+                    readonly>
+                <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}"
+                    readonly>
+                @endif
+
+                @if($User['type_client'] == null)
+
+                {{-- INPUT DO SEARCH SE NÃO TIVER AUTENTICADO --}}
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div wire:ignore>
+                            <div class="mt-3">
+                                <h5 style="font-weight: bold;" class="textcard">Selecione o Cliente
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <input wire:model="search" type="text" id="author" class="form-control"
+                                        placeholder="Pesquisar Cliente" autocomplete="off" required>
+                                    <div class="input-group-append">
+                                        <span wire:click="clearUser" class="input-group-text" title="Limpar"><i
+                                                class="fas fa-user-times"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- PARTE DE PESQUISA DE CLIENTE SE NÃO TIVER AUTENTICAÇÃO --}}
+
+                        <input type="hidden" name="client" value="{{$clientId}}">
+
+                        <input type="hidden" name="numbers" id="numbers"
+                            value="@foreach ($selectedNumbers as $selectedNumbers1) {{ $selectedNumbers1 }} @endforeach"
+                            readonly>
+                    </div>
+                    <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}"
+                        readonly>
+                </div>
+
+                @endif
+            </div>
+            <div class="d-flex card-header flex-column container justify-content-center align-items-center"
+                style="min-height: 62px;">
+                <h5 style="font-weight: bold; font-size:15px; margin:0px; " class="mb-1">Consultar</h5>
+                <div class="d-flex btsconsultar ">
+                    <button class="btn-copiacola mr-2 ml-2" style="background: #212425;"><i class="fa fa-trophy mr-2"
+                            style="font-size: 15px;" aria-hidden="true"></i>
+                        Ultimos Resultados</button> <button class="btn-copiacola"><i class="fa fa-money mr-2"
+                            style="font-size: 15px;" aria-hidden="true"></i>
+                        Ver Cotação</button>
+                </div>
+            </div>
+        </div>
     </div>
-
-    @endif
-
-
-
+    <div class="divider"></div>
+    <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
+        <div class="col-md-12">
+            @if($showList)
+            <ul class="list-group">
+                @if(isset($clients) && $clients->count() > 0)
+                @foreach($clients as $client)
+                <li wire:click="setId({{ $client }})" class="list-group-item" style="cursor:pointer;">{{
+                    $client->name . ' ' . $client->last_name .' - '. $client->email . ' - '.
+                    \App\Helper\Mask::addMaksPhone($client->ddd.$client->phone)}} </li>
+                @endforeach
+                @endif
+            </ul>
+            @endif
+        </div>
+    </div>
     {{-- PARTE DE ESCOLHER NUMEROS DO JOGO --}}
     <div class="row text-center">
         <div class="col-md-12">
             @if(isset($matriz))
-            <h4>{{ trans('admin.falta.quantSelec') }}:({{count($selectedNumbers)}}/{{$numbers}})</h4>
-            @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" || $typeGame->name ==
-            "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
-            <button wire:click="selecionaTudo()" class="{{ env('AllColor') }}" type="button" onclick="limpacampos();">{{
-                trans('admin.falta.selecNums') }}</button>
-            @endif
-
+            <div class="d-flex container justify-content-between align-items-center">
+                <button class="btn btn-block btn-success" style="max-width:200px;">Completar Jogo</button>
+                <h4 style="background:#303536; padding:10px; border-radius:100px;" class="numselecteds">{{
+                    trans('admin.falta.quantSelec')
+                    }}:<c style="color:#96C614;">({{count($selectedNumbers)}}/{{$numbers}})</c>
+                </h4>
+                @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" ||
+                $typeGame->name ==
+                "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
+                <button wire:click="selecionaTudo()" class="{{ env('AllColor') }}" type="button"
+                    onclick="limpacampos();">{{
+                    trans('admin.falta.selecNums') }}</button>
+                @endif
+                <button type="submit" style="max-width:200px;" id="button_game" onclick="mudarListaNumerosGeral()"
+                    class="btn btn-block btn-success">@if(request()->is('admin/bets/games/create/{{$typeGame->id}}'))
+                    {{ trans('admin.games.insert-game-button') }}
+                    @else
+                    {{ trans('admin.games.update-game-button') }}
+                    @endif
+                </button>
+            </div>
             <br>
 
-            <div class="col-md-12 automatic-bet">
-                <p style="font-size: 10px;margin-bottom: auto;">
-                    {{ trans('admin.falta.selecQuant') }}:
-                </p>
-                {{-- puxar do banco de dados quantos numeros pode se jogar --}}
-                @foreach ($busca as $buscas)
 
-                <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})"
-                    class="{{ env('randomNumbersColor') }}" type="button" onclick="limpacampos();">{{ $buscas['numbers']
-                    }}</button>
-                @endforeach
-                {{-- PARTE DE CALCULO DE VALORES DO JOGO --}}
-                <div class="col-md-4 mt-4 mx-auto text-center">
-                    @if(isset($values) && $values->count() > 0)
-                    @foreach($values as $value)
-                    <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
-                    <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
-                    <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
-                    <div class="d-flex justify-content-center aling-items-center">
-                    <div class="mr-5">
-                        {{ trans('admin.falta.digitValor') }}
-                        <input class="form-control" type="text" id="value" onchange="altera()" value="" name="value" value="{{ old('value') ?? session('value') }}"
-                            required
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-                    </div>
-                    <div>
-                        {{ trans('admin.falta.valorPremio') }} R$
-                        <input class="form-control" type="text" id="premio" value="" name="premio" readonly>
-                    </div>
-                    </div>
-                    <!-- <button  class="btn btn-info" type="button" onclick="altera();">{{ trans('admin.falta.calcular') }}</button> -->
-                    @endforeach
-                    @else
-
-                    @endif
-                </div>
-            </div>
 
 
 
@@ -187,8 +227,76 @@
     });
 </script> --}}
 
+<style>
+    @media (max-width: 1404px) {
+        .textcard {
+            font-size: 15px;
+        }
+
+        .numselecteds {
+            font-size: 15px;
+        }
+
+        @media (max-width: 1200px) {
+            .cardbtsadd {
+                flex-direction: column;
+            }
+
+            .btspadding {
+                margin-top: 5px !important;
+                margin-bottom: 5px !important;
+            }
+
+            .btsconsultar {
+                flex-direction: column;
+
+            }
+        }
+
+    }
+
+    .btn-add-value-extra {
+        background: #a3d712;
+        border: none;
+        padding: 5px;
+        font-weight: bold;
+        color: black;
+        font-size: 10px;
+    }
+
+    .divider {
+        padding: 5px;
+        background: #303536;
+    }
+
+    .btn-copiacola {
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        background: #B0045B;
+        font-size: 10px;
+        color: white;
+        border: none;
+        border-radius: 3px;
+    }
+    .btn-copiacola:hover{
+        color: white;
+    }
+</style>
 <script>
+
+
     //Função para realizar o calculo do multiplicador
+    function addmoney(event, v) {
+    event.preventDefault(); // Evita o envio do formulário ao clicar no botão
+    var campovalor = document.getElementById("value");
+    // Converte o valor atual para um número e então realiza a adição
+    campovalor.value = Number(campovalor.value) + Number(v);
+
+    altera();
+}   
     function altera() {
         var multiplicador = document.getElementById("multiplicador").value;
         var valor = document.getElementById("value").value;
