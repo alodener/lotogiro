@@ -355,8 +355,8 @@
 
                         @if(\App\Helper\UserValidate::iAmAdmin())
                         <li class="nav-item">
-                            <a href="{{route('admin.dashboards.extracts.manualRecharge')}}"
-                                class="nav-link @if(request()->is('admin/dashboards/extracts/manual-recharge')) active @endif">
+                            <a href="{{route('admin.dashboards.extracts.newExtract')}}"
+                                class="nav-link @if(request()->is('admin/dashboards/extracts/new-extract')) active @endif">
                                 <i class="fas fa-file-alt nav-icon"></i>
                                 <p>{{ trans('admin.menu.extratoRecarga') }} </p>
                             </a>
