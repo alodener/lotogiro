@@ -9,7 +9,10 @@ class LayoutSeeder extends Seeder
 {
     public function run()
     {
-        // Insira os dados na tabela
+        // Limpar todos os registros da tabela
+        DB::table('layout')->truncate();
+
+        // Inserir novos registros na tabela
         DB::table('layout')->insert([
             'nome_config' => 'Botões',
             'created_at' => now(),
@@ -21,8 +24,14 @@ class LayoutSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        
         DB::table('layout')->insert([
             'nome_config' => 'Icons Sidebar',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('layout')->insert([
+            'nome_config' => 'Imagens Resultados',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
