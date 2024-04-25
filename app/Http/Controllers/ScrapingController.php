@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BichaoModalidades;
+use CreateBichaoGamesTable;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
@@ -9,221 +11,115 @@ use App\Models\BichaoResultados;
 use App\Models\BichaoGames; 
 use App\Models\BichaoGamesVencedores; 
 use App\Models\BichaoAnimals; 
+use Illuminate\Support\Facades\DB;
+
 
 class ScrapingController extends Controller
 {
     //função base do scrapping
     public function scrape(Request $request)
     {
-        // Obtém o estado e a data da URL
-        $estado = $request->estado;
-        $data = $request->data;
-
-        // Verifica se a data está no formato correto
-        if (!preg_match('/^\d{2}-\d{2}-\d{4}$/', $data)) {
-            return response()->json(['error' => 'Formato de data inválido. Use dd-mm-yyyy'], 400);
+        // Obtém o UF (sigla do estado) do pedido
+        $uf = $request->estado;
+        $data = date('Y-m-d', strtotime($request->data));
+    
+        // Obtém o ID do estado com base no UF
+        $estado = DB::table('bichao_estados')
+                    ->where('uf', $uf)
+                    ->value('id');
+    
+        if (!$estado) {
+            return response()->json(['error' => 'Estado não encontrado'], 404);
         }
     
-        $data = str_replace('-', '/', $data);
-
-        $urls = [
-            'RJ' => [
-                'PTM' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-ptm-rio/',
-                    'phrase' => '(PTM-Rio) 11:00 Hoje ' . $data,
-                    'id' => 1,
-                ],
-                'PT' => [
-                    'url' => 'https://www.resultadosnahora.com.br/pt-riopt-rio/',
-                    'phrase' => '(PT-Rio) 14:00 Hoje ' . $data,
-                    'id' => 2,
-                ],
-                'PTV' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-ptv-rio/',
-                    'phrase' => '(PTV-Rio) 16:00 Hoje ' . $data,
-                    'id'=> 3,
-                ],
-                'PTN' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-ptn-rio/',
-                    'phrase' => '(PTN-Rio) 18:00 Hoje ' . $data,
-                    'id'=> 4,
-                ],
-                'COR' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-coruja/',
-                    'phrase' => '(Coruja-Rio) 21:00 Hoje ' . $data,
-                    'id'=> 5,
-                ]
-            ],
-            'SP' => [
-                'PT-SP' => [
-                    'url' => null, // Esta bancas parece não existir na fonte de dados fornecida
-                    'phrase' => '(Pt-Sp) 13:20 Hoje ' . $data,
-                    'id'=> 6,
-                ],
-                'Bandeirantes' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-bandeirante/',
-                    'phrase' => '(Bandeirante-Sp) 15:20 Hoje ' . $data,
-                    'id'=> 7,
-                ],
-                'PTN' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-ptn-sp/',
-                    'phrase' => '(Ptn-Sp) 20:20 Hoje ' . $data,
-                    'id'=> 8,
-                ]
-            ],
-            'GO' => [
-                'Look (11:20)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-look/',
-                    'phrase' => '(Look-Goias) 11:20 Hoje ' . $data,
-                    'id'=> 9,
-                ],
-                'Look (14:20)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-look/',
-                    'phrase' => '(Look-Goias) 14:20 Hoje ' . $data,
-                    'id'=> 10,
-                ],
-                'Look (16:20)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-look/',
-                    'phrase' => '(Look-Goias) 16:20 Hoje ' . $data,
-                    'id'=> 11,
-                ],
-                'Look (18:20)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-look/',
-                    'phrase' => '(Look-Goias) 18:20 Hoje ' . $data,
-                    'id'=> 12,
-                ],
-                'Look (21:20)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-look/',
-                    'phrase' => '(Look-Goias) 21:20 Hoje ' . $data,
-                    'id'=> 13,
-                ]
-            ],
-            'MG' => [
-                'Alvorada' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-alvorada-minas/',
-                    'phrase' => '(Minas Gerais) 12:00 Hoje ' . $data,
-                    'id'=> 14,
-                ],
-                'Minas-dia' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-minas-dia/',
-                    'phrase' => '(Minas Gerais) 15:00 Hoje ' . $data,
-                    'id'=> 15,
-                ],
-                'Minas-noite' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-minas-noite/',
-                    'phrase' => '(Minas Gerais) 19:00 Hoje ' . $data,
-                    'id'=> 16,
-                ]
-            ],
-            'BA' => [
-                // 'BA (10:00)' => [
-                //     'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
-                //     'phrase' => '(Bahia) 10:00 Hoje ' . $data,
-                //     'id'=> 17,
-                // ],
-                'BA (12:00)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
-                    'phrase' => '(Bahia) 12:00 Hoje ' . $data,
-                    'id'=> 17,
-                ],
-                'BA (15:00)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
-                    'phrase' => '(Bahia) 15:00 Hoje ' . $data,
-                    'id'=> 18,
-                ],
-                'BA (19:00)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-bahia/', 
-                    'phrase' => 'Federal (Bahia) 19:00 Hoje ' . $data,
-                    'id'=> 19,
-                ],
-                'BA (21:00)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
-                    'phrase' => '(Bahia) 21:00 Hoje ' . $data,
-                    'id'=> 20,
-                ]
-            ],
-            'PB' => [
-                'LOTEP (10:45)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 10:45 Hoje ' . $data,
-                    'id'=> 21,
-                ],
-                'LOTEP (12:45)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 12:45 Hoje ' . $data,
-                    'id'=> 22,
-                ],
-                'LOTEP (15:45)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 15:45 Hoje ' . $data,
-                    'id'=> 23,
-                ],
-                'LOTEP (18:00)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
-                    'phrase' => '(Lotep Paraíba) 18:00 Hoje ' . $data,
-                    'id'=> 24,
-                ],
-            ]
-        ];
+        // Obtém todos os horários de sorteio para esse estado com seus respectivos nomes de banca
+        $horarios = DB::table('bichao_horarios')
+                    ->select('id', 'banca', DB::raw("CONCAT(banca, ' (', DATE_FORMAT(horario, '%H:%i'), ')') AS horario"))
+                    ->where('estado_id', $estado)
+                    ->get();
     
-        // Verifica se o estado é válido
-        if (!array_key_exists($estado, $urls)) {
-            return response()->json(['error' => 'Estado inválido'], 400);
+        if ($horarios->isEmpty()) {
+            return response()->json(['error' => 'Nenhum horário de sorteio encontrado para este estado'], 404);
         }
     
-        $resultados = [];
+        // Inicializa um array para armazenar os resultados formatados
+        $todosResultados = [];
     
-        // Itera sobre as URLs disponíveis para o estado fornecido
-        foreach ($urls[$estado] as $banca => $config) {
-            $url = $config['url'];
-            $phrase = $config['phrase'];
+        // Para cada horário de sorteio, buscar os resultados correspondentes na tabela de resultados
+        foreach ($horarios as $horario) {
+            $resultados = DB::table('bichao_resultados')
+                            ->where('horario_id', $horario->id)
+                            ->whereDate('data_sorteio', $data)
+                            ->first();
     
-            if ($url) {
-                $client = new Client();
-                $response = $client->get($url);
-                $html = $response->getBody()->getContents();
-                $crawler = new Crawler($html);
+            // Verifica se há resultados para esse horário e data
+            if ($resultados) {
+                // Formata os resultados conforme o exemplo esperado
+                $formattedResults = [];
+                $formattedResults[] = [
+                    'lugar' => "1º",
+                    'numero' => $resultados->premio_1,
+                    'grupo' => $this->getGroupAndAnimal($resultados->premio_1)['grupo'],
+                    'animal' => $this->getGroupAndAnimal($resultados->premio_1)['animal']
+                ];
+                $formattedResults[] = [
+                    'lugar' => "2º",
+                    'numero' => $resultados->premio_2,
+                    'grupo' => $this->getGroupAndAnimal($resultados->premio_2)['grupo'],
+                    'animal' => $this->getGroupAndAnimal($resultados->premio_2)['animal']
+                ];
+                $formattedResults[] = [
+                    'lugar' => "3º",
+                    'numero' => $resultados->premio_3,
+                    'grupo' => $this->getGroupAndAnimal($resultados->premio_3)['grupo'],
+                    'animal' => $this->getGroupAndAnimal($resultados->premio_3)['animal']
+                ];
+                $formattedResults[] = [
+                    'lugar' => "4º",
+                    'numero' => $resultados->premio_4,
+                    'grupo' => $this->getGroupAndAnimal($resultados->premio_4)['grupo'],
+                    'animal' => $this->getGroupAndAnimal($resultados->premio_4)['animal']
+                ];
+                $formattedResults[] = [
+                    'lugar' => "5º",
+                    'numero' => $resultados->premio_5,
+                    'grupo' => $this->getGroupAndAnimal($resultados->premio_5)['grupo'],
+                    'animal' => $this->getGroupAndAnimal($resultados->premio_5)['animal']
+                ];
     
-                $crawler->filter('table')->each(function ($table) use (&$resultados, $phrase, $banca) {
-                    // dd($phrase);
-                    $tableContent = $table->html();
-                    if (strpos($tableContent, $phrase) !== false) {
-                        // Use DOMDocument para organizar os dados da tabela
-                        $doc = new \DOMDocument();
-                        $doc->loadHTML($tableContent);
-    
-                        $rows = $doc->getElementsByTagName('tr');
-    
-                        $bancaData = [];
-    
-                        foreach ($rows as $row) {
-                            $cols = $row->getElementsByTagName('td');
-                            $rowData = [];
-                            foreach ($cols as $col) {
-                                $rowData[] = $col->nodeValue;
-                            }
-                            $bancaData[] = $rowData;
-                        }
-    
-                        // Remova a primeira linha que contém cabeçalhos
-                        array_shift($bancaData);
-    
-                        // Adiciona os resultados dessa banca aos resultados gerais
-                        $resultados[$banca] = $bancaData;
-    
-                        return false; // Para parar a iteração quando a tabela desejada for encontrada
-                    }
-                });
+                // Adiciona os resultados formatados ao array principal
+                $todosResultados[$horario->horario] = $formattedResults;
             }
         }
     
-        if (!empty($resultados)) {
-            return response()->json($resultados);
+        if (empty($todosResultados)) {
+            return response()->json(['error' => 'Nenhum resultado encontrado para os horários e data especificados'], 404);
+        }
+    
+        // Retorna os resultados do banco de dados
+        return response()->json($todosResultados);
+    }
+     
+    private function getGroupAndAnimal($number)
+    {
+        // Obtém o grupo e o animal com base no número fornecido
+        $animal = DB::table('bichao_animais')
+                    ->where('value_1', 'like', '%' . substr($number, -2) . '%')
+                    ->orWhere('value_2', 'like', '%' . substr($number, -2) . '%')
+                    ->orWhere('value_3', 'like', '%' . substr($number, -2) . '%')
+                    ->orWhere('value_4', 'like', '%' . substr($number, -2) . '%')
+                    ->first();
+    
+        if ($animal) {
+            return [
+                'grupo' => (int) $animal->id,
+                'animal' => $animal->name
+            ];
         } else {
-            return response()->json(['error' => 'Nenhum resultado encontrado'], 404);
+            return null;
         }
     }
-    
+
     //dados formatados
     public function scrape0 (Request $request)
     {
@@ -240,44 +136,44 @@ class ScrapingController extends Controller
     
         $urls = [
             'RJ' => [
-                'PTM' => [
+                'PTM - RIO (11:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptm-rio/',
                     'phrase' => '(PTM-Rio) 11:00 Hoje ' . $data,
                     'id' => 1,
                 ],
-                'PT' => [
+                'PT - RIO  (14:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/pt-riopt-rio/',
                     'phrase' => '(PT-Rio) 14:00 Hoje ' . $data,
                     'id' => 2,
                 ],
-                'PTV' => [
+                'PTV - RIO (16:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptv-rio/',
                     'phrase' => '(PTV-Rio) 16:00 Hoje ' . $data,
                     'id'=> 3,
                 ],
-                'PTN' => [
+                'PTN - RIO (18:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptn-rio/',
                     'phrase' => '(PTN-Rio) 18:00 Hoje ' . $data,
                     'id'=> 4,
                 ],
-                'COR' => [
+                'CORUJA - RIO (21:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-coruja/',
                     'phrase' => '(Coruja-Rio) 21:00 Hoje ' . $data,
                     'id'=> 5,
                 ]
             ],
             'SP' => [
-                'PT-SP' => [
-                    'url' => null, // Esta bancas parece não existir na fonte de dados fornecida
+                'PT-SP (13:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-pt-sp/', // Esta bancas parece não existir na fonte de dados fornecida
                     'phrase' => '(Pt-Sp) 13:20 Hoje ' . $data,
                     'id'=> 6,
                 ],
-                'Bandeirantes' => [
+                'Bandeirantes (16:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-bandeirante/',
                     'phrase' => '(Bandeirante-Sp) 15:20 Hoje ' . $data,
                     'id'=> 7,
                 ],
-                'PTN' => [
+                'PTN - SP (20:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptn-sp/',
                     'phrase' => '(Ptn-Sp) 20:20 Hoje ' . $data,
                     'id'=> 8,
@@ -311,17 +207,17 @@ class ScrapingController extends Controller
                 ]
             ],
             'MG' => [
-                'Alvorada' => [
+                'Alvorada (12:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-alvorada-minas/',
                     'phrase' => '(Minas Gerais) 12:00 Hoje ' . $data,
                     'id'=> 14,
                 ],
-                'Minas-dia' => [
+                'Minas-dia (15:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-minas-dia/',
                     'phrase' => '(Minas Gerais) 15:00 Hoje ' . $data,
                     'id'=> 15,
                 ],
-                'Minas-noite' => [
+                'Minas-noite (19:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-minas-noite/',
                     'phrase' => '(Minas Gerais) 19:00 Hoje ' . $data,
                     'id'=> 16,
@@ -370,12 +266,62 @@ class ScrapingController extends Controller
                     'phrase' => '(Lotep Paraíba) 15:45 Hoje ' . $data,
                     'id'=> 23,
                 ],
-                'LOTEP (18:00)' => [
+                'LOTEP (18:45)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
                     'phrase' => '(Lotep Paraíba) 18:00 Hoje ' . $data,
                     'id'=> 24,
                 ],
-            ]
+            ],
+            'DF' => [
+                'LBR (12:40)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 12:40 Hoje ' . $data,
+                    'id'=> 25,
+                ],
+                'LBR (15:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 15:30 Hoje ' . $data,
+                    'id'=> 26,
+                ],
+                'LBR (17:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 17:30 Hoje ' . $data,
+                    'id'=> 27,
+                ],
+                'LBR (19:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 19:30 Hoje ' . $data,
+                    'id'=> 28,
+                ],
+                
+            ],
+            'CE' => [
+                'LOTOCE (11:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lotece-Ceará) 11:20 Hoje ' . $data,
+                    'id'=> 29,
+                ],
+                'LOTOCE (14:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lbr-Brasilia) 14:00 Hoje ' . $data,
+                    'id'=> 30,
+                ],
+                'LOTOCE (19:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lbr-Brasilia) 19:00 Hoje ' . $data,
+                    'id'=> 31,
+                ],
+                
+            ],
+            'FED' => [
+                'Loteria Federal do Brasil (19:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/loteria-federal/',
+                    'phrase' => '19:00 Hoje ' . $data,
+                    'id'=> 32,
+                ],
+            ],
+
+
         ];
     
         // Verifica se o estado é válido
@@ -453,46 +399,47 @@ class ScrapingController extends Controller
         $data = str_replace('-', '/', $data);
         $dataFormatada = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $data)));
 
+    
         $urls = [
             'RJ' => [
-                'PTM' => [
+                'PTM - RIO (11:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptm-rio/',
                     'phrase' => '(PTM-Rio) 11:00 Hoje ' . $data,
                     'id' => 1,
                 ],
-                'PT' => [
+                'PT - RIO  (14:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/pt-riopt-rio/',
                     'phrase' => '(PT-Rio) 14:00 Hoje ' . $data,
                     'id' => 2,
                 ],
-                'PTV' => [
+                'PTV - RIO (16:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptv-rio/',
                     'phrase' => '(PTV-Rio) 16:00 Hoje ' . $data,
                     'id'=> 3,
                 ],
-                'PTN' => [
+                'PTN - RIO (18:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptn-rio/',
                     'phrase' => '(PTN-Rio) 18:00 Hoje ' . $data,
                     'id'=> 4,
                 ],
-                'COR' => [
+                'CORUJA - RIO (21:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-coruja/',
                     'phrase' => '(Coruja-Rio) 21:00 Hoje ' . $data,
                     'id'=> 5,
                 ]
             ],
             'SP' => [
-                'PT-SP' => [
-                    'url' => null, // Esta bancas parece não existir na fonte de dados fornecida
+                'PT-SP (13:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-pt-sp/', // Esta bancas parece não existir na fonte de dados fornecida
                     'phrase' => '(Pt-Sp) 13:20 Hoje ' . $data,
                     'id'=> 6,
                 ],
-                'Bandeirantes' => [
+                'Bandeirantes (16:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-bandeirante/',
                     'phrase' => '(Bandeirante-Sp) 15:20 Hoje ' . $data,
                     'id'=> 7,
                 ],
-                'PTN' => [
+                'PTN - SP (20:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptn-sp/',
                     'phrase' => '(Ptn-Sp) 20:20 Hoje ' . $data,
                     'id'=> 8,
@@ -526,17 +473,17 @@ class ScrapingController extends Controller
                 ]
             ],
             'MG' => [
-                'Alvorada' => [
+                'Alvorada (12:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-alvorada-minas/',
                     'phrase' => '(Minas Gerais) 12:00 Hoje ' . $data,
                     'id'=> 14,
                 ],
-                'Minas-dia' => [
+                'Minas-dia (15:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-minas-dia/',
                     'phrase' => '(Minas Gerais) 15:00 Hoje ' . $data,
                     'id'=> 15,
                 ],
-                'Minas-noite' => [
+                'Minas-noite (19:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-minas-noite/',
                     'phrase' => '(Minas Gerais) 19:00 Hoje ' . $data,
                     'id'=> 16,
@@ -585,12 +532,62 @@ class ScrapingController extends Controller
                     'phrase' => '(Lotep Paraíba) 15:45 Hoje ' . $data,
                     'id'=> 23,
                 ],
-                'LOTEP (18:00)' => [
+                'LOTEP (18:45)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
                     'phrase' => '(Lotep Paraíba) 18:00 Hoje ' . $data,
                     'id'=> 24,
                 ],
-            ]
+            ],
+            'DF' => [
+                'LBR (12:40)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 12:40 Hoje ' . $data,
+                    'id'=> 25,
+                ],
+                'LBR (15:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 15:30 Hoje ' . $data,
+                    'id'=> 26,
+                ],
+                'LBR (17:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 17:30 Hoje ' . $data,
+                    'id'=> 27,
+                ],
+                'LBR (19:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 19:30 Hoje ' . $data,
+                    'id'=> 28,
+                ],
+                
+            ],
+            'CE' => [
+                'LOTOCE (11:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lotece-Ceará) 11:20 Hoje ' . $data,
+                    'id'=> 29,
+                ],
+                'LOTOCE (14:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lbr-Brasilia) 14:00 Hoje ' . $data,
+                    'id'=> 30,
+                ],
+                'LOTOCE (19:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
+                    'phrase' => '(Lbr-Brasilia) 19:00 Hoje ' . $data,
+                    'id'=> 31,
+                ],
+                
+            ],
+            'FED' => [
+                'Loteria Federal do Brasil (19:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/loteria-federal/',
+                    'phrase' => '19:00 Hoje ' . $data,
+                    'id'=> 32,
+                ],
+            ],
+
+
         ];
 
         // Verifica se o estado é válido
@@ -683,7 +680,7 @@ class ScrapingController extends Controller
     public function scrapeAllStates(Request $request)
     {
         // Lista de estados
-        $estados = ['RJ', 'SP', 'GO', 'MG', 'BA', 'PB'];
+        $estados = ['RJ', 'SP', 'GO', 'MG', 'BA', 'PB', 'DF', 'CE', 'FED'];
     
         // Obtém a data atual formatada no formato dd-mm-yyyy
         $dataAtual = now()->format('d-m-Y');
@@ -704,502 +701,389 @@ class ScrapingController extends Controller
         return response()->json($resultadosTotais);
     }
 
-    // private static function get_winners($resultados) {
-    //     $dataAtual = date('Y-m-d');
-    //     $horaAtual = date('H:i:s');
-    //     $dataAnterior = date('Y-m-d', strtotime('-24 hours'));
-    //     $dataSeguinte = date('Y-m-d', strtotime('+24 hours'));
 
-    //     $games = BichaoGames::select('bichao_games.*', 'bichao_horarios.horario', 'bichao_modalidades.multiplicador', 'bichao_modalidades.multiplicador_2')
-    //         ->join('bichao_horarios', 'bichao_horarios.id', '=', 'bichao_games.horario_id')
-    //         ->join('bichao_modalidades', 'bichao_modalidades.id', '=', 'bichao_games.modalidade_id')
-    //         ->whereDate('bichao_games.created_at', $dataAtual)
-    //         ->get()
-    //         ->toArray();
-    //     $animais = BichaoAnimals::get()->toArray();
-    //     $gamesWinners = [];
+    // $data = '2024-03-21';
 
-    //     foreach ($games as $game) {
-    //         $resultado = array_values(array_filter($resultados, fn ($resultado) => $resultado['horario_id'] == $game['horario_id']));
-    //         if (sizeof($resultado) == 0) continue;
-    //         $resultado = $resultado[0];
-    //         $horaGame = Date('H:i:s', strtotime($game['created_at']));
-    //         $datetimeGame = Date('Y-m-d H:i:s', strtotime($game['created_at']));
+    public function getWinners($data){
+
+    // $data = '2024-03-25';
+
+        if (!$data) {
+            return response()->json(['error' => 'Data não fornecida'], 400);
+        }
+    
+        $jogos = BichaoGames::whereDate('created_at', $data)->get();
+        $animais = BichaoAnimals::get()->toArray();
+
+        $vencedores = [];
+    
+        foreach ($jogos as $jogo) {
+            $resultado = BichaoResultados::where('horario_id', $jogo->horario_id)
+                              ->whereDate('created_at', $data)
+                              ->first();
+
             
-    //         if ($horaGame > $game['horario']) {
-    //             $resultadoPeriodoInicio = $dataAnterior.' '.$resultado['horario'];
-    //             $resultadoPeriodoFim = $dataAtual.' '.$resultado['horario'];
-    //             if ($datetimeGame <= $resultadoPeriodoInicio || $datetimeGame >= $resultadoPeriodoFim) continue;
-    //         } else {
-    //             $resultadoPeriodoInicio = $dataAnterior.' '.$resultado['horario'];
-    //             $resultadoPeriodoFim = $dataSeguinte.' '.$resultado['horario'];
-    //             if ($datetimeGame <= $resultadoPeriodoInicio || $datetimeGame >= $resultadoPeriodoFim) continue;
-    //         }
+            if ($resultado) {
+                $premios_quantia = 0;
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($jogo->{'premio_' . $i} == 1) {
+                        $premios_quantia++;
+                    }
+                }
 
-    //         $premios_quantia = 0;
-    //         if ($game['premio_1'] == 1) $premios_quantia = $premios_quantia  + 1;
-    //         if ($game['premio_2'] == 1) $premios_quantia = $premios_quantia  + 1;
-    //         if ($game['premio_3'] == 1) $premios_quantia = $premios_quantia  + 1;
-    //         if ($game['premio_4'] == 1) $premios_quantia = $premios_quantia  + 1;
-    //         if ($game['premio_5'] == 1) $premios_quantia = $premios_quantia  + 1;
-
-    //         $valor_premio = $game['valor'] * $game['multiplicador'] / $premios_quantia;
-    //         $game_winner = false;
-
-    //         // Milhar
-    //         if ($game['modalidade_id'] == 1) {
-    //             $winner = false;
-    //             if ($game['premio_1'] == 1 && $resultado['premio_1'] === $game['game_1']) $winner = true;
-    //             if ($game['premio_2'] == 1 && $resultado['premio_2'] === $game['game_1']) $winner = true;
-    //             if ($game['premio_3'] == 1 && $resultado['premio_3'] === $game['game_1']) $winner = true;
-    //             if ($game['premio_4'] == 1 && $resultado['premio_4'] === $game['game_1']) $winner = true;
-    //             if ($game['premio_5'] == 1 && $resultado['premio_5'] === $game['game_1']) $winner = true;
-    //             if ($winner) $game_winner = true;
-    //         }
-
-    //         // Milhar Invertida
-    //         if ($game['modalidade_id'] == 13) {
-    //             $divider = static::getFatorialInvertidoMilhar($game['game_1']);
-    //             $valor_premio = ($game['valor'] / $divider) * $game['multiplicador'] / $premios_quantia;
-
-    //             $winner = 0;
-    //             if ($game['premio_1'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_1'])) $winner += 1;
-    //             if ($game['premio_2'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_2'])) $winner += 1;
-    //             if ($game['premio_3'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_3'])) $winner += 1;
-    //             if ($game['premio_4'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_4'])) $winner += 1;
-    //             if ($game['premio_5'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_5'])) $winner += 1;
-    //             if ($winner > 0) {
-    //                 $game_winner = true;
-    //                 $valor_premio = number_format($valor_premio * $game_winner, 2, ".", "");
-    //             }
-    //         }
-
-    //         // Centena
-    //         if ($game['modalidade_id'] == 2) {
-    //             $winner = false;
-    //             if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 1) === $game['game_1']) $winner = true;
-    //             if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 1) === $game['game_1']) $winner = true;
-    //             if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 1) === $game['game_1']) $winner = true;
-    //             if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 1) === $game['game_1']) $winner = true;
-    //             if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 1) === $game['game_1']) $winner = true;
-    //             if ($winner) $game_winner = true;
-    //         }
-
-    //         // Centena Invertida
-    //         if ($game['modalidade_id'] == 14) {
-    //             $divider = static::getFatorialInvertidoCentena($game['game_1']);
-    //             $valor_premio = ($game['valor'] / $divider) * $game['multiplicador'] / $premios_quantia;
-
-    //             $winner = 0;
-    //             if ($game['premio_1'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_1'], 1))) $winner += 1;
-    //             if ($game['premio_2'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_2'], 1))) $winner += 1;
-    //             if ($game['premio_3'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_3'], 1))) $winner += 1;
-    //             if ($game['premio_4'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_4'], 1))) $winner += 1;
-    //             if ($game['premio_5'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_5'], 1))) $winner += 1;
-    //             if ($winner > 0) {
-    //                 $game_winner = true;
-    //                 $valor_premio = number_format($valor_premio * $game_winner, 2, ".", "");
-    //             }
-    //         }
-
-    //         // Dezena
-    //         if ($game['modalidade_id'] == 3) {
-    //             $winner = false;
-    //             if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) === $game['game_1']) $winner = true;
-    //             if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) === $game['game_1']) $winner = true;
-    //             if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) === $game['game_1']) $winner = true;
-    //             if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) === $game['game_1']) $winner = true;
-    //             if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) === $game['game_1']) $winner = true;
-    //             if ($winner) $game_winner = true;
-    //         }
-
-    //         // Unidade
-    //         if ($game['modalidade_id'] == 12) {
-    //             $winner = false;
-    //             if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 3) === $game['game_1']) $winner = true;
-    //             if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 3) === $game['game_1']) $winner = true;
-    //             if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 3) === $game['game_1']) $winner = true;
-    //             if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 3) === $game['game_1']) $winner = true;
-    //             if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 3) === $game['game_1']) $winner = true;
-    //             if ($winner) $game_winner = true;
-    //         }
-
-    //         // Grupo
-    //         if ($game['modalidade_id'] == 4) {
-    //             $animal = array_values(array_filter($animais, fn ($animal) => $animal['id'] == $game['game_1']));
-    //             if (sizeof($animal) == 0) continue;
-    //             $animal = $animal[0];
-                
-    //             $winner = false;
-    //             if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $winner = true;
-    //             if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $winner = true;
-    //             if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $winner = true;
-    //             if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $winner = true;
-    //             if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $winner = true;
-    //             if ($winner) $game_winner = true;
-    //         }
-
-    //         // Terno de Dezena
-    //         if ($game['modalidade_id'] == 6) {
-    //             $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
-
-    //             $valor_premio = $game['valor'] * $multiplicador;
-    //             $winner = 0;
-    //             $gameResults = [$game['game_1'], $game['game_2'], $game['game_3']];
-    //             if (in_array(substr($resultado['premio_1'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_1'], 2), $games)]);
-    //             if (in_array(substr($resultado['premio_2'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_2'], 2), $games)]);
-    //             if (in_array(substr($resultado['premio_3'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_3'], 2), $games)]);
-    //             if (in_array(substr($resultado['premio_4'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_4'], 2), $games)]);
-    //             if (in_array(substr($resultado['premio_5'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_5'], 2), $games)]);
-    //             if (count($gameResults) === 0) $game_winner = true;
-    //         }
-
-    //         // Quina de Grupo
-    //         if ($game['modalidade_id'] == 11) {
-    //             $animals = array_values(array_filter($animais, fn ($animal) => in_array($animal['id'], [$game['game_1'], $game['game_2'], $game['game_3'], $game['game_4'], $game['game_5']])));
-    //             if (sizeof($animals) == 0) continue;
-
-    //             $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
-    //             $valor_premio = $game['valor'] * $multiplicador;
-                
-    //             $winner = 0;
-    //             foreach ($animals as $animal) {
-    //                 $subWinner = false;
-    //                 if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($subWinner) $winner = $winner + 1;
-    //             }
-                
-    //             if ($winner === 5) $game_winner = true;
-    //         }
-
-    //         // Quadra de Grupo
-    //         if ($game['modalidade_id'] == 10) {
-    //             $animals = array_values(array_filter($animais, fn ($animal) => in_array($animal['id'], [$game['game_1'], $game['game_2'], $game['game_3'], $game['game_4']])));
-    //             if (sizeof($animals) == 0) continue;
-
-    //             $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
-    //             $valor_premio = $game['valor'] * $multiplicador;
-                
-    //             $winner = 0;
-    //             foreach ($animals as $animal) {
-    //                 $subWinner = false;
-    //                 if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($subWinner) $winner = $winner + 1;
-    //             }
-                
-    //             if ($winner === 4) $game_winner = true;
-    //         }
-
-    //         // Terno de Grupo
-    //         if ($game['modalidade_id'] == 7) {
-    //             $animals = array_values(array_filter($animais, fn ($animal) => in_array($animal['id'], [$game['game_1'], $game['game_2'], $game['game_3']])));
-    //             if (sizeof($animals) == 0) continue;
-
-    //             $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
-    //             $valor_premio = $game['valor'] * $multiplicador;
-                
-    //             $winner = 0;
-    //             foreach ($animals as $animal) {
-    //                 $subWinner = false;
-    //                 if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($subWinner) $winner = $winner + 1;
-    //             }
-                
-    //             if ($winner === 3) $game_winner = true;
-    //         }
-
-    //         // Duque de Dezena
-    //         if ($game['modalidade_id'] == 8) {
-    //             $valor_premio = $game['valor'] * $game['multiplicador'];
-    //             $winner = 0;
-    //             $gameResults = [$game['game_1'], $game['game_2']];
-    //             if (in_array(substr($resultado['premio_1'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_1'], 2), $games)]);
-    //             if (in_array(substr($resultado['premio_2'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_2'], 2), $games)]);
-    //             if (in_array(substr($resultado['premio_3'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_3'], 2), $games)]);
-    //             if (in_array(substr($resultado['premio_4'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_4'], 2), $games)]);
-    //             if (in_array(substr($resultado['premio_5'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_5'], 2), $games)]);
-    //             if (count($gameResults) === 0) $game_winner = true;
-    //         }
-
-    //         // Duque de Grupo
-    //         if ($game['modalidade_id'] == 9) {
-    //             $animals = array_values(array_filter($animais, fn ($animal) => in_array($animal['id'], [$game['game_1'], $game['game_2']])));
-    //             if (sizeof($animals) == 0) continue;
-    //             $valor_premio = $game['valor'] * $game['multiplicador'];
-                
-    //             $winner = 0;
-    //             foreach ($animals as $animal) {
-    //                 $subWinner = false;
-    //                 if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $subWinner = true;
-    //                 if ($subWinner) $winner = $winner + 1;
-    //             }
-                
-    //             if ($winner === 2) $game_winner = true;
-    //         }
-
-    //         if ($game_winner) $gamesWinners[] = ['game_id' => $game['id'], 'resultado_id' => $resultado['id'], 'valor_premio' => $valor_premio];
-    //     }
-
-    //     BichaoGamesVencedores::insert($gamesWinners);
-    // }
-
-
-    // private static function get_winners2($resultados) {
-    //     $dataAtual = date('Y-m-d');
-    //     $horaAtual = date('H:i:s');
-    //     $dataAnterior = date('Y-m-d', strtotime('-24 hours'));
-    //     $dataSeguinte = date('Y-m-d', strtotime('+24 hours'));
     
-    //     $games = BichaoGames::select('bichao_games.*', 'bichao_horarios.horario', 'bichao_modalidades.multiplicador', 'bichao_modalidades.multiplicador_2')
-    //         ->join('bichao_horarios', 'bichao_horarios.id', '=', 'bichao_games.horario_id')
-    //         ->join('bichao_modalidades', 'bichao_modalidades.id', '=', 'bichao_games.modalidade_id')
-    //         ->whereDate('bichao_games.created_at', $dataAtual)
-    //         ->get()
-    //         ->toArray();
-    //     $animais = BichaoAnimals::get()->toArray();
-    //     $gamesWinners = [];
+                $valor_premio = $jogo->valor * $jogo->modalidade->multiplicador / $premios_quantia;
+                $game_winner = false;
+
+                // Modalidade "Milhar" -> VALIDADO
+                if ($jogo->modalidade_id == 1) { 
+                    $winner = false;
+                    if ($jogo->premio_1 == 1 && $resultado->premio_1 === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_2 == 1 && $resultado->premio_2 === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_3 == 1 && $resultado->premio_3 === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_4 == 1 && $resultado->premio_4 === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_5 == 1 && $resultado->premio_5 === $jogo->game_1) $winner = true;
+                    if ($winner) $game_winner = true;
+                }
+
+                //Modalidade "Milhar Invertida" -> BLOCKED
+                if ($jogo->modalidade_id == 13) {
+                    $divider = static::getFatorialInvertidoMilhar($jogo->game_1);
+                    $valor_premio = ($jogo->valor / $divider) * $jogo->multiplicador / $premios_quantia;
     
-    //     foreach ($games as $game) {
-    //         $resultado = array_values(array_filter($resultados, fn ($resultado) => $resultado['horario_id'] == $game['horario_id']));
-    //         if (sizeof($resultado) == 0) continue;
-    //         $resultado = $resultado[0];
-    //         $horaGame = strtotime(date('H:i:s', strtotime($game['created_at'])));
-    //         $datetimeGame = strtotime($game['created_at']);
-    
-    //         if ($horaGame > strtotime($game['horario'])) {
-    //             $resultadoPeriodoInicio = strtotime($dataAnterior.' '.$resultado['horario']);
-    //             $resultadoPeriodoFim = strtotime($dataAtual.' '.$resultado['horario']);
-    //             if ($datetimeGame <= $resultadoPeriodoInicio || $datetimeGame >= $resultadoPeriodoFim) continue;
-    //         } else {
-    //             $resultadoPeriodoInicio = strtotime($dataAnterior.' '.$resultado['horario']);
-    //             $resultadoPeriodoFim = strtotime($dataSeguinte.' '.$resultado['horario']);
-    //             if ($datetimeGame <= $resultadoPeriodoInicio || $datetimeGame >= $resultadoPeriodoFim) continue;
-    //         }
-    
-    //         $premios_quantia = 0;
-    //         if ($game['premio_1'] == 1) $premios_quantia++;
-    //         if ($game['premio_2'] == 1) $premios_quantia++;
-    //         if ($game['premio_3'] == 1) $premios_quantia++;
-    //         if ($game['premio_4'] == 1) $premios_quantia++;
-    //         if ($game['premio_5'] == 1) $premios_quantia++;
-    
-    //         $valor_premio = $game['valor'] * $game['multiplicador'] / $premios_quantia;
-    //         $game_winner = false;
-    
-    //         // Verificando o tipo de modalidade
-    //         switch ($game['modalidade_id']) {
-    //             case 1: // Milhar
-    //                 $winner = false;
-    //                 if ($game['premio_1'] == 1 && $resultado['premio_1'] === $game['game_1']) $winner = true;
-    //                 if ($game['premio_2'] == 1 && $resultado['premio_2'] === $game['game_1']) $winner = true;
-    //                 if ($game['premio_3'] == 1 && $resultado['premio_3'] === $game['game_1']) $winner = true;
-    //                 if ($game['premio_4'] == 1 && $resultado['premio_4'] === $game['game_1']) $winner = true;
-    //                 if ($game['premio_5'] == 1 && $resultado['premio_5'] === $game['game_1']) $winner = true;
-    //                 if ($winner) $game_winner = true;
-    //                 break;
-    //             case 2: // Centena
-    //                 $winner = false;
-    //                 if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 1) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 1) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 1) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 1) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 1) === $game['game_1']) $winner = true;
-    //                 if ($winner) $game_winner = true;
-    //                 break;
-    //             case 3: // Dezena
-    //                 $winner = false;
-    //                 if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) === $game['game_1']) $winner = true;
-    //                 if ($winner) $game_winner = true;
-                
-    //                 break;
-    //             case 4: // Grupo
-    //                 $animal = array_values(array_filter($animais, fn ($animal) => $animal['id'] == $game['game_1']));
-    //                 if (sizeof($animal) == 0) continue;
-    //                 $animal = $animal[0];
+                    $winner = 0;
+                    if ($jogo->premio_1 == 1 && static::checkInvertidaWinner($jogo->game_1, $resultado->premio_1)) $winner += 1;
+                    if ($jogo->premio_2 == 1 && static::checkInvertidaWinner($jogo->game_1, $resultado->premio_2)) $winner += 1;
+                    if ($jogo->premio_3 == 1 && static::checkInvertidaWinner($jogo->game_1, $resultado->premio_3)) $winner += 1;
+                    if ($jogo->premio_4 == 1 && static::checkInvertidaWinner($jogo->game_1, $resultado->premio_4)) $winner += 1;
+                    if ($jogo->premio_5 == 1 && static::checkInvertidaWinner($jogo->game_1, $resultado->premio_5)) $winner += 1;
+                    if ($winner > 0) {
+                        $game_winner = true;
+                        $valor_premio = number_format($valor_premio * $game_winner, 2, ".", "");
+                    }
+                }
+
+                // Modalidade "Centena" -> VALIDADO
+                if ($jogo->modalidade_id == 2) { 
+                    $winner = false;
+                    // dd($resultado->premio_1);
+                    if ($jogo->premio_1 == 1 && substr($resultado->premio_1, 1) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_1 == 1 && substr($resultado->premio_2, 1) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_1 == 1 && substr($resultado->premio_3, 1) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_1 == 1 && substr($resultado->premio_4, 1) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_1 == 1 && substr($resultado->premio_5, 1) === $jogo->game_1) $winner = true;
+                    if ($winner) $game_winner = true;
+                }
+
+                // Centena Invertida -> BLOCKED
+                if ($jogo->modalidade_id == 14) {
+                    $divider = static::getFatorialInvertidoCentena($jogo->game_1);
+                    $valor_premio = ($jogo->valor / $divider) * $jogo->multiplicador / $premios_quantia;
+
+                    $game_winner = 0;
+                    if ($jogo->premio_1 == 1 && static::checkInvertidaWinner($jogo->game_1, substr($resultado->premio_1, 1))) $game_winner += 1;
+                    if ($jogo->premio_2 == 1 && static::checkInvertidaWinner($jogo->game_1, substr($resultado->premio_2, 1))) $game_winner += 1;
+                    if ($jogo->premio_3 == 1 && static::checkInvertidaWinner($jogo->game_1, substr($resultado->premio_3, 1))) $game_winner += 1;
+                    if ($jogo->premio_4 == 1 && static::checkInvertidaWinner($jogo->game_1, substr($resultado->premio_4, 1))) $game_winner += 1;
+                    if ($jogo->premio_5 == 1 && static::checkInvertidaWinner($jogo->game_1, substr($resultado->premio_5, 1))) $game_winner += 1;
+
+                    if ($game_winner > 0) {
+                        $game_winner = true;
+                        $valor_premio = number_format($valor_premio * $game_winner, 2, ".", "");
+                    }
+                }
+
+
+
+                // Verificação para a modalidade "Dezena" -> VALIDADO
+                if ($jogo->modalidade_id == 3) {
+                    $winner = false;
+                    if ($jogo->premio_1 == 1 && substr($resultado->premio_1, 2) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_2 == 1 && substr($resultado->premio_2, 2) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_3 == 1 && substr($resultado->premio_3, 2) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_4 == 1 && substr($resultado->premio_4, 2) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_5 == 1 && substr($resultado->premio_5, 2) === $jogo->game_1) $winner = true;
+                    if ($winner) $game_winner = true;
+                }
+
+                // Verificação para a modalidade "Unidade" -> VALIDADO 
+                if ($jogo->modalidade_id == 12) {
+                    $winner = false;
+                    if ($jogo->premio_1 == 1 && substr($resultado->premio_1, 3) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_2 == 1 && substr($resultado->premio_2, 3) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_3 == 1 && substr($resultado->premio_3, 3) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_4 == 1 && substr($resultado->premio_4, 3) === $jogo->game_1) $winner = true;
+                    if ($jogo->premio_5 == 1 && substr($resultado->premio_5, 3) === $jogo->game_1) $winner = true;
+                    if ($winner) $game_winner = true;
+
+                }
+
+                // Verificação para a modalidade "Grupo" -> VALIDADO
+                if ($jogo->modalidade_id == 4) {
+                    $animal = array_values(array_filter($animais, function ($animal) use ($jogo) {
+                        return $animal['id'] == $jogo->game_1;
+                    }));
                     
-    //                 $winner = false;
-    //                 if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $winner = true;
-    //                 if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $winner = true;
-    //                 if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $winner = true;
-    //                 if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $winner = true;
-    //                 if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $winner = true;
-    //                 if ($winner) $game_winner = true;
-    //                 break;
-    //             case 6: // Terno de Dezena
-    //                 $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
-    
-    //                 $valor_premio = $game['valor'] * $multiplicador;
-    //                 $winner = 0;
-    //                 $gameResults = [$game['game_1'], $game['game_2'], $game['game_3']];
-    //                 if (in_array(substr($resultado['premio_1'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_1'], 2), $games)]);
-    //                 if (in_array(substr($resultado['premio_2'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_2'], 2), $games)]);
-    //                 if (in_array(substr($resultado['premio_3'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_3'], 2), $games)]);
-    //                 if (in_array(substr($resultado['premio_4'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_4'], 2), $games)]);
-    //                 if (in_array(substr($resultado['premio_5'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_5'], 2), $games)]);
-    //                 if (count($gameResults) === 0) $game_winner = true;
+                    if (sizeof($animal) == 0) continue;
+                    $animal = $animal[0];
                     
-    //                 break;
-    //             case 7: // Terno de Grupo
-    //                 $animals = array_values(array_filter($animais, fn ($animal) => in_array($animal['id'], [$game['game_1'], $game['game_2'], $game['game_3']])));
-    //                 if (sizeof($animals) == 0) continue;
+                    $winner = false;
+                    if ($jogo->premio_1 == 1 && substr($resultado->premio_1, 2) >= $animal['value_1'] && substr($resultado->premio_1, 2) <= $animal['value_4']) $winner = true;
+                    if ($jogo->premio_2 == 1 && substr($resultado->premio_2, 2) >= $animal['value_1'] && substr($resultado->premio_2, 2) <= $animal['value_4']) $winner = true;
+                    if ($jogo->premio_3 == 1 && substr($resultado->premio_3, 2) >= $animal['value_1'] && substr($resultado->premio_3, 2) <= $animal['value_4']) $winner = true;
+                    if ($jogo->premio_4 == 1 && substr($resultado->premio_4, 2) >= $animal['value_1'] && substr($resultado->premio_4, 2) <= $animal['value_4']) $winner = true;
+                    if ($jogo->premio_5 == 1 && substr($resultado->premio_5, 2) >= $animal['value_1'] && substr($resultado->premio_5, 2) <= $animal['value_4']) $winner = true;
+                    if ($winner) $game_winner = true;
 
-    //                 $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
-    //                 $valor_premio = $game['valor'] * $multiplicador;
-                    
-    //                 $winner = 0;
-    //                 foreach ($animals as $animal) {
-    //                     $subWinner = false;
-    //                     if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($subWinner) $winner = $winner + 1;
-    //                 }
-                    
-    //                 if ($winner === 3) $game_winner = true;
-    //                 break;
-    //             case 8: // Duque de Dezena
-    //                 $valor_premio = $game['valor'] * $game['multiplicador'];
-    //                 $winner = 0;
-    //                 $gameResults = [$game['game_1'], $game['game_2']];
-    //                 if (in_array(substr($resultado['premio_1'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_1'], 2), $games)]);
-    //                 if (in_array(substr($resultado['premio_2'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_2'], 2), $games)]);
-    //                 if (in_array(substr($resultado['premio_3'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_3'], 2), $games)]);
-    //                 if (in_array(substr($resultado['premio_4'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_4'], 2), $games)]);
-    //                 if (in_array(substr($resultado['premio_5'], 2), $gameResults)) unset($gameResults[array_search(substr($resultado['premio_5'], 2), $games)]);
-    //                 if (count($gameResults) === 0) $game_winner = true;
-    //                     break;
-    //             case 9: // Duque de Grupo
-    //                 $animals = array_values(array_filter($animais, fn ($animal) => in_array($animal['id'], [$game['game_1'], $game['game_2']])));
-    //                 if (sizeof($animals) == 0) continue;
-    //                 $valor_premio = $game['valor'] * $game['multiplicador'];
-                    
-    //                 $winner = 0;
-    //                 foreach ($animals as $animal) {
-    //                     $subWinner = false;
-    //                     if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($subWinner) $winner = $winner + 1;
-    //                 }
-                    
-    //                 if ($winner === 2) $game_winner = true;
-    //                 if ($game_winner) $gamesWinners[] = ['game_id' => $game['id'], 'resultado_id' => $resultado['id'], 'valor_premio' => $valor_premio];
-    //                 break;
-    //             case 10: // Quadra de Grupo
-    //                 $animals = array_values(array_filter($animais, fn ($animal) => in_array($animal['id'], [$game['game_1'], $game['game_2'], $game['game_3'], $game['game_4']])));
-    //                 if (sizeof($animals) == 0) continue;
-    
-    //                 $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
-    //                 $valor_premio = $game['valor'] * $multiplicador;
-                    
-    //                 $winner = 0;
-    //                 foreach ($animals as $animal) {
-    //                     $subWinner = false;
-    //                     if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($subWinner) $winner = $winner + 1;
-    //                 }
-                    
-    //                 if ($winner === 4) $game_winner = true;
+                }
+
+                //Modalidade Terno de Dezena ->VALIDADO
+                if ($jogo->modalidade_id == 6) {
+                    $multiplicador = $premios_quantia == 3 ? $jogo->multiplicador : $jogo->multiplicador_2;
                 
-    //                 break;
-    //             case 11: // Quina de Grupo
-    //                 $animals = array_values(array_filter($animais, fn ($animal) => in_array($animal['id'], [$game['game_1'], $game['game_2'], $game['game_3'], $game['game_4'], $game['game_5']])));
-    //                 if (sizeof($animals) == 0) continue;
-    
-    //                 $multiplicador = $premios_quantia == 3 ? $game['multiplicador'] : $game['multiplicador_2'];
-    //                 $valor_premio = $game['valor'] * $multiplicador;
+                    $valor_premio = $jogo->valor * $multiplicador;
+                    $game_winner = 0;
+                    $gameResults = [$jogo->game_1, $jogo->game_2, $jogo->game_3];
+                    // dd($gameResults, $resultado->premio_1, $jogo->game_3, $winner);
+
+                    if (in_array(substr($resultado->premio_1, 2), $gameResults)) unset($gameResults[array_search(substr($resultado->premio_1, 2), $gameResults)]);
+                    if (in_array(substr($resultado->premio_2, 2), $gameResults)) unset($gameResults[array_search(substr($resultado->premio_2, 2), $gameResults)]);
+                    if (in_array(substr($resultado->premio_3, 2), $gameResults)) unset($gameResults[array_search(substr($resultado->premio_3, 2), $gameResults)]);
+                    if (in_array(substr($resultado->premio_4, 2), $gameResults)) unset($gameResults[array_search(substr($resultado->premio_4, 2), $gameResults)]);
+                    if (in_array(substr($resultado->premio_5, 2), $gameResults)) unset($gameResults[array_search(substr($resultado->premio_5, 2), $gameResults)]);
+                    if (count($gameResults) === 0) $game_winner = true;
+
+                }
+
+                // Quina de Grupo --> Valiado
+                if ($jogo->modalidade_id == 11) {
+                    $animals = array_values(array_filter($animais, function ($animal) use ($jogo) {
+                        return in_array($animal['id'], [$jogo->game_1, $jogo->game_2, $jogo->game_3, $jogo->game_4, $jogo->game_5]);
+                    }));
+                    if (sizeof($animals) == 0) continue;
+
+                    $multiplicador = $premios_quantia == 3 ? $jogo->multiplicador : $jogo->multiplicador_2;
+                    $valor_premio = $jogo->valor * $multiplicador;
                     
-    //                 $winner = 0;
-    //                 foreach ($animals as $animal) {
-    //                     $subWinner = false;
-    //                     if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 2) >= $animal['value_1'] && substr($resultado['premio_1'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 2) >= $animal['value_1'] && substr($resultado['premio_2'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 2) >= $animal['value_1'] && substr($resultado['premio_3'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 2) >= $animal['value_1'] && substr($resultado['premio_4'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 2) >= $animal['value_1'] && substr($resultado['premio_5'], 2) <= $animal['value_4']) $subWinner = true;
-    //                     if ($subWinner) $winner = $winner + 1;
-    //                 }
+                    $winner = 0;
+                    foreach ($animals as $animal) {
+                        $subWinner = false;
+                        if ($jogo->premio_1 == 1 && substr($resultado->premio_1, 2) >= $animal['value_1'] && substr($resultado->premio_1, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_2 == 1 && substr($resultado->premio_2, 2) >= $animal['value_1'] && substr($resultado->premio_2, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_3 == 1 && substr($resultado->premio_3, 2) >= $animal['value_1'] && substr($resultado->premio_3, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_4 == 1 && substr($resultado->premio_4, 2) >= $animal['value_1'] && substr($resultado->premio_4, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_5 == 1 && substr($resultado->premio_5, 2) >= $animal['value_1'] && substr($resultado->premio_5, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($subWinner) $winner = $winner + 1;
+                    }
                     
-    //                 if ($winner === 5) $game_winner = true;
+                    if ($winner === 5) $game_winner = true;
+
+                }
+
+                // Quadra de Grupo --> VALIDADO
+                if ($jogo->modalidade_id == 10) {
+                    $animals = array_values(array_filter($animais, function ($animal) use ($jogo) {
+                        return in_array($animal['id'], [$jogo->game_1, $jogo->game_2, $jogo->game_3, $jogo->game_4]);
+                    }));
+                    if (sizeof($animals) == 0) continue;
+
+                    $multiplicador = $premios_quantia == 3 ? $jogo->multiplicador : $jogo->multiplicador_2;
+                    $valor_premio = $jogo->valor * $multiplicador;
+                    
+                    $winner = 0;
+                    foreach ($animals as $animal) {
+                        $subWinner = false;
+                        if ($jogo->premio_1 == 1 && substr($resultado->premio_1, 2) >= $animal['value_1'] && substr($resultado->premio_1, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_2 == 1 && substr($resultado->premio_2, 2) >= $animal['value_1'] && substr($resultado->premio_2, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_3 == 1 && substr($resultado->premio_3, 2) >= $animal['value_1'] && substr($resultado->premio_3, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_4 == 1 && substr($resultado->premio_4, 2) >= $animal['value_1'] && substr($resultado->premio_4, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_5 == 1 && substr($resultado->premio_5, 2) >= $animal['value_1'] && substr($resultado->premio_5, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($subWinner) $winner = $winner + 1;
+                    }
+                    
+                    if ($winner === 4) $game_winner = true;
+
+                }
+
+                // Terno de Grupo -- > VALIDADO
+                if ($jogo->modalidade_id == 7) {
+                    $animals = array_values(array_filter($animais, function ($animal) use ($jogo) {
+                        return in_array($animal['id'], [$jogo->game_1, $jogo->game_2, $jogo->game_3]);
+                    }));
+                    if (sizeof($animals) == 0) continue;
+
+                    $multiplicador = $premios_quantia == 3 ? $jogo->multiplicador : $jogo->multiplicador_2;
+                    $valor_premio = $jogo->valor * $multiplicador;
+                    
+                    $winner = 0;
+                    foreach ($animals as $animal) {
+                        $subWinner = false;
+                        if ($jogo->premio_1 == 1 && substr($resultado->premio_1, 2) >= $animal['value_1'] && substr($resultado->premio_1, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_2 == 1 && substr($resultado->premio_2, 2) >= $animal['value_1'] && substr($resultado->premio_2, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_3 == 1 && substr($resultado->premio_3, 2) >= $animal['value_1'] && substr($resultado->premio_3, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_4 == 1 && substr($resultado->premio_4, 2) >= $animal['value_1'] && substr($resultado->premio_4, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_5 == 1 && substr($resultado->premio_5, 2) >= $animal['value_1'] && substr($resultado->premio_5, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($subWinner) $winner = $winner + 1;
+                    }
+                    
+                    if ($winner === 3) $game_winner = true;
+                    // dd($animals, $jogo->premio_1, $resultado->premio_1, $resultado->premio_2, $resultado->premio_3, $resultado->premio_4, $resultado->premio_5, $jogo->game_1, $winner);
+
+                }
                 
-    //                 break;
-    //             case 12: // Unidade
-    //                 $winner = false;
-    //                 if ($game['premio_1'] == 1 && substr($resultado['premio_1'], 3) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_2'] == 1 && substr($resultado['premio_2'], 3) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_3'] == 1 && substr($resultado['premio_3'], 3) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_4'] == 1 && substr($resultado['premio_4'], 3) === $game['game_1']) $winner = true;
-    //                 if ($game['premio_5'] == 1 && substr($resultado['premio_5'], 3) === $game['game_1']) $winner = true;
-    //                 if ($winner) $game_winner = true;
+                // Duque de Dezena
+                if ($jogo->modalidade_id == 8) {
+                    $valor_premio = $jogo->valor * $jogo->multiplicador;
+                    $winner = 0;
+                    $gameResults = [$jogo->game_1, $jogo->game_2];
+                    if (in_array(substr($resultado->premio_1, 2), $gameResults)) unset($gameResults[array_search(substr($resultado->premio_1, 2), $gameResults)]);
+                    if (in_array(substr($resultado->premio_2, 2), $gameResults)) unset($gameResults[array_search(substr($resultado->premio_2, 2), $gameResults)]);
+                    if (in_array(substr($resultado->premio_3, 2), $gameResults)) unset($gameResults[array_search(substr($resultado->premio_3, 2), $gameResults)]);
+                    if (in_array(substr($resultado->premio_4, 2), $gameResults)) unset($gameResults[array_search(substr($resultado->premio_4, 2), $gameResults)]);
+                    if (in_array(substr($resultado->premio_5, 2), $gameResults)) unset($gameResults[array_search(substr($resultado->premio_5, 2), $gameResults)]);
+                    if (count($gameResults) === 0) $game_winner = true;
+                }
+
+                // Duque de Grupo -- >VALIADO
+                if ($jogo['modalidade_id'] == 9) {
+                    $animals = array_values(array_filter($animais, function ($animal) use ($jogo) {
+                        return in_array($animal['id'], [$jogo['game_1'], $jogo['game_2']]);
+                    }));
+
                     
-    //                 break;
-    //             case 13: // Milhar Invertida
-    //                 $divider = static::getFatorialInvertidoMilhar($game['game_1']);
-    //                 $valor_premio = ($game['valor'] / $divider) * $game['multiplicador'] / $premios_quantia;
+                    if (sizeof($animals) == 0) continue;
+                    
+                    $valor_premio = $jogo['valor'] * $jogo['multiplicador'];
+                    $game_winner = 0;
+                    
+                    foreach ($animals as $animal) {
+                        $subWinner = false;
+                        if ($jogo->premio_1 == 1 && substr($resultado->premio_1, 2) >= $animal['value_1'] && substr($resultado->premio_1, 2) <= $animal['value_4']) $subWinner = true;
+
+                        if ($jogo->premio_2 == 1 && substr($resultado->premio_2, 2) >= $animal['value_1'] && substr($resultado->premio_2, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_3 == 1 && substr($resultado->premio_3, 2) >= $animal['value_1'] && substr($resultado->premio_3, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_4 == 1 && substr($resultado->premio_4, 2) >= $animal['value_1'] && substr($resultado->premio_4, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($jogo->premio_5 == 1 && substr($resultado->premio_5, 2) >= $animal['value_1'] && substr($resultado->premio_5, 2) <= $animal['value_4']) $subWinner = true;
+                        if ($subWinner) $game_winner = $game_winner + 1;
+                    }
+
+                    if ($game_winner != 2) $game_winner = false;
+                }
+
+
+                if ($game_winner) {
+                    // Adicionar informações sobre o vencedor ao array
+                    $gameExistente = BichaoGamesVencedores::where('game_id', $jogo->id)->exists();
+
+                    // Se o game_id já existir, pule para o próximo item
+                    if (!$gameExistente) {
+                        // Adicionar informações sobre o vencedor ao array
+                        $vencedores[] = [
+                            'game_id' => $jogo->id, 
+                            'valor_premio' => $valor_premio,
+                            'resultado_id' => $resultado->id,
+                            'created_at'=> now(),
+                            'updated_at'=> now()
+                        ];
+                    }
+                    
+
+                }
+            }
+
+        }
+
+        BichaoGamesVencedores::insert($vencedores);
+
+        return response()->json($vencedores);
+    }
     
-    //                 $winner = 0;
-    //                 if ($game['premio_1'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_1'])) $winner += 1;
-    //                 if ($game['premio_2'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_2'])) $winner += 1;
-    //                 if ($game['premio_3'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_3'])) $winner += 1;
-    //                 if ($game['premio_4'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_4'])) $winner += 1;
-    //                 if ($game['premio_5'] == 1 && static::checkInvertidaWinner($game['game_1'], $resultado['premio_5'])) $winner += 1;
-    //                 if ($winner > 0) {
-    //                     $game_winner = true;
-    //                     $valor_premio = number_format($valor_premio * $game_winner, 2, ".", "");
-    //                 }
-                
-    //                 break;
-    //             case 14: // Centena Invertida
-    //                 $divider = static::getFatorialInvertidoCentena($game['game_1']);
-    //                 $valor_premio = ($game['valor'] / $divider) * $game['multiplicador'] / $premios_quantia;
+
+    //Funções de suporte: 
+    private static function permutations($pool, $r = null) {
+        $n = count($pool);
     
-    //                 $winner = 0;
-    //                 if ($game['premio_1'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_1'], 1))) $winner += 1;
-    //                 if ($game['premio_2'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_2'], 1))) $winner += 1;
-    //                 if ($game['premio_3'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_3'], 1))) $winner += 1;
-    //                 if ($game['premio_4'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_4'], 1))) $winner += 1;
-    //                 if ($game['premio_5'] == 1 && static::checkInvertidaWinner($game['game_1'], substr($resultado['premio_5'], 1))) $winner += 1;
-    //                 if ($winner > 0) {
-    //                     $game_winner = true;
-    //                     $valor_premio = number_format($valor_premio * $game_winner, 2, ".", "");
-    //                 }
-    //                 break;
-    //             default:
-    //         }
+        if ($r == null) {
+            $r = $n;
+        }
     
-    //         if ($game_winner) $gamesWinners[] = ['game_id' => $game['id'], 'resultado_id' => $resultado['id'], 'valor_premio' => $valor_premio];
-    //     }
+        if ($r > $n) {
+            return;
+        }
     
-    //     BichaoGamesVencedores::insert($gamesWinners);
-    // }
+        $indices = range(0, $n - 1);
+        $cycles = range($n, $n - $r + 1, -1); // count down
     
+        yield array_slice($pool, 0, $r);
+    
+        if ($n <= 0) {
+            return;
+        }
+    
+        while (true) {
+            $exit_early = false;
+            for ($i = $r;$i--;$i >= 0) {
+                $cycles[$i]-= 1;
+                if ($cycles[$i] == 0) {
+                    // Push whatever is at index $i to the end, move everything back
+                    if ($i < count($indices)) {
+                        $removed = array_splice($indices, $i, 1);
+                        array_push($indices, $removed[0]);
+                    }
+                    $cycles[$i] = $n - $i;
+                } else {
+                    $j = $cycles[$i];
+                    // Swap indices $i & -$j.
+                    $i_val = $indices[$i];
+                    $neg_j_val = $indices[count($indices) - $j];
+                    $indices[$i] = $neg_j_val;
+                    $indices[count($indices) - $j] = $i_val;
+                    $result = [];
+                    $counter = 0;
+                    foreach ($indices as $indx) {
+                        array_push($result, $pool[$indx]);
+                        $counter++;
+                        if ($counter == $r) break;
+                    }
+                    yield $result;
+                    $exit_early = true;
+                    break;
+                }
+            }
+            if (!$exit_early) {
+                break; // Outer while loop
+            }
+        }
+    }
+    
+    private static function checkInvertidaWinner($game, $resultado) {
+        $game = str_split($game);
+        $resultado = str_split($resultado);
+        foreach ($game as $game) {
+            $key = array_search($game, $resultado);
+            if ($key !== false) unset($resultado[$key]);
+        }
+        return count($resultado) === 0;
+    }
+
+    private static function getFatorialInvertidoCentena($game) {
+        $result = iterator_to_array(static::permutations(str_split($game), 3));
+        $response = [];
+        foreach ($result as $row) {
+            if (!in_array($row, $response)) array_push($response, $row);
+        }
+
+        return count($response);
+    }
+
+    private static function getFatorialInvertidoMilhar($game) {
+        $result = iterator_to_array(static::permutations(str_split($game), 4));
+        $response = [];
+        foreach ($result as $row) {
+            if (!in_array($row, $response)) array_push($response, $row);
+        }
+
+        return count($response);
+    }
     
 }

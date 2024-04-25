@@ -108,7 +108,7 @@ class Commision
 
         if (is_int($game)) {
             $idgame = $game;
-        } elseif (is_object($game) && property_exists($game, 'id')) {
+        } elseif (is_object($game)) {
             $idgame = $game->id;
         }        $user = User::find($user_id);
         if (!$user) return 0;
