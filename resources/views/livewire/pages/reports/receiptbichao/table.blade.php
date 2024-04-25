@@ -149,7 +149,7 @@
                         <th>{{ trans('admin.gains.table-id-header') }}</th>
                         <th>{{ trans('admin.gains.table-game-type-header') }}</th>
                         <th>{{ trans('admin.gains.table-cpf-header') }}</th>
-                        <th scope="col">{{ trans('admin.bichao.resultados') }} <br />({{ trans('admin.falta.valorPagar') }})</th>
+                        <th class="text-size-1 text-left">Prêmio</th>
                         <th>{{ trans('admin.gains.table-customer-header') }}</th>
                         <th>{{ trans('admin.gains.table-user-header') }}</th>
                         <th>{{ trans('admin.gains.table-status-header') }}</th>
