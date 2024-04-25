@@ -146,6 +146,7 @@
                     <tr>
                         <th>{{ trans('admin.gains.table-id-header') }}</th>
                         <th>{{ trans('admin.bichao.loteria') }}</th>
+                        <th class="text-size-1 text-left">Prêmio</th>
                         <th>{{ trans('admin.bichao.modalidade') }}</th>
                         <th>{{ trans('admin.bichao.aposta') }}</th>
                         <th>{{ trans('admin.gains.table-cpf-header') }}</th>
@@ -176,6 +177,9 @@
                         <tr>
                             <td>{{ $game->id }}</td>
                             <td>{{ date('H\hi', strtotime($game->horario->horario)) }} - {{ $game->horario->banca }}</td>
+                            <td>
+                                R$ {{$game->premio_a_receber}}
+                            </td>
                             <td>{{ $game->modalidade->nome }}</td>
                             <td>{{ str_pad(join(' - ', $gameNumbers), 2, 0, STR_PAD_LEFT) }}</td>
                             <td>{{ \App\Helper\Mask::addMaskCpf($game->client->cpf) }}</td>
