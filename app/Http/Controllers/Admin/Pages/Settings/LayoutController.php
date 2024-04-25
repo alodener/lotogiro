@@ -8,6 +8,7 @@ use App\Models\Layout_Button;
 use App\Models\Layout_carousel_grande;
 use App\Models\Layout_icons_sidebar;
 use App\Models\Layout_imagens_resultado;
+use App\Models\Layout_imagens_publicidade;
 
 use Carbon\Carbon;
 use FontLib\Table\Type\post;
@@ -70,6 +71,13 @@ class LayoutController extends Controller
 
                 }
         }
+        if($config == 'Imagens Publicidade'){
+            $busca = Layout_imagens_publicidade::find($id);
+                if ($busca) {
+                    $busca->delete();
+
+                }
+        }
 
 
       
@@ -82,19 +90,35 @@ class LayoutController extends Controller
         $layout_carousel_grande = Layout_carousel_grande::all();
         $layout_icons_sidebar = Layout_icons_sidebar::all();
         $layout_imagens_resultado = Layout_imagens_resultado::all();
+        $layout_imagens_publicidade = Layout_imagens_publicidade::all();
 
-        return view('admin.pages.settings.layout.edit', ['layout' => $layout, 'layout_button' => $layout_button, 'layout_carousel_grande' => $layout_carousel_grande, 'layout_icons_sidebar' =>  $layout_icons_sidebar,'layout_imagens_resultado' =>  $layout_imagens_resultado]);
+        return view('admin.pages.settings.layout.edit', ['layout' => $layout, 'layout_button' => $layout_button, 'layout_carousel_grande' => $layout_carousel_grande, 'layout_icons_sidebar' =>  $layout_icons_sidebar,'layout_imagens_resultado' =>  $layout_imagens_resultado,'layout_imagens_publicidade' =>  $layout_imagens_publicidade]);
     }
 
 
 
 
-    public function update(Request $request, Layout_Button $layout_button, Layout_carousel_grande $layout_carousel_grande, Layout_icons_sidebar $layout_icons_sidebar,Layout_imagens_resultado $layout_imagens_resultado)
+    public function update(Request $request, Layout_Button $layout_button, Layout_carousel_grande $layout_carousel_grande, Layout_icons_sidebar $layout_icons_sidebar,Layout_imagens_resultado $layout_imagens_resultado,Layout_imagens_publicidade $layout_imagens_publicidade)
     {
 
 
 
         $data = $request->all();
+
+        if($data['nome_config'] == 'Imagens Publicidade'){
+
+
+            if (isset($request->imagens_publicidade)) {
+                if ($request->file('imagens_publicidade')->isValid()) {
+                    $image = $request->imagens_publicidade->store('banner_publicidade');
+                    $data['logo'] = $image;
+                    $layout_imagens_publicidade->url = $data['logo'];
+                    $layout_imagens_publicidade->nome = $request->nome;
+                    $layout_imagens_publicidade->save();
+    
+                }
+            }
+        }
 
         if($data['nome_config'] == 'Imagens Resultados'){
 

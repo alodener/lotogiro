@@ -57,9 +57,10 @@
                         {{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}
                     </h4>
                 </div>
-                <div class="container" style="padding:0px;">
-                    <img src="https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg"
-                        style="width:100%;max-height:150px;">
+                <div class="container-fluid" style="padding:0px;">
+                    <img src="{{ $typeGame->banner_resultados ? asset("storage/{$typeGame->banner_resultados}") :
+                    asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg') }}"
+                    style="width:100%;max-height:150px;">
 
 
                 </div>
@@ -75,10 +76,11 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 d-md-flex d-none">
         <div class="container" style="padding:0px;">
-            <img src="https://i.ibb.co/zQHhvj2/vertical-background-0ky9f0wy7qxg8h0x.jpg"
-                style="width:100%;height:100vh;">
+            <img src="{{ $banner_publicidade->url ? asset("storage/{$banner_publicidade->url}") :
+            asset('https://i.ibb.co/zQHhvj2/vertical-background-0ky9f0wy7qxg8h0x.jpg') }}"
+            style="width:100%;height:100vh;">
         </div>
     </div>
 </div>
@@ -133,6 +135,103 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-contentt">
+                <div class="modal-header">
+                    <div class="d-flex container justify-content-between align-items-center">
+                        <h5 class="modal-title" id="exampleModalLabel">LTB - Lotinha | Cotação</h5>
+                        <button class="btn-cotacao-download"><i class="fa fa-clipboard" aria-hidden="true"></i>
+                            Baixar Cotação</button>
+                    </div>
+
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Dezena</th>
+                                <th scope="col">Multiplicador</th>
+                                <th scope="col">Retorno (R$1,00)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>12</td>
+                                <td>10x</td>
+                                <td>R$:10,00</td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>100x</td>
+                                <td>R$:100,00</td>
+                            </tr>
+                            <tr>
+                                <td>14</td>
+                                <td>200x</td>
+                                <td>R$:200,00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ModalResultados" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-contentt">
+                <div class="modal-header">
+                    <div class="d-flex container justify-content-between align-items-center">
+                        <h5 class="modal-title" id="exampleModalLabel">Ultimos Sorteios</h5>
+
+                    </div>
+
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Data do Sorteio</th>
+                                <th scope="col">Bolas</th>
+                                <th scope="col">Baixar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>04/23/2024 - 13:30</td>
+                                <td class="d-flex">
+                                    <div class="bol">01</div>
+                                    <div class="bol">02</div>
+                                    <div class="bol">03</div>
+                                    <div class="bol">04</div>
+                                </td>
+                                <td><i class="fa fa-clipboard" aria-hidden="true"></i></td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>100x</td>
+                                <td><i class="fa fa-clipboard" aria-hidden="true"></i></td>
+                            </tr>
+                            <tr>
+                                <td>14</td>
+                                <td>200x</td>
+                                <td><i class="fa fa-clipboard" aria-hidden="true"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -171,6 +270,21 @@
 
 @push('styles')
 <style>
+    .bol {
+        margin: 0px 5px !important;
+        border-radius: 100%;
+        border: 1px solid #75baff;
+        background: #636363;
+        display: flex;
+        width: 30px;
+        height: 30px;
+        align-items: center;
+        justify-content: center;
+        padding: 0px;
+        margin: 0px;
+
+    }
+
     /* Estilo do modal */
     .modal {
         display: none;

@@ -35,5 +35,10 @@ class LayoutSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('layout')->insert([
+            'nome_config' => 'Imagens Publicidade',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

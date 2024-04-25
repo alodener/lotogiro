@@ -3,7 +3,27 @@
 
     <div class="d-flex flex-md-row flex-column-reverse mt-2">
         {{-- CARD 1 --}}
+        <div class="d-md-none d-flex funtions-mobile">
+            <div class="col-md-6 justify-content-center align-items-center text-center">
+                <div class="d-flex card-header container justify-content-center align-items-center"
+                    style="min-height: 62px;">
+                    <div class="d-flex ">
+                        <button data-toggle="modal" data-target="#ModalResultados" class="btn-copiacola "
+                            style="background: #212425;"><i class="fa fa-trophy mr-2" style="font-size: 15px;"
+                                aria-hidden="true"></i>
+                            Ultimos Resultados</button> <button data-toggle="modal" data-target="#exampleModal"
+                            class="btn-copiacola mr-2 ml-2"><i class="fa fa-money mr-2" style="font-size: 15px;"
+                                aria-hidden="true"></i>
+                            Ver Cotação</button>
+                        <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"
+                            class="btn btn-copiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
+                                aria-hidden="true"></i>
+                            Copia e Cola</a>
+                    </div>
+                </div>
 
+            </div>
+        </div>
         {{-- PARTE DE CALCULO DE VALORES DO JOGO --}}
         @if(isset($values) && $values->count() > 0)
         @foreach($values as $value)
@@ -19,9 +39,11 @@
                     oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                 <div class="d-flex cardbtsadd container justify-content-around align-items-center mt-2">
                     <p style="font-size:10px; margin:0px;">Valores Rápidos:</p>
+                    <div class="d-flex">
                     <button class="btn-add-value-extra" onclick="addmoney(event,1)">+ R$ 1,00</button>
-                    <button class="btn-add-value-extra btspadding" onclick="addmoney(event,5)">+ R$ 5,00</button>
+                    <button class="btn-add-value-extra mr-1 ml-1" onclick="addmoney(event,5)">+ R$ 5,00</button>
                     <button class="btn-add-value-extra" onclick="addmoney(event,10)">+ R$ 10,00</button>
+                </div>
                 </div>
             </div>
             <div class="d-flex card-header flex-column justify-content-center align-items-center"
@@ -36,7 +58,7 @@
 
         @endif
 
-
+        
 
         {{-- CARD 2 --}}
 
@@ -55,13 +77,14 @@
                     @endforeach
                 </div>
             </div>
-            <div class="d-flex card-header flex-column justify-content-center align-items-center"
+            <div class="d-none d-md-flex  card-header flex-column justify-content-center align-items-center"
                 style="min-height: 62px;">
                 <h5 style="font-weight: bold; font-size:15px; min-width:150px; margin:0px;" class="mb-1">Multiplos Jogos
                 </h5>
-                <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}" class="btn btn-copiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
-                    aria-hidden="true"></i>
-                Copia e Cola</a>
+                <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"
+                    class="btn btn-copiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
+                        aria-hidden="true"></i>
+                    Copia e Cola</a>
             </div>
         </div>
         {{-- CARD 3 --}}
@@ -123,18 +146,22 @@
 
                 @endif
             </div>
-            <div class="d-flex card-header flex-column container justify-content-center align-items-center"
+            <div class="d-none d-md-flex card-header flex-column container justify-content-center align-items-center "
                 style="min-height: 62px;">
                 <h5 style="font-weight: bold; font-size:15px; margin:0px; " class="mb-1">Consultar</h5>
                 <div class="d-flex btsconsultar ">
-                    <button class="btn-copiacola mr-2 ml-2" style="background: #212425;"><i class="fa fa-trophy mr-2"
-                            style="font-size: 15px;" aria-hidden="true"></i>
-                        Ultimos Resultados</button> <button class="btn-copiacola"><i class="fa fa-money mr-2"
-                            style="font-size: 15px;" aria-hidden="true"></i>
+                    <button data-toggle="modal" data-target="#ModalResultados" class="btn-copiacola mr-2 ml-2"
+                        style="background: #212425;"><i class="fa fa-trophy mr-2" style="font-size: 15px;"
+                            aria-hidden="true"></i>
+                        Ultimos Resultados</button> <button data-toggle="modal" data-target="#exampleModal"
+                        class="btn-copiacola"><i class="fa fa-money mr-2" style="font-size: 15px;"
+                            aria-hidden="true"></i>
                         Ver Cotação</button>
                 </div>
             </div>
         </div>
+        
+        
     </div>
     <div class="divider"></div>
     <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
@@ -169,12 +196,8 @@
                     onclick="limpacampos();">{{
                     trans('admin.falta.selecNums') }}</button>
                 @endif
-                <button type="submit" style="max-width:200px;" id="button_game" onclick="mudarListaNumerosGeral()"
-                    class="btn btn-block btn-success">@if(request()->is('admin/bets/games/create/{{$typeGame->id}}'))
-                    {{ trans('admin.games.insert-game-button') }}
-                    @else
-                    {{ trans('admin.games.update-game-button') }}
-                    @endif
+                <button type="submit" style="max-width:200px;" id="button_game"
+                    class="btn btn-block btn-success">Confirmar Aposta
                 </button>
             </div>
             <br>
@@ -202,7 +225,13 @@
             @endif
         </div>
     </div>
+
 </div>
+
+
+<!-- O modal -->
+
+
 
 @push('styles')
 <link href="{{asset('admin/layouts/plugins/select2/css/select2.min.css')}}" rel="stylesheet" />
@@ -228,6 +257,16 @@
 </script> --}}
 
 <style>
+    .btn-cotacao-download {
+        padding: 5px;
+        border: none;
+        background: gray;
+        border-radius: 10px;
+        font-size: 12px;
+    }
+
+
+
     @media (max-width: 1404px) {
         .textcard {
             font-size: 15px;
@@ -281,13 +320,12 @@
         border: none;
         border-radius: 3px;
     }
-    .btn-copiacola:hover{
+
+    .btn-copiacola:hover {
         color: white;
     }
 </style>
 <script>
-
-
     //Função para realizar o calculo do multiplicador
     function addmoney(event, v) {
     event.preventDefault(); // Evita o envio do formulário ao clicar no botão

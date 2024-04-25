@@ -60,8 +60,42 @@
 </div>
 
 <!-- Todos os jogos -->
+
 @if(\App\Models\TypeGame::count() > 0)
 <div class="container mt-3">
+    <button class="mt-2 mb-2 btn-resultados-disponiveis">Resultados Disponíveis<i class="fa fa-check-circle ml-3" aria-hidden="true"></i>
+    </button>
+
+    <div class="d-flex flex-wrap justify-content-center">
+        @php
+        $typeGames = \App\Models\TypeGame::get();
+        $count = 0;
+        @endphp
+
+        @foreach($typeGames as $typeGame)
+        <div class="d-flex p-2 box-imgs">
+            <a href="/admin/dashboards/foundresult/{{ $typeGame->id }}" class="hover-container">
+                <img class="img-todos-jogos" style="border-radius: 10px; width: 100%; height: 100%; object-fit: cover;"
+                    src="{{ $typeGame->banner_mobile ? asset(" storage/{$typeGame->banner_mobile}") :
+                asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}"
+                alt="{{ $typeGame->name }} " >
+                <div class="hover-content">
+                    <p>{{ $typeGame->name }}</p>
+                    <button class="btn btn-primary">Selecionar</button>
+                </div>
+            </a>
+        </div>
+
+
+        @endforeach
+        @endif
+    </div>
+</div>
+
+@if(\App\Models\TypeGame::count() > 0)
+<div class="container mt-3">
+    <button class="mt-2 mb-2 btn-aguardando-resultado">Aguardando Resultado<i class="fa fa-clock-o ml-3" aria-hidden="true"></i>
+    </button>
 
     <div class="d-flex flex-wrap justify-content-center">
         @php
@@ -142,6 +176,25 @@
 </script>
 
 <style>
+    .btn-aguardando-resultado{
+        background: gray;
+        border: none;
+        padding: 5px 10px;
+        font-size: 15px;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+    .btn-resultados-disponiveis{
+        background: #98C715;
+        border: none;
+        padding: 5px 10px;
+        font-size: 15px;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+
+    }
     .hover-container {
         position: relative;
     }

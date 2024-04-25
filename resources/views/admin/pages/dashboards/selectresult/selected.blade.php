@@ -8,12 +8,13 @@
 
 {{-- interface dos cards --}}
 <div class="container" style="padding:0px;">
-    {{$game->banner_resultados}}
     <img src="{{ $game->banner_resultados ? asset("storage/{$game->banner_resultados}") : asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg') }}"
      style="width:100%;max-height:150px;">
 
 
 </div>
+
+
 
 <div class="d-flex container flex-md-row flex-column justify-content-between mt-2" style="padding:0px;">
     <div class="container" style="margin:0px; padding:0px; ">
@@ -41,10 +42,10 @@
             <div class="card container d-flex flex-row align-items-center justify-content-center"
                 style="background-color:#202223; padding:10px;">
                 <button class="btn btn-primary d-flex align-items-center justify-content-center font-btn" style="font-size:12px; color:white;"> <i class="fa fa-files-o mr-2 icon-btn" style="font-size:20px;" aria-hidden="true"></i>
-                    Baixar PDF</button>
+                    Baixar Resultado</button>
                 <button class="btn btn-primary mr-2 ml-2  d-flex align-items-center justify-content-center font-btn" style="font-size:12px; color:white;"> <i class="fa fa-share-alt-square mr-2 icon-btn" style="font-size:20px;"aria-hidden="true"></i>
-                    Compartilhar</button>
-                <button class="btn btn-primary  d-flex align-items-center justify-content-center font-btn" style="font-size:12px; color:white; background:#C70067;"><i class="fa fa-money mr-2 icon-btn" style="font-size:20px;" aria-hidden="true"></i>
+                    TXT 20 Resultados</button>
+                <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary  d-flex align-items-center justify-content-center font-btn" style="font-size:12px; color:white; background:#C70067;"><i class="fa fa-money mr-2 icon-btn" style="font-size:20px;" aria-hidden="true"></i>
                     Ver Cotação</button>
             </div>
         </div>
@@ -79,14 +80,14 @@
                 <th>Resultado</th>
                 <th>Concurso</th>
                 <th>Data Sorteio</th>
-                <th>Ações</th>
+                <th>Baixar</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <th>171</th>
                 <th>LTB - Lotinha</th>
-                <th>08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
+                <th class="resulttext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
                 <th>1212</th>
                 <th>08/04/2023</th>
                 <th>
@@ -103,7 +104,7 @@
             <tr>
                 <th>171</th>
                 <th>LTB - Lotinha</th>
-                <th>08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
+                <th class="resulttext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
                 <th>1212</th>
                 <th>08/04/2023</th>
                 <th>
@@ -120,7 +121,7 @@
             <tr>
                 <th>171</th>
                 <th>LTB - Lotinha</th>
-                <th>08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
+                <th class="resulttext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
                 <th>1212</th>
                 <th>08/04/2023</th>
                 <th>
@@ -137,7 +138,7 @@
             <tr>
                 <th>171</th>
                 <th>LTB - Lotinha</th>
-                <th >08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
+                <th class="resulttext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
                 <th>1212</th>
                 <th>08/04/2023</th>
                 <th>
@@ -156,7 +157,50 @@
 </div>
 
 <div class="p-3"></div>
-
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <div class="d-flex container justify-content-between align-items-center">
+          <h5 class="modal-title" id="exampleModalLabel">LTB - Lotinha | Cotação</h5>
+          <button class="btn-cotacao-download"><i class="fa fa-clipboard" aria-hidden="true"></i>
+            Baixar Cotação</button>
+        </div>
+         
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Dezena</th>
+                    <th scope="col">Multiplicador</th>
+                    <th scope="col">Retorno (R$1,00)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>12</td>
+                    <td>10x</td>
+                    <td>R$:10,00</td>
+                  </tr>
+                  <tr>
+                    <td>13</td>
+                    <td>100x</td>
+                    <td>R$:100,00</td>
+                  </tr> <tr>
+                    <td>14</td>
+                    <td>200x</td>
+                    <td>R$:200,00</td>
+                  </tr>
+                </tbody>
+              </table>        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <style>
     .card {
@@ -200,6 +244,14 @@
 @endpush
 
 <style>
+
+    .btn-cotacao-download{
+        padding: 5px;
+        border:none;
+        background:gray;
+        border-radius: 10px;
+        font-size: 12px;
+    }
     .hover-container {
         position: relative;
     }
@@ -240,7 +292,13 @@
     }
 
 
+.numbertext{
+    font-size: 20px;
+}
 
+.resulttext{
+    font-size:13px;
+}
     @media screen and (max-width: 1400px) {
         .hover-content {
             padding: 10px !important;
