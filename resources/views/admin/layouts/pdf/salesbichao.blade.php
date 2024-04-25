@@ -163,7 +163,7 @@
                     <th class="text-size-1 text-left">NOME CLIENTE</th>
                     <th class="text-size-1 text-left">CRIAÇÃO</th>
                     <th class="text-size-1 text-left">LOTERIA</th>
-                    <th class="text-size-1 text-left">VALOR DO PRÊMIO</th>
+                    <th class="text-size-1 text-left">PRÊMIO</th>
                     <th class="text-size-1 text-left">MODALIDADE</th>
                     <th class="text-size-1 text-left">APOSTA</th>
                     <th class="text-size-1 text-left">POSIÇÃO</th>
