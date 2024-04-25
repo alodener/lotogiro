@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use PDF;
 use SnappyImage;
+use App\Models\Layout_imagens_publicidade;
 
 use App\Jobs\ProcessBetEntries;
 use App\Helper\Configs;
@@ -139,13 +140,13 @@ class GameController extends Controller
 
         $typeGames = TypeGame::find($typeGame)->first();
         $clients = collect([]);
-
+        $banner_publicidade = Layout_imagens_publicidade::first();
         /*
         $typeGames = TypeGame::get();
         $clients = Client::get();
         */
 
-        return view('admin.pages.bets.game.create', compact('typeGames', 'typeGame', 'clients'));
+        return view('admin.pages.bets.game.create', compact('typeGames', 'typeGame', 'clients','banner_publicidade'));
     }
 
     public function store(Request $request, Bet $validate_game, Game $game)
