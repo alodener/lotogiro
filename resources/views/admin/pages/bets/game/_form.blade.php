@@ -48,7 +48,7 @@
     <div class="col-md-10">
         <div class="card card-info col-md-12 pr-4 pl-4 pt-2">
             <div>
-                <div class="card-header d-flex justify-content-around align-items-center">
+                <div class="card-header d-flex justify-content-around align-items-center top-head">
                     <h3 class="card-title" style="font-weight: bold; text-transform:uppercase;">{{$typeGame->name}}</h3>
                     <h4 class="card-title" style="font-size:15px;">Tipo: {{$typeGame->name}}</h4>
                     <h4 class="card-title" style="font-size:15px;">Concurso: {{$typeGame->competitions->last()->number}}
@@ -337,6 +337,18 @@
         .btn-custom {
             padding: 0.25rem 0.5rem;
             font-size: 0.6rem;
+        }
+        }
+
+        @media (max-width: 992px) {
+        .top-head h4 {
+           font-size: 10px !important;
+           text-align: center;
+        }
+        .top-head h3{
+           font-size: 12px !important;
+           text-align: center;
+        }
         }
 </style>
 @endpush

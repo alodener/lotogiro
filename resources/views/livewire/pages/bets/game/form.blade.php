@@ -7,12 +7,12 @@
             <div class="col-md-6 justify-content-center align-items-center text-center">
                 <div class="d-flex card-header container justify-content-center align-items-center"
                     style="min-height: 62px;">
-                    <div class="d-flex ">
+                    <div class="d-flex card-acoes">
                         <button data-toggle="modal" data-target="#ModalResultados" class="btn-copiacola "
                             style="background: #212425;"><i class="fa fa-trophy mr-2" style="font-size: 15px;"
                                 aria-hidden="true"></i>
                             Ultimos Resultados</button> <button data-toggle="modal" data-target="#exampleModal"
-                            class="btn-copiacola mr-2 ml-2"><i class="fa fa-money mr-2" style="font-size: 15px;"
+                            class="btn-copiacola btn-divisor"><i class="fa fa-money mr-2" style="font-size: 15px;"
                                 aria-hidden="true"></i>
                             Ver Cotação</button>
                         <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"
@@ -183,9 +183,9 @@
     <div class="row text-center">
         <div class="col-md-12">
             @if(isset($matriz))
-            <div class="d-flex container justify-content-between align-items-center">
-                <button class="btn btn-block btn-success" style="max-width:200px;">Completar Jogo</button>
-                <h4 style="background:#303536; padding:10px; border-radius:100px;" class="numselecteds">{{
+            <div class="d-flex container-fluid justify-content-between align-items-center card-comands-pc">
+                <button class="btn btn-block btn-success btn-comandos" >Completar Jogo</button>
+                <h4 style="background:#303536; padding:10px; border-radius:100px;" class="numselecteds textbtnresponsive">{{
                     trans('admin.falta.quantSelec')
                     }}:<c style="color:#96C614;">({{count($selectedNumbers)}}/{{$numbers}})</c>
                 </h4>
@@ -196,9 +196,29 @@
                     onclick="limpacampos();">{{
                     trans('admin.falta.selecNums') }}</button>
                 @endif
-                <button type="submit" style="max-width:200px;" id="button_game"
-                    class="btn btn-block btn-success">Confirmar Aposta
+                <button type="submit"  id="button_game"
+                    class="btn btn-block btn-success btn-comandos" >Confirmar Aposta
                 </button>
+            </div>
+            <div class="d-flex container-fluid flex-column justify-content-between align-items-center card-comands-mobile">
+                <h4 style="background:#303536; padding:10px; border-radius:100px;" class="numselecteds">{{
+                    trans('admin.falta.quantSelec')
+                    }}:<c style="color:#96C614;">({{count($selectedNumbers)}}/{{$numbers}})</c>
+                </h4>
+                <div class="d-flex mt-2">
+                <button class="btn btn-block btn-success btn-comandos mr-2" >Completar Jogo</button>
+
+                @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" ||
+                $typeGame->name ==
+                "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
+                <button wire:click="selecionaTudo()" class="{{ env('AllColor') }}" type="button"
+                    onclick="limpacampos();">{{
+                    trans('admin.falta.selecNums') }}</button>
+                @endif
+                <button type="submit"  id="button_game"
+                    class="btn btn-block btn-success btn-comandos"style="margin: 0px;">Confirmar Aposta
+                </button>
+            </div>
             </div>
             <br>
 
@@ -257,6 +277,49 @@
 </script> --}}
 
 <style>
+     .numselecteds{
+        margin:0px;
+     }
+     @media (max-width: 500px) {
+        .card-comands-pc{
+            display: none !important;
+        }
+
+        .num-responsive{
+            font-size:20px !important;
+        }
+       
+     
+    }
+
+    @media (min-width: 500px) {
+        .card-comands-mobile{
+            display: none !important;
+        }
+        .numselecteds{
+            font-size:20px !important;
+        }
+        
+     
+    }
+     @media (max-width: 650px) {
+        
+        .textbtnresponsive{
+            font-size:15px !important;
+        }
+
+        .btn-comandos {
+            max-width: 130px !important;
+            font-size: 10px !important;
+
+        }
+    } @media (max-width: 550px) {
+       
+        .btn-comandos {
+            max-width: 110px !important;
+
+        }
+    }
     .btn-cotacao-download {
         padding: 5px;
         border: none;
@@ -265,8 +328,16 @@
         font-size: 12px;
     }
 
+    .btn-comandos{
+        max-width: 200px;
+    }
 
-
+    .btn-divisor{
+         margin-left: 10px;
+         margin-right: 10px;
+    }
+    
+   
     @media (max-width: 1404px) {
         .textcard {
             font-size: 15px;
@@ -275,8 +346,18 @@
         .numselecteds {
             font-size: 15px;
         }
+        @media (max-width: 1100px) {
+            .btn-comandos{
+                max-width: 100px;
+                font-size: 12px;
+            }
+    
+        }
 
         @media (max-width: 1200px) {
+            .btn-comandos{
+                max-width: 150px;
+            }
             .cardbtsadd {
                 flex-direction: column;
             }
@@ -292,6 +373,17 @@
             }
         }
 
+    }
+    @media (max-width: 465px) {
+    .card-acoes{
+        flex-direction: column;
+    }
+    .btn-divisor{
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    }
     }
 
     .btn-add-value-extra {
