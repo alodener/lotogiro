@@ -137,9 +137,9 @@
     </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+        aria-hidden="true" style="z-index: 999999">
         <div class="modal-dialog" role="document">
-            <div class="modal-contentt">
+            <div class="modal-content">
                 <div class="modal-header">
                     <div class="d-flex container justify-content-between align-items-center">
                         <h5 class="modal-title" id="exampleModalLabel">LTB - Lotinha | Cotação</h5>
@@ -183,9 +183,9 @@
         </div>
     </div>
     <div class="modal fade" id="ModalResultados" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+        style="z-index: 999999" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-contentt">
+            <div class="modal-content">
                 <div class="modal-header">
                     <div class="d-flex container justify-content-between align-items-center">
                         <h5 class="modal-title" id="exampleModalLabel">Ultimos Sorteios</h5>
@@ -232,8 +232,39 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="ModalCopiacola" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 100%;">
+            <div class="modal-content copiacontent">
+                <div class="modal-header" style="padding: 0px; border:none; padding-top:10px;">
+                    <div class="card-header container d-flex justify-content-center align-items-center ">
+                        <div class="col-11">
+                            <h5 class="modal-title2" id="exampleModalLabel">Multiplos Jogos | Aposte em vários jogos de
+                                uma única vez, apenas copiando e colando!</h5>
+                        </div>
+                        <div class="col-1"> <i onclick="lockmodaloff()" data-dismiss="modal"
+                                style="font-size:25px; cursor: pointer;" class="fa fa-times" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-body">
+                    @livewire('pages.bets.game.copiacola', ['typeGame' => $typeGame ?? null , 'clients' => $clients ??
+                    null])
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
+<script>
+    function lockmodaloff(){
+        localStorage.setItem('copiaecolalock', false);
+
+    }
+</script>
 
 
 @push('scripts')
@@ -270,6 +301,15 @@
 
 @push('styles')
 <style>
+    #ModalCopiacola {
+        width: 100%;
+    }
+
+    .modal-title2 {
+        font-size: 17px;
+        margin: 0px;
+    }
+
     .bol {
         margin: 0px 5px !important;
         border-radius: 100%;
@@ -283,6 +323,12 @@
         padding: 0px;
         margin: 0px;
 
+    }
+
+    .copiacontent {
+        padding: 0px !important;
+        border: none !important;
+        margin-top: 60px !important;
     }
 
     /* Estilo do modal */
@@ -310,7 +356,7 @@
         margin: auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 50%;
+        width: 100%;
         color: #000;
     }
 
@@ -338,17 +384,18 @@
             padding: 0.25rem 0.5rem;
             font-size: 0.6rem;
         }
+    }
+
+    @media (max-width: 992px) {
+        .top-head h4 {
+            font-size: 10px !important;
+            text-align: center;
         }
 
-        @media (max-width: 992px) {
-        .top-head h4 {
-           font-size: 10px !important;
-           text-align: center;
+        .top-head h3 {
+            font-size: 12px !important;
+            text-align: center;
         }
-        .top-head h3{
-           font-size: 12px !important;
-           text-align: center;
-        }
-        }
+    }
 </style>
 @endpush

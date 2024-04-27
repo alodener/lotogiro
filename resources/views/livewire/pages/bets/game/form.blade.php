@@ -15,8 +15,8 @@
                             class="btn-copiacola btn-divisor"><i class="fa fa-money mr-2" style="font-size: 15px;"
                                 aria-hidden="true"></i>
                             Ver Cotação</button>
-                        <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"
-                            class="btn btn-copiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
+                        <a 
+                            class="btn btn-copiacola" id="openModalButton2" data-toggle="modal" onclick="lockmodal()" data-target="#ModalCopiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
                                 aria-hidden="true"></i>
                             Copia e Cola</a>
                     </div>
@@ -81,8 +81,8 @@
                 style="min-height: 62px;">
                 <h5 style="font-weight: bold; font-size:15px; min-width:150px; margin:0px;" class="mb-1">Multiplos Jogos
                 </h5>
-                <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"
-                    class="btn btn-copiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
+                <a 
+                    class="btn btn-copiacola" id="openModalButton" onclick="lockmodal()" data-toggle="modal" data-target="#ModalCopiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
                         aria-hidden="true"></i>
                     Copia e Cola</a>
             </div>
@@ -418,6 +418,20 @@
     }
 </style>
 <script>
+        document.addEventListener('DOMContentLoaded', function() {      
+
+       var copiaecolalock = localStorage.getItem('copiaecolalock');
+    if (copiaecolalock === "true") {
+
+        var openModalButton = document.getElementById('openModalButton');
+        openModalButton.click();
+
+    }
+    console.log(copiaecolalock);
+});
+    function lockmodal(){
+    localStorage.setItem('copiaecolalock', true);
+}
     //Função para realizar o calculo do multiplicador
     function addmoney(event, v) {
     event.preventDefault(); // Evita o envio do formulário ao clicar no botão

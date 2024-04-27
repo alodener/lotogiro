@@ -6,26 +6,15 @@
         <img src="https://ambientedev.loteriabr.com/storage/banner_resultados/JGxuSQmnlEtd1EL6wsOs4IyfIcfiplJ2JuHxfBlm.jpg"
             style="width:100%;max-height:150px;">
     </div>
-    <div class="alert container text-center alert-primary mt-2" role="alert">
-        Para importar os jogos, é só colar cada jogo em uma linha. Você pode separar as dezenas com um dos
-                caracteres:<br> (-.,_ ) Exemplo:
-                 1-2-3-4-5 // 1.2.3.4.5 // 1 2 3 4 5 //
-      </div>
-      @if(!@empty($msg))
-
-      <div class="alert container alert-danger mt-2" role="alert">
-{{$msg}}
-      </div>
-      @endif
-    <div class="d-flex justify-content-center flex-md-row flex-column align-items-start container" style="padding: 0px;">
+    <div class="row container mx-auto">
         <div class="container col-md-6 ">
-            <div class="card-header card-copiacola text-center d-flex justify-content-around align-items-center">
-                <h3 class="card-title2" style="font-weight: bold; text-transform:uppercase;">
+            <div class="card-header text-center d-flex justify-content-around align-items-center">
+                <h3 class="card-title" style="font-weight: bold; text-transform:uppercase; font-size:13px;">
                     {{$typeGame->name}}</h3>
-                <h4 class="card-title2">Tipo: {{$typeGame->name}}</h4>
-                <h4 class="card-title2">Concurso: {{$typeGame->competitions->last()->number}}
+                <h4 class="card-title" style="font-size:12px;">Tipo: {{$typeGame->name}}</h4>
+                <h4 class="card-title" style="font-size:12px;">Concurso: {{$typeGame->competitions->last()->number}}
                 </h4>
-                <h4 class="card-title2">Data do Sorteio:
+                <h4 class="card-title" style="font-size:12px;">Data do Sorteio:
                     {{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}
                 </h4>
             </div>
@@ -35,13 +24,8 @@
                 </div>
                 <div class="textarea-container d-flex">
                     <div class="line-numbers" id="line-numbers"></div>
-                    <input type="hidden" name="dezena">
-                     <input type="hidden" name="controle" id="controle" value="{{$controle}}">
-                <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
-                <input hidden value="1" id="xml" name="xml">
-                <input type="hidden" name="dezena">
-                <input type="hidden" name="qtdDezena" value="{{$qtdDezena}}">
-                    <textarea wire:model="dezena" class="textarea" id="dezena" name="dezena" oninput="updateLineNumbers()"></textarea>
+                    <textarea wire:model="dezena" class="textarea" id="textarea" oninput="updateLineNumbers()"
+                        value="{{$valorTextArea}}"></textarea>
                 </div>
                 <div class="head-textarea mt-2">
                     <div class="d-flex flex-column buttons-box-textarea ml-2 ">
@@ -53,11 +37,11 @@
                 </div>
                 <div class="footer-textarea d-flex">
                     <div class="d-flex">
-                        <div class="d-flex align-items-center justify-content-center box-textarea mr-2 aj">
+                        <div class="d-flex align-items-center justify-content-center box-textarea mr-2">
                             <h1>Jogos Contabilizados:</h1>
                             <p>{{$contadorJogos}}</p>
                         </div>
-                        <div class="d-flex align-items-center justify-content-center box-textarea aj">
+                        <div class="d-flex align-items-center justify-content-center box-textarea">
                             <h1>Aposta Total:</h1>
                             <p class="valueaposta">R$:0,00</p>
                         </div>
@@ -123,12 +107,12 @@
 
         </div>
         <div class="text-center d-flex justify-content-around align-items-start container col-md-6 ">
-            <div class="container" style="padding: 0px;">
-                <div class="d-flex card-header  container justify-content-center align-items-center "
+            <div>
+                <div class="d-none d-md-flex card-header  container justify-content-center align-items-center "
                     style="min-height: 62px;">
-                    <h5 style="font-weight: bold; font-size:15px; margin:0px; " class="mr-4">Resultados e Cotações</h5>
+                    <h5 style="font-weight: bold; font-size:15px; margin:0px; " class="mb-1">Resultados e Cotações</h5>
                     <div class="d-flex btsconsultar ">
-                        <button data-toggle="modal" data-target="#ModalResultados" class="btn-copiacola  btnprevent"
+                        <button data-toggle="modal" data-target="#ModalResultados" class="btn-copiacola mr-2 ml-2 btnprevent"
                             style="background: #212425;"><i class="fa fa-trophy mr-2" style="font-size: 15px;"
                                 aria-hidden="true"></i>
                             Ultimos Resultados</button> <button data-toggle="modal" data-target="#exampleModal"
@@ -139,22 +123,22 @@
                 </div>
                 <div class="textarea-container d-flex">
                     <div class="line-numbers boxbig" id="line-numbers1"></div>
-                    <div class="line-numbers" id="line-numbers2" style="overflow: auto;"></div>
+                    <div class="line-numbers" id="line-numbers2"></div>
                     <div class="d-flex flex-column">
                         <!-- Valores serão inseridos automaticamente aqui -->
                     </div>
                 </div>
                 <div class="footer-textarea d-flex flex-column">
                     <div class="d-flex">
-                        <div class="d-flex align-items-center justify-content-center box-textarea aj">
+                        <div class="d-flex align-items-center justify-content-center box-textarea">
                             <h1>Aposta:</h1>
                             <p class="valueaposta">R$:0,00</p>
                         </div>
-                        <div class="d-flex align-items-center justify-content-center box-textarea  mr-2 ml-2 aj">
+                        <div class="d-flex align-items-center justify-content-center box-textarea  mr-2 ml-2">
                             <h1>Jogos contabilizados:</h1>
                             <p>{{$contadorJogos}}</p>
                         </div>
-                        <div class="d-flex align-items-center justify-content-center box-textarea aj">
+                        <div class="d-flex align-items-center justify-content-center box-textarea">
                             <h1>Aposta total</h1>
                             <p class="valueaposta">R$:0,00</p>
                         </div>
@@ -171,12 +155,12 @@
                         <p id="premioestimado">R$:0,00</p>
                     </div>
                     <div class="col-md-4">
-                        @if($podeCriar && empty($msg) && $search)
-                <button type="submit" id="submit_game" class="padraobtn btnprevent mr-2 ml-2" onclick="submit();" style="background: #00A651;">
+                        @if($podeCriar && empty($msg))
+                <button type="submit" id="submit_game" class="padraobtn mr-2 ml-2" onclick="submit();" style="background: #00A651;">
                     Confirmar Aposta</button>
                     
                     @else
-                    <button class="padraobtn btnprevent mr-2 ml-2"  disabled style="background: gray; color: black !important;">Confirmar Aposta</button>
+                    <button class="padraobtn mr-2 ml-2"  disabled style="background: gray; color: black !important;">
 
                 @endif
                        
@@ -185,15 +169,27 @@
             </div>
         </div>
     </div>
-    <div class="mx-auto container text-center col-md-12" @if($showList) style="border: 2px solid #323637;" @endif>
+    <div class="mx-auto card-alert-pai text-center col-md-8">
 
-       
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group mb-3">
+                    <input wire:model="search" type="text" id="author" class="form-control"
+                        placeholder="{{ trans('admin.search-customer') }}" autocomplete="off" required>
+
+                    <div class="input-group-append">
+                        <span wire:click="clearUser" class="input-group-text" title="{{ trans('admin.clear') }}"><i
+                                class="fas fa-user-times"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <input type="hidden" name="client" value="{{$clientId}}">
         <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
-        <div class="row mb-3 container mx-auto" id="list_group" style="max-height: 100px; overflow-y: auto" >
+        <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
             <div class="col-md-12">
                 @if($showList)
-                <ul class="list-group" >
+                <ul class="list-group">
                     @if(isset($clients) && $clients->count() > 0)
                     @foreach($clients as $client)
                     <li wire:click="setId({{ $client }})" class="list-group-item" style="cursor:pointer;">{{
@@ -219,13 +215,19 @@
         {{-- parte de calculo de valores --}}
         <div class="form-group col-md-6 mx-auto">
             @if(isset($values) && $values->count() > 0)
+            <label for="client">{{ trans('admin.games.value') }}: </label>
             @foreach($values as $value)
             <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
             <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
             <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
+            {{ trans('admin.games.bet-value-label') }}
+
+
             <input type="hidden" id="premio" value="" name="premio" readonly>
+            <!-- <button  class="btn btn-success" type="button">{{ trans('admin.games.calculate') }}</button>-->
             @endforeach
-            <div class="d-none justify-content-center align-items-center">
+            <br>
+            <div class="d-flex justify-content-center align-items-center">
                 <div class="mr-3">
                     <label for="quantidadeJogos">{{ trans('admin.lwGame.quantJ') }} </label>
                     <input type="text" class="form-control" id="contadorJogos" disabled value="{{$contadorJogos}}"
@@ -239,95 +241,54 @@
             </div>
             @endif
         </div>
-       
-        
+        @if(!@empty($msg))
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">{{$msg}}!</h4>
+        </div>
+        @endif
+        <input type="hidden" name="controle" id="controle" value="{{$controle}}">
+        <label for="dezena">{{ trans('admin.lwGame.doz') }} </label>
+        <div class="row">
+            <div class="col-12 dezena">
+                <input type="hidden" name="dezena">
+                <input type="hidden" name="qtdDezena" value="{{$qtdDezena}}">
+
+
+            </div>
+        </div>
+        <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
+        <input hidden value="1" id="xml" name="xml">
+        <div class="bts">
+
+
+
+            <div class="d-flex bts justify-content-center align-items-center mt-2">
+                
+
+            </div>
+        </div>
     </div>
 </div>
 @push('scripts')
 <style>
-
-.card-title2 h3{
-    font-size: 12px !important;
-}
-
-.card-title2 h4{
-    font-size:10px !important;
-}
-
-@media (min-width: 1200px) {
-    .btsconsultar button:nth-child(1){
-        margin-right: 10px;
-        margin-left: 10px;
-    }
-}
-
-@media (max-width: 1200px) {
-    .btsconsultar button:nth-child(1){
-        margin-bottom: 10px;
-    }
-}
-
-@media (max-width: 992px) {
-    .buttons-box-textarea button {
-        
-        font-size: 10px !important;
-        min-width: none !important;
-    }
-    .footer-textarea h1 {
-    font-size: 9px !important;
-    margin-right: 0px !important;
-}
-.footer-textarea p {
-    font-size: 12px !important;
-}
-.box-textarea {
-    padding: 5px !important;
-}
-.padraobtn {
-    padding: 5px !important;
-    font-size: 9px !important;
-    min-width: 95px !important;
-}
-.card-copiacola h3 {
-        font-size: 12px !important;
-    }
-    .card-copiacola h4 {
-        font-size: 10px !important;
-    }
-
-    .box-textarea-infos p {
-    font-size: 10px !important;
-}
-.box-textarea-infos h1 {
-    font-size: 10px !important;}
-
-}
-
-@media (max-width: 420px) {
-
-    .aj{
-        flex-direction: column !important;
-    }
-}
-   
     .boxbig {
         margin-right: 10px;
     }
 
     .line-numbers-chose p {
         font-weight: bold;
-    text-align: center;
-    height: 20px;
-    margin: 0px;
-    background: #B7B7B7;
-    border-radius: 100%;
-    width: 20px;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    margin-right: 5px;
-    font-size: 10px;
-    padding: 10px;
+        text-align: center;
+        height: 25px;
+        margin: 0px;
+        background: #B7B7B7;
+        border-radius: 100%;
+        width: 25px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        margin-right: 5px;
+        font-size: 13px;
+
     }
 
     .searchcard {
@@ -449,11 +410,8 @@
     }
 </style>
 <style>
-    .card-copiacola h3 {
-        font-size: 15px ;
-    }
-    .card-copiacola h4 {
-        font-size: 13px;
+    .cardheader h3 {
+        font-size: 12px !important;
     }
 
     .bts>.btn {
@@ -474,20 +432,18 @@
 
     .checker {
         border: 1px solid white;
-    width: 20px;
-    height: 20px;
-    padding: 10px;
-    border-radius: 190px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        width: 25px;
+        height: 25px;
+        border-radius: 190px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
 
 {{-- evento dispara quando retira o foco do campo texto --}}
 <script>
 
-   
     function submit(){
         document.getElementById('form_game').submit();
 
@@ -512,7 +468,7 @@
     });
 
     function organizedez() {
-    var textarea = document.getElementById("dezena");
+    var textarea = document.getElementById("textarea");
     var lines = textarea.value.split(',');
     var newText = lines.join('\n');
     textarea.value = newText;
@@ -521,7 +477,7 @@
 
   // Chamar a função inicialmente para exibir o contador de linhas
   function updateLineNumbers() {
-    var textarea = document.getElementById("dezena");
+    var textarea = document.getElementById("textarea");
 
     var lines = textarea.value.split("\n").length;
     var lineNumbers = "";
@@ -656,7 +612,7 @@ updateLineNumbers();
     }
 
     function limparlista(){
-        var textarea = document.getElementById("dezena");
+        var textarea = document.getElementById("textarea");
         textarea.value ='';
         updateLineNumbers();
 
