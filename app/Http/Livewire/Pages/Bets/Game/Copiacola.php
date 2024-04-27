@@ -30,8 +30,14 @@ class Copiacola extends Component
     public $podeCriar = false;
     public $exibirBotao = true;
     public $loading = false; // propriedade para controlar o estado de carregamento
+    public $valorTextArea = '';
 
 
+
+    public function updated($field)
+    {
+        
+    }
 
     public function mount($typeGame, $clients)
     {
@@ -44,8 +50,12 @@ class Copiacola extends Component
 
     }
     
+    
+    
+    
     public function dezenas()
-    {
+    {   
+        
         $this->reset('msg');
         $this->reset('values');
 
@@ -115,7 +125,7 @@ class Copiacola extends Component
                 
                 if (!in_array($result, $allowedDezenas)) {
                     $totalDezenasNaLinha = count($words);
-                    $this->msg = "A quantidade de dezenas na linha $linhaIndex não é permitida para este tipo de jogo. Total de dezenas na linha: $totalDezenasNaLinha.";
+                    $this->msg = "A quantidade  de dezenas na linha $linhaIndex não é permitida para este tipo de jogo. Total de dezenas na linha: $totalDezenasNaLinha.";
                     $this->controle = 0;
                 }
             }
@@ -135,6 +145,9 @@ class Copiacola extends Component
     
     public function updatedSearch($value)
     {
+
+        
+
         
         $userlogado = Auth::user(); 
     
@@ -159,7 +172,9 @@ class Copiacola extends Component
     }
 
     public function clearUser()
-    {
+    {   
+        
+
         $user = Auth::user();
 
         if ($user && $user->hasPermissionTo('read_all_gains')) {
@@ -170,6 +185,9 @@ class Copiacola extends Component
 
     public function render()
     {
+        $this->emit('atualizacao-dezena');
+
+
         $User = Auth::user();
         $FiltroUser = client::where('email', $User['email'])->first();
         $this->FiltroUser = $FiltroUser;
