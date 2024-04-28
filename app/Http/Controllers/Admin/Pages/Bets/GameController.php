@@ -150,7 +150,7 @@ class GameController extends Controller
     }
 
     public function store(Request $request, Bet $validate_game, Game $game)
-    {
+    {   
         $typeGame = TypeGame::find($request->type_game);
 
         if($request->numbers){
