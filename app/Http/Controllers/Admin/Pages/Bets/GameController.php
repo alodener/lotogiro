@@ -563,7 +563,7 @@ class GameController extends Controller
                     $info = [
                         'tipo_jogo' => 'LOTERIA',
                         'jogo' =>  $jogo->name,
-                        'jogo_id' => $game->type_game_id,
+                        'jogo_id' => $game->id,
                         'usuario_id' => $game->user_id,
                         'nome_usuario' => Auth()->user()->name,
                         'numbers' => $game->numbers,
