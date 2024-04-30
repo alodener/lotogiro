@@ -132,7 +132,7 @@
         </p>
         <p class="text-white text-size-2">
             <span class="font text-bold">VALIDO ATÉ:</span>
-            <span class="font">{{\Carbon\Carbon::parse($game->created_at)->addDays(4)->format('d/m/Y')}}</span>
+            <span class="font">{{\Carbon\Carbon::parse($game->created_at)->addDays(3)->format('d/m/Y')}}</span>
         </p>
         <p class="text-white text-size-2">
             <span class="font text-bold">BANCA:</span>
