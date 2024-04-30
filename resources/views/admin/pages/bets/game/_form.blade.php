@@ -142,7 +142,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="d-flex container justify-content-between align-items-center">
-                        <h5 class="modal-title" id="exampleModalLabel">LTB - Lotinha | Cotação</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">LTB - Lotinha | Cotaçãoa</h5>
                         <button class="btn-cotacao-download"><i class="fa fa-clipboard" aria-hidden="true"></i>
                             Baixar Cotação</button>
                     </div>
@@ -354,7 +354,6 @@
         background-color: #fefefe;
         max-width: 100%;
         margin: auto;
-        padding: 20px;
         border: 1px solid #888;
         width: 100%;
         color: #000;
