@@ -205,11 +205,27 @@
                         <tbody>
                             <tr>
                                 <td>04/23/2024 - 13:30</td>
-                                <td class="d-flex">
+                                <td class="d-flex overflow-scroll"> <!-- Adicionado overflow-scroll aqui -->
                                     <div class="bol">01</div>
                                     <div class="bol">02</div>
                                     <div class="bol">03</div>
                                     <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+                                    <div class="bol">04</div>
+
                                 </td>
                                 <td><i class="fa fa-clipboard" aria-hidden="true"></i></td>
                             </tr>
@@ -311,25 +327,27 @@
     }
 
     .bol {
-        margin: 0px 5px !important;
-        border-radius: 100%;
-        border: 1px solid #75baff;
-        background: #636363;
-        display: flex;
-        width: 30px;
-        height: 30px;
-        align-items: center;
-        justify-content: center;
-        padding: 0px;
-        margin: 0px;
-
-    }
+    margin: 0px 5px !important;
+    border-radius: 100%;
+    border: 1px solid #75baff;
+    background: #636363;
+    display: flex;
+    width: 30px !important;
+    height: 30px !important;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    margin: 0px;
+}
 
     .copiacontent {
         padding: 0px !important;
         border: none !important;
         margin-top: 60px !important;
-    }
+    }.overflow-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100px;}
 
     /* Estilo do modal */
     .modal {
