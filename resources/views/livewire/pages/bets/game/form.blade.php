@@ -216,7 +216,7 @@
                     trans('admin.falta.selecNums') }}</button>
                 @endif
                 <button type="submit"  id="button_game"
-                    class="btn btn-block btn-success btn-comandos"style="margin: 0px;">Confirmar Aposta
+                    class="btn btn-block btn-success btn-comandos btnprevent"style="margin: 0px;" onclick="submit()">Confirmar Aposta
                 </button>
             </div>
             </div>
@@ -275,6 +275,13 @@
         $('#sort_date').inputmask("99/99/9999 99:99:99");
     });
 </script> --}}
+
+<script>
+    function submit(){
+        document.getElementById('form_game').submit();
+
+    }
+</script>
 
 <style>
      .numselecteds{
@@ -418,6 +425,23 @@
     }
 </style>
 <script>
+     function submit(){
+        document.getElementById('form_game').submit();
+
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Selecionando todos os botões com a classe 'btnprevent'
+        var btnPrevent = document.querySelectorAll('.btnprevent');
+
+        // Adicionando um ouvinte de evento a cada botão
+        btnPrevent.forEach(function(btn) {
+            btn.addEventListener('click', function(event) {
+                // Prevenir o comportamento padrão do botão
+                event.preventDefault();
+                // Coloque aqui o código que deseja executar ao clicar no botão
+            });
+        });
+    });
         document.addEventListener('DOMContentLoaded', function() {      
 
        var copiaecolalock = localStorage.getItem('copiaecolalock');

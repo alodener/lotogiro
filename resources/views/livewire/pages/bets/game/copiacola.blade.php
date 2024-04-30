@@ -77,7 +77,7 @@
                 <div class="card-header col-md-6 d-flex align-items-center justify-content-center box-textarea-infos">
                     <h1>Valor da Aposta:</h1>
                     <input type="text" id="value" class="form-control" onchange="altera();" value="" name="value"
-                        required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');
+                         oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');
                              var valor = document.getElementById('value').value;
                              var contadorJogos = document.getElementById('contadorJogos').value;
                              var contadorJogos =  parseFloat(contadorJogos);
@@ -112,7 +112,7 @@
                 </div>
                 <div class="col-md-8 input-group mb-3">
                     <input wire:model="search" type="text" id="author" class="form-control"
-                        placeholder="{{ trans('admin.search-customer') }}" autocomplete="off" required>
+                        placeholder="{{ trans('admin.search-customer') }}" autocomplete="off" >
 
                     <div class="input-group-append">
                         <span wire:click="clearUser" class="input-group-text" title="{{ trans('admin.clear') }}"><i
