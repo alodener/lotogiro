@@ -48,53 +48,65 @@ class Copiacola extends Component
             $this->clients = $clients;
         }
 
+        $this->dispatchBrowserEvent('customEvent', []);
+
     }
-    
+    protected $listeners = ['dezenas' => 'dezenas'];
+
     
     
     
     public function dezenas()
     {   
-        
         $this->reset('msg');
         $this->reset('values');
-
-        $this->loading = true; // ativar o indicador de carregamento
-       
     
-
-
+        $this->loading = true; // ativar o indicador de carregamento
+    
         $this->dezena = preg_replace("/[,. _-]/", " ", $this->dezena);
-        $this->dezena = explode("\n", $this->dezena);
+    
+        if (is_string($this->dezena)) {
+            $this->dezena = explode("\n", $this->dezena);
+        } else {
+            // Se $this->dezena não for uma string, defina como uma array vazia
+            $this->dezena = [];
+        }
+    
         foreach ($this->dezena as &$linha) {
             $linha = rtrim($linha);
-
         }
+    
         $tmp = array_filter($this->dezena);
         $str = implode("\n", $tmp);
         $this->dezena = explode("\n", $str);
+    
         $typeGameValue;
         $result;
         $this->contadorJogos = 0;
         $this->exibirBotao = false;
-
+    
         $typeGame = TypeGame::find($this->typeGame->id);
         $maxNumbers = $typeGame->numbers;
         
         foreach ($this->dezena as $linhaIndex => $dezenaConvert) {
             $linhaIndex++;
             $this->contadorJogos++;
-            $string = preg_replace('/^\h*\v+/m', '', $dezenaConvert);
-            $words = explode(" ", $string);
-            $result = count($words);
             
-
+            $string = $dezenaConvert;
+            if (!empty($string)) {
+                $string = preg_replace('/^\h*\v+/m', '', $string);
+                $words = explode(" ", $string);
+                $result = count($words);
+            } else {
+                continue; // Pule esta iteração se $string estiver vazio
+            }
+    
             if ($this->msg == null) {
                 $typeGameValue = TypeGameValue::where([
                     ['type_game_id', $this->typeGame->id],
                     ['numbers', $result],
                 ])->get();
-
+    
                 if (!empty($typeGameValue)) {
                     $this->values = $typeGameValue;
                     $this->qtdDezena = $result;
@@ -102,25 +114,21 @@ class Copiacola extends Component
                 } else {
                     $this->msg = "Não existe valores para essa quantidade de Dezenas";
                 }
-        
-
+    
                 $dezenas = explode(" ", $string);
                 $dezenasForaDoLimite = array_filter($dezenas, function ($dezena) use ($maxNumbers) {
-                return ($dezena < 1 || $dezena > $maxNumbers);
+                    return ($dezena < 1 || $dezena > $maxNumbers);
                 });
                 
                 if (!empty($dezenasForaDoLimite) && $this->typeGame->id != 11) {
                     $this->msg = "Dezenas fora do intervalo permitido (1 a $maxNumbers): " . implode(", ", $dezenasForaDoLimite); 
-                    
                 }  else if(!empty($dezenasForaDoLimite)&& $this->typeGame->id == 11 && min($dezenasForaDoLimite) != 0){ // se for loto mania fica de 0 a 99
-                    
-                            
                     $this->msg = "Dezenas fora do intervalo permitido (0 a $maxNumbers): " . implode(", ", $dezenasForaDoLimite); 
                 }
                 else{
                     $this->podeCriar = true;
                 }
-
+    
                 $allowedDezenas = $typeGame->typeGameValues()->pluck('numbers')->toArray();
                 
                 if (!in_array($result, $allowedDezenas)) {
@@ -133,7 +141,7 @@ class Copiacola extends Component
      
         $this->loading = false;
     }
-
+    
  
     
     public function setId($client)
