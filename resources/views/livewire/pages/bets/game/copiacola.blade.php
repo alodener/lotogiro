@@ -29,55 +29,11 @@
                     {{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}
                 </h4>
             </div>
-            <div>
-                <div class="head-textarea">
-                    <p>Denezas</p>
-                </div>
-                <div class="textarea-container d-flex">
-                    <div class="line-numbers" id="line-numbers"></div>
-                    <input type="hidden" name="dezena">
-                     <input type="hidden" name="controle" id="controle" value="{{$controle}}">
-                <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
-                <input hidden value="1" id="xml" name="xml">
-                <input type="hidden" name="dezena">
-                <input type="hidden" name="qtdDezena" value="{{$qtdDezena}}">
-                    <textarea wire:model="dezena" class="textarea" id="dezena" name="dezena" oninput="updateLineNumbers()"></textarea>
-                </div>
-                <div class="head-textarea mt-2">
-                    <div class="d-flex flex-column buttons-box-textarea ml-2 ">
-
-                        <div class="container">
-                            <button  wire:click="dezenas" style="background:#B0045B; width:100%; " class="btnprevent">Computar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-textarea d-flex">
-                    <div class="d-flex">
-                        <div class="d-flex align-items-center justify-content-center box-textarea mr-2 aj">
-                            <h1>Jogos Contabilizados:</h1>
-                            <p>{{$contadorJogos}}</p>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center box-textarea aj">
-                            <h1>Aposta Total:</h1>
-                            <p class="valueaposta">R$:0,00</p>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column buttons-box-textarea ml-2 ">
-                        <div>
-                            <button style="background:#8C52FF; " class="mb-2">Correção Mágica</button>
-                        </div>
-                        <div>
-                            <button style="background:#B0045B;" class="btnprevent" onclick="limparlista()">Limpar Lista</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
             <div class="d-flex justify-content-center align-items-center">
                 <div class="card-header col-md-6 d-flex align-items-center justify-content-center box-textarea-infos">
                     <h1>Valor da Aposta:</h1>
                     <input type="text" id="value" class="form-control" onchange="altera();" value="" name="value"
-                        required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');
+                         oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');
                              var valor = document.getElementById('value').value;
                              var contadorJogos = document.getElementById('contadorJogos').value;
                              var contadorJogos =  parseFloat(contadorJogos);
@@ -108,11 +64,11 @@
 
             <div class="card-header d-flex col-md-12 searchcard">
                 <div class="col-md-4">
-                    <h1>Saldo da Carteira:</h1>
+                    <h1>Selecionar usuário</h1>
                 </div>
                 <div class="col-md-8 input-group mb-3">
                     <input wire:model="search" type="text" id="author" class="form-control"
-                        placeholder="{{ trans('admin.search-customer') }}" autocomplete="off" required>
+                        placeholder="{{ trans('admin.search-customer') }}" autocomplete="off" >
 
                     <div class="input-group-append">
                         <span wire:click="clearUser" class="input-group-text" title="{{ trans('admin.clear') }}"><i
@@ -120,6 +76,43 @@
                     </div>
                 </div>
             </div>
+            <div>
+                <div class="head-textarea">
+                    <p>Denezas</p>
+                </div>
+                <div class="textarea-container d-flex">
+                    <div class="line-numbers" id="line-numbers"></div>
+                    <input type="hidden" name="dezena">
+                     <input type="hidden" name="controle" id="controle" value="{{$controle}}">
+                <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
+                <input hidden value="1" id="xml" name="xml">
+                <input type="hidden" name="qtdDezena" value="{{$qtdDezena}}">
+                <textarea wire:model="dezena" class="textarea" id="dezena" name="dezena" onblur="dezenas()" oninput=" updateLineNumbers()"></textarea>
+            </div>
+               
+                <div class="footer-textarea d-flex">
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center justify-content-center box-textarea mr-2 aj">
+                            <h1>Jogos Contabilizados:</h1>
+                            <p>{{$contadorJogos}}</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center box-textarea aj">
+                            <h1>Aposta Total:</h1>
+                            <p class="valueaposta">R$:0,00</p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column buttons-box-textarea ml-2 ">
+                        <div>
+                            <button style="background:#8C52FF; " class="mb-2">Correção Mágica</button>
+                        </div>
+                        <div>
+                            <button style="background:#B0045B;" class="btnprevent" onclick="limparlista()">Limpar Lista</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
 
         </div>
         <div class="text-center d-flex justify-content-around align-items-start container col-md-6 ">
@@ -492,6 +485,11 @@
         document.getElementById('form_game').submit();
 
     }
+
+    function dezenas (){
+        Livewire.emit('dezenas');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         // Selecionando todos os botões com a classe 'btnprevent'
         var btnPrevent = document.querySelectorAll('.btnprevent');

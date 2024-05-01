@@ -259,7 +259,7 @@
                                     <div class="swiper-slide">
                                         <a
                                             href="{{route('games.bet.game.create', ['user' => $bet->user->id, 'bet' => $bet->id, 'typeGame' => $typeGame->id])}}">
-                                            <img src="{{ $typeGame->banner_pc ? asset(" storage/{$typeGame->banner_pc}")
+                                            <img src="{{ $typeGame->banner_pc ? asset("storage/{$typeGame->banner_pc}")
                                             :
                                             asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg')
                                             }}" alt="{{ $typeGame->name }}" class="d-none d-md-block">
