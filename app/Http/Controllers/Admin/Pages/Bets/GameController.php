@@ -329,7 +329,7 @@ class GameController extends Controller
                     ]);
                 }
 
-                $balance = Balance::calculation($totaldeAposta);
+                $balance = Balance::copyPaste($totaldeAposta);
 
                 if (!$balance) {
                     $bet->status_xml = 3;
