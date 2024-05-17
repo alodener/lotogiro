@@ -260,6 +260,38 @@
               </div>
             </div>
 
+            <div class="col-sm-6 col-md-4 d-flex justify-content-center">
+              <div class="card" onclick="openModal27()">
+                <div class="card-content">
+                  <h3 class="card-title">009 - Milhar </h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 d-flex justify-content-center">
+              <div class="card" onclick="openModal28()">
+                <div class="card-content">
+                  <h3 class="card-title">010 - Centena </h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 d-flex justify-content-center">
+              <div class="card" onclick="openModal29()">
+                <div class="card-content">
+                  <h3 class="card-title">011 - Dezena </h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 d-flex justify-content-center">
+              <div class="card" onclick="openModal30()">
+                <div class="card-content">
+                  <h3 class="card-title">012 - Grupo </h3>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -616,7 +648,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/duque-de-dezena.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/duquedezena.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -660,7 +692,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/milhar-centena.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/milharcent.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -704,7 +736,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/terno-de-dezena.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/ternodezena.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -844,6 +876,94 @@
   </div>
 </div>
 
+<!-- modal 27-->
+
+<div class="modal fade" id="video-modal-27" tabindex="-27" aria-labelledby="video-modal-27-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-27-label">009 - Milhar</h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/milhar.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal 28-->
+
+<div class="modal fade" id="video-modal-28" tabindex="-28" aria-labelledby="video-modal-28-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-28-label"> 010 - Centena  </h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/dezena.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal 29-->
+
+<div class="modal fade" id="video-modal-29" tabindex="-29" aria-labelledby="video-modal-29-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-29-label">011 - Dezena</h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/dezena.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal 30-->
+
+<div class="modal fade" id="video-modal-30" tabindex="-30" aria-labelledby="video-modal-30-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-30-label">012 - Grupo</h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/grupo.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -854,7 +974,7 @@
     window.close();
   }
 </script>
-
+ 
 <script>
   function openModal1() {
     $('#video-modal-1').modal('show');
@@ -933,6 +1053,18 @@
   }
   function openModal26() {
     $('#video-modal-26').modal('show');
+  }
+  function openModal27() {
+    $('#video-modal-27').modal('show');
+  }
+  function openModal28() {
+    $('#video-modal-28').modal('show');
+  }
+  function openModal29() {
+    $('#video-modal-29').modal('show');
+  }
+  function openModal30() {
+    $('#video-modal-30').modal('show');
   }
 
 </script>
