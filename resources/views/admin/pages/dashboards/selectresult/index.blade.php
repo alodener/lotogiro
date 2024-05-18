@@ -20,7 +20,7 @@
     <div class="card mb-6" style="background-color:#202223;">
         <div class="card-header">Bilhetes Totais</div>
         <div class="card-body">
-            <h5 class="card-title" style="font-size: 30px" id="campobilhetes">124 bilhetes</h5> <i
+            <h5 class="card-title" style="font-size: 30px" id="campobilhetes">0 bilhetes</h5> <i
                 class="nav-icon fa fa-ticket" style="float: right; font-size: 50px; color:#98C715;"></i>
         </div>
     </div>
@@ -37,27 +37,26 @@
 {{-- formulario onde buscaremos uma data especifica --}}
 
 
-<div class="container mt-1 d-flex justify-content-center align-items-center" style="padding: 0px; ">
+<div class="container mt-1 d-flex justify-content-center align-items-center" style="padding: 0px;">
     <div class="card-deck container d-flex justify-content-between card-header" style="margin:0px;">
         <div class="col-md-6 text-md-start ">
             <h3 style="margin:0;">Concursos Sorteados</h3>
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-end flex-md-row flex-column">
-            <div class="d-flex justify-content-center align-items-center "
-            <div class="d-flex justify-content-center align-items-center "
-                style="background:#222425;border-radius:10px;">
-                <select class="form-control date">
+            <div class="d-flex justify-content-center align-items-center" style="background:#222425; border-radius:10px;">
+                <select id="dateSelect" class="form-control date">
                     <option value="24">Ultimas 24 horas</option>
                     <option value="48">Ultimos 2 dias</option>
                     <option value="72">Ultimos 3 dias</option>
                     <option value="168">Ultimos 7 dias</option>
                 </select>
-                <i class="nav-icon fa fa-clock-o ml-2" style="float: right; font-size: 20px;color:#98C715;"></i>
+                <i class="nav-icon fa fa-clock-o ml-2" style="float: right; font-size: 20px; color:#98C715;"></i>
             </div>
         </div>
-
     </div>
 </div>
+
+<div id="result" class="mt-3 text-center"></div>
 
 <!-- Todos os jogos -->
 
@@ -127,53 +126,33 @@
 
 @endsection
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Inicializa o DataTable
-        var table = $('#relatorio').DataTable({
-            theme: "bootstrap",
-            "scrollX": true,
-            "columnDefs": [
-                { "className": "dt-center", "targets": "_all" }
-            ],
-         
-            "language": {
-                "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
-                "zeroRecords": "{{ trans('admin.pagesF.ndEncont') }}",
-                "info": "{{ trans('admin.pagesF.mostrandoPags') }}",
-                "infoEmpty": "{{ trans('admin.pagesF.nhmRegs') }}",
-                "infoFiltered": "{{ trans('admin.pagesF.filtrado') }}",
-                "search": "{{ trans('admin.pagesF.search') }}",
-                "previous": "{{ trans('admin.pagesF.previous') }}",
-                "next": "{{ trans('admin.pagesF.next') }}"
-            }
-        });
-
-        // Função para limpar a tabela
-        function limparTabela() {
-            table.clear().draw();
+        function loadResults() {
+            var hours = $('#dateSelect').val();
+            
+            $.ajax({
+                url: 'selectresult/' + hours,
+                method: 'GET',
+                success: function(response) {
+                    if(response == 1) {
+                        $('#campobilhetes').html(response + ' Bilhete');
+                    } else {
+                        $('#campobilhetes').html(response + ' Bilhetes');
+                    }
+                },
+                
+            });
         }
 
-       
+        $('#dateSelect').change(loadResults);
 
-  
-
-        // Função para somar os prêmios
-        
-
-        // Função para realizar a chamada AJAX e carregar os dados
-  
-
-
-
-
-  
-        
+        // Trigger the function on page load
+        loadResults();
     });
 </script>
+
 
 <style>
     .btn-aguardando-resultado{
@@ -239,7 +218,7 @@
     @media screen and (max-width: 1400px) {
         .hover-content {
             padding: 10px !important;
-        }
+        }   
 
         .hover-content p {
             font-size: 12px;

@@ -122,10 +122,12 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
             Route::prefix('selectresult')->name('selectresult.')->group(function () {
                 Route::get('/', [SelectresultController::class, 'index'])->name('index');
+                Route::get('/{date}', [SelectresultController::class, 'countgames'])   ;
+
             });
             Route::prefix('foundresult')->name('foundresult.')->group(function () {
                 Route::get('/{id}', [SelectresultController::class, 'selected'])->name('selected');
-            });
+            });     
 
             Route::prefix('wallet')->name('wallet.')->group(function () {
                 Route::get('/', [WalletController::class, 'index'])->name('index');
@@ -272,4 +274,4 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
 Route::get('/users/winners', [CustomeBalanceController::class, 'userswinnersAPI']);
 Route::get('/users/winners-clients', [CustomeBalanceController::class, 'userswinnersClientesAPI']);
-URL::forceScheme('https');
+//URL::forceScheme('https');
