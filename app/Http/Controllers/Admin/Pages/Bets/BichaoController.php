@@ -957,15 +957,13 @@ class BichaoController extends Controller
             ->leftJoin('bichao_games_vencedores as bgv', 'bgv.game_id', 'bichao_games.id')
             ->where('bichao_games.id', $id)
             ->first();
-
         $apostas = [];
         $premios = [];
-
-        if (strval($game->game_1) > 0) $apostas[] = $game->game_1;
-        if (strval($game->game_2) > 0) $apostas[] = $game->game_2;
-        if (strval($game->game_3) > 0) $apostas[] = $game->game_3;
-        if (strval($game->game_4) > 0) $apostas[] = $game->game_4;
-        if (strval($game->game_5) > 0) $apostas[] = $game->game_5;
+        if (strval($game->game_1) >= 0) $apostas[] = $game->game_1;
+        if (strval($game->game_2) >= 0) $apostas[] = $game->game_2;
+        if (strval($game->game_3) >= 0) $apostas[] = $game->game_3;
+        if (strval($game->game_4) >= 0) $apostas[] = $game->game_4;
+        if (strval($game->game_5) >= 0) $apostas[] = $game->game_5;
 
         if ($game->premio_1 == 1) $premios[] = 1;
         if ($game->premio_2 == 1) $premios[] = 2;
@@ -989,7 +987,6 @@ class BichaoController extends Controller
             $divider = static::getFatorialInvertidoCentena($game->game_1);
             $premioMaximo = ($game->valor / $divider) * $game->multiplicador / sizeof($premios);
         }
-        
         global $data;
         $data = [
             'game' => $game,
@@ -998,7 +995,6 @@ class BichaoController extends Controller
             'premios' => join('°, ', $premios),
             'premio_maximo' => number_format($premioMaximo, 2, '.', ''),
         ];
-
         if ($tipo == "pdf") {
 
             global $fileName;
