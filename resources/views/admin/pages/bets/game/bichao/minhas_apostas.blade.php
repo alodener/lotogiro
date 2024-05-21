@@ -78,11 +78,11 @@
                         <td>
                             <?php
                                         $games = [];
-                                        if (strval($aposta['game_1']) > 0) $games[] = $aposta['game_1'];
-                                        if (strval($aposta['game_2']) > 0) $games[] = $aposta['game_2'];
-                                        if (strval($aposta['game_3']) > 0) $games[] = $aposta['game_3'];
-                                        if (strval($aposta['game_4']) > 0) $games[] = $aposta['game_4'];
-                                        if (strval($aposta['game_5']) > 0) $games[] = $aposta['game_5'];
+                                        if (strval($aposta['game_1']) >= 0 && $aposta['game_1']) $games[] = $aposta['game_1'];
+                                        if (strval($aposta['game_2']) >= 0 && $aposta['game_2']) $games[] = $aposta['game_2'];
+                                        if (strval($aposta['game_3']) >= 0 && $aposta['game_3']) $games[] = $aposta['game_3'];
+                                        if (strval($aposta['game_4']) >= 0 && $aposta['game_4']) $games[] = $aposta['game_4'];
+                                        if (strval($aposta['game_5']) >= 0 && $aposta['game_5']) $games[] = $aposta['game_5'];
                                     ?>
                             {{ $aposta['modalidade_id'] !== 12 ? str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) :
                             $aposta['game_1'] }}
