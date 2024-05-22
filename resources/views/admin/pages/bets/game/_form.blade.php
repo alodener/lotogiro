@@ -202,44 +202,32 @@
                                 <th scope="col">Baixar</th>
                             </tr>
                         </thead>
+                    
+                        
                         <tbody>
+                            @foreach($draws as $draw)
                             <tr>
-                                <td>04/23/2024 - 13:30</td>
-                                <td class="d-flex overflow-scroll"> <!-- Adicionado overflow-scroll aqui -->
-                                    <div class="bol">01</div>
-                                    <div class="bol">02</div>
-                                    <div class="bol">03</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
-                                    <div class="bol">04</div>
+                                <th>{{ \Carbon\Carbon::parse($draw->created_at)->format('d/m/Y h:m') }}</th>
+                                <th class="resulttext">
+                                    <div class="d-flex overflow-scroll"> <!-- Adicionado overflow-scroll aqui -->
 
-                                </td>
-                                <td><i class="fa fa-clipboard" aria-hidden="true"></i></td>
+                                    @php
+                                        $numbers = explode(',', $draw->numbers);
+                                        foreach ($numbers as $number) {
+                                            echo '<div class="bol">' . $number . '</div>';
+                                        }
+                                    @endphp
+                                    </div>
+                                </th>
+                                <th>
+                                    <button class="btn btn-secondary">
+                                        <i class="fa fa-share-alt-square" aria-hidden="true"></i>
+                                    </button>
+                                </th>
                             </tr>
-                            <tr>
-                                <td>13</td>
-                                <td>100x</td>
-                                <td><i class="fa fa-clipboard" aria-hidden="true"></i></td>
-                            </tr>
-                            <tr>
-                                <td>14</td>
-                                <td>200x</td>
-                                <td><i class="fa fa-clipboard" aria-hidden="true"></i></td>
-                            </tr>
+                            @endforeach
                         </tbody>
+                        
                     </table>
                 </div>
                 <div class="modal-footer">

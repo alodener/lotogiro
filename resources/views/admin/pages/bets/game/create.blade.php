@@ -3,7 +3,6 @@
 @section('title', trans('admin.games.create-page-title'))
 
 @section('content')
-
 <div class="col-md-12">
   <section class="content">
     <form action="{{route('admin.bets.games.store')}}" method="POST" id="form_game">
