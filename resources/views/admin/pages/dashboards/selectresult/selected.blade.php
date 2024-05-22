@@ -8,22 +8,31 @@
 
 {{-- interface dos cards --}}
 <div class="container" style="padding:0px;">
-    <img src="{{ $game->banner_resultados ? asset("storage/{$game->banner_resultados}") : asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg') }}"
-     style="width:100%;max-height:150px;">
+    <img src="{{ $game->banner_resultados ? asset(" storage/{$game->banner_resultados}") :
+    asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg') }}"
+    style="width:100%;max-height:150px;">
 
 
 </div>
 
 
+<div class="card card-header container d-flex flex-row mt-1" style="margin-bottom:0px;">
+    <div class="" style="width:110%;align-self:center; margin-bottom:0px; font-size:19px; font-weight:bold;">{{ $game->name }}</div>
+    <div style="width:90%;align-self:center; margin-bottom:0px; font-size:15px;">
+        Tipo: {{$game->category}}</div>
+    <div style="width:90%;align-self:center; margin-bottom:0px; font-size:15px;">
+        Concurso: {{$draws[0]->competition_id}}</div>
+    <div style="width:90%;align-self:center; margin-bottom:0px; font-size:15px;">
+        Data do Sorteio: {{ \Carbon\Carbon::parse($draws[0]->created_at)->format('d/m/Y') }}</div>
 
+</div>
 <div class="d-flex container flex-md-row flex-column justify-content-between mt-2" style="padding:0px;">
     <div class="container" style="margin:0px; padding:0px; ">
         <div class="d-flex card-master flex-column" style="height:145px;">
             <div class="card container d-flex flex-row" style="margin-bottom:0px;">
                 <div class="card-header" style="width:110%;align-self:center; margin-bottom:0px; font-size:19px;">Último
                     Resultado</div>
-                <div class="card-header" style="width:90%;align-self:center; margin-bottom:0px; font-size:19px;">
-                    Concurso: {{$draws[0]->competition_id}}</div>
+                
             </div>
             <div class="card container d-flex flex-row align-items-center"
                 style="background-color:#202223; padding:10px;">
@@ -42,11 +51,18 @@
             </div>
             <div class="card container d-flex flex-row align-items-center justify-content-center"
                 style="background-color:#202223; padding:10px;">
-                <button class="btn btn-primary d-flex align-items-center justify-content-center font-btn" style="font-size:12px; color:white;"> <i class="fa fa-files-o mr-2 icon-btn" style="font-size:20px;" aria-hidden="true"></i>
+                <button class="btn btn-primary d-flex align-items-center justify-content-center font-btn"
+                    style="font-size:12px; color:white;"> <i class="fa fa-files-o mr-2 icon-btn" style="font-size:20px;"
+                        aria-hidden="true"></i>
                     Baixar Resultado</button>
-                <button class="btn btn-primary mr-2 ml-2  d-flex align-items-center justify-content-center font-btn" style="font-size:12px; color:white;"> <i class="fa fa-share-alt-square mr-2 icon-btn" style="font-size:20px;"aria-hidden="true"></i>
+                <button class="btn btn-primary mr-2 ml-2  d-flex align-items-center justify-content-center font-btn"
+                    style="font-size:12px; color:white;"> <i class="fa fa-share-alt-square mr-2 icon-btn"
+                        style="font-size:20px;" aria-hidden="true"></i>
                     TXT 20 Resultados</button>
-                <button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary  d-flex align-items-center justify-content-center font-btn" style="font-size:12px; color:white; background:#C70067;"><i class="fa fa-money mr-2 icon-btn" style="font-size:20px;" aria-hidden="true"></i>
+                <button data-toggle="modal" data-target="#exampleModal"
+                    class="btn btn-primary  d-flex align-items-center justify-content-center font-btn"
+                    style="font-size:12px; color:white; background:#C70067;"><i class="fa fa-money mr-2 icon-btn"
+                        style="font-size:20px;" aria-hidden="true"></i>
                     Ver Cotação</button>
             </div>
         </div>
@@ -108,50 +124,53 @@
 
 
 <div class="p-3"></div>
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <div class="d-flex container justify-content-between align-items-center">
-          <h5 class="modal-title" id="exampleModalLabel">LTB - Lotinha | Cotação</h5>
-          <button class="btn-cotacao-download"><i class="fa fa-clipboard" aria-hidden="true"></i>
-            Baixar Cotação</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex container justify-content-between align-items-center">
+                    <h5 class="modal-title" id="exampleModalLabel">LTB - Lotinha | Cotação</h5>
+                    <button class="btn-cotacao-download"><i class="fa fa-clipboard" aria-hidden="true"></i>
+                        Baixar Cotação</button>
+                </div>
+
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Dezena</th>
+                            <th scope="col">Multiplicador</th>
+                            <th scope="col">Retorno (R$1,00)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12</td>
+                            <td>10x</td>
+                            <td>R$:10,00</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>100x</td>
+                            <td>R$:100,00</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>200x</td>
+                            <td>R$:200,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
         </div>
-         
-        </div>
-        <div class="modal-body">        
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Dezena</th>
-                    <th scope="col">Multiplicador</th>
-                    <th scope="col">Retorno (R$1,00)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>12</td>
-                    <td>10x</td>
-                    <td>R$:10,00</td>
-                  </tr>
-                  <tr>
-                    <td>13</td>
-                    <td>100x</td>
-                    <td>R$:100,00</td>
-                  </tr> <tr>
-                    <td>14</td>
-                    <td>200x</td>
-                    <td>R$:200,00</td>
-                  </tr>
-                </tbody>
-              </table>        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 <style>
     .card {
@@ -220,14 +239,14 @@
 @endpush
 
 <style>
-
-    .btn-cotacao-download{
+    .btn-cotacao-download {
         padding: 5px;
-        border:none;
-        background:gray;
+        border: none;
+        background: gray;
         border-radius: 10px;
         font-size: 12px;
     }
+
     .hover-container {
         position: relative;
     }
@@ -268,13 +287,14 @@
     }
 
 
-.numbertext{
-    font-size: 20px;
-}
+    .numbertext {
+        font-size: 20px;
+    }
 
-.resulttext{
-    font-size:13px;
-}
+    .resulttext {
+        font-size: 13px;
+    }
+
     @media screen and (max-width: 1400px) {
         .hover-content {
             padding: 10px !important;
@@ -294,34 +314,37 @@
 
 
     @media screen and (max-width: 1290px) {
-       .numbertext{
-        font-size:20px;
-       }
-       .font-btn{
-        font-size:10px;
-        padding: 5px !important;
-       }
+        .numbertext {
+            font-size: 20px;
+        }
+
+        .font-btn {
+            font-size: 10px;
+            padding: 5px !important;
+        }
     }
+
     @media screen and (max-width: 1145px) {
-       .numbertext{
-        font-size:15px !important;
-       }
-       .font-btn{
-        font-size:8px !important;
-        padding: 5px !important;
-       }
+        .numbertext {
+            font-size: 15px !important;
+        }
 
-       .icon-btn{
-        font-size:10px;
-       }
+        .font-btn {
+            font-size: 8px !important;
+            padding: 5px !important;
+        }
+
+        .icon-btn {
+            font-size: 10px;
+        }
     }
+
     @media screen and (max-width: 767px) {
-      
-       .font-btn{
-        font-size:12px !important;
-       }
 
-       
+        .font-btn {
+            font-size: 12px !important;
+        }
+
+
     }
-   
 </style>
