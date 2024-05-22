@@ -184,7 +184,7 @@
         <div class="col-md-12">
             @if(isset($matriz))
             <div class="d-flex container-fluid justify-content-between align-items-center card-comands-pc">
-                <button class="btn btn-block btn-success btn-comandos" >Completar Jogo</button>
+                <button wire:click="completeGame({{$numbers}})"  class="btn btn-block btn-success btn-comandos" >Completar Jogo</button>
                 <h4 style="background:#303536; padding:10px; border-radius:100px;" class="numselecteds textbtnresponsive">{{
                     trans('admin.falta.quantSelec')
                     }}:<c style="color:#96C614;">({{count($selectedNumbers)}}/{{$numbers}})</c>
