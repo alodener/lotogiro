@@ -23,12 +23,13 @@
                 <div class="card-header" style="width:110%;align-self:center; margin-bottom:0px; font-size:19px;">Último
                     Resultado</div>
                 <div class="card-header" style="width:90%;align-self:center; margin-bottom:0px; font-size:19px;">
-                    Concurso: 12121</div>
+                    Concurso: {{$draws[0]->competition_id}}</div>
             </div>
             <div class="card container d-flex flex-row align-items-center"
                 style="background-color:#202223; padding:10px;">
 
-                <h4 class="numbertext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25
+                <h4 class="numbertext">{{$draws[0]->numbers}}
+
                 </h4>
             </div>
         </div>
@@ -68,10 +69,8 @@
 
 <!-- Todos os jogos -->
 <div class="container card-master mt-3">
-
     <table id="relatorio" class="table table-striped" style="width: 100%">
         <div class="d-flex justify-content-end">
-
         </div>
         <thead>
             <tr>
@@ -84,77 +83,29 @@
             </tr>
         </thead>
         <tbody>
+            @foreach($draws as $draw)
             <tr>
-                <th>171</th>
-                <th>LTB - Lotinha</th>
-                <th class="resulttext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
-                <th>1212</th>
-                <th>08/04/2023</th>
+                <th>{{ $draw->id }}</th>
+                <th>{{ $game->name }}</th>
+                <th class="resulttext">{{ $draw->numbers }}</th>
+                <th>{{ $draw->competition_id }}</th>
+                <th>{{ \Carbon\Carbon::parse($draw->created_at)->format('d/m/Y') }}</th>
                 <th>
                     <div class="d-flex justify-content-center align-items-center">
-                        <button class="btn btn-secondary mr-2  ">
+                        <button class="btn btn-secondary mr-2">
                             <i class="fa fa-files-o" aria-hidden="true"></i>
                         </button>
-                        <button class="btn btn-secondary ">
+                        <button class="btn btn-secondary">
                             <i class="fa fa-share-alt-square" aria-hidden="true"></i>
                         </button>
                     </div>
                 </th>
             </tr>
-            <tr>
-                <th>171</th>
-                <th>LTB - Lotinha</th>
-                <th class="resulttext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
-                <th>1212</th>
-                <th>08/04/2023</th>
-                <th>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <button class="btn btn-secondary mr-2  ">
-                            <i class="fa fa-files-o" aria-hidden="true"></i>
-                        </button>
-                        <button class="btn btn-secondary ">
-                            <i class="fa fa-share-alt-square" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </th>
-            </tr>
-            <tr>
-                <th>171</th>
-                <th>LTB - Lotinha</th>
-                <th class="resulttext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
-                <th>1212</th>
-                <th>08/04/2023</th>
-                <th>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <button class="btn btn-secondary mr-2  ">
-                            <i class="fa fa-files-o" aria-hidden="true"></i>
-                        </button>
-                        <button class="btn btn-secondary ">
-                            <i class="fa fa-share-alt-square" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </th>
-            </tr>
-            <tr>
-                <th>171</th>
-                <th>LTB - Lotinha</th>
-                <th class="resulttext">08,22,18,06,20,21,19,13,16,03,17,02,12,24,09,25</th>
-                <th>1212</th>
-                <th>08/04/2023</th>
-                <th>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <button class="btn btn-secondary mr-2  ">
-                            <i class="fa fa-files-o" aria-hidden="true"></i>
-                        </button>
-                        <button class="btn btn-secondary ">
-                            <i class="fa fa-share-alt-square" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </th>
-            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
+
 
 <div class="p-3"></div>
   <!-- Modal -->
@@ -224,6 +175,31 @@
             "columnDefs": [
                 { "className": "dt-center", "targets": "_all" }
             ],
+              $(document).ready(function() {
+        // Inicializa o DataTable
+        var table = $('#relatorio').DataTable({
+            theme: "bootstrap",
+            "scrollX": true,
+            "columnDefs": [
+                { "className": "dt-center", "targets": "_all" }
+            ],
+            "order": [[0, "desc"]],  // Define a ordenação inicial pela primeira coluna em ordem decrescente
+            
+            "language": {
+                "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
+                "zeroRecords": "{{ trans('admin.pagesF.ndEncont') }}",
+                "info": "{{ trans('admin.pagesF.mostrandoPags') }}",
+                "infoEmpty": "{{ trans('admin.pagesF.nhmRegs') }}",
+                "infoFiltered": "{{ trans('admin.pagesF.filtrado') }}",
+                "search": "{{ trans('admin.pagesF.search') }}",
+                "previous": "{{ trans('admin.pagesF.previous') }}",
+                "next": "{{ trans('admin.pagesF.next') }}"
+            }
+        });
+
+       
+        
+    });
          
             "language": {
                 "lengthMenu": "{{ trans('admin.pagesF.mostrandoRegs') }}",
