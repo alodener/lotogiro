@@ -15,8 +15,9 @@ class SelectResultController extends Controller
     {
 
         $banner = Layout_imagens_resultado::latest('id')->first();
+        $system = System::all();
 
-        return view('admin.pages.dashboards.selectresult.index', compact('banner'));
+        return view('admin.pages.dashboards.selectresult.index', compact('banner','system'));
     }
 
     public function selected(Request $request, $id)
@@ -39,4 +40,18 @@ class SelectResultController extends Controller
         // Retorna a quantidade de registros encontrados
         return $count;
     }
+
+
+    public function valuegames($dategame)
+    {
+        // Calcula a data e hora com base nas horas fornecidas
+        $date = now()->subHours($dategame);
+    
+        // Soma os valores do campo 'value' de todos os registros do modelo CountGames que foram criados após a data calculada
+        $sum = CountGames::where('created_at', '>=', $date)->sum('value');
+    
+        // Retorna a soma dos valores encontrados
+        return $sum;
+    }
+    
 }

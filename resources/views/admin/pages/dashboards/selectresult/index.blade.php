@@ -4,39 +4,31 @@
 
 @section('content')
 
-
-
 {{-- interface dos cards --}}
-
 <div class="container" style="padding:0px;">
     <img src="{{ $banner->url ? asset("storage/{$banner->url}") : asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg') }}"
      style="width:100%;max-height:150px;">
-
-
 </div>
-<div class="card-deck container card-master" style="width: 100%; margin-bottom: 10px; margin-left: auto;
-    margin-right: auto; margin-top:30px">
 
+<div class="card-deck container card-master" style="width: 100%; margin-bottom: 10px; margin-left: auto; margin-right: auto; margin-top:30px">
     <div class="card mb-6" style="background-color:#202223;">
         <div class="card-header">Bilhetes Totais</div>
         <div class="card-body">
-            <h5 class="card-title" style="font-size: 30px" id="campobilhetes">0 bilhetes</h5> <i
-                class="nav-icon fa fa-ticket" style="float: right; font-size: 50px; color:#98C715;"></i>
+            <h5 class="card-title" style="font-size: 30px" id="campobilhetes">0 bilhetes</h5>
+            <i class="nav-icon fa fa-ticket" style="float: right; font-size: 50px; color:#98C715;"></i>
         </div>
     </div>
 
     <div class="card mb-6" style="background-color:#202223;">
         <div class="card-header">Premiações Totais</div>
         <div class="card-body">
-            <h5 class="card-title" style="font-size: 30px" id="campopremiacoes">R$ 22.300,00</h5> <i
-                class="nav-icon fas fa-dollar-sign" style="float: right; font-size: 50px;color:#98C715;"></i>
+            <h5 class="card-title" style="font-size: 30px" id="campopremiacoes">R$ 22.300,00</h5>
+            <i class="nav-icon fas fa-dollar-sign" style="float: right; font-size: 50px;color:#98C715;"></i>
         </div>
     </div>
-
 </div>
-{{-- formulario onde buscaremos uma data especifica --}}
 
-
+{{-- Formulario onde buscaremos uma data especifica --}}
 <div class="container mt-1 d-flex justify-content-center align-items-center" style="padding: 0px;">
     <div class="card-deck container d-flex justify-content-between card-header" style="margin:0px;">
         <div class="col-md-6 text-md-start ">
@@ -59,20 +51,18 @@
 <div id="result" class="mt-3 text-center"></div>
 
 <!-- Todos os jogos -->
-
 @if(\App\Models\TypeGame::count() > 0)
 <div class="container mt-3">
     <button class="mt-2 mb-2 btn-resultados-disponiveis">Resultados Disponíveis<i class="fa fa-check-circle ml-3" aria-hidden="true"></i>
     </button>
 
-    <div class="d-flex flex-wrap justify-content-center">
+    <div class="d-flex flex-wrap justify-content-center" id="available-games">
         @php
         $typeGames = \App\Models\TypeGame::get();
-        $count = 0;
         @endphp
 
         @foreach($typeGames as $typeGame)
-        <div class="d-flex p-2 box-imgs">
+        <div class="d-flex p-2 box-imgs game-container" data-game-name="{{ $typeGame->name }}">
             <a href="/admin/dashboards/foundresult/{{ $typeGame->id }}" class="hover-container">
                 <img class="img-todos-jogos" style="border-radius: 10px; width: 100%; height: 100%; object-fit: cover;"
                     src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") :
@@ -84,43 +74,19 @@
                 </div>
             </a>
         </div>
-
-
         @endforeach
-        @endif
     </div>
 </div>
 
-@if(\App\Models\TypeGame::count() > 0)
 <div class="container mt-3">
     <button class="mt-2 mb-2 btn-aguardando-resultado">Aguardando Resultado<i class="fa fa-clock-o ml-3" aria-hidden="true"></i>
     </button>
 
-    <div class="d-flex flex-wrap justify-content-center">
-        @php
-        $typeGames = \App\Models\TypeGame::get();
-        $count = 0;
-        @endphp
-
-        @foreach($typeGames as $typeGame)
-        <div class="d-flex p-2 box-imgs">
-            <a href="/admin/dashboards/foundresult/{{ $typeGame->id }}" class="hover-container">
-                <img class="img-todos-jogos" style="border-radius: 10px; width: 100%; height: 100%; object-fit: cover;"
-                    src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") :
-                asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}"
-                alt="{{ $typeGame->name }} " >
-                <div class="hover-content">
-                    <p>{{ $typeGame->name }}</p>
-                    <button class="btn btn-primary">Selecionar</button>
-                </div>
-            </a>
-        </div>
-
-
-        @endforeach
-        @endif
+    <div class="d-flex flex-wrap justify-content-center" id="unavailable-games">
+        <!-- Jogos indisponíveis serão movidos para esta div via JavaScript -->
     </div>
 </div>
+@endif
 
 <div class="p-3"></div>
 
@@ -129,33 +95,64 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        var system = @json($system);
+        var partnerId = system.find(config => config.nome_config === "partner_id").value;
+
+        function somarPremios(dados) {
+            return dados.reduce((total, item) => {
+                let premioNumerico = typeof item.premio === 'string' 
+                    ? parseFloat(item.premio.replace(/\D/g, ''))
+                    : item.premio;
+                return total + premioNumerico;
+            }, 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function somarNumTickets(dados) {
+            return dados.reduce((total, item) => total + item.num_tickets, 0);
+        }
+
+        function listaall(dataSelecionada) {
+            $.ajax({
+                type: 'GET',
+                url: `http://localhost:8000/api/winners-list2?partner=3&hours=${dataSelecionada}`,
+                success: function(response) {
+                    console.log(response);
+
+                    var winnerGameNames = response.map(winner => winner.game_name);
+                    var gameContainers = document.querySelectorAll('.game-container');
+                    var availableGamesContainer = document.getElementById('available-games');
+                    var unavailableGamesContainer = document.getElementById('unavailable-games');
+
+                    gameContainers.forEach(container => {
+                        availableGamesContainer.appendChild(container);
+                    });
+
+                    gameContainers.forEach(container => {
+                        var gameName = container.getAttribute('data-game-name');
+                        if (!winnerGameNames.includes(gameName)) {
+                            unavailableGamesContainer.appendChild(container);
+                        }
+                    });
+
+                    $('#campobilhetes').text(`${somarNumTickets(response)} bilhetes`);
+                    $('#campopremiacoes').text(somarPremios(response));
+                }
+            });
+        }
+
         function loadResults() {
             var hours = $('#dateSelect').val();
-            
-            $.ajax({
-                url: 'selectresult/' + hours,
-                method: 'GET',
-                success: function(response) {
-                    if(response == 1) {
-                        $('#campobilhetes').html(response + ' Bilhete');
-                    } else {
-                        $('#campobilhetes').html(response + ' Bilhetes');
-                    }
-                },
-                
-            });
+            listaall(hours);
         }
 
         $('#dateSelect').change(loadResults);
 
-        // Trigger the function on page load
-        loadResults();
+        loadResults(); // Trigger the function on page load
     });
 </script>
 
-
 <style>
-    .btn-aguardando-resultado{
+    .btn-aguardando-resultado {
         background: gray;
         border: none;
         padding: 5px 10px;
@@ -164,7 +161,8 @@
         font-weight: bold;
         border-radius: 10px;
     }
-    .btn-resultados-disponiveis{
+
+    .btn-resultados-disponiveis {
         background: #98C715;
         border: none;
         padding: 5px 10px;
@@ -172,8 +170,8 @@
         color: white;
         font-weight: bold;
         border-radius: 10px;
-
     }
+
     .hover-container {
         position: relative;
     }
@@ -200,9 +198,7 @@
     }
 
     .hover-content p {
-
         font-weight: 700;
-
     }
 
     .hover-button {
@@ -213,22 +209,18 @@
         cursor: pointer;
     }
 
-
-
     @media screen and (max-width: 1400px) {
         .hover-content {
             padding: 10px !important;
-        }   
+        }
 
         .hover-content p {
             font-size: 12px;
-
         }
 
         .hover-content button {
             font-size: 10px;
             padding: 5px;
-
         }
     }
 </style>
