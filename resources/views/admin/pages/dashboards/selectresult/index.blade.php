@@ -114,7 +114,7 @@
         function listaall(dataSelecionada) {
             $.ajax({
                 type: 'GET',
-                url: `http://localhost:8000/api/winners-list2?partner=3&hours=${dataSelecionada}`,
+                url: `https://web.loteriasalternativas.com.br/api/winners-list2?partner=${partnerId}&hours=${dataSelecionada}`,
                 success: function(response) {
                     console.log(response);
 
