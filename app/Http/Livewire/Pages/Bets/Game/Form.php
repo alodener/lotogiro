@@ -117,7 +117,6 @@ class Form extends Component
 
     public function completeGame($quantidadeTotal) {
         $numerosSelecionados = $this->selectedNumbers;
-        $numerosPreselecionados = $this->selectedNumbers; // Salva os números pré-selecionados
         $quantidadeSelecionados = count($numerosSelecionados);
         $numerosRestantes = $quantidadeTotal - $quantidadeSelecionados;
     
@@ -143,14 +142,13 @@ class Form extends Component
             $numerosCompletos[] = $addNumeroAleatorio;
         }
     
-        // Combina os números pré-selecionados com os números completos
-        $jogoCompleto = array_merge($numerosPreselecionados, $numerosCompletos);
+        // Combina os números selecionados com os números completos
+        $jogoCompleto = array_merge($numerosSelecionados, $numerosCompletos);
     
         // Atualiza os números selecionados
         $this->selectedNumbers = $jogoCompleto;
         $this->verifyValue(); // Você precisará ajustar esta função conforme necessário
     }
-    
     
 
     public function randomNumbers($quantidadeAletorizar){
@@ -194,6 +192,7 @@ class Form extends Component
             ['type_game_id', $this->typeGame->id],
             ['numbers', $numbers],
         ])->get();
+        
 
         if( !empty($typeGameValue)){
             $this->values = $typeGameValue;
