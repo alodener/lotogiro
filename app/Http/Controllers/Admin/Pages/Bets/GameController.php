@@ -138,15 +138,18 @@ class GameController extends Controller
             abort(403);
         }
 
+
         $typeGames = TypeGame::find($typeGame)->first();
         $clients = collect([]);
         $banner_publicidade = Layout_imagens_publicidade::first();
+        $draws = Draw::where('type_game_id', $typeGame->id)->orderBy('created_at', 'desc')->get();
+
         /*
         $typeGames = TypeGame::get();
         $clients = Client::get();
         */
 
-        return view('admin.pages.bets.game.create', compact('typeGames', 'typeGame', 'clients','banner_publicidade'));
+        return view('admin.pages.bets.game.create', compact('typeGames', 'typeGame', 'clients','banner_publicidade','draws'));
     }
 
     public function store(Request $request, Bet $validate_game, Game $game)

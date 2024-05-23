@@ -15,8 +15,8 @@
                             class="btn-copiacola btn-divisor"><i class="fa fa-money mr-2" style="font-size: 15px;"
                                 aria-hidden="true"></i>
                             Ver Cotação</button>
-                        <a 
-                            class="btn btn-copiacola" id="openModalButton2" data-toggle="modal" onclick="lockmodal()" data-target="#ModalCopiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
+                        <a class="btn btn-copiacola" id="openModalButton2" data-toggle="modal" onclick="lockmodal()"
+                            data-target="#ModalCopiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
                                 aria-hidden="true"></i>
                             Copia e Cola</a>
                     </div>
@@ -40,10 +40,10 @@
                 <div class="d-flex cardbtsadd container justify-content-around align-items-center mt-2">
                     <p style="font-size:10px; margin:0px;">Valores Rápidos:</p>
                     <div class="d-flex">
-                    <button class="btn-add-value-extra" onclick="addmoney(event,1)">+ R$ 1,00</button>
-                    <button class="btn-add-value-extra mr-1 ml-1" onclick="addmoney(event,5)">+ R$ 5,00</button>
-                    <button class="btn-add-value-extra" onclick="addmoney(event,10)">+ R$ 10,00</button>
-                </div>
+                        <button class="btn-add-value-extra" onclick="addmoney(event,1)">+ R$ 1,00</button>
+                        <button class="btn-add-value-extra mr-1 ml-1" onclick="addmoney(event,5)">+ R$ 5,00</button>
+                        <button class="btn-add-value-extra" onclick="addmoney(event,10)">+ R$ 10,00</button>
+                    </div>
                 </div>
             </div>
             <div class="d-flex card-header flex-column justify-content-center align-items-center"
@@ -58,7 +58,7 @@
 
         @endif
 
-        
+
 
         {{-- CARD 2 --}}
 
@@ -81,8 +81,8 @@
                 style="min-height: 62px;">
                 <h5 style="font-weight: bold; font-size:15px; min-width:150px; margin:0px;" class="mb-1">Multiplos Jogos
                 </h5>
-                <a 
-                    class="btn btn-copiacola" id="openModalButton" onclick="lockmodal()" data-toggle="modal" data-target="#ModalCopiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
+                <a class="btn btn-copiacola" id="openModalButton" onclick="lockmodal()" data-toggle="modal"
+                    data-target="#ModalCopiacola"><i class="fa fa-ticket mr-2" style="font-size: 15px;"
                         aria-hidden="true"></i>
                     Copia e Cola</a>
             </div>
@@ -160,8 +160,8 @@
                 </div>
             </div>
         </div>
-        
-        
+
+
     </div>
     <div class="divider"></div>
     <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
@@ -184,10 +184,27 @@
         <div class="col-md-12">
             @if(isset($matriz))
             <div class="d-flex container-fluid justify-content-between align-items-center card-comands-pc">
-                <button class="btn btn-block btn-success btn-comandos" >Completar Jogo</button>
-                <h4 style="background:#303536; padding:10px; border-radius:100px;" class="numselecteds textbtnresponsive">{{
+                @php
+                $ultimoNumero = null; // Inicializa a variável $ultimoNumero como nula
+                @endphp
+
+                @foreach ($busca as $buscas)
+                @php
+                $ultimoNumero = $buscas['numbers']; // Atribui o valor de 'numbers' a $ultimoNumero
+                @endphp
+                @endforeach
+
+                <!-- Exibe o último número após o loop -->
+                <button wire:click="completeGame({{ $ultimoNumero }})"
+                    class="btn btn-block btn-success btn-comandos">Completar Jogo</button>
+                <div>
+
+                </div>
+
+                <h4 style="background:#303536; padding:10px; border-radius:100px;"
+                    class="numselecteds textbtnresponsive">{{
                     trans('admin.falta.quantSelec')
-                    }}:<c style="color:#96C614;">({{count($selectedNumbers)}}/{{$numbers}})</c>
+                    }}:<c style="color:#96C614;">({{count($selectedNumbers)}}/{{ $ultimoNumero }})</c>
                 </h4>
                 @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" ||
                 $typeGame->name ==
@@ -196,29 +213,29 @@
                     onclick="limpacampos();">{{
                     trans('admin.falta.selecNums') }}</button>
                 @endif
-                <button type="submit"  id="button_game"
-                    class="btn btn-block btn-success btn-comandos" >Confirmar Aposta
+                <button type="submit" id="button_game" class="btn btn-block btn-success btn-comandos">Confirmar Aposta
                 </button>
             </div>
-            <div class="d-flex container-fluid flex-column justify-content-between align-items-center card-comands-mobile">
+            <div
+                class="d-flex container-fluid flex-column justify-content-between align-items-center card-comands-mobile">
                 <h4 style="background:#303536; padding:10px; border-radius:100px;" class="numselecteds">{{
                     trans('admin.falta.quantSelec')
                     }}:<c style="color:#96C614;">({{count($selectedNumbers)}}/{{$numbers}})</c>
                 </h4>
                 <div class="d-flex mt-2">
-                <button class="btn btn-block btn-success btn-comandos mr-2" >Completar Jogo</button>
+                    <button class="btn btn-block btn-success btn-comandos mr-2">Completar Jogo</button>
 
-                @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" ||
-                $typeGame->name ==
-                "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
-                <button wire:click="selecionaTudo()" class="{{ env('AllColor') }}" type="button"
-                    onclick="limpacampos();">{{
-                    trans('admin.falta.selecNums') }}</button>
-                @endif
-                <button type="submit"  id="button_game"
-                    class="btn btn-block btn-success btn-comandos btnprevent"style="margin: 0px;" onclick="submit()">Confirmar Aposta
-                </button>
-            </div>
+                    @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" ||
+                    $typeGame->name ==
+                    "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
+                    <button wire:click="selecionaTudo()" class="{{ env('AllColor') }}" type="button"
+                        onclick="limpacampos();">{{
+                        trans('admin.falta.selecNums') }}</button>
+                    @endif
+                    <button type="submit" id="button_game" class="btn btn-block btn-success btn-comandos btnprevent"
+                        style="margin: 0px;" onclick="submit()">Confirmar Aposta
+                    </button>
+                </div>
             </div>
             <br>
 
@@ -284,35 +301,38 @@
 </script>
 
 <style>
-     .numselecteds{
-        margin:0px;
-     }
-     @media (max-width: 500px) {
-        .card-comands-pc{
+    .numselecteds {
+        margin: 0px;
+    }
+
+    @media (max-width: 500px) {
+        .card-comands-pc {
             display: none !important;
         }
 
-        .num-responsive{
-            font-size:20px !important;
+        .num-responsive {
+            font-size: 20px !important;
         }
-       
-     
+
+
     }
 
     @media (min-width: 500px) {
-        .card-comands-mobile{
+        .card-comands-mobile {
             display: none !important;
         }
-        .numselecteds{
-            font-size:20px !important;
+
+        .numselecteds {
+            font-size: 20px !important;
         }
-        
-     
+
+
     }
-     @media (max-width: 650px) {
-        
-        .textbtnresponsive{
-            font-size:15px !important;
+
+    @media (max-width: 650px) {
+
+        .textbtnresponsive {
+            font-size: 15px !important;
         }
 
         .btn-comandos {
@@ -320,13 +340,16 @@
             font-size: 10px !important;
 
         }
-    } @media (max-width: 550px) {
-       
+    }
+
+    @media (max-width: 550px) {
+
         .btn-comandos {
             max-width: 110px !important;
 
         }
     }
+
     .btn-cotacao-download {
         padding: 5px;
         border: none;
@@ -335,16 +358,16 @@
         font-size: 12px;
     }
 
-    .btn-comandos{
+    .btn-comandos {
         max-width: 200px;
     }
 
-    .btn-divisor{
-         margin-left: 10px;
-         margin-right: 10px;
+    .btn-divisor {
+        margin-left: 10px;
+        margin-right: 10px;
     }
-    
-   
+
+
     @media (max-width: 1404px) {
         .textcard {
             font-size: 15px;
@@ -353,18 +376,20 @@
         .numselecteds {
             font-size: 15px;
         }
+
         @media (max-width: 1100px) {
-            .btn-comandos{
+            .btn-comandos {
                 max-width: 100px;
                 font-size: 12px;
             }
-    
+
         }
 
         @media (max-width: 1200px) {
-            .btn-comandos{
+            .btn-comandos {
                 max-width: 150px;
             }
+
             .cardbtsadd {
                 flex-direction: column;
             }
@@ -381,16 +406,18 @@
         }
 
     }
+
     @media (max-width: 465px) {
-    .card-acoes{
-        flex-direction: column;
-    }
-    .btn-divisor{
-    margin-right: 0px;
-    margin-left: 0px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    }
+        .card-acoes {
+            flex-direction: column;
+        }
+
+        .btn-divisor {
+            margin-right: 0px;
+            margin-left: 0px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
     }
 
     .btn-add-value-extra {
@@ -425,7 +452,7 @@
     }
 </style>
 <script>
-     function submit(){
+    function submit(){
         document.getElementById('form_game').submit();
 
     }

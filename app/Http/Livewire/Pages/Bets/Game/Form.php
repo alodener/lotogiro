@@ -115,6 +115,42 @@ class Form extends Component
 
     }
 
+    public function completeGame($quantidadeTotal) {
+        $numerosSelecionados = $this->selectedNumbers;
+        $quantidadeSelecionados = count($numerosSelecionados);
+        $numerosRestantes = $quantidadeTotal - $quantidadeSelecionados;
+    
+        // Gera números aleatórios para completar o jogo
+        $numerosCompletos = [];
+        $rangeMax = $this->typeGame->numbers;
+        $numInicial = 1;
+    
+        if ($this->typeGame->category == 'loto_mania') {
+            $rangeMax = $this->typeGame->numbers - 1;
+            $numInicial = 0;
+        }
+    
+        for ($i = 0; $i < $numerosRestantes; $i++) {
+            $addNumeroAleatorio = rand($numInicial, $rangeMax);
+    
+            // Verifica se o número já está na lista de números selecionados
+            while (in_array($addNumeroAleatorio, $numerosSelecionados) || in_array($addNumeroAleatorio, $numerosCompletos)) {
+                $addNumeroAleatorio = rand($numInicial, $rangeMax);
+            }
+    
+            // Adiciona o número aleatório à lista de números completos
+            $numerosCompletos[] = $addNumeroAleatorio;
+        }
+    
+        // Combina os números selecionados com os números completos
+        $jogoCompleto = array_merge($numerosSelecionados, $numerosCompletos);
+    
+        // Atualiza os números selecionados
+        $this->selectedNumbers = $jogoCompleto;
+        $this->verifyValue(); // Você precisará ajustar esta função conforme necessário
+    }
+    
+
     public function randomNumbers($quantidadeAletorizar){
         $selectedNumbers = 0;
         $numerosAletatorios = array();
@@ -156,6 +192,7 @@ class Form extends Component
             ['type_game_id', $this->typeGame->id],
             ['numbers', $numbers],
         ])->get();
+        
 
         if( !empty($typeGameValue)){
             $this->values = $typeGameValue;
