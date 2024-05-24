@@ -34,10 +34,12 @@ class ScrapingController extends Controller
     
         // Obtém todos os horários de sorteio para esse estado com seus respectivos nomes de banca
         $horarios = DB::table('bichao_horarios')
-                    ->select('id', 'banca', DB::raw("CONCAT(banca, ' (', DATE_FORMAT(horario, '%H:%i'), ')') AS horario"))
+                    ->select('id', 'banca', DB::raw("CONCAT(banca, ' (', DATE_FORMAT(horario, '%H:%i'), ')') AS horario"),DB::raw("horario AS horarioT"))
                     ->where('estado_id', $estado)
+                    ->orderBy('horarioT', 'ASC')
                     ->get();
     
+        // dd($horarios);
         if ($horarios->isEmpty()) {
             return response()->json(['error' => 'Nenhum horário de sorteio encontrado para este estado'], 404);
         }
@@ -95,7 +97,6 @@ class ScrapingController extends Controller
         if (empty($todosResultados)) {
             return response()->json(['error' => 'Nenhum resultado encontrado para os horários e data especificados'], 404);
         }
-    
         // Retorna os resultados do banco de dados
         return response()->json($todosResultados);
     }
@@ -136,6 +137,11 @@ class ScrapingController extends Controller
     
         $urls = [
             'RJ' => [
+                'PTM - RIO (09:20)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-ptm-rio/',
+                    'phrase' => '(PTM-Rio) 09:00 Hoje ' . $data,
+                    'id' => 1,
+                ],
                 'PTM - RIO (11:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptm-rio/',
                     'phrase' => '(PTM-Rio) 11:00 Hoje ' . $data,
@@ -163,15 +169,35 @@ class ScrapingController extends Controller
                 ]
             ],
             'SP' => [
+                'PTM-SP (08:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/ptm-sp/', // Esta bancas parece não existir na fonte de dados fornecida
+                    'phrase' => '(Ptm-Sp) 08:20 Hoje ' . $data,
+                    'id'=> 6,
+                ],
+                'PTM-SP (10:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/ptm-sp/', // Esta bancas parece não existir na fonte de dados fornecida
+                    'phrase' => '(Ptm-Sp) 10:20 Hoje ' . $data,
+                    'id'=> 6,
+                ],
                 'PT-SP (13:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-pt-sp/', // Esta bancas parece não existir na fonte de dados fornecida
                     'phrase' => '(Pt-Sp) 13:20 Hoje ' . $data,
                     'id'=> 6,
                 ],
-                'Bandeirantes (16:00)' => [
-                    'url' => 'https://www.resultadosnahora.com.br/banca-bandeirante/',
-                    'phrase' => '(Bandeirante-Sp) 15:20 Hoje ' . $data,
-                    'id'=> 7,
+                'PT-SP (17:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-pt-sp/', // Esta bancas parece não existir na fonte de dados fornecida
+                    'phrase' => '(Pt-Sp) 17:20 Hoje ' . $data,
+                    'id'=> 6,
+                ],
+                // 'Bandeirantes (16:00)' => [
+                //     'url' => 'https://www.resultadosnahora.com.br/banca-bandeirante/',
+                //     'phrase' => '(Bandeirante-Sp) 15:20 Hoje ' . $data,
+                //     'id'=> 7,
+                // ],
+                'PTN - SP (19:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-ptn-sp/',
+                    'phrase' => '(Ptn-Sp) 19:20 Hoje ' . $data,
+                    'id'=> 8,
                 ],
                 'PTN - SP (20:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptn-sp/',
@@ -180,6 +206,11 @@ class ScrapingController extends Controller
                 ]
             ],
             'GO' => [
+                'Look (07:20)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-look/',
+                    'phrase' => '(Look-Goias) 07:20 Hoje ' . $data,
+                    'id'=> 9,
+                ],
                 'Look (11:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-look/',
                     'phrase' => '(Look-Goias) 11:20 Hoje ' . $data,
@@ -203,6 +234,11 @@ class ScrapingController extends Controller
                 'Look (21:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-look/',
                     'phrase' => '(Look-Goias) 21:20 Hoje ' . $data,
+                    'id'=> 13,
+                ],
+                'Look (23:20)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-look/',
+                    'phrase' => '(Look-Goias) 23:20 Hoje ' . $data,
                     'id'=> 13,
                 ]
             ],
@@ -402,6 +438,11 @@ class ScrapingController extends Controller
     
         $urls = [
             'RJ' => [
+                'PTM - RIO (09:20)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-ptm-rio/',
+                    'phrase' => '(PTM-Rio) 09:00 Hoje ' . $data,
+                    'id' => 33,
+                ],
                 'PTM - RIO (11:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptm-rio/',
                     'phrase' => '(PTM-Rio) 11:00 Hoje ' . $data,
@@ -429,15 +470,35 @@ class ScrapingController extends Controller
                 ]
             ],
             'SP' => [
+                'PTM-SP (08:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/ptm-sp/', // Esta bancas parece não existir na fonte de dados fornecida
+                    'phrase' => '(Ptm-Sp) 08:20 Hoje ' . $data,
+                    'id'=> 34,
+                ],
+                'PTM-SP (10:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/ptm-sp/', // Esta bancas parece não existir na fonte de dados fornecida
+                    'phrase' => '(Ptm-Sp) 10:20 Hoje ' . $data,
+                    'id'=> 35,
+                ],
                 'PT-SP (13:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-pt-sp/', // Esta bancas parece não existir na fonte de dados fornecida
                     'phrase' => '(Pt-Sp) 13:20 Hoje ' . $data,
                     'id'=> 6,
                 ],
+                'PT-SP (17:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-pt-sp/', // Esta bancas parece não existir na fonte de dados fornecida
+                    'phrase' => '(Pt-Sp) 17:20 Hoje ' . $data,
+                    'id'=> 36,
+                ],
                 'Bandeirantes (16:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-bandeirante/',
-                    'phrase' => '(Bandeirante-Sp) 15:20 Hoje ' . $data,
+                    'phrase' => '(Bandeirantes-Sp) 15:20 Hoje ' . $data,
                     'id'=> 7,
+                ],
+                'PTN - SP (19:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-ptn-sp/',
+                    'phrase' => '(Ptn-Sp) 19:20 Hoje ' . $data,
+                    'id'=> 37,
                 ],
                 'PTN - SP (20:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-ptn-sp/',
@@ -446,6 +507,16 @@ class ScrapingController extends Controller
                 ]
             ],
             'GO' => [
+                'Look (07:20)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-look/',
+                    'phrase' => '(Look-Goias) 07:20 Hoje ' . $data,
+                    'id'=> 38,
+                ],
+                'Look (09:20)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-look/',
+                    'phrase' => '(Look-Goias) 09:20 Hoje ' . $data,
+                    'id'=> 40,
+                ],
                 'Look (11:20)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-look/',
                     'phrase' => '(Look-Goias) 11:20 Hoje ' . $data,
@@ -470,6 +541,11 @@ class ScrapingController extends Controller
                     'url' => 'https://www.resultadosnahora.com.br/banca-look/',
                     'phrase' => '(Look-Goias) 21:20 Hoje ' . $data,
                     'id'=> 13,
+                ],
+                'Look (23:20)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-look/',
+                    'phrase' => '(Look-Goias) 23:20 Hoje ' . $data,
+                    'id'=> 39,
                 ]
             ],
             'MG' => [
@@ -487,14 +563,19 @@ class ScrapingController extends Controller
                     'url' => 'https://www.resultadosnahora.com.br/banca-minas-noite/',
                     'phrase' => '(Minas Gerais) 19:00 Hoje ' . $data,
                     'id'=> 16,
+                ],
+                'PREFERIDA (21:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-preferida-minas/',
+                    'phrase' => '(Minas Gerais) 21:00 Hoje ' . $data,
+                    'id'=> 41,
                 ]
             ],
             'BA' => [
-                // 'BA (10:00)' => [
-                //     'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
-                //     'phrase' => '(Bahia) 10:00 Hoje ' . $data,
-                //     'id'=> 17,
-                // ],
+                'BA (10:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
+                    'phrase' => '(Bahia) 10:00 Hoje ' . $data,
+                    'id'=> 42,
+                ],
                 'BA (12:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-bahia/',
                     'phrase' => '(Bahia) 12:00 Hoje ' . $data,
@@ -507,7 +588,7 @@ class ScrapingController extends Controller
                 ],
                 'BA (19:00)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-bahia/', 
-                    'phrase' => 'Federal (Bahia) 19:00 Hoje ' . $data,
+                    'phrase' => '(Bahia) 19:00 Hoje ' . $data,
                     'id'=> 19,
                 ],
                 'BA (21:00)' => [
@@ -517,6 +598,11 @@ class ScrapingController extends Controller
                 ]
             ],
             'PB' => [
+                'LOTEP (09:40)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-capital-loterias/',
+                    'phrase' => '(Capital Loterias-PB) 09:40 Hoje ' . $data,
+                    'id'=> 43,
+                ],
                 'LOTEP (10:45)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-lotep/',
                     'phrase' => '(Lotep Paraíba) 10:45 Hoje ' . $data,
@@ -537,8 +623,23 @@ class ScrapingController extends Controller
                     'phrase' => '(Lotep Paraíba) 18:00 Hoje ' . $data,
                     'id'=> 24,
                 ],
+                'LOTEP (20:30)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-local-paratodos/',
+                    'phrase' => '(Paratodos Paraíba) 20:30 Hoje ' . $data,
+                    'id'=> 44,
+                ],
             ],
             'DF' => [
+                'LBR (08:40)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 08:40 Hoje ' . $data,
+                    'id'=> 45,
+                ],
+                'LBR (10:30)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 10:30 Hoje ' . $data,
+                    'id'=> 46,
+                ],
                 'LBR (12:40)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
                     'phrase' => '(Lbr-Brasilia) 12:40 Hoje ' . $data,
@@ -559,22 +660,37 @@ class ScrapingController extends Controller
                     'phrase' => '(Lbr-Brasilia) 19:30 Hoje ' . $data,
                     'id'=> 28,
                 ],
+                'LBR (20:40)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 20:40 Hoje ' . $data,
+                    'id'=> 47,
+                ],
+                'LBR (22:40)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 22:30 Hoje ' . $data,
+                    'id'=> 48,
+                ],
+                'LBR (23:00)' => [
+                    'url' => 'https://www.resultadosnahora.com.br/banca-lbr/',
+                    'phrase' => '(Lbr-Brasilia) 23:40 Hoje ' . $data,
+                    'id'=> 50,
+                ],
                 
             ],
             'CE' => [
-                'LOTOCE (11:00)' => [
+                'LOTOCE (10:30)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
-                    'phrase' => '(Lotece-Ceará) 11:20 Hoje ' . $data,
+                    'phrase' => '(Lotece-Ceará) 10:30 Hoje ' . $data,
                     'id'=> 29,
                 ],
-                'LOTOCE (14:00)' => [
+                'LOTOCE (15:30)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
-                    'phrase' => '(Lbr-Brasilia) 14:00 Hoje ' . $data,
+                    'phrase' => '(Lotece-Ceará) 15:30 Hoje ' . $data,
                     'id'=> 30,
                 ],
-                'LOTOCE (19:00)' => [
+                'LOTOCE (19:30)' => [
                     'url' => 'https://www.resultadosnahora.com.br/banca-lotece/',
-                    'phrase' => '(Lbr-Brasilia) 19:00 Hoje ' . $data,
+                    'phrase' => '(Lotece-Ceará) 19:30 Hoje ' . $data,
                     'id'=> 31,
                 ],
                 
@@ -596,7 +712,7 @@ class ScrapingController extends Controller
         }
 
         $resultados = [];
-
+        
         // Itera sobre as URLs disponíveis para o estado fornecido
         foreach ($urls[$estado] as $banca => $config) {
             $url = $config['url'];
@@ -645,7 +761,7 @@ class ScrapingController extends Controller
                 });
             }
         }
-
+        // dd($resultados);
         if (!empty($resultados)) {
             // Agora vamos salvar os resultados no banco de dados
             foreach ($resultados as $banca => $dados) {

@@ -316,7 +316,7 @@ class BichaoController extends Controller
             ->whereDate('bichao_games.created_at','<=', $endAt)
             ->orderBy('bichao_games.created_at', 'DESC')
             ->paginate($perPage);
-
+        
         return view('admin.pages.bets.game.bichao.minhas_apostas', [
             'apostas' => $apostas,
             'perPage' => $perPage,
@@ -859,11 +859,11 @@ class BichaoController extends Controller
             $apostas = [];
             $premios = [];
             
-            if (strval($checkout[$index]['game_1']) > 0) $apostas[] = $checkout[$index]['game_1'];
-            if (strval($checkout[$index]['game_2']) > 0) $apostas[] = $checkout[$index]['game_2'];
-            if (strval($checkout[$index]['game_3']) > 0) $apostas[] = $checkout[$index]['game_3'];
-            if (strval($checkout[$index]['game_4']) > 0) $apostas[] = $checkout[$index]['game_4'];
-            if (strval($checkout[$index]['game_5']) > 0) $apostas[] = $checkout[$index]['game_5'];
+            if (strval($checkout[$index]['game_1']) >= 0 && $checkout[$index]['game_1']) $apostas[] = $checkout[$index]['game_1'];
+            if (strval($checkout[$index]['game_2']) >= 0 && $checkout[$index]['game_2']) $apostas[] = $checkout[$index]['game_2'];
+            if (strval($checkout[$index]['game_3']) >= 0 && $checkout[$index]['game_3']) $apostas[] = $checkout[$index]['game_3'];
+            if (strval($checkout[$index]['game_4']) >= 0 && $checkout[$index]['game_4']) $apostas[] = $checkout[$index]['game_4'];
+            if (strval($checkout[$index]['game_5']) >= 0 && $checkout[$index]['game_5']) $apostas[] = $checkout[$index]['game_5'];
 
             if ($checkout[$index]['premio_1'] == 1) $premios[] = 1;
             if ($checkout[$index]['premio_2'] == 1) $premios[] = 2;
@@ -957,15 +957,13 @@ class BichaoController extends Controller
             ->leftJoin('bichao_games_vencedores as bgv', 'bgv.game_id', 'bichao_games.id')
             ->where('bichao_games.id', $id)
             ->first();
-
         $apostas = [];
         $premios = [];
-
-        if (strval($game->game_1) > 0) $apostas[] = $game->game_1;
-        if (strval($game->game_2) > 0) $apostas[] = $game->game_2;
-        if (strval($game->game_3) > 0) $apostas[] = $game->game_3;
-        if (strval($game->game_4) > 0) $apostas[] = $game->game_4;
-        if (strval($game->game_5) > 0) $apostas[] = $game->game_5;
+        if (strval($game->game_1) >= 0 && $game->game_1) $apostas[] = $game->game_1;
+        if (strval($game->game_2) >= 0 && $game->game_2 ) $apostas[] = $game->game_2;
+        if (strval($game->game_3) >= 0 && $game->game_3) $apostas[] = $game->game_3;
+        if (strval($game->game_4) >= 0 && $game->game_4) $apostas[] = $game->game_4;
+        if (strval($game->game_5) >= 0 && $game->game_5) $apostas[] = $game->game_5;
 
         if ($game->premio_1 == 1) $premios[] = 1;
         if ($game->premio_2 == 1) $premios[] = 2;
@@ -989,7 +987,6 @@ class BichaoController extends Controller
             $divider = static::getFatorialInvertidoCentena($game->game_1);
             $premioMaximo = ($game->valor / $divider) * $game->multiplicador / sizeof($premios);
         }
-        
         global $data;
         $data = [
             'game' => $game,
@@ -998,13 +995,12 @@ class BichaoController extends Controller
             'premios' => join('°, ', $premios),
             'premio_maximo' => number_format($premioMaximo, 2, '.', ''),
         ];
-
         if ($tipo == "pdf") {
 
             global $fileName;
             global $pdf;
             $fileName = 'Recibo ' . $game->id . ' - ' . $game->cliente_nome . '.jpeg';
-
+            
             $pdf = SnappyImage::loadView('admin.layouts.pdf.receiptBichao', $data);
             return $pdf->download($fileName);
         } elseif ($tipo == "txt") {
