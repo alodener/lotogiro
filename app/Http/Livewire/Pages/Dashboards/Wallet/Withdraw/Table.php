@@ -99,13 +99,11 @@ class Table extends Component
     }
 
     public function mount(): void
-    {
+    {           
         $this->user = User::with('client')->find(auth()->id())->toArray();
         $this->userId = auth()->user()->id;
         $this->userObj = auth()->user();
         $this->pix = auth()->user()->pix;
-        }
-
     }
 
     public function render()
