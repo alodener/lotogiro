@@ -104,9 +104,6 @@ class Table extends Component
         $this->userId = auth()->user()->id;
         $this->userObj = auth()->user();
         $this->pix = auth()->user()->pix;
-
-        if((empty($this->pix) || is_null($this->pix)) && !is_null($this->user['client'])){
-            $this->pix = $this->user['client']['pix'];
         }
 
     }
