@@ -260,6 +260,22 @@
               </div>
             </div>
 
+            <div class="col-sm-6 col-md-4 d-flex justify-content-center">
+              <div class="card" onclick="openModal27()">
+                <div class="card-content">
+                  <h3 class="card-title">009 - Milhar Invertida </h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 d-flex justify-content-center">
+              <div class="card" onclick="openModal28()">
+                <div class="card-content">
+                  <h3 class="card-title">010 - Centena Invertida </h3>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -792,7 +808,7 @@
       <div class="modal-body">
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
-            <source src="{{asset('admin/videos/multiplos-jogos.mp4')}}" type="video/mp4">
+            <source src="{{asset('admin/videos/fazermultiplosjogos.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -837,6 +853,50 @@
         <div class="d-flex align-items-center justify-content-center">
           <video controls width="500">
             <source src="{{asset('admin/videos/converter.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal 27-->
+
+<div class="modal fade" id="video-modal-27" tabindex="-27" aria-labelledby="video-modal-27-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-27-label">009 - Milhar Invertida </h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/milhinvertida.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal 28-->
+
+<div class="modal fade" id="video-modal-28" tabindex="-28" aria-labelledby="video-modal-28-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-2-label">010 - Centena Invertida </h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/centinvertida.mp4')}}" type="video/mp4">
           </video>
         </div>
       </div>
@@ -933,6 +993,12 @@
   }
   function openModal26() {
     $('#video-modal-26').modal('show');
+  }
+  function openModal27() {
+    $('#video-modal-27').modal('show');
+  }
+  function openModal28() {
+    $('#video-modal-28').modal('show');
   }
 
 </script>
