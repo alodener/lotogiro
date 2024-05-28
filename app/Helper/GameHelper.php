@@ -54,7 +54,7 @@ class GameHelper
     $copiaGame->commission_value = 0;
     $copiaGame->commision_value_pai = 0;
     $copiaGame->commission_percentage = 0;
-
+    $copiaGame->random_game = $game->random_game ?? 0;
     $copiaGame->save();
 
 } else {
@@ -78,7 +78,7 @@ class GameHelper
         $copiaGame->commission_value = 0;
         $copiaGame->commision_value_pai = 0;
         $copiaGame->commission_percentage = 0;
-
+        $copiaGame->random_game = $game->random_game ?? 0;
         $copiaGame->save();
 
     }
