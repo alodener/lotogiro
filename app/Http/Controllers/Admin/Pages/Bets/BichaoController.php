@@ -734,25 +734,52 @@ class BichaoController extends Controller
         }
     }
 
-    private static function getFatorialInvertidoMilhar($game) {
-        $result = iterator_to_array(static::permutations(str_split($game), 4));
-        $response = [];
-        foreach ($result as $row) {
-            if (!in_array($row, $response)) array_push($response, $row);
+
+
+        private static function getFatorialInvertidoMilhar($game) {
+            $result = iterator_to_array(static::permutations(str_split($game), 4));
+            // Função para serializar cada sub-array
+            $serializedArray = array_map('serialize', $result);
+    
+            // Remove duplicados
+            $uniqueSerializedArray = array_unique($serializedArray);
+    
+            // Desserializar os sub-arrays de volta ao formato original
+            $result = array_map('unserialize', $uniqueSerializedArray);
+    
+            return count($result);
+    
+            // $response = [];
+            // foreach ($result as $row) {
+            //     if (!in_array($row, $response)) array_push($response, $row);
+            // }
+    
+            // return count($response);
         }
-
-        return count($response);
-    }
-
-    private static function getFatorialInvertidoCentena($game) {
-        $result = iterator_to_array(static::permutations(str_split($game), 3));
-        $response = [];
-        foreach ($result as $row) {
-            if (!in_array($row, $response)) array_push($response, $row);
+    
+        private static function getFatorialInvertidoCentena($game) {
+            $result = iterator_to_array(static::permutations(str_split($game), 3));
+                
+            // Função para serializar cada sub-array
+            $serializedArray = array_map('serialize', $result);
+    
+            // Remove duplicados
+            $uniqueSerializedArray = array_unique($serializedArray);
+    
+            // Desserializar os sub-arrays de volta ao formato original
+            $result = array_map('unserialize', $uniqueSerializedArray);
+    
+            return count($result);
+    
+            // $result = array_unique($result);
+            // return count($result);
+            // $response = [];
+            // foreach ($result as $row) {
+            //     if (!in_array($row, $response)) array_push($response, $row);
+            // }
+    
+            // return count($response);
         }
-
-        return count($response);
-    }
 
     public function checkout(Request $request) {
         if (!auth()->user()->hasPermissionTo('create_game')) {
