@@ -269,9 +269,25 @@
             </div>
 
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
+              <div class="card" onclick="openModal31()">
+                <div class="card-content">
+                  <h3 class="card-title">010 - Milhar Invertida </h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal28()">
                 <div class="card-content">
-                  <h3 class="card-title">010 - Centena </h3>
+                  <h3 class="card-title">011 - Centena </h3>
+                </div>
+              </div>
+            </div>
+
+             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
+              <div class="card" onclick="openModal32()">
+                <div class="card-content">
+                  <h3 class="card-title">012 - Centena Invertida </h3>
                 </div>
               </div>
             </div>
@@ -279,7 +295,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal29()">
                 <div class="card-content">
-                  <h3 class="card-title">011 - Dezena </h3>
+                  <h3 class="card-title">013 - Dezena </h3>
                 </div>
               </div>
             </div>
@@ -287,7 +303,7 @@
             <div class="col-sm-6 col-md-4 d-flex justify-content-center">
               <div class="card" onclick="openModal30()">
                 <div class="card-content">
-                  <h3 class="card-title">012 - Grupo </h3>
+                  <h3 class="card-title">014 - Grupo </h3>
                 </div>
               </div>
             </div>
@@ -964,6 +980,50 @@
   </div>
 </div>
 
+<!-- modal 31-->
+
+<div class="modal fade" id="video-modal-31" tabindex="-31" aria-labelledby="video-modal-31-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-31-label">010 - Milhar Invertida </h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/milhinvertida.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal 32-->
+
+<div class="modal fade" id="video-modal-32" tabindex="-32" aria-labelledby="video-modal-32-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-32-label">012 - Centena Invertida </h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/centinvertida.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1065,6 +1125,12 @@
   }
   function openModal30() {
     $('#video-modal-30').modal('show');
+  }
+  function openModal31() {
+    $('#video-modal-31').modal('show');
+  }
+  function openModal32() {
+    $('#video-modal-32').modal('show');
   }
 
 </script>
