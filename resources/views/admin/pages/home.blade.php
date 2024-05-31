@@ -147,7 +147,7 @@
             href="#collapseExample2" data-toggle="collapse" role="button" aria-expanded="false"
             aria-controls="collapseExample" style="border-bottom:1px solid #A3D712;">
             <span style="font-size:20px;" class="mr-3">💥</span>
-            <h5 class="mr-3">Indique e ganhe em cada amigo que convidar</h5>
+            <h5 class="mr-3">Indique um amigo</h5>
             <span style="font-size:20px;" class="mr-3">💥</span>
 
             <i class="fa fa-angle-down" style="color:#A3D712;" aria-hidden="true"></i>
@@ -168,7 +168,7 @@
                         <tr>
                             <td>Cadastro</td>
                             <td> <sl-copy-button class="icon-copy"
-                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}"></sl-copy-button>
+                                    value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->indicador }}"></sl-copy-button>
                             </td>
                         </tr>
                         @if($User['type_client'] == 1)
