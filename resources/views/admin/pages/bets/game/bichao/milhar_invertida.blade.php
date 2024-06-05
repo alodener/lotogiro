@@ -385,13 +385,18 @@ function insere_valor() {
                 const btn_gerar_milhar = $('#btn-gerar-milhar');
                 const input_milhar = $('#input-milhar');
                 let value = '';
+                input_milhar.val('');
 
                 for (i = 0; i < field_size; i++) {
                     value = value + randomNumber(0, 9);
                 }
 
                 // const value = `${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}${randomNumber(0, 9)}`;
-                if (!input_milhar.val()) return input_milhar.val(value);
+                if (!input_milhar.val()) {
+                    input_milhar.val(value);
+                    calculate_awards();
+                    return;
+                }
 
                 const old = input_milhar.val().split(',');
                 old.push(value);
