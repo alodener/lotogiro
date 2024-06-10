@@ -183,7 +183,7 @@ class GameController extends Controller
             }
         }
 
-        if($request->dezena){
+       /* if($request->dezena){
             $games = explode(",", $request->dezena);
             foreach ($games as $game) {
                 $dezenas = $this->game->where('numbers', $game)->get();
@@ -214,7 +214,7 @@ class GameController extends Controller
                 ]);
             };
 
-        }
+        }*/
 
       if ($typeGame) {
 
