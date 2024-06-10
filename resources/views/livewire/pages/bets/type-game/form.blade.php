@@ -108,6 +108,7 @@
                 <option value="mega_kino">Mega Kino</option> 
                 <option value="mega_lotto">Mega Lotto</option>
                 <option value="santa_lucia_double">Santa Lucia Double</option>
+                <option value="super_quina">Super Quina</option>
                 </select>
             </div>
         </div>
