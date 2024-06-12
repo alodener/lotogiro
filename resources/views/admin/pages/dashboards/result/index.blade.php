@@ -8,10 +8,14 @@
 
 <div class="container mt-5">
     <div class="card-deck container d-flex justify-content-between card-header" style="padding: 30px;">
-        <div class="col-md-6 text-md-start ">
+        <div class="col-md-4 text-md-start ">
             <h3 style="margin:0;">Lista de Ganhadores</h3>
         </div>
-        <div class="col-md-6 d-flex align-items-center flex-md-row flex-column">
+        <div class="col-md-4 d-flex align-items-center">
+  <input class="form-check-input" type="checkbox" role="switch" id="switchinternacional">
+  <label class="form-check-label" for="switchinternacional">Apenas Internacional</label>
+</div>
+        <div class="col-md-4 d-flex align-items-center flex-md-row flex-column">
             <h4 style="margin:0;" class="mr-2 mt-3 mt-md-0">Data:</h4>
             <input class="form-control date" id="dataInput" type="date">
         </div>
@@ -180,25 +184,49 @@
         // Função para realizar a chamada AJAX e carregar os dados
   
 
+        var filtrarPorJogosEspecificos = 1; // 0 para listar todos, 1 para listar apenas jogos específicos
+
+// Lista de jogos específicos
+var jogosEspecificos = [
+    'SLG-KINO LOTO',
+    'SLG-RE-KINO LOTO',
+    'SLG - PREMIOS ESPECIALES',
+    'SLG - CHISPALOTO',
+    'SLG-CHAO JEFE LOTO',
+    'SLG-MEGA LOTTO',
+    'SLG- MEGA KINO',
+    'SLG - STª LUCIA DOUBLE'
+];
+
 function listaall(dataSelecionada) {
-            $.ajax({
-                type: 'GET',
-                url: 'https://web.loteriasalternativas.com.br/api/winners-list?partner='+partnerId+'&sort_date=' + dataSelecionada,
-                success: function(response) {
-                    var totalPremios = somarPremios(response);
-                    var totalTickets = somarNumTickets(response);
-                    $('#campobilhetes').text(totalTickets + ' bilhetes');
-                    $('#campopremiacoes').text(totalPremios);
-                    adicionarDadosATabela(response);
-                    $('#downloadPDF').show();
+    // Coletar o estado do checkbox
+    var filtrarPorJogosEspecificos = $('#switchinternacional').is(':checked') ? 1 : 0;
+
+    $.ajax({
+        type: 'GET',
+        url: 'https://web.loteriasalternativas.com.br/api/winners-list?partner='+partnerId+'&sort_date=' + dataSelecionada,
+        success: function(response) {
+            // Filtrar os dados se a variável estiver definida como 1
+            if (filtrarPorJogosEspecificos === 1) {
+                response = response.filter(function(item) {
+                    return jogosEspecificos.includes(item.game_name);
+                });
+            }
+
+            var totalPremios = somarPremios(response);
+            var totalTickets = somarNumTickets(response);
+            $('#campobilhetes').text(totalTickets + ' bilhetes');
+            $('#campopremiacoes').text(totalPremios);
+            adicionarDadosATabela(response);
+            $('#downloadPDF').show();
 
             // Atribuir a tabela HTML ao botão de download do PDF
             $('#downloadPDF').off('click').on('click', function() {
-                gerarPDF(response,dataSelecionada);
-            });
-                }
+                gerarPDF(response, dataSelecionada);
             });
         }
+    });
+}
 
         function gerarPDF(dados,datasrc) {
     // Crie uma nova instância de jsPDF
@@ -251,6 +279,12 @@ function listaall(dataSelecionada) {
             var dataSelecionada = $(this).val();
             listaall(dataSelecionada);
         });
+
+        $('#switchinternacional').click(function() {
+            var dataSelecionada = $('#dataInput').val();
+            listaall(dataSelecionada);
+        });
+
 
         // Define a data hoje
         var hoje = new Date();
