@@ -30,6 +30,27 @@ class Balance
 
     }
 
+     public static function copyPaste($typeGameValue)
+    {
+        $response = false;
+        //$typeGameValue = TypeGameValue::find($typeGameValue);
+        $user = User::find(auth()->id());
+        $balance = $user->balance;
+
+        //$result = $balance - $typeGameValue->value;
+          $result = $balance - $typeGameValue;
+          $user = User::find(auth()->id());
+        if($result >= 0){
+           
+            $user->balance = $result;
+            $user->save();
+
+            $response = true;
+        }
+        
+        return $response;
+
+    }
     public static function calculationByHash($typeGameValue, $user)
     {
         $response = false;

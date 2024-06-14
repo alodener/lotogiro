@@ -58,7 +58,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <i class="fa fa-user mr-2" aria-hidden="true"></i>
 
-                        <input type="name" class="form-control input100" name="name" placeholder="Seu Nome">
+                        <input type="name" class="form-control input100" name="name" placeholder="Seu Nome" required>
                     </div>
 
                 </div>
@@ -66,7 +66,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <i class="fa fa-user mr-2" aria-hidden="true"></i>
 
-                        <input type="text" class="form-control input100" name="last_name" placeholder="Sobrenome">
+                        <input type="text" class="form-control input100" name="last_name" placeholder="Sobrenome" required>
                     </div>
 
                 </div>
@@ -75,7 +75,7 @@
                         <i class="fa fa-user mr-2" aria-hidden="true"></i>
 
                         <input type="email" class="form-control @error('email') is-invalid @enderror input100"
-                            name="email" placeholder="E-mail">
+                            name="email" placeholder="E-mail" required>
                     </div>
                     @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -90,7 +90,7 @@
                             <i class="fa fa-asterisk mr-2" aria-hidden="true"></i>
 
                            <input type="password" class="form-control @error('password') is-invalid @enderror input100"
-                                name="password" placeholder="Senha de 6 ate 8 digitos">
+                                name="password" placeholder="Senha de 6 ate 8 digitos" required>
 
                         </div>
 
@@ -105,7 +105,7 @@
                             <i class="fa fa-asterisk mr-2" aria-hidden="true"></i>
 
                             <input type="password" class="form-control @error('password') is-invalid @enderror input100"
-                                name="password" placeholder="Confirme sua senha">
+                                name="password" placeholder="Confirme sua senha" required>
 
                         </div>
 
@@ -122,7 +122,7 @@
                             <i class="fa fa-mobile mr-3" aria-hidden="true"></i>
 
                             <input type="text" id="phone" class="form-control  input100" name="phone"
-                                placeholder="Telefone">
+                                placeholder="Telefone" required>
 
                         </div>
 
