@@ -1126,10 +1126,13 @@
   function openModal30() {
     $('#video-modal-30').modal('show');
   }
-  function openModal31() {
+  
+function openModal31() {
     $('#video-modal-31').modal('show');
   }
-  function openModal32() {
+    
+    function openModal32() {
+      
     $('#video-modal-32').modal('show');
   }
 

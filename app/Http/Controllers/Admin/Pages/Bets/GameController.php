@@ -187,7 +187,7 @@ class GameController extends Controller
             }
         }
 
-        if($request->dezena){
+       /* if($request->dezena){
             $games = explode(",", $request->dezena);
             foreach ($games as $game) {
                 $dezenas = $this->game->where('numbers', $game)->get();
@@ -218,7 +218,7 @@ class GameController extends Controller
                 ]);
             };
 
-        }
+        }*/
 
       if ($typeGame) {
 
@@ -333,7 +333,7 @@ class GameController extends Controller
                     ]);
                 }
 
-                $balance = Balance::calculation($totaldeAposta);
+                $balance = Balance::copyPaste($totaldeAposta);
 
                 if (!$balance) {
                     $bet->status_xml = 3;
