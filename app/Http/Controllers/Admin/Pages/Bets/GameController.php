@@ -171,7 +171,6 @@ class GameController extends Controller
                     'numbers' => $request->numbers
                 ]);
             }
-            ;
 
             if (!$game->isEmpty()) {
                 $sumExistingPrizes = $this->game->where('numbers', $numbers)->sum('premio');
@@ -348,9 +347,10 @@ class GameController extends Controller
                     ]);
                 }
                 try {
+
                     ProcessBetEntries::dispatch($dezenas, $request, $bet, $competition, auth()->user())->onQueue('default');
                 } catch (\Exception $exception) {
-                    return redirect()->route('admin.bets.games.index', ['type_game' => $request->type_game])->withErrors([
+                    return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                         'success' => 'O seu jogo está sendo processado, você será notificado assim que terminar.'
                     ]);
                 }
@@ -457,24 +457,31 @@ class GameController extends Controller
 
                 try {
                     if ($game) {
-
                         $jogo = TypeGame::find($game->type_game_id);
+                        $usrname = Auth()->user()->name;
+                        $concurso = TypeGame::find($request->type_game)->competitions->last()->number;
+                        $matriz = env('APP_MATRIZ');
+                        $curl = curl_init();
 
-                        $info = [
-                            'tipo_jogo' => 'LOTERIA',
-                            'jogo' => $jogo->name,
-                            'jogo_id' => 1,
-                            'usuario_id' => $game->user_id,
-                            'nome_usuario' => Auth()->user()->name,
-                            'numbers' => $game->numbers,
-                            'valor_aposta' => $game->value,
-                            'valor_premio' => $game->premio,
-                            'concurso' => TypeGame::find($request->type_game)->competitions->last()->number
-                        ];
-
-                        $matriz = new Matriz();
-                        $matriz->loteriaLog($info);
-
+                        curl_setopt_array(
+                            $curl,
+                            array(
+                                CURLOPT_URL => $matriz . '/api/apostas-feitas',
+                                CURLOPT_RETURNTRANSFER => true,
+                                CURLOPT_ENCODING => '',
+                                CURLOPT_MAXREDIRS => 10,
+                                CURLOPT_TIMEOUT => 0,
+                                CURLOPT_FOLLOWLOCATION => true,
+                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                CURLOPT_CUSTOMREQUEST => 'POST',
+                                CURLOPT_POSTFIELDS => '{"tipo_jogo":"LOTERIA","jogo":"' . $jogo->name . '","jogo_id":1,"usuario_id":"' . $game->user_id . '","nome_usuario":"' . $usrname . '","numbers":"' . $game->numbers . '","valor_aposta":"' . $game->value . '","valor_premio":"' . $game->premio . '","concurso":"' . $concurso . '"}',
+                                CURLOPT_HTTPHEADER => array(
+                                    'Content-Type: application/json',
+                                ),
+                            )
+                        );
+                        $response = curl_exec($curl);
+                        curl_close($curl);
                     }
                 } catch (\Exception $exception) {
 

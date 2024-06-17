@@ -64,14 +64,15 @@ class Copiacola extends Component
         $this->loading = true; // ativar o indicador de carregamento
     
         $this->dezena = preg_replace("/[,. _-]/", " ", $this->dezena);
-    
+        $cleanedString = str_replace('"', '', $this->dezena);
+
+
         if (is_string($this->dezena)) {
             $this->dezena = explode("\n", $this->dezena);
         } else {
             // Se $this->dezena não for uma string, defina como uma array vazia
             $this->dezena = [];
         }
-    
         foreach ($this->dezena as &$linha) {
             $linha = rtrim($linha);
         }
@@ -79,7 +80,7 @@ class Copiacola extends Component
         $tmp = array_filter($this->dezena);
         $str = implode("\n", $tmp);
         $this->dezena = explode("\n", $str);
-    
+
         $typeGameValue;
         $result;
         $this->contadorJogos = 0;
@@ -138,7 +139,7 @@ class Copiacola extends Component
                 }
             }
         }
-     
+
         $this->loading = false;
     }
     
