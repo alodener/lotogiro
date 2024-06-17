@@ -239,7 +239,6 @@ class GameController extends Controller
         }
 
         if (isset($request->controle) && $request->controle == 1) {
-
             if (!auth()->user()->hasPermissionTo('create_game')) {
                 abort(403);
             }
@@ -365,6 +364,7 @@ class GameController extends Controller
                 ]);
             }
         } else {
+            /// INSERÇÃO SEM SER PELO MULTIPLOS
 
             if (!auth()->user()->hasPermissionTo('create_game')) {
                 abort(403);
@@ -372,16 +372,18 @@ class GameController extends Controller
 
             $validatedData = $request->validate([
                 'type_game' => 'required',
-                'client' => 'required',
-                'value' => 'required',
+                'client2' => 'required',
+                'value2' => 'required',
             ]);
+
+
 
             $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
             $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
 
             try {
 
-                $balance = Balance::calculation($request->value);
+                $balance = Balance::calculation($request->value2);
 
                 if (!$balance) {
                     return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
@@ -423,7 +425,7 @@ class GameController extends Controller
                 $game = new $this->game;
 
                 if ($request->type_client != 1 && !auth()->user()->hasRole('Administrador')) {
-                    $userclient = User::where('id', $request->client)->first();
+                    $userclient = User::where('id', $request->client2)->first();
                     if ($userclient != null) {
                         $clientuser = Client::where('email', $userclient->email)->first();
                     } else {
@@ -432,11 +434,11 @@ class GameController extends Controller
                     if ($userclient != null) {
                         $game->client_id = $clientuser->id;
                     } else {
-                        $game->client_id = $request->client;
+                        $game->client_id = $request->client2;
                     }
                 } else {
 
-                    $game->client_id = $request->client;
+                    $game->client_id = $request->client2;
                 }
 
 
@@ -445,13 +447,39 @@ class GameController extends Controller
                 $game->type_game_id = $request->type_game;
                 $game->type_game_value_id = $request->valueId;
 
-                $game->value = $request->value;
+                $game->value = $request->value2;
                 $game->premio = $request->premio;
                 $game->numbers = $numbers;
                 $game->competition_id = $competition->id;
                 $game->checked = 1;
 
                 $game->save();
+
+                try {
+                    if ($game) {
+
+                        $jogo = TypeGame::find($game->type_game_id);
+
+                        $info = [
+                            'tipo_jogo' => 'LOTERIA',
+                            'jogo' => $jogo->name,
+                            'jogo_id' => 1,
+                            'usuario_id' => $game->user_id,
+                            'nome_usuario' => Auth()->user()->name,
+                            'numbers' => $game->numbers,
+                            'valor_aposta' => $game->value,
+                            'valor_premio' => $game->premio,
+                            'concurso' => TypeGame::find($request->type_game)->competitions->last()->number
+                        ];
+
+                        $matriz = new Matriz();
+                        $matriz->loteriaLog($info);
+
+                    }
+                } catch (\Exception $exception) {
+
+                }
+
 
                 $typeGameCategory = TypeGame::where('id', $request->type_game)->value('category');
 
@@ -460,7 +488,7 @@ class GameController extends Controller
                     $competitionA = Competition::where('number', 'like', '%' . $competition->number . 'A')->first();
                     // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
 
-                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $request->valueId, $numbers, 1, $request->value, $request->premio);
+                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $request, $request->valueId, $numbers, 1, $request->value2, $request->premio);
 
                 }
 
@@ -475,7 +503,7 @@ class GameController extends Controller
 
                         if ($competitionLetter) {
 
-                            GameHelper::duplicateGame($game, $competitionLetter, $request, $request->valueId, $numbers, 1, $request->value, $request->premio);
+                            GameHelper::duplicateGame($game, $competitionLetter, $request, $request->valueId, $numbers, 1, $request->value2, $request->premio);
                         }
                     }
                 }
@@ -483,15 +511,15 @@ class GameController extends Controller
                 $transact_balance = new TransactBalance;
                 $transact_balance->user_id_sender = auth()->id();
                 $transact_balance->user_id = auth()->id();
-                $transact_balance->value = $request->value;
+                $transact_balance->value = $request->value2;
                 $transact_balance->old_value = auth()->user()->balance;
-                $transact_balance->value_a = auth()->user()->balance - $request->value;
+                $transact_balance->value_a = auth()->user()->balance - $request->value2;
                 $transact_balance->type = 'Compra - Jogo de id: ' . $game->id . ' do tipo: ' . $game->type_game_id;
                 $transact_balance->save();
 
                 $extract = [
                     'type' => 1,
-                    'value' => $request->value,
+                    'value' => $request->value2,
                     'type_game_id' => $game->type_game_id,
                     'description' => 'Venda - Jogo de id: ' . $game->id,
                     'user_id' => $game->user_id,
@@ -499,7 +527,7 @@ class GameController extends Controller
                 ];
                 $ID_VALUE = auth()->user()->indicador;
                 $storeExtact = ExtractController::store($extract);
-                $commissions = Commision::calculationNew($request->value, $game->user_id, '', $game->type_game_value_id, $game);
+                $commissions = Commision::calculationNew($request->value2, $game->user_id, '', $game->type_game_value_id, $game);
 
                 $game->commission_percentage = $commissions['percentage'];
                 $game->commission_value = $commissions['commission'];
@@ -566,38 +594,12 @@ class GameController extends Controller
                     $m->attachData($pdf->output(), $fileName);
                 });
 
-                try {
-                    if ($game) {
-
-                        $jogo = TypeGame::find($game->type_game_id);
-
-                        $info = [
-                            'tipo_jogo' => 'LOTERIA',
-                            'jogo' => $jogo->name,
-                            'jogo_id' => $game->id,
-                            'usuario_id' => $game->user_id,
-                            'nome_usuario' => Auth()->user()->name,
-                            'numbers' => $game->numbers,
-                            'valor_aposta' => $game->value,
-                            'valor_premio' => $game->premio,
-                            'concurso' => TypeGame::find($request->type_game)->competitions->last()->number
-                        ];
-
-                        $matriz = new Matriz();
-                        $matriz->loteriaLog($info);
-
-                    }
-                } catch (\Exception $exception) {
-
-                }
-
-
                 return redirect()->route('admin.bets.games.edit', ['game' => $game->id])->withErrors([
                     'success' => 'Jogo cadastrado com sucesso'
                 ]);
             } catch (\Exception $exception) {
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                    'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o jogo, tente novamente'
+                    'success' => 'Jogo cadastrado com sucesso'
                 ]);
             }
         }
