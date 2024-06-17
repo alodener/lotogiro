@@ -911,7 +911,7 @@ return [
                 'conversao' => 'Converter Bônus para Jogar',
                 'conversaoBonusParaSaque' => 'Conversão de Bônus para Saque PIX',
                 'conversaoSaqueParaSaldo' => 'Conversão de Saque Disponível para Saldo',
-                'saldo' => 'Saldo',
+                'saldo' => 'Saldo para jogar',
                 'converter' => 'Converter',
                 'carteiraa' => 'Carteira',
                 'recarregar' => 'Recarregar',
