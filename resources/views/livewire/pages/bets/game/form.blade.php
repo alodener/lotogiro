@@ -34,8 +34,8 @@
             <div class="card-header text-center d-flex flex-column justify-content-center align-items-center"
                 style="min-height: 162px;">
                 <h5 style="font-weight: bold;" class="textcard">{{ trans('admin.falta.digitValor') }}</h5>
-                <input class="form-control" style="text-align:center;" type="text" id="value" onchange="altera()"
-                    value="" name="value" value="{{ old('value') ?? session('value') }}" required
+                <input class="form-control" style="text-align:center;" type="text" id="value2" onchange="altera2()"
+                   name="value2" value="{{ old('value') ?? session('value') }}" required
                     oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                 <div class="d-flex cardbtsadd container justify-content-around align-items-center mt-2">
                     <p style="font-size:10px; margin:0px;">Valores Rápidos:</p>
@@ -52,7 +52,7 @@
                 <input class="form-control" type="text" id="premio" value="" name="premio" readonly>
             </div>
         </div>
-        <!-- <button  class="btn btn-info" type="button" onclick="altera();">{{ trans('admin.falta.calcular') }}</button> -->
+        <!-- <button  class="btn btn-info" type="button" onclick="altera2();">{{ trans('admin.falta.calcular') }}</button> -->
         @endforeach
         @else
 
@@ -94,8 +94,8 @@
                 @if($User['type_client'] == 1)
 
                 <input type="text" value="{{ $FiltroUser['name'] }}" disabled class="form-control">
-                <input type="hidden" name="client" value="{{ $FiltroUser['id'] }}" readonly>
-                <input type="hidden" name="type_client" value="{{ $User['type_client'] }}" readonly>
+                <input type="hidden" name="client2" value="{{ $FiltroUser['id'] }}" readonly>
+                <input type="hidden" name="type_clien2" value="{{ $User['type_client'] }}" readonly>
                 @endif
 
 
@@ -134,7 +134,7 @@
 
                         {{-- PARTE DE PESQUISA DE CLIENTE SE NÃO TIVER AUTENTICAÇÃO --}}
 
-                        <input type="hidden" name="client" value="{{$clientId}}">
+                        <input type="hidden" name="client2" value="{{$clientId}}">
 
                         <input type="hidden" name="numbers" id="numbers"
                             value="@foreach ($selectedNumbers as $selectedNumbers1) {{ $selectedNumbers1 }} @endforeach"
@@ -486,34 +486,13 @@
     //Função para realizar o calculo do multiplicador
     function addmoney(event, v) {
     event.preventDefault(); // Evita o envio do formulário ao clicar no botão
-    var campovalor = document.getElementById("value");
+    var campovalor = document.getElementById("value2");
     // Converte o valor atual para um número e então realiza a adição
     campovalor.value = Number(campovalor.value) + Number(v);
 
-    altera();
+    altera2();
 }   
-    function altera() {
-        var multiplicador = document.getElementById("multiplicador").value;
-        var valor = document.getElementById("value").value;
-        var Campovalor = document.getElementById("value");
-        var campoDoCalculo = document.getElementById("premio");
-        var maxreais = document.getElementById("maxreais").value;
-        var resultado;
-        var numberValor = parseInt(valor);
-        var numberReais = parseInt(maxreais);
-
-        //evento dispara quando retira o foco do campo texto
-        if(!isNaN(numberValor)){
-            if (numberReais >= numberValor) {
-            resultado = valor * multiplicador;
-            campoDoCalculo.value = resultado;
-            } else {
-            resultado = maxreais * multiplicador;
-            campoDoCalculo.value = resultado;
-            Campovalor.value = maxreais;
-            }
-        }
-    }
+    
 
     function mudarListaNumeros() {
         var input = document.querySelector("#numbers");
@@ -528,7 +507,7 @@
     }
 
     function mudarListaNumerosGeral() {
-        altera();
+        altera2();
         mudarListaNumeros();
 
     }

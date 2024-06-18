@@ -21,6 +21,7 @@ use App\Models\TransactBalance;
 use App\Helper\Configs;
 use App\Models\User;
 use App\Helper\GameHelper;
+use App\Libs\Matriz\Matriz;
 
 // lib de email
 use Mail;
@@ -66,40 +67,46 @@ class ProcessBetEntries implements ShouldQueue
      */
     public function handle()
     {
-        
-        if( !auth()->user()->hasRole('Administrador') && ($this->request['type_client'] != 1 || $this->request['type_client'] == null )){
+
+        if (!auth()->user()->hasRole('Administrador') && ($this->request['type_client'] != 1 || $this->request['type_client'] == null)) {
             $userclient = User::where('id', $this->request['client'])->first();
-                if($userclient != null){
-                    $clientuser = Client::where('email', $userclient->email)->first();
-                }else{
-                    $clientuser = $request->client;
-                }
+            if ($userclient != null) {
+                $clientuser = Client::where('email', $userclient->email)->first();
+            } else {
+                $clientuser = $request->client;
+            }
         }
 
         $valor = $this->request['value'];
-    
-        foreach ($this->dezenas as $dez) {
-            //$dezenaconvertida = string.split(/,(?! )/);
-            // $dezenaconvertida2 = explode(" ", $dez);
-            // sort($dezenaconvertida2, SORT_NUMERIC);
 
-            // $dezenaconvertida = implode(",", $dezenaconvertida2);
+        $dezenas = $this->request['dezena'];
+        $dezena_array = explode("\r\n", $dezenas);
+
+
+
+
+        foreach ($dezena_array as $dez) {
+
+
             $teste = explode("\n", $dez);
-            
             $str = implode("\n", $teste);
             $string = preg_replace('/^\h*\v+/m', '', $str);
             $words = explode(",", $string);
+
             $result = count($words);
+
             $typeGameValue = TypeGameValue::where([
                 ['type_game_id', $this->request['type_game']],
                 ['numbers', $result],
             ])->get();
 
+
             $valor = $this->request['value'];
+
             $multiplicador = $typeGameValue->isEmpty() ? 0 : $typeGameValue[0]->multiplicador;
             $maxreais = $typeGameValue->isEmpty() ? 0 : $typeGameValue[0]->maxreais;
             $contadorJogos = count($this->dezenas);
-           
+
 
             if ($maxreais >= $valor) {
                 $resultado = $valor * $multiplicador;
@@ -107,45 +114,73 @@ class ProcessBetEntries implements ShouldQueue
                 $resultado = $maxreais * $multiplicador;
                 $valor = $maxreais;
             }
-            
+
             $game = new Game;
-             if( !auth()->user()->hasRole('Administrador') && ($this->request['type_client'] != 1 || $this->request['type_client'] == null )){
+            if (!auth()->user()->hasRole('Administrador') && ($this->request['type_client'] != 1 || $this->request['type_client'] == null)) {
                 $game->client_id = $clientuser->id;
-                }else{
-                   $game->client_id = $this->request['client'];
-                }
+            } else {
+                $game->client_id = $this->request['client'];
+            }
+
             $game->user_id = $this->user->id;
+
             $game->type_game_id = $this->request['type_game'];
-            $game->type_game_value_id =  $typeGameValue[0]->id;
+
+            $game->type_game_value_id = $this->request['valueId'];
             $game->value = $this->request['value'];
             $game->premio = $resultado;
             $game->numbers = $dez;
             $game->competition_id = $this->competition->id;
             $game->checked = 1;
             $game->bet_id = $this->bet->id;
-            $game->save();
-            
+
+            if ($game) {
+
+                $jogo = TypeGame::find($game->type_game_id);
+                $usrname = Auth()->user()->name;
+                $concurso = TypeGame::find($this->request['type_game'])->competitions->last()->number;
+                $matriz = env('APP_MATRIZ');                
+                $curl = curl_init();
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => $matriz.'/api/apostas-feitas',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => '{"tipo_jogo":"LOTERIA","jogo":"'.$jogo->name.'","jogo_id":1,"usuario_id":"'.$game->user_id.'","nome_usuario":"'.$usrname.'","numbers":"'.$game->numbers.'","valor_aposta":"'.$game->value.'","valor_premio":"'.$game->premio.'","concurso":"'.$concurso.'"}',
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json',
+                    ),
+                )
+                );
+                $response = curl_exec($curl);
+                curl_close($curl);
+            }
             $typeGame = TypeGame::where('id', $this->request['type_game'])->value('category');
 
             //verifica se é da dupla sena 
-                if ( $typeGame == 'dupla_sena'){
+            if ($typeGame == 'dupla_sena') {
 
-                    //encontrar o concurso com o final A na tabela
-                    $competitionA = Competition::where('number', 'like', '%' . $this->competition->number . 'A')->first();
-                    // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
-                    $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $typeGameValue, $dez, 2, $valor, $resultado);
-                    
-                }
-                if ( $typeGame == 'mega_kino'){
-                        $letters = ['A', 'B', 'C', 'D', 'E', 'F'];
-                        foreach ($letters as $letter) { 
-                        $competitionLetter = Competition::where('number', $this->competition->number . $letter)->first();
-                        
-                        if ($competitionLetter) {
-                            GameHelper::duplicateGame($game, $competitionLetter, $this->request, $typeGameValue, $dez, 2, $valor, $resultado);
-                        }
+                //encontrar o concurso com o final A na tabela
+                $competitionA = Competition::where('number', 'like', '%' . $this->competition->number . 'A')->first();
+                // Chamada do helper para duplicar o jogo - dener.gomes 28.08 - 18:02
+                $copiaGame = GameHelper::duplicateGame($game, $competitionA, $this->request, $typeGameValue, $dez, 2, $valor, $resultado);
+
+            }
+            if ($typeGame == 'mega_kino') {
+                $letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+                foreach ($letters as $letter) {
+                    $competitionLetter = Competition::where('number', $this->competition->number . $letter)->first();
+
+                    if ($competitionLetter) {
+                        GameHelper::duplicateGame($game, $competitionLetter, $this->request, $typeGameValue, $dez, 2, $valor, $resultado);
                     }
                 }
+            }
             $transact_balance = new TransactBalance;
             $transact_balance->user_id_sender = auth()->id();
             $transact_balance->user_id = auth()->id();
@@ -168,8 +203,8 @@ class ProcessBetEntries implements ShouldQueue
             $commissions = Commision::calculationNew($game->value, $game->user_id, '', $game->type_game_value_id, $game);
 
             $planodecarreira = Configs::getPlanoDeCarreira();
-            if( $planodecarreira == "Ativado"){
-            UsersHasPoints::generatePoints($this->user, $game->value, 'Venda - Jogo de id: ' . $game->id);
+            if ($planodecarreira == "Ativado") {
+                UsersHasPoints::generatePoints($this->user, $game->value, 'Venda - Jogo de id: ' . $game->id);
             }
 
             $game->commission_percentage = $commissions['percentage'];
@@ -189,11 +224,11 @@ class ProcessBetEntries implements ShouldQueue
         $jogosCliente = Game::where('bet_id', $idAposta)->get();
 
         // informações para filename
-        $InfoJogos =  $jogosCliente[0];
+        $InfoJogos = $jogosCliente[0];
 
         // pegando informações de cliente
         $ClientInfo = Client::where('id', $InfoJogos["client_id"])->get();
-        $ClienteJogo =  $ClientInfo[0];
+        $ClienteJogo = $ClientInfo[0];
 
         // pegando typegame
         $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
@@ -216,7 +251,7 @@ class ProcessBetEntries implements ShouldQueue
         ];
 
         global $fileName;
-        $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
+        $fileName = 'Recibo ' . $InfoJogos['bet_id'] . ' - ' . $Nome . '.pdf';
 
         // return view('admin.layouts.pdf.receiptTudo', $data);
         global $pdf;

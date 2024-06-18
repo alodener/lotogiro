@@ -641,6 +641,56 @@ updateLineNumbers();
         // }
 
     }
+    function altera2() {
+        var multiplicador = document.getElementById("multiplicador").value;
+        var valor = document.getElementById("value2").value;
+        var Campovalor = document.getElementById("value2");
+        var campoDoCalculo = document.getElementById("premio");
+        var maxreais = document.getElementById("maxreais").value;
+        var resultado;
+
+        var numberValor = parseFloat(valor);
+        var numberReais = parseFloat(maxreais);
+
+        if (numberReais >= numberValor) {
+            resultado = valor * multiplicador;
+            campoDoCalculo.value = resultado.toFixed(2);
+        }
+        else {
+            resultado = maxreais * multiplicador;
+            campoDoCalculo.value = resultado;
+            Campovalor.value = maxreais;
+        }
+
+        var controlervar = document.getElementById("controle").value;
+        var textdezena = document.getElementById("dezena");
+
+      
+
+        var valor = document.getElementById('value2').value;
+        var contadorJogos = document.getElementById('contadorJogos').value;
+        var contadorJogos = parseFloat(contadorJogos);
+        var numberValor = parseFloat(valor);
+        var valorTotal = contadorJogos * numberValor;
+        document.getElementById('ValorTotal').value = valorTotal.toFixed(2);
+
+        // var contadorJogos = document.getElementById("contadorJogos").value;
+        // var contadorJogos =  parseFloat(contadorJogos);
+        // var valorTotal = contadorJogos *numberValor;
+
+        // if (valorTotal > maxreais)
+        // {
+        //     var contadorJogos = document.getElementById("contadorJogos").value;
+        //     var contadorJogos =  parseFloat(contadorJogos);
+        //     var valorTotal = contadorJogos *numberValor;
+        //     document.getElementById("ValorTotal").value = valorTotal;
+        // }
+        // else
+        // {
+        //     document.getElementById("ValorTotal").value = valorTotal;
+        // }
+
+    }
 
 
     function bloqueia() {
