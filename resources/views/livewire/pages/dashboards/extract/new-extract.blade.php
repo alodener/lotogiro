@@ -75,10 +75,10 @@
         
     </div>
 </div> 
-    <div class="col-md-12 p-4">
-        <div class="container card-master">
-            <!--Recargas Através do pix e o bônus recebidos através do pix -->
-            <div class="row">
+<div class="col-md-12 p-4">
+    <div class="container card-master">
+        <div class="row">
+             <!--Recargas Através do pix -->
                 <div class="col-md-6">
                     <div class="small-box ">
                         <div class="inner">
@@ -92,108 +92,207 @@
                     </div>
                 </div>
 
+            <div class="col-md-6">
                 <!--Total de bonus-->
-                <div class="col-md-6">
-                    <div class="small-box ">
-                        <div class="inner">
-                            <h3>R${{number_format($bonus, 2, ',', '.')}}</h3>
-                            <p>Total de bônus</p>
-                        </div>
-                        <div class="icon">
-                            <i class="bi bi-coin" style="color:#208E39;"></i>
-                        </div>
-                        <span class="small-box-footer p-2"></span>
+                <div class="small-box ">
+                    <div class="inner">
+                        <h3>R${{number_format($bonus, 2, ',', '.')}}</h3>
+                        <p>Total de bônus</p>
                     </div>
+                    <div class="icon">
+                        <i class="bi bi-cash-coin" style="color:#208E39;"></i>
+                    </div>
+                    <span class="small-box-footer p-2"></span>
                 </div>
             </div>
-
+        </div>
+        <div class="row ">
             <!--Total de recarga manual -->
-            <div class="row ">
-                <div class="col-md-6">
-                    <div class="small-box ">
-                        <div class="inner">
-                            <h3>R${{number_format($recargaManual, 2, ',', '.')}}</h3>
-                            <p>Recarga Manual</p>
-                        </div>
-                        <div class="icon">
-                            <i class="bi bi-cash-coin" style="color:#FFC107;"></i>
-                        </div>
-                        <span class="small-box-footer p-2"></span>
+            <div class="col-md-6">
+                <div class="small-box ">
+                    <div class="inner">
+                        <h3>R${{number_format($recargaManual, 2, ',', '.')}}</h3>
+                        <p>Recarga Manual</p>
                     </div>
+                    <div class="icon">
+                        <i class="bi bi-cash-coin" style="color:#208E39;"></i>
+                    </div>
+                    <span class="small-box-footer p-2"></span>
                 </div>
-
-                <!--Total de todas as transações-->
-                <div class="col-md-6">
-                    <div class="small-box ">
-                        <div class="inner">
-                            <h3>R${{number_format($totalTransacts, 2, ',', '.')}}</h3> 
-                            <p>Total</p>
-                        </div>
-                        <div class="icon">
-                            <i class="bi bi-coin" style="color:#FFC107;"></i>
-                        </div>
-                        <span class="small-box-footer p-2"></span>
+            </div>
+            <!--Total de Jogos Bichão  icone do dado-->
+            <div class="col-md-6">
+                <div class="small-box ">
+                    <div class="inner">
+                        <h3>R${{number_format($jogosBichao, 2, ',', '.')}}</h3> 
+                        <p>Apostas Jogo do Bicho</p>
                     </div>
+                    <div class="icon">
+                        <i class="bi bi-joystick" style="color:#850252;"></i>
+                    </div>
+                    <span class="small-box-footer p-2"></span>
                 </div>
             </div>
         </div>
-    </div>
+        
+        <div class="row ">
+            <!--Jogos realizados-->
+            <div class="col-md-6">
+                <div class="small-box ">
+                    <div class="inner">
+                        <h3>R${{number_format($jogosRealizados, 2, ',', '.')}}</h3>
+                        <p>Apostas Loterias</p>
+                    </div>
+                    <div class="icon">
+                        <i class="bi bi-joystick" style="color:#850252;"></i>
+                    </div>
+                    <span class="small-box-footer p-2"></span>
+                </div>
+            </div> 
+            <!--Bônus para saldo-->
+            <div class="col-md-6">
+                <div class="small-box ">
+                    <div class="inner">
+                        <h3>R${{number_format($conversaoBonusSaldo, 2, ',', '.')}}</h3>
+                        <p>Conversão de bônus para saldo</p>
+                    </div>
+                    <div class="icon">
+                        <i class="bi bi-arrow-left-right" style="color:#15d8e6;"></i>
+                    </div>
+                    <span class="small-box-footer p-2"></span>
+                </div>
+            </div> 
+        </div>
 
-    <div class="row  p-3">
-        <div class="col-md-12 extractable-cel">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th>{{ trans('admin.extracts.table-date-header') }}</th>
-                            <th>{{ trans('admin.extracts.table-user-header') }}</th>
-                            <th>{{ trans('admin.extracts.table-responsible-header') }}</th>
-                            <th>{{ trans('admin.extracts.table-value-header') }}</th>
-                            <th>{{ trans('admin.extracts.table-wallet-header') }}</th>
-                            <th>{{ "Type" }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($transacts as $transact)
+        <div class="row ">
+            <!--Bônus para Saque Disponível-->
+            <div class="col-md-6">
+                <div class="small-box ">
+                    <div class="inner">
+                        <h3>R${{number_format($conversaoBonusSaque, 2, ',', '.')}}</h3>
+                        <p>Converção de Bônus para Saque Disponível</p>
+                    </div>
+                    <div class="icon">
+                        <i class="bi bi-arrow-left-right" style="color:#15d8e6;"></i>
+                    </div>
+                    <span class="small-box-footer p-2"></span>
+                </div>
+            </div>
+
+             <!--Saque Disponível para Saldo-->
+             <div class="col-md-6">
+                <div class="small-box ">
+                    <div class="inner">
+                        <h3>R${{number_format($conversaoSaqueSaldo, 2, ',', '.')}}</h3>
+                        <p>Converção de Saque Dísponivel para Saldo</p>
+                    </div>
+                    <div class="icon">
+                        <i class="bi bi-arrow-left-right" style="color:#15d8e6;"></i>
+                    </div>
+                    <span class="small-box-footer p-2"></span>
+                </div>
+            </div> 
+        </div>
+        <div class="row ">
+             <!--Total de todas as transações-->
+             <div class="col-md-6">
+                <div class="small-box ">
+                    <div class="inner">
+                        <h3>R${{number_format($premioTotalLoteria, 2, ',', '.')}}</h3> 
+                        <p>Premiação Loterias</p>
+                    </div>
+                    <div class="icon">
+                        <i class="bi bi-currency-exchange" style="color:#cfdd11;"></i>
+                    </div>
+                    <span class="small-box-footer p-2"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="small-box ">
+                    <div class="inner">
+                        <h3>R${{number_format($premiosBichao, 2, ',', '.')}}</h3> 
+                        <p>Premiação Bichão</p>
+                    </div>
+                    <div class="icon">
+                        <i class="bi bi-currency-exchange" style="color:#cfdd11;"></i>
+                    </div>
+                    <span class="small-box-footer p-2"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ">
+            <!--Total de todas as transações-->
+            <div class="col-md-12">
+               <div class="small-box ">
+                   <div class="inner">
+                       <h3>R${{number_format($totalTransacts, 2, ',', '.')}}</h3> 
+                       <p>Total (Recargas via pix +  Recarga Manual - Total Bônus - Premiação JB - Premiação Lotérias) </p>
+                   </div>
+                   <div class="icon">
+                       <i class="bi bi-coin" style="color:#208E39;"></i>
+                   </div>
+                   <span class="small-box-footer p-2"></span>
+               </div>
+           </div>
+</div>
+    
+    <!-- <div class="row  p-3">
+            <div class="col-md-12 extractable-cel">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead>
                             <tr>
-                                
-                                <td>{{ $transact->created_at->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s') }}</td>
-                                <td>{{ $transact->user ? $transact->user->name . ' ' . $transact->user->last_name : 'Usuário não encontrado' }}</td>
-                                <td>  
-                                    @if($transact->user_id_sender)
-                                        <?php
-                                        $sender = App\Models\User::find($transact->user_id_sender);
-                                        ?>
-                                        @if($sender)
-                                            {{ $sender->name }} {{ $sender->last_name }}
-                                        @else
-                                            Não encontrado
-                                        @endif
-                                        @else
-                                            Não encontrado
-                                    @endif
-                                </td> 
-                                <td>{{ is_numeric($transact->value) ? number_format($transact->value, 2, ',', '.') : $transact->value }}</td>
-                                <td>{{ $transact->wallet == 'balance' ? trans('admin.balance') : trans('admin.bonus') }}</td>
-                                <td>{{  $transact->type }}</td>
+                                <th>{{ trans('admin.extracts.table-date-header') }}</th>
+                                <th>{{ trans('admin.extracts.table-user-header') }}</th>
+                                <th>{{ trans('admin.extracts.table-responsible-header') }}</th>
+                                <th>{{ trans('admin.extracts.table-value-header') }}</th>
+                                <th>{{ trans('admin.extracts.table-wallet-header') }}</th>
+                                <th>{{ "Type" }}</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-9">
-                                        {{ $transacts->links() }}
+                        </thead>
+                        <tbody>
+                            @foreach($transacts as $transact)
+                                <tr>
+                                    
+                                    <td>{{ $transact->created_at->timezone('America/Sao_Paulo')->format('d/m/Y H:i:s') }}</td>
+                                    <td>{{ $transact->user ? $transact->user->name . ' ' . $transact->user->last_name : 'Usuário não encontrado' }}</td>
+                                    <td>  
+                                        @if($transact->user_id_sender)
+                                            <?php
+                                            $sender = App\Models\User::find($transact->user_id_sender);
+                                            ?>
+                                            @if($sender)
+                                                {{ $sender->name }} {{ $sender->last_name }}
+                                            @else
+                                                Não encontrado
+                                            @endif
+                                            @else
+                                                Não encontrado
+                                        @endif
+                                    </td> 
+                                    <td>{{ is_numeric($transact->value) ? number_format($transact->value, 2, ',', '.') : $transact->value }}</td>
+                                    <td>{{ $transact->wallet == 'balance' ? trans('admin.balance') : trans('admin.bonus') }}</td>
+                                    <td>{{  $transact->type }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-9">
+                                            {{ $transacts->links() }}
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>   
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>   
+                </div>
             </div>
-        </div>
-    </div>
+        </div> -->
 </div>
 </div>
 </div>
