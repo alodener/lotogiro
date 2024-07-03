@@ -9,13 +9,16 @@ use App\Models\User;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 use App\Models\ModelHasRole;
-
+use App\Models\Draw;
+use App\Models\Game;
+use App\Models\BichaoGamesVencedores;
 class NewExtract extends Component
 {
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    public $range = 0, $dateStart, $dateEnd, $perPage = 10;
+    public $range = '0';
+    public $dateStart, $dateEnd, $perPage = 50;
     public $dtS, $dtF;
     public $searchTerm = '';
     public $selectedUserId;
@@ -25,6 +28,7 @@ class NewExtract extends Component
     public $selectedUsers = [];
     public $isAdmin;
     public $adminFilter;
+    
 
     public function mount()
     {
@@ -107,72 +111,79 @@ class NewExtract extends Component
              ->get();
          
         $transactsQuery = TransactBalance::query();
-        $transactsQuery->where(function ($query) {        
+        $transactsQuery->where(function ($query) {
             $query->where('type', 'LIKE', '%Recarga efetuada por meio da plataforma%')
-                ->orWhere('wallet', 'LIKE', '%bonus%')
-                ->orWhere(function ($query) {
-                    $query->where('type', 'LIKE', '%Add por Admin%')
-                        ->where('wallet', 'LIKE', '%balance%');
+            ->orWhere('wallet', 'LIKE', '%bonus%')
+            ->orWhere(function ($query) {
+            $query->where('type', 'LIKE', '%Add por Admin%')
+            ->where('wallet', 'LIKE', '%balance%');
                 });
-        });
-    
-        if($this->selectedUserId > 0  && !$this->isAdmin){ 
-            $transactsQuery->where('user_id', $this->selectedUserId); 
-        } else if($this->adminFilter > 0 && $this->isAdmin ){ 
-            $transactsQuery->where('user_id_sender', $this->adminFilter); 
-        }
-    
-        if ($this->range == 1) {
-            $transactsQuery->whereMonth('created_at', now()->month);
-        } elseif ($this->range == 2) {
-            $transactsQuery->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
-        } elseif ($this->range == 3) {
-            $transactsQuery->whereDate('created_at', now()->today());
-        } elseif ($this->range == 4 && $this->dateStart && $this->dateEnd) {
-            $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
-            $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
-            $transactsQuery->whereBetween('created_at', [$start, $end]);
-        }
-    
-        $transactsQuery->orderByDesc('id');
-        $transacts = $transactsQuery->paginate(10);
+            });
+             
+             if ($this->selectedUserId > 0 && !$this->isAdmin) {
+                 $transactsQuery->where('user_id', $this->selectedUserId);
+             } elseif ($this->adminFilter > 0 && $this->isAdmin) {
+                 $transactsQuery->where('user_id_sender', $this->adminFilter);
+             }            
+             if ($this->range == 1) {
+                $startOfMonth = now()->startOfMonth();
+                $endOfToday = now()->endOfDay();
+                $transactsQuery->whereBetween('created_at', [$startOfMonth, $endOfToday]);
+             } elseif ($this->range == 2) {
+                 $transactsQuery->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+             } elseif ($this->range == 3) {
+                 $transactsQuery->whereDate('created_at', now()->today());
+             } elseif ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                 $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                 $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                 $transactsQuery->whereBetween('created_at', [$start, $end]);
+             }
+             $transactsQuery->orderByDesc('id');
+             $transacts = $transactsQuery->paginate(10);             
     
         // Recarga PIX
         $recargaPix = TransactBalance::where('type', 'LIKE', '%Recarga efetuada por meio da plataforma%')
-            ->when($this->range > 0, function ($q) {
-                $now = Carbon::now();
-                if ($this->range == 1) {
-                    return $q->whereMonth('created_at', '=', $now->month);
-                }
-                if ($this->range == 2) {
-                    return $q->whereBetween('created_at', [$now->startOfWeek(), $now->endOfWeek()]);
-                }
-                if ($this->range == 3) {
-                    return $q->whereDate('created_at', $now->today());
-                }
-                if ($this->range == 4 && $this->dateStart && $this->dateEnd) {
-                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
-                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
-                    return $q->whereBetween('created_at', [$start, $end]);
-                }
-            })
-            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
-                return $q->where('user_id', '=', $this->selectedUserId);
-            })
-            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
-                return $q->where('user_id_sender', $this->adminFilter);
-            })
-            ->sum('value');
+        ->when($this->range > 0, function ($q) {
+            $now = Carbon::now();
+            if ($this->range == 1) {
+                $startOfMonth = $now->copy()->startOfMonth();
+                $endOfToday = $now->copy()->endOfDay();
+                return $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
+            }
+            if ($this->range == 2) {
+                $startOfWeek = $now->copy()->startOfWeek();
+                $endOfWeek = $now->copy()->endOfWeek();
+                return $q->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
+            }
+            if ($this->range == 3) {
+                return $q->whereDate('created_at', $now->copy()->today());
+            }
+            if ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                return $q->whereBetween('created_at', [$start, $end]);
+            }
+        })
+        ->when($this->selectedUserId > 0 && !$this->isAdmin, function ($q) {
+            return $q->where('user_id', '=', $this->selectedUserId);
+        })
+        ->when($this->adminFilter > 0 && $this->isAdmin, function ($q) {
+            return $q->where('user_id_sender', $this->adminFilter);
+        })
+        ->sum('value');
+
     
         // Bônus
         $bonus = TransactBalance::where('wallet', 'LIKE', '%bonus%')
             ->when($this->range > 0, function ($q) {
                 $now = Carbon::now();
                 if ($this->range == 1) {
-                    return $q->whereMonth('created_at', '=', $now->month);
+                    $startOfMonth = now()->startOfMonth();
+                    $endOfToday = now()->endOfDay();
+                    $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
                 }
                 if ($this->range == 2) {
-                    return $q->whereBetween('created_at', [$now->startOfWeek(), $now->endOfWeek()]);
+                    $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
                 }
                 if ($this->range == 3) {
                     return $q->whereDate('created_at', $now->today());
@@ -190,17 +201,19 @@ class NewExtract extends Component
                 return $q->where('user_id_sender', $this->adminFilter);
             })
             ->sum('value');
-    
-        // Recarga Manual
+
+
         $recargaManual = TransactBalance::where('type', 'LIKE', '%Add por Admin%')
             ->where('wallet', 'LIKE', '%balance%')
             ->when($this->range > 0, function ($q) {  
                 $now = Carbon::now();              
                 if ($this->range == 1) {
-                    return $q->whereMonth('created_at', '=', $now->month);
+                    $startOfMonth = now()->startOfMonth();
+                    $endOfToday = now()->endOfDay();
+                    $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
                 }
                 if ($this->range == 2) {
-                    return $q->whereBetween('created_at', [$now->startOfWeek(), $now->endOfWeek()]);
+                    $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
                 }
                 if ($this->range == 3) {
                     return $q->whereDate('created_at', $now->today());
@@ -218,9 +231,222 @@ class NewExtract extends Component
                 return $q->where('user_id_sender', $this->adminFilter);
             })
             ->sum('value');
-            
+
+         // Jogos Realizados
+        $jogosRealizados = TransactBalance::where('type', 'LIKE', '%Compra - Jogo de id:%')
+            ->where('wallet', 'LIKE', '%balance%')
+            ->when($this->range > 0, function ($q) {  
+                $now = Carbon::now();              
+                if ($this->range == 1) {
+                    $startOfMonth = now()->startOfMonth();
+                    $endOfToday = now()->endOfDay();
+                    $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
+                }
+                if ($this->range == 2) {
+                    $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                }
+                if ($this->range == 3) {
+                    return $q->whereDate('created_at', $now->today());
+                }
+                if ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                    return $q->whereBetween('created_at', [$start, $end]);
+                }
+            })
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
+                return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
+            })
+            ->sum('value');
+
+
+        // Conversão de bônus para saldo
+        $conversaoBonusSaldo = TransactBalance::where('type', 'LIKE', '%Saldo recebido a partir de Bônus.%')
+            ->where('wallet', 'LIKE', '%balance%')
+            ->when($this->range > 0, function ($q) {  
+                $now = Carbon::now();              
+                if ($this->range == 1) {
+                    $startOfMonth = now()->startOfMonth();
+                    $endOfToday = now()->endOfDay();
+                    $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
+                }
+                if ($this->range == 2) {
+                    $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                }
+                if ($this->range == 3) {
+                    return $q->whereDate('created_at', $now->today());
+                }
+                if ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                    return $q->whereBetween('created_at', [$start, $end]);
+                }
+            })
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
+                return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
+            })
+            ->sum('value');
+
+         // Conversão de bônus para saque disponivel
+        $conversaoBonusSaque = TransactBalance::where('type', 'LIKE', '%Saldo disponivel recebido atravez do bônus.%')
+            ->where('wallet', 'LIKE', '%balance%')
+            ->when($this->range > 0, function ($q) {  
+                $now = Carbon::now();              
+                if ($this->range == 1) {
+                    $startOfMonth = now()->startOfMonth();
+                    $endOfToday = now()->endOfDay();
+                    $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
+                }
+                if ($this->range == 2) {
+                    $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                }
+                if ($this->range == 3) {
+                    return $q->whereDate('created_at', $now->today());
+                }
+                if ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                    return $q->whereBetween('created_at', [$start, $end]);
+                }
+            })
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
+                return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
+            })
+            ->sum('value');
+
+         // Conversão de bônus para saque disponivel
+        $conversaoSaqueSaldo = TransactBalance::where('type', 'LIKE', '%Saldo recebido a partir de Saque Disponível%')
+            ->where('wallet', 'LIKE', '%balance%')
+            ->when($this->range > 0, function ($q) {  
+                $now = Carbon::now();              
+                if ($this->range == 1) {
+                    $startOfMonth = now()->startOfMonth();
+                    $endOfToday = now()->endOfDay();
+                    $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
+                }
+                if ($this->range == 2) {
+                    $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                }
+                if ($this->range == 3) {
+                    return $q->whereDate('created_at', $now->today());
+                }
+                if ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                    return $q->whereBetween('created_at', [$start, $end]);
+                }
+            })
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
+                return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
+            })
+            ->sum('value');
+
+         // Total De Jogos Bichão
+        $jogosBichao = TransactBalance::where('type', 'LIKE', '%Compra Bichão - Jogo de id:%')
+            ->where('wallet', 'LIKE', '%balance%')
+            ->when($this->range > 0, function ($q) {  
+                $now = Carbon::now();              
+                if ($this->range == 1) {
+                    $startOfMonth = now()->startOfMonth();
+                    $endOfToday = now()->endOfDay();
+                    $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
+                }
+                if ($this->range == 2) {
+                    $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                }
+                if ($this->range == 3) {
+                    return $q->whereDate('created_at', $now->today());
+                }
+                if ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                    return $q->whereBetween('created_at', [$start, $end]);
+                }
+            })
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
+                return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
+            })
+            ->sum('value');
+
+         //Total premio bichão
+
+         $premiosBichao = DB::table('bichao_games_vencedores')
+            ->join('bichao_games', 'bichao_games.id', '=', 'bichao_games_vencedores.game_id')
+            ->whereNotNull('bichao_games_vencedores.valor_premio')
+            ->when($this->range > 0, function ($q) {
+                $now = Carbon::now();
+                if ($this->range == 1) {
+                    $startOfMonth = now()->startOfMonth();
+                    $endOfToday = now()->endOfDay();
+                    return $q->whereBetween('bichao_games_vencedores.created_at', [$startOfMonth, $endOfToday]);
+                } elseif ($this->range == 2) {
+                    return $q->whereBetween('bichao_games_vencedores.created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                } elseif ($this->range == 3) {
+                    return $q->whereDate('bichao_games_vencedores.created_at', $now->today());
+                } elseif ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                    return $q->whereBetween('bichao_games_vencedores.created_at', [$start, $end]);
+                }
+            })
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function ($q) {
+                return $q->where('bichao_games.user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function ($q) {
+                return $q->where('bichao_games.user_id', $this->adminFilter);
+            })
+            ->sum('bichao_games_vencedores.valor_premio');
+
+        //total de premios loterias
+
+        $premioTotalLoteria = DB::table('games')
+            ->whereIn('id', function ($query) {
+                $query->selectRaw('CAST(games AS UNSIGNED)')
+                    ->from('draws')
+                    ->whereNotNull('games');
+            })
+                ->when($this->range > 0, function ($q) {
+                    $now = Carbon::now();
+                    if ($this->range == 1) {
+                        $startOfMonth = now()->startOfMonth();
+                        $endOfToday = now()->endOfDay();
+                        return $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
+                    } elseif ($this->range == 2) {
+                        return $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                    } elseif ($this->range == 3) {
+                        return $q->whereDate('created_at', $now->today());
+                    } elseif ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                        $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                        $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                        return $q->whereBetween('created_at', [$start, $end]);
+                    }
+                })
+                ->when($this->selectedUserId > 0 && !$this->isAdmin, function ($q) {
+                    return $q->where('games.user_id', '=', $this->selectedUserId);
+                })
+                ->when($this->adminFilter > 0 && $this->isAdmin, function ($q) {
+                    return $q->where('games.user_id', $this->adminFilter);
+                })
+                ->sum('games.premio');
+        
+        
         // Cálculo do total das transações
-        $totalTransacts = $recargaManual + $bonus + $recargaPix;
+        $totalTransacts = $recargaManual + $recargaPix - $premioTotalLoteria - $premiosBichao - $bonus ;
     
         return view('livewire.pages.dashboards.extract.new-extract', [
             'transacts' => $transacts,
@@ -232,6 +458,13 @@ class NewExtract extends Component
             'totalTransacts' => $totalTransacts,
             'userTransactions' => $this->userTransactions,
             'admins' => $admins,
+            'jogosRealizados' => $jogosRealizados,
+            'conversaoBonusSaldo' => $conversaoBonusSaldo,
+            'conversaoBonusSaque' =>  $conversaoBonusSaque,
+            'conversaoSaqueSaldo' => $conversaoSaqueSaldo,
+            'jogosBichao' => $jogosBichao,
+            'premioTotalLoteria' => $premioTotalLoteria,
+            'premiosBichao' => $premiosBichao,
         ]);
     }
 }
