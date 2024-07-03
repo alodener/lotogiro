@@ -71,13 +71,13 @@ HTML);
 
         try {   
             
-                $phone = Str::of($request->phone)->replaceMatches('/[^A-Za-z0-9]++/', '');
+                
                 $hashed = Hash::make($request->password);
 
                 $userRoles[] = Role::whereId(6)->first();
 
 
-
+                $phone = Str::of($request->phone)->replaceMatches('/[^A-Za-z0-9]++/', '');
 
                 $user = User::create([
                     'name' => $request->name,
@@ -85,10 +85,13 @@ HTML);
                     'email' => $request->email,
                     'indicador' => $request->indicator,
                     'password' => $hashed,
+                    'pix' => $request->pix,
                     'type_client' => 1,
                     'is_active' => 1,
                     'contact_made' => 0,
-                    'pix' => $request->pix,
+                    'ddd' => Str::of($phone)->substr(0, 2),
+                    'phone' => Str::of($phone)->substr(2),
+                    
                 ]);
                 
                 $user->syncRoles($userRoles);
