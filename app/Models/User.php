@@ -35,6 +35,9 @@ class User extends Authenticatable
         'user_id',
         'nome_funcao',
         'description',
+        'pix',
+        'ddd',
+        'phone',
     ];
 
     /**
