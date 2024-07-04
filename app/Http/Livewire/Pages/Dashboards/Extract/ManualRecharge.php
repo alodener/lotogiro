@@ -220,7 +220,7 @@ class ManualRecharge extends Component
             ->sum('value');
             
         // Cálculo do total das transações
-        $totalTransacts = $recargaManual + $recargaPix - + $bonus ;
+        $totalTransacts = $recargaManual + $recargaPix - $bonus ;
     
         return view('livewire.pages.dashboards.extract.manual-recharge', [
             'transacts' => $transacts,
