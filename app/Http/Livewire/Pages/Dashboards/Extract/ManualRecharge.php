@@ -2,199 +2,236 @@
 
 namespace App\Http\Livewire\Pages\Dashboards\Extract;
 
-use App\Helper\Money;
-use App\Models\ModelHasRole;
+use Livewire\Component;
+use Carbon\Carbon;
 use App\Models\TransactBalance;
 use App\Models\User;
-use Carbon\Carbon;
-use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\RechargeOrder;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\ModelHasRole;
 
 class ManualRecharge extends Component
 {
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    public $range = 0, $dateStart, $dateEnd, $perPage = 10, $value, $admins = [], $adminSelected = 0;
+    public $range = 0, $dateStart, $dateEnd, $perPage = 10;
+    public $dtS, $dtF;
+    public $searchTerm = '';
+    public $selectedUserId;
+    private $transacts;
+    public $userTransactions = [];
+    public $searching = false;
+    public $selectedUsers = [];
+    public $isAdmin;
+    public $adminFilter;
+
     public function mount()
     {
         $this->dateStart = Carbon::now()->format('d/m/Y');
         $this->dateEnd = Carbon::now()->format('d/m/Y');
     }
+
     public function search()
     {
-        if (is_null($this->dateStart) && is_null($this->dateEnd)) {
-            $this->addError('dateFieldsFilled', 'Data missing');
+        // Verifica se as datas foram fornecidas pelo usuário
+        if (empty($this->dateStart) || empty($this->dateEnd)) {
+            $this->addError('dateFieldsFilled', 'Por favor, forneça ambas as datas.');
             return;
         }
-        $this->resetErrorBag('dateFieldsFilled');
+        $dataFromatadaInicial = Carbon::parse($this->dtS)->format('d/m/Y');
+        $dataFromatadaFinal = Carbon::parse($this->dtF)->format('d/m/Y');
+      
+        $this->dateStart = $dataFromatadaInicial;
+        $this->dateEnd = $dataFromatadaFinal;
+
     }
 
+    public function getTransactsProperty()
+    {
+        return $this->transacts;
+    }
 
+    public function responsibleUser()
+    {
+        return $this->belongsTo(User::class, 'user_id_sender');
+        
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function selectUser($userId, $userName)
+    { 
+        // transações do usuário selecionado
+        $this->selectedUserId = $userId;
+        $this->searchTerm = $userName;
+
+        $this->isAdmin = $this->isAdminF($userId);
+
+        $this->selectedUser = [
+            'id' => $userId,
+            'name' => $userName,
+            'isAdmin' => $this->isAdmin,
+        ];
+
+         if (!$this->isAdmin) {
+        $this->adminFilter = null;
+    }
+        
+    }
+    public function isAdminF($userId)
+    {
+        return in_array($userId, $this->getAdmins()->pluck('id')->toArray());
+    }
+    public function getAdmins()
+    {
+        
+        return User::whereIn('id', ModelHasRole::where('role_id', 1)->pluck('model_id'))->get();
+    }
+
+    public function updateAdminFilter()
+    {
+        $this->isAdmin = true; 
+        $this->selectedUserId = null; 
+        $this->render(); 
+    }
+    
     public function render()
     {
-        $admins = [];
-        if($this->adminSelected != 0){
-            $adms = null;
-            $adms[] = $this->adminSelected;
-        }
-
-        if($this->adminSelected === 0){
-            $adms = null;
-            $roles = ModelHasRole::with('user')->where('role_id', 1)->get();
-
-            $roles->each(function ($item, $key){
-                $this->admins[] = [
-                    'id' => $item->user->id,
-                    'name' => $item->user->name . ' ' . $item->user->last_name
-                ];
-            });
-            $adms = $roles->pluck('model_id')->toArray();
-        }
-
-        $transacts = TransactBalance::with('userSender', 'user')
-            ->whereIn('user_id_sender', $adms)
-            ->whereNotIn('user_id', $adms)
-            ->when($this->range > 0, function ($q) {
-                $now = Carbon::now();
-                if($this->range === '1'){
-                    return $q->whereMonth('created_at', '=', $now->month);
-                }
-                if($this->range === '2'){
-                    $this->dateStart = Carbon::now()->addDay()->format('Y-m-d');
-                    $this->dateEnd = Carbon::now()->subDays(7)->format('Y-m-d');
-                    return $q->whereBetween('created_at', [$this->dateEnd, $this->dateStart]);
-                }
-                if($this->range === '3'){
-                    $periodo = [$now->format('Y-m-d') . ' 00:00:00', $now->format('Y-m-d') . ' 23:59:59'];
-                    return $q->whereBetween('created_at', $periodo);
-                }
-                if($this->range === '4'){
-                     //  $dateStart = $this->dateStart;
-                   // $endStart = $this->dateEnd;
-                 $periodo =   [Carbon::createFromFormat('d/m/Y', $this->dateStart)->format('Y-m-d') . ' 00:00:00',
-                Carbon::createFromFormat('d/m/Y', $this->dateEnd)->format('Y-m-d') . ' 23:59:59'];
-                    return $q->whereBetween('created_at', $periodo);
-                }
-            })
-
-            ->orderByDesc('id');
-               
-            //total recarga via plataforma
-
-            $totalpix = TransactBalance::with('userSender', 'user')
-            ->whereIn('user_id_sender', $adms)
-            ->whereNotIn('user_id', $adms)
-            ->where('type', 'LIKE', "%recarga%")
-            ->where('wallet', '=', 'balance')
-            ->when($this->range > 0, function ($q) {
-                $now = Carbon::now();
-                if ($this->range === '1') {
-                    return $q->whereMonth('created_at', '=', $now->month);
-                }
-                if ($this->range === '2') {
-                    $dateEnd = Carbon::now()->subDays(7);
-                    return $q->whereBetween('created_at', [$dateEnd, $now]);
-                }
-                if ($this->range === '3') {
-                    $periodo = [$now->format('Y-m-d') . ' 00:00:00', $now->format('Y-m-d') . ' 23:59:59'];
-                    return $q->whereBetween('created_at', $periodo);
-                }
-                if ($this->range === '4' && $this->dateStart && $this->dateEnd) {
-                    return $q->whereBetween('created_at', [
-                        Carbon::createFromFormat('d/m/Y', $this->dateStart),
-                        Carbon::createFromFormat('d/m/Y', $this->dateEnd),
-                    ]);
-                }
-
-            })
-            ->sum('value');
-
-            $totalpix = number_format($totalpix, 2, ',','.');
-
-            
-            //calculo do b么nus pix
-            $totalbonus = TransactBalance::with('userSender', 'user')
-            ->whereIn('user_id_sender', $adms)
-            ->whereNotIn('user_id', $adms)
-            ->where('wallet', 'bonus')
-            ->when($this->range > 0, function ($q) {
-                
-                $now = Carbon::now();
-                if ($this->range === '1') {
-                    return $q->whereMonth('created_at', '=', $now->month);
-                }
-                if ($this->range === '2') {
-                    $dateEnd = Carbon::now()->subDays(7);
-                    return $q->whereBetween('created_at', [$dateEnd, $now]);
-                }
-                if ($this->range === '3') {
-                    $periodo = [$now->format('Y-m-d') . ' 00:00:00', $now->format('Y-m-d') . ' 23:59:59'];
-                    return $q->whereBetween('created_at', $periodo);
-                }
-                if ($this->range === '4' && $this->dateStart && $this->dateEnd) {
-                    return $q->whereBetween('created_at', [
-                        Carbon::createFromFormat('d/m/Y', $this->dateStart),
-                        Carbon::createFromFormat('d/m/Y', $this->dateEnd),
-                    ]);
-                }
-            })
-            ->sum('value');
-            
-            $totalbonus = number_format($totalbonus, 2, ',','.');
-            
-            //Calculo da recarga manual           
-            $totalrecargamanual = TransactBalance::with('userSender', 'user')
-            ->whereIn('user_id_sender', $adms)
-            ->whereNotIn('user_id', $adms)
-            ->where('type', 'Add por Admin')
-            ->where('wallet', 'balance')
-            ->when($this->range > 0, function ($q) {
-            $now = Carbon::now();
-            if ($this->range === '1') {
-                return $q->whereMonth('created_at', '=', $now->month);
-            }
-            if ($this->range === '2') {
-                $dateEnd = Carbon::now()->subDays(7);
-                return $q->whereBetween('created_at', [$dateEnd, $now]);
-            }
-            if ($this->range === '3') {
-                $periodo = [$now->format('Y-m-d') . ' 00:00:00', $now->format('Y-m-d') . ' 23:59:59'];
-                return $q->whereBetween('created_at', $periodo);
-            }
-            if ($this->range === '4' && $this->dateStart && $this->dateEnd) {
-                return $q->whereBetween('created_at', [
-                    Carbon::createFromFormat('d/m/Y', $this->dateStart),
-                    Carbon::createFromFormat('d/m/Y', $this->dateEnd),
-                ]);
-            }
-        })
-        ->sum('value');
-
-        $totalrecargamanual = number_format($totalrecargamanual, 2, ',','.');
-     /*  $a = Money::toDatabase($totalrecargamanual);
-       $b = Money::toDatabase($totalbonus);
-       $c = Money::toDatabase($totalpix);
-        
-
-        $totalSoma = $a + $b + $c ;*/
-        
-
-        $total = Money::toReal($transacts->sum('value'));
-        $transacts = $transacts->paginate(10);
-        $transacts->valueTotal = $total;
-
-        $transacts->each(function($item, $key) use ($total) {
-            $item->data = Carbon::parse($item->created_at)->format('d/m/y H:i');
-            $item->value = Money::toReal($item->value);
-
-            $item->usuario = "{$item->user['name']} {$item->user['last_name']}";
-            $item->responsavel = "{$item->userSender['name']} {$item->userSender['last_name']}";
+        $admins = $this->getAdmins();
+        $users = User::where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->searchTerm}%")
+             ->whereNotIn('id', $admins->pluck('id')) 
+             ->get();
+         
+        $transactsQuery = TransactBalance::query();
+        $transactsQuery->where(function ($query) {        
+            $query->where('type', 'LIKE', '%Recarga efetuada por meio da plataforma%')
+                ->orWhere('wallet', 'LIKE', '%bonus%')
+                ->orWhere(function ($query) {
+                    $query->where('type', 'LIKE', '%Add por Admin%')
+                        ->where('wallet', 'LIKE', '%balance%');
+                });
         });
-
-          return view('livewire.pages.dashboards.extract.manual-recharge', compact('transacts', 'totalpix','totalbonus','totalrecargamanual'));
+    
+        if($this->selectedUserId > 0  && !$this->isAdmin){ 
+            $transactsQuery->where('user_id', $this->selectedUserId); 
+        } else if($this->adminFilter > 0 && $this->isAdmin ){ 
+            $transactsQuery->where('user_id_sender', $this->adminFilter); 
+        }
+    
+        if ($this->range == 1) {
+            $transactsQuery->whereMonth('created_at', now()->month);
+        } elseif ($this->range == 2) {
+            $transactsQuery->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+        } elseif ($this->range == 3) {
+            $transactsQuery->whereDate('created_at', now()->today());
+        } elseif ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+            $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+            $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+            $transactsQuery->whereBetween('created_at', [$start, $end]);
+        }
+    
+        $transactsQuery->orderByDesc('id');
+        $transacts = $transactsQuery->paginate(10);
+    
+        // Recarga PIX
+        $recargaPix = TransactBalance::where('type', 'LIKE', '%Recarga efetuada por meio da plataforma%')
+            ->when($this->range > 0, function ($q) {
+                $now = Carbon::now();
+                if ($this->range == 1) {
+                    return $q->whereMonth('created_at', '=', $now->month);
+                }
+                if ($this->range == 2) {
+                    return $q->whereBetween('created_at', [$now->startOfWeek(), $now->endOfWeek()]);
+                }
+                if ($this->range == 3) {
+                    return $q->whereDate('created_at', $now->today());
+                }
+                if ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                    return $q->whereBetween('created_at', [$start, $end]);
+                }
+            })
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
+                return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
+            })
+            ->sum('value');
+    
+        // Bônus
+        $bonus = TransactBalance::where('wallet', 'LIKE', '%bonus%')
+            ->when($this->range > 0, function ($q) {
+                $now = Carbon::now();
+                if ($this->range == 1) {
+                    return $q->whereMonth('created_at', '=', $now->month);
+                }
+                if ($this->range == 2) {
+                    return $q->whereBetween('created_at', [$now->startOfWeek(), $now->endOfWeek()]);
+                }
+                if ($this->range == 3) {
+                    return $q->whereDate('created_at', $now->today());
+                }
+                if ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                    return $q->whereBetween('created_at', [$start, $end]);
+                }
+            })
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
+                return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
+            })
+            ->sum('value');
+    
+        // Recarga Manual
+        $recargaManual = TransactBalance::where('type', 'LIKE', '%Add por Admin%')
+            ->where('wallet', 'LIKE', '%balance%')
+            ->when($this->range > 0, function ($q) {  
+                $now = Carbon::now();              
+                if ($this->range == 1) {
+                    return $q->whereMonth('created_at', '=', $now->month);
+                }
+                if ($this->range == 2) {
+                    return $q->whereBetween('created_at', [$now->startOfWeek(), $now->endOfWeek()]);
+                }
+                if ($this->range == 3) {
+                    return $q->whereDate('created_at', $now->today());
+                }
+                if ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                    return $q->whereBetween('created_at', [$start, $end]);
+                }
+            })
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function($q) {
+                return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function($q) {
+                return $q->where('user_id_sender', $this->adminFilter);
+            })
+            ->sum('value');
+            
+        // Cálculo do total das transações
+        $totalTransacts = $recargaManual + $recargaPix - + $bonus ;
+    
+        return view('livewire.pages.dashboards.extract.manual-recharge', [
+            'transacts' => $transacts,
+            'totalTransacts' => $totalTransacts,
+            'users' => $users,
+            'recargaPix' => $recargaPix,
+            'bonus' => $bonus,
+            'recargaManual' => $recargaManual,
+            'totalTransacts' => $totalTransacts,
+            'userTransactions' => $this->userTransactions,
+            'admins' => $admins,
+        ]);
     }
 }

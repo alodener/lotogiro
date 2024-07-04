@@ -352,13 +352,22 @@
                             </a>
                         </li>
                         @endcan
+                        @if(\App\Helper\UserValidate::iAmAdmin())
+                        <li class="nav-item">
+                            <a href="{{route('admin.dashboards.extracts.manualRecharge')}}"
+                                class="nav-link @if(request()->is('admin/dashboards/extracts/manual-recharge')) active @endif">
+                                <i class="fas fa-file-alt nav-icon"></i>
+                                <p>{{ trans('admin.menu.extratoRecarga') }} </p>
+                            </a>
+                        </li>
+                        @endif
 
                         @if(\App\Helper\UserValidate::iAmAdmin())
                         <li class="nav-item">
                             <a href="{{route('admin.dashboards.extracts.newExtract')}}"
                                 class="nav-link @if(request()->is('admin/dashboards/extracts/new-extract')) active @endif">
                                 <i class="fas fa-file-alt nav-icon"></i>
-                                <p>{{ trans('admin.menu.extratoRecarga') }} </p>
+                                <p>{{ trans('admin.menu.novoExtrato') }} </p>
                             </a>
                         </li>
                         @endif
