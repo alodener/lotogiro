@@ -3,6 +3,7 @@
 @section('title', trans('admin.games.listing-page-title'))
 
 @section('content')
+
 <div class="col p-3">
     @include('admin.pages.bets.game.bichao.top_menu')
     <hr />
@@ -172,6 +173,7 @@
 
 
 </div>
+
 @endsection
 
 @push('styles')
@@ -236,6 +238,7 @@ border-radius: 5px;
         integrity="sha512-pF+DNRwavWMukUv/LyzDyDMn8U2uvqYQdJN0Zvilr6DDo/56xPDZdDoyPDYZRSL4aOKO/FGKXTpzDyQJ8je8Qw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        
         const award = parseInt('{{$modalidade->multiplicador}}');
         const initial_value = 0;
         const button_first = $('#btn-award-first');
@@ -272,8 +275,7 @@ border-radius: 5px;
             const value = $('#input_value_bet').val();
             const client_id = $('#livewire-client-id').val();
             const teimosinha = $('#input_teimosinha_bet').val();
-            const premiacao = $('#price_award').text();const premiacao = $('#price_award').text();
-
+            const premiacao = $('#price_award').text();
             if (!option_award > 0) return alert('Selecione um dos prêmios');
             if (!value > 0) return alert('Insira um valor pra aposta');
             if (!client_id > 0) return alert('Escolha um cliente');
@@ -439,6 +441,19 @@ function insere_valor() {
             }
             calculate_awards();
         }
+
+        function button_first_to_third_award(){
+
+const button_first_to_third = $('#btn-award-first-to-third');
+const button_first_to_fifth = $('#btn-award-first-to-fifth');
+
+if(!button_first_to_third.hasClass('active')){
+    button_first_to_third.addClass('active');
+    button_first_to_fifth.removeClass('active');
+    award_type = 1;
+}
+calculate_awards();
+}
 
         function button_first_to_fifth_award(){
 
