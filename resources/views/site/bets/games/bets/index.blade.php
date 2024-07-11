@@ -137,9 +137,6 @@
 <!-- Button trigger modal -->
 
 
-
-
-
 <!-- Modal -->
 
 <div class="modal fade bd-example-modal-lg" id="exampleModalCenter"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -197,16 +194,16 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
         @if(!empty($bet) && $bet->status && $bet->botao_finalizar == 0)
 
-<div class="ml-4 ">
-    <form action="{{route('games.bet.update', ['user' => $bet->user->id, 'bet' => $bet])}}"
-        method="post">
-        @csrf
-        <button type="submit" class="btn btn-primary">{{ trans('admin.sitePages.fimApost')
-            }}</button>
-
-    </form>
-</div>
-@endif      </div>
+            <div class="ml-4 ">
+                <form action="{{route('games.bet.update', ['user' => $bet->user->id, 'bet' => $bet])}}"
+                    method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-primary">{{ trans('admin.sitePages.fimApost')
+                        }}</button>
+                </form>
+            </div>
+        @endif     
+      </div>
     </div>
   </div>
 </div>
@@ -252,7 +249,7 @@
                                     </path>
                                 </svg>
                             </div>
-                            @if(\App\Models\TypeGame::where('recomendado', 1)->count() > 0)
+                             @if(\App\Models\TypeGame::where('recomendado', 1)->count() > 0)
                             <div class="swiper">
                                 <div class="swiper-wrapper">
                                     @foreach(\App\Models\TypeGame::where('recomendado', 1)->get() as $typeGame)
@@ -263,11 +260,7 @@
                                             :
                                             asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg')
                                             }}" alt="{{ $typeGame->name }}" class="d-none d-md-block">
-                                            <img src="{{ $typeGame->banner_mobile ? asset("
-                                                storage/{$typeGame->banner_mobile}") :
-                                            asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg')
-                                            }}" alt="{{ $typeGame->name }}" class="d-md-none">
-
+                                            <img src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") :asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg')}}" alt="{{ $typeGame->name }}" class="d-md-none">
                                             <a>
                                     </div>
                                     @endforeach
@@ -277,7 +270,6 @@
                         </div>
 
                         <!-- Todos os jogos -->
-
                         @if(\App\Models\TypeGame::count() > 0)
                         <div class="container mt-5">
                             <div class="d-flex swipe-controles align-items-center mb-2">
@@ -295,19 +287,14 @@
                                     </path>
                                 </svg>
                             </div>
-
                             <div class="swiper-list swiper-full">
                                 <div class="swiper-wrapper">
                                     @foreach(\App\Models\TypeGame::get() as $typeGame)
                                     <div class="swiper-slide">
                                         <a href="{{route('games.bet.game.create', ['user' => $bet->user->id, 'bet' => $bet->id, 'typeGame' => $typeGame->id])}}"
                                             class="hover-container">
-
-
-                                            <img src="{{ $typeGame->banner_mobile ? asset("
-                                                storage/{$typeGame->banner_mobile}") :
-                                            asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg')
-                                            }}" alt="{{ $typeGame->name }}">
+                                               <img src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") : asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}"
+                                                alt="{{ $typeGame->name }}">
                                             <div class="hover-content">
                                                 <p>{{ $typeGame->name }}</p>
                                                 <button class="btn btn-primary">Jogar Agora</button>
@@ -315,16 +302,10 @@
                                         </a>
                                     </div>
                                     @endforeach
-
-
                                 </div>
                             </div>
                         </div>
                         @endif
-
-
-
-
                     </div>
                 </div>
                 @endif
@@ -388,8 +369,6 @@
         z-index: 1;
         display: block;
     }
-
-
     .swiper-slide {
         display: flex !important;
         align-items: center;
@@ -490,17 +469,7 @@ $('.category-info').click(function () {
             // Junta as palavras novamente com espaço em branco
             return words.join(' ');
         }
-
-
-
-
-
-
-
     });
-
-
-
 
 </script>
 
