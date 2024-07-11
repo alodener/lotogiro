@@ -3,48 +3,88 @@
 namespace App\Http\Livewire\Pages\Dashboards\Wallet\Extract;
 
 use App\Helper\Money;
-use App\Helper\UserValidate;
 use App\Models\TransactBalance;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
-use function App\Helper\UserValidate;
 
 class Table extends Component
 {
     use WithPagination;
 
-    public $trasacts = [];
-    public $paginate = [];
+    public $description = '';
+    public $dateFrom = null;
+    public $dateTo = null;
+    public $filteredSum = 0;
+    public $filtersApplied = false;
+    public $perPage = 10;
+
+    protected $paginationTheme = 'bootstrap';
 
     public function mount()
     {
-        $transacts = TransactBalance::with('user', 'userSender')
+        $this->loadTransacts();
+    }
+
+    public function loadTransacts()
+    {
+        $query = TransactBalance::with('user', 'userSender')
             ->where('user_id', auth()->id())
-            ->orderBy('created_at','desc')
-            ->paginate(10);
+            ->orderBy('updated_at', 'desc');
 
-        $this->paginate['next'] = $transacts->nextPageUrl();
-        $this->paginate['prev'] = $transacts->previousPageUrl();
+        if ($this->description) {
+            $query->where('type', 'LIKE', '%' . $this->description . '%');
+        }
 
+        if ($this->dateFrom && $this->dateTo) {
+            $query->whereDate('updated_at', '>=', Carbon::parse($this->dateFrom))
+                ->whereDate('updated_at', '<=', Carbon::parse($this->dateTo));
+        }
 
-        $transacts = $transacts->toArray();
+        $transacts = $query->paginate($this->perPage);
 
-        foreach ($transacts['data'] as $h){
+        if ($this->filtersApplied) {
+            $this->calculateSum($query);
+        }
+
+        $this->trasacts = [];
+        foreach ($transacts->items() as $h) {
             $this->trasacts[] = [
-                'data' => Carbon::parse($h['created_at'])->format('d/m/y à\\s H:i'),
-                'responsavel' => $h['user_sender']['name'],
-                'value' => Money::toReal($h['value']),
-                'old_value' => Money::toReal($h['old_value']),
-                'value_a' => Money::toReal($h['value_a']),
-                'obs' => $h['type']
-                
+                'data' => Carbon::parse($h->updated_at)->format('d/m/y à\\s H:i'),
+                'responsavel' => $h->userSender->name ?? '',
+                'value' => Money::toReal($h->value),
+                'old_value' => Money::toReal($h->old_value),
+                'value_a' => Money::toReal($h->value_a),
+                'obs' => $h->type
             ];
         }
+
+        return $transacts;
+    }
+
+    public function calculateSum($query)
+    {
+        $this->filteredSum = $query->sum('value');
+    }
+
+    public function applyFilters()
+    {
+        $this->filtersApplied = true;
+        $this->resetPage();
+        $this->loadTransacts();
+    }
+
+    public function updatingPerPage($value)
+    {
+        $this->resetPage(); 
     }
 
     public function render()
     {
-        return view('livewire.pages.dashboards.wallet.extract.table', ['paginate' => $this->paginate]);
+        $transacts = $this->loadTransacts();
+
+        return view('livewire.pages.dashboards.wallet.extract.table', [
+            'transacts' => $transacts,
+        ]);
     }
 }
