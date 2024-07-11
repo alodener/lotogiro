@@ -252,22 +252,18 @@
                                     </path>
                                 </svg>
                             </div>
-                            @if(\App\Models\TypeGame::where('recomendado', 1)->count() > 0)
+                             @if(\App\Models\TypeGame::where('recomendado', 1)->count() > 0)
                             <div class="swiper">
                                 <div class="swiper-wrapper">
                                     @foreach(\App\Models\TypeGame::where('recomendado', 1)->get() as $typeGame)
                                     <div class="swiper-slide">
                                         <a
                                             href="{{route('games.bet.game.create', ['user' => $bet->user->id, 'bet' => $bet->id, 'typeGame' => $typeGame->id])}}">
-                                            <img src="{{ $typeGame->banner_pc ? asset(" storage/{$typeGame->banner_pc}")
+                                            <img src="{{ $typeGame->banner_pc ? asset("storage/{$typeGame->banner_pc}")
                                             :
                                             asset('https://i.ibb.co/VWhHF8D/Yys88-SZf-Yy-AI4oo61k-Bd-Fw-Kq-Sl-R0k-Cu-Wd-DDQUVj5.jpg')
                                             }}" alt="{{ $typeGame->name }}" class="d-none d-md-block">
-                                            <img src="{{ $typeGame->banner_mobile ? asset("
-                                                storage/{$typeGame->banner_mobile}") :
-                                            asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg')
-                                            }}" alt="{{ $typeGame->name }}" class="d-md-none">
-
+                                            <img src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") :asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg')}}" alt="{{ $typeGame->name }}" class="d-md-none">
                                             <a>
                                     </div>
                                     @endforeach
@@ -275,7 +271,6 @@
                             </div>
                             @endif
                         </div>
-
                         <!-- Todos os jogos -->
 
                         @if(\App\Models\TypeGame::count() > 0)
@@ -302,12 +297,8 @@
                                     <div class="swiper-slide">
                                         <a href="{{route('games.bet.game.create', ['user' => $bet->user->id, 'bet' => $bet->id, 'typeGame' => $typeGame->id])}}"
                                             class="hover-container">
-
-
-                                            <img src="{{ $typeGame->banner_mobile ? asset("
-                                                storage/{$typeGame->banner_mobile}") :
-                                            asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg')
-                                            }}" alt="{{ $typeGame->name }}">
+                                            <img src="{{ $typeGame->banner_mobile ? asset("storage/{$typeGame->banner_mobile}") : asset('https://i.ibb.co/0yB31KB/60-Yp-Ckw9vf-EZXF9-Md4la52d-BK5j-YUPfqjx-E6c-Pro.jpg') }}"
+                                                alt="{{ $typeGame->name }}">
                                             <div class="hover-content">
                                                 <p>{{ $typeGame->name }}</p>
                                                 <button class="btn btn-primary">Jogar Agora</button>
