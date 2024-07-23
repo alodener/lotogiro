@@ -1024,6 +1024,50 @@
   </div>
 </div>
 
+<!-- modal 33-->
+
+<div class="modal fade" id="video-modal-33" tabindex="-33" aria-labelledby="video-modal-33-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-33-label">JOGO 012 - Como Fazer Multiplos Jogos </h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/cop-cola.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal 34-->
+
+<div class="modal fade" id="video-modal-34" tabindex="-34" aria-labelledby="video-modal-34-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="video-modal-34-label">PLATAFORMA 001 - Como o Cliente Faz Seu Cadastro </h5>
+        <div class="close-button">
+          <a href="/admin/dashboards/help/tutoriais"><span class="close-icon">&times;</span></a>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-center justify-content-center">
+          <video controls width="500">
+            <source src="{{asset('admin/videos/se-cadastrar.mp4')}}" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1126,14 +1170,17 @@
   function openModal30() {
     $('#video-modal-30').modal('show');
   }
-  
 function openModal31() {
     $('#video-modal-31').modal('show');
   }
-    
-    function openModal32() {
-      
+function openModal32() {
     $('#video-modal-32').modal('show');
+  }
+function openModal33() {  
+    $('#video-modal-33').modal('show');
+  }
+function openModal34() {
+    $('#video-modal-34').modal('show');
   }
 
 </script>
