@@ -514,13 +514,13 @@ class GameController extends Controller
                         }
                     }
                 }
-
+                $userTransact = User::find(auth()->id());
                 $transact_balance = new TransactBalance;
                 $transact_balance->user_id_sender = auth()->id();
                 $transact_balance->user_id = auth()->id();
                 $transact_balance->value = $request->value2;
-                $transact_balance->old_value = auth()->user()->balance;
-                $transact_balance->value_a = auth()->user()->balance - $request->value2;
+                $transact_balance->old_value =$userTransact->balance;
+                $transact_balance->value_a = $userTransact->balance - $request->value2;
                 $transact_balance->type = 'Compra - Jogo de id: ' . $game->id . ' do tipo: ' . $game->type_game_id;
                 $transact_balance->save();
 
