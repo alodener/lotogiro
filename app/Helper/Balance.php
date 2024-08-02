@@ -13,13 +13,14 @@ class Balance
     {
         $response = false;
         //$typeGameValue = TypeGameValue::find($typeGameValue);
-
-        $balance = auth()->user()->balance;
+        $user = User::find(auth()->id());
+        $balance =  $user->balance;
 
         //$result = $balance - $typeGameValue->value;
           $result = $balance - $typeGameValue;
+        $user = User::find(auth()->id());
         if($result >= 0){
-           $user = User::find(auth()->id());
+
             $user->balance = $result;
             $user->save();
 
