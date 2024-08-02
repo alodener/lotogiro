@@ -412,37 +412,45 @@ class NewExtract extends Component
             })
             ->sum('bichao_games_vencedores.valor_premio');
 
-        //total de premios loterias
+      //total de premios loterias
+
+       // Obtendo os IDs dos jogos premiados da tabela draws
+        $idsJogosPremiados = DB::table('draws')
+            ->whereNotNull('games')
+            ->pluck('games')
+            ->flatMap(function ($ids) {
+                return explode(',', $ids);
+            })
+            ->unique()
+            ->toArray();
 
         $premioTotalLoteria = DB::table('games')
-            ->whereIn('id', function ($query) {
-                $query->selectRaw('CAST(games AS UNSIGNED)')
-                    ->from('draws')
-                    ->whereNotNull('games');
+            ->whereIn('id', $idsJogosPremiados)
+            ->when($this->range > 0, function ($q) {
+                $now = Carbon::now();
+                if ($this->range == 1) {
+                    $startOfMonth = now()->startOfMonth();
+                    $endOfToday = now()->endOfDay();
+                    return $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
+                } elseif ($this->range == 2) {
+                    return $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                } elseif ($this->range == 3) {
+                    return $q->whereDate('created_at', $now->today());
+                } elseif ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                    $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                    $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                    return $q->whereBetween('created_at', [$start, $end]);
+                }
             })
-                ->when($this->range > 0, function ($q) {
-                    $now = Carbon::now();
-                    if ($this->range == 1) {
-                        $startOfMonth = now()->startOfMonth();
-                        $endOfToday = now()->endOfDay();
-                        return $q->whereBetween('created_at', [$startOfMonth, $endOfToday]);
-                    } elseif ($this->range == 2) {
-                        return $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
-                    } elseif ($this->range == 3) {
-                        return $q->whereDate('created_at', $now->today());
-                    } elseif ($this->range == 4 && $this->dateStart && $this->dateEnd) {
-                        $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
-                        $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
-                        return $q->whereBetween('created_at', [$start, $end]);
-                    }
-                })
-                ->when($this->selectedUserId > 0 && !$this->isAdmin, function ($q) {
-                    return $q->where('games.user_id', '=', $this->selectedUserId);
-                })
-                ->when($this->adminFilter > 0 && $this->isAdmin, function ($q) {
-                    return $q->where('games.user_id', $this->adminFilter);
-                })
-                ->sum('games.premio');
+            ->when($this->selectedUserId > 0 && !$this->isAdmin, function ($q) {
+                return $q->where('user_id', '=', $this->selectedUserId);
+            })
+            ->when($this->adminFilter > 0 && $this->isAdmin, function ($q) {
+                return $q->where('user_id', $this->adminFilter);
+            })
+            ->sum('premio');
+
+        $totalPremio = $premioTotalLoteria ?? 0;
         
         
         // Cálculo do total das transações
