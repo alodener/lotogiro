@@ -18,7 +18,7 @@ class NewExtract extends Component
 
     protected $paginationTheme = 'bootstrap';
     public $range = '0';
-    public $dateStart, $dateEnd, $perPage = 50;
+    public $dateStart, $dateEnd;
     public $dtS, $dtF;
     public $searchTerm = '';
     public $selectedUserId;
@@ -28,7 +28,11 @@ class NewExtract extends Component
     public $selectedUsers = [];
     public $isAdmin;
     public $adminFilter;
-    
+    public $typeFilter = '';
+    public $perPage = 10;
+    public $selectedUser = null;
+    public $selectedUserName;
+    public $filteredUsers = [];
 
     public function mount()
     {
@@ -38,16 +42,46 @@ class NewExtract extends Component
 
     public function search()
     {
-        // Verifica se as datas foram fornecidas pelo usuário
         if (empty($this->dateStart) || empty($this->dateEnd)) {
             $this->addError('dateFieldsFilled', 'Por favor, forneça ambas as datas.');
             return;
         }
-        $dataFromatadaInicial = Carbon::parse($this->dtS)->format('d/m/Y');
-        $dataFromatadaFinal = Carbon::parse($this->dtF)->format('d/m/Y');
-      
+    
+        $dataFromatadaInicial = Carbon::createFromFormat('d/m/Y', $this->dateStart)->format('Y-m-d');
+        $dataFromatadaFinal = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->format('Y-m-d');
+    
         $this->dateStart = $dataFromatadaInicial;
         $this->dateEnd = $dataFromatadaFinal;
+    
+        $query = Transaction::query(); // Substitua pelo nome do seu modelo de transações
+    
+        if ($this->typeFilter) {
+            $query->where('type', $this->typeFilter);
+        }
+    
+        if ($this->searchTerm) {
+            $query->whereHas('user', function($q) {
+                $q->where('name', 'like', '%' . $this->searchTerm . '%')
+                  ->orWhere('last_name', 'like', '%' . $this->searchTerm . '%');
+            });
+        }
+    
+        if ($this->adminFilter) {
+            $query->where('admin_id', $this->adminFilter);
+        }
+    
+        if ($this->range === '1') { // Mensal
+            $query->whereMonth('created_at', date('m'))
+                  ->whereYear('created_at', date('Y'));
+        } elseif ($this->range === '2') { // Semanal
+            $query->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+        } elseif ($this->range === '3') { // Diário
+            $query->whereDate('created_at', today());
+        } elseif ($this->range === '4') { // Customizado
+            $query->whereBetween('created_at', [$this->dateStart, $this->dateEnd]);
+        }
+    
+        $this->transacts = $query->paginate(10);
 
     }
 
@@ -68,24 +102,33 @@ class NewExtract extends Component
     }
 
     public function selectUser($userId, $userName)
-    { 
-        // transações do usuário selecionado
-        $this->selectedUserId = $userId;
-        $this->searchTerm = $userName;
+{ 
+    // Transações do usuário selecionado
+    $this->selectedUserId = $userId;
 
-        $this->isAdmin = $this->isAdminF($userId);
+    // Atualiza o searchTerm com o nome do usuário fornecido ou o nome encontrado no banco
+    $this->searchTerm = $userName ?: User::find($userId)->name ?? '';
 
-        $this->selectedUser = [
-            'id' => $userId,
-            'name' => $userName,
-            'isAdmin' => $this->isAdmin,
-        ];
+    // Verifica se o usuário é admin
+    $this->isAdmin = $this->isAdminF($userId);
 
-         if (!$this->isAdmin) {
+    // Atualiza os detalhes do usuário selecionado
+    $this->selectedUser = [
+        'id' => $userId,
+        'name' => $this->searchTerm,
+        'isAdmin' => $this->isAdmin,
+    ];
+
+    // Se não for admin, reseta o filtro de admin
+    if (!$this->isAdmin) {
         $this->adminFilter = null;
     }
-        
-    }
+
+    // Renderiza os resultados atualizados
+    $this->render();
+}
+
+    
     public function isAdminF($userId)
     {
         return in_array($userId, $this->getAdmins()->pluck('id')->toArray());
@@ -102,23 +145,74 @@ class NewExtract extends Component
         $this->selectedUserId = null; 
         $this->render(); 
     }
-    
+   
     public function render()
     {
+        
         $admins = $this->getAdmins();
         $users = User::where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->searchTerm}%")
              ->whereNotIn('id', $admins->pluck('id')) 
              ->get();
          
-        $transactsQuery = TransactBalance::query();
-        $transactsQuery->where(function ($query) {
-            $query->where('type', 'LIKE', '%Recarga efetuada por meio da plataforma%')
-            ->orWhere('wallet', 'LIKE', '%bonus%')
-            ->orWhere(function ($query) {
-            $query->where('type', 'LIKE', '%Add por Admin%')
-            ->where('wallet', 'LIKE', '%balance%');
-                });
-            });
+             $transactsQuery = TransactBalance::query();
+        
+            // Filtro baseado no tipo de transação
+            if ($this->typeFilter) {
+                $typeFilterPatterns = [
+                    'pix' => '%Recarga efetuada por meio da plataforma%',
+                    'manual_recharge' => '%Add por Admin%',
+                    'bonus_balance' => '%bonus%',
+                    'saquedisponivel_saldo' => '%Saldo recebido a partir de Saque Disponível%',
+                    'bonus_saquedisponivel' => '%Saldo disponivel recebido atravez do bônus%',
+                    'saldo_bonus' => '%Saldo recebido a partir de Bônus%',
+                    'bonus_purchase' => '%Bônus de jogo%',
+                    'bichao_purchase' => '%Compra Bichão - Jogo de id:%',
+                    'game_purchase' => '%Compra - Jogo%',
+                    'solicitacao_saque' => '%Solicitação de saque finalizada.%',
+                ];
+        
+                $pattern = $typeFilterPatterns[$this->typeFilter] ?? null;
+                if ($pattern) {
+                    $transactsQuery->where('type', 'like', $pattern);
+                }
+            }
+
+            if ($this->selectedUserId > 0 && !$this->isAdmin) {
+                $transactsQuery->where('user_id', $this->selectedUserId);
+            }
+        
+            if ($this->adminFilter > 0 && $this->isAdmin) {
+                $transactsQuery->where('user_id_sender', $this->adminFilter);
+            }
+            if ($this->range == 1) {
+                $startOfMonth = now()->startOfMonth();
+                $endOfToday = now()->endOfDay();
+                $transactsQuery->whereBetween('created_at', [$startOfMonth, $endOfToday]);
+             } elseif ($this->range == 2) {
+                 $transactsQuery->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+             } elseif ($this->range == 3) {
+                 $transactsQuery->whereDate('created_at', now()->today());
+             } elseif ($this->range == 4 && $this->dateStart && $this->dateEnd) {
+                 $start = Carbon::createFromFormat('d/m/Y', $this->dateStart)->startOfDay();
+                 $end = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->endOfDay();
+                 $transactsQuery->whereBetween('created_at', [$start, $end]);
+             }
+             $transactsQuery->orderByDesc('id');
+
+            
+            $transacts = $transactsQuery->paginate($this->perPage);
+
+             $transactsQuery->where(function ($query) {
+                 $query->where('type', 'LIKE', '%Recarga efetuada por meio da plataforma%')
+                     ->orWhere('wallet', 'LIKE', '%bonus%')
+                     ->orWhere(function ($query) {
+                         $query->where('type', 'LIKE', '%Add por Admin%')
+                             ->where('wallet', 'LIKE', '%balance%');
+                     })
+                     ->orWhere(function ($query) {
+                         $query->where('type', 'LIKE', '%Saldo recebido%'); // Adiciona conversão aqui
+                     });
+             });
              
              if ($this->selectedUserId > 0 && !$this->isAdmin) {
                  $transactsQuery->where('user_id', $this->selectedUserId);
@@ -139,7 +233,7 @@ class NewExtract extends Component
                  $transactsQuery->whereBetween('created_at', [$start, $end]);
              }
              $transactsQuery->orderByDesc('id');
-             $transacts = $transactsQuery->paginate(10);             
+                         
     
         // Recarga PIX
         $recargaPix = TransactBalance::where('type', 'LIKE', '%Recarga efetuada por meio da plataforma%')
@@ -412,17 +506,17 @@ class NewExtract extends Component
             })
             ->sum('bichao_games_vencedores.valor_premio');
 
-      //total de premios loterias
+        //total de premios loterias
 
        // Obtendo os IDs dos jogos premiados da tabela draws
-        $idsJogosPremiados = DB::table('draws')
-            ->whereNotNull('games')
-            ->pluck('games')
-            ->flatMap(function ($ids) {
-                return explode(',', $ids);
-            })
-            ->unique()
-            ->toArray();
+       $idsJogosPremiados = DB::table('draws')
+       ->whereNotNull('games')
+       ->pluck('games')
+       ->flatMap(function ($ids) {
+           return explode(',', $ids);
+       })
+       ->unique()
+       ->toArray();
 
         $premioTotalLoteria = DB::table('games')
             ->whereIn('id', $idsJogosPremiados)
@@ -473,6 +567,7 @@ class NewExtract extends Component
             'jogosBichao' => $jogosBichao,
             'premioTotalLoteria' => $premioTotalLoteria,
             'premiosBichao' => $premiosBichao,
+
         ]);
     }
 }
