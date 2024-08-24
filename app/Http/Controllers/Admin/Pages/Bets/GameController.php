@@ -543,7 +543,9 @@ class GameController extends Controller
                 // return $pdf->download($fileName);
 
                 // $arquivo = $pdf->output($fileName);
-                Mail::send('email.jogo', ['idjogo' => $game->id], function ($m) {
+
+                // envio do bilhete por email
+                /* Mail::send('email.jogo', ['idjogo' => $game->id], function ($m) {
                     global $data;
                     global $fileName;
                     global $pdf;
@@ -552,7 +554,7 @@ class GameController extends Controller
                     $m->subject('Seu Bilhete');
                     $m->to(auth()->user()->email);
                     $m->attachData($pdf->output(), $fileName);
-                });
+                }); */ 
 
                 try{
                 if($game){
