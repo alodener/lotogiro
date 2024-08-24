@@ -34,6 +34,19 @@ class Configs
         return $system->value;
     }
 
+    public static function getTokenSuitPay(){
+        $nameConfig = "Accesstoken SuitPay";
+        $system = System::Where('nome_config', $nameConfig)->first() ;
+
+        if(empty($system)) return;
+       
+        if(empty($system->value)){
+            return "";
+        }
+
+        return $system->value;
+    }
+
     public static function getTokenZoop(){
         $nameConfig = "Accesstoken Zoop";
         $system = System::Where('nome_config', $nameConfig)->first() ;

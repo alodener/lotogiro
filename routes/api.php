@@ -26,6 +26,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('zoop/webhook/process/transaction/success', [ZoopController::class, 'processTransactionSuccess'])->name('zoop.webhook.process.success');
 Route::post('mp/webhook/process/transaction', [MercadoPagoController::class, 'processTransaction'])->name('zoop.webhook.process');
 Route::post('db/webhook/process/transaction', [DoBankController::class, 'processTransaction'])->name('zoop.webhook.process');
+Route::post('suitpay/webhook/process/transaction', [SuitPayContSroller::class, 'processTransaction'])->name('suipay.webhook.process');
+
 
 
 Route::get('bichao/get-results', [BichaoController::class, 'get_resultados'])->name('bichao.get_resultados');
