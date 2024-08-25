@@ -103,11 +103,11 @@ class Wallet
                 }
 
 
-                $telegrambot = Configs::getTelegramUrlBot();                
+               /* $telegrambot = Configs::getTelegramUrlBot();                
                 $telegramchatid = Configs::getTelegramChatId();
                 if(!empty($telegrambot)) {
                 $menssagemtelegran = MensagemTelegram::enviarMensagemTelegram($telegramchatid, $totalRecharge, $telegrambot);
-                }
+                }*/
                 
 
                 return response()->json(['status' => 201]);
