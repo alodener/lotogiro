@@ -7,6 +7,7 @@ use App\Http\Controllers\Webhook\MercadoPagoController;
 use App\Http\Controllers\Webhook\DoBankController;
 use App\Http\Controllers\Admin\Pages\Bets\BichaoController;
 use App\Http\Controllers\ScrapingController;
+use App\Http\Controllers\Webhook\SuitPayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('zoop/webhook/process/transaction/success', [ZoopController::class, 'processTransactionSuccess'])->name('zoop.webhook.process.success');
 Route::post('mp/webhook/process/transaction', [MercadoPagoController::class, 'processTransaction'])->name('zoop.webhook.process');
 Route::post('db/webhook/process/transaction', [DoBankController::class, 'processTransaction'])->name('zoop.webhook.process');
-Route::post('suitpay/webhook/process/transaction', [SuitPayContSroller::class, 'processTransaction'])->name('suipay.webhook.process');
+Route::post('suitpay/webhook/process/transaction', [SuitPayController::class, 'processTransaction'])->name('suitpay.webhook.process');
 
 
 
