@@ -73,7 +73,7 @@
                                                     class="btn btn-green btn-md btn-block">{{ trans('admin.lwIndicated.cont') }}  {{$valueAdd}}</button>
                                              @elseif(config('services.activeGateway') == 'SuitPay')
                                              <button wire:click.prevent="callSuitPayPix" type="submit"
-                                                     @if($valueAdd <= 9.99) disabled @endif
+                                                     @if($valueAdd <= 0.99) disabled @endif
 
                                                     class="btn btn-green btn-md btn-block">{{ trans('admin.lwIndicated.cont') }}  {{$valueAdd}}</button>
                                              @else
