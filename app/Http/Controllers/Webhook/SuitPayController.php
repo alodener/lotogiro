@@ -14,7 +14,7 @@ class SuitPayController extends Controller
 
     public function processTransaction(Request $request)
     {
-        $SuitPay = Configs::getTokenSuitPay();
+        //$SuitPay = Configs::getTokenSuitPay();
        
         $data = $request->all();
 
@@ -22,8 +22,8 @@ class SuitPayController extends Controller
            
             $paymentData = new \stdClass;
             $paymentData->status = $data['statusTransaction'] == 'PAID_OUT' ? 'approved' : 'failure';
-            $paymentData->external_reference = $data['idTransaction'];
-
+            $paymentData->external_reference = $data['requestNumber'];
+        
           
             $walletHelper = new Wallet;
             $walletHelper->updateStatusPayment($paymentData);
