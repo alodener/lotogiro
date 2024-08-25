@@ -21,6 +21,14 @@ class Wallet
                 'Pago' => 1,
                 'failure' => 3
             ];
+
+        } elseif ($ACTIVE_GATEWAY == "SuitPay") {
+            $typeStatus = [
+                'pending' => 0,
+                'approved' => 1,
+                'failure' => 3
+            ];
+        
         }else{
             $typeStatus = [
                 'pending' => 0,

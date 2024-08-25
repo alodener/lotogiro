@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Http;
 use App\Helper\Configs;
 use App\Models\System;
 use Faker\Extension\Helper;
+use Carbon\Carbon;
 
 
 class Table extends Component
@@ -142,6 +143,103 @@ class Table extends Component
 
         ]);
     }
+
+   
+    public function callSuitPayPix()
+    {
+
+        
+        $SuitPay = Configs::getTokenSuitPay();
+    
+        $order = new RechargeOrder([
+            'user_id' => auth()->id(),
+            'value' => Money::toDatabase($this->valueAdd),
+            'status' => 0
+        ]);
+        $order->save();
+
+        $payment = [
+            'requestNumber' => $order->reference,
+            'amount' => floatval($order->value),
+            'usernameCheckout' => ENV("nome_sistema"),
+            'dueDate' => Carbon::now()->format('Y-m-d'),
+            'client' => [
+                'name' => "Default Payment",
+                'document' => "15307003706",
+                'phoneNumber' => "62999815500",
+                'email' => auth()->user()->email,
+                'address' => [
+                    'codIbge' => "5208707",
+                    'street' => "Rua Paraíba",
+                    'number' => "150",
+                    'complement' => "",
+                    'zipCode' => "74663-520",
+                    'neighborhood' => "Goiânia 2",
+                    'city' => "Goiânia",
+                    'state' => "GO",
+                ],
+            ],  
+            'callbackUrl' => "https://web.lotodasorte.com/mp/webhook/process/transaction",
+            'split' => [
+                "username" => "lotterpro",
+                "percentageSplit" => 10,
+            ],
+        ];
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://ws.suitpay.app/api/v1/gateway/request-qrcode',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($payment),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'ci: lotterpro_1723579133675',
+                'cs: 52b76bf44d605d22503308fe1e056277e6ecac1920ba8ee71e35483ce47af239cb6e47af7f9b4a4a9e9de4e655f7afc2',
+            ),
+            CURLOPT_SSL_VERIFYPEER => false,
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+
+        $response = json_decode($response);
+
+        if (isset($response->error)) {
+
+        echo '<pre>';
+        print_r($response);
+        echo '</pre>';
+        exit;
+    }
+
+    
+    $copyPast = isset($response->paymentCode) ? $response->paymentCode : '';
+    $base64 = isset($response->paymentCodeBase64) ? $response->paymentCodeBase64: '';
+   
+    $this->alert('info', 'Pronto!!', [
+        'position' => 'center',
+        'timer' => null,
+        'toast' => false,
+        'html' => "Seu código Copia e Cola está pronto, gostaria de pagar agora?<br><br>
+            <div class='input-group mb-3'>
+                <input type='text' value='{$copyPast}' readonly class='form-control' placeholder='qrCodeSuitPay' aria-label='qrCodeSuitPay' aria-describedby='button-addon2' id='input_output'>
+                <button class='btn btn-outline-secondary' onclick='copyText()' type='button' id='copyPix'>Copiar</button>
+            </div>
+            <div class='input-group mb-3'>
+                <img src='data:image/gif;base64,$base64' style='max-width:250px;margin:auto'>
+            </div>
+            <div><button class='btn btn-info btn-md' onclick='redirectPix()'>Concluído</button></div>",
+    ]);
+}
+
+
 
     public function callZoopPix()
     {
