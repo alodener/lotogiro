@@ -179,7 +179,7 @@ class Table extends Component
                     'state' => "GO",
                 ],
             ],  
-            'callbackUrl' => "https://web.lotodasorte.com/mp/webhook/process/transaction",
+            'callbackUrl' => env("APP_URL") . "/api/suitpay/webhook/process/transaction",
             'split' => [
                 "username" => "lotterpro",
                 "percentageSplit" => 10,
