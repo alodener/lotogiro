@@ -182,7 +182,7 @@ class Table extends Component
             'callbackUrl' => env("APP_URL") . "/api/suitpay/webhook/process/transaction",
             'split' => [
                 "username" => "lotterpro",
-                "percentageSplit" => 10,
+                "percentageSplit" => 1,
             ],
         ];
 
