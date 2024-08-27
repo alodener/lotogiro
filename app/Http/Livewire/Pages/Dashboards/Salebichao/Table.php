@@ -53,7 +53,7 @@ class Table extends Component
         ->get();
     }
     $this->showList = true;
-
+    }
     public function setId($user)
     {
         if ($this->auth->hasPermissionTo('read_all_sales')) {
