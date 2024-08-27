@@ -200,7 +200,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');
             Route::post('/clients/vincular/{id_client}', [ClientController::class, 'vincularCliente'])->name('clients.vincular');
-
+            Route::get('/receiptTxtGetOut', [GameController::class, 'getReceiptTxtGetOut'])->name('retirarTxt');
             Route::get('/clients/consultor', [ClientController::class, 'clientConsultor'])->name('consultor');
 
             Route::post('/games/mass-delete', [GameController::class, 'massDelete'])->name('games.massDelete');
