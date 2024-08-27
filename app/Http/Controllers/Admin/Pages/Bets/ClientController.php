@@ -40,6 +40,18 @@ class ClientController extends Controller
                 }else{
                 $client = $this->client->get();
                 }
+
+                if (isset($params['search']) && !empty($params['search'])) {
+                    $search = $params['search']; //verifica se esse parametro nao esta vazio
+                    // filtra os jogos 
+                    $this->clients = Client::where(function($query) use ($search) {
+                        $query->where('name', 'like', "%{$search}%") // condição para buscar pelo nome 
+                              ->orWhere('last_name', 'like', "%{$search}%") // condição para buscar pelo sobrenome 
+                              ->orWhereRaw("CONCAT(name, ' ', last_name) like ?", ["%{$search}%"]); // condição para buscar pelos dois 
+                    });
+                
+                }
+                
                 return DataTables::of($client)
                     ->addIndexColumn()
                     ->addColumn('action', function ($client) {
