@@ -83,14 +83,15 @@
         @endif
         <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
             <div class="col-md-12">
-                @if($showList)
+                @if($showList && $users->count())
                 <ul class="list-group">
                     @foreach($users as $user)
-                    <li wire:click="setId({{ $user }})" class="list-group-item" style="cursor:pointer;">{{ $user['name']
-                        . '
-                        ' . $user['last_name'] . ' - ' . $user['email'] }}</li>
+                    <li wire:click="setId({{ $user }})" class="list-group-item" style="cursor:pointer;">
+                        {{ $user['name'] . ' ' . $user['last_name'] . ' - ' . $user['email'] }}
+                    </li>
                     @endforeach
-                    @endif
+                @endif
+
             </div>
         </div>
     </div>

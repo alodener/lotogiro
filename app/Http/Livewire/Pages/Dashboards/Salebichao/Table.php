@@ -45,14 +45,14 @@ class Table extends Component
 
     public function updatedSearch($value)
     {
-        if ($this->auth->hasPermissionTo('read_all_gains')) {
-            $this->users = User::where(function($query) {
-                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
-            })
-            ->get();
-        }
-        $this->showList = true;
+    if ($this->auth->hasPermissionTo('read_all_gains')) {
+        $this->users = User::where(function($query) {
+            $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->search}%");
+        })
+        ->take(10)
+        ->get();
     }
+    $this->showList = true;
 
     public function setId($user)
     {
