@@ -23,7 +23,11 @@
         <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame])}}">
             <button class="btn btn-info my-2">{{ trans('admin.games.new-game-button') }}</button>
         </a>
-
+        @can('read_user')
+        <a href="{{route('admin.bets.retirarTxt')}}">
+            <button class="btn btn-info my-2"> Retirar TXT</button>
+        </a>
+        @endcan
         <div class="table-responsive extractable-cel">
             @can('read_client')
                 <div class="filter-wrapper">
