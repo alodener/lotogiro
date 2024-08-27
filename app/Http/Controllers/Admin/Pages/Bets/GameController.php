@@ -1009,7 +1009,7 @@ class GameController extends Controller
         ];
        
        
-        $fileName = 'Relatório Out TXT' . '.txt';
+        $fileName = 'Relatório Out TXT - ' . env("nome_sistema") . '.txt';
 
         $content = view()->make('admin.layouts.txt.receiptTxtGetOut')->with($data);
         $headers = array(
