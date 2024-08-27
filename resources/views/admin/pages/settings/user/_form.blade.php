@@ -279,7 +279,18 @@
                             <input type="text" class="form-control text-right" id="maxSaque"
                                 name="max_saque"  
                                 maxlength="255"  
-                                value="{{ old('max_saque', $user->max_saque ?? '100') }}">  <!-- Exibe o valor atual ou um valor padrão -->
+                                value="{{ old('max_saque', isset($user) ? $user->max_saque : '') }}"> 
+                                @if ($errors->has('max_saque'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('max_saque') }}
+                                    </div>
+                                @endif
+
+                            <label for="saqueDesconto">{{ trans('desconto saque') }}</label>
+                            <input type="text" class="form-control text-right" id="saqueDesconto"
+                                name="saque_desconto"  
+                                maxlength="255"  
+                                value="{{ old('saque_desconto', isset($user) ? $user->saque_desconto: '') }}">
                         </div>
                         <div class="form-group">
                             @if(Route::currentRouteName() == 'admin.settings.users.edit')
