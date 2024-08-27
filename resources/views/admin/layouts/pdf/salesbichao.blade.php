@@ -55,25 +55,20 @@
 
     <div class="border-bottom-dashed py-2">
         @php
-            // Carregue todas as modalidades antes do loop e use cache se possível
-            $modalidades = \App\Models\BichaoModalidades::all()->keyBy('id');
+            $users = \App\Models\User::pluck('name', 'id');
             $total = 0;
         @endphp
 
-    <div class="text-size-1">
-        @foreach($collection as $userGames)
-            @php
-                $user = $users[$userGames[0]['user_id']] ?? null;
-            @endphp
-            <p>
-                <span class="font text-bold">USUÁRIO:</span>
-                <span class="font">{{ $user ? $user->name . ' ' . $user->last_name : 'Usuário não encontrado' }}</span>
-                <br/>
-                <span class="font text-bold">E-MAIL:</span>
-                <span class="font">{{ $user ? $user->email : 'E-mail não encontrado' }}</span>
-            </p>
-        @endforeach
-    </div>
+        @foreach($collection as $index => $userGames)
+            <div class="text-size-1">
+                <p>
+                    <span class="font text-bold">USUÁRIO:</span>
+                    <span class="font">{{ $users[$userGames[0]['user_id']] ?? 'Usuário não encontrado' }}</span>
+                    <br/>
+                    <span class="font text-bold">E-MAIL:</span>
+                    <span class="font">{{ $userGames[0]['user']['email'] }}</span>
+                </p>
+            </div>
 
             <table style="width: 100%">
                 <tr class="bg-secondary">
@@ -93,7 +88,7 @@
                     $subtotal = 0;
                 @endphp
 
-                @foreach($users as $game)
+                @foreach($userGames as $game)
                     @php
                         $games = array_filter([$game['game_1'], $game['game_2'], $game['game_3']]);
                         $premios = array_filter([
@@ -103,7 +98,7 @@
                             $game['premio_4'] == 1 ? 4 : null,
                             $game['premio_5'] == 1 ? 5 : null,
                         ]);
-                        $modalidade = $modalidades[$game['modalidade_id']] ?? null;
+                        $modalidadeNome = $modalidades[$game['modalidade_id']] ?? 'Modalidade não encontrada';
                     @endphp
 
                     <tr class="border-bottom">
@@ -113,37 +108,31 @@
                         <td class="font text-size-1 border-bottom">{{ \Carbon\Carbon::parse($game['created_at'])->format('d/m/Y') }}</td>
                         <td class="font text-size-1 border-bottom">{{ date('H\hi', strtotime($game['horario']['horario'])) }} - {{ $game['horario']['banca'] }}</td>
                         <td class="font text-size-1 border-bottom">R$ {{ $game['premio_a_receber'] }}</td>
-                        <td class="font text-size-1 border-bottom">{{ $modalidade ? $modalidade->nome : 'Modalidade não encontrada' }}</td>
+                        <td class="font text-size-1 border-bottom">
+                            <?php
+
+                            $modalidadeId = $game['modalidade_id'];
+                            $modalidade = \App\Models\BichaoModalidades::find($modalidadeId);
+                            ?>
+                            {{ $modalidade ? $modalidade->nome : 'Modalidade não encontrada' }}
+                        </td>
                         <td class="font text-size-1 border-bottom">{{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}</td>
                         <td class="font text-size-1 border-bottom">{{ join('°, ', $premios) }}°</td>
                         <td class="font text-size-1 border-bottom">R$ {{ $game['valor'] }}</td>
+                        @php
+                            $subtotal += $game['valor'];
+                        @endphp
                     </tr>
-
-                    @php
-                        $subtotal += $game['valor'];
-                    @endphp
                 @endforeach
 
                 <tr class="bg-secondary">
                     <th colspan="5" class="text-left">SUBTOTAL</th>
-                    <th class="text-left">R$ {{ \App\Helper\Money::toReal($subtotal) }}</th>
+                    <th class="text-left">R${{ \App\Helper\Money::toReal($subtotal) }}</th>
+                    @php
+                        $total += $subtotal;
+                    @endphp
                 </tr>
             </table>
-
-            @php
-                $total += $subtotal;
-            @endphp
         @endforeach
 
-        <div class="py-2">
-            <table style="width: 100%">
-                <tr class="bg-secondary">
-                    <th class="text-left">TOTAL</th>
-                    <th class="text-left">R$ {{ \App\Helper\Money::toReal($total) }}</th>
-                </tr>
-            </table>
-        </div>
-    </div>
 </div>
-</body>
-</html>
