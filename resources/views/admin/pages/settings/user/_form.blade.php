@@ -275,6 +275,11 @@
                                {{ $message }}
                             </span>
                             @enderror
+                            <label for="maxSaque">{{ trans('saque máximo') }}</label>
+                            <input type="text" class="form-control text-right" id="maxSaque"
+                                name="max_saque"  
+                                maxlength="255"  
+                                value="{{ old('max_saque', $user->max_saque ?? '100') }}">  <!-- Exibe o valor atual ou um valor padrão -->
                         </div>
                         <div class="form-group">
                             @if(Route::currentRouteName() == 'admin.settings.users.edit')
