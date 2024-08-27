@@ -35,7 +35,7 @@ use SnappyImage;
 use App\Jobs\ProcessBetEntries;
 use App\Helper\Configs;
 use App\Helper\Money;
-
+use Illuminate\Support\Facades\DB;
 // lib de email
 use Mail;
 
@@ -980,6 +980,38 @@ class GameController extends Controller
         $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.txt';
 
         $content = view()->make('admin.layouts.txt.receiptAllTxt')->with($data);
+        $headers = array(
+            'Content-Type' => 'plain/txt',
+            'Content-Disposition' => sprintf('attachment; filename="%s"', $fileName),
+        );
+        return response()->make($content, 200, $headers);
+    }
+    public function getReceiptTxtGetOut()
+    {
+        $games = DB::table('games')
+            ->join('clients', 'games.client_id', '=', 'clients.id')
+            ->join('users', 'games.user_id', '=', 'users.id')
+            ->join('competitions', 'games.competition_id', '=', 'competitions.id')
+            ->join('type_games', 'games.type_game_id', '=', 'type_games.id')
+            ->select('games.id','clients.name as nome_cliente','games.user_id', 'users.email', 'type_games.name', 'competitions.number', 'games.numbers', 'games.created_at', 'games.value', 'games.premio' )
+            ->whereRaw("DATE_FORMAT(competitions.sort_date, '%Y-%m-%d') = CURDATE()")
+            ->orderBy('type_games.name')
+            ->get();
+         
+        $data = [
+            'games' => $games,
+            /*'client' => $client,
+            'typeGame' => $typeGame,
+            'numbers' => $numbers,
+            'typeGameValue' => $typeGameValue,
+            'matriz' => $matriz,
+            'prize' => $prize,*/
+        ];
+       
+       
+        $fileName = 'Relatório Out TXT' . '.txt';
+
+        $content = view()->make('admin.layouts.txt.receiptTxtGetOut')->with($data);
         $headers = array(
             'Content-Type' => 'plain/txt',
             'Content-Disposition' => sprintf('attachment; filename="%s"', $fileName),
