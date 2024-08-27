@@ -70,6 +70,19 @@ class Table extends Component
             return;
         }
 
+        $maxSaque = auth()->user()->max_saque;
+
+        if (intval($value) > intval($maxSaque)) {
+            $this->alert('warning', 'Valor solicitado maior que o seu limite de saque!', [
+                'position' => 'center',
+                'timer' => '2000',
+                'toast' => false,
+                'timerProgressBar' => true,
+                'allowOutsideClick' => false
+            ]);
+            return;
+        }
+
        if(intval($value) >= intval($valorMinimo) && intval($value) <= $this->user['available_withdraw']){
         
            $withdrawRequest = WithdrawRequest::create([

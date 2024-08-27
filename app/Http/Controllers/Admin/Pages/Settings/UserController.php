@@ -368,6 +368,7 @@ class UserController extends Controller
             abort(403);
         }
         $telefone = null;
+      
         $validatedData = $request->validate([
             'name' => 'required|max:50',
             'last_name' => 'required|max:100',
@@ -443,7 +444,6 @@ class UserController extends Controller
             'commission' => $request->input('commission'),
             'Permissoes' => $roles_request,
             ];
-            //dd($camposForms);
         
 
             if($request->input('balance')  <= 0){
@@ -538,6 +538,7 @@ class UserController extends Controller
                 if (!is_null($request->pix)) {
                     $userClient->pix = $request->pix;  
                 }
+                
     
         
                 $userClient->save();
@@ -629,6 +630,7 @@ class UserController extends Controller
             $user->commission_individual_bichao_lv_1 = json_encode($commission_individual_bichao_lv_1);
             $user->commission_individual_bichao_lv_2 = json_encode($commission_individual_bichao_lv_2);
             $user->pix = $request->pix;
+            $user->max_saque = $request->max_saque;
 
             if(!is_null($telefone)){
             $user->ddd = $ddd;
