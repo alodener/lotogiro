@@ -36,7 +36,7 @@ class DrawController extends Controller
         }
 
         if ($request->ajax()) {
-            $draw = $this->draw->get();
+            $draw = $this->draw->orderBy('created_at', 'desc');
             return DataTables::of($draw)
                 ->addIndexColumn()
                 ->addColumn('action', function ($draw) {
