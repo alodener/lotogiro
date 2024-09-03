@@ -24,7 +24,7 @@ class CompetitionController extends Controller
         }
 
         if ($request->ajax()) {
-            $competition = Competition::get();
+            $competition = Competition::orderBy('created_at', 'desc');
             return DataTables::of($competition)
                 ->addIndexColumn()
                 ->addColumn('action', function ($competition) {

@@ -36,9 +36,9 @@ class ClientController extends Controller
 
             if ($request->ajax()) {
                 if (auth()->user()->hasRole('Administrador')){
-                 $client = $this->client->get();
+                 $client = $this->client->orderBy('created_at', 'desc');
                 }else{
-                $client = $this->client->get();
+                $client = $this->client->orderBy('created_at', 'desc');
                 }
 
                 if (isset($params['search']) && !empty($params['search'])) {

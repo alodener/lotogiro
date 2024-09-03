@@ -117,7 +117,7 @@ class ReportController extends Controller
             abort(403);
         }
 
-        $users = User::get();
+        $users = User::orderBy('created_at', 'desc');
 
 
         return view('admin.pages.reports.receiptbichao.index', compact('users'));
