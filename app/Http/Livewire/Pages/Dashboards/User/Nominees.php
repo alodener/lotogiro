@@ -68,7 +68,7 @@ class Nominees extends Component
 
         // Último jogo das Loterias
         $ultimoJogoLoterias = TransactBalance::where('user_id', $consultor->id)
-            ->where('type', 'LIKE', '%Compra Bichão - Jogo de id:%')
+            ->where('type', 'LIKE', '%Compra - Jogo de id:%')
             ->where('wallet', 'LIKE', '%balance%')
             ->orderBy('created_at', 'desc')
             ->value('created_at');
