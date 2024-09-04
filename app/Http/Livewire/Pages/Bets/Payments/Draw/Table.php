@@ -189,10 +189,17 @@ class Table extends Component
         return $query;
     }
 
-    public function filterDraws($query)
+    public function filterDraws($query, $dateStart, $dateEnd)
     {
+        $startDate = Carbon::parse($dateStart)->startOfDay();
+        $endDate = Carbon::parse($dateEnd)->endOfDay();
+       
         
-        $draws = Draw::whereNotNull('games')->get();
+        $draws = Draw::join('competitions', 'competitions.id', '=', 'draws.competition_id')
+        ->whereBetween('competitions.sort_date', [$startDate, $endDate])
+        ->orderBy('draws.type_game_id')
+        ->get();
+
         $array = [];
 
         if ($draws->count() > 0) {
@@ -208,6 +215,7 @@ class Table extends Component
             $query->where('id', '<', 0);
         }
 
+
         return $query;
     }
 
@@ -220,7 +228,7 @@ class Table extends Component
     {
         $now = Carbon::now();
         switch ($this->range) {
-            case 1:
+            case 1: 
                 $dateStart = $now->startOfMonth()->toDateString();
                 $dateEnd = $now->endOfMonth()->toDateString();
                 break;
@@ -237,7 +245,7 @@ class Table extends Component
                 $dateEnd = Carbon::parse(strtotime(str_replace('/', '-', $this->dateEnd)))->toDateString();
                 break;
         }
-    
+  
     return [
         'dateStart' => $dateStart,
         'dateEnd' => $dateEnd,
@@ -294,15 +302,16 @@ class Table extends Component
     {
         $query = Game::query();
         $filterRange = $this->filterRange();
-        $query
-            ->when($this->dateStart, fn($query, $searchUser) => $query->whereDate('created_at', '>=', $filterRange['dateStart'])
-                ->whereDate('created_at', '<=', $filterRange['dateEnd']));
+        
+                
+
         $query = $this->filterUser($query);
         $query = $this->filterClient($query);
         $query = $this->filterStatus($query);
-        $query = $this->filterDraws($query);
-
+        $query = $this->filterDraws($query, $filterRange['dateStart'], $filterRange['dateEnd']);
         $query = $this->sumValues($query);
+
+
        
         return $query;
     }
