@@ -19,6 +19,7 @@ use App\Models\TypeGame;
 use App\Models\TypeGameValue;
 use App\Models\BichaoModalidades;
 use App\Models\LogUsuario;
+use App\Helper\UserValidate;
 
 
 
@@ -872,5 +873,24 @@ class UserController extends Controller
         $users = User::orWhere('name', 'like', '%' . $request->q . '%')->orWhere('last_name', 'like', '%' . $request->q . '%')->get();
 
         return UserResource::collection($users);
+    }
+
+    public function consultoresIndicados()
+    {
+        if (!UserValidate::iAmAdmin()) {
+            abort(403);
+        }
+        return view('admin.pages.settings.user.consultoresIndicados');
+    }
+
+    public function nominees(Request $request)
+    {
+        if (!UserValidate::iAmAdmin()) {
+            abort(403);
+        }
+
+        $consultorId = $request->query('consultorId'); 
+        
+        return view('admin.pages.settings.user.nominees', compact('consultorId'));
     }
 }
