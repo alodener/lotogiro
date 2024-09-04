@@ -37,8 +37,8 @@ class Nominees extends Component
         })->findOrFail($this->consultorId);
 
         // Total de recargas
-        $totalRecargas = TransactBalance::where('user_id', $consultor->id)
-            ->where('type', 'Recarga efetuada por meio da plataforma')
+       $totalRecargas = TransactBalance::where('user_id', $consultor->id)
+            ->where('type', 'LIKE', '%Recarga%')
             ->sum('value');
 
         // Última recarga
