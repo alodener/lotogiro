@@ -177,6 +177,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->commission = $request->commission;
             $user->indicador = $indicador;
+            $user->cpf = $request->cpf;
             $user->pix = $data['pix'];
             if(!is_null($request->telefone)){
                 $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
@@ -507,7 +508,7 @@ class UserController extends Controller
                 $newBalance = $user->balance +  $balanceRequest;
                 }
             }
-        
+         
 
             $userClient = Client::where("email", $user->email)->first();
             if ($userClient) {
@@ -614,6 +615,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
+            $user->cpf = $request->cpf;
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
