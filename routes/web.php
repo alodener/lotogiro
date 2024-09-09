@@ -245,7 +245,12 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('users/{userId}/statementBalance', [UserController::class, 'Balance'])->name('users.statementBalance');
             Route::resource('permissions', PermissionController::class);
             Route::resource('roles', RoleController::class);
+
+            Route::get('/consultores-indicados', [UserController::class, 'consultoresIndicados'])->name('consultoresIndicados');
+            Route::get('/indicados/', [UserController::class, 'nominees'])->name('nominees');   
+
         });
+        
 
         Route::prefix('reports')->name('reports.')->group(function () {
             Route::get('used-dozens/competitions', [ReportController::class, 'usedDozensListCompetitions'])->name('used.dozens');
@@ -258,6 +263,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::prefix('notifications')->name('notifications.')->group(function () {
             Route::get('/readAll', [UserController::class, 'readAllNotifications']);
             Route::get('/', [UserController::class, 'getAllNotifications']);
+
         });
     });
 });

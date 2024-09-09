@@ -467,7 +467,15 @@
                     @endcan
                     @if(\App\Helper\Configs::getPlanoDeCarreira() == "Ativado")
                     @can('read_user')
-
+                    
+                    <li class="nav-item">
+                        <a href="{{ route('admin.settings.consultoresIndicados') }}"
+                            class="nav-link @if(request()->is('settings/consultores-indicados*')) active @endif">
+                            <i class="fas fa-users nav-icon"></i>
+                            <p>{{ trans('Consultores') }}</p>
+                        </a>
+                    </li>
+                    
                     <li class="nav-item">
                         <a href="{{route('admin.settings.qualifications.index')}}"
                             class="nav-link @if(request()->is('admin/settings/qualifications*')) active @endif">

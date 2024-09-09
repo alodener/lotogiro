@@ -30,6 +30,18 @@ class Table extends Component
         $valorMinimo = System::where('nome_config', 'Valor Minimo')->first()->value;
         $horarioMaximo = System::where('nome_config', 'Horario Maximo')->first()->value;
         $value = Money::toDatabase($this->valueTransfer);
+
+
+        if (empty($this->pix)) {
+            $this->alert('warning', 'Chave PIX não informada. Por favor, entre em contato com o suporte.', [
+                'position' => 'center',
+                'timer' => '2000',
+                'toast' => false,
+                'timerProgressBar' => true,
+                'allowOutsideClick' => false
+            ]);
+            return;
+        }
        
         if(intval($value) < intval($valorMinimo) || is_null($this->valueTransfer)){
             $this->alert('warning', 'Valor precisa ser de pelo menos R$'.$valorMinimo, [
