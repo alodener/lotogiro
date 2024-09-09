@@ -178,6 +178,7 @@ class UserController extends Controller
                 $user->password = Hash::make($request->password);
                 $user->commission = $request->commission;
                 $user->indicador = $indicador;
+                $user->cpf = $request->cpf;
                 $user->pix = $data['pix'];
                 $user->max_saque = $request->max_saque;     
                 $user->saque_desconto = $request->saque_desconto; 
@@ -617,6 +618,7 @@ class UserController extends Controller
                 $user->name = $request->name;
                 $user->last_name = $request->last_name;
                 $user->email = $request->email;
+                $user->cpf = $request->cpf;
                 !empty($request->password) ? $user->password = bcrypt($request->password) : null;
                 $user->status = isset($request->status) ? 1 : 0;
                 $user->commission = $request->commission;
