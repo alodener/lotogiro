@@ -21,7 +21,7 @@ class ChaveAleatoria
     $specialCharacters = str_shuffle('!@#$%*-');
  
     //Junta tudo
-    $characters = $capitalLetters.$smallLetters.$numbers.$specialCharacters;
+    $characters = $capitalLetters.$smallLetters.$numbers;
  
     //Embaralha e pega apenas a quantidade de caracteres informada no parâmetro
     $password = substr(str_shuffle($characters), 0, $qtyCaraceters);

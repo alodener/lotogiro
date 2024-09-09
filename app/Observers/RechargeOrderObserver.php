@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\RechargeOrder;
 use Illuminate\Support\Str;
+use App\Helper\ChaveAleatoria;
 
 class RechargeOrderObserver
 {
@@ -16,7 +17,7 @@ class RechargeOrderObserver
     public function creating(RechargeOrder $rechargeOrder)
     {
         if(is_null($rechargeOrder->reference) || empty($rechargeOrder->reference)){
-            $rechargeOrder->reference = Str::uuid();
+            $rechargeOrder->reference = ChaveAleatoria::generateKey(16);
         }
     }
 }

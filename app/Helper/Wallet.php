@@ -22,6 +22,13 @@ class Wallet
                 'failure' => 3
             ];
 
+        } elseif ($ACTIVE_GATEWAY == "MutualPay") {
+            $typeStatus = [
+                'pending' => 0,
+                'approved' => 1,
+                'failure' => 3
+            ];
+
         } elseif ($ACTIVE_GATEWAY == "SuitPay") {
             $typeStatus = [
                 'pending' => 0,
@@ -65,7 +72,7 @@ class Wallet
                 if($user->commission > 0){
                     $commission = $newRechargeOrder->value * ($user->commission/100);
                     $totalRecharge = $newRechargeOrder->value;
-                    $msgCommission = "Mais {$user->commission}% de comiss茫o.";
+                    $msgCommission = "Mais {$user->commission}% de comissao.";
                 }
 
 

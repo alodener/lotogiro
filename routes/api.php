@@ -8,6 +8,7 @@ use App\Http\Controllers\Webhook\DoBankController;
 use App\Http\Controllers\Admin\Pages\Bets\BichaoController;
 use App\Http\Controllers\ScrapingController;
 use App\Http\Controllers\Webhook\SuitPayController;
+use App\Http\Controllers\Webhook\MutualPayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::post('zoop/webhook/process/transaction/success', [ZoopController::class, 
 Route::post('mp/webhook/process/transaction', [MercadoPagoController::class, 'processTransaction'])->name('zoop.webhook.process');
 Route::post('db/webhook/process/transaction', [DoBankController::class, 'processTransaction'])->name('zoop.webhook.process');
 Route::post('suitpay/webhook/process/transaction', [SuitPayController::class, 'processTransaction'])->name('suitpay.webhook.process');
+Route::post('mutualpay/webhook/process/transaction', [MutualPayController::class, 'processTransaction'])->name('mutualpay.webhook.process');
 
 
 
