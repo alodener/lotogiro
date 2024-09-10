@@ -233,6 +233,10 @@
                     <span class="font text-bold">GANHO MÁXIMO: </span>
                     <span class="font">R${{\App\Helper\Money::toReal($jogos['premio'])}}</span>
                 </p>
+                 <p class="">
+                    <span class="font text-bold">JOGO VÁLIDO ATÉ: </span>
+                    <span class="font">{{ \Carbon\Carbon::parse($jogos->competition->sort_date)->addHours(72)->format('d/m/Y H:i:s') }}</span>
+                </p>
             </div>
 
             {{-- quebra de pagina --}}
