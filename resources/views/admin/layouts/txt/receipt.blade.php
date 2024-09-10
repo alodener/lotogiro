@@ -32,4 +32,6 @@ VALOR APOSTADO: R${{\App\Helper\Money::toReal($game->value)}}
 
 GANHO MÁXIMO: R${{\App\Helper\Money::toReal($game->premio)}}
 
+JOGO VÁLIDO ATÉ: {{ \Carbon\Carbon::parse($game->competition->sort_date)->addHours(72)->format('d/m/Y H:i:s') }}
+
 
