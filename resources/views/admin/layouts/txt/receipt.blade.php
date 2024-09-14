@@ -1,6 +1,6 @@
 COMPROVANTE DE APOSTA
 
-GIRO DA SORTE
+ APOSTA {{ env("nome_sistema") }}
 
 @if($prize == 1)
 PREMIADO
