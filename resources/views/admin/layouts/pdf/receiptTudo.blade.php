@@ -154,6 +154,10 @@
                     <span class="font text-bold">EMITIDO EM:</span>
                     <span class="font">{{\Carbon\Carbon::parse($jogos['created_at'])->format('d/m/Y h:i:s')}}</span>
                 </p>
+                <p class="text-white text-size-2">
+                <span class="font text-bold">VALIDADO EM:</span>
+                <span class="font">{{¥Carbon¥Carbon::parse($game->updated_at)->format('d/m/Y H:i:s')}}</span>
+                </p>
                 <p class="">
                     <span class="font text-bold">PARTICIPANTE:</span>
                     <span class="font">{{ $Nome }}</span>
