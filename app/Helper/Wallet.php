@@ -52,9 +52,10 @@ class Wallet
             $reference = $request->external_reference;
             $rechargeOrder = RechargeOrder::where('reference', $reference)->get();
             $user = User::find($rechargeOrder->first()->user_id);
-
+            
             if($rechargeOrder->contains('status', 1) || $rechargeOrder->contains('status', 2)){
-                return response()->json(['status' => 403]);
+                return response()->json(['status' => 200]);
+                \Log::info('$Segunda passada: ' . $reference);
             }
 
             if($typeStatus[$request->status] === 0){
@@ -64,8 +65,30 @@ class Wallet
             if($typeStatus[$request->status] !== 0){
                 $newRechargeOrder = $rechargeOrder->first()->replicate();
                 $newRechargeOrder->status = $typeStatus[$request->status];
-                $newRechargeOrder->push();
+                $newRechargeOrder->save();
+                sleep(1);
+                $rechargeOrderAgain = RechargeOrder::where('reference', $reference)->get();
+                $contador = 0;
+                foreach ($rechargeOrderAgain as $recharge) {
+                    \Log::info('$rechargeOrderAgain: ' . $reference);
+                        if($recharge->status == 1){
+                            $contador++;
+                            \Log::info('reference: ' . $reference);
+                            \Log::info('Contador: ' . $contador);
+                        }
+                        if($contador > 1){
+                            \Log::info('caiu no if: ' . $contador);
+                        $totalRecharge = $newRechargeOrder->value;
+                        \Log::info('INICIO SCRIPT: ' . $reference);
+                    \Log::info('FIM DO SCRiP: ' . $reference);
 
+                             return response()->json(['status' => 200]);
+                        }
+                }
+
+                if($contador == 2){
+                    return response()->json(['status' => 200]);
+                }
                 $commission = 0;
                 $totalRecharge = $newRechargeOrder->value;
                 $msgCommission = "";
@@ -78,7 +101,7 @@ class Wallet
 
                 if($typeStatus[$request->status] === 1){
                     TransactBalance::create([
-                        'user_id_sender' => 4,
+                        'user_id_sender' => 759,
                         'user_id' => $user->id,
                         'value' => $totalRecharge,
                         'old_value' => $user->balance,
@@ -116,8 +139,9 @@ class Wallet
                 $menssagemtelegran = MensagemTelegram::enviarMensagemTelegram($telegramchatid, $totalRecharge, $telegrambot);
                 }*/
                 
+                \Log::info('RISCOU NO FINAL 1:');
+              //  return response()->json(['status' => 200]);
 
-                return response()->json(['status' => 201]);
             }
         }
         return response()->json(['status' => 403]);

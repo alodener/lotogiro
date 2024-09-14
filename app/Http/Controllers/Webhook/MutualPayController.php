@@ -16,7 +16,8 @@ class MutualPayController extends Controller
     {
        
         $data = $request->all();
-
+        sleep(2);
+        \Log::info($request);
         //VARIAVEIS DE STATUS E ID DA TRANSAÇÃO
         if (isset($data['transactionid']) && isset($data['status_process'])) {
            
@@ -27,8 +28,9 @@ class MutualPayController extends Controller
           
             $walletHelper = new Wallet;
             $walletHelper->updateStatusPayment($paymentData);
-
+            \Log::info("RISCOU MUTUAL");
             return response()->json([], 200);
+             
         }
 
         return response()->json(['error' => 'Dados inválidos'], 400);
