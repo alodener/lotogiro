@@ -136,6 +136,10 @@
             <span class="font">{{\Carbon\Carbon::parse($game->created_at)->format('d/m/Y h:i:s')}}</span>
         </p>
         <p class="text-white text-size-2">
+            <span class="font text-bold">VALIDADO EM:</span>
+            <span class="font">{{¥Carbon¥Carbon::parse($game->updated_at)->format('d/m/Y H:i:s')}}</span>
+        </p>
+        <p class="text-white text-size-2">
             <span class="font text-bold">PARTICIPANTE:</span>
             <span class="font">{{mb_strtoupper($client->name . ' ' . $client->last_name, 'UTF-8') }}</span>
         </p>
