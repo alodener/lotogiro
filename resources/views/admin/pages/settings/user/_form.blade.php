@@ -291,6 +291,29 @@
                                 name="saque_desconto"  
                                 maxlength="255"  
                                 value="{{ old('saque_desconto', isset($user) ? $user->saque_desconto: '') }}">
+                                <label for="">1º Intervalo de Horário de Saque e 2º Intervalo de Horário de Saque</label>
+                            <div class="row form-group">
+                            <input type="time" class="col-md-2 form-control text-right" id="first_schedule_one"
+                                name="first_schedule_one"  
+                                maxlength="255"  
+                                value="{{ old('first_schedule_one', isset($user) ? $user->first_schedule_one: '') }}">
+                                <label for="second_schedule_one"> - </label>
+                            <input type="time" class="col-md-2 form-control text-right" id="second_schedule_one"
+                                name="second_schedule_one"  
+                                maxlength="255"  
+                                value="{{ old('second_schedule_one', isset($user) ? $user->second_schedule_one: '') }}">
+                                &nbsp;
+                                &nbsp;
+                                <input type="time" class="col-md-2 form-control text-right" id="first_schedule_two"
+                                name="first_schedule_two"  
+                                maxlength="255"  
+                                value="{{ old('first_schedule_two', isset($user) ? $user->first_schedule_two: '') }}">
+                                <label for="second_schedule_one"> - </label>
+                            <input type="time" class="col-md-2 form-control text-right" id="second_schedule_two"
+                                name="second_schedule_two"  
+                                maxlength="255"  
+                                value="{{ old('second_schedule_two', isset($user) ? $user->second_schedule_two: '') }}">
+                            </div>
                         </div>
                         <div class="form-group">
                             @if(Route::currentRouteName() == 'admin.settings.users.edit')

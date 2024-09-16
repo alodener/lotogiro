@@ -9,6 +9,7 @@ use App\Helper\Configs;
 use Illuminate\Support\Facades\DB;
 use App\Models\TransactBalance;
 use App\Models\User;
+use App\Helper\ApiWallet;
 use App\Notifications\RechargeProcessedNotification;
 class VerifyPaymentsMutualDuplicated extends Command
 {
@@ -81,7 +82,7 @@ class VerifyPaymentsMutualDuplicated extends Command
                      ]);
                     $user->balance += $totalRecharge;
                     $user->save();
-                    
+                    $alteraUsuarioApi = ApiWallet::updateUsuario($user);
                     
                     if($rechargeOrderNotification != null){
                     $user = User::where('id', $rechargeOrderNotification->user_id )->first();

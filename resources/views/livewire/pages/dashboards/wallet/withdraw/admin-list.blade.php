@@ -28,7 +28,7 @@
                         <tr>
                             <td>{{ $withdraw->data }}</td>
                             <td>{{ $withdraw->responsavel }}</td>
-                            <td>{{ $withdraw->type == 'bonus_to_available_withdraw' ? 'Conversão Bônus para Saque Disponível' : 'Saque' }}</td>
+                            <td>{{ $withdraw->type}}</td>
                             @if(\App\Helper\UserValidate::iAmAdmin())
                                 <th>{{ $withdraw->pix }}</th>
                             @endif
