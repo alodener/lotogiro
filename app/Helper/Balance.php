@@ -6,6 +6,7 @@ use App\Models\TypeGameValue;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Competition;
+use App\Helper\ApiWallet;
 
 class Balance
 {
@@ -23,7 +24,7 @@ class Balance
 
             $user->balance = $result;
             $user->save();
-
+            $alteraUsuarioApi = ApiWallet::updateUsuario($user);
             $response = true;
         }
 
@@ -45,7 +46,7 @@ class Balance
            
             $user->balance = $result;
             $user->save();
-
+            $alteraUsuarioApi = ApiWallet::updateUsuario($user);
             $response = true;
         }
         
@@ -85,7 +86,7 @@ class Balance
             $user = User::find(auth()->id());
             $user->balance = $result;
             $user->save();
-
+            $alteraUsuarioApi = ApiWallet::updateUsuario($user);
             $response = true;
         }
 
@@ -105,7 +106,7 @@ class Balance
            
             $user->balance = $result;
             $user->save();
-
+            $alteraUsuarioApi = ApiWallet::updateUsuario($user);
             $response = true;
         }
 

@@ -10,6 +10,7 @@ use App\Models\WithdrawRequest;
 use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use App\Helper\ApiWallet;
 
 class Table extends Component
 {
@@ -21,17 +22,22 @@ class Table extends Component
     public $valueTransfer;
     public $pix;
     public $botaoClicado = false;
+    public $checkBoxDesmarcado = true;
+    public $checkBoxDescontoDesmarcado = true;
+    public $checkBoxValue;
+    public $checkBoxValueDesconto;
+    public $valorMinimo;
 
     public function requestWithdraw(): void
     {
         if ($this->botaoClicado) {
             return;
         }
-        $valorMinimo = System::where('nome_config', 'Valor Minimo')->first()->value;
+        $this->valorMinimo = System::where('nome_config', 'Valor Minimo')->first()->value;
         $horarioMaximo = System::where('nome_config', 'Horario Maximo')->first()->value;
         $value = Money::toDatabase($this->valueTransfer);
 
-
+        
         if (empty($this->pix)) {
             $this->alert('warning', 'Chave PIX não informada. Por favor, entre em contato com o suporte.', [
                 'position' => 'center',
@@ -43,8 +49,8 @@ class Table extends Component
             return;
         }
        
-        if(intval($value) < intval($valorMinimo) || is_null($this->valueTransfer)){
-            $this->alert('warning', 'Valor precisa ser de pelo menos R$'.$valorMinimo, [
+        if(intval($value) < intval($this->valorMinimo) || is_null($this->valueTransfer)){
+            $this->alert('warning', 'Valor precisa ser de pelo menos R$'.$this->valorMinimo, [
                 'position' => 'center',
                 'timer' => '2000',
                 'toast' => false,
@@ -55,11 +61,13 @@ class Table extends Component
             return;
         }
         
-        $now = Carbon::now()->format('H');
-        if(intval($now) > intval($horarioMaximo)) {
-            $this->alert('warning', 'A conversão bônus para saque só poderá ser solicitado até ' . $horarioMaximo . ':00 horas todos os dias', [
+        $now = Carbon::now()->format('H:i');   
+     
+        if(Carbon::now()->between(Carbon::parse($this->user['first_schedule_one'])->format('H:i'), Carbon::parse($this->user['second_schedule_one'])->format('H:i'))
+         || Carbon::now()->between(Carbon::parse($this->user['first_schedule_two'])->format('H:i'), Carbon::parse($this->user['second_schedule_two'])->format('H:i'))) {
+            $this->alert('warning', 'O saque não é Possível entre esses Horários: ' . $this->user['first_schedule_one'] . ' E ' . $this->user['second_schedule_one'] . ' e também entre ' . $this->user['first_schedule_two'] . ' E ' . $this->user['second_schedule_two'], [
                 'position' => 'center',
-                'timer' => '2000',
+                'timer' => '10000',
                 'toast' => false,
                 'timerProgressBar' => true,
                 'allowOutsideClick' => false
@@ -71,19 +79,12 @@ class Table extends Component
         $value = str_replace(',', '.', $this->valueTransfer);
         $value = Money::toDatabase($this->valueTransfer);
 
-        if ($value > $this->user['available_withdraw']){
-            $this->alert('warning', 'Saldo Saque Disponível inferior ao solicitado!', [
-                'position' => 'center',
-                'timer' => '2000',
-                'toast' => false,
-                'timerProgressBar' => true,
-                'allowOutsideClick' => false
-            ]);
-            return;
-        }
+        
 
         $maxSaque = auth()->user()->max_saque;
 
+       
+        
         if (intval($value) > intval($maxSaque)) {
             $this->alert('warning', 'Valor solicitado maior que o seu limite de saque!', [
                 'position' => 'center',
@@ -94,35 +95,143 @@ class Table extends Component
             ]);
             return;
         }
-
-       if(intval($value) >= intval($valorMinimo) && intval($value) <= $this->user['available_withdraw']){
         
-           $withdrawRequest = WithdrawRequest::create([
-               'user_id' => $this->userId,
-               'value' => Money::toDatabase($this->valueTransfer)
-           ]);
-
-           LockBalance::create([
-               'withdraw_request_id' => $withdrawRequest->id,
-               'value' => Money::toDatabase($this->valueTransfer)
-           ]);
-
-           $this->userObj->available_withdraw = $this->userObj->available_withdraw - Money::toDatabase($this->valueTransfer);
-           $this->userObj->pix = $this->pix;
-
-           $this->userObj->save();
-           $this->botaoClicado = true;
-
-           $this->flash('success', 'Solicitação realizada com sucesso!', [
-               'position' => 'center',
-               'timer' => '2000',
-               'toast' => false,
-               'timerProgressBar' => true,
-               'allowOutsideClick' => false
-           ], route('admin.dashboards.wallet.index'));
-       }
+        if($this->checkBoxValue == "bonus"){
+            $this->retiradaBonus($value);
+        }else if($this->checkBoxValue == "saldo"){
+            $this->retiradaSaldo($value);
+        }
+        
+       
+    }
+    public function marcarCheckBox()
+    {
+          if($this->checkBoxValue != false){
+            $this->checkBoxDesmarcado = false;
+          } else{
+            $this->checkBoxDesmarcado = true;
+          }
+        
+        
+    }
+    public function marcarCheckBoxDesconto()
+    {
+          if($this->checkBoxValueDesconto != false){
+            $this->checkBoxDescontoDesmarcado = false;
+          } else{
+            $this->checkBoxDescontoDesmarcado = true;
+          }
+        
+        
     }
 
+    public function retiradaBonus($valueAtTransfer){
+        $retonoApi = ApiWallet::getUsuario($this->user['id']);
+       
+        if ($valueAtTransfer > $retonoApi->bonus){
+            $this->alert('warning', 'Saldo de Bonus inferior ao solicitado!', [
+                'position' => 'center',
+                'timer' => '2000',
+                'toast' => false,
+                'timerProgressBar' => true,
+                'allowOutsideClick' => false
+            ]);
+            return;
+        }
+
+        if(intval($valueAtTransfer) >= intval($this->valorMinimo) && intval($valueAtTransfer) <= $retonoApi->bonus){
+            if($this->checkBoxValueDesconto == "now"){
+                $pagamentoAutomatico = "yes";
+
+            }else{
+                $pagamentoAutomatico = "no";
+            }
+            $withdrawRequest = WithdrawRequest::create([
+                'user_id' => $this->userId,
+                'value' => Money::toDatabase($this->valueTransfer),
+                'old_value' => Money::toDatabase($this->user['bonus']),
+                'value_a' => Money::toDatabase($this->user['bonus'] - Money::toDatabase($this->valueTransfer)),
+                'pagamento_automatico'=>  $pagamentoAutomatico,
+                'type' => "Saque de Bônus"
+            ]);
+
+            LockBalance::create([
+                'withdraw_request_id' => $withdrawRequest->id,
+                'value' => Money::toDatabase($this->valueTransfer)
+            ]);
+
+            $this->userObj->bonus = $this->userObj->bonus - Money::toDatabase($this->valueTransfer);
+            $this->userObj->pix = $this->pix;
+ 
+            $this->userObj->save();
+            $retonoApiAltera = ApiWallet::updateUsuario($this->userObj);
+            $this->botaoClicado = true;
+ 
+            $this->flash('success', 'Solicitação realizada com sucesso!', [
+                'position' => 'center',
+                'timer' => '2000',
+                'toast' => false,
+                'timerProgressBar' => true,
+                'allowOutsideClick' => false
+            ], route('admin.dashboards.wallet.index'));
+        }
+
+    }
+    
+    public function retiradaSaldo($valueAtTransfer){
+        $retonoApi = ApiWallet::getUsuario($this->user['id']);
+
+        if ($valueAtTransfer > $retonoApi->available_withdraw){
+            $this->alert('warning', 'Saldo Saque Disponível inferior ao solicitado!', [
+                'position' => 'center',
+                'timer' => '2000',
+                'toast' => false,
+                'timerProgressBar' => true,
+                'allowOutsideClick' => false
+            ]);
+            return;
+        }
+
+        if(intval($valueAtTransfer) >= intval($this->valorMinimo) && intval($valueAtTransfer) <= $retonoApi->available_withdraw){
+
+            if($this->checkBoxValueDesconto == "now"){
+                $pagamentoAutomatico = "yes";
+
+            }else{
+                $pagamentoAutomatico = "no";
+            }
+        
+            $withdrawRequest = WithdrawRequest::create([
+                'user_id' => $this->userId,
+                'value' => Money::toDatabase($this->valueTransfer),
+                'old_value' => Money::toDatabase($this->user['available_withdraw']),
+                'value_a' => Money::toDatabase($this->user['available_withdraw'] - Money::toDatabase($this->valueTransfer)),
+                'pagamento_automatico'=>  $pagamentoAutomatico,
+                'type' => "Saque de Saldo Disponível"
+            ]);
+ 
+            LockBalance::create([
+                'withdraw_request_id' => $withdrawRequest->id,
+                'value' => Money::toDatabase($this->valueTransfer)
+            ]);
+ 
+            $this->userObj->available_withdraw = $this->userObj->available_withdraw - Money::toDatabase($this->valueTransfer);
+            $this->userObj->pix = $this->pix;
+ 
+            $this->userObj->save();
+            $retonoApiAltera = ApiWallet::updateUsuario($this->userObj);
+            $this->botaoClicado = true;
+ 
+            $this->flash('success', 'Solicitação realizada com sucesso!', [
+                'position' => 'center',
+                'timer' => '2000',
+                'toast' => false,
+                'timerProgressBar' => true,
+                'allowOutsideClick' => false
+            ], route('admin.dashboards.wallet.index'));
+        }
+
+    }
     public function mount(): void
     {           
         $this->user = User::with('client')->find(auth()->id())->toArray();

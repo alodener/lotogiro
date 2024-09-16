@@ -57,11 +57,41 @@
                                     <small class=" mt-2">
                                             {{ trans('admin.pagesF.valorInse') }}
                                         </small>
+                                        <h6 class="text-muted" style="color:#A3D712 !important;">Escolha a carteira do Saque:</h6>
+                                        <div class="custom-control custom-checkbox">
+                                        
+            <input type="radio" wire:model="checkBoxValue"  wire:click="marcarCheckBox" class="custom-control-input" id="saque_bonus" value="bonus">
+            <label class="custom-control-label" for="saque_bonus">Sacar de Bonus </label>
+                                                        
+        </div>
+            <div class="custom-control custom-checkbox">
+                <input type="radio" wire:model="checkBoxValue" wire:click="marcarCheckBox" class="custom-control-input" id="saque_saldo" value="saldo" >
+                <label class="custom-control-label" for="saque_saldo">Sacar de Saque Disponível</label>
+                                                        
+            </div>
+
+            <h6 class="text-muted" style="color:#A3D712 !important;">Você deseja sacar agora ?:</h6>
+            <p>Se você escolher sacar agora, será descontado do valor do saque a taxa de <b>{{auth()->user()->saque_desconto}}%</b>. 
+                Caso escolha aguardar 24 horas, nada será cobrado.</p>
+                                        <div class="custom-control custom-checkbox">
+                                        
+            <input type="radio" wire:model="checkBoxValueDesconto"  wire:click="marcarCheckBoxDesconto" class="custom-control-input" id="now" value="now">
+            <label class="custom-control-label" for="now">Sacar Agora! </label>
+                                                        
+        </div>
+            <div class="custom-control custom-checkbox">
+                <input type="radio" wire:model="checkBoxValueDesconto" wire:click="marcarCheckBoxDesconto" class="custom-control-input" id="24" value="24" >
+                <label class="custom-control-label" for="24">Aguardar 24 horas!</label>
+                                                        
+            </div>
+
                                 </div>
+
                             </div>
+                            
                             <div class="col-sm-12 col-md-6 mx-auto mt-5">
                               <div class="input-group">
-                                    <button wire:click="requestWithdraw" type="button" class="btn btn-info btn-block" @if($botaoClicado) disabled @endif>
+                                    <button wire:click="requestWithdraw" type="button" class="btn btn-info btn-block" @if($botaoClicado || $checkBoxDesmarcado || $checkBoxDescontoDesmarcado) disabled @endif>
                                         {{ trans('admin.pagesF.solicitar') }} <span class="fa fa-send"></span>
                                     </button>
                                 </div>

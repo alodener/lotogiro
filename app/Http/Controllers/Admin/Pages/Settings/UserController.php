@@ -20,6 +20,7 @@ use App\Models\TypeGameValue;
 use App\Models\BichaoModalidades;
 use App\Models\LogUsuario;
 use App\Helper\UserValidate;
+use App\Helper\ApiWallet;
 
 
 
@@ -182,6 +183,10 @@ class UserController extends Controller
                 $user->pix = $data['pix'];
                 $user->max_saque = $request->max_saque;     
                 $user->saque_desconto = $request->saque_desconto; 
+                $user->first_schedule_one = $request->first_schedule_one;
+                $user->second_schedule_one = $request->second_schedule_one;
+                $user->first_schedule_two = $request->first_schedule_two;
+                $user->second_schedule_two = $request->second_schedule_two;
                 if(!is_null($request->telefone)){
                     $telefoneCompleto =  Str::of($request->telefone)->replaceMatches('/[^A-Za-z0-9]++/', '');
                     $ddd = Str::of($telefoneCompleto)->substr(0, 2);
@@ -225,7 +230,7 @@ class UserController extends Controller
                 $user->balance = $balanceRequest;
 
                 $user->save();
-
+                
             // registrar a criação no banco de dados/tabela log
             
             //Converter o Array de Permissões em String para Salvar no Banco
@@ -272,6 +277,7 @@ class UserController extends Controller
                 $logUsuario->description = $description;
                 $logUsuario->save();
                 
+                $criaUsuarioApi = ApiWallet::criaUsuario($user);
                 
                 TransactBalance::create([
                     'user_id_sender' => auth()->id(),
@@ -637,6 +643,10 @@ class UserController extends Controller
                 $user->pix = $request->pix;
                 $user->max_saque = $request->max_saque;
                 $user->saque_desconto = $request->saque_desconto;
+                $user->first_schedule_one = $request->first_schedule_one;
+                $user->second_schedule_one = $request->second_schedule_one;
+                $user->first_schedule_two = $request->first_schedule_two;
+                $user->second_schedule_two = $request->second_schedule_two;
 
 
                 if(!is_null($telefone)){
@@ -671,7 +681,7 @@ class UserController extends Controller
                 // salvar no banco de dados
                 $user->save();
 
-                
+                $alteraUsuarioApi = ApiWallet::updateUsuario($user);
 
                 if((float) $newBonus > 0){
                 

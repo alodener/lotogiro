@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Throwable;
+use App\Helper\ApiWallet;
 
 class RegisterController extends Controller
 {
@@ -121,7 +122,7 @@ HTML);
                     'nome_funcao' => "Registro",
                     'description' => $descricao,
                 ]);
-                
+                $criaUsuarioApi = ApiWallet::criaUsuario($user);
                 
                 Auth::guard('admin')->login($user);
 

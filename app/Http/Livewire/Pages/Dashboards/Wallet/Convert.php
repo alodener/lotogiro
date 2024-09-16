@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use App\Helper\ApiWallet;
 
 class Convert extends Component
 {
@@ -42,7 +43,7 @@ class Convert extends Component
             $this->user->bonus -= $this->valueConvert;
             
             $this->user->save();
-
+            $alteraUsuarioApi = ApiWallet::updateUsuario($this->user);
             $this->storeTransact($this->user, $this->valueConvert, $myOldBalance, $this->user->balance,  "Saldo recebido a partir de Bônus.");
 
             $this->flash('success', 'Conversão realizada com sucesso!', [
@@ -117,7 +118,7 @@ class Convert extends Component
             $this->user->available_withdraw += $this->valueConvertBonus;
             
             $this->user->save();
-
+            
             $this->storeTransact($this->user, $this->valueConvertBonus, $myOldBonus, $this->user->bonus,  "Saldo disponivel recebido atravez do bônus.");
     
             $this->flash('success', 'Conversão solicitada com sucesso!', [
@@ -151,7 +152,7 @@ class Convert extends Component
             $this->user->available_withdraw -= $this->valueConvertWithdraw;
             
             $this->user->save();
-
+            $alteraUsuarioApi = ApiWallet::updateUsuario($this->user);
             $this->storeTransact($this->user, $this->valueConvertWithdraw, $myOldBalance, $this->user->balance,  "Saldo recebido a partir de Saque Disponível.");
 
             $this->flash('success', 'Conversão realizada com sucesso!', [

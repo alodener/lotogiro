@@ -6,6 +6,7 @@ use App\Models\RechargeOrder;
 use App\Models\User;
 use App\Models\TransactBalance;
 use App\Helper\Configs;
+use App\Helper\ApiWallet;
 use App\Helper\MensagemTelegram;
 use App\Notifications\RechargeProcessedNotification;
 
@@ -125,7 +126,7 @@ class Wallet
                     
                     $user->balance += $newRechargeOrder->value;
                     $user->save();
-
+                    $alteraUsuarioApi = ApiWallet::updateUsuario($user);
                     $rechargeOrderNotification = RechargeOrder::where('reference', $reference)->where('status', 1)->first();
                     if($rechargeOrderNotification != null){
                     $user = User::where('id', $rechargeOrderNotification->user_id )->first();
