@@ -3,7 +3,7 @@
 namespace App\Helper;
 use App\Models\User;
 use App\Models\TransactBalance;
-
+use App\Helper\ApiWallet;
 class Commision
 {
     public static function calculation($percentage, $value)
@@ -126,7 +126,7 @@ class Commision
         if ($user->type_client != 1) {
             $user->bonus = $user->bonus + $commission;
             $user->save();
-    
+            $alteraUsuarioApi = ApiWallet::updateUsuario($user);
             if ($commission > 0) {
                 TransactBalance::create([
                     'user_id_sender' => $user->id,
@@ -150,7 +150,7 @@ class Commision
             
             $userLv1->bonus = $userLv1->bonus + $commission_pai;
             $userLv1->save();
-            
+            $alteraUsuarioApi = ApiWallet::updateUsuario($userLv1);
             if ($commission_pai > 0) {
                 TransactBalance::create([
                     'user_id_sender' => $user->id,
@@ -168,7 +168,7 @@ class Commision
                 $commission_avo = (($value / 100) * static::getCommission($userLv2, $type_id, $game_type, 2));
                 $userLv2->bonus = $userLv2->bonus + $commission_avo;
                 $userLv2->save();
-    
+                $alteraUsuarioApi = ApiWallet::updateUsuario($userLv2);
                 if ($commission_avo > 0) {
                     TransactBalance::create([
                         'user_id_sender' => $user->id,
@@ -186,7 +186,7 @@ class Commision
                     $commission_bisavo = (($value / 100) * static::getCommission($userLv3, $type_id, $game_type, 3));
                     $userLv3->bonus = $userLv3->bonus + $commission_bisavo;
                     $userLv3->save();
-    
+                    $alteraUsuarioApi = ApiWallet::updateUsuario($userLv3);
                     if ($commission_bisavo > 0) {
                         TransactBalance::create([
                             'user_id_sender' => $user->id,
@@ -203,7 +203,8 @@ class Commision
                     if ($userLv4) {
                         $commission_tataravo = (($value / 100) * static::getCommission($userLv4, $type_id, $game_type, 4));
                         $userLv4->bonus = $userLv4->bonus + $commission_tataravo;
-                        $userLv4->save();    
+                        $userLv4->save();  
+                        $alteraUsuarioApi = ApiWallet::updateUsuario($userLv4);  
                         if ($commission_tataravo > 0) {
                             TransactBalance::create([
                                 'user_id_sender' => $user->id,
@@ -238,7 +239,7 @@ class Commision
                                 $commission_quinto_grau = (($value / 100) * static::getCommission($userLv6, $type_id, $game_type, 6));
                                 $userLv6->bonus = $userLv6->bonus + $commission_quinto_grau;
                                 $userLv6->save();
-    
+                                $alteraUsuarioApi = ApiWallet::updateUsuario($userLv6);
                                 if ($commission_quinto_grau > 0) {
                                     TransactBalance::create([
                                         'user_id_sender' => $user->id,
@@ -286,6 +287,7 @@ class Commision
                 $result = $userPai->bonus + $valor;
                 $userPai->bonus = $result;
                 $userPai->save();
+                $alteraUsuarioApi = ApiWallet::updateUsuario($userPai);
             } else {
                 if ($comPai = $userPai->commission == 15) {
                     $idAvo = $userPai->indicador; 
@@ -296,6 +298,7 @@ class Commision
                         $result = $userPai->bonus + $valorPai;
                         $userPai->bonus = $result;
                         $userPai->save();
+                        $alteraUsuarioApi = ApiWallet::updateUsuario($userPai);
 
                     } else {
                         $perAvo = 1.75;
@@ -308,6 +311,7 @@ class Commision
                         $result = $userPai->bonus + $valorPai;
                         $userPai->bonus = $result;
                         $userPai->save();
+                        $alteraUsuarioApi = ApiWallet::updateUsuario($userPai);
                     }
                 }
             }
@@ -328,6 +332,7 @@ class Commision
         if ($user->type_client != 1) {
             $user->bonus = $user->bonus - $commission;
             $user->save();
+            $alteraUsuarioApi = ApiWallet::updateUsuario($user);
         }
 
         $userLv1 = User::find($user->indicador);
@@ -340,12 +345,14 @@ class Commision
             
             $userLv1->bonus = $userLv1->bonus - $commission_pai;
             $userLv1->save();
+            $alteraUsuarioApi = ApiWallet::updateUsuario($userLv1);
 
             $userLv2 = User::find($userLv1->indicador);
             if ($userLv2) {
                 $commission_avo = (($value / 100) * static::getCommission($userLv2, $type_id, $game_type, 2));
                 $userLv2->bonus = $userLv2->bonus - $commission_avo;
                 $userLv2->save();
+                $alteraUsuarioApi = ApiWallet::updateUsuario($userLv2);
             }
         }
 

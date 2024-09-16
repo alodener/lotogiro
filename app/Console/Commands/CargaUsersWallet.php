@@ -44,9 +44,10 @@ class CargaUsersWallet extends Command
      */
     public function handle()
     {
-        $userBanca = User::limit(3)->get();
+        $userBanca = User::get();
         
         foreach($userBanca as $users){
+            sleep(1);
             echo $users->id ;
         $data = [
             'banca_codigo' => env('banca_codigo'),
