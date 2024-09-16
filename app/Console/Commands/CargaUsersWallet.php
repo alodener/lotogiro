@@ -49,7 +49,7 @@ class CargaUsersWallet extends Command
         foreach($userBanca as $users){
             echo $users->id ;
         $data = [
-            'banca_codigo' => 0001,
+            'banca_codigo' => env('banca_codigo'),
             'people_id' => $users->id ,         
             'name' => $users->name,
             'email' => $users->email,
