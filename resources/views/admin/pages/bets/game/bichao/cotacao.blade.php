@@ -29,7 +29,7 @@
                 </thead>
                 <tbody>
                     @foreach ($cotacoes as $cotacao)
-                    @if ($cotacao->id == 6 || $cotacao->id == 7)
+                    @if ($cotacao->id == 6 || $cotacao->id == 7 ||  $cotacao->id == 8 )
                     <tr>
                         <th scope="row">
                         <td>{{ $cotacao['nome'] }} 1 ao 3</td>
