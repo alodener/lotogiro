@@ -29,6 +29,7 @@
                <th>Nome</th>
                <th>Classificação</th>
                <th>Email</th>
+               <th>Quantidade de Indicados</th>
                <th>Comissão</th>
                <th>Comissão NV1</th>
                <th>Comissão NV2</th>
@@ -45,6 +46,7 @@
                    <td>{{ $consultor->name }} {{ $consultor->last_name }}</td>
                    <td>{{ $consultor->roles->first()->name ?? 'Não classificado' }}</td>
                    <td>{{ $consultor->email }}</td>
+                   <td>{{ $consultor->indicados_count }}</td>
                    <td>{{ $consultor->commission ?? '-' }}</td>
                    <td>{{ $consultor->commission_lv_1 ?? '-' }}</td>
                    <td>{{ $consultor->commission_lv_2 ?? '-' }}</td>
