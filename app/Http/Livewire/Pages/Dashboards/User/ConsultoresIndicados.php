@@ -34,6 +34,11 @@ class ConsultoresIndicados extends Component
                 ->from('model_has_roles')
                 ->whereIn('role_id', $consultorRoles);
         })
+        ->select('users.*', \DB::raw('(SELECT COUNT(*) FROM users u2 WHERE u2.indicador = users.id) as indicados_count'))
+        ->where(function ($query) {
+            $query->where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('last_name', 'like', '%' . $this->search . '%');
+        })
         ->where(function ($query) {
             $query->where('name', 'like', '%' . $this->search . '%')
                   ->orWhere('last_name', 'like', '%' . $this->search . '%');
