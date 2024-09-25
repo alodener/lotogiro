@@ -20,6 +20,9 @@ use App\Models\TypeGameValue;
 use App\Models\BichaoModalidades;
 use App\Models\LogUsuario;
 use App\Helper\UserValidate;
+use Illuminate\Support\Facades\DB;
+
+
 
 
 
@@ -894,5 +897,15 @@ class UserController extends Controller
         $consultorId = $request->query('consultorId'); 
         
         return view('admin.pages.settings.user.nominees', compact('consultorId'));
+    }
+    public function checkBichaoStatus()
+    {
+        // Consulta o status da configuração 'Bichao'
+        $status = DB::table('system')->where('nome_config', 'Bichao')->value('value');
+    
+        // Se estiver desativado, retorna um erro 403
+        if ($status !== 'Ativado') {
+            abort(403, 'Acesso negado, pois o Bichão está desativado.');
+        }
     }
 }

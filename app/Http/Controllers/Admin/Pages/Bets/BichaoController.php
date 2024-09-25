@@ -28,6 +28,8 @@ use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
 use SnappyImage;
+use App\Http\Controllers\Admin\Pages\Settings\UserController;
+
 
 class BichaoController extends Controller
 {
@@ -37,6 +39,13 @@ class BichaoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+     protected $userController;
+
+     public function __construct(UserController $userController)
+     {
+         $this->userController = $userController;
+     }
+
     private static function getTotalCarrinho($chart)
     {
         return array_reduce($chart, fn ($acc, $item) => (isset($item['teimosinha']) && $item['teimosinha'] >= 1) ? $acc + ($item['value'] * ($item['teimosinha'] + 1)) : $acc + $item['value'], 0);
@@ -44,6 +53,8 @@ class BichaoController extends Controller
 
     public function index()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -57,11 +68,14 @@ class BichaoController extends Controller
         $estados = BichaoEstados::where('active', 1)->get();
 
         $totalCarrinho = static::getTotalCarrinho($chart);
+
         return view('admin.pages.bets.game.bichao.index', compact('clientId','showList','totalCarrinho', 'modalidade', 'chart', 'estados'));
     }
 
     public function centena()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -75,6 +89,8 @@ class BichaoController extends Controller
 
     public function dezena()
     {
+         $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -88,6 +104,8 @@ class BichaoController extends Controller
 
     public function group()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -101,6 +119,8 @@ class BichaoController extends Controller
 
     public function milhar_centena()
     {
+         $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -114,6 +134,8 @@ class BichaoController extends Controller
 
     public function quina_grupo()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -127,6 +149,8 @@ class BichaoController extends Controller
 
     public function quadra_grupo()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -140,6 +164,8 @@ class BichaoController extends Controller
 
     public function terno_grupo()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -153,6 +179,8 @@ class BichaoController extends Controller
 
     public function duque_grupo()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -166,6 +194,8 @@ class BichaoController extends Controller
 
     public function terno_dezena()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -179,6 +209,8 @@ class BichaoController extends Controller
 
     public function duque_dezena()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -192,6 +224,8 @@ class BichaoController extends Controller
 
     public function unidade()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -205,6 +239,8 @@ class BichaoController extends Controller
 
     public function milhar_invertida()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -219,6 +255,8 @@ class BichaoController extends Controller
 
     public function centena_invertida()
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -233,6 +271,8 @@ class BichaoController extends Controller
 
     public function cotacao(Response $response)
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -247,6 +287,8 @@ class BichaoController extends Controller
 
     public function settings(Response $response)
     {
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('read_user')) {
             abort(403);
         }
@@ -296,6 +338,9 @@ class BichaoController extends Controller
     }
 
     public function my_bets(Request $request) {
+
+        $this->userController->checkBichaoStatus();
+        
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -366,6 +411,9 @@ class BichaoController extends Controller
     }
 
     public function comissions(Request $request) {
+
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -389,6 +437,9 @@ class BichaoController extends Controller
     }
 
     public function draws(Request $request) {
+
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -455,6 +506,9 @@ class BichaoController extends Controller
     }
 
     public function results(){
+
+        $this->userController->checkBichaoStatus();
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
