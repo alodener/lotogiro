@@ -577,7 +577,7 @@ class UserController extends Controller
                 'commission' => $user->commission,
                 'Permissoes' => $user_string_roles,
                 ];
-                //dd($originalValues);
+                
 
 
                 // array para armazenar as alterações
@@ -681,13 +681,33 @@ class UserController extends Controller
                     // $this->storeTransact($user, ($user->commission/100) * $balanceRequest,$oldBonus,  $newBalance, 'bonus');
                 }
 
-                if((float) $newBalance > 0){
-                    
-                    $this->storeTransact($user, $balanceRequest, $oldBalance ,  $newBalance);
+                if ((float) $newBalance > 0) {
+                    // Calcula a diferença entre o novo saldo e o saldo antigo
+                    $diferenca = (float) $newBalance - $oldBalance;
+                
+                    // Se a diferença for positiva (novo saldo é maior que o saldo atual)
+                    if ($diferenca > 0) {
+                        // Calcula o novo valor acumulado somando a diferença
+                        $valorAtualizado = $oldBalance + $diferenca;
+                
+                        // Passa a diferença como valor de transação e o saldo atualizado
+                        $this->storeTransact($user, $diferenca, $oldBalance, $valorAtualizado);
+                    }
                 }
-                if($ajuste == 1 && $oldBalance != (float) Money::toDatabase($request->balanceAtual)){
-                    $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance,  $newBalance);
+                
+                // Caso de ajuste com condição adicional
+                if ($ajuste == 1 && $oldBalance != (float) Money::toDatabase($request->balanceAtual)) {
+                    $diferenca = (float) Money::toDatabase($request->balanceAtual) - $oldBalance;
+                
+                    if ($diferenca > 0) {
+                        // Calcula o novo valor acumulado somando a diferença
+                        $valorAtualizado = $oldBalance + $diferenca;
+                
+                        // Passa a diferença como valor de transação e o saldo atualizado
+                        $this->storeTransact($user, $diferenca, $oldBalance, $valorAtualizado);
+                    }
                 }
+                
                 }else{
                 $user->name = $request->name;
                 $user->last_name = $request->last_name;
