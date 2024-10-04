@@ -69,28 +69,41 @@
                   
     <div class="col-md-12">
       
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+        
         <div class="form-row">
             <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                <input wire:model.defer="dtS" type="date" class="form-control" id="date_start" name="dateStart" autocomplete="off" maxlength="50" placeholder="Data Inicial">
+                <input type="text" wire:model="dateStart" placeholder="Data Inicial" id="dateStart" class="form-control">
+            </div>
+        
+            <div class="form-group col-md-6 @if($range != 4) d-none @endif">
+                <input type="text" wire:model="dateEnd" placeholder="Data Final" id="dateEnd" class="form-control">
             </div>
 
-            <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                <input wire:model.defer="dtF" type="date" class="form-control" id="date_end" name="dateEnd" autocomplete="off" maxlength="50" placeholder="Data Final">        
-            </div>
-            <div class="form-group col-md-6 @if($range != 4) d-none @endif">
-                <div class="mt-2">
-                    <button wire:click="search"class="btn btn-primary">Buscar</button>
-                </div>
-                <div wire:loading.attr="disabled" wire:target="submit">
-                    <!-- Conteúdo que você quer esconder durante a busca -->
-                </div>
+            <div class="form-group col-md-12 @if($range != 4) d-none @endif">
                 <div wire:loading>
-                    Buscando...
+                    <span class="text-info">Buscando...</span>
                 </div>
             </div>
+
         </div>
         
-    </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                flatpickr("#dateStart", {
+                    dateFormat: "d/m/Y",
+                    locale: "pt" // Definindo a localização como português
+                });
+                flatpickr("#dateEnd", {
+                    dateFormat: "d/m/Y",
+                    locale: "pt" // Definindo a localização como português
+                });
+            });
+        </script>
+        
+        
     
     <div class="col-md-12 p-4">
         <div class="container card-master">
@@ -354,10 +367,18 @@
     <script src="{{asset('admin/layouts/plugins/select2/js/select2.min.js')}}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 
     <script>
         $(document).ready(function () {
+        });
+
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true
+            });
         });
 
         $(document).ready(function() {
