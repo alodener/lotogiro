@@ -17,7 +17,7 @@ class RechargeOrderObserver
     public function creating(RechargeOrder $rechargeOrder)
     {
         if(is_null($rechargeOrder->reference) || empty($rechargeOrder->reference)){
-            $rechargeOrder->reference = ChaveAleatoria::generateKey(16);
+            $rechargeOrder->reference = ENV("banca_codigo") . "B" . ChaveAleatoria::generateKey(16);
         }
     }
 }
