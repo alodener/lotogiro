@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Pages\Bets\Payments\Draw;
 
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
 use App\Models\Draw;
 use App\Models\Game;
 use App\Models\User;
@@ -19,19 +18,27 @@ class Table extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-
-
-    public $dateStart, $dateEnd, $auth, $perPage, $value, $searchUser, $searchClient, $client_id, $user_id, $startDate, $endDate, $users, $clients;
+    public $dateStart, $dateEnd, $auth, $perPage, $value, $searchUser, $searchClient, $client_id, $user_id, $users, $clients;
     public $showList = false;
     public $showList2 = false;
     public $userId, $clientId;
-    public $range = 1;
     public $filters = [
         "searchUser" => null,
         "searchClient" => null,
-
     ];
-   
+    public $range = 3; 
+    public $selectedUserId;
+
+
+    public function setId($userId)
+    {
+        logger('User ID received: ', ['userId' => $userId]); // Loga o ID recebido
+        $this->userId = $userId; // Define a variável de filtro
+        $this->searchUser = ''; // Limpa o campo de pesquisa
+        $this->showList = false; // Esconde a lista
+        $this->updatedFilters(); // Atualiza os filtros e reseta a paginação
+    }
+
     public function mount()
     {
         $this->auth = auth()->user();
@@ -40,9 +47,8 @@ class Table extends Component
             $this->dateStart = Carbon::now()->startOfMonth()->format('d/m/Y');
             $this->dateEnd = Carbon::now()->format('d/m/Y');
         }
-        $this->updatedSearchUser('Admin');
-        $this->updatedSearchClient('Admin');
-        $this->perPage = session()->get('perPage', 10);
+        $this->perPage = session()->get('perPage', 10); // Inicializa com 10 registros
+        $this->range = 3;
     }
 
     public function clearFilters()
@@ -55,46 +61,34 @@ class Table extends Component
         $this->resetPage();
     }
 
-    public function submit()
+    public function updatedPerPage($value)
     {
-        $dataValidated = $this->validate([
-            'dateStart' => 'required',
-            'dateEnd' => 'required',
-        ]);
-        
-    } 
-    
-    
-    public function updatedSearchUser($value)
+        $this->resetPage();
+        session()->put('perPage', $value);
+    }
+
+   public function updatedSearchUser($value)
     {
         if ($this->auth->hasPermissionTo('read_all_sales')) {
-            $this->users = User::where(function($query) {
-                $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->searchUser}%");
-            })
-            ->get();
+            $this->users = User::select('id', 'name', 'last_name')
+                ->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "{$this->searchUser}%")
+                ->limit(10) // Limita a quantidade de resultados para 10
+                ->get();
         }
-        
+
         $this->showList = true;
     }
 
     public function updatedSearchClient($value)
     {
         if ($this->auth->hasPermissionTo('read_all_sales')) {
-            $this->clients = Client::where(function($query) {
+            $this->clients = Client::where(function ($query) {
                 $query->where(DB::raw("CONCAT(name, ' ', last_name)"), 'like', "%{$this->searchClient}%");
             })
             ->get();
         }
         
-        
         $this->showList2 = true;
-    }
-
-
-    public function updatedPerPage($value)
-    {
-        $this->resetPage();
-        session()->put('perPage', $value);
     }
 
     public function pay()
@@ -112,22 +106,23 @@ class Table extends Component
                     'type_game_id' => $game->type_game_id,
                     'description' => 'Prêmio - Jogo de id: ' . $game->id,
                     'user_id' => $game->user_id,
-                    'client_id' => $game->client_id
+                    'client_id' => $game->client_id,
                 ];
 
-                
                 $users = User::where([
-                ['id', $game->user_id],
-                ['type_client', 1],
-                 ])->get();
+                    ['id', $game->user_id],
+                    ['type_client', 1],
+                ])->get();
+
                 foreach ($users as $user) {
-                $premio = $game->premio;
-                $balance = $user->balance;
-                $result = $balance + $premio;
-                $user->balance = $result;
-                $user->save();
+                    $premio = $game->premio;
+                    $balance = $user->balance;
+                    $result = $balance + $premio;
+                    $user->balance = $result;
+                    $user->save();
                 }
-                $storeExtact = ExtractController::store($extract);
+                
+                ExtractController::store($extract);
             }
             session()->flash('success', 'Pagamentos baixados com sucesso!');
         } else {
@@ -153,39 +148,9 @@ class Table extends Component
         }
     }
 
-
-    public function getReport()
-    {
-    $games = $this->runQueryBuilder()->with(['user', 'typeGameValue'])->get();
-
-    $collection = new Collection();
-    $searchedNames = explode(' ', $this->searchUser);
-
-    foreach ($games as $game) {
-        $fullName = $game->user->name . ' ' . $game->user->last_name;
-        $matchFound = false;
-
-
-
-        foreach ($searchedNames as $searchedName) {
-            if (stripos($fullName, $searchedName) !== false) {
-                $matchFound = true;
-                break; 
-            }
-        }
-
-        if ($matchFound) {
-            $collection = $collection->push($game->toArray());
-        }
-    }
-
-    }
-
-
     public function filterStatus($query)
     {
         $query->where('prize_payment', false);
-
         return $query;
     }
 
@@ -193,134 +158,94 @@ class Table extends Component
     {
         $startDate = Carbon::parse($dateStart)->startOfDay();
         $endDate = Carbon::parse($dateEnd)->endOfDay();
-       
         
         $draws = Draw::join('competitions', 'competitions.id', '=', 'draws.competition_id')
-        ->whereBetween('competitions.sort_date', [$startDate, $endDate])
-        ->orderBy('draws.type_game_id')
-        ->get();
+            ->whereBetween('competitions.sort_date', [$startDate, $endDate])
+            ->orderBy('draws.type_game_id')
+            ->pluck('draws.games'); // Use pluck para obter apenas os jogos
 
         $array = [];
-
-        if ($draws->count() > 0) {
-            foreach ($draws as $draw) {
-                $games = explode(',', $draw->games);
-                foreach ($games as $game) {
-                    array_push($array, $game);
-                }
-            }
-                    
+        foreach ($draws as $draw) {
+            $games = explode(',', $draw);
+            $array = array_merge($array, $games);
+        }
+        
+        if (!empty($array)) {
             $query->whereIn('id', $array);
         } else {
             $query->where('id', '<', 0);
         }
 
-
         return $query;
-    }
-
-    public function updatedRange($value)
-    {
-        $this->resetPage();
-    }
-
-    public function filterRange()
-    {
-        $now = Carbon::now();
-        switch ($this->range) {
-            case 1: 
-                $dateStart = $now->startOfMonth()->toDateString();
-                $dateEnd = $now->endOfMonth()->toDateString();
-                break;
-            case 2:
-                $dateStart = $now->startOfWeek()->toDateString();
-                $dateEnd = $now->endOfWeek()->toDateString();
-                break;
-            case 3:
-                $dateStart = $now->startOfDay()->toDateString();
-                $dateEnd = $now->endOfDay()->toDateString();
-                break;
-            case 4:
-                $dateStart = Carbon::parse(strtotime(str_replace('/', '-', $this->dateStart)))->toDateString();
-                $dateEnd = Carbon::parse(strtotime(str_replace('/', '-', $this->dateEnd)))->toDateString();
-                break;
-        }
-  
-    return [
-        'dateStart' => $dateStart,
-        'dateEnd' => $dateEnd,
-        ];
-    }
-
-
-    public function setId($user)
-    {
-        if ($this->auth->hasPermissionTo('read_all_sales')) {
-            $this->userId = $user["id"];
-            $this->searchUser = $user["name"] . ' ' . $user["last_name"] . ' - ' . $user["email"];
-            $this->showList = false;
-        }
-    }
-    public function setIdClient($client)
-    {
-        if ($this->auth->hasPermissionTo('read_all_sales')) {
-            $this->clientId = $client["id"];
-            $this->searchClient = $client["name"] . ' ' . $client["last_name"] . ' - ' . $client["email"];
-            $this->showList2 = false;
-        }
     }
 
     public function filterUser($query)
     {
-        $query->when($this->userId, fn($query, $searchUser) => $query->where('user_id', $this->userId));
-        
+        if (!empty($this->userId)) {
+            $query->where('user_id', $this->userId);
+        }
         return $query;
     }
 
     public function filterClient($query)
     {
-        $query->when($this->clientId, fn($query, $searchClient) => $query->where('client_id', $this->clientId));
-        
+        $query->when($this->clientId, fn($query) => $query->where('client_id', $this->clientId));
         return $query;
     }
 
     public function sumValues($query)
     {
-        $value = 0;
-
-        foreach ($query->get() as $item) {
-            $value += $item->premio;
-        }
-
-        $this->value = $value;
-
-        return $query;
+        return $query->sum('premio'); // Usar sum diretamente na query
     }
 
+    public function filterRange()
+    {
+        if ($this->range == 3) { // Se o range for 'diário'
+            $this->dateStart = Carbon::now()->startOfDay()->format('d/m/Y');
+            $this->dateEnd = Carbon::now()->endOfDay()->format('d/m/Y');
+        } elseif ($this->range == 2) { // Se o range for 'semanal'
+            $this->dateStart = Carbon::now()->startOfWeek()->format('d/m/Y');
+            $this->dateEnd = Carbon::now()->endOfWeek()->format('d/m/Y');
+        } elseif ($this->range == 1) { // Se o range for 'mensal'
+            $this->dateStart = Carbon::now()->startOfMonth()->format('d/m/Y');
+            $this->dateEnd = Carbon::now()->endOfMonth()->format('d/m/Y');
+        }
+        
+        return [
+            'dateStart' => Carbon::createFromFormat('d/m/Y', $this->dateStart)->format('Y-m-d'),
+            'dateEnd' => Carbon::createFromFormat('d/m/Y', $this->dateEnd)->format('Y-m-d'),
+        ];
+    }
 
     public function runQueryBuilder()
     {
         $query = Game::query();
-        $filterRange = $this->filterRange();
-        
-                
 
+        // Aplica todos os filtros
         $query = $this->filterUser($query);
         $query = $this->filterClient($query);
         $query = $this->filterStatus($query);
+
+        $filterRange = $this->filterRange();
         $query = $this->filterDraws($query, $filterRange['dateStart'], $filterRange['dateEnd']);
-        $query = $this->sumValues($query);
 
+        // Adiciona a ordenação do mais recente para o menos recente
+        $query->orderBy('created_at', 'desc'); 
 
-       
+        $this->value = $this->sumValues($query->clone()); // Clone para não afetar a query original
+
         return $query;
     }
 
 
     public function render()
     {
+        $filterRange = $this->filterRange();
+
+        $games = $this->runQueryBuilder()->paginate($this->perPage); // Paginação
+
         return view('livewire.pages.bets.payments.draw.table', [
-            "games" => $this->runQueryBuilder()->paginate($this->perPage),
+            "games" => $games,
         ]);
     }
 }
