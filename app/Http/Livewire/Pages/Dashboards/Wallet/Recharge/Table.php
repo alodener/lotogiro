@@ -159,6 +159,8 @@ class Table extends Component
             'id' => $order->reference,
             'img' => "S",
             'imgtype' => "png",
+            'mudavalor' => "false",
+            'dinamico' => "true",
             'value' => floatval($order->value),
             'webhook' => env("APP_URL") . "/api/mutualpay/webhook/process/transaction",
         ];
