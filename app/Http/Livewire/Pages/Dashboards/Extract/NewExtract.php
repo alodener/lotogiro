@@ -15,7 +15,7 @@ use App\Models\BichaoGamesVencedores;
 class NewExtract extends Component
 {
     use WithPagination;
-
+    
     protected $paginationTheme = 'bootstrap';
     public $range = '0';
     public $dateStart, $dateEnd;
@@ -42,47 +42,68 @@ class NewExtract extends Component
 
     public function search()
     {
+        // Verifique se as datas estão preenchidas
         if (empty($this->dateStart) || empty($this->dateEnd)) {
             $this->addError('dateFieldsFilled', 'Por favor, forneça ambas as datas.');
             return;
         }
+
+        // Validação das datas
+        if (!$this->isValidDate($this->dateStart) || !$this->isValidDate($this->dateEnd)) {
+            $this->addError('dateFormat', 'Formato de data inválido. Use dd/mm/YYYY.');
+            return;
+        }
+
+        // Formatação das datas
+        $dataFromatadaInicial = Carbon::createFromFormat('d/m/Y', $this->dateStart);
+        $dataFromatadaFinal = Carbon::createFromFormat('d/m/Y', $this->dateEnd);
+
+        
+        if (!$dataFromatadaInicial || !$dataFromatadaFinal) {
+            $this->addError('dateFormat', 'Erro ao processar as datas. Verifique o formato.');
+            return;
+        }
+
     
-        $dataFromatadaInicial = Carbon::createFromFormat('d/m/Y', $this->dateStart)->format('Y-m-d');
-        $dataFromatadaFinal = Carbon::createFromFormat('d/m/Y', $this->dateEnd)->format('Y-m-d');
-    
-        $this->dateStart = $dataFromatadaInicial;
-        $this->dateEnd = $dataFromatadaFinal;
-    
-        $query = Transaction::query(); // Substitua pelo nome do seu modelo de transações
-    
+        $this->dateStart = $dataFromatadaInicial->format('Y-m-d');
+        $this->dateEnd = $dataFromatadaFinal->format('Y-m-d');
+
+        $query = TransactBalance::query(); 
+
         if ($this->typeFilter) {
             $query->where('type', $this->typeFilter);
         }
-    
+
         if ($this->searchTerm) {
             $query->whereHas('user', function($q) {
                 $q->where('name', 'like', '%' . $this->searchTerm . '%')
-                  ->orWhere('last_name', 'like', '%' . $this->searchTerm . '%');
+                ->orWhere('last_name', 'like', '%' . $this->searchTerm . '%');
             });
         }
-    
+
         if ($this->adminFilter) {
             $query->where('admin_id', $this->adminFilter);
         }
-    
+
+        // Filtros de intervalo
         if ($this->range === '1') { // Mensal
             $query->whereMonth('created_at', date('m'))
-                  ->whereYear('created_at', date('Y'));
+                ->whereYear('created_at', date('Y'));
         } elseif ($this->range === '2') { // Semanal
             $query->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
         } elseif ($this->range === '3') { // Diário
             $query->whereDate('created_at', today());
-        } elseif ($this->range === '4') { // Customizado
+        } elseif ($this->range === '4') { // Personalizado
             $query->whereBetween('created_at', [$this->dateStart, $this->dateEnd]);
         }
-    
-        $this->transacts = $query->paginate(10);
 
+        // Paginando os resultados
+        $this->transacts = $query->paginate($this->perPage);
+    }
+
+    private function isValidDate($date)
+    {
+        return preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $date);
     }
 
     public function getTransactsProperty()
@@ -102,33 +123,32 @@ class NewExtract extends Component
     }
 
     public function selectUser($userId, $userName)
-{ 
-    // Transações do usuário selecionado
-    $this->selectedUserId = $userId;
+    { 
+        // Transações do usuário selecionado
+        $this->selectedUserId = $userId;
 
-    // Atualiza o searchTerm com o nome do usuário fornecido ou o nome encontrado no banco
-    $this->searchTerm = $userName ?: User::find($userId)->name ?? '';
+        // Atualiza o searchTerm com o nome do usuário fornecido ou o nome encontrado no banco
+        $this->searchTerm = $userName ?: User::find($userId)->name ?? '';
 
-    // Verifica se o usuário é admin
-    $this->isAdmin = $this->isAdminF($userId);
+        // Verifica se o usuário é admin
+        $this->isAdmin = $this->isAdminF($userId);
 
-    // Atualiza os detalhes do usuário selecionado
-    $this->selectedUser = [
-        'id' => $userId,
-        'name' => $this->searchTerm,
-        'isAdmin' => $this->isAdmin,
-    ];
+        // Atualiza os detalhes do usuário selecionado
+        $this->selectedUser = [
+            'id' => $userId,
+            'name' => $this->searchTerm,
+            'isAdmin' => $this->isAdmin,
+        ];
 
-    // Se não for admin, reseta o filtro de admin
-    if (!$this->isAdmin) {
-        $this->adminFilter = null;
+        // Se não for admin, reseta o filtro de admin
+        if (!$this->isAdmin) {
+            $this->adminFilter = null;
+        }
+
+        // Renderiza os resultados atualizados
+        $this->render();
     }
 
-    // Renderiza os resultados atualizados
-    $this->render();
-}
-
-    
     public function isAdminF($userId)
     {
         return in_array($userId, $this->getAdmins()->pluck('id')->toArray());
