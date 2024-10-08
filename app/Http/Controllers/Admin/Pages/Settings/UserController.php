@@ -52,6 +52,16 @@ class UserController extends Controller
         if ($request->ajax()) {
             $users = $this->user->where('id', '<>', auth()->user()->id);
 
+            // Verifica se o parâmetro de busca foi fornecido e não está vazio
+             if ($request->has('search') && !empty($request->input('search.value'))) {
+                $search = $request->input('search.value'); // Captura o valor da busca vindo do DataTables
+    
+                // Aplica o filtro de busca pelo nome e sobrenome
+                $sql = " SELECT * FROM `users` where CONCAT(name, ' ', last_name) like '%" . $search . "%' ";
+                $users = \DB::select($sql);
+                
+            }
+
             return DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('action', function ($user) {
