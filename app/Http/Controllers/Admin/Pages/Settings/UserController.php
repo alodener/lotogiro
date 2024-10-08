@@ -56,9 +56,18 @@ class UserController extends Controller
              if ($request->has('search') && !empty($request->input('search.value'))) {
                 $search = $request->input('search.value'); // Captura o valor da busca vindo do DataTables
     
+                if(str_contains($search, '@')){
+                    $sql = " SELECT * FROM `users` where email like '%" . $search . "%' ";
+                    $users = \DB::select($sql);
+                    
+                }else if(is_numeric(filter_var($search, FILTER_SANITIZE_NUMBER_INT))){
+                    $sql = " SELECT * FROM `users` where id like '%" . $search . "%' ";
+                    $users = \DB::select($sql);
+                }else{
                 // Aplica o filtro de busca pelo nome e sobrenome
                 $sql = " SELECT * FROM `users` where CONCAT(name, ' ', last_name) like '%" . $search . "%' ";
                 $users = \DB::select($sql);
+                }
                 
             }
 
