@@ -69,6 +69,7 @@ class Copiacola extends Component
         $this->exibirBotao = false;
 
         $typeGame = TypeGame::find($this->typeGame->id);
+        $typeGameCategory = TypeGame::find($this->typeGame->category);
         $maxNumbers = $typeGame->numbers;
         
         foreach ($this->dezena as $linhaIndex => $dezenaConvert) {
@@ -96,20 +97,21 @@ class Copiacola extends Component
 
                 $dezenas = explode(" ", $string);
                 $dezenasForaDoLimite = array_filter($dezenas, function ($dezena) use ($maxNumbers) {
-                return ($dezena < 1 || $dezena > $maxNumbers);
+                    if ($this->typeGame->category == 'loto_mania') {
+                        return ($dezena < 0 || $dezena > 99); 
+                    } else {
+                        return ($dezena < 1 || $dezena > $maxNumbers); 
+                    }
                 });
                 
-                if (!empty($dezenasForaDoLimite) && $this->typeGame->id != 11) {
-                    $this->msg = "Dezenas fora do intervalo permitido (1 a $maxNumbers): " . implode(", ", $dezenasForaDoLimite); 
-                    
-                }  else if(!empty($dezenasForaDoLimite)&& $this->typeGame->id == 11 && min($dezenasForaDoLimite) != 0){ // se for loto mania fica de 0 a 99
-                    
-                            
-                    $this->msg = "Dezenas fora do intervalo permitido (0 a $maxNumbers): " . implode(", ", $dezenasForaDoLimite); 
-                }
-                else{
+                if (!empty($dezenasForaDoLimite) && $this->typeGame->category != 'loto_mania') {
+                    $this->msg = "Dezenas fora do intervalo permitido (1 a $maxNumbers): " . implode(", ", $dezenasForaDoLimite);
+                } elseif (!empty($dezenasForaDoLimite) && $this->typeGame->category == 'loto_mania') {
+                    $this->msg = "Dezenas fora do intervalo permitido (0 a 99): " . implode(", ", $dezenasForaDoLimite);
+                } else {
                     $this->podeCriar = true;
                 }
+                
 
                 $allowedDezenas = $typeGame->typeGameValues()->pluck('numbers')->toArray();
                 
