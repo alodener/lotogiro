@@ -515,7 +515,6 @@
                 @endcanany
 
             </li>
-            @canany(['read_user', 'read_role', 'read_permission'])
 
             <div class="nav-item nav-group-item has-treeview @if(request()->is('admin/result/*')) menu-open @endif">
                 <a href="{{route('admin.dashboards.result.index')}}"
@@ -527,7 +526,6 @@
                 </a>
 
             </div>
-            @endcanany
 
             <div class="nav-item nav-group-item has-treeview @if(request()->is('admin/settings/*')) menu-open @endif">
                 <a href="{{route('admin.dashboards.help.index')}}"
