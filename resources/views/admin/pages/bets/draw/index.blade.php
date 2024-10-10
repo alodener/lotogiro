@@ -21,11 +21,11 @@
             @enderror
             @can('create_draw')
             <div class="d-flex align-items-center justify-content-between">
-                <div>
+            <!--    <div>
                 <a href="{{route('admin.bets.draws.create')}}">
                     <button class="btn btn-info my-2">{{ trans('admin.draws.new-draw') }}</button>
                 </a>
-                </div>
+                </div> -->
                 <div> <a href="{{ route('admin.bets.report-draws-index')  }}" >
                     <button class="btn btn-primary">{{ trans('admin.falta.visuRelatorio') }}</button>
                 </a></div>
