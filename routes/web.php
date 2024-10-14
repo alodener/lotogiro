@@ -248,6 +248,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
             Route::get('/consultores-indicados', [UserController::class, 'consultoresIndicados'])->name('consultoresIndicados');
             Route::get('/indicados/', [UserController::class, 'nominees'])->name('nominees');   
+            Route::get('/refillVolume', [UserController::class, 'refillVolume'])->name('users.refillVolume');
 
         });
         
@@ -270,4 +271,3 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
 Route::get('/users/winners', [CustomeBalanceController::class, 'userswinnersAPI']);
 Route::get('/users/winners-clients', [CustomeBalanceController::class, 'userswinnersClientesAPI']);
-URL::forceScheme('https');
