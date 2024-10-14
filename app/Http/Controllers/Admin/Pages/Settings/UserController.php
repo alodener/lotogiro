@@ -947,4 +947,12 @@ class UserController extends Controller
             abort(403, 'Acesso negado, pois o Bichão está desativado.');
         }
     }
+    public function refillVolume (Request $request)
+    {
+        if (!UserValidate::iAmAdmin()) {
+            abort(403);
+        }
+        
+        return view('admin.pages.settings.user.refillVolume');
+    }
 }
