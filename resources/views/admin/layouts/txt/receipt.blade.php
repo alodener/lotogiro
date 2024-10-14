@@ -6,32 +6,43 @@ COMPROVANTE DE APOSTA
 PREMIADO
 
 @endif
-ID APOSTA: {{$game->id}}
+ID APOSTA: {{$game->id}} 
 
-EMITIDO EM: {{\Carbon\Carbon::parse($game->created_at)->format('d/m/Y h:i:s')}}
+EMITIDO EM: {{\Carbon\Carbon::parse($game->created_at)->format('d/m/Y H:i:s')}} 
 
-CPF: {{\App\Helper\Mask::addMaskCpf($game->client->cpf)}}
+CPF: {{\App\Helper\Mask::addMaskCpf($game->client->cpf)}} 
 
-PARTICIPANTE: {{mb_strtoupper($client->name . ' ' . $client->last_name, 'UTF-8') }}
+PARTICIPANTE: {{mb_strtoupper($client->name . ' ' . $client->last_name, 'UTF-8') }} 
 
-CONCURSO: {{$game->competition->number }}
+CONCURSO: {{$game->competition->number }} 
 
-DATA SORTEIO: {{\Carbon\Carbon::parse($game->competition->sort_date)->format('d/m/Y')}}
+DATA SORTEIO: {{\Carbon\Carbon::parse($game->competition->sort_date)->format('d/m/Y')}} 
 
-HORA SORTEIO: {{\Carbon\Carbon::parse($game->competition->sort_date)->format('H:i:s')}}
+HORA SORTEIO: {{\Carbon\Carbon::parse($game->competition->sort_date)->format('H:i:s')}} 
 
-{{mb_strtoupper($typeGame->name, 'UTF-8')}}
+{{mb_strtoupper($typeGame->name, 'UTF-8')}} 
 
-@foreach($matriz as $lines)
-{{implode(' ', $lines)}}
-@endforeach
+@php
+$numbers = []; 
 
-QTDE DEZENAS: {{$typeGameValue->numbers}}
+foreach ($matriz as $lines) {
+    foreach ($lines as $number) {
+        $numbers[] = str_pad($number, 2, '0', STR_PAD_LEFT); 
+    }
+}
 
-VALOR APOSTADO: R${{\App\Helper\Money::toReal($game->value)}}
+$numbers = array_unique($numbers);
+sort($numbers);
+@endphp
 
-GANHO MÁXIMO: R${{\App\Helper\Money::toReal($game->premio)}}
 
-JOGO VÁLIDO ATÉ: {{ \Carbon\Carbon::parse($game->competition->sort_date)->addHours(72)->format('d/m/Y H:i:s') }}
+DEZENAS: {{ implode(', ', $numbers) }}
+
+QTDE DEZENAS: {{$typeGameValue->numbers}} 
+
+VALOR APOSTADO: R${{\App\Helper\Money::toReal($game->value)}} 
+
+GANHO MÁXIMO: R${{\App\Helper\Money::toReal($game->premio)}} 
+
 
 
