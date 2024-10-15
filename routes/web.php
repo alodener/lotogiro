@@ -271,3 +271,5 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
 Route::get('/users/winners', [CustomeBalanceController::class, 'userswinnersAPI']);
 Route::get('/users/winners-clients', [CustomeBalanceController::class, 'userswinnersClientesAPI']);
+
+URL::forceScheme('https');
