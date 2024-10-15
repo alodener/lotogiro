@@ -22,9 +22,13 @@
             @can('create_user')
                 <a href="{{route('admin.settings.users.create')}}">
                     <button class="btn btn-info my-2">{{ trans('admin.pagesF.newUser') }}</button>
-
                 </a>
             @endcan
+
+            <a href="{{route('admin.settings.users.refillVolume')}}">
+                    <button class="btn btn-info my-2">Volume de Recarga</button>
+                </a>
+            
             <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-sm" id="user_table">
                     <thead>
