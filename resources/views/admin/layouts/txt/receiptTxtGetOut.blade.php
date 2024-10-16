@@ -12,7 +12,9 @@ TIPO DE JOGO: {{$jogos->name}}
 CONCURSO: {{$jogos->number}} 
 VALOR APOSTA:R${{\App\Helper\Money::toReal($jogos->value)}}
 VALOR PREMIO: R${{\App\Helper\Money::toReal($jogos->premio)}}
-DEZENAS: {{$jogos->numbers}}
+DEZENAS: {{ implode(', ', array_map(function($dezenas) {
+    return str_pad($dezenas, 2, '0', STR_PAD_LEFT);
+}, explode(',', $jogos->numbers))) }}
 CRIADO EM: {{\Carbon\Carbon::parse($jogos->created_at)->format('d/m/Y H:i:s')}}
 --------------------------------
 @endforeach
