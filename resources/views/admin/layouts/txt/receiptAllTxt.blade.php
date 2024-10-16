@@ -16,6 +16,8 @@ HORA SORTEIO: {{\Carbon\Carbon::parse($Datas['sort_date'])->format('H:i:s')}}
 $numbers = array();
                 $numbers = explode(',', $jogos['numbers']);
                 asort($numbers, SORT_NUMERIC);
+                $formattedNumbers = array_map(fn($n) => str_pad($n, 2, '0', STR_PAD_LEFT), $numbers); 
+
 
                 $matriz = [];
                 $line = [];
