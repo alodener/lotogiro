@@ -97,7 +97,7 @@
                     $game['premio_5'] == 1 ? 5 : null,
                     
                 ]);
-                dd($game);
+                
                 $modalidadeNome = $modalidades[$game['modalidade_id']] ?? 'Modalidade não encontrada';
 
                 // Aqui você acessa a modalidade do jogo
