@@ -58,7 +58,17 @@
             $users = \App\Models\User::pluck('name', 'id');
             $total = 0;
         @endphp
-
+        <table style="width: 100%">
+                <tr class="bg-secondary">
+                    <th class="text-size-1 text-left">ID</th>
+                    <th class="text-size-1 text-left">CRIAÇÃO</th>
+                    <th class="text-size-1 text-left">LOTERIA</th>
+                    <th class="text-size-1 text-left">PRÊMIO</th>
+                    <th class="text-size-1 text-left">MODALIDADE</th>
+                    <th class="text-size-1 text-left">APOSTA</th>
+                    <th class="text-size-1 text-left">POSIÇÃO</th>
+                    <th class="text-size-1 text-left">VALOR</th>
+                </tr>
         @foreach($collection as $index => $userGames)
          <!-- <div class="text-size-1">
                 <p>
@@ -70,17 +80,7 @@
                 </p>
             </div> -->
 
-            <table style="width: 100%">
-                <tr class="bg-secondary">
-                    <th class="text-size-1 text-left">ID</th>
-                    <th class="text-size-1 text-left">CRIAÇÃO</th>
-                    <th class="text-size-1 text-left">LOTERIA</th>
-                    <th class="text-size-1 text-left">PRÊMIO</th>
-                    <th class="text-size-1 text-left">MODALIDADE</th>
-                    <th class="text-size-1 text-left">APOSTA</th>
-                    <th class="text-size-1 text-left">POSIÇÃO</th>
-                    <th class="text-size-1 text-left">VALOR</th>
-                </tr>
+            
 
                 @php
                     $subtotal = 0;
@@ -125,14 +125,8 @@
         @endforeach
 
 
-                <tr class="bg-secondary">
-                    <th colspan="5" class="text-left">SUBTOTAL</th>
-                    <th class="text-left">R${{ \App\Helper\Money::toReal($subtotal) }}</th>
-                    @php
-                        $total += $subtotal;
-                    @endphp
-                </tr>
-            </table>
+            
         @endforeach
+        </table>
 
 </div>
