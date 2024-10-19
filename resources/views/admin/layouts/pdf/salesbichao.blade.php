@@ -124,7 +124,6 @@
             </tr>
         @endforeach
 
-
             
         @endforeach
         </table>
