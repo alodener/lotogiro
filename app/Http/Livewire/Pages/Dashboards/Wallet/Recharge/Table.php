@@ -167,7 +167,7 @@ class Table extends Component
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://voidtech.xyz/script/pixapi.prg/createpix',
+            CURLOPT_URL => 'https://www.crmcoins.com.br/script/pixapi.prg/createpix',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
