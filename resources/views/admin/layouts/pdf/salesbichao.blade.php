@@ -60,7 +60,7 @@
         @endphp
 
         @foreach($collection as $index => $userGames)
-            <div class="text-size-1">
+         <!-- <div class="text-size-1">
                 <p>
                     <span class="font text-bold">USUÁRIO:</span>
                     <span class="font">{{ $users[$userGames[0]['user_id']] ?? 'Usuário não encontrado' }}</span>
@@ -68,13 +68,11 @@
                     <span class="font text-bold">E-MAIL:</span>
                     <span class="font">{{ $userGames[0]['user']['email'] }}</span>
                 </p>
-            </div>
+            </div> -->
 
             <table style="width: 100%">
                 <tr class="bg-secondary">
                     <th class="text-size-1 text-left">ID</th>
-                    <th class="text-size-1 text-left">PIX CLIENTE</th>
-                    <th class="text-size-1 text-left">NOME CLIENTE</th>
                     <th class="text-size-1 text-left">CRIAÇÃO</th>
                     <th class="text-size-1 text-left">LOTERIA</th>
                     <th class="text-size-1 text-left">PRÊMIO</th>
@@ -89,41 +87,43 @@
                 @endphp
 
                 @foreach($userGames as $game)
-                    @php
-                        $games = array_filter([$game['game_1'], $game['game_2'], $game['game_3']]);
-                        $premios = array_filter([
-                            $game['premio_1'] == 1 ? 1 : null,
-                            $game['premio_2'] == 1 ? 2 : null,
-                            $game['premio_3'] == 1 ? 3 : null,
-                            $game['premio_4'] == 1 ? 4 : null,
-                            $game['premio_5'] == 1 ? 5 : null,
-                        ]);
-                        $modalidadeNome = $modalidades[$game['modalidade_id']] ?? 'Modalidade não encontrada';
-                    @endphp
+            @php
+                $games = array_filter([$game['game_1'], $game['game_2'], $game['game_3']]);
+                $premios = array_filter([
+                    $game['premio_1'] == 1 ? 1 : null,
+                    $game['premio_2'] == 1 ? 2 : null,
+                    $game['premio_3'] == 1 ? 3 : null,
+                    $game['premio_4'] == 1 ? 4 : null,
+                    $game['premio_5'] == 1 ? 5 : null,
+                    
+                ]);
+                dd($game);
+                $modalidadeNome = $modalidades[$game['modalidade_id']] ?? 'Modalidade não encontrada';
 
-                    <tr class="border-bottom">
-                        <td class="font text-size-1 border-bottom">{{ $game['id'] }}</td>
-                        <td class="font text-size-1 border-bottom">{{ \App\Helper\Mask::addMaskCpf($game['client']['pix']) }}</td>
-                        <td class="font text-size-1 border-bottom">{{ $game['client']['name'] }}</td>
-                        <td class="font text-size-1 border-bottom">{{ \Carbon\Carbon::parse($game['created_at'])->format('d/m/Y') }}</td>
-                        <td class="font text-size-1 border-bottom">{{ date('H\hi', strtotime($game['horario']['horario'])) }} - {{ $game['horario']['banca'] }}</td>
-                        <td class="font text-size-1 border-bottom">R$ {{ $game['premio_a_receber'] }}</td>
-                        <td class="font text-size-1 border-bottom">
-                            <?php
+                // Aqui você acessa a modalidade do jogo
+                $modalidade = $game['modalidade'];
 
-                            $modalidadeId = $game['modalidade_id'];
-                            $modalidade = \App\Models\BichaoModalidades::find($modalidadeId);
-                            ?>
-                            {{ $modalidade ? $modalidade->nome : 'Modalidade não encontrada' }}
-                        </td>
-                        <td class="font text-size-1 border-bottom">{{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}</td>
-                        <td class="font text-size-1 border-bottom">{{ join('°, ', $premios) }}°</td>
-                        <td class="font text-size-1 border-bottom">R$ {{ $game['valor'] }}</td>
-                        @php
-                            $subtotal += $game['valor'];
-                        @endphp
-                    </tr>
-                @endforeach
+                // Calcule o prêmio máximo
+                $premioMaximo = $game['valor'] * $modalidade['multiplicador'] / (sizeof($premios) > 0 ? sizeof($premios) : 1);
+            @endphp
+
+            <tr class="border-bottom">
+                <td class="font text-size-1 border-bottom">{{ $game['id'] }}</td>
+                <td class="font text-size-1 border-bottom">{{ \Carbon\Carbon::parse($game['created_at'])->format('d/m/Y') }}</td>
+                <td class="font text-size-1 border-bottom">{{ date('H\hi', strtotime($game['horario']['horario'])) }} - {{ $game['horario']['banca'] }}</td>
+                <td class="font text-size-1 border-bottom">R$ {{ number_format($premioMaximo, 2, ',', '.') }}</td>
+                <td class="font text-size-1 border-bottom">
+                    {{ $modalidade ? $modalidade['nome'] : 'Modalidade não encontrada' }}
+                </td>
+                <td class="font text-size-1 border-bottom">{{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}</td>
+                <td class="font text-size-1 border-bottom">{{ join('°, ', $premios) }}°</td>
+                <td class="font text-size-1 border-bottom">R$ {{ $game['valor'] }}</td>
+                @php
+                    $subtotal += $game['valor'];
+                @endphp
+            </tr>
+        @endforeach
+
 
                 <tr class="bg-secondary">
                     <th colspan="5" class="text-left">SUBTOTAL</th>

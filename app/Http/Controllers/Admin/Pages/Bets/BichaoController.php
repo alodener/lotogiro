@@ -666,17 +666,28 @@ class BichaoController extends Controller
 
         $games = explode(',', $data['item']['game']);
         if ($data['item']['modality'] === 'Milhar/Centena') {
+            $modalidadeMilhar = BichaoModalidades::where('nome', 'Milhar')->first();
+            $modalidadeCentena = BichaoModalidades::where('nome', 'Centena')->first();
+            $modeMilhar = $modalidadeMilhar->multiplicador;
+            $premiacoes = $data['item']['award_type'] ;
+            $countPremiacoes = count($premiacoes);
+
+            $modeCentena = $modalidadeCentena->multiplicador;
+
             foreach ($games as $game) {
                 $value = floatval($data['item']['value']) / 2;
-
+                $premioMilhar = ($value * $modeMilhar) / $countPremiacoes;    
                 $chartDto = $data['item'];
                 $chartDto['value'] = $value;
                 $chartDto['modality'] ='Milhar';
                 $chartDto['game'] = $game;
+                $chartDto['premiacao'] = $premioMilhar;
                 $chart[] = $chartDto;
-
+            
+                $premioCentena = ($value * $modeCentena) / $countPremiacoes;
                 $chartDto['modality'] ='Centena';
                 $chartDto['game'] = substr($game, 1);
+                $chartDto['premiacao'] = $premioCentena;
                 $chart[] = $chartDto;
             }
         } else {
