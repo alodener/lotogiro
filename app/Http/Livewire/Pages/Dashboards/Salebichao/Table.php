@@ -362,7 +362,7 @@ class Table extends Component
         foreach ($games as $game) {
             $collection = $collection->push($game->toArray());
         }
-        $collection = $collection->sortByDesc('client.name')->groupBy('user.name');
+       $collection = $collection->sortByDesc('horario.horario')->groupBy('horario.banca');
 
         $data = [
             'dateFilter' => $this->filterRange(),
