@@ -34,10 +34,24 @@
 </head>
 <body>
 <div>
+    
+    @php
+        $users = \App\Models\User::pluck('name', 'id');
+        $total = 0;
+
+        // Calculando o total antes de exibir o cabeçalho
+        foreach ($collection as $userGames) {
+            $subtotal = 0;
+            foreach ($userGames as $game) {
+                $subtotal += $game['valor'];
+            }
+            $total += $subtotal;
+        }
+    @endphp
     <div class="border-bottom-dashed">
         <p class="text-danger text-center font text-size-2 text-bold">
             RELATÓRIO DE VENDAS <br/>
-            BICHÃO DA SORTE
+            BICHÃO DA SORTE 
         </p>
     </div>
     <div class="border-bottom-dashed text-size-1">
@@ -50,6 +64,10 @@
             <br/>
             <span class="font text-bold">BANCA:</span>
             <span class="font">{{ env("nome_sistema") }}</span>
+            <br/>
+            <!-- Adicionando o campo Total -->
+            <span class="font text-bold">TOTAL:</span>
+            <span class="font">R$ {{ \App\Helper\Money::toReal($total) }}</span>
         </p>
     </div>
 
@@ -58,7 +76,10 @@
             $users = \App\Models\User::pluck('name', 'id');
             $total = 0;
         @endphp
-        <table style="width: 100%">
+
+        @foreach($collection as $index => $userGames)
+            
+            <table style="width: 100%">
                 <tr class="bg-secondary">
                     <th class="text-size-1 text-left">ID</th>
                     <th class="text-size-1 text-left">CRIAÇÃO</th>
@@ -69,63 +90,47 @@
                     <th class="text-size-1 text-left">POSIÇÃO</th>
                     <th class="text-size-1 text-left">VALOR</th>
                 </tr>
-        @foreach($collection as $index => $userGames)
-         <!-- <div class="text-size-1">
-                <p>
-                    <span class="font text-bold">USUÁRIO:</span>
-                    <span class="font">{{ $users[$userGames[0]['user_id']] ?? 'Usuário não encontrado' }}</span>
-                    <br/>
-                    <span class="font text-bold">E-MAIL:</span>
-                    <span class="font">{{ $userGames[0]['user']['email'] }}</span>
-                </p>
-            </div> -->
-
-            
 
                 @php
                     $subtotal = 0;
                 @endphp
 
                 @foreach($userGames as $game)
-            @php
-                $games = array_filter([$game['game_1'], $game['game_2'], $game['game_3']]);
-                $premios = array_filter([
-                    $game['premio_1'] == 1 ? 1 : null,
-                    $game['premio_2'] == 1 ? 2 : null,
-                    $game['premio_3'] == 1 ? 3 : null,
-                    $game['premio_4'] == 1 ? 4 : null,
-                    $game['premio_5'] == 1 ? 5 : null,
-                    
-                ]);
-                
-                $modalidadeNome = $modalidades[$game['modalidade_id']] ?? 'Modalidade não encontrada';
+                    @php
+                        $games = array_filter([$game['game_1'], $game['game_2'], $game['game_3']]);
+                        $premios = array_filter([
+                            $game['premio_1'] == 1 ? 1 : null,
+                            $game['premio_2'] == 1 ? 2 : null,
+                            $game['premio_3'] == 1 ? 3 : null,
+                            $game['premio_4'] == 1 ? 4 : null,
+                            $game['premio_5'] == 1 ? 5 : null,
+                        ]);
+                        $modalidadeNome = $modalidades[$game['modalidade_id']] ?? 'Modalidade não encontrada';
+                    @endphp
 
-                // Aqui você acessa a modalidade do jogo
-                $modalidade = $game['modalidade'];
+                    <tr class="border-bottom">
+                        <td class="font text-size-1 border-bottom">{{ $game['id'] }}</td>
+                        <td class="font text-size-1 border-bottom">{{ \Carbon\Carbon::parse($game['created_at'])->format('d/m/Y') }}</td>
+                        <td class="font text-size-1 border-bottom">{{ date('H\hi', strtotime($game['horario']['horario'])) }} - {{ $game['horario']['banca'] }}</td>
+                        <td class="font text-size-1 border-bottom">R$ {{ $game['premio_a_receber'] }}</td>
+                        <td class="font text-size-1 border-bottom">
+                            <?php
 
-                // Calcule o prêmio máximo
-                $premioMaximo = $game['valor'] * $modalidade['multiplicador'] / (sizeof($premios) > 0 ? sizeof($premios) : 1);
-            @endphp
+                            $modalidadeId = $game['modalidade_id'];
+                            $modalidade = \App\Models\BichaoModalidades::find($modalidadeId);
+                            ?>
+                            {{ $modalidade ? $modalidade->nome : 'Modalidade não encontrada' }}
+                        </td>
+                        <td class="font text-size-1 border-bottom">{{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}</td>
+                        <td class="font text-size-1 border-bottom">{{ join('°, ', $premios) }}°</td>
+                        <td class="font text-size-1 border-bottom">R$ {{ $game['valor'] }}</td>
+                        @php
+                            $subtotal += $game['valor'];
+                        @endphp
+                    </tr>
+                @endforeach
 
-            <tr class="border-bottom">
-                <td class="font text-size-1 border-bottom">{{ $game['id'] }}</td>
-                <td class="font text-size-1 border-bottom">{{ \Carbon\Carbon::parse($game['created_at'])->format('d/m/Y') }}</td>
-                <td class="font text-size-1 border-bottom">{{ date('H\hi', strtotime($game['horario']['horario'])) }} - {{ $game['horario']['banca'] }}</td>
-                <td class="font text-size-1 border-bottom">R$ {{ number_format($premioMaximo, 2, ',', '.') }}</td>
-                <td class="font text-size-1 border-bottom">
-                    {{ $modalidade ? $modalidade['nome'] : 'Modalidade não encontrada' }}
-                </td>
-                <td class="font text-size-1 border-bottom">{{ str_pad(join(' - ', $games), 2, 0, STR_PAD_LEFT) }}</td>
-                <td class="font text-size-1 border-bottom">{{ join('°, ', $premios) }}°</td>
-                <td class="font text-size-1 border-bottom">R$ {{ $game['valor'] }}</td>
-                @php
-                    $subtotal += $game['valor'];
-                @endphp
-            </tr>
+            </table>
         @endforeach
-
-            
-        @endforeach
-        </table>
 
 </div>
