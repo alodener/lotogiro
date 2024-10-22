@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pages\Dashboards\Salebichao;
 
 use App\Models\BichaoGames;
+use App\Models\BichaoHorarios; 
 use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
@@ -33,15 +34,29 @@ class Table extends Component
     public $filters = [
         "search" => null
     ];
+    public $horario; // Nova propriedade para o filtro de horário
+    public $horarios = []; // Para armazenar os horários
+    public $valor;
+
 
     public function mount()
     {
         $this->auth = auth()->user();
+        $this->range = 3; // Inicia com 'diário' por padrão
+    
         if ($this->auth->hasPermissionTo('read_all_sales')) {
             $this->updatedSearch('Admin');
         }
+    
         $this->perPage = session()->get('perPage', 10);
+    
+        $this->horarios = BichaoHorarios::select('horario')
+                            ->distinct()
+                            ->orderBy('horario', 'asc')
+                            ->get();
     }
+    
+
 
     public function updatedSearch($value)
     {
@@ -83,6 +98,19 @@ class Table extends Component
         unset($this->sorts[$column]);
     }
 
+    public function buscar()
+{
+    $query = BichaoGames::query();
+
+    // Outros filtros já existentes
+    if (!empty($this->valor)) {
+        $query->where('premio_a_receber', '>=', $this->valor);
+    }
+
+    $this->registros = $query->get();
+}
+
+
     public function applySorting($query)
     {
         foreach ($this->sorts as $column => $direction) {
@@ -95,11 +123,26 @@ class Table extends Component
     {
         $this->resetPage();
     }
+    public function applyFilters()
+    {
+        // Reseta a paginação para a primeira página
+        $this->horarios = BichaoHorarios::select('horario')
+        ->distinct()
+        ->orderBy('horario', 'asc')
+        ->get();
+
+    // Reseta a página para a primeira
+    $this->resetPage();
+    }
+
+
 
     public function updatedRange($value)
     {
-        $this->resetPage();
+        $this->resetPage(); 
+        //$this->applyFilters(); // Isso vai garantir que o filtro seja aplicado corretamente
     }
+    
 
     public function updatedStatus($value)
     {
@@ -127,32 +170,33 @@ class Table extends Component
     }
 
     public function filterRange()
-    {
-        $now = Carbon::now();
-        switch ($this->range) {
-            case 1:
-                $dateStart = $now->startOfMonth()->toDateString();
-                $dateEnd = $now->endOfMonth()->toDateString();
-                break;
-            case 2:
-                $dateStart = $now->startOfWeek()->toDateString();
-                $dateEnd = $now->endOfWeek()->toDateString();
-                break;
-            case 3:
-                $dateStart = $now->startOfDay()->toDateString();
-                $dateEnd = $now->endOfDay()->toDateString();
-                break;
-            case 4:
-                $dateStart = Carbon::parse(strtotime(str_replace('/', '-', $this->dateStart)))->toDateString();
-                $dateEnd = Carbon::parse(strtotime(str_replace('/', '-', $this->dateEnd)))->toDateString();
-                break;
-        }
-
-        return [
-            'dateStart' => $dateStart,
-            'dateEnd' => $dateEnd,
-        ];
+{
+    $now = Carbon::now();
+    switch ($this->range) {
+        case 1: // Mensal
+            $dateStart = $now->startOfMonth()->toDateString();
+            $dateEnd = $now->endOfMonth()->toDateString();
+            break;
+        case 2: // Últimos 7 dias
+            $dateStart = $now->copy()->subDays(6)->startOfDay()->toDateString(); // 6 dias antes de hoje
+            $dateEnd = $now->endOfDay()->toDateString(); // Final do dia atual
+            break;
+        case 3: // Diário
+            $dateStart = $now->startOfDay()->toDateString();
+            $dateEnd = $now->endOfDay()->toDateString();
+            break;
+        case 4: // Período customizado
+            $dateStart = Carbon::parse(strtotime(str_replace('/', '-', $this->dateStart)))->toDateString();
+            $dateEnd = Carbon::parse(strtotime(str_replace('/', '-', $this->dateEnd)))->toDateString();
+            break;
     }
+
+    return [
+        'dateStart' => $dateStart,
+        'dateEnd' => $dateEnd,
+    ];
+}
+
 
     public function filterUser($query)
     {
@@ -233,34 +277,83 @@ class Table extends Component
         return $query;
     }
 
-    public function runQueryBuilder()
+    public function filterHorario($query)
     {
-        $query = BichaoGames::query();
-        if (!$this->auth->hasPermissionTo('read_all_sales')) {
-            $query->where('user_id', $this->auth->id);
+        if (!empty($this->horario)) {
+            $query->whereHas('horario', function ($query) {
+                $query->where('horario', $this->horario);
+            });
         }
-        $filterRange = $this->filterRange();
-        $query
-            ->when($this->range, fn($query, $search) => $query->whereDate('created_at', '>=', $filterRange['dateStart'])
-                ->whereDate('created_at', '<=', $filterRange['dateEnd']))->orderBy('created_at', 'desc');
-        $query = $this->filterUser($query);
-        $query = $this->filterStatus($query);
-        
-         if (!$this->auth->hasPermissionTo('read_all_sales')) {
-             $query = $this->sumValues($query, $this->auth->id);
-            
-        }else{
-             
-             if($this->userId != null){
-                 $query = $this->sumValuesEscolhido($query, $this->userId);
-             }else{
-               $query = $this->sumValuesTodos($query);
-           }
-        }
-            
-        
+    
         return $query;
     }
+
+    public function updatedHorario($value)
+    {
+       $this->resetPage();
+    }
+
+    public function reloadHorarios()
+{
+    // Recarrega os horários do banco de dados
+    $this->horarios = BichaoHorarios::select('horario')
+        ->distinct()
+        ->orderBy('horario', 'asc')
+        ->get();
+
+    // Reseta a seleção atual
+    $this->reset('horario');
+}
+
+
+    public function runQueryBuilder()
+{
+    // Inicializa a consulta com o join entre bichao_games e bichao_horarios
+    $query = BichaoGames::query()
+        ->join('bichao_horarios', 'bichao_games.horario_id', '=', 'bichao_horarios.id')
+        ->select(
+            'bichao_games.*',
+            'bichao_horarios.horario as horario_completo'
+        );
+
+    // Aplica o filtro de usuário
+    if (!$this->auth->hasPermissionTo('read_all_sales')) {
+        $query->where('bichao_games.user_id', $this->auth->id);
+    }   
+
+    // Aplica o filtro de período
+    $filterRange = $this->filterRange();
+    $query->whereDate('bichao_games.created_at', '>=', $filterRange['dateStart'])
+          ->whereDate('bichao_games.created_at', '<=', $filterRange['dateEnd']);
+
+    // Aplica o filtro de horário
+    if (!empty($this->horario)) {
+        $query->where('bichao_horarios.horario', $this->horario);
+    }
+
+    if (!empty($this->valor)) {
+        // Remove pontos e converte para decimal tanto no banco quanto no input do usuário
+        $query->where(DB::raw('CAST(REPLACE(REPLACE(premio_a_receber, \'.\', \'\'), \',\', \'\') AS DECIMAL(10, 2))'), '>=', floatval(str_replace([',', '.'], '', $this->valor)));
+    }
+   // dd($this->filterRange(), $this->horario, $this->valor);
+    // Aplica o filtro de usuário, status e soma de valores
+    $query = $this->filterUser($query);
+    $query = $this->filterStatus($query);
+
+    if (!$this->auth->hasPermissionTo('read_all_sales')) {
+        $query = $this->sumValues($query, $this->auth->id);
+    } else {
+        if ($this->userId !== null) {
+            $query = $this->sumValuesEscolhido($query, $this->userId);
+        } else {
+            $query = $this->sumValuesTodos($query);
+        }
+    }
+
+    return $query;
+}
+
+
 
     public function getReport()
     {
