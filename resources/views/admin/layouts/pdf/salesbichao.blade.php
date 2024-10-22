@@ -76,9 +76,7 @@
             $users = \App\Models\User::pluck('name', 'id');
             $total = 0;
         @endphp
-
-        @foreach($collection as $index => $userGames)
-            <table style="width: 100%">
+        <table style="width: 100%">
                 <tr class="bg-secondary">
                     <th class="text-size-1 text-left">ID</th>
                     <th class="text-size-1 text-left">CRIAÇÃO</th>
@@ -89,6 +87,9 @@
                     <th class="text-size-1 text-left">POSIÇÃO</th>
                     <th class="text-size-1 text-left">VALOR</th>
                 </tr>
+
+        @foreach($collection as $index => $userGames)
+            
         
                 @php
                     $subtotal = 0;
@@ -129,7 +130,8 @@
                     </tr>
                 @endforeach
 
-            </table>
+           
         @endforeach
+             </table>
 
 </div>
