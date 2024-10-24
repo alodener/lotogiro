@@ -195,10 +195,10 @@
                             <?php
                                 $gameNumbers = [];
                                 $prizes = [];
-    
-                                if (strval($game->game_1) > 0) $gameNumbers[] = $game->game_1;
-                                if (strval($game->game_2) > 0) $gameNumbers[] = $game->game_2;
-                                if (strval($game->game_3) > 0) $gameNumbers[] = $game->game_3;
+
+                                if (!is_null($game->game_1)) $gameNumbers[] = str_pad($game->game_1, 2, '0', STR_PAD_LEFT);
+                                if (!is_null($game->game_2)) $gameNumbers[] = str_pad($game->game_2, 2, '0', STR_PAD_LEFT);
+                                if (!is_null($game->game_3)) $gameNumbers[] = str_pad($game->game_3, 2, '0', STR_PAD_LEFT);
     
                                 if ($game['premio_1'] == 1) $prizes[] = 1;
                                 if ($game['premio_2'] == 1) $prizes[] = 2;
